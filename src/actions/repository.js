@@ -6,9 +6,9 @@ import {
   GET_REPOSITORY_CONTRIBUTORS_IS_PENDING,
   GET_REPOSITORY_CONTRIBUTORS_WAS_SUCCESSFUL,
   GET_REPOSITORY_CONTRIBUTORS_HAD_ERROR,
-  GET_REPOSITORY_TOP_CONTENTS_IS_PENDING,
-  GET_REPOSITORY_TOP_CONTENTS_WAS_SUCCESSFUL,
-  GET_REPOSITORY_TOP_CONTENTS_HAD_ERROR,
+  GET_REPOSITORY_CONTENTS_IS_PENDING,
+  GET_REPOSITORY_CONTENTS_WAS_SUCCESSFUL,
+  GET_REPOSITORY_CONTENTS_HAD_ERROR,
   GET_REPOSITORY_ISSUES_IS_PENDING,
   GET_REPOSITORY_ISSUES_WAS_SUCCESSFUL,
   GET_REPOSITORY_ISSUES_HAD_ERROR,
@@ -72,22 +72,22 @@ export const getContributors = url => {
   };
 };
 
-export const getTopContents = url => {
+export const getContents = url => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 
-    dispatch({type: GET_REPOSITORY_TOP_CONTENTS_IS_PENDING});
+    dispatch({type: GET_REPOSITORY_CONTENTS_IS_PENDING});
 
     fetchUrl(url, accessToken)
       .then(data => {
         dispatch({
-          type: GET_REPOSITORY_TOP_CONTENTS_WAS_SUCCESSFUL,
+          type: GET_REPOSITORY_CONTENTS_WAS_SUCCESSFUL,
           payload: data,
         });
       })
       .catch(error => {
         dispatch({
-          type: GET_REPOSITORY_TOP_CONTENTS_HAD_ERROR,
+          type: GET_REPOSITORY_CONTENTS_HAD_ERROR,
           payload: error,
         });
       });

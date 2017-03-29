@@ -6,9 +6,9 @@ import {
   GET_REPOSITORY_CONTRIBUTORS_IS_PENDING,
   GET_REPOSITORY_CONTRIBUTORS_WAS_SUCCESSFUL,
   GET_REPOSITORY_CONTRIBUTORS_HAD_ERROR,
-  GET_REPOSITORY_TOP_CONTENTS_IS_PENDING,
-  GET_REPOSITORY_TOP_CONTENTS_WAS_SUCCESSFUL,
-  GET_REPOSITORY_TOP_CONTENTS_HAD_ERROR,
+  GET_REPOSITORY_CONTENTS_IS_PENDING,
+  GET_REPOSITORY_CONTENTS_WAS_SUCCESSFUL,
+  GET_REPOSITORY_CONTENTS_HAD_ERROR,
   GET_REPOSITORY_ISSUES_IS_PENDING,
   GET_REPOSITORY_ISSUES_WAS_SUCCESSFUL,
   GET_REPOSITORY_ISSUES_HAD_ERROR,
@@ -21,12 +21,12 @@ const initialState = {
   repositoryName: '',
   repository: {},
   contributors: [],
-  topContents: [],
+  contents: [],
   issues: [],
   readMe: '',
   isPendingRepository: false,
   isPendingContributors: false,
-  isPendingTopContents: false,
+  isPendingContents: false,
   isPendingIssues: false,
   isPendingReadMe: false,
   error: '',
@@ -73,22 +73,22 @@ export default function repositoryReducer(state = initialState, action={}) {
           error: action.payload,
           isPendingContributors: false,
         };
-      case GET_REPOSITORY_TOP_CONTENTS_IS_PENDING:
+      case GET_REPOSITORY_CONTENTS_IS_PENDING:
         return {
           ...state,
-          isPendingTopContents: true,
+          isPendingContents: true,
         };
-      case GET_REPOSITORY_TOP_CONTENTS_WAS_SUCCESSFUL:
+      case GET_REPOSITORY_CONTENTS_WAS_SUCCESSFUL:
         return {
           ...state,
-          topContents: action.payload,
-          isPendingTopContents: false,
+          contents: action.payload,
+          isPendingContents: false,
         };
-      case GET_REPOSITORY_TOP_CONTENTS_HAD_ERROR:
+      case GET_REPOSITORY_CONTENTS_HAD_ERROR:
         return {
           ...state,
           error: action.payload,
-          isPendingTopContents: false,
+          isPendingContents: false,
         };
       case GET_REPOSITORY_ISSUES_IS_PENDING:
         return {

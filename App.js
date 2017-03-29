@@ -28,7 +28,7 @@ import Home from './src/screens/HomeScreen';
 import ListRender from './src/screens/ListRenderScreen';
 import Organization from './src/screens/OrganizationScreen';
 import Repository from './src/screens/RepositoryScreen';
-import RepositoryCode from './src/screens/RepositoryCodeScreen';
+import RepositoryCodeList from './src/screens/RepositoryCodeListScreen';
 import IssuesList from './src/screens/IssuesListScreen';
 import ReadMe from './src/screens/ReadMe';
 
@@ -89,10 +89,10 @@ const HomeStackNavigator = StackNavigator(
         },
       },
     },
-    RepositoryCode: {
-      screen: RepositoryCode,
+    RepositoryCodeList: {
+      screen: RepositoryCodeList,
       navigationOptions: {
-        title: ({state}) => `${state.params.content.name}`,
+        title: ({state}) => state.params.topLevel ? 'Code' : `${state.params.content.name}`,
       },
     },
     IssuesList: {
@@ -182,10 +182,10 @@ const MyProfileStackNavigator = StackNavigator(
         },
       },
     },
-    RepositoryCode: {
-      screen: RepositoryCode,
+    RepositoryCodeList: {
+      screen: RepositoryCodeList,
       navigationOptions: {
-        title: ({state}) => `${state.params.content.name}`,
+        title: ({state}) => state.params.topLevel ? 'Code' : `${state.params.content.name}`,
       },
     },
     IssuesList: {

@@ -14,7 +14,7 @@ const UserProfile = (
   <View style={styles.container}>
     <View style={styles.profile}>
       <Image
-        style={[styles.avatar, user.type === 'User' && styles.userAvatar]}
+        style={[styles.avatar, initialUser.type === 'User' && styles.userAvatar]}
         resizeMode="contain"
         source={{uri: initialUser.avatar_url}}
       />

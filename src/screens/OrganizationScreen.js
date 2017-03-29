@@ -1,5 +1,6 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {StyleSheet} from 'react-native';
+import {ListItem} from 'react-native-elements';
 
 import ViewContainer from '../components/ViewContainer';
 import UserProfile from '../components/UserProfile';
@@ -9,133 +10,110 @@ import SectionList from '../components/SectionList';
 import ParallaxScroll from '../components/ParallaxScroll';
 import RepositoryListItem from '../components/RepositoryListItem';
 
-import Communications from 'react-native-communications';
-import {ListItem} from 'react-native-elements';
 import colors from '../config/colors';
+import Communications from 'react-native-communications';
 
-export default class Organization extends Component {
-  constructor() {
-    super();
+import {connect} from 'react-redux';
+import {getOrg, getOrgRepos, getOrgMembers} from '../actions/organization';
 
-    this.state = {
-      organization: {},
-      repositories: [],
-      people: [],
-      fetchingData: false,
-    };
-  }
+const mapStateToProps = state => ({
+  organization: state.organization.organization,
+  repositories: state.organization.repositories,
+  members: state.organization.members,
+  isPendingOrg: state.organization.isPendingOrg,
+  isPendingRepos: state.user.isPendingRepos,
+  isPendingMembers: state.user.isPendingMembers,
+});
 
+const mapDispatchToProps = dispatch => ({
+  getOrg: orgName => dispatch(getOrg(orgName)),
+  getOrgRepos: url => dispatch(getOrgRepos(url)),
+  getOrgMembers: orgName => dispatch(getOrgMembers(orgName)),
+});
+
+class Organization extends Component {
   componentDidMount() {
-    this.setState({
-      fetchingData: true,
-    });
+    const organization = this.props.navigation.state.params.organization;
 
-    const organizationName = this.props.navigation.state.params.organization.login;
-
-    fetch(`https://api.github.com/orgs/${organizationName}`)
-      .then(response => response.json())
-      .then(orgData => {
-        fetch(orgData.repos_url)
-          .then(response => response.json())
-          .then(repos => {
-            this.setState({
-              organization: orgData,
-              repositories: repos,
-            });
-          });
-
-        fetch(`https://api.github.com/orgs/${organizationName}/public_members`)
-          .then(response => response.json())
-          .then(publicMembers => {
-            this.setState({
-              people: publicMembers,
-              fetchingData: false,
-            });
-          });
-      })
-      .done();
+    this.props.getOrg(organization.login);
+    // this.props.getOrgRepos(organization.repos_url);
+    this.props.getOrgMembers(organization.login);
   }
 
   render() {
+    const {
+      organization,
+      repositories,
+      members,
+      isPendingOrg,
+      isPendingRepos,
+      isPendingMembers,
+      navigation,
+    } = this.props;
+
     const initialOrganization = this.props.navigation.state.params.organization;
 
     return (
-      <ViewContainer
-        barColor="light">
+      <ViewContainer barColor="light">
 
         <ParallaxScroll
           renderContent={() => (
             <UserProfile
-              type='org'
+              type="org"
               initialUser={initialOrganization}
-              user={!this.state.fetchingData && this.state.organization}
-              navigation={this.props.navigation}
+              user={
+                initialOrganization.login === organization.login
+                  ? organization
+                  : {}
+              }
+              navigation={navigation}
             />
           )}
-          stickyTitle={this.state.organization.name}
+          stickyTitle={organization.name}
           navigateBack
-          navigation={this.props.navigation}
+          navigation={navigation}
         >
 
-          {this.state.fetchingData &&
-            <LoadingMembersList
-              title="MEMBERS"
-            />
-          }
+          {isPendingMembers && <LoadingMembersList title="MEMBERS" />}
 
-          {!this.state.fetchingData &&
+          {!isPendingMembers &&
             <MembersList
               title="MEMBERS"
-              members={this.state.people}
-              navigation={this.props.navigation}
-            />
-          }
+              members={members}
+              navigation={navigation}
+            />}
 
-            {(this.state.organization.email || this.state.organization.blog) &&
-              <SectionList
-                title="LINKS">
-                  {this.state.organization.email &&
-                    <ListItem
-                      title="Email"
-                      titleStyle={styles.listTitle}
-                      leftIcon={{name: 'email', color: colors.grey}}
-                      subtitle={this.state.organization.email}
-                      onPress={() => Communications.email([this.state.organization.email], null, null, 'Hi!', '')}
-                      underlayColor={colors.greyLight}
-                    />
-                  }
-
-                  {this.state.organization.blog &&
-                    <ListItem
-                      title="Website"
-                      titleStyle={styles.listTitle}
-                      leftIcon={{name: 'link', color: colors.grey}}
-                      subtitle={this.state.organization.blog }
-                      onPress={() => Communications.web(this.state.organization.blog)}
-                      underlayColor={colors.greyLight}
-                    />
-                  }
-              </SectionList>
-            }
-
-            {this.state.repositories.length > 0 &&
-              <SectionList
-                title="REPOSITORIES">
-                {
-                  this.state.repositories.map((item, i) => (
-                    <RepositoryListItem
-                      key={i}
-                      repository={item}
-                      navigation={this.props.navigation} />
-                  ))
-                }
-              </SectionList>
-            }
+          {!isPendingOrg &&
+            organization.blog &&
+            <SectionList title="LINKS">
+              {organization.blog &&
+                <ListItem
+                  title="Website"
+                  titleStyle={styles.listTitle}
+                  leftIcon={{name: 'link', color: colors.grey}}
+                  subtitle={organization.blog}
+                  onPress={() => Communications.web(organization.blog)}
+                  underlayColor={colors.greyLight}
+                />}
+            </SectionList>}
         </ParallaxScroll>
       </ViewContainer>
     );
   }
 }
+
+Organization.propTypes = {
+  getOrg: PropTypes.func,
+  getOrgRepos: PropTypes.func,
+  getOrgMembers: PropTypes.func,
+  organization: PropTypes.object,
+  repositories: PropTypes.array,
+  members: PropTypes.array,
+  isPendingOrg: PropTypes.bool,
+  isPendingRepos: PropTypes.bool,
+  isPendingMembers: PropTypes.bool,
+  navigation: PropTypes.object,
+};
 
 const styles = StyleSheet.create({
   listTitle: {
@@ -143,3 +121,5 @@ const styles = StyleSheet.create({
     fontFamily: 'AvenirNext-Medium',
   },
 });
+
+export default connect(mapStateToProps, mapDispatchToProps)(Organization);

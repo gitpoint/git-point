@@ -16,6 +16,7 @@ const UserListItem = (
     title={user.login}
     titleStyle={styles.title}
     avatar={{uri: user.avatar_url}}
+    avatarStyle={styles.avatar}
     underlayColor={colors.greyLight}
     onPress={() => navigation.navigate(user.type === 'User' ? 'Profile' : 'Organization', user.type === 'User' ? {user: user} : {organization: user})}
   />
@@ -31,6 +32,9 @@ const styles = StyleSheet.create({
     color: colors.black,
     fontFamily: 'AvenirNext-Medium',
   },
+  avatar: {
+    backgroundColor: colors.greyLight,
+  }
 });
 
 export default UserListItem;

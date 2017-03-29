@@ -25,10 +25,8 @@ const mapStateToProps = state => ({
   repositoryName: state.repository.repositoryName,
   repository: state.repository.repository,
   contributors: state.repository.contributors,
-  topContents: state.repository.topContents,
   issues: state.repository.issues,
   isPendingContributors: state.repository.isPendingContributors,
-  isPendingTopContents: state.repository.isPendingTopContents,
   isPendingIssues: state.repository.isPendingIssues,
 });
 
@@ -56,7 +54,6 @@ class Repository extends Component {
       issues,
       isPendingRepository,
       isPendingContributors,
-      isPendingTopContents,
       isPendingIssues,
       navigation,
     } = this.props;
@@ -102,7 +99,6 @@ class Repository extends Component {
               navigation={navigation}
             />}
 
-          {!isPendingTopContents &&
             <SectionList title="SOURCE">
               <ListItem
                 title="README"
@@ -118,13 +114,12 @@ class Repository extends Component {
                 titleStyle={styles.listTitle}
                 leftIcon={{name: 'code', color: colors.grey}}
                 onPress={() =>
-                  navigation.navigate('RepositoryCode', {
-                    content: {name: 'Code'},
-                    repository: repository,
+                  navigation.navigate('RepositoryCodeList', {
+                    topLevel: true,
                   })}
                 underlayColor={colors.greyLight}
               />
-            </SectionList>}
+            </SectionList>
 
           {!isPendingIssues &&
             pureIssues.length > 0 &&
@@ -171,16 +166,13 @@ Repository.propTypes = {
   selectRepository: PropTypes.func,
   getRepository: PropTypes.func,
   getContributors: PropTypes.func,
-  getTopContents: PropTypes.func,
   getIssues: PropTypes.func,
   repositoryName: PropTypes.string,
   repository: PropTypes.object,
   contributors: PropTypes.array,
-  topContents: PropTypes.array,
   issues: PropTypes.array,
   isPendingRepository: PropTypes.bool,
   isPendingContributors: PropTypes.bool,
-  isPendingTopContents: PropTypes.bool,
   isPendingIssues: PropTypes.bool,
   navigation: PropTypes.object,
 };

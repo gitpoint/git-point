@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { StatusBar, FlatList, Animated } from 'react-native';
+import React, {Component, PropTypes} from 'react';
+import {FlatList} from 'react-native';
 
 import ViewContainer from '../components/ViewContainer';
 import RepositoryListItem from '../components/RepositoryListItem';
@@ -7,112 +7,91 @@ import UserListItem from '../components/UserListItem';
 import LoadingUserListItem from '../components/LoadingUserListItem';
 import LoadingRepositoryListItem from '../components/LoadingRepositoryListItem';
 
-import colors from '../config/colors';
+import {connect} from 'react-redux';
+import {getUserInfoList} from '../actions/userInfoList';
 
-import { ListItem } from 'react-native-elements'
+const mapStateToProps = state => ({
+  user: state.userInfoList.user,
+  list: state.userInfoList.list,
+  isPendingList: state.userInfoList.isPendingList,
+});
 
-export default class ListRender extends Component {
-  constructor() {
-    super();
+const mapDispatchToProps = dispatch => ({
+  getUserInfoList: (user, type) => dispatch(getUserInfoList(user, type)),
+});
 
-    this.state = {
-      user: '',
-      list: [],
-      searchQuery: '',
-      fetchingList: false,
-    }
-  }
-
+class ListRender extends Component {
   componentDidMount() {
-    this.fetchAll();
+    const user = this.props.navigation.state.params.user;
+
+    this.props.getUserInfoList(user, this.getType());
   }
 
-  fetchAll() {
-    this.setState({
-      fetchingList: true,
-    });
-
-    fetch(this.endpoint())
-      .then((response) => response.json())
-      .then((list) => {
-        this.setState({
-          list,
-          fetchingList: false,
-        });
-      })
-      .done();
-  }
-
-  endpoint() {
-    let user = this.props.navigation.state.params ? this.props.navigation.state.params.user : `housseindjirdeh`;
-
-    switch(this.props.navigation.state.params.listType) {
-      case "Repositories":
-        return `https://api.github.com/users/${user}/repos`;
-      case "Starred":
-        return `https://api.github.com/users/${user}/starred`;
-      case "Followers":
-        return `https://api.github.com/users/${user}/followers`;
-      case "Following":
-        return `https://api.github.com/users/${user}/following`;
+  getType() {
+    switch (this.props.navigation.state.params.listType) {
+      case 'Repositories':
+        return 'repos';
+      case 'Starred':
+        return 'starred';
+      case 'Followers':
+        return 'followers';
+      case 'Following':
+        return 'following';
     }
   }
 
   renderItem = ({item}) => {
-    const listType = this.props.navigation.state.params.listType;
+    const {navigation} = this.props;
+    const listType = navigation.state.params.listType;
 
     if (listType === 'Repositories' || listType === 'Starred') {
-      return (
-        <RepositoryListItem
-            repository={item} 
-            navigation={this.props.navigation} />
-      )
+      return <RepositoryListItem repository={item} navigation={navigation} />;
     } else {
-      return (
-        <UserListItem
-           user={item}
-           navigation={this.props.navigation} />
-      )
+      return <UserListItem user={item} navigation={navigation} />;
     }
-  }
-
-  search(query) {
-    this.setState({
-      searchQuery: query,
-    });
-  }
+  };
 
   render() {
-    const listType = this.props.navigation.state.params.listType;
+    const {list, isPendingList, navigation} = this.props;
+    const showLoadingCount = navigation.state.params.showLoadingCount;
+    const listType = navigation.state.params.listType;
 
     return (
-      <ViewContainer
-        barColor="dark">
+      <ViewContainer barColor="dark">
 
-        { this.state.fetchingList && (listType === 'Followers' || listType === 'Following') &&
-            [...Array(this.props.navigation.state.params.showLoadingCount)].map((item, i) => (
-              <LoadingUserListItem key={i}/>
-            ))
-        }
+        {isPendingList &&
+          (listType === 'Followers' || listType === 'Following') &&
+          [...Array(showLoadingCount)].map((item, i) => (
+            <LoadingUserListItem key={i} />
+          ))}
 
-        { this.state.fetchingList && (listType !== 'Followers' || listType !== 'Following') &&
-            [...Array(this.props.navigation.state.params.showLoadingCount)].map((item, i) => (
-              <LoadingRepositoryListItem key={i}/>
-            ))
-        }
+        {isPendingList &&
+          (listType !== 'Followers' || listType !== 'Following') &&
+          [...Array(showLoadingCount)].map((item, i) => (
+            <LoadingRepositoryListItem key={i} />
+          ))}
 
-        { !this.state.fetchingList &&
+        {!isPendingList &&
           <FlatList
-            data={this.state.list}
+            data={list}
             keyExtractor={this.keyExtractor}
             renderItem={this.renderItem}
-          />
-        }
+          />}
       </ViewContainer>
-    )
+    );
   }
 
-  keyExtractor = (item) => {
+  keyExtractor = item => {
     return item.id;
-  }
+  };
 }
+
+ListRender.propTypes = {
+  getUserInfoList: PropTypes.func,
+  user: PropTypes.object,
+  list: PropTypes.array,
+  isPendingList: PropTypes.bool,
+  navigation: PropTypes.object,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListRender);
