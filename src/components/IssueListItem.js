@@ -53,15 +53,15 @@ IssueListItem.propTypes = {
 
 const styles = StyleSheet.create({
   title: {
-    color: colors.black,
-    fontFamily: 'AvenirNext-Medium',
+    color: colors.primarydark,
+    fontFamily: 'AvenirNext-DemiBold',
   },
   subtitle: {
     marginLeft: 10,
   },
   subtitleText: {
-    color: colors.greyDark,
-    fontFamily: 'AvenirNext-Medium',
+    color: colors.primaryDark,
+    fontFamily: 'AvenirNext-Regular',
   },
   subtitleDate: {
     color: colors.greyDark,

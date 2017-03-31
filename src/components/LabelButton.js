@@ -31,7 +31,7 @@ LabelButton.propTypes = {
 
 const styles = StyleSheet.create({
   labelButton: {
-    padding: 3,
+    padding: 5,
     borderRadius: 3,
     marginLeft: 0,
     marginRight: 10,

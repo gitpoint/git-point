@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   avatar: {
+    backgroundColor: colors.greyLight,
     borderRadius: 15,
     height: 30,
     width: 30,

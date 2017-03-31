@@ -8,7 +8,6 @@ import LoadingMembersList from '../components/LoadingMembersList';
 import MembersList from '../components/MembersList';
 import SectionList from '../components/SectionList';
 import ParallaxScroll from '../components/ParallaxScroll';
-import RepositoryListItem from '../components/RepositoryListItem';
 
 import colors from '../config/colors';
 import Communications from 'react-native-communications';
@@ -36,17 +35,14 @@ class Organization extends Component {
     const organization = this.props.navigation.state.params.organization;
 
     this.props.getOrg(organization.login);
-    // this.props.getOrgRepos(organization.repos_url);
     this.props.getOrgMembers(organization.login);
   }
 
   render() {
     const {
       organization,
-      repositories,
       members,
       isPendingOrg,
-      isPendingRepos,
       isPendingMembers,
       navigation,
     } = this.props;

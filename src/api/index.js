@@ -98,7 +98,7 @@ export const fetchOrg = (orgName, accessToken) => {
 };
 
 export const fetchOrgMembers = (orgName, accessToken) => {
-  return fetchUrl(`${root}/orgs/${orgName}/members/`, accessToken);
+  return fetchUrl(`${root}/orgs/${orgName}/members`, accessToken);
 };
 
 ///

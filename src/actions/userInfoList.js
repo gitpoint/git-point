@@ -16,7 +16,7 @@ export const getUserInfoList = (user, type) => {
       listType: type,
     });
 
-    fetchUrl(`${USER_ENDPOINT(user)}/${type}`, accessToken)
+    fetchUrl(`${USER_ENDPOINT(user.login)}/${type}`, accessToken)
       .then(data => {
         dispatch({
           type: GET_USER_INFO_LIST_WAS_SUCCESSFUL,

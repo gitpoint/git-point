@@ -46,8 +46,59 @@ import reduxThunk from 'redux-thunk';
 
 const store = createStore(
   rootReducer,
-  compose(applyMiddleware(logger, reduxThunk), autoRehydrate())
+  compose(applyMiddleware(reduxThunk, logger), autoRehydrate())
 );
+
+const sharedRoutes = {
+  ListRender: {
+    screen: ListRender,
+    navigationOptions: {
+      title: ({state}) => `${state.params.listType}`,
+    },
+  },
+  Profile: {
+    screen: Profile,
+    navigationOptions: {
+      header: {
+        visible: false,
+      },
+    },
+  },
+  Organization: {
+    screen: Organization,
+    navigationOptions: {
+      header: {
+        visible: false,
+      },
+    },
+  },
+  Repository: {
+    screen: Repository,
+    navigationOptions: {
+      header: {
+        visible: false,
+      },
+    },
+  },
+  RepositoryCodeList: {
+    screen: RepositoryCodeList,
+    navigationOptions: {
+      title: ({state}) => state.params.topLevel ? 'Code' : `${state.params.content.name}`,
+    },
+  },
+  IssuesList: {
+    screen: IssuesList,
+    navigationOptions: {
+      title: ({state}) => state.params.type === 'issue' ? 'Issues' : 'Pull Requests',
+    },
+  },
+  ReadMe: {
+    screen: ReadMe,
+    navigationOptions: {
+      title: 'README.md',
+    },
+  },
+};
 
 const HomeStackNavigator = StackNavigator(
   {
@@ -59,54 +110,7 @@ const HomeStackNavigator = StackNavigator(
         },
       },
     },
-    ListRender: {
-      screen: ListRender,
-      navigationOptions: {
-        title: ({state}) => `${state.params.listType}`,
-      },
-    },
-    Profile: {
-      screen: Profile,
-      navigationOptions: {
-        header: {
-          visible: false,
-        },
-      },
-    },
-    Organization: {
-      screen: Organization,
-      navigationOptions: {
-        header: {
-          visible: false,
-        },
-      },
-    },
-    Repository: {
-      screen: Repository,
-      navigationOptions: {
-        header: {
-          visible: false,
-        },
-      },
-    },
-    RepositoryCodeList: {
-      screen: RepositoryCodeList,
-      navigationOptions: {
-        title: ({state}) => state.params.topLevel ? 'Code' : `${state.params.content.name}`,
-      },
-    },
-    IssuesList: {
-      screen: IssuesList,
-      navigationOptions: {
-        title: ({state}) => `${state.params.type}`,
-      },
-    },
-    ReadMe: {
-      screen: ReadMe,
-      navigationOptions: {
-        title: 'README.md',
-      },
-    },
+    ...sharedRoutes
   },
   {
     headerMode: 'screen',
@@ -118,7 +122,7 @@ const NotificationsStackNavigator = StackNavigator(
     Notifications: {
       screen: Notifications,
     },
-    //...
+    ...sharedRoutes,
   },
   {
     headerMode: 'screen',
@@ -135,7 +139,7 @@ const SearchStackNavigator = StackNavigator(
         },
       },
     },
-    //...
+    ...sharedRoutes,
   },
   {
     headerMode: 'screen',
@@ -152,54 +156,7 @@ const MyProfileStackNavigator = StackNavigator(
         },
       },
     },
-    ListRender: {
-      screen: ListRender,
-      navigationOptions: {
-        title: ({state}) => `${state.params.listType}`,
-      },
-    },
-    Profile: {
-      screen: Profile,
-      navigationOptions: {
-        header: {
-          visible: false,
-        },
-      },
-    },
-    Organization: {
-      screen: Organization,
-      navigationOptions: {
-        header: {
-          visible: false,
-        },
-      },
-    },
-    Repository: {
-      screen: Repository,
-      navigationOptions: {
-        header: {
-          visible: false,
-        },
-      },
-    },
-    RepositoryCodeList: {
-      screen: RepositoryCodeList,
-      navigationOptions: {
-        title: ({state}) => state.params.topLevel ? 'Code' : `${state.params.content.name}`,
-      },
-    },
-    IssuesList: {
-      screen: IssuesList,
-      navigationOptions: {
-        title: ({state}) => `${state.params.type}`,
-      },
-    },
-    ReadMe: {
-      screen: ReadMe,
-      navigationOptions: {
-        title: 'README.md',
-      },
-    },
+    ...sharedRoutes,
   },
   {
     headerMode: 'screen',

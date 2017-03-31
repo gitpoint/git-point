@@ -26,7 +26,7 @@ const UserProfile = (
         style={styles.unit}
         onPress={() => navigation.navigate('ListRender', {
           listType: 'Repositories',
-          user: user.login,
+          user: user,
           showLoadingCount: user.public_repos > 10 ? 10 : user.public_repos,
         })}
       >
@@ -41,7 +41,7 @@ const UserProfile = (
           style={styles.unit}
           onPress={() => navigation.navigate('ListRender', {
             listType: 'Followers',
-            user: user.login,
+            user: user,
             showLoadingCount: user.followers > 10 ? 10 : user.followers,
           })}
         >
@@ -56,7 +56,7 @@ const UserProfile = (
           style={styles.unit}
           onPress={() => navigation.navigate('ListRender', {
             listType: 'Following',
-            user: user.login,
+            user: user,
             showLoadingCount: user.following > 10 ? 10 : user.following,
           })}
         >

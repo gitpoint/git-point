@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import { Dimensions, Linking, View, StyleSheet, Image } from 'react-native';
-import colors from '../config/colors'
-import {CLIENT_ID} from '../api'
-
-const queryString = require('query-string');
-
-import { connect }  from 'react-redux';
-import { auth } from '../actions/auth';
-
 import { Button } from 'react-native-elements'
 
 import LoadingContainer from '../components/LoadingContainer';
+
+import colors from '../config/colors'
+import {CLIENT_ID} from '../api'
+
+import queryString from 'query-string';
+import { connect }  from 'react-redux';
+import { auth } from '../actions/auth';
 
 const stateRandom = Math.random() + '';
 const window = Dimensions.get('window');

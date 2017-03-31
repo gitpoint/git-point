@@ -1,5 +1,4 @@
 import {
-  SELECT_REPOSITORY,
   GET_REPOSITORY_IS_PENDING,
   GET_REPOSITORY_WAS_SUCCESSFUL,
   GET_REPOSITORY_HAD_ERROR,
@@ -18,15 +17,6 @@ import {
 } from '../constants';
 
 import {fetchUrl, fetchReadMe} from '../api';
-
-export const selectRepository = repoName => {
-  return dispatch => {
-    dispatch({
-      type: SELECT_REPOSITORY,
-      payload: repoName,
-    });
-  };
-};
 
 export const getRepository = url => {
   return (dispatch, getState) => {

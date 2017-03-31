@@ -15,14 +15,12 @@ import colors from '../config/colors';
 
 import {connect} from 'react-redux';
 import {
-  selectRepository,
   getRepository,
   getContributors,
   getIssues,
 } from '../actions/repository';
 
 const mapStateToProps = state => ({
-  repositoryName: state.repository.repositoryName,
   repository: state.repository.repository,
   contributors: state.repository.contributors,
   issues: state.repository.issues,
@@ -31,7 +29,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  selectRepository: repoName => dispatch(selectRepository(repoName)),
   getRepository: url => dispatch(getRepository(url)),
   getContributors: url => dispatch(getContributors(url)),
   getIssues: url => dispatch(getIssues(url)),
@@ -41,7 +38,6 @@ class Repository extends Component {
   componentDidMount() {
     const repo = this.props.navigation.state.params.repository;
 
-    this.props.selectRepository(repo.name);
     this.props.getRepository(repo.url);
     this.props.getContributors(repo.contributors_url);
     this.props.getIssues(repo.issues_url.replace('{/number}', ''));

@@ -1,5 +1,4 @@
 import {
-  SELECT_REPOSITORY,
   GET_REPOSITORY_IS_PENDING,
   GET_REPOSITORY_WAS_SUCCESSFUL,
   GET_REPOSITORY_HAD_ERROR,
@@ -18,7 +17,6 @@ import {
 } from '../constants';
 
 const initialState = {
-  repositoryName: '',
   repository: {},
   contributors: [],
   contents: [],
@@ -34,11 +32,6 @@ const initialState = {
 
 export default function repositoryReducer(state = initialState, action={}) {
   switch (action.type) {
-      case SELECT_REPOSITORY:
-        return {
-          ...state,
-          repositoryName: action.payload,
-        };
       case GET_REPOSITORY_IS_PENDING:
         return {
           ...state,

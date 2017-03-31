@@ -1,15 +1,16 @@
 import React, {Component, PropTypes} from 'react';
 import {StyleSheet} from 'react-native';
+import {ListItem} from 'react-native-elements';
 
 import ViewContainer from '../components/ViewContainer';
 import UserProfile from '../components/UserProfile';
 import SectionList from '../components/SectionList';
 import LoadingContainer from '../components/LoadingContainer';
 import ParallaxScroll from '../components/ParallaxScroll';
+import UserListItem from '../components/UserListItem';
 
 import colors from '../config/colors';
 import Communications from 'react-native-communications';
-import {ListItem} from 'react-native-elements';
 
 import {connect} from 'react-redux';
 import {getUser, getOrgs} from '../actions/authUser';
@@ -108,17 +109,7 @@ class MyProfile extends Component {
             {orgs.length > 0 &&
               <SectionList title="ORGANIZATIONS">
                 {orgs.map((item, i) => (
-                  <ListItem
-                    title={item.login}
-                    titleStyle={styles.listTitle}
-                    roundAvatar
-                    key={i}
-                    avatar={{uri: item.avatar_url}}
-                    onPress={() => navigation.navigate('Organization', {
-                      organization: item,
-                    })}
-                    underlayColor={colors.greyLight}
-                  />
+                  <UserListItem key={i} user={item} navigation={navigation} />
                 ))}
               </SectionList>}
           </ParallaxScroll>}

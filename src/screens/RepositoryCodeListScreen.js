@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
 RepositoryCodeList.propTypes = {
   getContents: PropTypes.func,
   repository: PropTypes.object,
-  contents: PropTypes.object,
+  contents: PropTypes.array,
   isPendingContents: PropTypes.bool,
   navigation: PropTypes.object,
 };
