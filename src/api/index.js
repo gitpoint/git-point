@@ -81,8 +81,8 @@ export const fetchUserEvents = (user, accessToken) => {
   return fetch(
     EVENTS_ENDPOINT,
     accessTokenParameters(accessToken),
-  ).then(response => response.json());
-};
+    ).then(response => response.json());
+  };
 
 export const fetchReadMe = (user, repository, accessToken) => {
   const README_ENDPOINT = `${root}/repos/${user}/${repository}/readme?ref=master`;

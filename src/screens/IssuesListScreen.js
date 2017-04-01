@@ -8,7 +8,8 @@ class IssuesList extends Component {
   renderItem = ({item}) => (
     <IssueListItem
       type={this.props.navigation.state.params.type}
-      issue={item} />
+      issue={item}
+      navigation={this.props.navigation} />
   )
 
   render() {

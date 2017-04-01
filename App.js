@@ -30,6 +30,7 @@ import Organization from './src/screens/OrganizationScreen';
 import Repository from './src/screens/RepositoryScreen';
 import RepositoryCodeList from './src/screens/RepositoryCodeListScreen';
 import IssuesList from './src/screens/IssuesListScreen';
+import Issue from './src/screens/IssueScreen';
 import ReadMe from './src/screens/ReadMe';
 
 // Redux Store
@@ -46,7 +47,7 @@ import reduxThunk from 'redux-thunk';
 
 const store = createStore(
   rootReducer,
-  compose(applyMiddleware(reduxThunk, logger), autoRehydrate())
+  compose(applyMiddleware(reduxThunk, __DEV__ && logger), autoRehydrate())
 );
 
 const sharedRoutes = {
@@ -90,6 +91,12 @@ const sharedRoutes = {
     screen: IssuesList,
     navigationOptions: {
       title: ({state}) => state.params.type === 'issue' ? 'Issues' : 'Pull Requests',
+    },
+  },
+  Issue: {
+    screen: Issue,
+    navigationOptions: {
+      title: ({state}) => `#${state.params.issue.number}`,
     },
   },
   ReadMe: {

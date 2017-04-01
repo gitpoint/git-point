@@ -131,7 +131,7 @@ class Repository extends Component {
               {pureIssues
                 .slice(0, 3)
                 .map((item, i) => (
-                  <IssueListItem key={i} type="issue" issue={item} />
+                  <IssueListItem key={i} type="issue" issue={item} navigation={navigation} />
                 ))}
             </SectionList>}
 
@@ -149,7 +149,7 @@ class Repository extends Component {
               {pulls
                 .slice(0, 3)
                 .map((item, i) => (
-                  <IssueListItem key={i} type="pull" issue={item} />
+                  <IssueListItem key={i} type="pull" issue={item} navigation={navigation} />
                 ))}
             </SectionList>}
         </ParallaxScroll>

@@ -121,7 +121,7 @@ class MyProfile extends Component {
 MyProfile.propTypes = {
   getUser: PropTypes.func,
   getOrgs: PropTypes.func,
-  user: PropTypes.array,
+  user: PropTypes.object,
   orgs: PropTypes.array,
   isPendingUser: PropTypes.bool,
   isPendingOrgs: PropTypes.bool,

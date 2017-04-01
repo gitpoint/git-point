@@ -11,6 +11,7 @@ const IssueListItem = (
   {
     type,
     issue,
+    navigation,
   }
 ) => (
   <ListItem
@@ -22,6 +23,7 @@ const IssueListItem = (
     }}
     titleStyle={styles.title}
     underlayColor={colors.greyLight}
+    onPress={() => navigation.navigate('Issue', {issue: issue})}
   />
 );
 
@@ -49,6 +51,7 @@ const renderLabelButtons = labels => {
 IssueListItem.propTypes = {
   type: PropTypes.string,
   issue: PropTypes.object,
+  navigation: PropTypes.object,
 };
 
 const styles = StyleSheet.create({

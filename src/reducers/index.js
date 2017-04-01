@@ -6,6 +6,7 @@ import userEventsReducer from './userEvents';
 import repositoryReducer from './repository';
 import organizationReducer from './organization';
 import userInfoListReducer from './userInfoList';
+import issueReducer from './issue';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   userEvents: userEventsReducer,
   repository: repositoryReducer,
   organization: organizationReducer,
-  userInfoList: userInfoListReducer
+  userInfoList: userInfoListReducer,
+  issue: issueReducer,
 });
 
 export default rootReducer;
