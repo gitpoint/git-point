@@ -39,8 +39,8 @@ const CommentListItem = (
 
       <View style={styles.commentBody}>
         <HTMLView
-          value={comment.body_html.replace(new RegExp('<p>', 'g'), '<span>')
-            .replace(new RegExp('</p>', 'g'), '</span>')}
+          value={comment.body_html.replace(new RegExp('<blockquote>', 'g'), '<h2>')
+            .replace(new RegExp('</blockquote>', 'g'), '</h2>')}
           stylesheet={commentStyles}
         />
       </View>
@@ -99,13 +99,17 @@ const styles = StyleSheet.create({
 });
 
 const commentStyles = StyleSheet.create({
-  span: {
+  p: {
     color: colors.primaryDark,
     fontFamily: 'AvenirNext-Regular',
   },
   a: {
     fontFamily: 'AvenirNext-DemiBold',
   },
+  h2: {
+    color: colors.greyLight,
+    fontFamily: 'AvenirNext-DemiBold',
+  }
 });
 
 export default CommentListItem;
