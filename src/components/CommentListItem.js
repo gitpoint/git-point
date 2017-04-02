@@ -1,9 +1,11 @@
 import React, {PropTypes} from 'react';
-import {StyleSheet, Dimensions, Text} from 'react-native';
-import {ListItem} from 'react-native-elements';
+import {StyleSheet, Dimensions, View, Text, Image} from 'react-native';
+import {Icon} from 'react-native-elements';
 
 import colors from '../config/colors';
 const window = Dimensions.get('window');
+
+import HTMLView from 'react-native-htmlview';
 
 const CommentListItem = (
   {
@@ -11,29 +13,38 @@ const CommentListItem = (
     navigation
   }
 ) => (
-  <ListItem
-    roundAvatar
-    avatar={{uri: comment.user.avatar_url}}
-    avatarStyle={styles.avatar}
-    containerStyle={{width: window.width}}
-    title={renderBody(comment, navigation)}
-    rightIcon={{name: 'thumb-up'}}
-  />
-);
+  <View
+      style={styles.container}>
+      <View style={styles.header}>
+        <Image
+          style={styles.avatar}
+          source={{uri: comment.user.avatar_url}}
+          />
 
-const renderBody = (comment, navigation) => (
-  <Text style={styles.descriptionContainer}>
-    <Text
-      style={styles.linkDescription}
-      onPress={() => navigation.navigate('Profile', {
-        user: comment.user,
-      })}
-    >
-      {comment.user.login}{' '}
-    </Text>
-    {comment.body_html}
-    <Text style={styles.date}>2h</Text>
-  </Text>
+          <Text style={styles.titleSubtitleContainer}>
+            <Text
+              style={styles.linkDescription}
+              onPress={() => navigation.navigate('Profile', {
+                user: comment.user,
+              })}
+            >
+              {comment.user.login}{'  '}
+            </Text>
+          </Text>
+
+        <View style={styles.dateContainer}>
+          <Text style={styles.date}>2h</Text>
+        </View>
+      </View>
+
+      <View style={styles.commentBody}>
+        <HTMLView
+          value={comment.body_html.replace(new RegExp('<p>', 'g'), '<span>')
+            .replace(new RegExp('</p>', 'g'), '</span>')}
+          stylesheet={commentStyles}
+        />
+      </View>
+    </View>
 );
 
 CommentListItem.propTypes = {
@@ -42,21 +53,58 @@ CommentListItem.propTypes = {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    paddingTop: 10,
+    paddingRight: 10,
+    paddingBottom: 10,
+    borderBottomColor: '#ededed',
+    borderBottomWidth: 1,
+    backgroundColor: 'transparent'
+  },
+  header: {
+    flexDirection: 'row',
+    marginLeft: 10,
+    alignItems: 'center',
+  },
   avatar: {
     backgroundColor: colors.greyLight,
+    width: 34,
+    height: 34,
+    borderRadius: 17
   },
-  descriptionContainer: {
+  titleSubtitleContainer: {
     justifyContent: 'center',
     flex: 1,
     marginLeft: 10,
     color: colors.primaryDark,
     fontFamily: 'AvenirNext-Regular',
   },
+  dateContainer: {
+    flex: 0.15,
+    alignItems: 'flex-end',
+    justifyContent: 'center'
+  },
   linkDescription: {
     fontFamily: 'AvenirNext-DemiBold',
   },
   date: {
     color: colors.greyDark,
+  },
+  commentBody: {
+    marginTop: 4,
+    marginBottom: 10,
+    marginLeft: 54,
+    marginRight: 10,
+  }
+});
+
+const commentStyles = StyleSheet.create({
+  span: {
+    color: colors.primaryDark,
+    fontFamily: 'AvenirNext-Regular',
+  },
+  a: {
+    fontFamily: 'AvenirNext-DemiBold',
   },
 });
 

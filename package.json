@@ -33,6 +33,7 @@
     "eslint-plugin-react": "^6.10.0",
     "eslint-plugin-react-native": "^2.2.1",
     "jest": "18.1.0",
+    "react-native-htmlview": "^0.8.0",
     "react-test-renderer": "~16.0.0-alpha.3"
   },
   "jest": {

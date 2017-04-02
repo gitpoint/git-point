@@ -4,7 +4,7 @@ export default {
   grey: '#bbb',
   greyDarkest: '#808080',
   greyDark: '#999',
-  greyLight: '#f4f4f4',
+  greyLight: '#ededed',
   white: '#ffffff',
   bug: '#ee0701',
   duplicate: '#cccccc',

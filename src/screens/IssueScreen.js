@@ -4,6 +4,7 @@ import {FlatList} from 'react-native';
 import ViewContainer from '../components/ViewContainer';
 import LoadingUserListItem from '../components/LoadingUserListItem';
 import CommentListItem from '../components/CommentListItem';
+import CommentInput from '../components/CommentInput';
 
 import {connect} from 'react-redux';
 import {getIssueComments} from '../actions/issue';
@@ -34,8 +35,6 @@ class Issue extends Component {
 
     return (
       <ViewContainer>
-        <CommentListItem comment={issue} navigation={navigation} />
-
         {isPendingComments &&
           [...Array(issue.comments)].map((item, i) => (
             <LoadingUserListItem key={i} />
@@ -43,10 +42,12 @@ class Issue extends Component {
 
         <FlatList
           removeClippedSubviews={false}
-          data={comments}
+          data={[issue, ...comments]}
           keyExtractor={this.keyExtractor}
           renderItem={this.renderItem}
         />
+
+        <CommentInput />
       </ViewContainer>
     );
   }
