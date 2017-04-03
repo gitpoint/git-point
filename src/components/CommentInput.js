@@ -54,9 +54,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  icon: {
-
-  },
   textInput: {
     fontSize: 14,
     flex: 1,

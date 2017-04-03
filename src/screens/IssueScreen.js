@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import {FlatList} from 'react-native';
+import {FlatList, KeyboardAvoidingView} from 'react-native';
 
 import ViewContainer from '../components/ViewContainer';
 import LoadingUserListItem from '../components/LoadingUserListItem';
@@ -31,7 +31,7 @@ class Issue extends Component {
 
   render() {
     const issue = this.props.navigation.state.params.issue;
-    const {comments, isPendingComments, navigation} = this.props;
+    const {comments, isPendingComments} = this.props;
 
     return (
       <ViewContainer>
@@ -40,14 +40,20 @@ class Issue extends Component {
             <LoadingUserListItem key={i} />
           ))}
 
-        <FlatList
-          removeClippedSubviews={false}
-          data={[issue, ...comments]}
-          keyExtractor={this.keyExtractor}
-          renderItem={this.renderItem}
-        />
+          <KeyboardAvoidingView
+            style={{flex: 1}}
+            behavior={'padding'}
+            keyboardVerticalOffset={65}
+          >
+            <FlatList
+              removeClippedSubviews={false}
+              data={[issue, ...comments]}
+              keyExtractor={this.keyExtractor}
+              renderItem={this.renderItem}
+            />
 
-        <CommentInput />
+            <CommentInput />
+          </KeyboardAvoidingView>
       </ViewContainer>
     );
   }
