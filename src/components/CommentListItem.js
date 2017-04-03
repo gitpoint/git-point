@@ -1,9 +1,8 @@
 import React, {PropTypes} from 'react';
-import {StyleSheet, Dimensions, View, Text, Image} from 'react-native';
-import {Icon} from 'react-native-elements';
+import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
+import Emoji from 'react-native-emoji';
 
 import colors from '../config/colors';
-const window = Dimensions.get('window');
 
 import HTMLView from 'react-native-htmlview';
 
@@ -43,6 +42,32 @@ const CommentListItem = (
             .replace(new RegExp('</blockquote>', 'g'), '</h2>')}
           stylesheet={commentStyles}
         />
+
+        <View style={styles.reactionsBar}>
+          <TouchableOpacity
+            style={styles.reactionContainer}>
+            <Text style={styles.reaction}><Emoji name="+1"/></Text>
+            <Text style={styles.reactionCount}>
+              6
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.reactionContainer}>
+            <Text style={styles.reaction}><Emoji name="-1"/></Text>
+            <Text style={styles.reactionCount}>
+              1
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.reactionContainer}>
+            <Text style={styles.reaction}><Emoji name="tada"/></Text>
+            <Text style={styles.reactionCount}>
+              2
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
 );
@@ -95,7 +120,31 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginLeft: 54,
     marginRight: 10,
-  }
+  },
+  reactionsBar: {
+    flexDirection: 'row',
+    flex: 1,
+    paddingTop: 15,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+  },
+  reactionContainer: {
+    marginRight: 10,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  reaction: {
+    fontSize: 17,
+  },
+  reactionCount: {
+    color: colors.primaryDark,
+    paddingLeft: 3,
+    paddingTop: 5,
+    marginRight: 15,
+    fontSize: 13,
+    fontFamily: 'AvenirNext-Medium',
+  },
 });
 
 const commentStyles = StyleSheet.create({
