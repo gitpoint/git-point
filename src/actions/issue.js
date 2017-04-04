@@ -4,7 +4,7 @@ import {
   GET_ISSUE_COMMENTS_HAD_ERROR
 } from '../constants';
 
-import { fetchUrl } from '../api';
+import { fetchUrlPreview } from '../api';
 
 export const getIssueComments = (url) => {
   return (dispatch, getState) => {
@@ -12,7 +12,7 @@ export const getIssueComments = (url) => {
 
     dispatch({ type: GET_ISSUE_COMMENTS_IS_PENDING });
 
-    fetchUrl(url, accessToken).then(data => {
+    fetchUrlPreview(url, accessToken).then(data => {
       dispatch({
         type: GET_ISSUE_COMMENTS_WAS_SUCCESSFUL,
         payload: data,

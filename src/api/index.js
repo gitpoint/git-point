@@ -14,6 +14,13 @@ const accessTokenParametersHTML = accessToken => ({
   },
 });
 
+const accessTokenParametersPreview = accessToken => ({
+  headers: {
+    Accept: '  application/vnd.github.squirrel-girl-preview',
+    Authorization: `token ${accessToken}`,
+  },
+});
+
 const authParameters = (code, state) => ({
   method: 'POST',
   headers: {
@@ -107,6 +114,17 @@ export const fetchUrl = (url, accessToken) => {
   return fetch(
     url,
     accessTokenParametersHTML(accessToken),
+  ).then(response => response.json());
+};
+
+///
+
+///
+
+export const fetchUrlPreview = (url, accessToken) => {
+  return fetch(
+    url,
+    accessTokenParametersPreview(accessToken),
   ).then(response => response.json());
 };
 

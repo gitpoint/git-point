@@ -16,7 +16,7 @@ import {
   GET_REPOSITORY_README_HAD_ERROR,
 } from '../constants';
 
-import {fetchUrl, fetchReadMe} from '../api';
+import {fetchUrl, fetchUrlPreview, fetchReadMe} from '../api';
 
 export const getRepository = url => {
   return (dispatch, getState) => {
@@ -90,7 +90,7 @@ export const getIssues = url => {
 
     dispatch({type: GET_REPOSITORY_ISSUES_IS_PENDING});
 
-    fetchUrl(url, accessToken)
+    fetchUrlPreview(url, accessToken)
       .then(data => {
         dispatch({
           type: GET_REPOSITORY_ISSUES_WAS_SUCCESSFUL,

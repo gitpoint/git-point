@@ -26,7 +26,7 @@ class Issue extends Component {
   }
 
   renderItem = ({item}) => (
-    <CommentListItem comment={item} naigation={this.props.navigation} />
+    <CommentListItem comment={item} navigation={this.props.navigation} />
   );
 
   render() {
