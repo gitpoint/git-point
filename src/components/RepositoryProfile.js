@@ -14,7 +14,8 @@ const RepositoryProfile = (
     <View style={styles.profile}>
       <Icon
         containerStyle={styles.icon}
-        name={repository.fork ? 'call-split' : 'library-books'}
+        name={repository.fork ? 'repo-forked' : 'repo'}
+        type="octicon"
         size={45}
         color={colors.greyLight}
       />

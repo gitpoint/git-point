@@ -98,7 +98,7 @@ class Repository extends Component {
             <SectionList title="SOURCE">
               <ListItem
                 title="README"
-                leftIcon={{name: 'insert-drive-file', color: colors.grey}}
+                leftIcon={{name: 'book', color: colors.grey, type: 'octicon'}}
                 titleStyle={styles.listTitle}
                 onPress={() => navigation.navigate('ReadMe', {
                   repository: repository,
@@ -108,7 +108,7 @@ class Repository extends Component {
               <ListItem
                 title="View Code"
                 titleStyle={styles.listTitle}
-                leftIcon={{name: 'code', color: colors.grey}}
+                leftIcon={{name: 'code', color: colors.grey, type: 'octicon'}}
                 onPress={() =>
                   navigation.navigate('RepositoryCodeList', {
                     topLevel: true,

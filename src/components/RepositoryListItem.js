@@ -16,8 +16,9 @@ const RepositoryListItem = (
     title={renderTitle(repository)}
     titleStyle={styles.title}
     rightIcon={{
-      name: repository.fork ? 'call-split' : 'library-books',
+      name: repository.fork ? 'repo-forked' : 'repo',
       color: colors.grey,
+      type: 'octicon'
     }}
     underlayColor={colors.greyLight}
     onPress={() => navigation.navigate('Repository', {repository: repository})}
@@ -38,6 +39,7 @@ const renderTitle = repository => (
       <Icon
         containerStyle={styles.extraInfoIcon}
         name="star"
+        type="octicion"
         size={15}
         color={colors.greyDark}
       />

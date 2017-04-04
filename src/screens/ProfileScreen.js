@@ -68,7 +68,7 @@ class Profile extends Component {
                 <ListItem
                   title="Email"
                   titleStyle={styles.listTitle}
-                  leftIcon={{name: 'email', color: colors.grey}}
+                  leftIcon={{name: 'mail', color: colors.grey, type: 'octicon'}}
                   subtitle={user.email}
                   subtitleStyle={styles.listSubTitle}
                   onPress={() =>
@@ -80,7 +80,7 @@ class Profile extends Component {
                 <ListItem
                   title="Website"
                   titleStyle={styles.listTitle}
-                  leftIcon={{name: 'link', color: colors.grey}}
+                  leftIcon={{name: 'link', color: colors.grey, type: 'octicon'}}
                   subtitle={user.blog}
                   subtitleStyle={styles.listSubTitle}
                   onPress={() => Communications.web(user.blog)}
@@ -91,23 +91,23 @@ class Profile extends Component {
           {!isPending &&
             <SectionList title="DETAILS">
               <ListItem
-                title="Recent Activity"
+                title="Events"
                 titleStyle={styles.listTitle}
-                leftIcon={{name: 'track-changes', color: colors.grey}}
+                leftIcon={{name: 'pencil', color: colors.grey, type: 'octicon'}}
                 underlayColor={colors.greyLight}
               />
 
               <ListItem
                 title="Starred "
                 titleStyle={styles.listTitle}
-                leftIcon={{name: 'event-note', color: colors.grey}}
+                leftIcon={{name: 'star', color: colors.grey, type: 'octicon'}}
                 underlayColor={colors.greyLight}
               />
 
               <ListItem
                 title="Gists"
                 titleStyle={styles.listTitle}
-                leftIcon={{name: 'supervisor-account', color: colors.grey}}
+                leftIcon={{name: 'gist', color: colors.grey, type: 'octicon'}}
                 underlayColor={colors.greyLight}
               />
             </SectionList>}

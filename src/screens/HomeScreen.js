@@ -6,8 +6,7 @@ import {
   Text,
   Platform,
   FlatList,
-  Dimensions,
-  ActivityIndicator
+  Dimensions
 } from 'react-native';
 
 import LoadingUserListItem from '../components/LoadingUserListItem';
@@ -37,8 +36,6 @@ import {getUserEvents} from '../actions/userEvents';
 import {ListItem} from 'react-native-elements';
 
 import ViewContainer from '../components/ViewContainer';
-import LoadingContainer from '../components/LoadingContainer';
-
 import colors from '../config/colors';
 
 const mapStateToProps = state => ({
@@ -315,35 +312,41 @@ class Home extends Component {
 
     switch (eventType) {
       case 'CommitCommentEvent':
-        return 'chat-bubble-outline';
+        return 'comment-discussion';
       case 'CreateEvent':
-        return 'create';
+        return 'git-branch';
       case 'DeleteEvent':
-        return 'delete';
+        return 'trashcan';
       case 'ForkEvent':
-        return 'call-split';
+        return 'repo-forked';
       case 'GollumEvent':
-        return 'description';
+        return 'book';
       case 'IssueCommentEvent':
-        return 'chat';
+        return 'comment-discussion';
       case 'IssuesEvent':
-        return 'note-add';
+        if (userEvent.action === 'reopened') {
+          return 'issue-reopened';
+        } else if (userEvent.action === 'closed') {
+          return 'issue-closed';
+        } else {
+          return 'issue-opened';
+        }
       case 'MemberEvent':
-        return 'account-circle';
+        return 'person';
       case 'PublicEvent':
-        return 'public';
+        return 'globe';
       case 'PullRequestEvent':
-        return 'subdirectory-arrow-left';
+        return 'git-pull-request';
       case 'PullRequestReviewEvent':
-        return 'chat';
+        return 'git-pull-request';
       case 'PullRequestReviewCommentEvent':
-        return 'chat';
+        return 'comment-discussion';
       case 'PushEvent':
-        return 'input';
+        return 'git-commit';
       case 'ReleaseEvent':
-        return 'new-releases';
+        return 'tag';
       case 'RepositoryEvent':
-        return 'library-books';
+        return 'repo';
       case 'WatchEvent':
         return 'star';
     }
@@ -374,7 +377,7 @@ class Home extends Component {
                 avatar={{uri: item.actor.avatar_url}}
                 containerStyle={{width: window.width}}
                 title={this.renderDescription(item)}
-                rightIcon={{name: this.getIcon(item)}}
+                rightIcon={{name: this.getIcon(item), type: 'octicon'}}
               />
             )}
           />

@@ -61,8 +61,9 @@ class RepositoryCodeList extends Component {
     <ListItem
       title={item.name}
       leftIcon={{
-        name: item.type === 'dir' ? 'folder-open' : 'insert-drive-file',
+        name: item.type === 'dir' ? 'file-directory' : 'file',
         color: colors.grey,
+        type: 'octicon'
       }}
       titleStyle={item.type === 'dir' ? styles.titleBold : styles.title}
       onPress={() => this.goToPath(item)}

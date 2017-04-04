@@ -18,8 +18,9 @@ const IssueListItem = (
     title={issue.title}
     subtitle={renderSubtitle(issue)}
     rightIcon={{
-      name: type === 'issue' ? 'warning' : 'input',
+      name: type === 'issue' ? 'issue-opened' : 'git-pull-request',
       color: colors.grey,
+      type: 'octicon'
     }}
     titleStyle={styles.title}
     underlayColor={colors.greyLight}
