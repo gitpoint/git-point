@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   reaction: {
-    fontSize: 15,
+    fontSize: 16,
   },
   count: {
     color: colors.primaryDark,

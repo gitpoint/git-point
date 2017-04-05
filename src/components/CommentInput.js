@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component, PropTypes} from 'react';
 import {StyleSheet, View, Text, TextInput} from 'react-native';
 import {Icon} from 'react-native-elements';
 
@@ -10,11 +10,13 @@ class CommentInput extends Component {
 
     this.state = {
       text: '',
-      height: 0
+      height: 0,
     };
   }
 
   render() {
+    const {onSubmitEditing} = this.props;
+
     return (
       <View style={styles.container}>
         <View style={styles.wrapper}>
@@ -23,23 +25,35 @@ class CommentInput extends Component {
           <TextInput
             placeholder="Add a comment..."
             multiline={true}
-            onChangeText={(text) => {
+            blurOnSubmit={true}
+            onChangeText={text => {
               this.setState({text});
             }}
-            onContentSizeChange={(event) => {
+            onContentSizeChange={event => {
               this.setState({height: event.nativeEvent.contentSize.height});
             }}
+            onSubmitEditing={event => {
+              onSubmitEditing(event.nativeEvent.text);
+              this.setState({text: ''});
+            }}
             placeholderTextColor={colors.grey}
-            style={[styles.textInput, {height: Math.max(30, this.state.height)}]}
+            style={[
+              styles.textInput,
+              {height: Math.max(30, this.state.height)},
+            ]}
             value={this.state.text}
           />
 
           <Text style={styles.post}>Post</Text>
         </View>
       </View>
-    )
+    );
   }
 }
+
+CommentInput.propTypes = {
+  onSubmitEditing: PropTypes.func,
+};
 
 const styles = StyleSheet.create({
   container: {

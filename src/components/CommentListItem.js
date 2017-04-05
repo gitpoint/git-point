@@ -154,6 +154,7 @@ const styles = StyleSheet.create({
   },
   commentBody: {
     color: colors.black,
+    fontSize: 14,
     fontFamily: 'AvenirNext-Regular',
   },
   reactionsBar: {

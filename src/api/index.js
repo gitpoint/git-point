@@ -7,6 +7,17 @@ const accessTokenParameters = accessToken => ({
   },
 });
 
+const accessTokenParametersPOST = (accessToken, body) => ({
+  method: 'POST',
+  headers: {
+    Accept: '  application/vnd.github.squirrel-girl-preview',
+    Authorization: `token ${accessToken}`,
+  },
+  body: JSON.stringify({
+    body: body
+  }),
+});
+
 const accessTokenParametersHTML = accessToken => ({
   headers: {
     Accept: 'application/vnd.github.VERSION.html',
@@ -106,6 +117,15 @@ export const fetchOrg = (orgName, accessToken) => {
 
 export const fetchOrgMembers = (orgName, accessToken) => {
   return fetchUrl(`${root}/orgs/${orgName}/members`, accessToken);
+};
+
+export const fetchPostIssueComment = (body, owner, repoName, issueNum, accessToken) => {
+  const POST_ENDPOINT = `${root}/repos/${owner}/${repoName}/issues/${issueNum}/comments`;
+
+  return fetch(
+    POST_ENDPOINT,
+    accessTokenParametersPOST(accessToken, body),
+  ).then(response => response.json());
 };
 
 ///

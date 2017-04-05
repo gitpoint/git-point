@@ -14,7 +14,7 @@ const UserProfile = (
   <View style={styles.container}>
     <View style={styles.profile}>
       <Image
-        style={[styles.avatar, initialUser.type === 'User' && styles.userAvatar]}
+        style={[styles.avatar, (initialUser.type === 'User' || user.type === 'User') && styles.userAvatar]}
         resizeMode="contain"
         source={{uri: initialUser.avatar_url}}
       />
@@ -91,9 +91,9 @@ const styles = StyleSheet.create({
     width: 75,
     height: 75,
     marginBottom: 20,
+    borderRadius: 37.5,
   },
   userAvatar: {
-    borderRadius: 37.5,
     borderColor: colors.white,
     borderWidth: 2,
   },
