@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import {StyleSheet, View, Text, TextInput} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, Text, TextInput} from 'react-native';
 import {Icon} from 'react-native-elements';
 
 import colors from '../config/colors';
@@ -14,9 +14,12 @@ class CommentInput extends Component {
     };
   }
 
-  render() {
-    const {onSubmitEditing} = this.props;
+  handleSubmit = (body) => {
+    this.props.onSubmitEditing(body);
+    this.setState({text: ''});
+  }
 
+  render() {
     return (
       <View style={styles.container}>
         <View style={styles.wrapper}>
@@ -26,16 +29,9 @@ class CommentInput extends Component {
             placeholder="Add a comment..."
             multiline={true}
             blurOnSubmit={true}
-            onChangeText={text => {
-              this.setState({text});
-            }}
-            onContentSizeChange={event => {
-              this.setState({height: event.nativeEvent.contentSize.height});
-            }}
-            onSubmitEditing={event => {
-              onSubmitEditing(event.nativeEvent.text);
-              this.setState({text: ''});
-            }}
+            onChangeText={text => this.setState({text})}
+            onContentSizeChange={event => this.setState({height: event.nativeEvent.contentSize.height})}
+            onSubmitEditing={event => this.handleSubmit(event.nativeEvent.text)}
             placeholderTextColor={colors.grey}
             style={[
               styles.textInput,
@@ -44,7 +40,9 @@ class CommentInput extends Component {
             value={this.state.text}
           />
 
-          <Text style={styles.post}>Post</Text>
+          <TouchableOpacity disabled={this.state.text === ''} style={styles.postButtonContainer} onPress={() => this.handleSubmit(this.state.text)}>
+            <Text style={[styles.postButton, this.state.text === '' ? styles.postButtonDisabled : styles.postButtonEnabled]}>Post</Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -76,15 +74,22 @@ const styles = StyleSheet.create({
     color: colors.black,
     fontFamily: 'AvenirNext-Regular',
   },
-  post: {
+  postButtonContainer: {
     flex: 0.15,
-    fontSize: 16,
     alignItems: 'flex-end',
     justifyContent: 'center',
-    color: colors.primaryDark,
+  },
+  postButton: {
+    fontSize: 14,
     letterSpacing: 1,
     fontFamily: 'AvenirNext-DemiBold',
   },
+  postButtonDisabled: {
+    color: colors.grey,
+  },
+  postButtonEnabled: {
+    color: colors.primaryDark,
+  }
 });
 
 export default CommentInput;

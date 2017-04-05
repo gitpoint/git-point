@@ -114,8 +114,6 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingRight: 10,
     paddingBottom: 10,
-    borderBottomColor: '#ededed',
-    borderBottomWidth: 1,
     backgroundColor: 'transparent',
   },
   header: {
@@ -150,9 +148,11 @@ const styles = StyleSheet.create({
   commentContainer: {
     marginTop: 4,
     marginLeft: 54,
-    marginRight: 10,
+    borderBottomColor: colors.greyLight,
+    borderBottomWidth: 1,
   },
   commentBody: {
+    paddingRight: 10,
     color: colors.black,
     fontSize: 14,
     fontFamily: 'AvenirNext-Regular',
