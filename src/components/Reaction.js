@@ -6,21 +6,26 @@ import colors from '../config/colors';
 const emojiTypes = {
   '+1': '👍',
   '-1': '👎',
-  'smile': '😄',
-  'tada': '🎉',
+  'laugh': '😄',
+  'hooray': '🎉',
   'confused': '😕',
   'heart': '❤️',
 }
 
 const Reaction = (
   {
-    emoji,
+    type,
     count,
     active,
+    createdReactionID,
+    commentID,
+    triggerReaction
   },
 ) => (
-  <TouchableOpacity style={active ? styles.containerActive : styles.container}>
-    <Text style={styles.reaction}>{emojiTypes[emoji]}</Text>
+  <TouchableOpacity
+    style={active ? styles.containerActive : styles.container}
+    onPress={() => triggerReaction(type, commentID, active, createdReactionID)}>
+    <Text style={styles.reaction}>{emojiTypes[type]}</Text>
     <Text style={active ? styles.countActive : styles.count}>
       {count}
     </Text>
@@ -28,9 +33,12 @@ const Reaction = (
 );
 
 Reaction.propTypes = {
-  active: PropTypes.bool,
-  emoji: PropTypes.string,
+  type: PropTypes.string,
   count: PropTypes.number,
+  active: PropTypes.bool,
+  createdReactionID: PropTypes.number,
+  commentID: PropTypes.number,
+  triggerReaction: PropTypes.func,
 };
 
 const styles = StyleSheet.create({

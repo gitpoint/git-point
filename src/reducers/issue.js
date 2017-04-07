@@ -7,7 +7,13 @@ import {
   POST_ISSUE_COMMENT_HAD_ERROR,
   HYDRATE_COMMENT_IS_PENDING,
   HYDRATE_COMMENT_WAS_SUCCESSFUL,
-  HYDRATE_COMMENT_HAD_ERROR
+  HYDRATE_COMMENT_HAD_ERROR,
+  CREATE_REACTION_IS_PENDING,
+  CREATE_REACTION_WAS_SUCCESSFUL,
+  CREATE_REACTION_HAD_ERROR,
+  DELETE_REACTION_IS_PENDING,
+  DELETE_REACTION_WAS_SUCCESSFUL,
+  DELETE_REACTION_HAD_ERROR
 } from '../constants';
 
 const initialState = {
@@ -15,6 +21,8 @@ const initialState = {
   isPendingComments: false,
   isPendingHydratedComment: false,
   isPostingComment: false,
+  isCreatingReaction: false,
+  isDeletingReaction: false,
   error: '',
 }
 
@@ -63,7 +71,7 @@ export default function issueReducer(state = initialState, action={}) {
         return {
           ...state,
           comments: state.comments.map(
-               (comment, i) => comment.id === action.commentID ? {...comment, completeReactions: action.payload} : comment
+               (comment) => comment.id === action.commentID ? {...comment, completeReactions: action.payload} : comment
            ),
           isPendingHydratedComment: false,
         };
@@ -72,6 +80,44 @@ export default function issueReducer(state = initialState, action={}) {
           ...state,
           error: action.payload,
           isPendingHydratedComment: false,
+        };
+      case CREATE_REACTION_IS_PENDING:
+        return {
+          ...state,
+          isCreatingReaction: true,
+        };
+      case CREATE_REACTION_WAS_SUCCESSFUL:
+        return {
+          ...state,
+          comments: state.comments.map(
+               (comment) => comment.id === action.commentID ? {...comment, completeReactions: [...comment.completeReactions, action.payload]} : comment
+           ),
+          isCreatingReaction: false,
+        };
+      case CREATE_REACTION_HAD_ERROR:
+        return {
+          ...state,
+          error: action.payload,
+          isCreatingReaction: false,
+        };
+      case DELETE_REACTION_IS_PENDING:
+        return {
+          ...state,
+          isDeletingReaction: true,
+        };
+      case DELETE_REACTION_WAS_SUCCESSFUL:
+        return {
+          ...state,
+          comments: state.comments.map(
+               (comment) => comment.id === action.commentID ? {...comment, completeReactions: comment.completeReactions.filter(reaction => reaction !== action.reactionID)} : comment
+           ),
+          isDeletingReaction: false,
+        };
+      case DELETE_REACTION_HAD_ERROR:
+        return {
+          ...state,
+          error: action.payload,
+          isDeletingReaction: false,
         };
       default:
         return state;

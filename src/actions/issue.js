@@ -7,12 +7,18 @@ import {
   POST_ISSUE_COMMENT_HAD_ERROR,
   HYDRATE_COMMENT_IS_PENDING,
   HYDRATE_COMMENT_WAS_SUCCESSFUL,
-  HYDRATE_COMMENT_HAD_ERROR
+  HYDRATE_COMMENT_HAD_ERROR,
+  CREATE_REACTION_IS_PENDING,
+  CREATE_REACTION_WAS_SUCCESSFUL,
+  CREATE_REACTION_HAD_ERROR,
+  DELETE_REACTION_IS_PENDING,
+  DELETE_REACTION_WAS_SUCCESSFUL,
+  DELETE_REACTION_HAD_ERROR
 } from '../constants';
 
-import { fetchUrlPreview, fetchPostIssueComment } from '../api';
+import { fetchUrlPreview, fetchPostIssueComment, fetchCreateIssueReactionComment, fetchDeleteReaction } from '../api';
 
-export const getIssueComments = (url) => {
+const getIssueComments = (url) => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 
@@ -27,6 +33,28 @@ export const getIssueComments = (url) => {
     .catch(error => {
       dispatch({
         type: GET_ISSUE_COMMENTS_HAD_ERROR,
+        payload: error,
+      })
+    })
+  };
+};
+
+const hydrateComment = (comment) => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: HYDRATE_COMMENT_IS_PENDING });
+
+    return fetchUrlPreview(comment.reactions.url, accessToken).then(data => {
+      dispatch({
+        type: HYDRATE_COMMENT_WAS_SUCCESSFUL,
+        commentID: comment.id,
+        payload: data,
+      });
+    })
+    .catch(error => {
+      dispatch({
+        type: HYDRATE_COMMENT_HAD_ERROR,
         payload: error,
       })
     })
@@ -54,63 +82,6 @@ export const postIssueComment = (body, owner, repoName, issueNum) => {
   };
 };
 
-export const hydrateComment = (comment) => {
-  return (dispatch, getState) => {
-    const accessToken = getState().auth.accessToken;
-
-    dispatch({ type: HYDRATE_COMMENT_IS_PENDING });
-
-    return fetchUrlPreview(comment.reactions.url, accessToken).then(data => {
-      dispatch({
-        type: HYDRATE_COMMENT_WAS_SUCCESSFUL,
-        commentID: comment.id,
-        payload: data,
-      });
-    })
-    .catch(error => {
-      dispatch({
-        type: HYDRATE_COMMENT_HAD_ERROR,
-        payload: error,
-      })
-    })
-  };
-};
-
-// export const hydrateIssueCommentsWithReactions = (comments) => {
-//   return (dispatch, getState) => {
-//     const accessToken = getState().auth.accessToken;
-//
-//     dispatch({ type: HYDRATE_ISSUE_COMMENTS_WITH_REACTIONS_PENDING });
-//
-//     const hydratedComments = comments.map((comment) => {
-//       if (comment.reactions.total_count > 0) {
-//         fetchUrlPreview(comment.reactions.url, accessToken).then(reactionsData => {
-//           const hydratedComment = comment;
-//
-//           hydratedComment.completeReactions = reactionsData;
-//           return hydratedComment;
-//           // return {...comment, reactions: reactionsData};
-//         })
-//         .catch(error => {
-//           dispatch({
-//             type: HYDRATE_ISSUE_COMMENTS_WITH_REACTIONS_HAD_ERROR,
-//             payload: error,
-//           })
-//         });
-//       } else {
-//         return comment;
-//       }
-//     });
-//
-//     if (hydratedComments.length === comments.length) {
-//       dispatch({
-//         type: HYDRATE_ISSUE_COMMENTS_WITH_REACTIONS_WAS_SUCCESSFUL,
-//         payload: hydratedComments,
-//       });
-//     }
-//   };
-// };
-
 export const getHydratedComments = (url) => {
   return (dispatch, getState) => {
     return dispatch(getIssueComments(url)).then(() => {
@@ -121,4 +92,47 @@ export const getHydratedComments = (url) => {
       });
     })
   }
+}
+
+export const createIssueCommentReaction = (type, commentID, owner, repoName) => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: CREATE_REACTION_IS_PENDING });
+
+    return fetchCreateIssueReactionComment(type, commentID, owner, repoName, accessToken).then(data => {
+      dispatch({
+        type: CREATE_REACTION_WAS_SUCCESSFUL,
+        commentID: commentID,
+        payload: data,
+      });
+    })
+    .catch(error => {
+      dispatch({
+        type: CREATE_REACTION_HAD_ERROR,
+        payload: error,
+      })
+    })
+  };
+}
+
+export const deleteReaction = (reactionID) => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: DELETE_REACTION_IS_PENDING });
+
+    return fetchDeleteReaction(reactionID, accessToken).then(() => {
+      dispatch({
+        type: DELETE_REACTION_WAS_SUCCESSFUL,
+        reactionID: reactionID,
+      });
+    })
+    .catch(error => {
+      dispatch({
+        type: DELETE_REACTION_HAD_ERROR,
+        payload: error,
+      })
+    })
+  };
 }

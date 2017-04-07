@@ -15,11 +15,26 @@ import colors from '../config/colors';
 
 // import HTMLView from 'react-native-htmlview';
 const reactionButtons = ['👍', '👎', '😄', '🎉', '😕', '❤️', 'Cancel'];
+const reactionTypes = ['+1', '-1', 'laugh', 'hooray', 'confused', 'heart'];
 
 class CommentListItem extends Component {
   state = {
     addReactionClicked: 'none',
   };
+
+  renderReaction = (type, comment) => {
+    let count;
+    let reacted = null;
+
+    if (comment.completeReactions) {
+      count = comment.completeReactions.filter(reaction => reaction.content === type).length;
+      reacted = comment.completeReactions.some(reaction => reaction.content === type && reaction.user.login === this.props.authUser);
+    } else {
+      count = comment.reactions[type];
+    }
+
+    return count > 0 ? <Reaction type={type} count={count} active={reacted} createdReactionID={reacted ? comment.completeReactions.find(reaction => reaction.content === type && reaction.user.login === this.props.authUser).id : null} commentID={comment.id} triggerReaction={this.props.triggerReaction} /> : null;
+  }
 
   render() {
     const {comment, navigation} = this.props;
@@ -62,142 +77,9 @@ class CommentListItem extends Component {
             ]}
           >
 
-            {!comment.completeReactions &&
-              comment.reactions['+1'] > 0 &&
-              <Reaction emoji="+1" count={comment.reactions['+1']} />}
-
-            {!comment.completeReactions &&
-              comment.reactions['-1'] > 0 &&
-              <Reaction emoji="-1" count={comment.reactions['-1']} />}
-
-            {!comment.completeReactions &&
-              comment.reactions['laugh'] > 0 &&
-              <Reaction emoji="smile" count={comment.reactions['laugh']} />}
-
-            {!comment.completeReactions &&
-              comment.reactions['confused'] > 0 &&
-              <Reaction
-                emoji="confused"
-                count={comment.reactions['confused']}
-              />}
-
-            {!comment.completeReactions &&
-              comment.reactions['heart'] > 0 &&
-              <Reaction emoji="heart" count={comment.reactions['heart']} />}
-
-            {!comment.completeReactions &&
-              comment.reactions['hooray'] > 0 &&
-              <Reaction emoji="tada" count={comment.reactions['hooray']} />}
-
-            {/* {} */}
-
-            {comment.completeReactions &&
-              comment.completeReactions.filter(
-                reaction => reaction.content === '+1'
-              ).length > 0 &&
-              <Reaction
-                emoji="+1"
-                count={
-                  comment.completeReactions.filter(
-                    reaction => reaction.content === '+1'
-                  ).length
-                }
-                active={comment.completeReactions.some(
-                  reaction =>
-                    reaction.content === '+1' &&
-                    reaction.user.login === this.props.authUser
-                )}
-              />}
-
-            {comment.completeReactions &&
-              comment.completeReactions.filter(
-                reaction => reaction.content === '-1'
-              ).length > 0 &&
-              <Reaction
-                emoji="-1"
-                count={
-                  comment.completeReactions.filter(
-                    reaction => reaction.content === '-1'
-                  ).length
-                }
-                active={comment.completeReactions.some(
-                  reaction =>
-                    reaction.content === '-1' &&
-                    reaction.user.login === this.props.authUser
-                )}
-              />}
-
-            {comment.completeReactions &&
-              comment.completeReactions.filter(
-                reaction => reaction.content === 'laugh'
-              ).length > 0 &&
-              <Reaction
-                emoji="smile"
-                count={
-                  comment.completeReactions.filter(
-                    reaction => reaction.content === 'laugh'
-                  ).length
-                }
-                active={comment.completeReactions.some(
-                  reaction =>
-                    reaction.content === 'laugh' &&
-                    reaction.user.login === this.props.authUser
-                )}
-              />}
-
-            {comment.completeReactions &&
-              comment.completeReactions.filter(
-                reaction => reaction.content === 'confused'
-              ).length > 0 &&
-              <Reaction
-                emoji="confused"
-                count={
-                  comment.completeReactions.filter(
-                    reaction => reaction.content === 'confused'
-                  ).length
-                }
-                active={comment.completeReactions.some(
-                  reaction =>
-                    reaction.content === 'confused' &&
-                    reaction.user.login === this.props.authUser
-                )}
-              />}
-
-            {comment.completeReactions &&
-              comment.completeReactions.filter(
-                reaction => reaction.content === 'heart'
-              ).length > 0 &&
-              <Reaction
-                emoji="heart"
-                count={
-                  comment.completeReactions.filter(
-                    reaction => reaction.content === 'heart'
-                  ).length
-                }
-                active={comment.completeReactions.some(
-                  reaction =>
-                    reaction.content === 'heart' &&
-                    reaction.user.login === this.props.authUser
-                )}
-              />}
-
-            {comment.completeReactions &&
-              comment.completeReactions.filter(
-                reaction => reaction.content === 'hooray'
-              ).length > 0 &&
-              <Reaction
-                emoji="tada"
-                count={
-                  comment.completeReactions.filter(
-                    reaction => reaction.content === 'hooray'
-                  ).length
-                }
-                active={comment.completeReactions.some(
-                  reaction =>
-                    reaction.content === 'hooray' &&
-                    reaction.user.login === this.props.authUser
-                )}
-              />}
+            {reactionTypes.map((reaction) =>
+              this.renderReaction(reaction, comment)
+            )}
 
             <TouchableOpacity onPress={this.showActionSheet}>
               <AddReaction />
@@ -226,6 +108,7 @@ class CommentListItem extends Component {
 CommentListItem.propTypes = {
   authUser: PropTypes.string,
   comment: PropTypes.object,
+  triggerReaction: PropTypes.func,
   navigation: PropTypes.object,
 };
 

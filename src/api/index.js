@@ -1,3 +1,4 @@
+
 export const CLIENT_ID = '87c7f05700c052937cfb';
 export const CLIENT_SECRET = '3a70aee4d5e26c457720a31c3efe2f9062a4997a';
 
@@ -14,9 +15,15 @@ const accessTokenParametersPOST = (accessToken, body) => ({
     Accept: 'application/vnd.github.squirrel-girl-preview',
     Authorization: `token ${accessToken}`,
   },
-  body: JSON.stringify({
-    body: body
-  }),
+  body: JSON.stringify(body),
+});
+
+const accessTokenParametersDELETE = (accessToken) => ({
+  method: 'DELETE',
+  headers: {
+    Accept: 'application/vnd.github.squirrel-girl-preview',
+    Authorization: `token ${accessToken}`,
+  }
 });
 
 const accessTokenParametersHTML = accessToken => ({
@@ -126,10 +133,27 @@ export const fetchPostIssueComment = (body, owner, repoName, issueNum, accessTok
 
   return fetch(
     POST_ENDPOINT,
-    accessTokenParametersPOST(accessToken, body),
+    accessTokenParametersPOST(accessToken, {body: body}),
   ).then(response => response.json());
 };
 
+export const fetchCreateIssueReactionComment = (type, commentID, owner, repoName, accessToken) => {
+  const POST_ENDPOINT = `${root}/repos/${owner}/${repoName}/issues/comments/${commentID}/reactions`;
+
+  return fetch(
+    POST_ENDPOINT,
+    accessTokenParametersPOST(accessToken, {content: type}),
+  ).then(response => response.json());
+};
+
+export const fetchDeleteReaction = (reactionID, accessToken) => {
+  const POST_ENDPOINT = `${root}/reactions/${reactionID}`;
+
+  return fetch(
+    POST_ENDPOINT,
+    accessTokenParametersDELETE(accessToken),
+  ).then(response => response.json());
+};
 
 ///
 

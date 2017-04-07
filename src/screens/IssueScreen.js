@@ -7,7 +7,7 @@ import CommentListItem from '../components/CommentListItem';
 import CommentInput from '../components/CommentInput';
 
 import {connect} from 'react-redux';
-import {getHydratedComments, postIssueComment} from '../actions/issue';
+import {getHydratedComments, postIssueComment, createIssueCommentReaction, deleteReaction} from '../actions/issue';
 
 const mapStateToProps = state => ({
   authUser: state.authUser.user.login,
@@ -21,6 +21,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getHydratedComments: url => dispatch(getHydratedComments(url)),
   postIssueComment: (body, owner, repoName, issueNum) => dispatch(postIssueComment(body, owner, repoName, issueNum)),
+  createIssueCommentReaction: (type, commentID, owner, repoName) => dispatch(createIssueCommentReaction(type, commentID, owner, repoName)),
+  deleteReaction: (reactionID) => dispatch(deleteReaction(reactionID)),
 });
 
 class Issue extends Component {
@@ -40,8 +42,20 @@ class Issue extends Component {
     this.props.postIssueComment(body, owner, repoName, issueNum);
   }
 
+  triggerReaction = (type, commentID, active, createdReactionID) => {
+    const {repository} = this.props;
+    const repoName = repository.name;
+    const owner = repository.owner.login;
+
+    active ? this.props.deleteReaction(createdReactionID) : this.props.createIssueCommentReaction(type, commentID, owner, repoName);
+  }
+
   renderItem = ({item}) => (
-    <CommentListItem comment={item} authUser={this.props.authUser} navigation={this.props.navigation} />
+    <CommentListItem
+      comment={item}
+      authUser={this.props.authUser}
+      triggerReaction={this.triggerReaction}
+      navigation={this.props.navigation} />
   );
 
   render() {
@@ -55,6 +69,7 @@ class Issue extends Component {
             <LoadingUserListItem key={i} />
           ))}
 
+        {!isPendingComments &&
           <KeyboardAvoidingView
             style={{flex: 1}}
             behavior={'padding'}
@@ -69,6 +84,7 @@ class Issue extends Component {
 
             <CommentInput onSubmitEditing={this.postComment}/>
           </KeyboardAvoidingView>
+        }
       </ViewContainer>
     );
   }
@@ -81,6 +97,8 @@ class Issue extends Component {
 Issue.propTypes = {
   getHydratedComments: PropTypes.func,
   postIssueComment: PropTypes.func,
+  createIssueCommentReaction: PropTypes.func,
+  deleteIssueCommentReaction: PropTypes.func,
   issue: PropTypes.object,
   authUser: PropTypes.string,
   repository: PropTypes.object,
