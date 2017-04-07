@@ -1,8 +1,16 @@
 import React, {PropTypes} from 'react';
 import {StyleSheet, TouchableOpacity, Text} from 'react-native';
-import Emoji from 'react-native-emoji';
 
 import colors from '../config/colors';
+
+const emojiTypes = {
+  '+1': '👍',
+  '-1': '👎',
+  'smile': '😄',
+  'tada': '🎉',
+  'confused': '😕',
+  'heart': '❤️',
+}
 
 const Reaction = (
   {
@@ -11,7 +19,7 @@ const Reaction = (
   },
 ) => (
   <TouchableOpacity style={styles.container}>
-    <Text style={styles.reaction}><Emoji name={emoji} /></Text>
+    <Text style={styles.reaction}>{emojiTypes[emoji]}</Text>
     <Text style={styles.count}>
       {count}
     </Text>
@@ -25,17 +33,23 @@ Reaction.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
-    marginRight: 15,
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: colors.greyLight,
+    paddingLeft: 5,
+    paddingRight: 5,
+    paddingBottom: 2,
+    marginRight: 7,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
   reaction: {
-    fontSize: 16,
+    fontSize: 13,
   },
   count: {
     color: colors.primaryDark,
-    paddingLeft: 3,
+    paddingLeft: 5,
     paddingTop: 5,
     fontSize: 13,
     fontFamily: 'AvenirNext-Medium',

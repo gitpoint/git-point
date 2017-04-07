@@ -49,9 +49,11 @@ class CommentListItem extends Component {
         </View>
 
         <View style={styles.commentContainer}>
-          <Text style={styles.commentBody}>
-            {comment.body}
-          </Text>
+          {comment.body !== '' &&
+            <Text style={styles.commentBody}>
+              {comment.body}
+            </Text>
+          }
 
           <View
             style={[

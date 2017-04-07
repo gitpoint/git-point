@@ -7,7 +7,7 @@ import CommentListItem from '../components/CommentListItem';
 import CommentInput from '../components/CommentInput';
 
 import {connect} from 'react-redux';
-import {getIssueComments, postIssueComment} from '../actions/issue';
+import {getHydratedComments, postIssueComment} from '../actions/issue';
 
 const mapStateToProps = state => ({
   repository: state.repository.repository,
@@ -17,7 +17,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getIssueComments: url => dispatch(getIssueComments(url)),
+  getHydratedComments: url => dispatch(getHydratedComments(url)),
   postIssueComment: (body, owner, repoName, issueNum) => dispatch(postIssueComment(body, owner, repoName, issueNum)),
 });
 
@@ -25,7 +25,7 @@ class Issue extends Component {
   componentDidMount() {
     const issue = this.props.navigation.state.params.issue;
 
-    this.props.getIssueComments(issue.comments_url);
+    this.props.getHydratedComments(issue.comments_url);
   }
 
   postComment = (body) => {
@@ -77,7 +77,7 @@ class Issue extends Component {
 }
 
 Issue.propTypes = {
-  getIssueComments: PropTypes.func,
+  getHydratedComments: PropTypes.func,
   postIssueComment: PropTypes.func,
   issue: PropTypes.object,
   repository: PropTypes.object,

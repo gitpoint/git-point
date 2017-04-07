@@ -11,21 +11,24 @@ const AddReaction = () => (
       name="smiley"
       type="octicon"
       color={colors.grey}
-      size={16} />
+      size={13} />
   </View>
 );
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 5,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: colors.greyLight,
+    padding: 5,
   },
   plus: {
     color: colors.grey,
-    paddingRight: 3,
-    fontSize: 13,
+    paddingRight: 2,
+    fontSize: 10,
     fontFamily: 'AvenirNext-Medium',
   },
 });
