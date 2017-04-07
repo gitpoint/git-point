@@ -52,8 +52,7 @@ class CommentListItem extends Component {
           {comment.body !== '' &&
             <Text style={styles.commentBody}>
               {comment.body}
-            </Text>
-          }
+            </Text>}
 
           <View
             style={[
@@ -62,31 +61,149 @@ class CommentListItem extends Component {
                 styles.reactionsBarMargin,
             ]}
           >
-            {comment.reactions['+1'] > 0 &&
+
+            {!comment.completeReactions &&
+              comment.reactions['+1'] > 0 &&
               <Reaction emoji="+1" count={comment.reactions['+1']} />}
 
-            {comment.reactions['-1'] > 0 &&
+            {!comment.completeReactions &&
+              comment.reactions['-1'] > 0 &&
               <Reaction emoji="-1" count={comment.reactions['-1']} />}
 
-            {comment.reactions['laugh'] > 0 &&
+            {!comment.completeReactions &&
+              comment.reactions['laugh'] > 0 &&
               <Reaction emoji="smile" count={comment.reactions['laugh']} />}
 
-            {comment.reactions['confused'] > 0 &&
+            {!comment.completeReactions &&
+              comment.reactions['confused'] > 0 &&
               <Reaction
                 emoji="confused"
                 count={comment.reactions['confused']}
               />}
 
-            {comment.reactions['heart'] > 0 &&
+            {!comment.completeReactions &&
+              comment.reactions['heart'] > 0 &&
               <Reaction emoji="heart" count={comment.reactions['heart']} />}
 
-            {comment.reactions['hooray'] > 0 &&
+            {!comment.completeReactions &&
+              comment.reactions['hooray'] > 0 &&
               <Reaction emoji="tada" count={comment.reactions['hooray']} />}
+
+            {/* {} */}
+
+            {comment.completeReactions &&
+              comment.completeReactions.filter(
+                reaction => reaction.content === '+1'
+              ).length > 0 &&
+              <Reaction
+                emoji="+1"
+                count={
+                  comment.completeReactions.filter(
+                    reaction => reaction.content === '+1'
+                  ).length
+                }
+                active={comment.completeReactions.some(
+                  reaction =>
+                    reaction.content === '+1' &&
+                    reaction.user.login === this.props.authUser
+                )}
+              />}
+
+            {comment.completeReactions &&
+              comment.completeReactions.filter(
+                reaction => reaction.content === '-1'
+              ).length > 0 &&
+              <Reaction
+                emoji="-1"
+                count={
+                  comment.completeReactions.filter(
+                    reaction => reaction.content === '-1'
+                  ).length
+                }
+                active={comment.completeReactions.some(
+                  reaction =>
+                    reaction.content === '-1' &&
+                    reaction.user.login === this.props.authUser
+                )}
+              />}
+
+            {comment.completeReactions &&
+              comment.completeReactions.filter(
+                reaction => reaction.content === 'laugh'
+              ).length > 0 &&
+              <Reaction
+                emoji="smile"
+                count={
+                  comment.completeReactions.filter(
+                    reaction => reaction.content === 'laugh'
+                  ).length
+                }
+                active={comment.completeReactions.some(
+                  reaction =>
+                    reaction.content === 'laugh' &&
+                    reaction.user.login === this.props.authUser
+                )}
+              />}
+
+            {comment.completeReactions &&
+              comment.completeReactions.filter(
+                reaction => reaction.content === 'confused'
+              ).length > 0 &&
+              <Reaction
+                emoji="confused"
+                count={
+                  comment.completeReactions.filter(
+                    reaction => reaction.content === 'confused'
+                  ).length
+                }
+                active={comment.completeReactions.some(
+                  reaction =>
+                    reaction.content === 'confused' &&
+                    reaction.user.login === this.props.authUser
+                )}
+              />}
+
+            {comment.completeReactions &&
+              comment.completeReactions.filter(
+                reaction => reaction.content === 'heart'
+              ).length > 0 &&
+              <Reaction
+                emoji="heart"
+                count={
+                  comment.completeReactions.filter(
+                    reaction => reaction.content === 'heart'
+                  ).length
+                }
+                active={comment.completeReactions.some(
+                  reaction =>
+                    reaction.content === 'heart' &&
+                    reaction.user.login === this.props.authUser
+                )}
+              />}
+
+            {comment.completeReactions &&
+              comment.completeReactions.filter(
+                reaction => reaction.content === 'hooray'
+              ).length > 0 &&
+              <Reaction
+                emoji="tada"
+                count={
+                  comment.completeReactions.filter(
+                    reaction => reaction.content === 'hooray'
+                  ).length
+                }
+                active={comment.completeReactions.some(
+                  reaction =>
+                    reaction.content === 'hooray' &&
+                    reaction.user.login === this.props.authUser
+                )}
+              />}
 
             <TouchableOpacity onPress={this.showActionSheet}>
               <AddReaction />
             </TouchableOpacity>
           </View>
+
         </View>
       </View>
     );
@@ -101,12 +218,13 @@ class CommentListItem extends Component {
       },
       buttonIndex => {
         this.setState({clicked: reactionButtons[buttonIndex]});
-      },
+      }
     );
   };
 }
 
 CommentListItem.propTypes = {
+  authUser: PropTypes.string,
   comment: PropTypes.object,
   navigation: PropTypes.object,
 };
@@ -162,10 +280,10 @@ const styles = StyleSheet.create({
   reactionsBar: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 10,
   },
   reactionsBarMargin: {
     marginTop: 10,
-    marginBottom: 10,
   },
 });
 

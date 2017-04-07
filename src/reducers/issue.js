@@ -5,13 +5,15 @@ import {
   POST_ISSUE_COMMENT_IS_PENDING,
   POST_ISSUE_COMMENT_WAS_SUCCESSFUL,
   POST_ISSUE_COMMENT_HAD_ERROR,
-  HYDRATE_ISSUE_COMMENTS_WITH_REACTIONS_PENDING,
-  HYDRATE_ISSUE_COMMENTS_WITH_REACTIONS_WAS_SUCCESSFUL
+  HYDRATE_COMMENT_IS_PENDING,
+  HYDRATE_COMMENT_WAS_SUCCESSFUL,
+  HYDRATE_COMMENT_HAD_ERROR
 } from '../constants';
 
 const initialState = {
   comments: [],
   isPendingComments: false,
+  isPendingHydratedComment: false,
   isPostingComment: false,
   error: '',
 }
@@ -51,6 +53,25 @@ export default function issueReducer(state = initialState, action={}) {
           ...state,
           error: action.payload,
           isPostingComment: false,
+        };
+      case HYDRATE_COMMENT_IS_PENDING:
+        return {
+          ...state,
+          isPendingHydratedComment: true,
+        };
+      case HYDRATE_COMMENT_WAS_SUCCESSFUL:
+        return {
+          ...state,
+          comments: state.comments.map(
+               (comment, i) => comment.id === action.commentID ? {...comment, completeReactions: action.payload} : comment
+           ),
+          isPendingHydratedComment: false,
+        };
+      case HYDRATE_COMMENT_HAD_ERROR:
+        return {
+          ...state,
+          error: action.payload,
+          isPendingHydratedComment: false,
         };
       default:
         return state;

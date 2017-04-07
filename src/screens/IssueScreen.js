@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import {FlatList, KeyboardAvoidingView, ActivityIndicator, View} from 'react-native';
+import {FlatList, KeyboardAvoidingView} from 'react-native';
 
 import ViewContainer from '../components/ViewContainer';
 import LoadingUserListItem from '../components/LoadingUserListItem';
@@ -10,9 +10,11 @@ import {connect} from 'react-redux';
 import {getHydratedComments, postIssueComment} from '../actions/issue';
 
 const mapStateToProps = state => ({
+  authUser: state.authUser.user.login,
   repository: state.repository.repository,
   comments: state.issue.comments,
   isPendingComments: state.issue.isPendingComments,
+  isPendingHydratedComments: state.issue.isPendingHydratedComments,
   isPostingComment: state.issue.isPostingComment,
 });
 
@@ -39,7 +41,7 @@ class Issue extends Component {
   }
 
   renderItem = ({item}) => (
-    <CommentListItem comment={item} navigation={this.props.navigation} />
+    <CommentListItem comment={item} authUser={this.props.authUser} navigation={this.props.navigation} />
   );
 
   render() {
@@ -80,9 +82,12 @@ Issue.propTypes = {
   getHydratedComments: PropTypes.func,
   postIssueComment: PropTypes.func,
   issue: PropTypes.object,
+  authUser: PropTypes.string,
   repository: PropTypes.object,
   comments: PropTypes.array,
+  hydratedComments: PropTypes.array,
   isPendingComments: PropTypes.bool,
+  isPendingHydratedComments: PropTypes.bool,
   isPostingComment: PropTypes.bool,
   navigation: PropTypes.object,
 };

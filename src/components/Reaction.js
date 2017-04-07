@@ -16,17 +16,19 @@ const Reaction = (
   {
     emoji,
     count,
+    active,
   },
 ) => (
-  <TouchableOpacity style={styles.container}>
+  <TouchableOpacity style={active ? styles.containerActive : styles.container}>
     <Text style={styles.reaction}>{emojiTypes[emoji]}</Text>
-    <Text style={styles.count}>
+    <Text style={active ? styles.countActive : styles.count}>
       {count}
     </Text>
   </TouchableOpacity>
 );
 
 Reaction.propTypes = {
+  active: PropTypes.bool,
   emoji: PropTypes.string,
   count: PropTypes.number,
 };
@@ -44,15 +46,35 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
+  containerActive: {
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: 'rgba(79,176,252,.4)',
+    backgroundColor: 'rgba(79,176,252,.08)',
+    paddingLeft: 5,
+    paddingRight: 5,
+    paddingBottom: 2,
+    marginRight: 7,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
   reaction: {
     fontSize: 13,
   },
   count: {
-    color: colors.primaryDark,
+    color: colors.greyDark,
     paddingLeft: 5,
     paddingTop: 5,
     fontSize: 13,
     fontFamily: 'AvenirNext-Medium',
+  },
+  countActive: {
+    color: '#4fb0fc',
+    paddingLeft: 5,
+    paddingTop: 5,
+    fontSize: 13,
+    fontFamily: 'AvenirNext-DemiBold',
   },
 });
 

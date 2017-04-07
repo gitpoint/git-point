@@ -4,13 +4,14 @@ export const CLIENT_SECRET = '3a70aee4d5e26c457720a31c3efe2f9062a4997a';
 const accessTokenParameters = accessToken => ({
   headers: {
     Authorization: `token ${accessToken}`,
+    'Cache-Control': 'no-cache',
   },
 });
 
 const accessTokenParametersPOST = (accessToken, body) => ({
   method: 'POST',
   headers: {
-    Accept: '  application/vnd.github.squirrel-girl-preview',
+    Accept: 'application/vnd.github.squirrel-girl-preview',
     Authorization: `token ${accessToken}`,
   },
   body: JSON.stringify({
@@ -29,6 +30,7 @@ const accessTokenParametersPreview = accessToken => ({
   headers: {
     Accept: '  application/vnd.github.squirrel-girl-preview',
     Authorization: `token ${accessToken}`,
+    'Cache-Control': 'no-cache',
   },
 });
 
