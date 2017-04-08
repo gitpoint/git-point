@@ -18,23 +18,43 @@ const reactionButtons = ['👍', '👎', '😄', '🎉', '😕', '❤️', 'Canc
 const reactionTypes = ['+1', '-1', 'laugh', 'hooray', 'confused', 'heart'];
 
 class CommentListItem extends Component {
-  state = {
-    addReactionClicked: 'none',
-  };
-
-  renderReaction = (type, comment) => {
+  renderReaction = (type, comment, index) => {
     let count;
     let reacted = null;
 
     if (comment.completeReactions) {
-      count = comment.completeReactions.filter(reaction => reaction.content === type).length;
-      reacted = comment.completeReactions.some(reaction => reaction.content === type && reaction.user.login === this.props.authUser);
+      count = comment.completeReactions.filter(
+        reaction => reaction.content === type
+      ).length;
+      reacted = comment.completeReactions.some(
+        reaction =>
+          reaction.content === type &&
+          reaction.user.login === this.props.authUser
+      );
     } else {
       count = comment.reactions[type];
     }
 
-    return count > 0 ? <Reaction type={type} count={count} active={reacted} createdReactionID={reacted ? comment.completeReactions.find(reaction => reaction.content === type && reaction.user.login === this.props.authUser).id : null} commentID={comment.id} triggerReaction={this.props.triggerReaction} /> : null;
-  }
+    return count > 0
+      ? <Reaction
+          key={index}
+          type={type}
+          count={count}
+          active={reacted}
+          createdReactionID={
+            reacted
+              ? comment.completeReactions.find(
+                  reaction =>
+                    reaction.content === type &&
+                    reaction.user.login === this.props.authUser
+                ).id
+              : null
+          }
+          commentID={comment.id}
+          triggerReaction={this.props.triggerReaction}
+        />
+      : null;
+  };
 
   render() {
     const {comment, navigation} = this.props;
@@ -77,11 +97,10 @@ class CommentListItem extends Component {
             ]}
           >
 
-            {reactionTypes.map((reaction) =>
-              this.renderReaction(reaction, comment)
-            )}
+            {reactionTypes.map((reaction, i) =>
+              this.renderReaction(reaction, comment, i))}
 
-            <TouchableOpacity onPress={this.showActionSheet}>
+            <TouchableOpacity onPress={() => this.showActionSheet(comment)}>
               <AddReaction />
             </TouchableOpacity>
           </View>
@@ -91,7 +110,7 @@ class CommentListItem extends Component {
     );
   }
 
-  showActionSheet = () => {
+  showActionSheet = comment => {
     ActionSheetIOS.showActionSheetWithOptions(
       {
         title: 'Add Reaction',
@@ -99,9 +118,26 @@ class CommentListItem extends Component {
         cancelButtonIndex: 6,
       },
       buttonIndex => {
-        this.setState({clicked: reactionButtons[buttonIndex]});
+        const reactionType = reactionTypes[buttonIndex];
+        if (buttonIndex !== 6) {
+          this.props.addAdditionalReaction(
+            reactionType,
+            comment.id,
+            this.alreadyReacted(comment, reactionType)
+          );
+        }
       }
     );
+  };
+
+  alreadyReacted = (comment, type) => {
+    return comment.completeReactions
+      ? comment.completeReactions.some(
+          reaction =>
+            reaction.content === type &&
+            reaction.user.login === this.props.authUser
+        )
+      : false;
   };
 }
 
@@ -109,6 +145,7 @@ CommentListItem.propTypes = {
   authUser: PropTypes.string,
   comment: PropTypes.object,
   triggerReaction: PropTypes.func,
+  addAdditionalReaction: PropTypes.func,
   navigation: PropTypes.object,
 };
 

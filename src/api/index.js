@@ -151,8 +151,7 @@ export const fetchDeleteReaction = (reactionID, accessToken) => {
 
   return fetch(
     POST_ENDPOINT,
-    accessTokenParametersDELETE(accessToken),
-  ).then(response => response.json());
+    accessTokenParametersDELETE(accessToken));
 };
 
 ///

@@ -116,7 +116,7 @@ export const createIssueCommentReaction = (type, commentID, owner, repoName) => 
   };
 }
 
-export const deleteReaction = (reactionID) => {
+export const deleteReaction = (commentID, reactionID) => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 
@@ -125,6 +125,7 @@ export const deleteReaction = (reactionID) => {
     return fetchDeleteReaction(reactionID, accessToken).then(() => {
       dispatch({
         type: DELETE_REACTION_WAS_SUCCESSFUL,
+        commentID: commentID,
         reactionID: reactionID,
       });
     })

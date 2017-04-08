@@ -5,6 +5,8 @@ export default {
   greyDarkest: '#808080',
   greyDark: '#999',
   greyLight: '#ededed',
+  green: '#2cbe4e',
+  red: '#cb2431',
   white: '#ffffff',
   bug: '#ee0701',
   duplicate: '#cccccc',

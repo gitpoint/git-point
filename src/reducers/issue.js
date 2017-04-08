@@ -90,7 +90,13 @@ export default function issueReducer(state = initialState, action={}) {
         return {
           ...state,
           comments: state.comments.map(
-               (comment) => comment.id === action.commentID ? {...comment, completeReactions: [...comment.completeReactions, action.payload]} : comment
+               (comment) => {
+                 if (comment.id === action.commentID) {
+                   return comment.completeReactions ? {...comment, completeReactions: [...comment.completeReactions, action.payload]} : {...comment, completeReactions: [action.payload]};
+                 } else {
+                   return comment;
+                 }
+               }
            ),
           isCreatingReaction: false,
         };
@@ -109,7 +115,13 @@ export default function issueReducer(state = initialState, action={}) {
         return {
           ...state,
           comments: state.comments.map(
-               (comment) => comment.id === action.commentID ? {...comment, completeReactions: comment.completeReactions.filter(reaction => reaction !== action.reactionID)} : comment
+               (comment) => {
+                 if (comment.id === action.commentID) {
+                   return {...comment, completeReactions: comment.completeReactions.filter(reaction => reaction.id !== action.reactionID)};
+                 } else {
+                   return comment;
+                 }
+               }
            ),
           isDeletingReaction: false,
         };
