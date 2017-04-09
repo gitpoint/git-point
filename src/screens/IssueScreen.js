@@ -71,10 +71,8 @@ class Issue extends Component {
   );
 
   render() {
-    const issue = this.props.navigation.state.params.issue;
-    const {comments, isPendingComments} = this.props;
-
-    const IssueHeader = IssueDescriptionListItem({issue});
+    const {comments, isPendingComments, navigation} = this.props;
+    const issue = navigation.state.params.issue;
 
     return (
       <ViewContainer>
@@ -91,7 +89,7 @@ class Issue extends Component {
           >
             <FlatList
               ListHeaderComponent={(): React$Element<*> => (
-                <IssueDescriptionListItem issue={issue} />
+                <IssueDescriptionListItem issue={issue} navigation={navigation} />
               )}
               removeClippedSubviews={false}
               data={[issue, ...comments]}

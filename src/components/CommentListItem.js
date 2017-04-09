@@ -12,6 +12,7 @@ import Reaction from './Reaction';
 import AddReaction from './AddReaction';
 
 import colors from '../config/colors';
+import moment from 'moment';
 
 // import HTMLView from 'react-native-htmlview';
 const reactionButtons = ['👍', '👎', '😄', '🎉', '😕', '❤️', 'Cancel'];
@@ -79,7 +80,7 @@ class CommentListItem extends Component {
           </Text>
 
           <View style={styles.dateContainer}>
-            <Text style={styles.date}>2h</Text>
+            <Text style={styles.date}>{moment(comment.created_at).fromNow()}</Text>
           </View>
         </View>
 
@@ -200,7 +201,7 @@ const styles = StyleSheet.create({
   reactionsBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 15,
   },
   reactionsBarMargin: {
     marginTop: 10,

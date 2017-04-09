@@ -13,11 +13,13 @@ const MembersList = (
   {
     title,
     members,
+    containerStyle,
+    smallTitle,
     navigation,
   },
 ) => (
-  <View style={styles.wrapper}>
-    <Text style={styles.sectionTitle}>{title}</Text>
+  <View style={[styles.container, containerStyle && containerStyle]}>
+    <Text style={smallTitle ? styles.sectionTitleSmall : styles.sectionTitleSmall}>{title}</Text>
 
     <FlatList
       data={members}
@@ -43,11 +45,13 @@ const MembersList = (
 MembersList.propTypes = {
   title: PropTypes.string,
   members: PropTypes.array,
+  containerStyle: PropTypes.object,
+  smallTitle: PropTypes.bool,
   navigation: PropTypes.object,
 };
 
 const styles = StyleSheet.create({
-  wrapper: {
+  container: {
     marginTop: 15,
     padding: 15,
   },
@@ -63,6 +67,11 @@ const styles = StyleSheet.create({
   sectionTitle: {
     color: colors.black,
     fontFamily: 'AvenirNext-Bold',
+    marginBottom: 10,
+  },
+  sectionTitleSmall: {
+    color: colors.primarydark,
+    fontFamily: 'AvenirNext-DemiBold',
     marginBottom: 10,
   },
 });
