@@ -10,6 +10,7 @@ const SectionList = (
     showButton,
     buttonTitle,
     buttonAction,
+    noOuterBorders,
     children,
   }
 ) => (
@@ -27,7 +28,7 @@ const SectionList = (
           onPress={buttonAction}
         />}
     </View>
-    <List containerStyle={styles.list}>
+    <List containerStyle={[styles.list, noOuterBorders && styles.noOuterBorders]}>
       {children}
     </List>
   </View>
@@ -38,6 +39,7 @@ SectionList.propTypes = {
   children: PropTypes.any,
   showButton: PropTypes.bool,
   buttonTitle: PropTypes.string,
+  noOuterBorders: PropTypes.bool,
   buttonAction: PropTypes.func,
 };
 
@@ -70,6 +72,10 @@ const styles = StyleSheet.create({
   list: {
     marginTop: 0,
   },
+  noOuterBorders: {
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
+  }
 });
 
 export default SectionList;

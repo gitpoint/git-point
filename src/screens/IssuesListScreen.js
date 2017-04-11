@@ -9,11 +9,12 @@ class IssuesList extends Component {
     <IssueListItem
       type={this.props.navigation.state.params.type}
       issue={item}
+      userHasPushPermission={this.props.navigation.state.params.userHasPushPermission}
       navigation={this.props.navigation} />
   )
 
   render() {
-    const {navigation} = this.props;
+    const  {navigation} = this.props;
 
     return (
       <ViewContainer>
@@ -33,6 +34,7 @@ class IssuesList extends Component {
 }
 
 IssuesList.propTypes = {
+  userHasPushPermission: PropTypes.bool,
   navigation: PropTypes.object,
 };
 

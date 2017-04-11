@@ -12,11 +12,12 @@ const IssueListItem = (
   {
     type,
     issue,
+    userHasPushPermission,
     navigation,
   }
 ) => (
   <TouchableHighlight
-    onPress={() => navigation.navigate('Issue', {issue: issue})}
+    onPress={() => navigation.navigate('Issue', {issue: issue, userHasPushPermission: userHasPushPermission})}
     underlayColor={colors.greyLight}>
     <View style={styles.container}>
       <ListItem
@@ -32,30 +33,10 @@ const IssueListItem = (
   </TouchableHighlight>
 );
 
-// const renderSubtitle = issue => (
-//   <View>
-//     <Text style={styles.subtitle}>
-//       <Text style={styles.subtitleText}>Opened by {issue.user.login}</Text>
-//       {'  '}
-//       <Text style={styles.subtitleDate}>
-//         {moment(issue.created_at).fromNow()}
-//       </Text>
-//     </Text>
-//     <View style={styles.labelButtonGroup}>
-//       {renderLabelButtons(issue.labels)}
-//     </View>
-//   </View>
-// );
-//
-// const renderLabelButtons = labels => {
-//   return labels
-//     .slice(0, 3)
-//     .map((label, i) => <LabelButton key={i} label={label} />);
-// };
-
 IssueListItem.propTypes = {
   type: PropTypes.string,
   issue: PropTypes.object,
+  userHasPushPermission: PropTypes.bool,
   navigation: PropTypes.object,
 };
 

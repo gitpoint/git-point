@@ -31,6 +31,7 @@ import Repository from './src/screens/RepositoryScreen';
 import RepositoryCodeList from './src/screens/RepositoryCodeListScreen';
 import IssuesList from './src/screens/IssuesListScreen';
 import Issue from './src/screens/IssueScreen';
+import IssueSettings from './src/screens/IssueSettingsScreen';
 import ReadMe from './src/screens/ReadMe';
 
 // Redux Store
@@ -97,6 +98,12 @@ const sharedRoutes = {
     screen: Issue,
     navigationOptions: {
       title: ({state}) => `#${state.params.issue.number}`,
+    },
+  },
+  IssueSettings: {
+    screen: IssueSettings,
+    navigationOptions: {
+      title: 'Settings',
     },
   },
   ReadMe: {

@@ -125,13 +125,14 @@ class Repository extends Component {
               buttonTitle="View All"
               buttonAction={() => navigation.navigate('IssuesList', {
                 type: 'issue',
+                userHasPushPermission: repository.permissions.admin || repository.permissions.push,
                 issues: pureIssues,
               })}
             >
               {pureIssues
                 .slice(0, 3)
                 .map((item, i) => (
-                  <IssueListItem key={i} type="issue" issue={item} navigation={navigation} />
+                  <IssueListItem key={i} type="issue" issue={item} userHasPushPermission={repository.permissions.admin || repository.permissions.push} navigation={navigation} />
                 ))}
             </SectionList>}
 
@@ -143,13 +144,14 @@ class Repository extends Component {
               buttonTitle="View All"
               buttonAction={() => navigation.navigate('IssuesList', {
                 type: 'pull',
+                userHasPushPermission: repository.permissions.admin || repository.permissions.push,
                 issues: pulls,
               })}
             >
               {pulls
                 .slice(0, 3)
                 .map((item, i) => (
-                  <IssueListItem key={i} type="pull" issue={item} navigation={navigation} />
+                  <IssueListItem key={i} type="pull" issue={item} userHasPushPermission={repository.permissions.admin || repository.permissions.push} navigation={navigation} />
                 ))}
             </SectionList>}
         </ParallaxScroll>

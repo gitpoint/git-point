@@ -1,11 +1,14 @@
 import React, {Component, PropTypes} from 'react';
 import {FlatList, KeyboardAvoidingView} from 'react-native';
+import {Icon} from 'react-native-elements';
 
 import ViewContainer from '../components/ViewContainer';
 import LoadingUserListItem from '../components/LoadingUserListItem';
 import IssueDescriptionListItem from '../components/IssueDescriptionListItem';
 import CommentListItem from '../components/CommentListItem';
 import CommentInput from '../components/CommentInput';
+
+import colors from '../config/colors';
 
 import {connect} from 'react-redux';
 import {getHydratedComments, postIssueComment, createIssueCommentReaction, deleteReaction} from '../actions/issue';
@@ -27,6 +30,25 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class Issue extends Component {
+  static navigationOptions = {
+    header: ({ state, navigate }) => {
+      let right = (
+        <Icon
+          name="gear"
+          color={colors.primarydark}
+          type='octicon'
+          containerStyle={{marginRight: 5}}
+          onPress={() => navigate('IssueSettings', {
+            issue: state.params.issue,
+          })}/>
+      );
+
+      if (state.params.userHasPushPermission) {
+        return { right };
+      }
+    },
+  }
+
   componentDidMount() {
     const issue = this.props.navigation.state.params.issue;
 

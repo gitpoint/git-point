@@ -15,7 +15,7 @@ const IssueDescriptionListItem = (
     navigation
   }
 ) => (
-  <View style={styles.container}>
+  <View style={styles.container, styles.borderBottom}>
     <View style={styles.headerContainer}>
       <ListItem
         title={issue.title}
@@ -27,18 +27,22 @@ const IssueDescriptionListItem = (
       />
       <IssueStateBadge style={styles.badge} issue={issue} />
     </View>
-    <View style={styles.labelButtonGroup}>
-      {renderLabelButtons(issue.labels)}
-    </View>
-    <View style={styles.assigneesSection}>
-      <MembersList
-        title="Assignees"
-        members={issue.assignees}
-        containerStyle={{marginTop: 0, paddingLeft: 0}}
-        smallTitle
-        navigation={navigation}
-      />
-    </View>
+    {issue.labels.length > 0 &&
+      <View style={styles.labelButtonGroup}>
+        {renderLabelButtons(issue.labels)}
+      </View>
+    }
+    {issue.assignees.length > 0 &&
+      <View style={styles.assigneesSection}>
+        <MembersList
+          title="Assignees"
+          members={issue.assignees}
+          containerStyle={{marginTop: 0, paddingTop: 0, paddingLeft: 0}}
+          smallTitle
+          navigation={navigation}
+        />
+      </View>
+    }
   </View>
 );
 
@@ -65,6 +69,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingRight: 10,
   },
+  borderBottom: {
+    borderBottomWidth: 1,
+    borderBottomColor: colors.greyLight,
+  },
   title: {
     color: colors.primarydark,
     fontFamily: 'AvenirNext-DemiBold',
@@ -82,12 +90,11 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     flexDirection: 'row',
     marginLeft: 54,
+    paddingBottom: 15,
   },
   assigneesSection: {
     marginLeft: 54,
     paddingBottom: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.greyLight,
   }
 });
 
