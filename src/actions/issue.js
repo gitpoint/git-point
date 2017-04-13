@@ -5,6 +5,9 @@ import {
   POST_ISSUE_COMMENT_IS_PENDING,
   POST_ISSUE_COMMENT_WAS_SUCCESSFUL,
   POST_ISSUE_COMMENT_HAD_ERROR,
+  HYDRATE_ISSUE_DESC_IS_PENDING,
+  HYDRATE_ISSUE_DESC_WAS_SUCCESSFUL,
+  HYDRATE_ISSUE_DESC_HAD_ERROR,
   HYDRATE_COMMENT_IS_PENDING,
   HYDRATE_COMMENT_WAS_SUCCESSFUL,
   HYDRATE_COMMENT_HAD_ERROR,
@@ -21,13 +24,13 @@ import {
 
 import { fetchUrlPreview, fetchPostIssueComment, fetchCreateIssueReactionComment, fetchDeleteReaction, fetchEditIssue } from '../api';
 
-const getIssueComments = (url) => {
+const getIssueComments = (issue) => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 
-    dispatch({ type: GET_ISSUE_COMMENTS_IS_PENDING });
+    dispatch({ type: GET_ISSUE_COMMENTS_IS_PENDING, payload: issue });
 
-    return fetchUrlPreview(url, accessToken).then(data => {
+    return fetchUrlPreview(issue.comments_url, accessToken).then(data => {
       dispatch({
         type: GET_ISSUE_COMMENTS_WAS_SUCCESSFUL,
         payload: data,
@@ -36,6 +39,27 @@ const getIssueComments = (url) => {
     .catch(error => {
       dispatch({
         type: GET_ISSUE_COMMENTS_HAD_ERROR,
+        payload: error,
+      })
+    })
+  };
+};
+
+const hydrateIssueDesc = (issue) => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: HYDRATE_ISSUE_DESC_IS_PENDING });
+
+    return fetchUrlPreview(issue.reactions.url, accessToken).then(data => {
+      dispatch({
+        type: HYDRATE_ISSUE_DESC_WAS_SUCCESSFUL,
+        payload: data,
+      });
+    })
+    .catch(error => {
+      dispatch({
+        type: HYDRATE_ISSUE_DESC_HAD_ERROR,
         payload: error,
       })
     })
@@ -85,10 +109,12 @@ export const postIssueComment = (body, owner, repoName, issueNum) => {
   };
 };
 
-export const getHydratedComments = (url) => {
+export const getHydratedComments = (issue) => {
   return (dispatch, getState) => {
-    return dispatch(getIssueComments(url)).then(() => {
+    return dispatch(getIssueComments(issue)).then(() => {
       const comments = getState().issue.comments;
+
+      dispatch(hydrateIssueDesc(issue));
 
       comments.filter(comment => comment.reactions.total_count > 0).forEach((comment) => {
           return dispatch(hydrateComment(comment))
@@ -101,7 +127,7 @@ export const createIssueCommentReaction = (type, commentID, owner, repoName) => 
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 
-    dispatch({ type: CREATE_REACTION_IS_PENDING });
+    dispatch({ type: CREATE_REACTION_IS_PENDING, payload: commentID });
 
     return fetchCreateIssueReactionComment(type, commentID, owner, repoName, accessToken).then(data => {
       dispatch({

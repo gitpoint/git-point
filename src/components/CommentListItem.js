@@ -6,6 +6,7 @@ import {
   Image,
   ActionSheetIOS,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 
 import Reaction from './Reaction';
@@ -58,7 +59,7 @@ class CommentListItem extends Component {
   };
 
   render() {
-    const {comment, navigation} = this.props;
+    const {comment, isCreatingReaction, navigation} = this.props;
 
     return (
       <View style={styles.container}>
@@ -104,6 +105,14 @@ class CommentListItem extends Component {
             <TouchableOpacity onPress={() => this.showReactionActionSheet(comment)}>
               <AddReaction />
             </TouchableOpacity>
+
+            {isCreatingReaction &&
+              <ActivityIndicator
+                animating={true}
+                size="small"
+                style={styles.creatingReactionLoader}
+              />
+            }
           </View>
 
         </View>
@@ -145,6 +154,7 @@ class CommentListItem extends Component {
 CommentListItem.propTypes = {
   authUser: PropTypes.string,
   comment: PropTypes.object,
+  isCreatingReaction: PropTypes.bool,
   triggerReaction: PropTypes.func,
   addAdditionalReaction: PropTypes.func,
   navigation: PropTypes.object,
@@ -205,6 +215,9 @@ const styles = StyleSheet.create({
   },
   reactionsBarMargin: {
     marginTop: 10,
+  },
+  creatingReactionLoader: {
+    marginLeft: 10,
   },
 });
 

@@ -16,10 +16,13 @@ import {getHydratedComments, postIssueComment, createIssueCommentReaction, delet
 const mapStateToProps = state => ({
   authUser: state.authUser.user.login,
   repository: state.repository.repository,
+  issue: state.issue.issue,
   comments: state.issue.comments,
   isPendingComments: state.issue.isPendingComments,
   isPendingHydratedComments: state.issue.isPendingHydratedComments,
   isPostingComment: state.issue.isPostingComment,
+  isCreatingReaction: state.issue.isCreatingReaction,
+  isCreatingReactionForID: state.issue.isCreatingReactionForID,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -52,7 +55,7 @@ class Issue extends Component {
   componentDidMount() {
     const issue = this.props.navigation.state.params.issue;
 
-    this.props.getHydratedComments(issue.comments_url);
+    this.props.getHydratedComments(issue);
   }
 
   postComment = (body) => {
@@ -87,14 +90,14 @@ class Issue extends Component {
     <CommentListItem
       comment={item}
       authUser={this.props.authUser}
+      isCreatingReaction={this.props.isCreatingReaction && this.props.isCreatingReactionForID === item.id}
       triggerReaction={this.triggerReaction}
       addAdditionalReaction={this.addAdditionalReaction}
       navigation={this.props.navigation} />
   );
 
   render() {
-    const {comments, isPendingComments, navigation} = this.props;
-    const issue = navigation.state.params.issue;
+    const {issue, comments, isPendingComments, navigation} = this.props;
 
     return (
       <ViewContainer>
@@ -144,6 +147,8 @@ Issue.propTypes = {
   isPendingComments: PropTypes.bool,
   isPendingHydratedComments: PropTypes.bool,
   isPostingComment: PropTypes.bool,
+  isCreatingReaction: PropTypes.bool,
+  isCreatingReactionForID: PropTypes.number,
   navigation: PropTypes.object,
 };
 

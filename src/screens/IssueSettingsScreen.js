@@ -18,7 +18,7 @@ class IssueSettings extends Component {
       <ViewContainer>
         <ScrollView>
           <SectionList
-            showActionButton
+            showButton
             buttonTitle="New Label"
             style={{borderBottomWidth: 1, borderBottomColor: colors.grey}}
             noItems={issue.labels.length === 0}
@@ -32,7 +32,7 @@ class IssueSettings extends Component {
           </SectionList>
 
           <SectionList
-            showActionButton
+            showButton
             buttonTitle="Assign Yourself"
             noItems={issue.assignees.length === 0}
             noItemsMessage="None yet"
@@ -46,6 +46,13 @@ class IssueSettings extends Component {
 
           <SectionList
             title="Actions">
+            <ListItem
+              title="Lock Issue"
+              hideChevron
+              underlayColor={colors.greyLight}
+              titleStyle={styles.listItemTitle}
+              onPress={() => showLockIssueActionSheet(issue)}
+            />
             <ListItem
               title="Close Issue"
               hideChevron
@@ -74,7 +81,24 @@ const showConfirmCloseIssueActionSheet = issue => {
   );
 };
 
+const showLockIssueActionSheet = issue => {
+  ActionSheetIOS.showActionSheetWithOptions(
+    {
+      title: 'Are you sure you want to lock this issue?',
+      options: ['Yes', 'Cancel'],
+      cancelButtonIndex: 1,
+    },
+    buttonIndex => {
+
+    }
+  );
+};
+
 const styles = StyleSheet.create({
+  listItemTitle: {
+    color: colors.black,
+    fontFamily: 'AvenirNext-Medium',
+  },
   closeActionTitle: {
     color: colors.red,
     fontFamily: 'AvenirNext-DemiBold',

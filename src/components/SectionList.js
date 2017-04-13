@@ -8,7 +8,6 @@ const SectionList = (
   {
     title,
     showButton,
-    showActionButton,
     buttonTitle,
     buttonAction,
     noOuterBorders,
@@ -24,13 +23,13 @@ const SectionList = (
       <View style={styles.topHeader}>
         <Text style={styles.sectionTitle}>{title.toUpperCase()}</Text>
 
-        {(showButton || showActionButton) &&
+        {showButton &&
           <Button
             title={buttonTitle}
             fontFamily="AvenirNext-DemiBold"
             fontSize={13}
             color={showButton ? colors.primarydark : colors.white}
-            buttonStyle={[styles.button, showButton ? styles.displayButton : styles.actionButton]}
+            buttonStyle={styles.button}
             onPress={buttonAction}
           />}
       </View>
@@ -69,25 +68,17 @@ const styles = StyleSheet.create({
     fontFamily: 'AvenirNext-Bold',
   },
   listTitle: {
-    color: colors.primarydark,
-    fontFamily: 'AvenirNext-DemiBold',
+    color: colors.black,
+    fontFamily: 'AvenirNext-Medium',
   },
   button: {
-    borderWidth: 1,
-    borderRadius: 3,
-    paddingTop: 5,
-    paddingBottom: 5,
-    paddingLeft: 10,
-    paddingRight: 10,
-    margin: 0,
-  },
-  displayButton: {
     backgroundColor: colors.white,
     borderColor: colors.primarydark,
-  },
-  actionButton: {
-    backgroundColor: colors.green,
-    borderColor: colors.green,
+    borderWidth: 1,
+    borderRadius: 3,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    margin: 0,
   },
   list: {
     marginTop: 0,
