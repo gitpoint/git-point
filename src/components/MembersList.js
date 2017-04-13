@@ -19,7 +19,7 @@ const MembersList = (
   },
 ) => (
   <View style={[styles.container, containerStyle && containerStyle]}>
-    <Text style={smallTitle ? styles.sectionTitleSmall : styles.sectionTitleSmall}>{title}</Text>
+    <Text style={smallTitle ? styles.sectionTitleSmall : styles.sectionTitle}>{title}</Text>
 
     <FlatList
       data={members}

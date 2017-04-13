@@ -48,7 +48,8 @@ AssigneeListItem.propTypes = {
 const styles = StyleSheet.create({
   container: {
     paddingRight: 10,
-    paddingBottom: 10,
+    borderBottomColor: colors.greyLight,
+    borderBottomWidth: 1,
   },
   wrapper: {
     padding: 10,
@@ -70,8 +71,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    color: colors.primaryDark,
-    fontFamily: 'AvenirNext-DemiBold',
+    color: colors.black,
+    fontFamily: 'AvenirNext-Medium',
+    fontSize: 16,
     marginLeft: 10
   },
   iconContainer: {

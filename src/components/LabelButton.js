@@ -7,30 +7,36 @@ import colors from '../config/colors';
 const LabelButton = (
   {
     label,
+    largeWithTag,
   },
 ) => (
   <Button
     title={label.name}
     fontFamily="AvenirNext-DemiBold"
-    fontSize={12}
-    color={
-      label.name === 'bug' ||
-        label.name === 'help wanted' ||
-        label.name === 'question'
-        ? colors.white
-        : colors.primarydark
-    }
-    buttonStyle={styles.labelButton}
+    fontSize={largeWithTag ? 13 : 12}
+    color={getFontColorByBackground(label.color)}
+    buttonStyle={largeWithTag ? styles.largeLabelButton : styles.smallLabelButton}
     backgroundColor={`#${label.color}`}
+    icon={
+      largeWithTag && {
+        name: 'tag',
+        type: 'octicon',
+        color: getFontColorByBackground(label.color),
+      }
+    }
   />
 );
 
+const getFontColorByBackground = bgColor =>
+  parseInt(bgColor, 16) > 0xffffff / 2 ? colors.black : colors.white;
+
 LabelButton.propTypes = {
   label: PropTypes.object,
+  largeWithTag: PropTypes.bool,
 };
 
 const styles = StyleSheet.create({
-  labelButton: {
+  smallLabelButton: {
     padding: 5,
     paddingTop: 3,
     paddingBottom: 3,
@@ -39,6 +45,14 @@ const styles = StyleSheet.create({
     marginRight: 10,
     minWidth: 70,
   },
+  largeLabelButton: {
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
+    marginLeft: 0,
+    borderRadius: 3,
+  }
 });
 
 export default LabelButton;

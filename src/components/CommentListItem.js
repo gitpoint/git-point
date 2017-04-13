@@ -101,7 +101,7 @@ class CommentListItem extends Component {
             {reactionTypes.map((reaction, i) =>
               this.renderReaction(reaction, comment, i))}
 
-            <TouchableOpacity onPress={() => this.showActionSheet(comment)}>
+            <TouchableOpacity onPress={() => this.showReactionActionSheet(comment)}>
               <AddReaction />
             </TouchableOpacity>
           </View>
@@ -111,7 +111,7 @@ class CommentListItem extends Component {
     );
   }
 
-  showActionSheet = comment => {
+  showReactionActionSheet = comment => {
     ActionSheetIOS.showActionSheetWithOptions(
       {
         title: 'Add Reaction',

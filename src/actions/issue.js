@@ -13,10 +13,13 @@ import {
   CREATE_REACTION_HAD_ERROR,
   DELETE_REACTION_IS_PENDING,
   DELETE_REACTION_WAS_SUCCESSFUL,
-  DELETE_REACTION_HAD_ERROR
+  DELETE_REACTION_HAD_ERROR,
+  EDIT_ISSUE_IS_PENDING,
+  EDIT_ISSUE_WAS_SUCCESSFUL,
+  EDIT_ISSUE_HAD_ERROR,
 } from '../constants';
 
-import { fetchUrlPreview, fetchPostIssueComment, fetchCreateIssueReactionComment, fetchDeleteReaction } from '../api';
+import { fetchUrlPreview, fetchPostIssueComment, fetchCreateIssueReactionComment, fetchDeleteReaction, fetchEditIssue } from '../api';
 
 const getIssueComments = (url) => {
   return (dispatch, getState) => {
@@ -132,6 +135,27 @@ export const deleteReaction = (commentID, reactionID) => {
     .catch(error => {
       dispatch({
         type: DELETE_REACTION_HAD_ERROR,
+        payload: error,
+      })
+    })
+  };
+}
+
+export const editIssue = (owner, repoName, issueNum, editParams) => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: EDIT_ISSUE_IS_PENDING });
+
+    return fetchEditIssue(owner, repoName, issueNum, editParams, accessToken).then(data => {
+      dispatch({
+        type: EDIT_ISSUE_WAS_SUCCESSFUL,
+        payload: data,
+      });
+    })
+    .catch(error => {
+      dispatch({
+        type: EDIT_ISSUE_HAD_ERROR,
         payload: error,
       })
     })

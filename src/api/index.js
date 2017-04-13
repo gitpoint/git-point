@@ -1,4 +1,3 @@
-
 export const CLIENT_ID = '87c7f05700c052937cfb';
 export const CLIENT_SECRET = '3a70aee4d5e26c457720a31c3efe2f9062a4997a';
 
@@ -7,6 +6,14 @@ const accessTokenParameters = accessToken => ({
     Authorization: `token ${accessToken}`,
     'Cache-Control': 'no-cache',
   },
+});
+
+const accessTokenParametersPATCH = (editParams, accessToken) => ({
+  method: 'PATCH',
+  headers: {
+    Authorization: `token ${accessToken}`,
+  },
+  body: JSON.stringify(editParams),
 });
 
 const accessTokenParametersPOST = (accessToken, body) => ({
@@ -152,6 +159,14 @@ export const fetchDeleteReaction = (reactionID, accessToken) => {
   return fetch(
     POST_ENDPOINT,
     accessTokenParametersDELETE(accessToken));
+};
+
+export const fetchEditIssue = (owner, repoName, issueNum, editParams, accessToken) => {
+  const POST_ENDPOINT = `${root}/${owner}/${repoName}/issues/${issueNum}`;
+
+  return fetch(
+    POST_ENDPOINT,
+    accessTokenParametersPATCH(editParams, accessToken));
 };
 
 ///

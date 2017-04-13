@@ -6,7 +6,7 @@ export default {
   greyDark: '#999',
   greyLight: '#ededed',
   green: '#2cbe4e',
-  red: '#cb2431',
+  red: '#ee0701',
   white: '#ffffff',
   bug: '#ee0701',
   duplicate: '#cccccc',
