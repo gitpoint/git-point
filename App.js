@@ -17,6 +17,9 @@ import Splash from './src/screens/SplashScreen';
 // LoginScreen
 import Login from './src/screens/LoginScreen';
 
+// WelcomeScreen
+import Welcome from './src/screens/WelcomeScreen';
+
 // Main Tab Screens
 import MyProfile from './src/screens/MyProfileScreen';
 import Profile from './src/screens/ProfileScreen';
@@ -267,6 +270,15 @@ const GitPoint = StackNavigator(
         },
       },
     },
+    Welcome: {
+      screen: Welcome,
+      navigationOptions: {
+        header: {
+          visible: false,
+        },
+      },
+      path: 'welcome',
+    },
     Main: {
       screen: MainTabNavigator,
       navigationOptions: {
@@ -274,7 +286,6 @@ const GitPoint = StackNavigator(
           visible: false,
         },
       },
-      path: 'home',
     },
   },
   {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Image } from 'react-native';
 
 import colors from '../config/colors'
 
@@ -9,7 +9,7 @@ import { connect }  from 'react-redux';
 
 const mapStateToProps = state => (
   {
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
   }
 )
 
@@ -33,7 +33,10 @@ class Splash extends Component {
   render() {
     return (
       <View style={styles.logoContainer}>
-
+        <Image
+          style={styles.logo}
+          source={require('../images/logo-black.png')}
+        />
       </View>
     )
   }
@@ -48,7 +51,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     width: 100,
-    height: 100
+    height: 100,
   },
 });
 
