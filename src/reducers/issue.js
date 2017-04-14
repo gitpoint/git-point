@@ -11,12 +11,21 @@ import {
   HYDRATE_COMMENT_IS_PENDING,
   HYDRATE_COMMENT_WAS_SUCCESSFUL,
   HYDRATE_COMMENT_HAD_ERROR,
-  CREATE_REACTION_IS_PENDING,
-  CREATE_REACTION_WAS_SUCCESSFUL,
-  CREATE_REACTION_HAD_ERROR,
-  DELETE_REACTION_IS_PENDING,
-  DELETE_REACTION_WAS_SUCCESSFUL,
-  DELETE_REACTION_HAD_ERROR
+  CREATE_ISSUE_REACTION_IS_PENDING,
+  CREATE_ISSUE_REACTION_WAS_SUCCESSFUL,
+  CREATE_ISSUE_REACTION_HAD_ERROR,
+  CREATE_COMMENT_REACTION_IS_PENDING,
+  CREATE_COMMENT_REACTION_WAS_SUCCESSFUL,
+  CREATE_COMMENT_REACTION_HAD_ERROR,
+  DELETE_COMMENT_REACTION_IS_PENDING,
+  DELETE_COMMENT_REACTION_WAS_SUCCESSFUL,
+  DELETE_COMMENT_REACTION_HAD_ERROR,
+  DELETE_ISSUE_REACTION_IS_PENDING,
+  DELETE_ISSUE_REACTION_WAS_SUCCESSFUL,
+  DELETE_ISSUE_REACTION_HAD_ERROR,
+  EDIT_ISSUE_IS_PENDING,
+  EDIT_ISSUE_WAS_SUCCESSFUL,
+  EDIT_ISSUE_HAD_ERROR,
 } from '../constants';
 
 const initialState = {
@@ -29,6 +38,7 @@ const initialState = {
   isCreatingReaction: false,
   isCreatingReactionForID: null,
   isDeletingReaction: false,
+  isEditingIssue: false,
   error: '',
 }
 
@@ -105,13 +115,33 @@ export default function issueReducer(state = initialState, action={}) {
           error: action.payload,
           isPendingHydratedComment: false,
         };
-      case CREATE_REACTION_IS_PENDING:
+      case CREATE_ISSUE_REACTION_IS_PENDING:
         return {
           ...state,
           isCreatingReactionForID: action.payload,
           isCreatingReaction: true,
         };
-      case CREATE_REACTION_WAS_SUCCESSFUL:
+      case CREATE_ISSUE_REACTION_WAS_SUCCESSFUL:
+        return {
+          ...state,
+          issue: {...state.issue, completeReactions: [...state.issue.completeReactions, action.payload]},
+          isCreatingReactionForID: null,
+          isCreatingReaction: false,
+        };
+      case CREATE_ISSUE_REACTION_HAD_ERROR:
+        return {
+          ...state,
+          error: action.payload,
+          isCreatingReactionForID: null,
+          isCreatingReaction: false,
+        };
+      case CREATE_COMMENT_REACTION_IS_PENDING:
+        return {
+          ...state,
+          isCreatingReactionForID: action.payload,
+          isCreatingReaction: true,
+        };
+      case CREATE_COMMENT_REACTION_WAS_SUCCESSFUL:
         return {
           ...state,
           comments: state.comments.map(
@@ -126,19 +156,36 @@ export default function issueReducer(state = initialState, action={}) {
           isCreatingReactionForID: null,
           isCreatingReaction: false,
         };
-      case CREATE_REACTION_HAD_ERROR:
+      case CREATE_COMMENT_REACTION_HAD_ERROR:
         return {
           ...state,
           error: action.payload,
           isCreatingReactionForID: null,
           isCreatingReaction: false,
         };
-      case DELETE_REACTION_IS_PENDING:
+      case DELETE_ISSUE_REACTION_IS_PENDING:
         return {
           ...state,
           isDeletingReaction: true,
         };
-      case DELETE_REACTION_WAS_SUCCESSFUL:
+      case DELETE_ISSUE_REACTION_WAS_SUCCESSFUL:
+        return {
+          ...state,
+          issue: {...state.issue, completeReactions: state.issue.completeReactions.filter(reaction => reaction.id !== action.reactionID)},
+          isDeletingReaction: false,
+        };
+      case DELETE_ISSUE_REACTION_HAD_ERROR:
+        return {
+          ...state,
+          error: action.payload,
+          isDeletingReaction: false,
+        };
+      case DELETE_COMMENT_REACTION_IS_PENDING:
+        return {
+          ...state,
+          isDeletingReaction: true,
+        };
+      case DELETE_COMMENT_REACTION_WAS_SUCCESSFUL:
         return {
           ...state,
           comments: state.comments.map(
@@ -152,11 +199,28 @@ export default function issueReducer(state = initialState, action={}) {
            ),
           isDeletingReaction: false,
         };
-      case DELETE_REACTION_HAD_ERROR:
+      case DELETE_COMMENT_REACTION_HAD_ERROR:
         return {
           ...state,
           error: action.payload,
           isDeletingReaction: false,
+        };
+      case EDIT_ISSUE_IS_PENDING:
+        return {
+          ...state,
+          isEditingIssue: true,
+        };
+      case EDIT_ISSUE_WAS_SUCCESSFUL:
+        return {
+          ...state,
+          issue: action.payload,
+          isEditingIssue: false,
+        };
+      case EDIT_ISSUE_HAD_ERROR:
+        return {
+          ...state,
+          error: action.payload,
+          isEditingIssue: false,
         };
       default:
         return state;

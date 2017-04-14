@@ -11,18 +11,24 @@ import {
   HYDRATE_COMMENT_IS_PENDING,
   HYDRATE_COMMENT_WAS_SUCCESSFUL,
   HYDRATE_COMMENT_HAD_ERROR,
-  CREATE_REACTION_IS_PENDING,
-  CREATE_REACTION_WAS_SUCCESSFUL,
-  CREATE_REACTION_HAD_ERROR,
-  DELETE_REACTION_IS_PENDING,
-  DELETE_REACTION_WAS_SUCCESSFUL,
-  DELETE_REACTION_HAD_ERROR,
+  CREATE_ISSUE_REACTION_IS_PENDING,
+  CREATE_ISSUE_REACTION_WAS_SUCCESSFUL,
+  CREATE_ISSUE_REACTION_HAD_ERROR,
+  CREATE_COMMENT_REACTION_IS_PENDING,
+  CREATE_COMMENT_REACTION_WAS_SUCCESSFUL,
+  CREATE_COMMENT_REACTION_HAD_ERROR,
+  DELETE_COMMENT_REACTION_IS_PENDING,
+  DELETE_COMMENT_REACTION_WAS_SUCCESSFUL,
+  DELETE_COMMENT_REACTION_HAD_ERROR,
+  DELETE_ISSUE_REACTION_IS_PENDING,
+  DELETE_ISSUE_REACTION_WAS_SUCCESSFUL,
+  DELETE_ISSUE_REACTION_HAD_ERROR,
   EDIT_ISSUE_IS_PENDING,
   EDIT_ISSUE_WAS_SUCCESSFUL,
   EDIT_ISSUE_HAD_ERROR,
 } from '../constants';
 
-import { fetchUrlPreview, fetchPostIssueComment, fetchCreateIssueReactionComment, fetchDeleteReaction, fetchEditIssue } from '../api';
+import { fetchUrlPreview, fetchPostIssueComment, fetchCreateIssueReaction, fetchCreateCommentReaction, fetchDeleteReaction, fetchEditIssue } from '../api';
 
 const getIssueComments = (issue) => {
   return (dispatch, getState) => {
@@ -123,44 +129,86 @@ export const getHydratedComments = (issue) => {
   }
 }
 
-export const createIssueCommentReaction = (type, commentID, owner, repoName) => {
+export const createIssueReaction = (type, issueNum, commentID, owner, repoName) => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 
-    dispatch({ type: CREATE_REACTION_IS_PENDING, payload: commentID });
+    dispatch({ type: CREATE_ISSUE_REACTION_IS_PENDING, payload: commentID });
 
-    return fetchCreateIssueReactionComment(type, commentID, owner, repoName, accessToken).then(data => {
+    return fetchCreateIssueReaction(type, issueNum, owner, repoName, accessToken).then(data => {
       dispatch({
-        type: CREATE_REACTION_WAS_SUCCESSFUL,
-        commentID: commentID,
+        type: CREATE_ISSUE_REACTION_WAS_SUCCESSFUL,
         payload: data,
       });
     })
     .catch(error => {
       dispatch({
-        type: CREATE_REACTION_HAD_ERROR,
+        type: CREATE_ISSUE_REACTION_HAD_ERROR,
         payload: error,
       })
     })
   };
 }
 
-export const deleteReaction = (commentID, reactionID) => {
+export const createCommentReaction = (type, commentID, owner, repoName) => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 
-    dispatch({ type: DELETE_REACTION_IS_PENDING });
+    dispatch({ type: CREATE_COMMENT_REACTION_IS_PENDING, payload: commentID });
+
+    return fetchCreateCommentReaction(type, commentID, owner, repoName, accessToken).then(data => {
+      dispatch({
+        type: CREATE_COMMENT_REACTION_WAS_SUCCESSFUL,
+        commentID: commentID,
+        payload: data,
+      });
+    })
+    .catch(error => {
+      dispatch({
+        type: CREATE_COMMENT_REACTION_HAD_ERROR,
+        payload: error,
+      })
+    })
+  };
+}
+
+export const deleteIssueReaction = (reactionID) => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: DELETE_ISSUE_REACTION_IS_PENDING });
 
     return fetchDeleteReaction(reactionID, accessToken).then(() => {
       dispatch({
-        type: DELETE_REACTION_WAS_SUCCESSFUL,
+        type: DELETE_ISSUE_REACTION_WAS_SUCCESSFUL,
+        reactionID: reactionID,
+      });
+    })
+    .catch(error => {
+      dispatch({
+        type: DELETE_ISSUE_REACTION_HAD_ERROR,
+        payload: error,
+      })
+    })
+  };
+}
+
+export const deleteCommentReaction = (commentID, reactionID) => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: DELETE_COMMENT_REACTION_IS_PENDING });
+
+    return fetchDeleteReaction(reactionID, accessToken).then(() => {
+      dispatch({
+        type: DELETE_COMMENT_REACTION_WAS_SUCCESSFUL,
         commentID: commentID,
         reactionID: reactionID,
       });
     })
     .catch(error => {
       dispatch({
-        type: DELETE_REACTION_HAD_ERROR,
+        type: DELETE_COMMENT_REACTION_HAD_ERROR,
         payload: error,
       })
     })

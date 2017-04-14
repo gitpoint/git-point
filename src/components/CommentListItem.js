@@ -40,6 +40,7 @@ class CommentListItem extends Component {
     return count > 0
       ? <Reaction
           key={index}
+          commentType={this.props.commentType}
           type={type}
           count={count}
           active={reacted}
@@ -132,6 +133,7 @@ class CommentListItem extends Component {
         if (buttonIndex !== 6) {
           this.props.addAdditionalReaction(
             reactionType,
+            this.props.commentType,
             comment.id,
             this.alreadyReacted(comment, reactionType)
           );
@@ -154,6 +156,7 @@ class CommentListItem extends Component {
 CommentListItem.propTypes = {
   authUser: PropTypes.string,
   comment: PropTypes.object,
+  commentType: PropTypes.string,
   isCreatingReaction: PropTypes.bool,
   triggerReaction: PropTypes.func,
   addAdditionalReaction: PropTypes.func,

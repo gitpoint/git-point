@@ -15,6 +15,7 @@ const emojiTypes = {
 const Reaction = (
   {
     type,
+    commentType,
     count,
     active,
     createdReactionID,
@@ -24,7 +25,7 @@ const Reaction = (
 ) => (
   <TouchableOpacity
     style={active ? styles.containerActive : styles.container}
-    onPress={() => triggerReaction(type, commentID, active, createdReactionID)}>
+    onPress={() => triggerReaction(type, commentType, commentID, active, createdReactionID)}>
     <Text style={styles.reaction}>{emojiTypes[type]}</Text>
     <Text style={active ? styles.countActive : styles.count}>
       {count}
@@ -34,6 +35,7 @@ const Reaction = (
 
 Reaction.propTypes = {
   type: PropTypes.string,
+  commentType: PropTypes.string,
   count: PropTypes.number,
   active: PropTypes.bool,
   createdReactionID: PropTypes.number,

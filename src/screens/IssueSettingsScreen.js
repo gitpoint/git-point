@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
-import {ScrollView, StyleSheet, View, ActionSheetIOS} from 'react-native';
-import {Button, ListItem} from 'react-native-elements';
+import {ScrollView, StyleSheet, ActionSheetIOS} from 'react-native';
+import {ListItem} from 'react-native-elements';
 
 import ViewContainer from '../components/ViewContainer';
 import SectionList from '../components/SectionList';
@@ -9,10 +9,24 @@ import LabelListItem from '../components/LabelListItem';
 
 import colors from '../config/colors';
 
+import {connect} from 'react-redux';
+import {editIssue} from '../actions/issue';
+
+const mapStateToProps = state => ({
+  authUser: state.authUser.user,
+  repository: state.repository.repository,
+  issue: state.issue.issue,
+  isEditingIssue: state.issue.isEditingIssue,
+});
+
+const mapDispatchToProps = dispatch => ({
+  editIssue: (owner, repoName, issueNum, editParams) =>
+    dispatch(editIssue(owner, repoName, issueNum, editParams)),
+});
+
 class IssueSettings extends Component {
   render() {
-    const { navigation } = this.props;
-    const issue = navigation.state.params.issue;
+    const {issue, navigation} = this.props;
 
     return (
       <ViewContainer>
@@ -23,12 +37,11 @@ class IssueSettings extends Component {
             style={{borderBottomWidth: 1, borderBottomColor: colors.grey}}
             noItems={issue.labels.length === 0}
             noItemsMessage="None yet"
-            title="LABELS">
-            {
-              issue.labels.map((item, i) => (
-                <LabelListItem label={item} key={i}/>
-              ))
-            }
+            title="LABELS"
+          >
+            {issue.labels.map((item, i) => (
+              <LabelListItem label={item} key={i} />
+            ))}
           </SectionList>
 
           <SectionList
@@ -36,63 +49,66 @@ class IssueSettings extends Component {
             buttonTitle="Assign Yourself"
             noItems={issue.assignees.length === 0}
             noItemsMessage="None yet"
-            title="ASSIGNEES">
-            {
-              issue.assignees.map((item, i) => (
-                <AssigneeListItem user={item} key={i} navigation={navigation}/>
-              ))
-            }
+            title="ASSIGNEES"
+          >
+            {issue.assignees.map((item, i) => (
+              <AssigneeListItem user={item} key={i} navigation={navigation} />
+            ))}
           </SectionList>
 
-          <SectionList
-            title="Actions">
+          <SectionList title="Actions">
             <ListItem
               title="Lock Issue"
               hideChevron
               underlayColor={colors.greyLight}
               titleStyle={styles.listItemTitle}
-              onPress={() => showLockIssueActionSheet(issue)}
+              onPress={() => this.showLockIssueActionSheet()}
             />
             <ListItem
               title="Close Issue"
               hideChevron
               underlayColor={colors.greyLight}
               titleStyle={styles.closeActionTitle}
-              onPress={() => showConfirmCloseIssueActionSheet(issue)}
+              onPress={() => this.showConfirmCloseIssueActionSheet()}
             />
           </SectionList>
         </ScrollView>
       </ViewContainer>
     );
   }
+
+  showConfirmCloseIssueActionSheet = () => {
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        title: 'Are you sure you want to close this issue?',
+        options: ['Yes', 'Cancel'],
+        destructiveButtonIndex: 0,
+        cancelButtonIndex: 1,
+      },
+      buttonIndex => {
+          const {issue, repository} = this.props;
+
+          const repoName = repository.name;
+          const owner = repository.owner.login;
+
+        if (buttonIndex === 0) {
+          this.props.editIssue(owner, repoName, issue.number, {state: 'closed'});
+        }
+      }
+    );
+  };
+
+  showLockIssueActionSheet = issue => {
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        title: 'Are you sure you want to lock this issue?',
+        options: ['Yes', 'Cancel'],
+        cancelButtonIndex: 1,
+      },
+      buttonIndex => {}
+    );
+  };
 }
-
-const showConfirmCloseIssueActionSheet = issue => {
-  ActionSheetIOS.showActionSheetWithOptions(
-    {
-      title: 'Are you sure you want to close this issue?',
-      options: ['Yes', 'Cancel'],
-      destructiveButtonIndex: 0,
-      cancelButtonIndex: 1,
-    },
-    buttonIndex => {
-
-    }
-  );
-};
-
-const showLockIssueActionSheet = issue => {
-  ActionSheetIOS.showActionSheetWithOptions(
-    {
-      title: 'Are you sure you want to lock this issue?',
-      options: ['Yes', 'Cancel'],
-      cancelButtonIndex: 1,
-    },
-    buttonIndex => {
-
-    }
-  );
-};
 
 const styles = StyleSheet.create({
   listItemTitle: {
@@ -105,4 +121,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export default IssueSettings;
+IssueSettings.propTypes = {
+  editIssue: PropTypes.func,
+  authUser: PropTypes.object,
+  repository: PropTypes.object,
+  issue: PropTypes.object,
+  isEditingIssue: PropTypes.bool,
+  navigation: PropTypes.object,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(IssueSettings);

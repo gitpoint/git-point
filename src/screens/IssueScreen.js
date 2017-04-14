@@ -11,10 +11,17 @@ import CommentInput from '../components/CommentInput';
 import colors from '../config/colors';
 
 import {connect} from 'react-redux';
-import {getHydratedComments, postIssueComment, createIssueCommentReaction, deleteReaction} from '../actions/issue';
+import {
+  getHydratedComments,
+  postIssueComment,
+  createIssueReaction,
+  createCommentReaction,
+  deleteIssueReaction,
+  deleteCommentReaction,
+} from '../actions/issue';
 
 const mapStateToProps = state => ({
-  authUser: state.authUser.user.login,
+  authUser: state.authUser.user,
   repository: state.repository.repository,
   issue: state.issue.issue,
   comments: state.issue.comments,
@@ -27,30 +34,37 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getHydratedComments: url => dispatch(getHydratedComments(url)),
-  postIssueComment: (body, owner, repoName, issueNum) => dispatch(postIssueComment(body, owner, repoName, issueNum)),
-  createIssueCommentReaction: (type, commentID, owner, repoName) => dispatch(createIssueCommentReaction(type, commentID, owner, repoName)),
-  deleteReaction: (commentID, reactionID) => dispatch(deleteReaction(commentID, reactionID)),
+  postIssueComment: (body, owner, repoName, issueNum) =>
+    dispatch(postIssueComment(body, owner, repoName, issueNum)),
+  createIssueReaction: (type, issue, commentID, owner, repoName) =>
+    dispatch(createIssueReaction(type, issue, commentID, owner, repoName)),
+  createCommentReaction: (type, commentID, owner, repoName) =>
+    dispatch(createCommentReaction(type, commentID, owner, repoName)),
+  deleteIssueReaction: reactionID => dispatch(deleteIssueReaction(reactionID)),
+  deleteCommentReaction: (commentID, reactionID) =>
+    dispatch(deleteCommentReaction(commentID, reactionID)),
 });
 
 class Issue extends Component {
   static navigationOptions = {
-    header: ({ state, navigate }) => {
+    header: ({state, navigate}) => {
       let right = (
         <Icon
           name="gear"
           color={colors.primarydark}
-          type='octicon'
+          type="octicon"
           containerStyle={{marginRight: 5}}
           onPress={() => navigate('IssueSettings', {
             issue: state.params.issue,
-          })}/>
+          })}
+        />
       );
 
       if (state.params.userHasPushPermission) {
-        return { right };
+        return {right};
       }
     },
-  }
+  };
 
   componentDidMount() {
     const issue = this.props.navigation.state.params.issue;
@@ -58,7 +72,7 @@ class Issue extends Component {
     this.props.getHydratedComments(issue);
   }
 
-  postComment = (body) => {
+  postComment = body => {
     const {repository, navigation} = this.props;
 
     const repoName = repository.name;
@@ -66,34 +80,69 @@ class Issue extends Component {
     const issueNum = navigation.state.params.issue.number;
 
     this.props.postIssueComment(body, owner, repoName, issueNum);
-  }
+  };
 
-  triggerReaction = (type, commentID, active, createdReactionID) => {
-    const {repository} = this.props;
+  triggerReaction = (
+    type,
+    commentType,
+    commentID,
+    active,
+    createdReactionID
+  ) => {
+    const {repository, navigation} = this.props;
     const repoName = repository.name;
     const owner = repository.owner.login;
+    const issueNum = navigation.state.params.issue.number;
 
-    active ? this.props.deleteReaction(commentID, createdReactionID) : this.props.createIssueCommentReaction(type, commentID, owner, repoName);
-  }
+    if (active) {
+      commentType === 'issue'
+        ? this.props.deleteIssueReaction(createdReactionID)
+        : this.props.deleteCommentReaction(commentID, createdReactionID);
+    } else {
+      commentType === 'issue'
+        ? this.props.createIssueReaction(
+            type,
+            issueNum,
+            commentID,
+            owner,
+            repoName
+          )
+        : this.props.createCommentReaction(type, commentID, owner, repoName);
+    }
+  };
 
-  addAdditionalReaction = (type, commentID, reacted) => {
-    const {repository} = this.props;
+  addAdditionalReaction = (type, commentType, commentID, reacted) => {
+    const {repository, navigation} = this.props;
     const repoName = repository.name;
     const owner = repository.owner.login;
+    const issueNum = navigation.state.params.issue.number;
 
     if (!reacted) {
-      this.props.createIssueCommentReaction(type, commentID, owner, repoName);
+      commentType === 'issue'
+        ? this.props.createIssueReaction(
+            type,
+            issueNum,
+            commentID,
+            owner,
+            repoName
+          )
+        : this.props.createCommentReaction(type, commentID, owner, repoName);
     }
-  }
+  };
 
   renderItem = ({item}) => (
     <CommentListItem
       comment={item}
-      authUser={this.props.authUser}
-      isCreatingReaction={this.props.isCreatingReaction && this.props.isCreatingReactionForID === item.id}
+      commentType={item.issue_url ? 'comment' : 'issue'}
+      authUser={this.props.authUser.login}
+      isCreatingReaction={
+        this.props.isCreatingReaction &&
+          this.props.isCreatingReactionForID === item.id
+      }
       triggerReaction={this.triggerReaction}
       addAdditionalReaction={this.addAdditionalReaction}
-      navigation={this.props.navigation} />
+      navigation={this.props.navigation}
+    />
   );
 
   render() {
@@ -114,7 +163,10 @@ class Issue extends Component {
           >
             <FlatList
               ListHeaderComponent={(): React$Element<*> => (
-                <IssueDescriptionListItem issue={issue} navigation={navigation} />
+                <IssueDescriptionListItem
+                  issue={issue}
+                  navigation={navigation}
+                />
               )}
               removeClippedSubviews={false}
               data={[issue, ...comments]}
@@ -122,9 +174,8 @@ class Issue extends Component {
               renderItem={this.renderItem}
             />
 
-            <CommentInput onSubmitEditing={this.postComment}/>
-          </KeyboardAvoidingView>
-        }
+            <CommentInput onSubmitEditing={this.postComment} />
+          </KeyboardAvoidingView>}
       </ViewContainer>
     );
   }
@@ -137,10 +188,12 @@ class Issue extends Component {
 Issue.propTypes = {
   getHydratedComments: PropTypes.func,
   postIssueComment: PropTypes.func,
-  createIssueCommentReaction: PropTypes.func,
-  deleteReaction: PropTypes.func,
+  createIssueReaction: PropTypes.func,
+  createCommentReaction: PropTypes.func,
+  deleteIssueReaction: PropTypes.func,
+  deleteCommentReaction: PropTypes.func,
   issue: PropTypes.object,
-  authUser: PropTypes.string,
+  authUser: PropTypes.object,
   repository: PropTypes.object,
   comments: PropTypes.array,
   hydratedComments: PropTypes.array,
