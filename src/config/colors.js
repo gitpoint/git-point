@@ -5,14 +5,9 @@ export default {
   greyDarkest: '#808080',
   greyDark: '#999',
   greyLight: '#ededed',
+  greyVeryLight: '#fbfbfb',
   green: '#2cbe4e',
   red: '#ee0701',
   white: '#ffffff',
-  bug: '#ee0701',
-  duplicate: '#cccccc',
-  enhancement: '#84b6eb',
-  helpWanted: '#128A0C',
-  invalid: '#e6e6e6',
-  question: '#cc317c',
-  wontfix: '#ffffff'
+  transparent: 'transparent',
 }

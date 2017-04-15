@@ -19,7 +19,7 @@ const IssueListItem = (
   <TouchableHighlight
     onPress={() => navigation.navigate('Issue', {issue: issue, userHasPushPermission: userHasPushPermission})}
     underlayColor={colors.greyLight}>
-    <View style={styles.container}>
+    <View style={[styles.container, issue.state === 'closed' && styles.closedIssue]}>
       <ListItem
         containerStyle={styles.listItemContainer}
         title={issue.title}
@@ -46,9 +46,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingRight: 10,
-    paddingBottom: 5,
+    paddingVertical: 5,
     borderBottomWidth: 1,
     borderBottomColor: colors.greyLight,
+  },
+  closedIssue: {
+    backgroundColor: colors.greyVeryLight,
+    opacity: 0.6,
   },
   listItemContainer: {
     flex: 1,

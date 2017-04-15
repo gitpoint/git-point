@@ -1,3 +1,4 @@
+
 import React, {Component, PropTypes} from 'react';
 import {ScrollView, StyleSheet, ActionSheetIOS} from 'react-native';
 import {ListItem} from 'react-native-elements';
@@ -65,11 +66,11 @@ class IssueSettings extends Component {
               onPress={() => this.showLockIssueActionSheet()}
             />
             <ListItem
-              title="Close Issue"
+              title={issue.state === 'open' ? "Close Issue" : "Reopen Issue"}
               hideChevron
               underlayColor={colors.greyLight}
-              titleStyle={styles.closeActionTitle}
-              onPress={() => this.showConfirmCloseIssueActionSheet()}
+              titleStyle={issue.state === 'open' ? styles.closeActionTitle : styles.openActionTitle}
+              onPress={() => this.showChangeIssueStateActionSheet(issue.state === 'open' ? 'close' : 'reopen')}
             />
           </SectionList>
         </ScrollView>
@@ -77,22 +78,23 @@ class IssueSettings extends Component {
     );
   }
 
-  showConfirmCloseIssueActionSheet = () => {
+  showChangeIssueStateActionSheet = (stateChange) => {
     ActionSheetIOS.showActionSheetWithOptions(
       {
-        title: 'Are you sure you want to close this issue?',
+        title: `Are you sure you want to ${stateChange} this issue?`,
         options: ['Yes', 'Cancel'],
         destructiveButtonIndex: 0,
         cancelButtonIndex: 1,
       },
       buttonIndex => {
-          const {issue, repository} = this.props;
+        const {issue, repository} = this.props;
+        const repoName = repository.name;
+        const owner = repository.owner.login;
 
-          const repoName = repository.name;
-          const owner = repository.owner.login;
+        const newState = stateChange === 'open' ? 'open' : 'closed';
 
         if (buttonIndex === 0) {
-          this.props.editIssue(owner, repoName, issue.number, {state: 'closed'});
+          this.props.editIssue(owner, repoName, issue.number, {state: newState});
         }
       }
     );
@@ -105,7 +107,9 @@ class IssueSettings extends Component {
         options: ['Yes', 'Cancel'],
         cancelButtonIndex: 1,
       },
-      buttonIndex => {}
+      buttonIndex => {
+        
+      }
     );
   };
 }
@@ -117,7 +121,11 @@ const styles = StyleSheet.create({
   },
   closeActionTitle: {
     color: colors.red,
-    fontFamily: 'AvenirNext-DemiBold',
+    fontFamily: 'AvenirNext-Medium',
+  },
+  openActionTitle: {
+    color: colors.green,
+    fontFamily: 'AvenirNext-Medium',
   },
 });
 

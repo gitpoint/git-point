@@ -20,29 +20,52 @@ class CommentInput extends Component {
   }
 
   render() {
+    const {userHasPushPermission, issueLocked} = this.props;
+
+    let userCanPost = null;
+    if (issueLocked && !userHasPushPermission) {
+      userCanPost = false;
+    } else {
+      userCanPost = true;
+    }
+
     return (
       <View style={styles.container}>
         <View style={styles.wrapper}>
-          <Icon style={styles.icon} name="send" color={colors.grey} />
+          <Icon name="send" color={colors.grey} />
 
-          <TextInput
-            placeholder="Add a comment..."
-            multiline={true}
-            blurOnSubmit={true}
-            onChangeText={text => this.setState({text})}
-            onContentSizeChange={event => this.setState({height: event.nativeEvent.contentSize.height})}
-            onSubmitEditing={event => this.handleSubmit(event.nativeEvent.text)}
-            placeholderTextColor={colors.grey}
-            style={[
-              styles.textInput,
-              {height: Math.max(30, this.state.height)},
-            ]}
-            value={this.state.text}
-          />
+          {userCanPost &&
+            <TextInput
+              placeholder={(issueLocked && userHasPushPermission) ? "Locked, but you can still comment..." : "Add a comment..."}
+              multiline={true}
+              blurOnSubmit={true}
+              onChangeText={text => this.setState({text})}
+              onContentSizeChange={event => this.setState({height: event.nativeEvent.contentSize.height})}
+              onSubmitEditing={event => this.handleSubmit(event.nativeEvent.text)}
+              placeholderTextColor={colors.grey}
+              style={[
+                styles.textInput,
+                {height: Math.max(30, this.state.height)},
+              ]}
+              value={this.state.text}
+            />
+          }
 
-          <TouchableOpacity disabled={this.state.text === ''} style={styles.postButtonContainer} onPress={() => this.handleSubmit(this.state.text)}>
-            <Text style={[styles.postButton, this.state.text === '' ? styles.postButtonDisabled : styles.postButtonEnabled]}>Post</Text>
-          </TouchableOpacity>
+          {!userCanPost &&
+            <Text style={[styles.textInput, {color: colors.grey}]}>Issue is locked</Text>
+          }
+
+          {!this.props.issueLocked &&
+            <TouchableOpacity disabled={this.state.text === ''} style={styles.postButtonContainer} onPress={() => this.handleSubmit(this.state.text)}>
+              <Text style={[styles.postButton, this.state.text === '' ? styles.postButtonDisabled : styles.postButtonEnabled]}>Post</Text>
+            </TouchableOpacity>
+          }
+
+          {this.props.issueLocked &&
+            <View style={styles.postButtonContainer}>
+              <Icon name="lock" type="octicon" color={colors.grey} />
+            </View>
+          }
         </View>
       </View>
     );
@@ -50,6 +73,8 @@ class CommentInput extends Component {
 }
 
 CommentInput.propTypes = {
+  userHasPushPermission: PropTypes.bool,
+  issueLocked: PropTypes.bool,
   onSubmitEditing: PropTypes.func,
 };
 

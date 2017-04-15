@@ -40,7 +40,7 @@ class Repository extends Component {
 
     this.props.getRepository(repo.url);
     this.props.getContributors(repo.contributors_url);
-    this.props.getIssues(repo.issues_url.replace('{/number}', ''));
+    this.props.getIssues(repo.issues_url.replace('{/number}', '?state=all'));
   }
 
   render() {
@@ -121,6 +121,8 @@ class Repository extends Component {
             pureIssues.length > 0 &&
             <SectionList
               title="ISSUES"
+              noItems={pureIssues.filter(issue => issue.state === 'open').length === 0}
+              noItemsMessage={pureIssues.length === 0 ? "No issues" : "No open issues"}
               showButton={pureIssues.length > 3}
               buttonTitle="View All"
               buttonAction={() => navigation.navigate('IssuesList', {
@@ -130,6 +132,7 @@ class Repository extends Component {
               })}
             >
               {pureIssues
+                .filter(issue => issue.state === 'open')
                 .slice(0, 3)
                 .map((item, i) => (
                   <IssueListItem key={i} type="issue" issue={item} userHasPushPermission={repository.permissions.admin || repository.permissions.push} navigation={navigation} />
@@ -140,6 +143,8 @@ class Repository extends Component {
             pulls.length > 0 &&
             <SectionList
               title="PULL REQUESTS"
+              noItems={pulls.filter(issue => issue.state === 'open').length === 0}
+              noItemsMessage={pulls.length === 0 ? "No pull requests" : "No open pull requests"}
               showButton={pulls.length > 3}
               buttonTitle="View All"
               buttonAction={() => navigation.navigate('IssuesList', {
@@ -149,6 +154,7 @@ class Repository extends Component {
               })}
             >
               {pulls
+                .filter(issue => issue.state === 'open')
                 .slice(0, 3)
                 .map((item, i) => (
                   <IssueListItem key={i} type="pull" issue={item} userHasPushPermission={repository.permissions.admin || repository.permissions.push} navigation={navigation} />

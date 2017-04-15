@@ -54,6 +54,7 @@ class Issue extends Component {
           color={colors.primarydark}
           type="octicon"
           containerStyle={{marginRight: 5}}
+          underlayColor={colors.transparent}
           onPress={() => navigate('IssueSettings', {
             issue: state.params.issue,
           })}
@@ -174,7 +175,7 @@ class Issue extends Component {
               renderItem={this.renderItem}
             />
 
-            <CommentInput onSubmitEditing={this.postComment} />
+            <CommentInput userHasPushPermission={navigation.state.params.userHasPushPermission} issueLocked={issue.locked} onSubmitEditing={this.postComment} />
           </KeyboardAvoidingView>}
       </ViewContainer>
     );

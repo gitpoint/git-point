@@ -210,12 +210,14 @@ export default function issueReducer(state = initialState, action={}) {
           ...state,
           isEditingIssue: true,
         };
-      case EDIT_ISSUE_WAS_SUCCESSFUL:
+      case EDIT_ISSUE_WAS_SUCCESSFUL: {
         return {
           ...state,
-          issue: action.payload,
+          issue: {...state.issue, ...action.payload},
           isEditingIssue: false,
+          isCreatingReaction: false,
         };
+      }
       case EDIT_ISSUE_HAD_ERROR:
         return {
           ...state,

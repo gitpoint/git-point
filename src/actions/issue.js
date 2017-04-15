@@ -221,10 +221,10 @@ export const editIssue = (owner, repoName, issueNum, editParams) => {
 
     dispatch({ type: EDIT_ISSUE_IS_PENDING });
 
-    return fetchEditIssue(owner, repoName, issueNum, editParams, accessToken).then(data => {
+    return fetchEditIssue(owner, repoName, issueNum, editParams, accessToken).then(() => {
       dispatch({
         type: EDIT_ISSUE_WAS_SUCCESSFUL,
-        payload: data,
+        payload: editParams,
       });
     })
     .catch(error => {
