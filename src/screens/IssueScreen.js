@@ -133,6 +133,7 @@ class Issue extends Component {
 
   renderItem = ({item}) => (
     <CommentListItem
+      issue={this.props.issue}
       comment={item}
       commentType={item.issue_url ? 'comment' : 'issue'}
       authUser={this.props.authUser.login}

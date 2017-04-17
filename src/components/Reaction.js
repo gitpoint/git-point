@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {StyleSheet, TouchableOpacity, Text} from 'react-native';
+import {StyleSheet, TouchableOpacity, View, Text} from 'react-native';
 
 import colors from '../config/colors';
 
@@ -18,26 +18,38 @@ const Reaction = (
     commentType,
     count,
     active,
+    locked,
     createdReactionID,
     commentID,
     triggerReaction
   },
-) => (
-  <TouchableOpacity
-    style={active ? styles.containerActive : styles.container}
-    onPress={() => triggerReaction(type, commentType, commentID, active, createdReactionID)}>
-    <Text style={styles.reaction}>{emojiTypes[type]}</Text>
-    <Text style={active ? styles.countActive : styles.count}>
-      {count}
-    </Text>
-  </TouchableOpacity>
-);
+) => {
+  let Component = locked ? View : TouchableOpacity;
+
+  const addOrRemoveReaction = (type, commentType, commentID, active, createdReactionID) => {
+    if (!locked) {
+      return triggerReaction(type, commentType, commentID, active, createdReactionID);
+    }
+  }
+
+  return (
+    <Component
+      style={[styles.container, active && styles.containerActive, locked && styles.containerLocked]}
+      onPress={() => addOrRemoveReaction(type, commentType, commentID, active, createdReactionID)}>
+      <Text style={styles.reaction}>{emojiTypes[type]}</Text>
+      <Text style={active ? styles.countActive : styles.count}>
+        {count}
+      </Text>
+    </Component>
+  )
+};
 
 Reaction.propTypes = {
   type: PropTypes.string,
   commentType: PropTypes.string,
   count: PropTypes.number,
   active: PropTypes.bool,
+  locked: PropTypes.bool,
   createdReactionID: PropTypes.number,
   commentID: PropTypes.number,
   triggerReaction: PropTypes.func,
@@ -57,17 +69,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   containerActive: {
-    borderWidth: 1,
-    borderRadius: 5,
     borderColor: 'rgba(79,176,252,.4)',
     backgroundColor: 'rgba(79,176,252,.08)',
-    paddingLeft: 5,
-    paddingRight: 5,
-    paddingBottom: 2,
-    marginRight: 7,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+  },
+  containerLocked: {
+    backgroundColor: colors.greyVeryLight,
   },
   reaction: {
     fontSize: 13,

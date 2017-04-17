@@ -118,7 +118,6 @@ class Repository extends Component {
             </SectionList>
 
           {!isPendingIssues &&
-            pureIssues.length > 0 &&
             <SectionList
               title="ISSUES"
               noItems={pureIssues.filter(issue => issue.state === 'open').length === 0}
@@ -140,7 +139,6 @@ class Repository extends Component {
             </SectionList>}
 
           {!isPendingIssues &&
-            pulls.length > 0 &&
             <SectionList
               title="PULL REQUESTS"
               noItems={pulls.filter(issue => issue.state === 'open').length === 0}

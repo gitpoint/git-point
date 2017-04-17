@@ -26,6 +26,9 @@ import {
   EDIT_ISSUE_IS_PENDING,
   EDIT_ISSUE_WAS_SUCCESSFUL,
   EDIT_ISSUE_HAD_ERROR,
+  CHANGE_LOCK_STATUS_IS_PENDING,
+  CHANGE_LOCK_STATUS_WAS_SUCCESSFUL,
+  CHANGE_LOCK_STATUS_HAD_ERROR,
 } from '../constants';
 
 const initialState = {
@@ -39,6 +42,7 @@ const initialState = {
   isCreatingReactionForID: null,
   isDeletingReaction: false,
   isEditingIssue: false,
+  isChangingLockStatus: false,
   error: '',
 }
 
@@ -223,6 +227,24 @@ export default function issueReducer(state = initialState, action={}) {
           ...state,
           error: action.payload,
           isEditingIssue: false,
+        };
+      case CHANGE_LOCK_STATUS_IS_PENDING:
+        return {
+          ...state,
+          isChangingLockStatus: true,
+        };
+      case CHANGE_LOCK_STATUS_WAS_SUCCESSFUL: {
+        return {
+          ...state,
+          issue: {...state.issue, locked: !state.issue.locked},
+          isChangingLockStatus: false,
+        };
+      }
+      case CHANGE_LOCK_STATUS_HAD_ERROR:
+        return {
+          ...state,
+          error: action.payload,
+          isChangingLockStatus: false,
         };
       default:
         return state;

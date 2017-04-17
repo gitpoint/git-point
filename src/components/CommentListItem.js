@@ -44,6 +44,7 @@ class CommentListItem extends Component {
           type={type}
           count={count}
           active={reacted}
+          locked={this.props.issue.locked}
           createdReactionID={
             reacted
               ? comment.completeReactions.find(
@@ -60,7 +61,7 @@ class CommentListItem extends Component {
   };
 
   render() {
-    const {comment, isCreatingReaction, navigation} = this.props;
+    const {issue, comment, isCreatingReaction, navigation} = this.props;
 
     return (
       <View style={styles.container}>
@@ -103,9 +104,11 @@ class CommentListItem extends Component {
             {reactionTypes.map((reaction, i) =>
               this.renderReaction(reaction, comment, i))}
 
-            <TouchableOpacity onPress={() => this.showReactionActionSheet(comment)}>
-              <AddReaction />
-            </TouchableOpacity>
+            {!issue.locked &&
+              <TouchableOpacity onPress={() => this.showReactionActionSheet(comment)}>
+                <AddReaction />
+              </TouchableOpacity>
+            }
 
             {isCreatingReaction &&
               <ActivityIndicator
@@ -155,6 +158,7 @@ class CommentListItem extends Component {
 
 CommentListItem.propTypes = {
   authUser: PropTypes.string,
+  issue: PropTypes.object,
   comment: PropTypes.object,
   commentType: PropTypes.string,
   isCreatingReaction: PropTypes.bool,

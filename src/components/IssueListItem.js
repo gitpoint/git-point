@@ -17,9 +17,10 @@ const IssueListItem = (
   }
 ) => (
   <TouchableHighlight
+    style={issue.state === 'closed' && styles.closedIssue}
     onPress={() => navigation.navigate('Issue', {issue: issue, userHasPushPermission: userHasPushPermission})}
     underlayColor={colors.greyLight}>
-    <View style={[styles.container, issue.state === 'closed' && styles.closedIssue]}>
+    <View style={styles.container}>
       <ListItem
         containerStyle={styles.listItemContainer}
         title={issue.title}

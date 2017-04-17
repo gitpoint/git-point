@@ -8,6 +8,22 @@ const accessTokenParameters = accessToken => ({
   },
 });
 
+const accessTokenParametersPUT = (accessToken) => ({
+  method: 'PUT',
+  headers: {
+    Authorization: `token ${accessToken}`,
+    'Content-Length': 0,
+  },
+});
+
+const accessTokenParametersDELETE = (accessToken) => ({
+  method: 'DELETE',
+  headers: {
+    Authorization: `token ${accessToken}`,
+  },
+});
+
+
 const accessTokenParametersPATCH = (editParams, accessToken) => ({
   method: 'PATCH',
   headers: {
@@ -25,7 +41,7 @@ const accessTokenParametersPOST = (accessToken, body) => ({
   body: JSON.stringify(body),
 });
 
-const accessTokenParametersDELETE = (accessToken) => ({
+const accessTokenParametersDELETEPreview = (accessToken) => ({
   method: 'DELETE',
   headers: {
     Accept: 'application/vnd.github.squirrel-girl-preview',
@@ -167,15 +183,23 @@ export const fetchDeleteReaction = (reactionID, accessToken) => {
 
   return fetch(
     POST_ENDPOINT,
-    accessTokenParametersDELETE(accessToken));
+    accessTokenParametersDELETEPreview(accessToken));
 };
 
-export const fetchEditIssue = (owner, repoName, issueNum, editParams, accessToken) => {
+export const fetchEditIssue = (owner, repoName, issueNum, editParams, updateParams, accessToken) => {
   const POST_ENDPOINT = `${root}/repos/${owner}/${repoName}/issues/${issueNum}`;
 
   return fetch(
     POST_ENDPOINT,
     accessTokenParametersPATCH(editParams, accessToken));
+};
+
+export const fetchChangeIssueLockStatus = (owner, repoName, issueNum, currentStatus, accessToken) => {
+  const POST_ENDPOINT = `${root}/repos/${owner}/${repoName}/issues/${issueNum}/lock`;
+
+  return fetch(
+    POST_ENDPOINT,
+    currentStatus ? accessTokenParametersDELETE(accessToken) : accessTokenParametersPUT(accessToken));
 };
 
 ///
