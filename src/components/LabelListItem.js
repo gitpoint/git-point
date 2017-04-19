@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
-import {StyleSheet, View, TouchableOpacity, Image, Text} from 'react-native';
-import {Icon, Button} from 'react-native-elements';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import {Icon} from 'react-native-elements';
 
 import LabelButton from './LabelButton';
 

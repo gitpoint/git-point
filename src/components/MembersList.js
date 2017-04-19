@@ -1,12 +1,14 @@
 import React, {PropTypes} from 'react';
+import FastImage from 'react-native-fast-image'
+
 import {
   StyleSheet,
-  Image,
   View,
   Text,
   FlatList,
   TouchableHighlight,
 } from 'react-native';
+
 import colors from '../config/colors';
 
 const MembersList = (
@@ -25,16 +27,23 @@ const MembersList = (
       data={members}
       showsHorizontalScrollIndicator={false}
       renderItem={({item}) => (
-        <View style={styles.avatarContainer}>
-          <TouchableHighlight
-            onPress={() => navigation.navigate('Profile', {
-              user: item,
-            })}
-            underlayColor="transparent"
-          >
-            <Image style={styles.avatar} source={{uri: item.avatar_url}} />
-          </TouchableHighlight>
-        </View>
+        <TouchableHighlight
+          onPress={() => navigation.navigate('Profile', {
+            user: item,
+          })}
+          underlayColor="transparent"
+          style={styles.avatarContainer}
+        >
+          <View style={styles.avatarContainer}>
+              <FastImage
+                style={styles.avatar}
+                source={{
+                  uri: item.avatar_url,
+                  priority: FastImage.priority.high,
+                }}
+              />
+          </View>
+      </TouchableHighlight>
       )}
       keyExtractor={item => item.id}
       horizontal={true}

@@ -13,6 +13,7 @@
     "react-native": "0.43.2",
     "react-native-communications": "^2.2.1",
     "react-native-elements": "^0.9.3",
+    "react-native-fast-image": "0.0.4",
     "react-native-parallax-scroll-view": "^0.19.0",
     "react-native-vector-icons": "^4.0.0",
     "react-navigation": "git+https://github.com/react-community/react-navigation.git",

@@ -61,24 +61,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.primarydark,
-    fontFamily: 'AvenirNext-DemiBold',
-  },
-  subtitle: {
-    marginLeft: 10,
-  },
-  subtitleText: {
-    color: colors.primaryDark,
-    fontFamily: 'AvenirNext-Regular',
-  },
-  subtitleDate: {
-    color: colors.greyDark,
-    fontFamily: 'AvenirNext-Regular',
-  },
-  labelButtonGroup: {
-    marginLeft: 10,
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    marginTop: 5,
+    fontFamily: 'AvenirNext-Medium',
   },
   badge: {
     flex: 0.15,
