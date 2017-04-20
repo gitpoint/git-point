@@ -18,13 +18,16 @@ import {
   createCommentReaction,
   deleteIssueReaction,
   deleteCommentReaction,
+  getDiff
 } from '../actions/issue';
 
 const mapStateToProps = state => ({
   authUser: state.authUser.user,
   repository: state.repository.repository,
   issue: state.issue.issue,
+  diff: state.issue.diff,
   comments: state.issue.comments,
+  isPendingDiff: state.issue.isPendingDiff,
   isPendingComments: state.issue.isPendingComments,
   isPendingHydratedComments: state.issue.isPendingHydratedComments,
   isPostingComment: state.issue.isPostingComment,
@@ -43,34 +46,39 @@ const mapDispatchToProps = dispatch => ({
   deleteIssueReaction: reactionID => dispatch(deleteIssueReaction(reactionID)),
   deleteCommentReaction: (commentID, reactionID) =>
     dispatch(deleteCommentReaction(commentID, reactionID)),
+  getDiff: (url) =>
+    dispatch(getDiff(url)),
 });
 
 class Issue extends Component {
-  static navigationOptions = {
-    header: ({state, navigate}) => {
-      let right = (
-        <Icon
-          name="gear"
-          color={colors.primarydark}
-          type="octicon"
-          containerStyle={{marginRight: 5}}
-          underlayColor={colors.transparent}
-          onPress={() => navigate('IssueSettings', {
-            issue: state.params.issue,
-          })}
-        />
-      );
+  static navigationOptions = ({ navigation }) => {
+    const {state, navigate} = navigation;
 
-      if (state.params.userHasPushPermission) {
-        return {right};
-      }
-    },
+    if (state.params.userHasPushPermission) {
+      return {
+        headerRight: (
+          <Icon
+            name="gear"
+            color={colors.primarydark}
+            type="octicon"
+            containerStyle={{marginRight: 5}}
+            underlayColor={colors.transparent}
+            onPress={() => navigate('IssueSettings', {
+              issue: state.params.issue,
+            })}
+          />
+        ),
+      };
+    }
   };
 
   componentDidMount() {
     const issue = this.props.navigation.state.params.issue;
-
     this.props.getHydratedComments(issue);
+
+    if (issue.pull_request) {
+      this.props.getDiff(issue.pull_request.diff_url);
+    }
   }
 
   postComment = body => {
@@ -148,7 +156,7 @@ class Issue extends Component {
   );
 
   render() {
-    const {issue, comments, isPendingComments, navigation} = this.props;
+    const {issue, comments, isPendingDiff, isPendingComments, navigation} = this.props;
 
     return (
       <ViewContainer>
@@ -157,7 +165,7 @@ class Issue extends Component {
             <LoadingUserListItem key={i} />
           ))}
 
-        {!isPendingComments &&
+        {!isPendingComments && issue &&
           <KeyboardAvoidingView
             style={{flex: 1}}
             behavior={'padding'}
@@ -167,6 +175,7 @@ class Issue extends Component {
               ListHeaderComponent={(): React$Element<*> => (
                 <IssueDescriptionListItem
                   issue={issue}
+                  isPendingDiff={isPendingDiff}
                   navigation={navigation}
                 />
               )}
@@ -189,6 +198,7 @@ class Issue extends Component {
 
 Issue.propTypes = {
   getHydratedComments: PropTypes.func,
+  getDiff: PropTypes.func,
   postIssueComment: PropTypes.func,
   createIssueReaction: PropTypes.func,
   createCommentReaction: PropTypes.func,
@@ -199,6 +209,7 @@ Issue.propTypes = {
   repository: PropTypes.object,
   comments: PropTypes.array,
   hydratedComments: PropTypes.array,
+  isPendingDiff: PropTypes.bool,
   isPendingComments: PropTypes.bool,
   isPendingHydratedComments: PropTypes.bool,
   isPostingComment: PropTypes.bool,

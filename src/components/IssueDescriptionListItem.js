@@ -12,6 +12,7 @@ import moment from 'moment';
 const IssueDescriptionListItem = (
   {
     issue,
+    isPendingDiff,
     navigation
   }
 ) => (
@@ -27,6 +28,14 @@ const IssueDescriptionListItem = (
       />
       <IssueStateBadge style={styles.badge} issue={issue} />
     </View>
+
+    {!isPendingDiff && issue.pull_request && (
+        <Button
+          title='Diff'
+        />
+      )
+    }
+
     {issue.labels.length > 0 &&
       <View style={styles.labelButtonGroup}>
         {renderLabelButtons(issue.labels)}
@@ -54,6 +63,7 @@ const renderLabelButtons = labels => {
 
 IssueDescriptionListItem.propTypes = {
   issue: PropTypes.object,
+  isPendingDiff: PropTypes.bool,
   navigation: PropTypes.object,
 };
 

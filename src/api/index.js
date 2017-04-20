@@ -56,6 +56,13 @@ const accessTokenParametersHTML = accessToken => ({
   },
 });
 
+const accessTokenParametersDiff = accessToken => ({
+  headers: {
+    Accept: 'application/vnd.github.VERSION.diff',
+    Authorization: `token ${accessToken}`,
+  },
+});
+
 const accessTokenParametersPreview = accessToken => ({
   headers: {
     Accept: '  application/vnd.github.squirrel-girl-preview',
@@ -204,10 +211,21 @@ export const fetchChangeIssueLockStatus = (owner, repoName, issueNum, currentSta
 
 ///
 
+export const fetchDiff = (url, accessToken) => {
+  return fetch(
+    url,
+    accessTokenParametersDiff(accessToken),
+  ).then(response => response.text());
+};
+
+///
+
+///
+
 export const fetchUrl = (url, accessToken) => {
   return fetch(
     url,
-    accessTokenParametersHTML(accessToken),
+    accessTokenParameters(accessToken),
   ).then(response => response.json());
 };
 

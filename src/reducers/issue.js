@@ -29,11 +29,15 @@ import {
   CHANGE_LOCK_STATUS_IS_PENDING,
   CHANGE_LOCK_STATUS_WAS_SUCCESSFUL,
   CHANGE_LOCK_STATUS_HAD_ERROR,
+  GET_ISSUE_DIFF_IS_PENDING,
+  GET_ISSUE_DIFF_WAS_SUCCESSFUL,
+  GET_ISSUE_DIFF_HAD_ERROR
 } from '../constants';
 
 const initialState = {
   issue: {},
   comments: [],
+  diff: '',
   isPendingComments: false,
   isPendingHydratedComment: false,
   isPendingHydratedIssueDesc: false,
@@ -43,6 +47,7 @@ const initialState = {
   isDeletingReaction: false,
   isEditingIssue: false,
   isChangingLockStatus: false,
+  isPendingDiff: false,
   error: '',
 }
 
@@ -245,6 +250,23 @@ export default function issueReducer(state = initialState, action={}) {
           ...state,
           error: action.payload,
           isChangingLockStatus: false,
+        };
+      case GET_ISSUE_DIFF_IS_PENDING:
+        return {
+          ...state,
+          isPendingDiff: true,
+        };
+      case GET_ISSUE_DIFF_WAS_SUCCESSFUL:
+        return {
+          ...state,
+          diff: action.payload,
+          isPendingDiff: false,
+        };
+      case GET_ISSUE_DIFF_HAD_ERROR:
+        return {
+          ...state,
+          error: action.payload,
+          isPendingDiff: false,
         };
       default:
         return state;

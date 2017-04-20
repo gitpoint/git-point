@@ -57,9 +57,9 @@ const store = createStore(
 const sharedRoutes = {
   ListRender: {
     screen: ListRender,
-    navigationOptions: {
-      title: ({state}) => `${state.params.listType}`,
-    },
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.listType,
+    })
   },
   Profile: {
     screen: Profile,
@@ -81,21 +81,21 @@ const sharedRoutes = {
   },
   RepositoryCodeList: {
     screen: RepositoryCodeList,
-    navigationOptions: {
-      title: ({state}) => state.params.topLevel ? 'Code' : `${state.params.content.name}`,
-    },
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.topLevel ? 'Code' : navigation.state.params.content.name,
+    })
   },
   IssuesList: {
     screen: IssuesList,
-    navigationOptions: {
-      title: ({state}) => state.params.type === 'issue' ? 'Issues' : 'Pull Requests',
-    },
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.type === 'issue' ? 'Issues' : 'Pull Requests',
+    })
   },
   Issue: {
     screen: Issue,
-    navigationOptions: {
-      title: ({state}) => `#${state.params.issue.number}`,
-    },
+    navigationOptions: ({ navigation }) => ({
+      title: `#${navigation.state.params.issue.number}`,
+    })
   },
   IssueSettings: {
     screen: IssueSettings,
