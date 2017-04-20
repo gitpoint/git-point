@@ -12,6 +12,7 @@ import moment from 'moment';
 const IssueDescriptionListItem = (
   {
     issue,
+    diff,
     isPendingDiff,
     navigation
   }
@@ -32,6 +33,9 @@ const IssueDescriptionListItem = (
     {!isPendingDiff && issue.pull_request && (
         <Button
           title='Diff'
+          onPress={() => navigation.navigate('PullDiff', {
+            diff: diff,
+          })}
         />
       )
     }
@@ -63,6 +67,7 @@ const renderLabelButtons = labels => {
 
 IssueDescriptionListItem.propTypes = {
   issue: PropTypes.object,
+  diff: PropTypes.string,
   isPendingDiff: PropTypes.bool,
   navigation: PropTypes.object,
 };

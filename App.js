@@ -36,6 +36,7 @@ import IssuesList from './src/screens/IssuesListScreen';
 import Issue from './src/screens/IssueScreen';
 import IssueSettings from './src/screens/IssueSettingsScreen';
 import ReadMe from './src/screens/ReadMe';
+import PullDiff from './src/screens/PullDiffScreen';
 
 // Redux Store
 import {compose, createStore, applyMiddleware} from 'redux';
@@ -101,6 +102,12 @@ const sharedRoutes = {
     screen: IssueSettings,
     navigationOptions: {
       title: 'Settings',
+    },
+  },
+  PullDiff: {
+    screen: PullDiff,
+    navigationOptions: {
+      title: 'Diff',
     },
   },
   ReadMe: {
