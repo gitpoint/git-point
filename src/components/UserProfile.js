@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import FastImage from 'react-native-fast-image'
 
 import colors from '../config/colors';
 
@@ -13,10 +14,12 @@ const UserProfile = (
 ) => (
   <View style={styles.container}>
     <View style={styles.profile}>
-      <Image
+      <FastImage
         style={[styles.avatar, (initialUser.type === 'User' || user.type === 'User') && styles.userAvatar]}
-        resizeMode="contain"
-        source={{uri: initialUser.avatar_url}}
+        source={{
+          uri: initialUser.avatar_url,
+          priority: FastImage.priority.high,
+        }}
       />
       <Text style={styles.title}>{user.name}</Text>
       <Text style={styles.subtitle}>{initialUser.login}</Text>

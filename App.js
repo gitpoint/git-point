@@ -64,25 +64,19 @@ const sharedRoutes = {
   Profile: {
     screen: Profile,
     navigationOptions: {
-      header: {
-        visible: false,
-      },
+      headerVisible: false,
     },
   },
   Organization: {
     screen: Organization,
     navigationOptions: {
-      header: {
-        visible: false,
-      },
+      headerVisible: false,
     },
   },
   Repository: {
     screen: Repository,
     navigationOptions: {
-      header: {
-        visible: false,
-      },
+      headerVisible: false,
     },
   },
   RepositoryCodeList: {
@@ -122,9 +116,7 @@ const HomeStackNavigator = StackNavigator(
     Home: {
       screen: Home,
       navigationOptions: {
-        header: {
-          title: 'Events',
-        },
+        headerTitle: 'Events',
       },
     },
     ...sharedRoutes
@@ -151,9 +143,7 @@ const SearchStackNavigator = StackNavigator(
     Search: {
       screen: Search,
       navigationOptions: {
-        header: {
-          visible: false,
-        },
+        headerVisible: false,
       },
     },
     ...sharedRoutes,
@@ -168,9 +158,7 @@ const MyProfileStackNavigator = StackNavigator(
     MyProfile: {
       screen: MyProfile,
       navigationOptions: {
-        header: {
-          visible: false,
-        },
+        headerVisible: false,
       },
     },
     ...sharedRoutes,
@@ -185,61 +173,53 @@ const MainTabNavigator = TabNavigator(
     Home: {
       screen: HomeStackNavigator,
       navigationOptions: {
-        tabBar: {
-          icon: ({tintColor}) => (
-            <Icon
-              containerStyle={{justifyContent: 'center', alignItems: 'center'}}
-              color={tintColor}
-              name="home"
-              size={33}
-            />
-          ),
-        },
+        tabBarIcon: ({tintColor}) => (
+          <Icon
+            containerStyle={{justifyContent: 'center', alignItems: 'center'}}
+            color={tintColor}
+            name="home"
+            size={33}
+          />
+        ),
       },
     },
     Notifications: {
       screen: NotificationsStackNavigator,
       navigationOptions: {
-        tabBar: {
-          icon: ({tintColor}) => (
-            <Icon
-              containerStyle={{justifyContent: 'center', alignItems: 'center'}}
-              color={tintColor}
-              name="notifications"
-              size={33}
-            />
-          ),
-        },
+        tabBarIcon: ({tintColor}) => (
+          <Icon
+            containerStyle={{justifyContent: 'center', alignItems: 'center'}}
+            color={tintColor}
+            name="notifications"
+            size={33}
+          />
+        ),
       },
     },
     Search: {
       screen: SearchStackNavigator,
       navigationOptions: {
-        tabBar: {
-          icon: ({tintColor}) => (
-            <Icon
-              containerStyle={{justifyContent: 'center', alignItems: 'center'}}
-              color={tintColor}
-              name="search"
-              size={33}
-            />
-          ),
-        },
+        tabBarIcon: ({tintColor}) => (
+          <Icon
+            containerStyle={{justifyContent: 'center', alignItems: 'center'}}
+            color={tintColor}
+            name="search"
+            size={33}
+          />
+        ),
       },
     },
     MyProfile: {
       screen: MyProfileStackNavigator,
       navigationOptions: {
-        tabBar: {
-          icon: ({tintColor}) => (
-            <Icon
-              containerStyle={{justifyContent: 'center', alignItems: 'center'}}
-              color={tintColor}
-              name="person"
-              size={33}
-            />
-          ),
-        },
+        tabBarIcon: ({tintColor}) => (
+          <Icon
+            containerStyle={{justifyContent: 'center', alignItems: 'center'}}
+            color={tintColor}
+            name="person"
+            size={33}
+          />
+        ),
       },
     },
   },
@@ -257,42 +237,32 @@ const GitPoint = StackNavigator(
     Splash: {
       screen: Splash,
       navigationOptions: {
-        header: {
-          visible: false,
-        },
+        headerVisible: false,
       },
     },
     Login: {
       screen: Login,
       navigationOptions: {
-        header: {
-          visible: false,
-        },
+        headerVisible: false,
       },
     },
     Welcome: {
       screen: Welcome,
       navigationOptions: {
-        header: {
-          visible: false,
-        },
+        headerVisible: false,
       },
       path: 'welcome',
     },
     Main: {
       screen: MainTabNavigator,
       navigationOptions: {
-        header: {
-          visible: false,
-        },
+        headerVisible: false,
       },
     },
   },
   {
     headerMode: 'screen',
-    containerOptions: {
-      URIPrefix: 'gitpoint://',
-    },
+    URIPrefix: 'gitpoint://',
   }
 );
 
