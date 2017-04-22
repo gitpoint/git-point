@@ -21,6 +21,7 @@ class PullDiff extends Component {
 
   render() {
     const  {navigation} = this.props;
+    const filesChanged = Parse(navigation.state.params.diff);
 
     return (
       <ViewContainer>
