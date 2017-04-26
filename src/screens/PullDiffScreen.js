@@ -1,8 +1,12 @@
 import React, {Component, PropTypes} from 'react';
 import { Text } from 'react-native';
+import {Card, ListItem} from 'react-native-elements';
+
 import Parse from 'parse-diff';
 
 import ViewContainer from '../components/ViewContainer';
+
+const files = Parse(this.props.navigation.state.params.diff);
 
 class PullDiff extends Component {
   componentDidMount() {
@@ -26,6 +30,27 @@ class PullDiff extends Component {
     return (
       <ViewContainer>
         <Text>{navigation.state.params.diff}</Text>
+
+        {files.map((file, i) => (
+          <Card containerStyle={{padding: 0}} >
+           {
+             file.chunks.map((chunk, i) => (
+                 <ListItem
+                  leftIcon={{'git-pull-request', color: colors.grey, type: 'octicon'}}
+                   key={i}
+                   title={chunk.name} />
+
+                   {
+                     chunk.changes.map((change, i) => (
+                       <ListItem
+                        key={i}
+                        title={`Content: ${change.content}, Type: ${change.type}`} />
+                     ))
+                   }
+               ))
+            }
+          </Card>
+          ))}
       </ViewContainer>
     )
   }
