@@ -10,4 +10,10 @@ export default {
   red: '#ee0701',
   white: '#ffffff',
   transparent: 'transparent',
+  codeChunkBlue: '#f8f8ff',
+  codeChunkLineNumberBlue: '#f3f3ff',
+  addCodeGreen: '#eaffea',
+  addCodeLineNumberGreen: '#DBFFD6',
+  delCodeRed: '#ffecec',
+  delCodeLineNumberRed: '#ffdddd',
 }
