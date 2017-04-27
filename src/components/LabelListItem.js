@@ -36,7 +36,6 @@ LabelListItem.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
-    paddingRight: 10,
     borderBottomColor: colors.greyLight,
     borderBottomWidth: 1,
   },

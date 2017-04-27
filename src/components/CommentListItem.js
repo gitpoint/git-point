@@ -3,11 +3,11 @@ import {
   StyleSheet,
   View,
   Text,
-  Image,
   ActionSheetIOS,
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
+import FastImage from 'react-native-fast-image'
 
 import Reaction from './Reaction';
 import AddReaction from './AddReaction';
@@ -66,21 +66,26 @@ class CommentListItem extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <Image
-            style={styles.avatar}
-            source={{uri: comment.user.avatar_url}}
-          />
+          <TouchableOpacity onPress={() => navigation.navigate('Profile', {
+              user: comment.user,
+            })}>
+            <FastImage
+              style={styles.avatar}
+              source={{
+                uri: comment.user.avatar_url,
+                priority: FastImage.priority.high,
+              }}
+            />
+          </TouchableOpacity>
 
-          <Text style={styles.titleSubtitleContainer}>
-            <Text
-              style={styles.linkDescription}
-              onPress={() => navigation.navigate('Profile', {
-                user: comment.user,
-              })}
-            >
+          <TouchableOpacity style={styles.titleSubtitleContainer}
+            onPress={() => navigation.navigate('Profile', {
+              user: comment.user,
+            })}>
+            <Text style={styles.linkDescription}>
               {comment.user.login}{'  '}
             </Text>
-          </Text>
+          </TouchableOpacity>
 
           <View style={styles.dateContainer}>
             <Text style={styles.date}>{moment(comment.created_at).fromNow()}</Text>
@@ -189,8 +194,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
     marginLeft: 10,
-    color: colors.primaryDark,
-    fontFamily: 'AvenirNext-Regular',
   },
   dateContainer: {
     flex: 0.15,
@@ -199,6 +202,7 @@ const styles = StyleSheet.create({
   },
   linkDescription: {
     fontFamily: 'AvenirNext-DemiBold',
+    color: colors.primaryDark,
   },
   date: {
     color: colors.greyDark,

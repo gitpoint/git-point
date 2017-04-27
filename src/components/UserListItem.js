@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {StyleSheet, View, TouchableHighlight, Text} from 'react-native';
+import {StyleSheet, View, TouchableHighlight, TouchableOpacity, Text} from 'react-native';
 import {Icon} from 'react-native-elements';
 import FastImage from 'react-native-fast-image'
 
@@ -9,15 +9,25 @@ const UserListItem = (
   {
     user,
     navigation,
+    icon,
+    iconAction
   }
-) => (
-  <TouchableHighlight
+) => {
+  const ContainerComponent = iconAction ? View : TouchableHighlight;
+  const UserComponent = iconAction ? TouchableOpacity : View;
+  const IconComponent = iconAction ? TouchableOpacity : View;
+
+  return (
+  <ContainerComponent
     onPress={() => navigation.navigate(user.type === 'User' ? 'Profile' : 'Organization', user.type === 'User' ? {user: user} : {organization: user})}
     underlayColor={colors.greyLight}
     style={styles.container}
   >
     <View style={styles.wrapper}>
-      <View style={styles.userInfo}>
+      <UserComponent style={styles.userInfo}
+        onPress={() => navigation.navigate('Profile', {
+          user: user,
+        })}>
         <FastImage
           style={styles.avatar}
           source={{
@@ -30,21 +40,25 @@ const UserListItem = (
           <Text
             style={styles.title}>{user.login}</Text>
         </View>
-      </View>
+      </UserComponent>
 
-      <View style={styles.iconContainer}>
+      <IconComponent style={styles.iconContainer} onPress={() => iconAction(user.login)}>
         <Icon
           color={colors.grey}
-          name="chevron-right"
+          size={icon ? 24 : 28}
+          name={icon ? icon : 'chevron-right'}
+          type={icon && 'octicon'}
         />
-      </View>
+      </IconComponent>
     </View>
-  </TouchableHighlight>
-);
+  </ContainerComponent>
+)};
 
 UserListItem.propTypes = {
   user: PropTypes.object,
   navigation: PropTypes.object,
+  icon: PropTypes.string,
+  iconAction: PropTypes.func,
 };
 
 const styles = StyleSheet.create({

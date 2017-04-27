@@ -51,26 +51,26 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class Issue extends Component {
-  // static navigationOptions = ({ navigation }) => {
-  //   const {state, navigate} = navigation;
-  //
-  //   if (state.params.userHasPushPermission) {
-  //     return {
-  //       headerRight: (
-  //         <Icon
-  //           name="gear"
-  //           color={colors.primarydark}
-  //           type="octicon"
-  //           containerStyle={{marginRight: 5}}
-  //           underlayColor={colors.transparent}
-  //           onPress={() => navigate('IssueSettings', {
-  //             issue: state.params.issue,
-  //           })}
-  //         />
-  //       ),
-  //     };
-  //   }
-  // };
+  static navigationOptions = ({ navigation }) => {
+    const {state, navigate} = navigation;
+
+    if (state.params.userHasPushPermission) {
+      return {
+        headerRight: (
+          <Icon
+            name="gear"
+            color={colors.primarydark}
+            type="octicon"
+            containerStyle={{marginRight: 5}}
+            underlayColor={colors.transparent}
+            onPress={() => navigate('IssueSettings', {
+              issue: state.params.issue,
+            })}
+          />
+        ),
+      };
+    }
+  };
 
   componentDidMount() {
     const issue = this.props.navigation.state.params.issue;

@@ -4,7 +4,7 @@ import {ListItem} from 'react-native-elements';
 
 import ViewContainer from '../components/ViewContainer';
 import SectionList from '../components/SectionList';
-import AssigneeListItem from '../components/AssigneeListItem';
+import UserListItem from '../components/UserListItem';
 import LabelListItem from '../components/LabelListItem';
 
 import colors from '../config/colors';
@@ -97,11 +97,12 @@ class IssueSettings extends Component {
             title="ASSIGNEES"
           >
             {issue.assignees.map((item, i) => (
-              <AssigneeListItem
+              <UserListItem
                 user={item}
                 key={i}
                 navigation={navigation}
-                removeAssignee={userToRemove =>
+                icon="x"
+                iconAction={userToRemove =>
                   this.editIssue(
                     {
                       assignees: [
