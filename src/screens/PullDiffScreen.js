@@ -11,20 +11,20 @@ import CodeLine from '../components/CodeLine';
 import colors from '../config/colors';
 
 class PullDiff extends Component {
-  renderFileTitle = (title) => {
+  renderFileTitle = title => {
     <View>
-     <Text>{title}</Text>
-    </View>
-  }
+      <Text>{title}</Text>
+    </View>;
+  };
 
   renderItem = ({item}) => {
     var chunks = item.chunks.map((chunk, i) => {
       return (
         <View>
-          <CodeLine key={i} newChunk change={{content: chunk.content}}/>
+          <CodeLine key={i} newChunk change={{content: chunk.content}} />
 
           {chunk.changes.map((change, i) => (
-            <CodeLine key={i} change={change}/>
+            <CodeLine key={i} change={change} />
           ))}
         </View>
       );
@@ -33,20 +33,24 @@ class PullDiff extends Component {
     return (
       <Card
         containerStyle={styles.fileChangeContainer}
-        dividerStyle={styles.dividerStyle}>
-          <ScrollView
-            style={styles.fileTitleContainer}
-            automaticallyAdjustContentInsets={false}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}>
-              <View style={styles.linesChanged}>
-                <Text style={[styles.codeStyle, styles.lineNumbersChanged]}>{item.additions + item.deletions}</Text>
-                <DiffBlocks additions={item.additions} deletions={item.deletions} />
-              </View>
+        dividerStyle={styles.dividerStyle}
+      >
+        <ScrollView
+          style={styles.fileTitleContainer}
+          automaticallyAdjustContentInsets={false}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+        >
+          <View style={styles.linesChanged}>
+            <Text style={[styles.codeStyle, styles.lineNumbersChanged]}>
+              {item.additions + item.deletions}
+            </Text>
+            <DiffBlocks additions={item.additions} deletions={item.deletions} />
+          </View>
 
-              <Text style={[styles.fileTitle, styles.codeStyle]}>{item.from}</Text>
-          </ScrollView>
-          {chunks}
+          <Text style={[styles.fileTitle, styles.codeStyle]}>{item.from}</Text>
+        </ScrollView>
+        {chunks}
       </Card>
     );
   };
@@ -68,13 +72,14 @@ class PullDiff extends Component {
     );
   }
 
-  keyExtractor = item => {
-    return item.id;
+  keyExtractor = (item, index) => {
+    return index;
   };
 }
 
 PullDiff.propTypes = {
   diff: PropTypes.string,
+  navigation: PropTypes.object,
 };
 
 const styles = StyleSheet.create({

@@ -1,12 +1,14 @@
 import React, {PropTypes} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, ActivityIndicator} from 'react-native';
 import {ListItem, Button} from 'react-native-elements';
 
 import IssueStateBadge from './IssueStateBadge';
 import MembersList from './MembersList';
 import LabelButton from './LabelButton';
+import DiffBlocks from '../components/DiffBlocks';
 
 import colors from '../config/colors';
+import Parse from 'parse-diff';
 import moment from 'moment';
 
 const IssueDescriptionListItem = (
@@ -14,50 +16,73 @@ const IssueDescriptionListItem = (
     issue,
     diff,
     isPendingDiff,
-    navigation
-  }
-) => (
-  <View style={styles.container, styles.borderBottom}>
-    <View style={styles.headerContainer}>
-      <ListItem
-        title={issue.title}
-        titleStyle={styles.title}
-        subtitle={moment(issue.created_at).fromNow()}
-        containerStyle={styles.listItemContainer}
-        leftIcon={{name: issue.pull_request ? 'git-pull-request' : 'issue-opened', size: 36, color: colors.grey, type: 'octicon'}}
-        hideChevron
-      />
-      <IssueStateBadge style={styles.badge} issue={issue} />
+    navigation,
+  },
+) => {
+  const filesChanged = Parse(diff);
+
+  let lineAdditions = 0;
+  let lineDeletions = 0;
+
+  filesChanged.forEach(function(file) {
+    lineAdditions = lineAdditions + file.additions;
+    lineDeletions = lineDeletions + file.deletions;
+  });
+
+  return (
+    <View style={(styles.container, styles.borderBottom)}>
+      <View style={styles.headerContainer}>
+        <ListItem
+          title={issue.title}
+          titleStyle={styles.title}
+          subtitle={moment(issue.created_at).fromNow()}
+          containerStyle={styles.listItemContainer}
+          leftIcon={{
+            name: issue.pull_request ? 'git-pull-request' : 'issue-opened',
+            size: 36,
+            color: colors.grey,
+            type: 'octicon',
+          }}
+          hideChevron
+        />
+        <IssueStateBadge style={styles.badge} issue={issue} />
+      </View>
+
+      {!isPendingDiff &&
+        issue.pull_request &&
+        <View style={styles.diffBlocksContainer}>
+
+          {isPendingDiff &&
+            <ActivityIndicator animating={isPendingDiff} size="small" />}
+
+          {!isPendingDiff &&
+            <DiffBlocks
+              additions={lineAdditions}
+              deletions={lineDeletions}
+              showNumbers
+              onPress={() => navigation.navigate('PullDiff', {
+                diff: diff,
+              })}
+            />}
+        </View>}
+
+      {issue.labels.length > 0 &&
+        <View style={styles.labelButtonGroup}>
+          {renderLabelButtons(issue.labels)}
+        </View>}
+      {issue.assignees.length > 0 &&
+        <View style={styles.assigneesSection}>
+          <MembersList
+            title="Assignees"
+            members={issue.assignees}
+            containerStyle={{marginTop: 0, paddingTop: 0, paddingLeft: 0}}
+            smallTitle
+            navigation={navigation}
+          />
+        </View>}
     </View>
-
-    {!isPendingDiff && issue.pull_request && (
-        <Button
-          title='Diff'
-          onPress={() => navigation.navigate('PullDiff', {
-            diff: diff,
-          })}
-        />
-      )
-    }
-
-    {issue.labels.length > 0 &&
-      <View style={styles.labelButtonGroup}>
-        {renderLabelButtons(issue.labels)}
-      </View>
-    }
-    {issue.assignees.length > 0 &&
-      <View style={styles.assigneesSection}>
-        <MembersList
-          title="Assignees"
-          members={issue.assignees}
-          containerStyle={{marginTop: 0, paddingTop: 0, paddingLeft: 0}}
-          smallTitle
-          navigation={navigation}
-        />
-      </View>
-    }
-  </View>
-);
+  );
+};
 
 const renderLabelButtons = labels => {
   return labels
@@ -96,6 +121,13 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
     flex: 1,
   },
+  diffBlocksContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    paddingRight: 10,
+    paddingBottom: 10,
+  },
   badge: {
     flex: 0.15,
     alignItems: 'flex-end',
@@ -110,7 +142,7 @@ const styles = StyleSheet.create({
   assigneesSection: {
     marginLeft: 54,
     paddingBottom: 5,
-  }
+  },
 });
 
 export default IssueDescriptionListItem;

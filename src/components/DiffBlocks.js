@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 
 import colors from '../config/colors';
 
@@ -7,7 +7,9 @@ const DiffBlocks = (
   {
     additions,
     deletions,
-  }
+    showNumbers,
+    onPress,
+  },
 ) => {
   const linesChanged = additions + deletions;
 
@@ -20,44 +22,63 @@ const DiffBlocks = (
     redBlocks = deletions;
     greyBlocks = 5 - (greenBlocks + redBlocks);
   } else {
-    greenBlocks = Math.floor((additions / linesChanged) * 5);
-    redBlocks = Math.floor((deletions / linesChanged) * 5);
+    greenBlocks = Math.floor(additions / linesChanged * 5);
+    redBlocks = Math.floor(deletions / linesChanged * 5);
     greyBlocks = 5 - (greenBlocks + redBlocks);
   }
 
+  let Component = onPress ? TouchableOpacity : View;
+
   return (
-    <View style={styles.container}>
+    <Component style={styles.container} onPress={onPress}>
+      {showNumbers &&
+        <View style={styles.linesChanged}>
+          <Text style={styles.numAdditions}>{`+${additions}`}</Text>
+          <Text style={styles.numDeletions}>{`-${deletions}`}</Text>
+        </View>}
 
       {[...Array(greenBlocks)].map((item, i) => {
-        return (
-          <View key={i} style={[styles.block, styles.greenBlock]} />
-        );
+        return <View key={i} style={[styles.block, styles.greenBlock]} />;
       })}
 
       {[...Array(redBlocks)].map((item, i) => {
-        return (
-          <View key={i} style={[styles.block, styles.redBlock]} />
-        );
+        return <View key={i} style={[styles.block, styles.redBlock]} />;
       })}
 
       {[...Array(greyBlocks)].map((item, i) => {
-        return (
-          <View key={i} style={[styles.block, styles.greyBlock]} />
-        );
+        return <View key={i} style={[styles.block, styles.greyBlock]} />;
       })}
-    </View>
-  )
+    </Component>
+  );
 };
 
 DiffBlocks.propTypes = {
   additions: PropTypes.number,
   deletions: PropTypes.number,
+  showNumbers: PropTypes.bool,
+  onPress: PropTypes.func,
 };
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  linesChanged: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  numAdditions: {
+    marginRight: 3,
+    fontFamily: 'AvenirNext-DemiBold',
+    color: colors.green,
+    letterSpacing: 1,
+  },
+  numDeletions: {
+    marginRight: 2,
+    fontFamily: 'AvenirNext-DemiBold',
+    color: colors.red,
+    letterSpacing: 1,
   },
   block: {
     width: 7,
@@ -72,7 +93,7 @@ const styles = StyleSheet.create({
   },
   greyBlock: {
     backgroundColor: colors.greyMid,
-  }
+  },
 });
 
 export default DiffBlocks;

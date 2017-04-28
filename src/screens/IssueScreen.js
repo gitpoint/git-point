@@ -7,6 +7,7 @@ import LoadingUserListItem from '../components/LoadingUserListItem';
 import IssueDescriptionListItem from '../components/IssueDescriptionListItem';
 import CommentListItem from '../components/CommentListItem';
 import CommentInput from '../components/CommentInput';
+import Parse from 'parse-diff';
 
 import colors from '../config/colors';
 
@@ -79,6 +80,11 @@ class Issue extends Component {
     if (issue.pull_request) {
       this.props.getDiff(issue.pull_request.diff_url);
     }
+
+    const {diff} = this.props;
+    const filesChanged = Parse(diff);
+    console.log(diff);
+    console.log(filesChanged);
   }
 
   postComment = body => {
@@ -139,6 +145,19 @@ class Issue extends Component {
     }
   };
 
+  renderHeader = () => {
+    const {issue, diff, isPendingDiff, navigation} = this.props;
+
+    return (
+      <IssueDescriptionListItem
+        issue={issue}
+        diff={diff}
+        isPendingDiff={isPendingDiff}
+        navigation={navigation}
+      />
+    )
+  };
+
   renderItem = ({item}) => (
     <CommentListItem
       issue={this.props.issue}
@@ -156,7 +175,7 @@ class Issue extends Component {
   );
 
   render() {
-    const {issue, diff, comments, isPendingDiff, isPendingComments, navigation} = this.props;
+    const {issue, comments, isPendingComments, navigation} = this.props;
 
     return (
       <ViewContainer>
@@ -171,15 +190,9 @@ class Issue extends Component {
             behavior={'padding'}
             keyboardVerticalOffset={65}
           >
+
             <FlatList
-              ListHeaderComponent={(): React$Element<*> => (
-                <IssueDescriptionListItem
-                  issue={issue}
-                  diff={diff}
-                  isPendingDiff={isPendingDiff}
-                  navigation={navigation}
-                />
-              )}
+              ListHeaderComponent={this.renderHeader}
               removeClippedSubviews={false}
               data={[issue, ...comments]}
               keyExtractor={this.keyExtractor}
@@ -206,6 +219,7 @@ Issue.propTypes = {
   deleteIssueReaction: PropTypes.func,
   deleteCommentReaction: PropTypes.func,
   issue: PropTypes.object,
+  diff: PropTypes.string,
   authUser: PropTypes.object,
   repository: PropTypes.object,
   comments: PropTypes.array,
