@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Menlo',
     fontSize: 12,
     paddingHorizontal: 10,
-    paddingVertical: 2,
+    paddingVertical: 3,
   },
   newChunkLineNumbers: {
     backgroundColor: colors.codeChunkLineNumberBlue,
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     width: 60,
     flex: 0.15,
     paddingLeft: 10,
-    paddingVertical: 2,
+    paddingVertical: 3,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },

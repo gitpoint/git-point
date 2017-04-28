@@ -11,12 +11,6 @@ import CodeLine from '../components/CodeLine';
 import colors from '../config/colors';
 
 class PullDiff extends Component {
-  componentDidMount() {
-    const files = Parse(this.props.navigation.state.params.diff);
-
-    console.log(files);
-  }
-
   renderFileTitle = (title) => {
     <View>
      <Text>{title}</Text>
@@ -46,7 +40,8 @@ class PullDiff extends Component {
             horizontal={true}
             showsHorizontalScrollIndicator={false}>
               <View style={styles.linesChanged}>
-                <Text style={styles.codeStyle}>{item.additions + item.deletions}</Text>
+                <Text style={[styles.codeStyle, styles.lineNumbersChanged]}>{item.additions + item.deletions}</Text>
+                <DiffBlocks additions={item.additions} deletions={item.deletions} />
               </View>
 
               <Text style={[styles.fileTitle, styles.codeStyle]}>{item.from}</Text>
@@ -67,6 +62,7 @@ class PullDiff extends Component {
           data={filesChanged}
           keyExtractor={this.keyExtractor}
           renderItem={this.renderItem}
+          disableVirtualization={true}
         />
       </ViewContainer>
     );
@@ -91,14 +87,18 @@ const styles = StyleSheet.create({
     backgroundColor: colors.greyVeryLight,
   },
   linesChanged: {
-    flex: 0.15,
-    width: 50,
+    flex: 0.30,
     paddingLeft: 10,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  lineNumbersChanged: {
+    fontFamily: 'Menlo',
+    marginRight: 5,
   },
   fileTitle: {
     flex: 1,
+    marginLeft: 10,
   },
   codeStyle: {
     fontFamily: 'Menlo',
