@@ -11,10 +11,29 @@ import CodeLine from '../components/CodeLine';
 import colors from '../config/colors';
 
 class PullDiff extends Component {
-  renderFileTitle = title => {
-    <View>
-      <Text>{title}</Text>
-    </View>;
+  renderHeader = () => {
+    const filesChanged = Parse(this.props.navigation.state.params.diff);
+
+    let lineAdditions = 0;
+    let lineDeletions = 0;
+
+    filesChanged.forEach(function(file) {
+      lineAdditions = lineAdditions + file.additions;
+      lineDeletions = lineDeletions + file.deletions;
+    });
+
+    return (
+      <View style={styles.header}>
+        <Text style={[styles.headerItem, styles.headerText]}>{`${filesChanged.length} ${filesChanged.length === 1 ? 'file' : 'files'}`}</Text>
+
+        <DiffBlocks
+          style={styles.headerItem}
+          additions={lineAdditions}
+          deletions={lineDeletions}
+          showNumbers
+        />
+      </View>
+    )
   };
 
   renderItem = ({item}) => {
@@ -53,9 +72,18 @@ class PullDiff extends Component {
             <DiffBlocks additions={item.additions} deletions={item.deletions} />
           </View>
 
-          <Text style={[styles.fileTitle, styles.codeStyle]}>{item.from}</Text>
+          {item.new &&
+            <Text style={styles.fileTitle}>
+              <Text style={styles.newIndicator}>NEW{'\n'}</Text>
+              <Text style={[styles.fileTitle, styles.codeStyle]}>{item.to}</Text>
+            </Text>
+          }
+
+          {!item.new &&
+            <Text style={[styles.fileTitle, styles.codeStyle]}>{item.from === item.to ? item.to : `${item.from} \n → ${item.to}`}</Text>
+          }
         </ScrollView>
-        {chunks}
+        {item.chunks.length > 0 ? chunks : <Text style={styles.noChangesMessage}>File renamed without changes.</Text>}
       </Card>
     );
   };
@@ -67,6 +95,7 @@ class PullDiff extends Component {
     return (
       <ViewContainer>
         <FlatList
+          ListHeaderComponent={this.renderHeader}
           removeClippedSubviews={false}
           data={filesChanged}
           keyExtractor={this.keyExtractor}
@@ -90,6 +119,7 @@ PullDiff.propTypes = {
 const styles = StyleSheet.create({
   fileChangeContainer: {
     padding: 0,
+    marginVertical: 25,
   },
   fileTitleContainer: {
     flexDirection: 'row',
@@ -117,6 +147,29 @@ const styles = StyleSheet.create({
   dividerStyle: {
     marginBottom: 0,
   },
+  noChangesMessage: {
+    fontFamily: 'AvenirNext-DemiBold',
+    paddingVertical: 5,
+    paddingLeft: 10,
+  },
+  newIndicator: {
+    fontFamily: 'AvenirNext-DemiBold',
+    color: colors.green,
+  },
+  header: {
+    paddingTop: 25,
+    paddingHorizontal: 25,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+  headerItem: {
+    flex: 1,
+  },
+  headerText: {
+    fontFamily: 'AvenirNext-DemiBold',
+    fontSize: 16,
+  }
 });
 
 export default PullDiff;
