@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {View, ScrollView, Text, StyleSheet} from 'react-native';
+import {View, ScrollView, Text, StyleSheet, Dimensions} from 'react-native';
 
 import colors from '../config/colors';
 
@@ -10,17 +10,8 @@ const CodeLine = (
   }
 ) => (
   <View style={styles.container}>
-    <ScrollView
-      automaticallyAdjustContentInsets={false}
-      horizontal={true}
-      showsHorizontalScrollIndicator={false}
-      style={[
-        styles.wrapper,
-        newChunk && styles.newChunkLine,
-        change.type === 'add' && styles.addLine,
-        change.type === 'del' && styles.delLine,
-      ]}
-    >
+    <View
+      style={styles.wrapper}>
       <View
         style={[
           styles.lineNumbers,
@@ -33,10 +24,15 @@ const CodeLine = (
         <Text style={styles.codeLineNumber}>{change.type === 'add' ? change.ln : (change.type === 'normal' ? change.ln2 : (change.type === 'del' ? '' : '...'))}</Text>
       </View>
 
-      <View>
-        <Text style={styles.codeLine}>{change.content}</Text>
+      <View style={[
+        styles.codeLineContainer,
+        newChunk && styles.newChunkLineContainer,
+        change.type === 'add' && styles.addLine,
+        change.type === 'del' && styles.delLine,
+      ]}>
+        <Text style={[styles.codeLine, newChunk && styles.newChunkLine]}>{change.content}</Text>
       </View>
-    </ScrollView>
+    </View>
   </View>
 );
 
@@ -52,6 +48,11 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     flexDirection: 'row',
+    flex: 1,
+  },
+  codeLineContainer: {
+    minWidth: Dimensions.get('window').width - 60,
+    flex: 0.85,
   },
   codeLine: {
     fontFamily: 'Menlo',
@@ -62,8 +63,11 @@ const styles = StyleSheet.create({
   newChunkLineNumbers: {
     backgroundColor: colors.codeChunkLineNumberBlue,
   },
-  newChunkLine: {
+  newChunkLineContainer: {
     backgroundColor: colors.codeChunkBlue,
+  },
+  newChunkLine: {
+    color: colors.grey,
   },
   addLine: {
     backgroundColor: colors.addCodeGreen,
@@ -79,7 +83,6 @@ const styles = StyleSheet.create({
   },
   lineNumbers: {
     width: 60,
-    flex: 0.15,
     paddingLeft: 10,
     paddingVertical: 3,
     flexDirection: 'row',

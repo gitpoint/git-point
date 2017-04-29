@@ -20,13 +20,18 @@ class PullDiff extends Component {
   renderItem = ({item}) => {
     var chunks = item.chunks.map((chunk, i) => {
       return (
-        <View>
-          <CodeLine key={i} newChunk change={{content: chunk.content}} />
+        <ScrollView
+          automaticallyAdjustContentInsets={false}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}>
+          <View style={{flexDirection: 'column'}}>
+            <CodeLine key={i} newChunk change={{content: chunk.content}} />
 
-          {chunk.changes.map((change, i) => (
-            <CodeLine key={i} change={change} />
-          ))}
-        </View>
+            {chunk.changes.map((change, i) => (
+              <CodeLine key={i} change={change} />
+            ))}
+          </View>
+        </ScrollView>
       );
     });
 
