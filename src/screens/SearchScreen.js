@@ -1,35 +1,37 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, StatusBar, ScrollView, ActivityIndicator } from 'react-native';
-import colors from '../config/colors'
+import { List, Button, ButtonGroup, Card } from 'react-native-elements'
 
 import ViewContainer from '../components/ViewContainer';
 import RepositoryListItem from '../components/RepositoryListItem';
 import UserListItem from '../components/UserListItem';
 import SearchInput from '../components/SearchInput';
 
-import { List, Button, ButtonGroup, Card } from 'react-native-elements'
+import colors from '../config/colors';
 
-const users = [
- {
-    name: 'brynn',
-    avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg'
- }]
+import {connect} from 'react-redux';
+import {getOrg, getOrgRepos, getOrgMembers} from '../actions/organization';
 
-export default class Search extends Component {
+const mapStateToProps = state => ({
+  users: state.search.users,
+  repos: state.search.repos,
+  isPendingSearchUsers: state.search.isPendingSearchUsers,
+  isPendingSearchRepos: state.search.isPendingSearchRepos,
+});
+
+const mapDispatchToProps = dispatch => ({
+  searchRepos: query => dispatch(searchRepos(query)),
+  searchUsers: query => dispatch(searchUsers(query))
+});
+
+class Search extends Component {
   constructor() {
     super();
 
     this.state = {
       query: '',
-      searchBegins: false,
-      searchIndex: 0,
-      filteredData: [],
-      filteredTrendingUsers: [],
-      fetchingList: false,
-      fetchingTrending: false,
+      searchType: 0,
     }
-
-    this.switchQueryType = this.switchQueryType.bind(this)
   }
 
   componentDidMount() {
@@ -42,23 +44,9 @@ export default class Search extends Component {
 
   search(query, selectedIndex = null) {
     const selectedSearchType = selectedIndex !== null ? selectedIndex : this.state.searchIndex;
-    const queryType = selectedSearchType === 0 ? 'repositories' : 'users';
 
     if (query) {
-      this.setState({
-        fetchingList: true,
-      });
-
-      fetch(`https://api.github.com/search/${queryType}?q=${query}`)
-        .then((response) => response.json())
-        .then((data) => {
-          this.setState({
-            query,
-            filteredData: data.items,
-            fetchingList: false,
-          });
-        })
-        .done();
+      selectedSearchType === 0 ? this.props.searchRepos(query) : this.props.searchUsers(query);
     }
   }
 
@@ -70,24 +58,6 @@ export default class Search extends Component {
     }
 
     this.search(this.state.query, selectedIndex);
-  }
-
-  setSearchBegins() {
-    this.setState({
-      searchBegins: true,
-    });
-  }
-
-  unsetSearchBegins() {
-    this.refs['searchInput'].refs['searchField'].clear(0);
-    this.refs['searchInput'].refs['searchField'].blur();
-
-    this.setState({
-      query: '',
-      searchBegins: false,
-      searchIndex: 0,
-      filteredData: [],
-    });
   }
 
   renderListItem(item, i) {
@@ -235,3 +205,5 @@ const styles = StyleSheet.create({
     color: colors.black,
   },
 });
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

@@ -209,6 +209,14 @@ export const fetchChangeIssueLockStatus = (owner, repoName, issueNum, currentSta
     currentStatus ? accessTokenParametersDELETE(accessToken) : accessTokenParametersPUT(accessToken));
 };
 
+export const fetchSearch = (type, query, accessToken) => {
+  const POST_ENDPOINT = `https://api.github.com/search/${type}?q=${query}`;
+
+  return fetch(
+    POST_ENDPOINT,
+    accessTokenParameters(accessToken));
+};
+
 ///
 
 export const fetchDiff = (url, accessToken) => {

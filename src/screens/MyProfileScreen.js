@@ -83,7 +83,7 @@ class MyProfile extends Component {
                   />}
               </SectionList>}
 
-            <SectionList title="DETAILS">
+            {/* <SectionList title="DETAILS">
               <ListItem
                 title="Events"
                 titleStyle={styles.listTitle}
@@ -104,7 +104,7 @@ class MyProfile extends Component {
                 leftIcon={{name: 'gist', color: colors.grey, type: 'octicon'}}
                 underlayColor={colors.greyLight}
               />
-            </SectionList>
+            </SectionList> */}
 
             {orgs.length > 0 &&
               <SectionList title="ORGANIZATIONS">

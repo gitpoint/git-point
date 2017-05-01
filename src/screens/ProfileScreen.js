@@ -88,7 +88,7 @@ class Profile extends Component {
                 />}
             </SectionList>}
 
-          {!isPending &&
+          {/* {!isPending &&
             <SectionList title="DETAILS">
               <ListItem
                 title="Events"
@@ -110,7 +110,7 @@ class Profile extends Component {
                 leftIcon={{name: 'gist', color: colors.grey, type: 'octicon'}}
                 underlayColor={colors.greyLight}
               />
-            </SectionList>}
+            </SectionList>} */}
 
           {!isPending &&
             orgs.length > 0 &&
