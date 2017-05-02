@@ -15,11 +15,12 @@ const initialState = {
   error: '',
 }
 
-export default function userReducer(state = initialState, action={}) {
+export default function searchReducer(state = initialState, action={}) {
   switch (action.type) {
       case SEARCH_REPOS_IS_PENDING:
         return {
           ...state,
+          repos: [],
           isPendingSearchRepos: true,
         };
       case SEARCH_REPOS_WAS_SUCCESSFUL:
@@ -37,6 +38,7 @@ export default function userReducer(state = initialState, action={}) {
       case SEARCH_USERS_IS_PENDING:
         return {
           ...state,
+          users: [],
           isPendingSearchUsers: true,
         };
       case SEARCH_USERS_WAS_SUCCESSFUL:

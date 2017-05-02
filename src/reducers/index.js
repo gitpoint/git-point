@@ -7,6 +7,7 @@ import repositoryReducer from './repository';
 import organizationReducer from './organization';
 import userInfoListReducer from './userInfoList';
 import issueReducer from './issue';
+import searchReducer from './search';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   organization: organizationReducer,
   userInfoList: userInfoListReducer,
   issue: issueReducer,
+  search: searchReducer,
 });
 
 export default rootReducer;

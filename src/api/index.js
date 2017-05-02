@@ -214,7 +214,8 @@ export const fetchSearch = (type, query, accessToken) => {
 
   return fetch(
     POST_ENDPOINT,
-    accessTokenParameters(accessToken));
+    accessTokenParameters(accessToken),
+  ).then(response => response.json());
 };
 
 ///

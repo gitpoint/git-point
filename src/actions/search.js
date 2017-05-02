@@ -19,7 +19,7 @@ export const searchRepos = (query) => {
       .then(data => {
         dispatch({
           type: SEARCH_REPOS_WAS_SUCCESSFUL,
-          payload: data,
+          payload: data.items,
         });
       })
       .catch(error => {
@@ -41,7 +41,7 @@ export const searchUsers = (query) => {
       .then(data => {
         dispatch({
           type: SEARCH_USERS_WAS_SUCCESSFUL,
-          payload: data,
+          payload: data.items,
         });
       })
       .catch(error => {
