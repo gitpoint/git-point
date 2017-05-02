@@ -30,7 +30,7 @@ class ReadMe extends Component {
 
     return (
       <ViewContainer barColor="dark">
-        {isPendingReadMe && <LoadingContainer animating={isPendingReadMe} />}
+        {isPendingReadMe && <LoadingContainer animating={isPendingReadMe} center/>}
         {!isPendingReadMe && <WebView source={{html: readMe}} />}
       </ViewContainer>
     );

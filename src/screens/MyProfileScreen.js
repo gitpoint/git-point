@@ -41,7 +41,7 @@ class MyProfile extends Component {
 
         {isPendingUser ||
           (isPendingOrgs &&
-            <LoadingContainer animating={isPendingUser || isPendingOrgs} />)}
+            <LoadingContainer animating={isPendingUser || isPendingOrgs} center />)}
 
         {!isPendingUser &&
           !isPendingOrgs &&

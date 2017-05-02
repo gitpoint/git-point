@@ -106,7 +106,7 @@ class Login extends Component {
             />
           </View>}
 
-        {isAuthenticated && <LoadingContainer animating={isLoggingIn} />}
+        {isAuthenticated && <LoadingContainer animating={isLoggingIn} center />}
       </View>
     );
   }

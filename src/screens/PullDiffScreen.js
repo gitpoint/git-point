@@ -79,7 +79,14 @@ class PullDiff extends Component {
             </Text>
           }
 
-          {!item.new &&
+          {item.deleted &&
+            <Text style={styles.fileTitle}>
+              <Text style={styles.deletedIndicator}>DELETED{'\n'}</Text>
+              <Text style={[styles.fileTitle, styles.codeStyle]}>{item.from}</Text>
+            </Text>
+          }
+
+          {!item.new && !item.deleted &&
             <Text style={[styles.fileTitle, styles.codeStyle]}>{item.from === item.to ? item.to : `${item.from} \n → ${item.to}`}</Text>
           }
         </ScrollView>
@@ -155,6 +162,10 @@ const styles = StyleSheet.create({
   newIndicator: {
     fontFamily: 'AvenirNext-DemiBold',
     color: colors.green,
+  },
+  deletedIndicator: {
+    fontFamily: 'AvenirNext-DemiBold',
+    color: colors.red,
   },
   header: {
     paddingTop: 25,

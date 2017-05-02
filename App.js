@@ -65,19 +65,19 @@ const sharedRoutes = {
   Profile: {
     screen: Profile,
     navigationOptions: {
-      headerVisible: false,
+      header: null,
     },
   },
   Organization: {
     screen: Organization,
     navigationOptions: {
-      headerVisible: false,
+      header: null,
     },
   },
   Repository: {
     screen: Repository,
     navigationOptions: {
-      headerVisible: false,
+      header: null,
     },
   },
   RepositoryCodeList: {
@@ -150,7 +150,7 @@ const SearchStackNavigator = StackNavigator(
     Search: {
       screen: Search,
       navigationOptions: {
-        headerVisible: false,
+        header: null,
       },
     },
     ...sharedRoutes,
@@ -165,7 +165,7 @@ const MyProfileStackNavigator = StackNavigator(
     MyProfile: {
       screen: MyProfile,
       navigationOptions: {
-        headerVisible: false,
+        header: null,
       },
     },
     ...sharedRoutes,
@@ -244,26 +244,26 @@ const GitPoint = StackNavigator(
     Splash: {
       screen: Splash,
       navigationOptions: {
-        headerVisible: false,
+        header: null,
       },
     },
     Login: {
       screen: Login,
       navigationOptions: {
-        headerVisible: false,
+        header: null,
       },
     },
     Welcome: {
       screen: Welcome,
       navigationOptions: {
-        headerVisible: false,
+        header: null,
       },
       path: 'welcome',
     },
     Main: {
       screen: MainTabNavigator,
       navigationOptions: {
-        headerVisible: false,
+        header: null,
       },
     },
   },
