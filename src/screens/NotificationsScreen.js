@@ -1,14 +1,19 @@
-import React, {Component, PropTypes} from 'react';
-import {StyleSheet, FlatList, View} from 'react-native';
-import {ButtonGroup, Card} from 'react-native-elements';
+import React, { Component, PropTypes } from "react";
+import { StyleSheet, FlatList, View, ScrollView, Text } from "react-native";
+import { ButtonGroup, Card, ListItem } from "react-native-elements";
+import FastImage from 'react-native-fast-image'
 
-import ViewContainer from '../components/ViewContainer';
-import LoadingContainer from '../components/LoadingContainer';
+import ViewContainer from "../components/ViewContainer";
+import LoadingContainer from "../components/LoadingContainer";
 
-import colors from '../config/colors';
+import colors from "../config/colors";
 
-import {connect} from 'react-redux';
-import {getUnreadNotifications, getParticipatingNotifications, getAllNotifications} from '../actions/notifications';
+import { connect } from "react-redux";
+import {
+  getUnreadNotifications,
+  getParticipatingNotifications,
+  getAllNotifications
+} from "../actions/notifications";
 
 const mapStateToProps = state => ({
   unread: state.notifications.unread,
@@ -16,13 +21,14 @@ const mapStateToProps = state => ({
   all: state.notifications.all,
   isPendingUnread: state.user.isPendingUnread,
   isPendingParticipating: state.user.isPendingParticipating,
-  isPendingAll: state.user.isPendingAll,
+  isPendingAll: state.user.isPendingAll
 });
 
 const mapDispatchToProps = dispatch => ({
   getUnreadNotifications: () => dispatch(getUnreadNotifications()),
-  getParticipatingNotifications: () => dispatch(getParticipatingNotifications()),
-  getAllNotifications: () => dispatch(getAllNotifications()),
+  getParticipatingNotifications: () =>
+    dispatch(getParticipatingNotifications()),
+  getAllNotifications: () => dispatch(getAllNotifications())
 });
 
 class Notifications extends Component {
@@ -30,11 +36,12 @@ class Notifications extends Component {
     super();
 
     this.state = {
-      type: 0,
+      type: 0
     };
 
     this.switchType = this.switchType.bind(this);
-    this.renderHeader = this.renderHeader.bind(this);
+    this.getNotifications = this.getNotifications.bind(this);
+    this.isLoading = this.isLoading.bind(this);
   }
 
   componentDidMount() {
@@ -42,67 +49,105 @@ class Notifications extends Component {
   }
 
   switchType(selectedType) {
+    const { unread, participating, all } = this.props;
+
     if (this.state.type !== selectedType) {
       this.setState({
-        type: selectedType,
+        type: selectedType
       });
     }
+
+    if (selectedType === 0 && unread.length === 0) {
+      this.props.getUnreadNotifications();
+    } else if (selectedType === 1 && participating.length === 0) {
+      this.props.getParticipatingNotifications();
+    } else if (selectedType === 2 && all.length === 0) {
+      this.props.getAllNotifications();
+    }
+
+    this.refs.notificationsListRef.scrollToOffset({x: 0, y: 0, animated: false});
   }
 
-  renderHeader = () => {
-    return (
-      <ButtonGroup
-        onPress={this.switchType}
-        selectedIndex={this.state.searchType}
-        buttons={['Unread', 'Participating', 'All']}
-        textStyle={styles.buttonGroupText}
-        selectedTextStyle={styles.buttonGroupTextSelected}
-        containerStyle={styles.buttonGroupContainer}
-      />
-    )
-  };
+  renderItem = ({ item }) => {
+    const notifications = this.getNotifications().filter(
+      notification => notification.repository.full_name === item
+    );
 
-  compareNotificationTitle = (a,b) => {
-    if (a.repository.full_name < b.repository.full_name)
-      return -1;
-    if (a.repository.full_name > b.repository.full_name)
-      return 1;
-    return 0;
-  }
+    const repositories = [
+      ...new Set(
+        this.getNotifications().map(
+          notification => notification.repository
+        )
+      )
+    ];
 
-  renderItem = ({item}) => {
     return (
       <Card
-        containerStyle={styles.fileChangeContainer}
-        dividerStyle={styles.dividerStyle}
-      >
-        <View>
-          <Text style={styles.fileTitle}>
-            <Text style={[styles.fileTitle, styles.codeStyle]}>{item.to}</Text>
-          </Text>
+        containerStyle={styles.repositoryContainer}
+      > 
+
+        <View style={styles.headerContainer}>
+          <FastImage
+            style={styles.repositoryOwnerAvatar}
+            source={{
+              uri: this.getImage(item),
+              priority: FastImage.priority.high,
+            }}
+          />
+
+            <Text style={styles.repositoryTitle}>{item}</Text>
         </View>
-        {item.chunks.length > 0 ? chunks : <Text style={styles.noChangesMessage}>File renamed without changes.</Text>}
+
+        <ScrollView>
+          {notifications.map((notification, i) => (
+            <ListItem
+              key={i}
+              leftIcon={{
+                name: notification.subject.type === 'Commit' ? 'git-commit' : (notification.subject.type === 'PullRequest' ? 'git-pull-request' : 'issue-opened'),
+                size: 20,
+                color: colors.grey,
+                type: 'octicon',
+              }}
+              title={notification.subject.title}
+              titleStyle={styles.notificationTitle}
+              hideChevron
+            />
+          ))}
+        </ScrollView>
       </Card>
     );
   };
 
+  getImage(repoName) {
+    const notificationForRepo = this.getNotifications().find((notification) => notification.repository.full_name === repoName);
+
+    return notificationForRepo.repository.owner.avatar_url;
+  }
+
   getNotifications() {
-    const {unread, participating, all} = this.props;
-    const {type} = this.state;
+    const { unread, participating, all } = this.props;
+    const { type } = this.state;
 
     switch (type) {
       case 0:
-        return unread.sort(this.compareNotificationTitle);
+        return unread;
       case 1:
-        return participating.sort(this.compareNotificationTitle);
+        return participating;
       case 2:
         return all;
     }
   }
 
   isLoading() {
-    const {unread, participating, all, isPendingUnread, isPendingParticipating, isPendingAll} = this.props;
-    const {type} = this.state;
+    const {
+      unread,
+      participating,
+      all,
+      isPendingUnread,
+      isPendingParticipating,
+      isPendingAll
+    } = this.props;
+    const { type } = this.state;
 
     switch (type) {
       case 0:
@@ -115,34 +160,51 @@ class Notifications extends Component {
   }
 
   render() {
-    const {type} = this.state;
-    
+    const { type } = this.state;
+    const repositories = [
+      ...new Set(
+        this.getNotifications().map(
+          notification => notification.repository.full_name
+        )
+      )
+    ];
+
     return (
       <ViewContainer>
         {!this.isLoading() &&
-          <FlatList
-            ListHeaderComponent={this.renderHeader}
-            removeClippedSubviews={false}
-            data={this.getNotifications()}
-            keyExtractor={this.keyExtractor}
-            renderItem={this.renderItem}
-            disableVirtualization={true}
-          />
-        }
+          <View>
+            <View style={styles.buttonGroupWrapper}>
+              <ButtonGroup
+                onPress={this.switchType}
+                selectedIndex={this.state.type}
+                buttons={["Unread", "Participating", "All"]}
+                textStyle={styles.buttonGroupText}
+                selectedTextStyle={styles.buttonGroupTextSelected}
+                containerStyle={styles.buttonGroupContainer}
+              />
+            </View>
+            <FlatList
+              ref="notificationsListRef"
+              removeClippedSubviews={false}
+              data={repositories}
+              keyExtractor={this.keyExtractor}
+              renderItem={this.renderItem}
+              disableVirtualization={true}
+            />
+          </View>}
 
         {this.isLoading() &&
           <LoadingContainer
             animating={this.isLoading()}
-            text={`Retrieving ${type === 0 ? 'unread' : (type === 1 ? 'pending' : 'all')} notifications`}
+            text={`Retrieving ${type === 0 ? "unread" : type === 1 ? "pending" : "all"} notifications`}
             style={styles.marginSpacing}
-          />
-        }
+          />}
       </ViewContainer>
     );
   }
 
-  keyExtractor = item => {
-    return item.id;
+  keyExtractor = (item, index) => {
+    return index;
   };
 }
 
@@ -156,19 +218,50 @@ Notifications.propTypes = {
   isPendingUnread: PropTypes.bool,
   isPendingParticipating: PropTypes.bool,
   isPendingAll: PropTypes.bool,
-  navigation: PropTypes.object,
+  navigation: PropTypes.object
 };
 
 const styles = StyleSheet.create({
+  buttonGroupWrapper: {
+    backgroundColor: colors.greyLight,
+    paddingTop: 28,
+  },
   buttonGroupContainer: {
     height: 30,
   },
   buttonGroupText: {
-    fontFamily: 'AvenirNext-Bold',
+    fontFamily: "AvenirNext-Bold"
   },
   buttonGroupTextSelected: {
-    color: colors.black,
+    color: colors.black
   },
+  repositoryContainer: {
+    padding: 0,
+    marginVertical: 25,
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: 5,
+    paddingVertical: 8,
+    backgroundColor: colors.greyLight,
+  },
+  repositoryOwnerAvatar: {
+    borderRadius: 13,
+    width: 26,
+    height: 26,
+  },
+  repositoryTitle: {
+    color: colors.primarydark,
+    fontFamily: "AvenirNext-DemiBold",
+    marginLeft: 10,
+    flex: 1,
+  },
+  notificationTitle: {
+    color: colors.black,
+    fontSize: 14,    
+    fontFamily: 'AvenirNext-Regular',
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Notifications);

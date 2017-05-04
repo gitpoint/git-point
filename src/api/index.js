@@ -218,6 +218,15 @@ export const fetchSearch = (type, query, accessToken) => {
   ).then(response => response.json());
 };
 
+export const fetchNotifications = (participating, all, accessToken) => {
+  const POST_ENDPOINT = `https://api.github.com/notifications?participating=${participating}&all=${all}`;
+
+  return fetch(
+    POST_ENDPOINT,
+    accessTokenParameters(accessToken),
+  ).then(response => response.json());
+};
+
 ///
 
 export const fetchDiff = (url, accessToken) => {

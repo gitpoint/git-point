@@ -8,6 +8,7 @@ import organizationReducer from './organization';
 import userInfoListReducer from './userInfoList';
 import issueReducer from './issue';
 import searchReducer from './search';
+import notificationsReducer from './notifications';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   userInfoList: userInfoListReducer,
   issue: issueReducer,
   search: searchReducer,
+  notifications: notificationsReducer,
 });
 
 export default rootReducer;

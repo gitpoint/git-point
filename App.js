@@ -123,7 +123,7 @@ const HomeStackNavigator = StackNavigator(
     Home: {
       screen: Home,
       navigationOptions: {
-        headerTitle: 'Events',
+        headerTitle: 'GitPoint',
       },
     },
     ...sharedRoutes
@@ -137,6 +137,9 @@ const NotificationsStackNavigator = StackNavigator(
   {
     Notifications: {
       screen: Notifications,
+      navigationOptions: {
+        header: null,
+      },
     },
     ...sharedRoutes,
   },
