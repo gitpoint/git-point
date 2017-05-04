@@ -52,7 +52,7 @@ import reduxThunk from 'redux-thunk';
 
 const store = createStore(
   rootReducer,
-  compose(applyMiddleware(reduxThunk, __DEV__ && logger), autoRehydrate())
+  compose(applyMiddleware(reduxThunk), autoRehydrate())
 );
 
 const sharedRoutes = {

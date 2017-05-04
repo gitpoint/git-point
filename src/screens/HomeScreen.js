@@ -359,18 +359,18 @@ class Home extends Component {
       <ViewContainer
         barColor="dark">
 
-        { isPending &&
+        { isPending && userEvents.length === 0 &&
             [...Array(10)].map((item, i) => (
               <LoadingUserListItem key={i}/>
             ))
         }
 
-        { !isPending &&
+        { userEvents.length > 0 &&
           <FlatList
             removeClippedSubviews={false}
             data={userEvents}
             onRefresh={this.getUserEvents}
-            refreshing={false}
+            refreshing={isPending}
             keyExtractor={this.keyExtractor}
             renderItem={({item}) => (
               <ListItem
