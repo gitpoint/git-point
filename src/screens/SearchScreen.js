@@ -86,25 +86,6 @@ class Search extends Component {
     }
   };
 
-  renderHeader = () => (
-    <View>
-      <View style={styles.searchBarWrapper}>
-        <SearchInput
-          onSubmitEditing={event => this.search(event.nativeEvent.text)}
-        />
-      </View>
-
-      <ButtonGroup
-        onPress={this.switchQueryType}
-        selectedIndex={this.state.searchType}
-        buttons={['Repositories', 'Users']}
-        textStyle={styles.buttonGroupText}
-        selectedTextStyle={styles.buttonGroupTextSelected}
-        containerStyle={{height: 30}}
-      />
-    </View>
-  );
-
   render() {
     const {
       users,

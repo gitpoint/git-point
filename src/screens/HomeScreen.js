@@ -367,6 +367,7 @@ class Home extends Component {
 
         { !isPending &&
           <FlatList
+            removeClippedSubviews={false}
             data={userEvents}
             onRefresh={this.getUserEvents}
             refreshing={false}
