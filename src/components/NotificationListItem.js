@@ -7,6 +7,7 @@ import colors from '../config/colors';
 const NotificationListItem = (
   {
     notification,
+    iconAction,
     navigation,
   }
 ) => {
@@ -30,7 +31,7 @@ const NotificationListItem = (
       </TouchableOpacity>
 
       {notification.unread &&
-        <TouchableOpacity style={styles.iconContainer}>
+        <TouchableOpacity style={styles.iconContainer} onPress={() => iconAction(notification.id)}>
             <Icon
             color={colors.grey}
             size={22}
@@ -45,6 +46,7 @@ const NotificationListItem = (
 
 NotificationListItem.propTypes = {
   notification: PropTypes.object,
+  iconAction: PropTypes.func,
   navigation: PropTypes.object,
 };
 

@@ -1,7 +1,14 @@
 import React, { Component, PropTypes } from "react";
-import { StyleSheet, FlatList, View, ScrollView, Text, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  FlatList,
+  View,
+  ScrollView,
+  Text,
+  TouchableOpacity
+} from "react-native";
 import { ButtonGroup, Card, Icon } from "react-native-elements";
-import FastImage from 'react-native-fast-image'
+import FastImage from "react-native-fast-image";
 
 import ViewContainer from "../components/ViewContainer";
 import LoadingContainer from "../components/LoadingContainer";
@@ -13,7 +20,9 @@ import { connect } from "react-redux";
 import {
   getUnreadNotifications,
   getParticipatingNotifications,
-  getAllNotifications
+  getAllNotifications,
+  markAsRead,
+  markRepoAsRead
 } from "../actions/notifications";
 
 const mapStateToProps = state => ({
@@ -29,7 +38,9 @@ const mapDispatchToProps = dispatch => ({
   getUnreadNotifications: () => dispatch(getUnreadNotifications()),
   getParticipatingNotifications: () =>
     dispatch(getParticipatingNotifications()),
-  getAllNotifications: () => dispatch(getAllNotifications())
+  getAllNotifications: () => dispatch(getAllNotifications()),
+  markAsRead: notificationID => dispatch(markAsRead(notificationID)),
+  markRepoAsRead: repoFullName => dispatch(markRepoAsRead(repoFullName))
 });
 
 class Notifications extends Component {
@@ -68,31 +79,34 @@ class Notifications extends Component {
       this.props.getAllNotifications();
     }
 
-    this.refs.notificationsListRef.scrollToOffset({x: 0, y: 0, animated: false});
+    this.refs.notificationsListRef.scrollToOffset({
+      x: 0,
+      y: 0,
+      animated: false
+    });
   }
 
   renderItem = ({ item }) => {
+    const { markAsRead, markRepoAsRead } = this.props;
     const notifications = this.notifications().filter(
       notification => notification.repository.full_name === item
     );
 
     return (
-      <Card
-        containerStyle={styles.repositoryContainer}
-      > 
+      <Card containerStyle={styles.repositoryContainer}>
 
         <View style={styles.headerContainer}>
           <FastImage
             style={styles.repositoryOwnerAvatar}
             source={{
               uri: this.getImage(item),
-              priority: FastImage.priority.high,
+              priority: FastImage.priority.high
             }}
           />
 
           <Text style={styles.repositoryTitle}>{item}</Text>
           
-          <TouchableOpacity style={styles.markAsReadIconRepo}>
+          <TouchableOpacity style={styles.markAsReadIconRepo} onPress={() => markRepoAsRead(item)}>
             <Icon
               color={colors.greyDark}
               size={28}
@@ -104,7 +118,12 @@ class Notifications extends Component {
 
         <ScrollView>
           {notifications.map((notification, i) => (
-            <NotificationListItem key={i} notification={notification} navigation={this.props.navigation} />
+            <NotificationListItem
+              key={i}
+              notification={notification}
+              iconAction={notificationID => markAsRead(notificationID)}
+              navigation={this.props.navigation}
+            />
           ))}
         </ScrollView>
       </Card>
@@ -112,7 +131,9 @@ class Notifications extends Component {
   };
 
   getImage(repoName) {
-    const notificationForRepo = this.notifications().find((notification) => notification.repository.full_name === repoName);
+    const notificationForRepo = this.notifications().find(
+      notification => notification.repository.full_name === repoName
+    );
 
     return notificationForRepo.repository.owner.avatar_url;
   }
@@ -153,7 +174,11 @@ class Notifications extends Component {
   }
 
   getNotifications() {
-    const { getUnreadNotifications, getParticipatingNotifications, getAllNotifications } = this.props;
+    const {
+      getUnreadNotifications,
+      getParticipatingNotifications,
+      getAllNotifications
+    } = this.props;
     const { type } = this.state;
 
     switch (type) {
@@ -178,13 +203,13 @@ class Notifications extends Component {
 
     return (
       <ViewContainer>
-        {this.isLoading() && this.notifications().length === 0 &&
+        {this.isLoading() &&
+          this.notifications().length === 0 &&
           <LoadingContainer
             animating={this.isLoading() && this.notifications().length === 0}
             text={`Retrieving ${type === 0 ? "unread" : type === 1 ? "pending" : "all"} notifications`}
             style={styles.marginSpacing}
-          />
-        }
+          />}
 
         <View style={styles.marginBottom}>
           <View style={styles.buttonGroupWrapper}>
@@ -221,6 +246,8 @@ Notifications.propTypes = {
   getUnreadNotifications: PropTypes.func,
   getParticipatingNotifications: PropTypes.func,
   getAllNotifications: PropTypes.func,
+  markAsRead: PropTypes.func,
+  markRepoAsRead: PropTypes.func,
   unread: PropTypes.array,
   participating: PropTypes.array,
   all: PropTypes.array,
@@ -233,10 +260,10 @@ Notifications.propTypes = {
 const styles = StyleSheet.create({
   buttonGroupWrapper: {
     backgroundColor: colors.greyLight,
-    paddingTop: 28,
+    paddingTop: 28
   },
   buttonGroupContainer: {
-    height: 30,
+    height: 30
   },
   buttonGroupText: {
     fontFamily: "AvenirNext-Bold"
@@ -246,39 +273,40 @@ const styles = StyleSheet.create({
   },
   repositoryContainer: {
     padding: 0,
-    marginVertical: 25,
+    marginVertical: 25
   },
   headerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingLeft: 5,
     paddingVertical: 8,
-    backgroundColor: colors.greyLight,
+    backgroundColor: colors.greyLight
   },
   repositoryOwnerAvatar: {
     borderRadius: 13,
     width: 26,
-    height: 26,
+    height: 26
   },
   repositoryTitle: {
     color: colors.primarydark,
     fontFamily: "AvenirNext-DemiBold",
     marginLeft: 10,
-    flex: 1,
+    flex: 1
   },
   notificationTitle: {
     color: colors.black,
-    fontSize: 14,    
-    fontFamily: 'AvenirNext-Regular',
+    fontSize: 14,
+    fontFamily: "AvenirNext-Regular"
   },
   markAsReadIconRepo: {
     flex: 0.15,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center"
   },
   marginBottom: {
-    marginBottom: 85,
-  },
+    marginBottom: 70,
+    backgroundColor: "transparent"
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Notifications);

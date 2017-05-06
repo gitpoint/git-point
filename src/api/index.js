@@ -227,6 +227,24 @@ export const fetchNotifications = (participating, all, accessToken) => {
   ).then(response => response.json());
 };
 
+export const fetchMarkNotificationAsRead = (notificationID, accessToken) => {
+  const POST_ENDPOINT = `https://api.github.com/notifications/threads/${notificationID}`;
+
+  return fetch(
+    POST_ENDPOINT,
+    accessTokenParametersPATCH(null, accessToken),
+  );
+};
+
+export const fetchMarkRepoNotificationAsRead = (repoFullName, accessToken) => {
+  const POST_ENDPOINT = `https://api.github.com/repos/${repoFullName}/notifications`;
+
+  return fetch(
+    POST_ENDPOINT,
+    accessTokenParametersPUT(accessToken),
+  );
+};
+
 ///
 
 export const fetchDiff = (url, accessToken) => {
