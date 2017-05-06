@@ -25,10 +25,13 @@ import {
   markRepoAsRead
 } from "../actions/notifications";
 
+import {getIssueFromUrl} from "../actions/issue";
+
 const mapStateToProps = state => ({
   unread: state.notifications.unread,
   participating: state.notifications.participating,
   all: state.notifications.all,
+  issue: state.issue.issue,
   isPendingUnread: state.notifications.isPendingUnread,
   isPendingParticipating: state.notifications.isPendingParticipating,
   isPendingAll: state.notifications.isPendingAll
@@ -40,7 +43,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(getParticipatingNotifications()),
   getAllNotifications: () => dispatch(getAllNotifications()),
   markAsRead: notificationID => dispatch(markAsRead(notificationID)),
-  markRepoAsRead: repoFullName => dispatch(markRepoAsRead(repoFullName))
+  markRepoAsRead: repoFullName => dispatch(markRepoAsRead(repoFullName)),
+  getIssueFromUrl: url => dispatch(getIssueFromUrl(url))
 });
 
 class Notifications extends Component {
@@ -122,6 +126,7 @@ class Notifications extends Component {
               key={i}
               notification={notification}
               iconAction={notificationID => markAsRead(notificationID)}
+              navigationAction={notification => this.navigateToThread(notification)}
               navigation={this.props.navigation}
             />
           ))}
@@ -129,6 +134,16 @@ class Notifications extends Component {
       </Card>
     );
   };
+
+  navigateToThread(notification) {
+    const {getIssueFromUrl, navigation} = this.props;
+    
+    getIssueFromUrl(notification.subject.url.replace('pulls', 'issues')).then(() => {
+      navigation.navigate('Issue', {
+          issue: this.props.issue
+        })
+    })
+  }
 
   getImage(repoName) {
     const notificationForRepo = this.notifications().find(
@@ -246,6 +261,8 @@ Notifications.propTypes = {
   getUnreadNotifications: PropTypes.func,
   getParticipatingNotifications: PropTypes.func,
   getAllNotifications: PropTypes.func,
+  getIssueFromUrl: PropTypes.func,
+  issue: PropTypes.object,
   markAsRead: PropTypes.func,
   markRepoAsRead: PropTypes.func,
   unread: PropTypes.array,

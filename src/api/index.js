@@ -8,12 +8,13 @@ const accessTokenParameters = accessToken => ({
   },
 });
 
-const accessTokenParametersPUT = (accessToken) => ({
+const accessTokenParametersPUT = (accessToken, body = {}) => ({
   method: 'PUT',
   headers: {
     Authorization: `token ${accessToken}`,
     'Content-Length': 0,
   },
+  body: JSON.stringify(body)
 });
 
 const accessTokenParametersDELETE = (accessToken) => ({

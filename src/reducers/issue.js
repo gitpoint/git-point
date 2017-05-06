@@ -31,7 +31,10 @@ import {
   CHANGE_LOCK_STATUS_HAD_ERROR,
   GET_ISSUE_DIFF_IS_PENDING,
   GET_ISSUE_DIFF_WAS_SUCCESSFUL,
-  GET_ISSUE_DIFF_HAD_ERROR
+  GET_ISSUE_DIFF_HAD_ERROR,
+  GET_ISSUE_FROM_URL_IS_PENDING,
+  GET_ISSUE_FROM_URL_WAS_SUCCESSFUL,
+  GET_ISSUE_FROM_URL_HAD_ERROR
 } from '../constants';
 
 const initialState = {
@@ -48,6 +51,7 @@ const initialState = {
   isEditingIssue: false,
   isChangingLockStatus: false,
   isPendingDiff: false,
+  isPendingIssue: false,
   error: '',
 }
 
@@ -267,6 +271,23 @@ export default function issueReducer(state = initialState, action={}) {
           ...state,
           error: action.payload,
           isPendingDiff: false,
+        };
+      case GET_ISSUE_FROM_URL_IS_PENDING:
+        return {
+          ...state,
+          isPendingIssue: true,
+        };
+      case GET_ISSUE_FROM_URL_WAS_SUCCESSFUL:
+        return {
+          ...state,
+          issue: action.payload,
+          isPendingIssue: false,
+        };
+      case GET_ISSUE_FROM_URL_HAD_ERROR:
+        return {
+          ...state,
+          error: action.payload,
+          isPendingIssue: false,
         };
       default:
         return state;

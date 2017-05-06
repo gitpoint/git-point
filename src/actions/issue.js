@@ -31,7 +31,10 @@ import {
   CHANGE_LOCK_STATUS_HAD_ERROR,
   GET_ISSUE_DIFF_IS_PENDING,
   GET_ISSUE_DIFF_WAS_SUCCESSFUL,
-  GET_ISSUE_DIFF_HAD_ERROR
+  GET_ISSUE_DIFF_HAD_ERROR,
+  GET_ISSUE_FROM_URL_IS_PENDING,
+  GET_ISSUE_FROM_URL_WAS_SUCCESSFUL,
+  GET_ISSUE_FROM_URL_HAD_ERROR
 } from '../constants';
 
 import {
@@ -42,7 +45,7 @@ import {
   fetchCreateCommentReaction,
   fetchDeleteReaction,
   fetchEditIssue,
-  fetchChangeIssueLockStatus,
+  fetchChangeIssueLockStatus
 } from '../api';
 
 const getIssueComments = issue => {
@@ -328,6 +331,28 @@ export const getDiff = url => {
       .catch(error => {
         dispatch({
           type: GET_ISSUE_DIFF_HAD_ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+export const getIssueFromUrl = url => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({type: GET_ISSUE_FROM_URL_IS_PENDING});
+
+    return fetchUrlPreview(url, accessToken)
+      .then(data => {
+        dispatch({
+          type: GET_ISSUE_FROM_URL_WAS_SUCCESSFUL,
+          payload: data,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: GET_ISSUE_FROM_URL_HAD_ERROR,
           payload: error,
         });
       });

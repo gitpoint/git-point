@@ -209,6 +209,7 @@ const styles = StyleSheet.create({
   listContainer: {
     borderTopColor: colors.greyLight,
     borderTopWidth: 1,
+    marginBottom: 105,
   },
 });
 

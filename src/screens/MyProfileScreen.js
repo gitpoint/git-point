@@ -83,35 +83,14 @@ class MyProfile extends Component {
                   />}
               </SectionList>}
 
-            {/* <SectionList title="DETAILS">
-              <ListItem
-                title="Events"
-                titleStyle={styles.listTitle}
-                leftIcon={{name: 'pencil', color: colors.grey, type: 'octicon'}}
-                underlayColor={colors.greyLight}
-              />
-
-              <ListItem
-                title="Starred"
-                titleStyle={styles.listTitle}
-                leftIcon={{name: 'star', color: colors.grey, type: 'octicon'}}
-                underlayColor={colors.greyLight}
-              />
-
-              <ListItem
-                title="Gists"
-                titleStyle={styles.listTitle}
-                leftIcon={{name: 'gist', color: colors.grey, type: 'octicon'}}
-                underlayColor={colors.greyLight}
-              />
-            </SectionList> */}
-
-            {orgs.length > 0 &&
-              <SectionList title="ORGANIZATIONS">
+              <SectionList 
+                title="ORGANIZATIONS"
+                noItems={orgs.length === 0}
+                noItemsMessage={'No organizations'}>
                 {orgs.map((item, i) => (
                   <UserListItem key={i} user={item} navigation={navigation} />
                 ))}
-              </SectionList>}
+              </SectionList>
           </ParallaxScroll>}
       </ViewContainer>
     );

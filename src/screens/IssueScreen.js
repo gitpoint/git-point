@@ -7,7 +7,6 @@ import LoadingUserListItem from '../components/LoadingUserListItem';
 import IssueDescriptionListItem from '../components/IssueDescriptionListItem';
 import CommentListItem from '../components/CommentListItem';
 import CommentInput from '../components/CommentInput';
-import Parse from 'parse-diff';
 
 import colors from '../config/colors';
 
@@ -19,7 +18,8 @@ import {
   createCommentReaction,
   deleteIssueReaction,
   deleteCommentReaction,
-  getDiff
+  getDiff,
+  getIssueFromUrl
 } from '../actions/issue';
 
 const mapStateToProps = state => ({
@@ -34,6 +34,7 @@ const mapStateToProps = state => ({
   isPostingComment: state.issue.isPostingComment,
   isCreatingReaction: state.issue.isCreatingReaction,
   isCreatingReactionForID: state.issue.isCreatingReactionForID,
+  isPendingIssue: state.issue.isPendingIssue
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -49,6 +50,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(deleteCommentReaction(commentID, reactionID)),
   getDiff: (url) =>
     dispatch(getDiff(url)),
+  getIssueFromUrl: (url) =>
+    dispatch(getIssueFromUrl(url)),
 });
 
 class Issue extends Component {
@@ -74,17 +77,14 @@ class Issue extends Component {
   };
 
   componentDidMount() {
-    const issue = this.props.navigation.state.params.issue;
+    const {navigation} = this.props;
+    const issue = navigation.state.params.issue;
+    
     this.props.getHydratedComments(issue);
 
     if (issue.pull_request) {
       this.props.getDiff(issue.pull_request.diff_url);
     }
-
-    const {diff} = this.props;
-    const filesChanged = Parse(diff);
-    console.log(diff);
-    console.log(filesChanged);
   }
 
   postComment = body => {
@@ -218,6 +218,7 @@ Issue.propTypes = {
   createCommentReaction: PropTypes.func,
   deleteIssueReaction: PropTypes.func,
   deleteCommentReaction: PropTypes.func,
+  getIssueFromUrl: PropTypes.func,
   issue: PropTypes.object,
   diff: PropTypes.string,
   authUser: PropTypes.object,
