@@ -97,7 +97,8 @@ class CommentListItem extends Component {
             <Text style={styles.commentBody}>
               {comment.body}
             </Text>}
-
+          
+          {comment.body !== null && 
           <View
             style={[
               styles.reactionsBar,
@@ -122,7 +123,7 @@ class CommentListItem extends Component {
                 style={styles.creatingReactionLoader}
               />
             }
-          </View>
+          </View>}
 
         </View>
       </View>

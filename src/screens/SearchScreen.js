@@ -1,11 +1,11 @@
 import React, {Component, PropTypes} from 'react';
 import {StyleSheet, Text, View, FlatList, Dimensions} from 'react-native';
 import {ButtonGroup} from 'react-native-elements';
+import SearchBar from 'react-native-search-bar';
 
 import ViewContainer from '../components/ViewContainer';
 import RepositoryListItem from '../components/RepositoryListItem';
 import UserListItem from '../components/UserListItem';
-import SearchInput from '../components/SearchInput';
 import LoadingContainer from '../components/LoadingContainer';
 
 import colors from '../config/colors';
@@ -33,18 +33,13 @@ class Search extends Component {
       query: '',
       searchType: 0,
       searchStart: false,
+      searchFocus: false,
     };
 
     this.switchQueryType = this.switchQueryType.bind(this);
     this.search = this.search.bind(this);
     this.renderItem = this.renderItem.bind(this);
   }
-
-  componentDidMount() {
-    this.fetchTrending();
-  }
-
-  fetchTrending() {}
 
   search(query, selectedType = null) {
     const {searchRepos, searchUsers} = this.props;
@@ -99,9 +94,24 @@ class Search extends Component {
       <ViewContainer>
         <View>
           <View style={styles.searchBarWrapper}>
-            <SearchInput
-              onSubmitEditing={event => this.search(event.nativeEvent.text)}
-            />
+            <View style={styles.searchContainer}>
+              <SearchBar
+                ref="searchBar"
+                hideBackground={true}
+                textColor={colors.primaryDark}
+                textFieldBackgroundColor={colors.greyLight}
+                showsCancelButton={this.state.searchFocus}
+                onFocus={() => this.setState({searchFocus: true})}
+                onCancelButtonPress={() => {
+                  this.setState({ searchStart: false });
+                  this.refs.searchBar.unFocus();
+                }}
+                onSearchButtonPress={(query) => {
+                  this.search(query);
+                  this.refs.searchBar.unFocus();
+                }}
+              />
+            </View>
           </View>
 
           <ButtonGroup
@@ -113,19 +123,19 @@ class Search extends Component {
             containerStyle={styles.buttonGroupContainer}
           />
         </View>
+        
+        {isPendingSearchRepos &&
+          searchType === 0 &&
+          <LoadingContainer
+            animating={isPendingSearchRepos && searchType === 0}
+            text={`Searching for ${query}`}
+            style={styles.marginSpacing}
+          />}
 
         {isPendingSearchUsers &&
           searchType === 1 &&
           <LoadingContainer
             animating={isPendingSearchUsers && searchType === 1}
-            text={`Searching for ${query}`}
-            style={styles.marginSpacing}
-          />}
-
-        {isPendingSearchRepos &&
-          searchType === 0 &&
-          <LoadingContainer
-            animating={isPendingSearchRepos && searchType === 0}
             text={`Searching for ${query}`}
             style={styles.marginSpacing}
           />}
@@ -182,6 +192,13 @@ const styles = StyleSheet.create({
   searchBarWrapper: {
     flexDirection: 'row',
     marginTop: 20,
+  },
+  searchContainer: {
+    width: Dimensions.get('window').width,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: colors.grey,
+    backgroundColor: colors.white,
+    flex: 1,
   },
   list: {
     marginTop: 0,

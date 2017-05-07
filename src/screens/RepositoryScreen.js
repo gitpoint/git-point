@@ -40,7 +40,7 @@ class Repository extends Component {
 
     this.props.getRepository(repo.url);
     this.props.getContributors(repo.contributors_url);
-    this.props.getIssues(repo.issues_url.replace('{/number}', '?state=all'));
+    this.props.getIssues(repo.issues_url.replace('{/number}', '?state=all&per_page=100'));
   }
 
   render() {

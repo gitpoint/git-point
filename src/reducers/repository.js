@@ -40,6 +40,7 @@ export default function repositoryReducer(state = initialState, action={}) {
       case GET_REPOSITORY_IS_PENDING:
         return {
           ...state,
+          issues: [],
           isPendingRepository: true,
         };
       case GET_REPOSITORY_WAS_SUCCESSFUL:
