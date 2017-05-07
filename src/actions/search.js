@@ -5,9 +5,6 @@ import {
   SEARCH_USERS_IS_PENDING,
   SEARCH_USERS_WAS_SUCCESSFUL,
   SEARCH_USERS_HAD_ERROR,
-  SEARCH_ISSUES_IS_PENDING,
-  SEARCH_ISSUES_WAS_SUCCESSFUL,
-  SEARCH_ISSUES_HAD_ERROR,
   SEARCH_PULLS_IS_PENDING,
   SEARCH_PULLS_WAS_SUCCESSFUL,
   SEARCH_PULLS_HAD_ERROR
@@ -53,28 +50,6 @@ export const searchUsers = (query) => {
       .catch(error => {
         dispatch({
           type: SEARCH_USERS_HAD_ERROR,
-          payload: error,
-        });
-      });
-  };
-};
-
-export const searchRepoIssues = (query, repoFullName) => {
-  return (dispatch, getState) => {
-    const accessToken = getState().auth.accessToken;
-
-    dispatch({type: SEARCH_ISSUES_IS_PENDING});
-
-    return fetchSearch('issues', query, accessToken, `+repo:${repoFullName}+type:issue`)
-      .then(data => {
-        dispatch({
-          type: SEARCH_ISSUES_WAS_SUCCESSFUL,
-          payload: data.items,
-        });
-      })
-      .catch(error => {
-        dispatch({
-          type: SEARCH_ISSUES_HAD_ERROR,
           payload: error,
         });
       });

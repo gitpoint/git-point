@@ -16,10 +16,22 @@ import {
   GET_REPOSITORY_README_HAD_ERROR,
   GET_REPOSITORY_LABELS_IS_PENDING,
   GET_REPOSITORY_LABELS_WAS_SUCCESSFUL,
-  GET_REPOSITORY_LABELS_HAD_ERROR
+  GET_REPOSITORY_LABELS_HAD_ERROR,
+  SEARCH_OPEN_ISSUES_IS_PENDING,
+  SEARCH_OPEN_ISSUES_WAS_SUCCESSFUL,
+  SEARCH_OPEN_ISSUES_HAD_ERROR,
+  SEARCH_CLOSED_ISSUES_IS_PENDING,
+  SEARCH_CLOSED_ISSUES_WAS_SUCCESSFUL,
+  SEARCH_CLOSED_ISSUES_HAD_ERROR,
+  SEARCH_OPEN_PULLS_IS_PENDING,
+  SEARCH_OPEN_PULLS_WAS_SUCCESSFUL,
+  SEARCH_OPEN_PULLS_HAD_ERROR,
+  SEARCH_CLOSED_PULLS_IS_PENDING,
+  SEARCH_CLOSED_PULLS_WAS_SUCCESSFUL,
+  SEARCH_CLOSED_PULLS_HAD_ERROR,
 } from '../constants';
 
-import {fetchUrl, fetchUrlPreview, fetchReadMe} from '../api';
+import {fetchUrl, fetchUrlPreview, fetchReadMe, fetchSearch} from '../api';
 
 export const getRepository = url => {
   return (dispatch, getState) => {
@@ -147,6 +159,94 @@ export const getLabels = url => {
       .catch(error => {
         dispatch({
           type: GET_REPOSITORY_LABELS_HAD_ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+export const searchOpenRepoIssues = (query, repoFullName) => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({type: SEARCH_OPEN_ISSUES_IS_PENDING});
+
+    return fetchSearch('issues', query, accessToken, `+repo:${repoFullName}+type:issue+state:open&sort=created`)
+      .then(data => {
+        dispatch({
+          type: SEARCH_OPEN_ISSUES_WAS_SUCCESSFUL,
+          payload: data.items,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: SEARCH_OPEN_ISSUES_HAD_ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+export const searchClosedRepoIssues = (query, repoFullName) => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({type: SEARCH_CLOSED_ISSUES_IS_PENDING});
+
+    return fetchSearch('issues', query, accessToken, `+repo:${repoFullName}+type:issue+state:closed&sort=created`)
+      .then(data => {
+        dispatch({
+          type: SEARCH_CLOSED_ISSUES_WAS_SUCCESSFUL,
+          payload: data.items,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: SEARCH_CLOSED_ISSUES_HAD_ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+export const searchOpenRepoPulls = (query, repoFullName) => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({type: SEARCH_OPEN_PULLS_IS_PENDING});
+
+    return fetchSearch('issues', query, accessToken, `+repo:${repoFullName}+type:pr+state:open&sort=created`)
+      .then(data => {
+        dispatch({
+          type: SEARCH_OPEN_PULLS_WAS_SUCCESSFUL,
+          payload: data.items,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: SEARCH_OPEN_PULLS_HAD_ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+export const searchClosedRepoPulls = (query, repoFullName) => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({type: SEARCH_CLOSED_PULLS_IS_PENDING});
+
+    return fetchSearch('issues', query, accessToken, `+repo:${repoFullName}+type:pr+state:closed&sort=created`)
+      .then(data => {
+        dispatch({
+          type: SEARCH_CLOSED_PULLS_WAS_SUCCESSFUL,
+          payload: data.items,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: SEARCH_CLOSED_PULLS_HAD_ERROR,
           payload: error,
         });
       });

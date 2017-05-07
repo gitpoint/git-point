@@ -16,7 +16,19 @@ import {
   GET_REPOSITORY_README_HAD_ERROR,
   GET_REPOSITORY_LABELS_IS_PENDING,
   GET_REPOSITORY_LABELS_WAS_SUCCESSFUL,
-  GET_REPOSITORY_LABELS_HAD_ERROR
+  GET_REPOSITORY_LABELS_HAD_ERROR,
+  SEARCH_OPEN_ISSUES_IS_PENDING,
+  SEARCH_OPEN_ISSUES_WAS_SUCCESSFUL,
+  SEARCH_OPEN_ISSUES_HAD_ERROR,
+  SEARCH_CLOSED_ISSUES_IS_PENDING,
+  SEARCH_CLOSED_ISSUES_WAS_SUCCESSFUL,
+  SEARCH_CLOSED_ISSUES_HAD_ERROR,
+  SEARCH_OPEN_PULLS_IS_PENDING,
+  SEARCH_OPEN_PULLS_WAS_SUCCESSFUL,
+  SEARCH_OPEN_PULLS_HAD_ERROR,
+  SEARCH_CLOSED_PULLS_IS_PENDING,
+  SEARCH_CLOSED_PULLS_WAS_SUCCESSFUL,
+  SEARCH_CLOSED_PULLS_HAD_ERROR,
 } from '../constants';
 
 const initialState = {
@@ -26,12 +38,20 @@ const initialState = {
   contents: [],
   issues: [],
   readMe: '',
+  searchedOpenIssues: [],
+  searchedClosedIssues: [],
+  searchedOpenPulls: [],
+  searchedClosedPulls: [],
   isPendingRepository: false,
   isPendingContributors: false,
   isPendingContents: false,
   isPendingIssues: false,
   isPendingReadMe: false,
   isPendingLabels: false,
+  isPendingSearchOpenIssues: false,
+  isPendingSearchClosedIssues: false,
+  isPendingSearchOpenPulls: false,
+  isPendingSearchClosedPulls: false,
   error: '',
 }
 
@@ -139,6 +159,78 @@ export default function repositoryReducer(state = initialState, action={}) {
           ...state,
           error: action.payload,
           isPendingLabels: false,
+        };
+      case SEARCH_OPEN_ISSUES_IS_PENDING:
+        return {
+          ...state,
+          searchedOpenIssues: [],
+          isPendingSearchOpenIssues: true,
+        };
+      case SEARCH_OPEN_ISSUES_WAS_SUCCESSFUL:
+        return {
+          ...state,
+          searchedOpenIssues: action.payload,
+          isPendingSearchOpenIssues: false,
+        };
+      case SEARCH_OPEN_ISSUES_HAD_ERROR:
+        return {
+          ...state,
+          error: action.payload,
+          isPendingSearchOpenIssues: false,
+        };
+      case SEARCH_CLOSED_ISSUES_IS_PENDING:
+        return {
+          ...state,
+          searchedClosedIssues: [],
+          isPendingSearchClosedIssues: true,
+        };
+      case SEARCH_CLOSED_ISSUES_WAS_SUCCESSFUL:
+        return {
+          ...state,
+          searchedClosedIssues: action.payload,
+          isPendingSearchClosedIssues: false,
+        };
+      case SEARCH_CLOSED_ISSUES_HAD_ERROR:
+        return {
+          ...state,
+          error: action.payload,
+          isPendingSearchClosedIssues: false,
+        };
+      case SEARCH_OPEN_PULLS_IS_PENDING:
+        return {
+          ...state,
+          searchedOpenPulls: [],
+          isPendingSearchOpenPulls: true,
+        };
+      case SEARCH_OPEN_PULLS_WAS_SUCCESSFUL:
+        return {
+          ...state,
+          searchedOpenPulls: action.payload,
+          isPendingSearchOpenPulls: false,
+        };
+      case SEARCH_OPEN_PULLS_HAD_ERROR:
+        return {
+          ...state,
+          error: action.payload,
+          isPendingSearchOpenPulls: false,
+        };
+      case SEARCH_CLOSED_PULLS_IS_PENDING:
+        return {
+          ...state,
+          searchedClosedPulls: [],
+          isPendingSearchClosedPulls: true,
+        };
+      case SEARCH_CLOSED_PULLS_WAS_SUCCESSFUL:
+        return {
+          ...state,
+          searchedClosedPulls: action.payload,
+          isPendingSearchClosedPulls: false,
+        };
+      case SEARCH_CLOSED_PULLS_HAD_ERROR:
+        return {
+          ...state,
+          error: action.payload,
+          isPendingSearchClosedPulls: false,
         };
       default:
         return state;

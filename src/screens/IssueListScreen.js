@@ -10,22 +10,22 @@ import LoadingContainer from '../components/LoadingContainer';
 import colors from '../config/colors';
 
 import {connect} from 'react-redux';
-import {searchRepoIssues, searchRepoPulls} from '../actions/search';
+import {searchOpenRepoIssues, searchClosedRepoIssues} from '../actions/repository';
 
 const mapStateToProps = state => ({
   repository: state.repository.repository,
-  issues: state.search.issues,
-  pullRequests: state.search.pullRequests,
-  isPendingSearchIssues: state.search.isPendingSearchIssues,
-  isPendingSearchpullRequests: state.search.isPendingSearchpullRequests,
+  searchedOpenIssues: state.repository.searchedOpenIssues,
+  searchedClosedIssues: state.repository.searchedClosedIssues,
+  isPendingSearchOpenIssues: state.repository.isPendingSearchOpenIssues,
+  isPendingSearchClosedIssues: state.repository.isPendingSearchClosedIssues
 });
 
 const mapDispatchToProps = dispatch => ({
-  searchRepoIssues: (query, repo) => dispatch(searchRepoIssues(query, repo)),
-  searchRepoPulls: (query, repo) => dispatch(searchRepoPulls(query, repo)),
+  searchOpenRepoIssues: (query, repo) => dispatch(searchOpenRepoIssues(query, repo)),
+  searchClosedRepoIssues: (query, repo) => dispatch(searchClosedRepoIssues(query, repo)),
 });
 
-class IssuesList extends Component {
+class IssueList extends Component {
   constructor() {
     super();
 
@@ -38,6 +38,7 @@ class IssuesList extends Component {
 
     this.switchQueryType = this.switchQueryType.bind(this);
     this.search = this.search.bind(this);
+    this.getList = this.getList.bind(this);
   }
 
   switchQueryType(selectedType) {
@@ -51,7 +52,7 @@ class IssuesList extends Component {
   }
 
   search(query, selectedType = null) {
-    const {searchRepoIssues, searchRepoPulls, repository} = this.props;
+    const {searchOpenRepoIssues, searchClosedRepoIssues, repository} = this.props;
 
     const selectedSearchType = selectedType !== null
       ? selectedType
@@ -63,7 +64,7 @@ class IssuesList extends Component {
         searchStart: true,
       });
 
-      selectedSearchType === 0 ? searchRepoIssues(query, repository.full_name) : searchRepoPulls(query, repository.full_name);
+      selectedSearchType === 0 ? searchOpenRepoIssues(query, repository.full_name) : searchClosedRepoIssues(query, repository.full_name);
     }
   }
 
@@ -75,10 +76,21 @@ class IssuesList extends Component {
       navigation={this.props.navigation} />
   )
 
-  render() {
-    const {issues, pullRequests, isPendingSearchIssues, isPendingSearchpullRequests, navigation} = this.props;
-    const {query, searchType, searchStart} = this.state;
+  getList = () => {
+    const {searchedOpenIssues, searchedClosedIssues, navigation} = this.props;    
+    const {searchType, searchStart} = this.state;
+    
+    if (searchStart) {
+      return searchType === 0 ? searchedOpenIssues : searchedClosedIssues;
+    } else {
+      return searchType === 0 ? navigation.state.params.issues.filter(issue => issue.state === 'open') : navigation.state.params.issues.filter(issue => issue.state === 'closed');
+    }
+  }
 
+  render() {
+    const {searchedOpenIssues, searchedClosedIssues, isPendingSearchOpenIssues, isPendingSearchClosedIssues} = this.props;
+    const {query, searchType, searchStart} = this.state;
+    
     return (
       <ViewContainer>
         <View style={styles.header}>
@@ -92,7 +104,7 @@ class IssuesList extends Component {
                 showsCancelButton={this.state.searchFocus}
                 onFocus={() => this.setState({searchFocus: true})}
                 onCancelButtonPress={() => {
-                  this.setState({ searchStart: false });
+                  this.setState({ searchStart: false, query: '' });
                   this.refs.searchBar.unFocus();
                 }}
                 onSearchButtonPress={(query) => {
@@ -113,51 +125,42 @@ class IssuesList extends Component {
           />
         </View>
 
-        {isPendingSearchIssues &&
+        {isPendingSearchOpenIssues &&
           searchType === 0 &&
           <LoadingContainer
-            animating={isPendingSearchIssues && searchType === 0}
+            animating={isPendingSearchOpenIssues && searchType === 0}
             text={`Searching for ${query}`}
             style={styles.marginSpacing}
           />}
 
-        {isPendingSearchpullRequests &&
+        {isPendingSearchClosedIssues &&
           searchType === 1 &&
           <LoadingContainer
-            animating={isPendingSearchpullRequests && searchType === 1}
+            animating={isPendingSearchClosedIssues && searchType === 1}
             text={`Searching for ${query}`}
             style={styles.marginSpacing}
           />}
-
-        {searchStart && ((searchType === 0 && issues.length > 0) || (searchType === 1 && pullRequests.length > 0)) &&
+        
+        {this.getList().length > 0 &&
           <FlatList
             removeClippedSubviews={false}
-            data={searchType === 0 ? issues : pullRequests}
+            data={this.getList()}
             keyExtractor={this.keyExtractor}
             renderItem={this.renderItem}
           />
         }
 
-        {!searchStart &&
-          <FlatList
-          removeClippedSubviews={false}
-          data={searchType === 0 ? navigation.state.params.issues.filter(issue => issue.state === 'open') : navigation.state.params.issues.filter(issue => issue.state === 'closed')}
-          keyExtractor={this.keyExtractor}
-          renderItem={this.renderItem}
-          />
-        }
-
-        {searchStart && !isPendingSearchIssues && issues.length === 0 && searchType === 0 &&
+        {searchStart && !isPendingSearchOpenIssues && searchedOpenIssues.length === 0 && searchType === 0 &&
           <View style={styles.marginSpacing}>
             <Text style={styles.searchTitle}>
-              No issues found!
+              No open issues found!
             </Text>
           </View>}
 
-        {searchStart && !isPendingSearchpullRequests && pullRequests.length === 0 && searchType === 1 &&
+        {searchStart && !isPendingSearchClosedIssues && searchedClosedIssues.length === 0 && searchType === 1 &&
           <View style={styles.marginSpacing}>
             <Text style={styles.searchTitle}>
-              No pull requests found!
+              No closed issues found!
             </Text>
           </View>}
       </ViewContainer>
@@ -169,14 +172,14 @@ class IssuesList extends Component {
   }
 }
 
-IssuesList.propTypes = {
-  issues: PropTypes.array,
+IssueList.propTypes = {
   repository: PropTypes.object,
-  pullRequests: PropTypes.array,
-  isPendingSearchIssues: PropTypes.bool,
-  isPendingSearchpullRequests: PropTypes.bool,
-  searchRepoIssues: PropTypes.func,
-  searchRepoPulls: PropTypes.func,
+  searchedOpenIssues: PropTypes.array,
+  searchedClosedIssues: PropTypes.array,
+  isPendingSearchOpenIssues: PropTypes.bool,
+  isPendingSearchClosedIssues: PropTypes.bool,
+  searchOpenRepoIssues: PropTypes.func,
+  searchClosedRepoIssues: PropTypes.func,
   navigation: PropTypes.object,
 };
 
@@ -225,4 +228,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(IssuesList);
+export default connect(mapStateToProps, mapDispatchToProps)(IssueList);

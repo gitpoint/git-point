@@ -124,7 +124,7 @@ class Repository extends Component {
               noItemsMessage={pureIssues.length === 0 ? "No issues" : "No open issues"}
               showButton={pureIssues.length > 3}
               buttonTitle="View All"
-              buttonAction={() => navigation.navigate('IssuesList', {
+              buttonAction={() => navigation.navigate('IssueList', {
                 type: 'issue',
                 userHasPushPermission: repository.permissions.admin || repository.permissions.push,
                 issues: pureIssues,
@@ -145,7 +145,7 @@ class Repository extends Component {
               noItemsMessage={pulls.length === 0 ? "No pull requests" : "No open pull requests"}
               showButton={pulls.length > 3}
               buttonTitle="View All"
-              buttonAction={() => navigation.navigate('IssuesList', {
+              buttonAction={() => navigation.navigate('PullList', {
                 type: 'pull',
                 userHasPushPermission: repository.permissions.admin || repository.permissions.push,
                 issues: pulls,

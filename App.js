@@ -32,7 +32,8 @@ import ListRender from './src/screens/ListRenderScreen';
 import Organization from './src/screens/OrganizationScreen';
 import Repository from './src/screens/RepositoryScreen';
 import RepositoryCodeList from './src/screens/RepositoryCodeListScreen';
-import IssuesList from './src/screens/IssuesListScreen';
+import IssueList from './src/screens/IssueListScreen';
+import PullList from './src/screens/PullListScreen';
 import Issue from './src/screens/IssueScreen';
 import IssueSettings from './src/screens/IssueSettingsScreen';
 import ReadMe from './src/screens/ReadMe';
@@ -86,11 +87,17 @@ const sharedRoutes = {
       title: navigation.state.params.topLevel ? 'Code' : navigation.state.params.content.name,
     })
   },
-  IssuesList: {
-    screen: IssuesList,
-    navigationOptions: ({ navigation }) => ({
-      title: navigation.state.params.type === 'issue' ? 'Issues' : 'Pull Requests',
-    })
+  IssueList: {
+    screen: IssueList,
+    navigationOptions: {
+      title: 'Issues',
+    },
+  },
+  PullList: {
+    screen: PullList,
+    navigationOptions: {
+      title: 'Pull Requests',
+    },
   },
   Issue: {
     screen: Issue,

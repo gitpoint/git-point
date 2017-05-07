@@ -33,7 +33,7 @@ class CommentListItem extends Component {
           reaction.content === type &&
           reaction.user.login === this.props.authUser
       );
-    } else {
+    } else if (comment.reactions) {
       count = comment.reactions[type];
     }
 
