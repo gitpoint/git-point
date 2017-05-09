@@ -1,23 +1,23 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from "react";
 import {
   StyleSheet,
   View,
   Text,
   ActionSheetIOS,
   TouchableOpacity,
-  ActivityIndicator,
-} from 'react-native';
-import FastImage from 'react-native-fast-image'
+  ActivityIndicator
+} from "react-native";
+import FastImage from "react-native-fast-image";
 
-import Reaction from './Reaction';
-import AddReaction from './AddReaction';
+import Reaction from "./Reaction";
+import AddReaction from "./AddReaction";
 
-import colors from '../config/colors';
-import moment from 'moment';
+import colors from "../config/colors";
+import moment from "moment";
 
-// import HTMLView from 'react-native-htmlview';
-const reactionButtons = ['👍', '👎', '😄', '🎉', '😕', '❤️', 'Cancel'];
-const reactionTypes = ['+1', '-1', 'laugh', 'hooray', 'confused', 'heart'];
+import HTMLView from "react-native-htmlview";
+const reactionButtons = ["👍", "👎", "😄", "🎉", "😕", "❤️", "Cancel"];
+const reactionTypes = ["+1", "-1", "laugh", "hooray", "confused", "heart"];
 
 class CommentListItem extends Component {
   renderReaction = (type, comment, index) => {
@@ -61,69 +61,84 @@ class CommentListItem extends Component {
   };
 
   render() {
-    const {issue, comment, isCreatingReaction, navigation} = this.props;
+    const { issue, comment, isCreatingReaction, navigation } = this.props;
 
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation.navigate('Profile', {
-              user: comment.user,
-            })}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("Profile", {
+                user: comment.user
+              })}
+          >
             <FastImage
               style={styles.avatar}
               source={{
                 uri: comment.user.avatar_url,
-                priority: FastImage.priority.high,
+                priority: FastImage.priority.high
               }}
             />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.titleSubtitleContainer}
-            onPress={() => navigation.navigate('Profile', {
-              user: comment.user,
-            })}>
+          <TouchableOpacity
+            style={styles.titleSubtitleContainer}
+            onPress={() =>
+              navigation.navigate("Profile", {
+                user: comment.user
+              })}
+          >
             <Text style={styles.linkDescription}>
-              {comment.user.login}{'  '}
+              {comment.user.login}{"  "}
             </Text>
           </TouchableOpacity>
 
           <View style={styles.dateContainer}>
-            <Text style={styles.date}>{moment(comment.created_at).fromNow()}</Text>
+            <Text style={styles.date}>
+              {moment(comment.created_at).fromNow()}
+            </Text>
           </View>
         </View>
 
         <View style={styles.commentContainer}>
-          {comment.body !== '' &&
-            <Text style={styles.commentBody}>
-              {comment.body}
-            </Text>}
-          
-          {comment.body !== null && 
-          <View
-            style={[
-              styles.reactionsBar,
-              comment.body.substr(comment.body.length - 1) !== '\n' &&
-                styles.reactionsBarMargin,
-            ]}
-          >
+          {comment.body_html !== "" &&
+            <HTMLView
+              value={comment.body_html
+                .replace(new RegExp("<blockquote>", "g"), "<h2>")
+                .replace(new RegExp("</blockquote>", "g"), "</h2>")
+                .replace(/\s*(<br \/> | <br>)\s*/gi, "<br\>")
+                .replace(new RegExp('<p>', 'g'), '<span>')
+                .replace(new RegExp('</p>', 'g'), '</span>')}
+              stylesheet={commentStyles}
+            />}
 
-            {reactionTypes.map((reaction, i) =>
-              this.renderReaction(reaction, comment, i))}
+          {comment.body_html !== null &&
+            <View
+              style={[
+                styles.reactionsBar,
+                comment.body_html.substr(comment.body_html.length - 1) !==
+                  "\n" && styles.reactionsBarMargin
+              ]}
+            >
 
-            {!issue.locked &&
-              <TouchableOpacity onPress={() => this.showReactionActionSheet(comment)}>
-                <AddReaction />
-              </TouchableOpacity>
-            }
+              {reactionTypes.map((reaction, i) =>
+                this.renderReaction(reaction, comment, i)
+              )}
 
-            {isCreatingReaction &&
-              <ActivityIndicator
-                animating={true}
-                size="small"
-                style={styles.creatingReactionLoader}
-              />
-            }
-          </View>}
+              {!issue.locked &&
+                <TouchableOpacity
+                  onPress={() => this.showReactionActionSheet(comment)}
+                >
+                  <AddReaction />
+                </TouchableOpacity>}
+
+              {isCreatingReaction &&
+                <ActivityIndicator
+                  animating={true}
+                  size="small"
+                  style={styles.creatingReactionLoader}
+                />}
+            </View>}
 
         </View>
       </View>
@@ -133,9 +148,9 @@ class CommentListItem extends Component {
   showReactionActionSheet = comment => {
     ActionSheetIOS.showActionSheetWithOptions(
       {
-        title: 'Add Reaction',
+        title: "Add Reaction",
         options: reactionButtons,
-        cancelButtonIndex: 6,
+        cancelButtonIndex: 6
       },
       buttonIndex => {
         const reactionType = reactionTypes[buttonIndex];
@@ -170,7 +185,7 @@ CommentListItem.propTypes = {
   isCreatingReaction: PropTypes.bool,
   triggerReaction: PropTypes.func,
   addAdditionalReaction: PropTypes.func,
-  navigation: PropTypes.object,
+  navigation: PropTypes.object
 };
 
 const styles = StyleSheet.create({
@@ -178,74 +193,82 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingRight: 10,
     paddingBottom: 10,
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent"
   },
   header: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginLeft: 10,
-    alignItems: 'center',
+    alignItems: "center"
   },
   avatar: {
     backgroundColor: colors.greyLight,
     width: 34,
     height: 34,
-    borderRadius: 17,
+    borderRadius: 17
   },
   titleSubtitleContainer: {
-    justifyContent: 'center',
+    justifyContent: "center",
     flex: 1,
-    marginLeft: 10,
+    marginLeft: 10
   },
   dateContainer: {
     flex: 0.15,
-    alignItems: 'flex-end',
-    justifyContent: 'center',
+    alignItems: "flex-end",
+    justifyContent: "center"
   },
   linkDescription: {
-    fontFamily: 'AvenirNext-DemiBold',
-    color: colors.primaryDark,
+    fontFamily: "AvenirNext-DemiBold",
+    color: colors.primaryDark
   },
   date: {
-    color: colors.greyDark,
+    color: colors.greyDark
   },
   commentContainer: {
     marginTop: 4,
     marginLeft: 54,
     borderBottomColor: colors.greyLight,
-    borderBottomWidth: 1,
+    borderBottomWidth: 1
   },
   commentBody: {
     paddingRight: 10,
     color: colors.black,
     fontSize: 14,
-    fontFamily: 'AvenirNext-Regular',
+    fontFamily: "AvenirNext-Regular"
   },
   reactionsBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 15,
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 15
   },
   reactionsBarMargin: {
-    marginTop: 10,
+    marginTop: 10
   },
   creatingReactionLoader: {
-    marginLeft: 10,
-  },
+    marginLeft: 10
+  }
 });
 
-// const commentStyles = StyleSheet.create({
-//   p: {
-//     color: colors.primaryDark,
-//     fontFamily: 'AvenirNext-Regular',
-//   },
-//   a: {
-//     fontFamily: 'AvenirNext-DemiBold',
-//   },
-//   h2: {
-//     color: colors.greyLight,
-//     fontFamily: 'AvenirNext-DemiBold',
-//   }
-// });
+const commentStyles = StyleSheet.create({
+  p: {
+    color: colors.primaryDark,
+    fontFamily: "AvenirNext-Regular"
+  },
+  span: {
+    color: colors.primaryDark,
+    fontFamily: "AvenirNext-Regular"
+  },
+  li: {
+    color: colors.primaryDark,
+    fontFamily: "AvenirNext-Regular"
+  },
+  a: {
+    fontFamily: "AvenirNext-DemiBold"
+  },
+  h2: {
+    color: colors.greyLight,
+    fontFamily: "AvenirNext-DemiBold"
+  }
+});
 
 export default CommentListItem;
 
@@ -254,3 +277,9 @@ export default CommentListItem;
 //     .replace(new RegExp('</blockquote>', 'g'), '</h2>')}
 //   stylesheet={commentStyles}
 // />
+
+{
+  /*<Text style={styles.commentBody}>
+              {comment.body}
+            </Text>}*/
+}

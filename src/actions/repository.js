@@ -31,7 +31,7 @@ import {
   SEARCH_CLOSED_PULLS_HAD_ERROR,
 } from '../constants';
 
-import {fetchUrl, fetchUrlPreview, fetchReadMe, fetchSearch} from '../api';
+import {fetchUrl, fetchUrlPreview, fetchCommentHTML, fetchReadMe, fetchSearch} from '../api';
 
 export const getRepository = url => {
   return (dispatch, getState) => {
@@ -105,7 +105,7 @@ export const getIssues = url => {
 
     dispatch({type: GET_REPOSITORY_ISSUES_IS_PENDING});
 
-    fetchUrlPreview(url, accessToken)
+    fetchCommentHTML(url, accessToken)
       .then(data => {
         dispatch({
           type: GET_REPOSITORY_ISSUES_WAS_SUCCESSFUL,

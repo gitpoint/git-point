@@ -50,16 +50,23 @@ const accessTokenParametersDELETEPreview = (accessToken) => ({
   }
 });
 
+const accessTokenParametersHTMLPreview = accessToken => ({
+  headers: {
+    Accept: 'application/vnd.github.v3.html, application/vnd.github.squirrel-girl-preview',
+    Authorization: `token ${accessToken}`,
+  },
+});
+
 const accessTokenParametersHTML = accessToken => ({
   headers: {
-    Accept: 'application/vnd.github.VERSION.html',
+    Accept: 'application/vnd.github.v3.html',
     Authorization: `token ${accessToken}`,
   },
 });
 
 const accessTokenParametersDiff = accessToken => ({
   headers: {
-    Accept: 'application/vnd.github.VERSION.diff',
+    Accept: 'application/vnd.github.v3.diff',
     Authorization: `token ${accessToken}`,
   },
 });
@@ -274,6 +281,17 @@ export const fetchUrlPreview = (url, accessToken) => {
   return fetch(
     url,
     accessTokenParametersPreview(accessToken),
+  ).then(response => response.json());
+};
+
+///
+
+///
+
+export const fetchCommentHTML = (url, accessToken) => {
+  return fetch(
+    url,
+    accessTokenParametersHTMLPreview(accessToken),
   ).then(response => response.json());
 };
 

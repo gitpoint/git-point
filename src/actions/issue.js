@@ -39,6 +39,7 @@ import {
 
 import {
   fetchDiff,
+  fetchCommentHTML,
   fetchUrlPreview,
   fetchPostIssueComment,
   fetchCreateIssueReaction,
@@ -54,7 +55,7 @@ const getIssueComments = issue => {
 
     dispatch({type: GET_ISSUE_COMMENTS_IS_PENDING, payload: issue});
 
-    return fetchUrlPreview(issue.comments_url, accessToken)
+    return fetchCommentHTML(issue.comments_url, accessToken)
       .then(data => {
         dispatch({
           type: GET_ISSUE_COMMENTS_WAS_SUCCESSFUL,
@@ -343,7 +344,7 @@ export const getIssueFromUrl = url => {
 
     dispatch({type: GET_ISSUE_FROM_URL_IS_PENDING});
 
-    return fetchUrlPreview(url, accessToken)
+    return fetchCommentHTML(url, accessToken)
       .then(data => {
         dispatch({
           type: GET_ISSUE_FROM_URL_WAS_SUCCESSFUL,
