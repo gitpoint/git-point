@@ -81,8 +81,8 @@ class Issue extends Component {
     const issueNum = navigation.state.params.issue.number;
 
     this.props.postIssueComment(body, owner, repoName, issueNum);
-    Keyboard.dismiss();
     this.refs.commentsListRef.scrollToEnd();
+    Keyboard.dismiss();
   };
 
   renderHeader = () => {

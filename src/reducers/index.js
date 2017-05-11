@@ -5,7 +5,6 @@ import userReducer from './user';
 import userEventsReducer from './userEvents';
 import repositoryReducer from './repository';
 import organizationReducer from './organization';
-import userInfoListReducer from './userInfoList';
 import issueReducer from './issue';
 import searchReducer from './search';
 import notificationsReducer from './notifications';
@@ -17,7 +16,6 @@ const rootReducer = combineReducers({
   userEvents: userEventsReducer,
   repository: repositoryReducer,
   organization: organizationReducer,
-  userInfoList: userInfoListReducer,
   issue: issueReducer,
   search: searchReducer,
   notifications: notificationsReducer,

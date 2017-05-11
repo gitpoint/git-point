@@ -28,7 +28,9 @@ import Notifications from './src/screens/NotificationsScreen';
 import Home from './src/screens/HomeScreen';
 
 //Stack Screen
-import ListRender from './src/screens/ListRenderScreen';
+import RepositoryList from './src/screens/RepositoryListScreen';
+import FollowerList from './src/screens/FollowerListScreen';
+import FollowingList from './src/screens/FollowingListScreen';
 import Organization from './src/screens/OrganizationScreen';
 import Repository from './src/screens/RepositoryScreen';
 import RepositoryCodeList from './src/screens/RepositoryCodeListScreen';
@@ -57,11 +59,23 @@ const store = createStore(
 );
 
 const sharedRoutes = {
-  ListRender: {
-    screen: ListRender,
-    navigationOptions: ({ navigation }) => ({
-      title: navigation.state.params.listType,
-    })
+  RepositoryList: {
+    screen: RepositoryList,
+    navigationOptions: {
+      title: 'Repositories',
+    }
+  },
+  FollowerList: {
+    screen: FollowerList,
+    navigationOptions: {
+      title: 'Followers',
+    }
+  },
+  FollowingList: {
+    screen: FollowingList,
+    navigationOptions: {
+      title: 'Following',
+    }
   },
   Profile: {
     screen: Profile,

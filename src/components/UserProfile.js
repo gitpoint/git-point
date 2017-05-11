@@ -27,10 +27,9 @@ const UserProfile = (
     <View style={styles.details}>
       <TouchableOpacity
         style={styles.unit}
-        onPress={() => navigation.navigate('ListRender', {
-          listType: 'Repositories',
+        onPress={() => navigation.navigate('RepositoryList', {
           user: user,
-          showLoadingCount: user.public_repos > 10 ? 10 : user.public_repos,
+          repoCount: user.public_repos > 10 ? 10 : user.public_repos,
         })}
       >
         <Text style={styles.unitNumber}>
@@ -42,10 +41,9 @@ const UserProfile = (
       {type !== 'org' &&
         <TouchableOpacity
           style={styles.unit}
-          onPress={() => navigation.navigate('ListRender', {
-            listType: 'Followers',
+          onPress={() => navigation.navigate('FollowerList', {
             user: user,
-            showLoadingCount: user.followers > 10 ? 10 : user.followers,
+            followerCount: user.followers > 10 ? 10 : user.followers,
           })}
         >
           <Text style={styles.unitNumber}>
@@ -57,10 +55,9 @@ const UserProfile = (
       {type !== 'org' &&
         <TouchableOpacity
           style={styles.unit}
-          onPress={() => navigation.navigate('ListRender', {
-            listType: 'Following',
+          onPress={() => navigation.navigate('FollowingList', {
             user: user,
-            showLoadingCount: user.following > 10 ? 10 : user.following,
+            followingCount: user.following > 10 ? 10 : user.following,
           })}
         >
           <Text style={styles.unitNumber}>

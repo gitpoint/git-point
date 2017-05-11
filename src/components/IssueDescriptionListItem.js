@@ -66,11 +66,11 @@ const IssueDescriptionListItem = (
             />}
         </View>}
 
-      {issue.labels.length > 0 &&
+      {issue.labels && issue.labels.length > 0 &&
         <View style={styles.labelButtonGroup}>
           {renderLabelButtons(issue.labels)}
         </View>}
-      {issue.assignees.length > 0 &&
+      {issue.assignees && issue.assignees.length > 0 &&
         <View style={styles.assigneesSection}>
           <MembersList
             title="Assignees"

@@ -94,21 +94,24 @@ class CommentListItem extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate("Profile", {
-                user: comment.user
-              })}
-          >
-            <FastImage
-              style={styles.avatar}
-              source={{
-                uri: comment.user.avatar_url,
-                priority: FastImage.priority.high
-              }}
-            />
-          </TouchableOpacity>
+          {comment.user && 
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("Profile", {
+                  user: comment.user
+                })}
+            >
+              <FastImage
+                style={styles.avatar}
+                source={{
+                  uri: comment.user.avatar_url,
+                  priority: FastImage.priority.high
+                }}
+              />
+            </TouchableOpacity>
+          }
 
+          {comment.user &&
           <TouchableOpacity
             style={styles.titleSubtitleContainer}
             onPress={() =>
@@ -120,6 +123,7 @@ class CommentListItem extends Component {
               {comment.user.login}{"  "}
             </Text>
           </TouchableOpacity>
+          }
 
           <View style={styles.dateContainer}>
             <Text style={styles.date}>

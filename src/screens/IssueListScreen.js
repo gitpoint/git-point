@@ -193,8 +193,6 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     width: Dimensions.get('window').width,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: colors.grey,
     backgroundColor: colors.white,
     flex: 1,
   },
