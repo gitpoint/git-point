@@ -8,13 +8,17 @@ import colors from '../config/colors';
 const UserListItem = (
   {
     user,
+    title,
+    titleStyle,
+    onlyImageNavigate,
     navigation,
     icon,
     iconAction
   }
 ) => {
-  const ContainerComponent = iconAction ? View : TouchableHighlight;
-  const UserComponent = iconAction ? TouchableOpacity : View;
+  const ContainerComponent = iconAction || onlyImageNavigate ? View : TouchableHighlight;
+  const UserComponent = iconAction && !onlyImageNavigate? TouchableOpacity : View;
+  const ImageContainerComponent = onlyImageNavigate? TouchableOpacity : View;
   const IconComponent = iconAction ? TouchableOpacity : View;
 
   return (
@@ -28,17 +32,25 @@ const UserListItem = (
         onPress={() => navigation.navigate('Profile', {
           user: user,
         })}>
-        <FastImage
-          style={styles.avatar}
-          source={{
-            uri: user.avatar_url,
-            priority: FastImage.priority.high,
-          }}
-        />
+
+        <ImageContainerComponent onPress={() => navigation.navigate('Profile', {
+            user: user,
+          })}>
+          <FastImage
+            style={styles.avatar}
+            source={{
+              uri: user.avatar_url,
+              priority: FastImage.priority.high,
+            }}
+            onPress={() => navigation.navigate('Profile', {
+              user: user,
+            })}
+          />
+        </ImageContainerComponent>
 
         <View style={styles.titleContainer}>
           <Text
-            style={styles.title}>{user.login}</Text>
+            style={[styles.title, titleStyle && titleStyle]}>{title ? title : user.login}</Text>
         </View>
       </UserComponent>
 
@@ -56,6 +68,9 @@ const UserListItem = (
 
 UserListItem.propTypes = {
   user: PropTypes.object,
+  title: PropTypes.any,
+  onlyImageNavigate: PropTypes.bool,
+  titleStyle: PropTypes.object,
   navigation: PropTypes.object,
   icon: PropTypes.string,
   iconAction: PropTypes.func,

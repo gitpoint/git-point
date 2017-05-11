@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 import LoadingUserListItem from '../components/LoadingUserListItem';
+import UserListItem from '../components/UserListItem';
 
 import moment from 'moment';
 
@@ -353,7 +354,7 @@ class Home extends Component {
   }
 
   render() {
-    const { isPending, userEvents } = this.props;
+    const { isPending, userEvents, navigation } = this.props;
 
     return (
       <ViewContainer
@@ -373,12 +374,13 @@ class Home extends Component {
             refreshing={isPending}
             keyExtractor={this.keyExtractor}
             renderItem={({item}) => (
-              <ListItem
-                roundAvatar
-                avatar={{uri: item.actor.avatar_url}}
-                containerStyle={{width: window.width}}
+              <UserListItem
+                user={item.actor}
                 title={this.renderDescription(item)}
-                rightIcon={{name: this.getIcon(item), type: 'octicon'}}
+                titleStyle={{fontSize: 14}}
+                navigation={navigation}
+                onlyImageNavigate
+                icon={this.getIcon(item)}                
               />
             )}
           />
@@ -387,6 +389,13 @@ class Home extends Component {
     );
   }
 
+  // <ListItem
+  //               roundAvatar
+  //               avatar={{uri: item.actor.avatar_url}}
+  //               containerStyle={{width: window.width}}
+  //               title={this.renderDescription(item)}
+  //               rightIcon={{name: this.getIcon(item), type: 'octicon'}}
+  //             />
   keyExtractor = (item) => {
     return item.id;
   }

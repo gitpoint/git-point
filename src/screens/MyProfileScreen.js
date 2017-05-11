@@ -33,6 +33,11 @@ class MyProfile extends Component {
     this.props.getOrgs();
   }
 
+  getUserBlog(url) {
+    const prefix = 'http';
+    return url.substr(0, prefix.length) === prefix ? url : `http://${url}`
+  }
+
   render() {
     const {user, orgs, isPendingUser, isPendingOrgs, navigation} = this.props;
 
@@ -78,7 +83,7 @@ class MyProfile extends Component {
                     leftIcon={{name: 'link', color: colors.grey, type: 'octicon'}}
                     subtitle={user.blog}
                     subtitleStyle={styles.listSubTitle}
-                    onPress={() => Communications.web(user.blog)}
+                    onPress={() => Communications.web(this.getUserBlog(user.blog))}
                     underlayColor={colors.greyLight}
                   />}
               </SectionList>}

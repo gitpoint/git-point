@@ -32,6 +32,11 @@ class Profile extends Component {
     this.props.getOrgs(this.props.navigation.state.params.user.login);
   }
 
+  getUserBlog(url) {
+    const prefix = 'http';
+    return url.substr(0, prefix.length) === prefix ? url : `http://${url}`
+  }
+
   render() {
     const { user, orgs, isPendingUser, isPendingOrgs, navigation } = this.props;
     const initialUser = navigation.state.params.user;
@@ -91,7 +96,7 @@ class Profile extends Component {
                   }}
                   subtitle={user.blog}
                   subtitleStyle={styles.listSubTitle}
-                  onPress={() => Communications.web(user.blog)}
+                  onPress={() => Communications.web(this.getUserBlog(user.blog))}
                   underlayColor={colors.greyLight}
                 />}
             </SectionList>}
