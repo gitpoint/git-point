@@ -175,32 +175,6 @@ export const fetchPostIssueComment = (body, owner, repoName, issueNum, accessTok
   ).then(response => response.json());
 };
 
-export const fetchCreateIssueReaction = (type, issueNum, owner, repoName, accessToken) => {
-  const POST_ENDPOINT = `${root}/repos/${owner}/${repoName}/issues/${issueNum}/reactions`;
-
-  return fetch(
-    POST_ENDPOINT,
-    accessTokenParametersPOST(accessToken, {content: type}),
-  ).then(response => response.json());
-};
-
-export const fetchCreateCommentReaction = (type, commentID, owner, repoName, accessToken) => {
-  const POST_ENDPOINT = `${root}/repos/${owner}/${repoName}/issues/comments/${commentID}/reactions`;
-
-  return fetch(
-    POST_ENDPOINT,
-    accessTokenParametersPOST(accessToken, {content: type}),
-  ).then(response => response.json());
-};
-
-export const fetchDeleteReaction = (reactionID, accessToken) => {
-  const POST_ENDPOINT = `${root}/reactions/${reactionID}`;
-
-  return fetch(
-    POST_ENDPOINT,
-    accessTokenParametersDELETEPreview(accessToken));
-};
-
 export const fetchEditIssue = (owner, repoName, issueNum, editParams, updateParams, accessToken) => {
   const POST_ENDPOINT = `${root}/repos/${owner}/${repoName}/issues/${issueNum}`;
 

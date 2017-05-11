@@ -12,12 +12,8 @@ import colors from '../config/colors';
 
 import {connect} from 'react-redux';
 import {
-  getHydratedComments,
+  getIssueComments,
   postIssueComment,
-  createIssueReaction,
-  createCommentReaction,
-  deleteIssueReaction,
-  deleteCommentReaction,
   getDiff,
   getIssueFromUrl
 } from '../actions/issue';
@@ -30,24 +26,14 @@ const mapStateToProps = state => ({
   comments: state.issue.comments,
   isPendingDiff: state.issue.isPendingDiff,
   isPendingComments: state.issue.isPendingComments,
-  isPendingHydratedComments: state.issue.isPendingHydratedComments,
   isPostingComment: state.issue.isPostingComment,
-  isCreatingReaction: state.issue.isCreatingReaction,
-  isCreatingReactionForID: state.issue.isCreatingReactionForID,
   isPendingIssue: state.issue.isPendingIssue
 });
 
 const mapDispatchToProps = dispatch => ({
-  getHydratedComments: url => dispatch(getHydratedComments(url)),
+  getIssueComments: url => dispatch(getIssueComments(url)),
   postIssueComment: (body, owner, repoName, issueNum) =>
     dispatch(postIssueComment(body, owner, repoName, issueNum)),
-  createIssueReaction: (type, issue, commentID, owner, repoName) =>
-    dispatch(createIssueReaction(type, issue, commentID, owner, repoName)),
-  createCommentReaction: (type, commentID, owner, repoName) =>
-    dispatch(createCommentReaction(type, commentID, owner, repoName)),
-  deleteIssueReaction: reactionID => dispatch(deleteIssueReaction(reactionID)),
-  deleteCommentReaction: (commentID, reactionID) =>
-    dispatch(deleteCommentReaction(commentID, reactionID)),
   getDiff: (url) =>
     dispatch(getDiff(url)),
   getIssueFromUrl: (url) =>
@@ -80,7 +66,7 @@ class Issue extends Component {
     const {navigation} = this.props;
     const issue = navigation.state.params.issue;
     
-    this.props.getHydratedComments(issue);
+    this.props.getIssueComments(issue);
 
     if (issue.pull_request) {
       this.props.getDiff(issue.pull_request.diff_url);
@@ -97,54 +83,6 @@ class Issue extends Component {
     this.props.postIssueComment(body, owner, repoName, issueNum);
     Keyboard.dismiss();
     this.refs.commentsListRef.scrollToEnd();
-  };
-
-  triggerReaction = (
-    type,
-    commentType,
-    commentID,
-    active,
-    createdReactionID
-  ) => {
-    const {repository, navigation} = this.props;
-    const repoName = repository.name;
-    const owner = repository.owner.login;
-    const issueNum = navigation.state.params.issue.number;
-
-    if (active) {
-      commentType === 'issue'
-        ? this.props.deleteIssueReaction(createdReactionID)
-        : this.props.deleteCommentReaction(commentID, createdReactionID);
-    } else {
-      commentType === 'issue'
-        ? this.props.createIssueReaction(
-            type,
-            issueNum,
-            commentID,
-            owner,
-            repoName
-          )
-        : this.props.createCommentReaction(type, commentID, owner, repoName);
-    }
-  };
-
-  addAdditionalReaction = (type, commentType, commentID, reacted) => {
-    const {repository, navigation} = this.props;
-    const repoName = repository.name;
-    const owner = repository.owner.login;
-    const issueNum = navigation.state.params.issue.number;
-
-    if (!reacted) {
-      commentType === 'issue'
-        ? this.props.createIssueReaction(
-            type,
-            issueNum,
-            commentID,
-            owner,
-            repoName
-          )
-        : this.props.createCommentReaction(type, commentID, owner, repoName);
-    }
   };
 
   renderHeader = () => {
@@ -166,12 +104,6 @@ class Issue extends Component {
       comment={item}
       commentType={item.issue_url ? 'comment' : 'issue'}
       authUser={this.props.authUser.login}
-      isCreatingReaction={
-        this.props.isCreatingReaction &&
-          this.props.isCreatingReactionForID === item.id
-      }
-      triggerReaction={this.triggerReaction}
-      addAdditionalReaction={this.addAdditionalReaction}
       navigation={this.props.navigation}
     />
   );
@@ -214,26 +146,18 @@ class Issue extends Component {
 }
 
 Issue.propTypes = {
-  getHydratedComments: PropTypes.func,
+  getIssueComments: PropTypes.func,
   getDiff: PropTypes.func,
   postIssueComment: PropTypes.func,
-  createIssueReaction: PropTypes.func,
-  createCommentReaction: PropTypes.func,
-  deleteIssueReaction: PropTypes.func,
-  deleteCommentReaction: PropTypes.func,
   getIssueFromUrl: PropTypes.func,
   issue: PropTypes.object,
   diff: PropTypes.string,
   authUser: PropTypes.object,
   repository: PropTypes.object,
   comments: PropTypes.array,
-  hydratedComments: PropTypes.array,
   isPendingDiff: PropTypes.bool,
   isPendingComments: PropTypes.bool,
-  isPendingHydratedComments: PropTypes.bool,
   isPostingComment: PropTypes.bool,
-  isCreatingReaction: PropTypes.bool,
-  isCreatingReactionForID: PropTypes.number,
   navigation: PropTypes.object,
 };
 
