@@ -48,14 +48,14 @@ const IssueDescriptionListItem = (
         <IssueStateBadge style={styles.badge} issue={issue} />
       </View>
 
-      {!isPendingDiff &&
+      {
         issue.pull_request &&
         <View style={styles.diffBlocksContainer}>
 
           {isPendingDiff &&
             <ActivityIndicator animating={isPendingDiff} size="small" />}
 
-          {!isPendingDiff &&
+          {!isPendingDiff && (lineAdditions !== 0 || lineDeletions !== 0) &&
             <DiffBlocks
               additions={lineAdditions}
               deletions={lineDeletions}

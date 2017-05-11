@@ -63,18 +63,78 @@ class CommentListItem extends Component {
   render() {
     const { issue, comment, isCreatingReaction, navigation } = this.props;
     const commentBodyAdjusted = () => (
-      // comment.body_html.replace(new RegExp(/<img[^>]*>/, 'g'), 'Image').replace(new RegExp(/<blockquote>[\n]*?<p>/, 'g'), '<span>').replace(new RegExp(/<\/p>[\n]*?<\/blockquote>/, 'g'), '</span>')
-      comment.body_html.replace(new RegExp(/<img[^>]*>/, 'g'), 'Image').replace(new RegExp(/<ul>[\n]*?<li>/, 'g'), '<ul><li>').replace(new RegExp(/<\/li>[\n]*?<\/ul>/, 'g'), '</li></ul>').replace(new RegExp(/<ol>[\n]*?<li>/, 'g'), '<ol><li>').replace(new RegExp(/<\/li>[\n]*?<\/ol>/, 'g'), '</li></ol>').replace(new RegExp(/<li>[\n]*?<p>/, 'g'), '<li><p>')
-    )
+      comment.body_html
+        .replace(new RegExp(/<img[^>]*>/, "g"), "Image")
+        .replace(new RegExp(/<ul>[\n]*?<li>/, "g"), "<ul><li>")
+        .replace(new RegExp(/<\/li>[\n]*?<\/ul>/, "g"), "</li></ul>")
+        .replace(new RegExp(/<ol>[\n]*?<li>/, "g"), "<ol><li>")
+        .replace(new RegExp(/<\/li>[\n]*?<\/ol>/, "g"), "</li></ol>")
+        .replace(new RegExp(/<li>[\n]*?<p>/, "g"), "<li><p>")
+        .replace(new RegExp(/<\/h1>[\n]*?<p>/, "g"), "</h1><p>")
+        .replace(new RegExp(/<\/h2>[\n]*?<p>/, "g"), "</h2><p>")
+        .replace(new RegExp(/<\/h3>[\n]*?<p>/, "g"), "</h3><p>")
+    );
 
-    function myDomElement(node, index, list, parent, origRenderer) {
-        if(node.name === 'blockquote') {
-            return (<View style={ {paddingHorizontal: 12, borderLeftWidth: 3, borderLeftColor: colors.greyMid} }>
-                        <Text style={ {color: colors.greyBlue, fontFamily: "AvenirNext-Regular"} }>{ node.children[1].children[0].data }</Text>
-                    </View>);
-        } else if(node.name === 'hr') {
-            return (<View style={ {height: 4, backgroundColor: colors.greyLight} } />);
-    }
+    const myDomElement = node => {
+      if (node.name === "blockquote") {
+        return (
+          <View
+            style={{
+              paddingHorizontal: 12,
+              borderLeftWidth: 3,
+              borderLeftColor: colors.greyMid
+            }}
+          >
+            <Text
+              style={{
+                color: colors.greyBlue,
+                fontFamily: "AvenirNext-Regular"
+              }}
+            >
+              {node.children[1].children[0].data}
+            </Text>
+          </View>
+        );
+      } else if (node.name === "hr") {
+        return (
+          <View style={{ height: 4, backgroundColor: colors.greyLight }} />
+        );
+      } else if (node.name === "code" && node.parent.name === "p") {
+        return (
+          <Text
+            style={{
+              fontFamily: "Menlo",
+              backgroundColor: colors.greyMidLight,
+              fontSize: 13
+            }}
+          >
+            {node.children[0].data}
+          </Text>
+        );
+      } else if (node.name === "h1" || node.name === "h2" || node.name === "h3") {
+        return (
+          <View
+            style={{
+              borderBottomWidth: node.name !== "h3" ? 1 : 0,
+              borderBottomColor: colors.greyMid,
+              marginBottom: 12}}
+          >
+            <Text
+              style={{
+                color: colors.primaryDark,
+                fontFamily: "AvenirNext-DemiBold",
+                fontSize: node.name === "h1" ? 26 : (node.name === "h2" ? 22 : 20),
+                paddingBottom: 4
+              }}
+            >
+              {node.children[0].data}
+            </Text>
+          </View>
+        );
+      }
+
+      return undefined;
+    };
 
     return (
       <View style={styles.container}>
@@ -114,18 +174,55 @@ class CommentListItem extends Component {
         </View>
 
         <View style={styles.commentContainer}>
-          {comment.body_html && comment.body_html !== "" &&
+          {comment.body_html &&
+            comment.body_html !== "" &&
             <HTMLView
               value={commentBodyAdjusted()}
               stylesheet={commentStyles}
-              renderNode= { myDomElement }
+              renderNode={myDomElement}
             />}
 
-          {comment.body_html && comment.body_html !== null &&
+          {comment.body &&
+            comment.body !== "" && !comment.body_html &&
+            <Text
+              style={styles.commentText}
+            >{comment.body}</Text>}
+
+          {comment.body_html &&
+            comment.body_html !== null &&
             <View
               style={[
                 styles.reactionsBar,
                 comment.body_html.substr(comment.body_html.length - 1) !==
+                  "\n" && styles.reactionsBarMargin
+              ]}
+            >
+
+              {reactionTypes.map((reaction, i) =>
+                this.renderReaction(reaction, comment, i)
+              )}
+
+              {!issue.locked &&
+                <TouchableOpacity
+                  onPress={() => this.showReactionActionSheet(comment)}
+                >
+                  <AddReaction />
+                </TouchableOpacity>}
+
+              {isCreatingReaction &&
+                <ActivityIndicator
+                  animating={true}
+                  size="small"
+                  style={styles.creatingReactionLoader}
+                />}
+            </View>}
+
+          {comment.body &&
+            comment.body !== null && !comment.body_html &&
+            <View
+              style={[
+                styles.reactionsBar,
+                comment.body.substr(comment.body.length - 1) !==
                   "\n" && styles.reactionsBarMargin
               ]}
             >
@@ -244,6 +341,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: "AvenirNext-Regular"
   },
+  commentText: {
+    color: colors.primaryDark,
+    fontFamily: "AvenirNext-Regular"
+  },
   reactionsBar: {
     flexDirection: "row",
     alignItems: "center",
@@ -257,18 +358,24 @@ const styles = StyleSheet.create({
   }
 });
 
+const textStyle = {
+  color: colors.primaryDark,
+  fontFamily: "AvenirNext-Regular"
+};
+
+const linkStyle = {
+  color: colors.primaryDark,
+  fontFamily: "AvenirNext-DemiBold"
+};
+
 const commentStyles = StyleSheet.create({
-  p: {
-    color: colors.primaryDark,
-    fontFamily: "AvenirNext-Regular"
-  },
-  li: {
-    color: colors.primaryDark,
-    fontFamily: "AvenirNext-Regular"
-  },
-  a: {
-    fontFamily: "AvenirNext-DemiBold"
-  },
+  p: textStyle,
+  // h1: {...textStyle, fontSize: 26},
+  h2: textStyle,
+  h3: textStyle,
+  h4: textStyle,
+  li: textStyle,
+  a: linkStyle
 });
 
 export default CommentListItem;

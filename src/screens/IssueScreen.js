@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import {FlatList, KeyboardAvoidingView} from 'react-native';
+import {FlatList, KeyboardAvoidingView, Keyboard} from 'react-native';
 import {Icon} from 'react-native-elements';
 
 import ViewContainer from '../components/ViewContainer';
@@ -95,6 +95,8 @@ class Issue extends Component {
     const issueNum = navigation.state.params.issue.number;
 
     this.props.postIssueComment(body, owner, repoName, issueNum);
+    Keyboard.dismiss();
+    this.refs.commentsListRef.scrollToEnd();
   };
 
   triggerReaction = (
@@ -192,6 +194,7 @@ class Issue extends Component {
           >
 
             <FlatList
+              ref="commentsListRef"
               ListHeaderComponent={this.renderHeader}
               removeClippedSubviews={false}
               data={[issue, ...comments]}
