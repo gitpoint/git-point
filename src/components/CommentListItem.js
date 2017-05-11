@@ -29,7 +29,7 @@ class CommentListItem extends Component {
         .replace(new RegExp(/<\/h3>[\n]*?<p>/, "g"), "</h3><p>")
     );
 
-    const myDomElement = node => {
+    const myDomElement = (node, index, siblings, parent, defaultRenderer) => {
       if (node.name === "blockquote") {
         return (
           <View
@@ -45,7 +45,7 @@ class CommentListItem extends Component {
                 fontFamily: "AvenirNext-Regular"
               }}
             >
-              {node.children[1].children[0].data}
+              {defaultRenderer(node.children, parent)}
             </Text>
           </View>
         );
@@ -53,16 +53,17 @@ class CommentListItem extends Component {
         return (
           <View style={{ height: 4, backgroundColor: colors.greyLight }} />
         );
-      } else if (node.name === "code" && node.parent.name === "p") {
+      } else if (node.name === "code") {
         return (
           <Text
             style={{
               fontFamily: "Menlo",
               backgroundColor: colors.greyMidLight,
-              fontSize: 13
+              fontSize: 13,
+              margin: node.parent.name === "pre" ? 12 : 3,
             }}
           >
-            {node.children[0].data}
+            {defaultRenderer(node.children, parent)}
           </Text>
         );
       } else if (node.name === "h1" || node.name === "h2" || node.name === "h3") {
@@ -81,7 +82,7 @@ class CommentListItem extends Component {
                 paddingBottom: 4
               }}
             >
-              {node.children[0].data}
+              {defaultRenderer(node.children, parent)}
             </Text>
           </View>
         );
