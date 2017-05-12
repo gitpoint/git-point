@@ -15,7 +15,7 @@ import colors from '../config/colors';
 
 import {connect} from 'react-redux';
 import {
-  getRepository,
+  getRepositoryInfo,
   getContributors,
   getIssues,
 } from '../actions/repository';
@@ -24,12 +24,13 @@ const mapStateToProps = state => ({
   repository: state.repository.repository,
   contributors: state.repository.contributors,
   issues: state.repository.issues,
+  isPendingRepository: state.repository.isPendingRepository,  
   isPendingContributors: state.repository.isPendingContributors,
   isPendingIssues: state.repository.isPendingIssues,
 });
 
 const mapDispatchToProps = dispatch => ({
-  getRepository: url => dispatch(getRepository(url)),
+  getRepositoryInfo: url => dispatch(getRepositoryInfo(url)),
   getContributors: url => dispatch(getContributors(url)),
   getIssues: url => dispatch(getIssues(url)),
 });
@@ -40,7 +41,7 @@ class Repository extends Component {
     const repo = navigation.state.params.repository;
     const repoUrl = navigation.state.params.repositoryUrl;
     
-    this.props.getRepository(repo ? repo.url : repoUrl);
+    this.props.getRepositoryInfo(repo ? repo.url : repoUrl);
 
     // if (repo) {
     //   this.props.getContributors(repo.contributors_url);
@@ -76,7 +77,7 @@ class Repository extends Component {
         <ParallaxScroll
           renderContent={() => (
             <RepositoryProfile
-              repository={isPendingAny &&  initalRepository ? initalRepository : repository}
+              repository={isPendingRepository ? initalRepository : repository}
               navigation={navigation}
             />
           )}

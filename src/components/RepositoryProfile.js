@@ -11,57 +11,61 @@ const RepositoryProfile = (
   }
 ) => (
   <View style={styles.container}>
-    <View style={styles.profile}>
-      <Icon
-        containerStyle={styles.icon}
-        name={repository.fork ? 'repo-forked' : 'repo'}
-        type="octicon"
-        size={45}
-        color={colors.greyLight}
-      />
+    {repository &&
+      <View>
+        <View style={styles.profile}>
+          <Icon
+            containerStyle={styles.icon}
+            name={repository.fork ? 'repo-forked' : 'repo'}
+            type="octicon"
+            size={45}
+            color={colors.greyLight}
+          />
 
-      <Text style={styles.title}>{repository.name}</Text>
-      <Text style={[styles.subtitle, styles.subtitleDescription]}>
-        {repository.description}
-      </Text>
+          <Text style={styles.title}>{repository.name}</Text>
+          <Text style={[styles.subtitle, styles.subtitleDescription]}>
+            {repository.description}
+          </Text>
 
-      {repository.fork &&
-        <Text style={[styles.subtitle, styles.subtitleFork]}>
+          {repository.fork &&
+            <Text style={[styles.subtitle, styles.subtitleFork]}>
 
-          {repository.parent &&
-            <Text>
-              <Text>forked from</Text>
-              <Text
-                style={{fontWeight: 'bold'}}
-                onPress={() =>
-                  navigation.navigate('Repository', {
-                    repository: repository.parent,
-                  })}
-              >
-                {' '}{repository.parent.full_name}
-              </Text>
+              {repository.parent &&
+                <Text>
+                  <Text>forked from</Text>
+                  <Text
+                    style={{fontWeight: 'bold'}}
+                    onPress={() =>
+                      navigation.navigate('Repository', {
+                        repository: repository.parent,
+                      })}
+                  >
+                    {' '}{repository.parent.full_name}
+                  </Text>
+                </Text>
+              }
+
+            </Text>}
+        </View>
+
+        <View style={styles.details}>
+
+          <View style={styles.unit}>
+            <Text style={styles.unitNumber}>
+              {repository.stargazers_count}
             </Text>
-          }
+            <Text style={styles.unitText}>Stars</Text>
+          </View>
 
-        </Text>}
-    </View>
-
-    <View style={styles.details}>
-
-      <View style={styles.unit}>
-        <Text style={styles.unitNumber}>
-          {repository.stargazers_count}
-        </Text>
-        <Text style={styles.unitText}>Stars</Text>
+          <View style={styles.unit}>
+            <Text style={styles.unitNumber}>
+              {repository.forks}
+            </Text>
+            <Text style={styles.unitText}>Forks</Text>
+          </View>
+        </View>
       </View>
-
-      <View style={styles.unit}>
-        <Text style={styles.unitNumber}>
-          {repository.forks}
-        </Text>
-        <Text style={styles.unitText}>Forks</Text>
-      </View>
-    </View>
+    }
   </View>
 );
 

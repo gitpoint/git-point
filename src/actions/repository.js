@@ -33,13 +33,25 @@ import {
 
 import {fetchUrl, fetchCommentHTML, fetchReadMe, fetchSearch} from '../api';
 
+export const getRepositoryInfo = url => {
+  return (dispatch, getState) => {
+    return dispatch(getRepository(url)).then(() => {
+      const contributorsUrl = getState().repository.repository.contributors_url;
+      const issuesUrl = getState().repository.repository.issues_url.replace('{/number}', '?state=all&per_page=100');
+
+      dispatch(getContributors(contributorsUrl));
+      dispatch(getIssues(issuesUrl));
+    });
+  };
+};
+
 export const getRepository = url => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 
     dispatch({type: GET_REPOSITORY_IS_PENDING});
 
-    fetchUrl(url, accessToken)
+    return fetchUrl(url, accessToken)
       .then(data => {
         dispatch({
           type: GET_REPOSITORY_WAS_SUCCESSFUL,
