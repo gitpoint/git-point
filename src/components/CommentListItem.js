@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from "react";
-import { StyleSheet, View, Text, TouchableOpacity, Linking } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import FastImage from "react-native-fast-image";
 
 import colors from "../config/colors";
@@ -23,6 +23,8 @@ class CommentListItem extends Component {
         .replace(new RegExp(/<\/h3>[\n]*?<p>/, "g"), "</h3><p>");
 
     const myDomElement = (node, index, siblings, parent, defaultRenderer) => {
+      const onLinkPress = this.props.onLinkPress;
+
       if (node.name === "blockquote") {
         return (
           <View
@@ -100,16 +102,6 @@ class CommentListItem extends Component {
       return undefined;
     };
 
-    const onLinkPress = (node) => {
-      if (node.attribs.class.includes('user-mention')) {
-        navigation.navigate("Profile", {
-          user: {login: node.children[0].data.substring(1)}
-        })
-      } else {
-        Linking.openURL(node.attribs.href)
-      }
-    }
-
     const commentPresent =
       (comment.body_html && comment.body_html !== "") ||
       (comment.body && comment.body !== "");
@@ -161,7 +153,6 @@ class CommentListItem extends Component {
                   value={commentBodyAdjusted()}
                   stylesheet={commentStyles}
                   renderNode={myDomElement}
-                  onLinkPress={(url) => onLinkPress(url)}
                 />}
 
               {comment.body &&
@@ -181,10 +172,8 @@ class CommentListItem extends Component {
 }
 
 CommentListItem.propTypes = {
-  authUser: PropTypes.string,
-  issue: PropTypes.object,
   comment: PropTypes.object,
-  commentType: PropTypes.string,
+  onLinkPress: PropTypes.func,
   navigation: PropTypes.object
 };
 
@@ -263,15 +252,3 @@ const commentStyles = StyleSheet.create({
 });
 
 export default CommentListItem;
-
-// <HTMLView
-//   value={comment.body_html.replace(new RegExp('<blockquote>', 'g'), '<h2>')
-//     .replace(new RegExp('</blockquote>', 'g'), '</h2>')}
-//   stylesheet={commentStyles}
-// />
-
-{
-  /*<Text style={styles.commentBody}>
-              {comment.body}
-            </Text>}*/
-}

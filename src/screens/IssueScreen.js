@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from "react";
-import { FlatList, KeyboardAvoidingView, Keyboard } from "react-native";
+import { FlatList, KeyboardAvoidingView, Keyboard, Linking } from "react-native";
 import { Icon } from "react-native-elements";
 
 import ViewContainer from "../components/ViewContainer";
@@ -99,13 +99,29 @@ class Issue extends Component {
 
   renderItem = ({ item }) => (
     <CommentListItem
-      issue={this.props.issue}
       comment={item}
-      commentType={item.issue_url ? "comment" : "issue"}
-      authUser={this.props.authUser.login}
+      onLinkPress={node => this.onLinkPress(node)}
       navigation={this.props.navigation}
     />
   );
+
+    onLinkPress = (node) => {
+      const {getIssueFromUrl, navigation} = this.props;
+
+      if (node.attribs.class.includes('user-mention')) {
+        navigation.navigate("Profile", {
+          user: {login: node.children[0].data.substring(1)}
+        })
+      } else if (node.attribs.class.includes('issue-link')) {
+        getIssueFromUrl(node.attribs['data-url'].replace('github.com', 'api.github.com/repos')).then(() => {
+          navigation.navigate('Issue', {
+              issue: this.props.issue
+            })
+        })
+      } else {
+        Linking.openURL(node.attribs.href)
+      }
+    }
 
   render() {
     const { issue, comments, isPendingComments, navigation } = this.props;
