@@ -36,11 +36,16 @@ const mapDispatchToProps = dispatch => ({
 
 class Repository extends Component {
   componentDidMount() {
-    const repo = this.props.navigation.state.params.repository;
+    const {navigation} = this.props;
+    const repo = navigation.state.params.repository;
+    const repoUrl = navigation.state.params.repositoryUrl;
+    
+    this.props.getRepository(repo ? repo.url : repoUrl);
 
-    this.props.getRepository(repo.url);
-    this.props.getContributors(repo.contributors_url);
-    this.props.getIssues(repo.issues_url.replace('{/number}', '?state=all&per_page=100'));
+    // if (repo) {
+    //   this.props.getContributors(repo.contributors_url);
+    //   this.props.getIssues(repo.issues_url.replace('{/number}', '?state=all&per_page=100'));
+    // }
   }
 
   render() {
@@ -71,7 +76,7 @@ class Repository extends Component {
         <ParallaxScroll
           renderContent={() => (
             <RepositoryProfile
-              repository={isPendingAny ? initalRepository : repository}
+              repository={isPendingAny &&  initalRepository ? initalRepository : repository}
               navigation={navigation}
             />
           )}
@@ -81,7 +86,7 @@ class Repository extends Component {
         >
 
           <SectionList title="OWNER">
-            {[initalRepository.owner].map((item, i) => (
+            {[initalRepository ? initalRepository.owner : repository.owner].map((item, i) => (
               <UserListItem key={i} user={item} navigation={navigation} />
             ))}
           </SectionList>

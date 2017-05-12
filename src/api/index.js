@@ -36,25 +36,9 @@ const accessTokenParametersPATCH = (editParams, accessToken) => ({
 const accessTokenParametersPOST = (accessToken, body) => ({
   method: 'POST',
   headers: {
-    Accept: 'application/vnd.github.squirrel-girl-preview',
     Authorization: `token ${accessToken}`,
   },
   body: JSON.stringify(body),
-});
-
-const accessTokenParametersDELETEPreview = (accessToken) => ({
-  method: 'DELETE',
-  headers: {
-    Accept: 'application/vnd.github.squirrel-girl-preview',
-    Authorization: `token ${accessToken}`,
-  }
-});
-
-const accessTokenParametersHTMLPreview = accessToken => ({
-  headers: {
-    Accept: 'application/vnd.github.v3.html, application/vnd.github.squirrel-girl-preview',
-    Authorization: `token ${accessToken}`,
-  },
 });
 
 const accessTokenParametersHTML = accessToken => ({
@@ -68,14 +52,6 @@ const accessTokenParametersDiff = accessToken => ({
   headers: {
     Accept: 'application/vnd.github.v3.diff',
     Authorization: `token ${accessToken}`,
-  },
-});
-
-const accessTokenParametersPreview = accessToken => ({
-  headers: {
-    Accept: '  application/vnd.github.squirrel-girl-preview',
-    Authorization: `token ${accessToken}`,
-    'Cache-Control': 'no-cache',
   },
 });
 
@@ -251,21 +227,10 @@ export const fetchUrl = (url, accessToken) => {
 
 ///
 
-export const fetchUrlPreview = (url, accessToken) => {
-  return fetch(
-    url,
-    accessTokenParametersPreview(accessToken),
-  ).then(response => response.json());
-};
-
-///
-
-///
-
 export const fetchCommentHTML = (url, accessToken) => {
   return fetch(
     url,
-    accessTokenParametersHTMLPreview(accessToken),
+    accessTokenParametersHTML(accessToken),
   ).then(response => response.json());
 };
 

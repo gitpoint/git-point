@@ -18,6 +18,10 @@ import {
   getIssueFromUrl
 } from "../actions/issue";
 
+import {
+  getRepository,
+} from '../actions/repository';
+
 const mapStateToProps = state => ({
   authUser: state.authUser.user,
   repository: state.repository.repository,
@@ -35,7 +39,8 @@ const mapDispatchToProps = dispatch => ({
   postIssueComment: (body, owner, repoName, issueNum) =>
     dispatch(postIssueComment(body, owner, repoName, issueNum)),
   getDiff: url => dispatch(getDiff(url)),
-  getIssueFromUrl: url => dispatch(getIssueFromUrl(url))
+  getIssueFromUrl: url => dispatch(getIssueFromUrl(url)),
+  getRepository: url => dispatch(getRepository(url)),
 });
 
 class Issue extends Component {
@@ -92,6 +97,8 @@ class Issue extends Component {
         issue={issue}
         diff={diff}
         isPendingDiff={isPendingDiff}
+        onRepositoryPress={url => this.onRepositoryPress(url)}
+        onLinkPress={node => this.onLinkPress(node)}
         navigation={navigation}
       />
     );
@@ -105,23 +112,31 @@ class Issue extends Component {
     />
   );
 
-    onLinkPress = (node) => {
-      const {getIssueFromUrl, navigation} = this.props;
+  onLinkPress = (node) => {
+    const {getIssueFromUrl, navigation} = this.props;
 
-      if (node.attribs.class.includes('user-mention')) {
-        navigation.navigate("Profile", {
-          user: {login: node.children[0].data.substring(1)}
-        })
-      } else if (node.attribs.class.includes('issue-link')) {
-        getIssueFromUrl(node.attribs['data-url'].replace('github.com', 'api.github.com/repos')).then(() => {
-          navigation.navigate('Issue', {
-              issue: this.props.issue
-            })
-        })
-      } else {
-        Linking.openURL(node.attribs.href)
-      }
+    if (node.attribs.class && node.attribs.class.includes('user-mention')) {
+      navigation.navigate("Profile", {
+        user: {login: node.children[0].data.substring(1)}
+      })
+    } else if (node.attribs.class && node.attribs.class.includes('issue-link')) {
+      getIssueFromUrl(node.attribs['data-url'].replace('github.com', 'api.github.com/repos')).then(() => {
+        navigation.navigate('Issue', {
+            issue: this.props.issue
+          })
+      })
+    } else {
+      Linking.openURL(node.attribs.href)
     }
+  }
+
+  onRepositoryPress = (url) => {
+    const {navigation} = this.props;
+
+    navigation.navigate('Repository', {
+        repositoryUrl: url
+      })
+  }
 
   render() {
     const { issue, comments, isPendingComments, navigation } = this.props;
@@ -170,6 +185,7 @@ class Issue extends Component {
 Issue.propTypes = {
   getIssueComments: PropTypes.func,
   getDiff: PropTypes.func,
+  getRepository: PropTypes.func,
   postIssueComment: PropTypes.func,
   getIssueFromUrl: PropTypes.func,
   issue: PropTypes.object,

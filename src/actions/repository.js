@@ -31,7 +31,7 @@ import {
   SEARCH_CLOSED_PULLS_HAD_ERROR,
 } from '../constants';
 
-import {fetchUrl, fetchUrlPreview, fetchCommentHTML, fetchReadMe, fetchSearch} from '../api';
+import {fetchUrl, fetchCommentHTML, fetchReadMe, fetchSearch} from '../api';
 
 export const getRepository = url => {
   return (dispatch, getState) => {
