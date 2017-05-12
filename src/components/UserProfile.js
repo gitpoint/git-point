@@ -17,7 +17,7 @@ const UserProfile = (
       <FastImage
         style={[styles.avatar, (initialUser.type === 'User' || user.type === 'User') && styles.userAvatar]}
         source={{
-          uri: initialUser.avatar_url,
+          uri: initialUser.avatar_url ? initialUser.avatar_url : user.avatar_url,
           priority: FastImage.priority.high,
         }}
       />

@@ -389,13 +389,6 @@ class Home extends Component {
     );
   }
 
-  // <ListItem
-  //               roundAvatar
-  //               avatar={{uri: item.actor.avatar_url}}
-  //               containerStyle={{width: window.width}}
-  //               title={this.renderDescription(item)}
-  //               rightIcon={{name: this.getIcon(item), type: 'octicon'}}
-  //             />
   keyExtractor = (item) => {
     return item.id;
   }
@@ -403,7 +396,6 @@ class Home extends Component {
 
 const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : 0;
-const window = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {

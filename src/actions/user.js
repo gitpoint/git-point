@@ -13,10 +13,13 @@ import {
   GET_FOLLOWERS_HAD_ERROR,
   GET_FOLLOWING_IS_PENDING,
   GET_FOLLOWING_WAS_SUCCESSFUL,
-  GET_FOLLOWING_HAD_ERROR
+  GET_FOLLOWING_HAD_ERROR,
+  SEARCH_USER_REPOS_IS_PENDING,
+  SEARCH_USER_REPOS_WAS_SUCCESSFUL,
+  SEARCH_USER_REPOS_HAD_ERROR,
 } from '../constants';
 
-import { fetchUser, fetchUserOrgs, fetchUrl, USER_ENDPOINT } from '../api';
+import { fetchUser, fetchUserOrgs, fetchUrl, USER_ENDPOINT, fetchSearch } from '../api';
 
 export const getUser = (user) => {
   return (dispatch, getState) => {
@@ -67,7 +70,7 @@ export const getRepositories = (user) => {
 
     dispatch({ type: GET_REPOSITORIES_IS_PENDING });
 
-    fetchUrl(`${USER_ENDPOINT(user.login)}/repos`, accessToken)
+    fetchUrl(`${USER_ENDPOINT(user.login)}/repos?per_page=50`, accessToken)
       .then(data => {
       dispatch({
         type: GET_REPOSITORIES_WAS_SUCCESSFUL,
@@ -89,7 +92,7 @@ export const getFollowers = (user) => {
 
     dispatch({ type: GET_FOLLOWERS_IS_PENDING });
 
-    fetchUrl(`${USER_ENDPOINT(user.login)}/followers`, accessToken)
+    fetchUrl(`${USER_ENDPOINT(user.login)}/followers?per_page=100`, accessToken)
       .then(data => {
       dispatch({
         type: GET_FOLLOWERS_WAS_SUCCESSFUL,
@@ -111,7 +114,7 @@ export const getFollowing = (user) => {
 
     dispatch({ type: GET_FOLLOWING_IS_PENDING });
 
-    fetchUrl(`${USER_ENDPOINT(user.login)}/following`, accessToken)
+    fetchUrl(`${USER_ENDPOINT(user.login)}/following?per_page=100`, accessToken)
       .then(data => {
       dispatch({
         type: GET_FOLLOWING_WAS_SUCCESSFUL,
@@ -124,5 +127,27 @@ export const getFollowing = (user) => {
         payload: error,
       })
     })
+  };
+};
+
+export const searchUserRepos = (query, user) => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({type: SEARCH_USER_REPOS_IS_PENDING});
+
+    return fetchSearch('repositories', query, accessToken, `+user:${user.login}`)
+      .then(data => {
+        dispatch({
+          type: SEARCH_USER_REPOS_WAS_SUCCESSFUL,
+          payload: data.items,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: SEARCH_USER_REPOS_HAD_ERROR,
+          payload: error,
+        });
+      });
   };
 };

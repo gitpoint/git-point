@@ -1,10 +1,5 @@
 import React, { Component, PropTypes } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Linking } from "react-native";
 import FastImage from "react-native-fast-image";
 
 import colors from "../config/colors";
@@ -13,10 +8,9 @@ import moment from "moment";
 import HTMLView from "react-native-htmlview";
 
 class CommentListItem extends Component {
-
   render() {
-    const {comment, navigation } = this.props;
-    const commentBodyAdjusted = () => (
+    const { comment, navigation } = this.props;
+    const commentBodyAdjusted = () =>
       comment.body_html
         .replace(new RegExp(/<img[^>]*>/, "g"), "Image")
         .replace(new RegExp(/<ul>[\n]*?<li>/, "g"), "<ul><li>")
@@ -26,8 +20,7 @@ class CommentListItem extends Component {
         .replace(new RegExp(/<li>[\n]*?<p>/, "g"), "<li><p>")
         .replace(new RegExp(/<\/h1>[\n]*?<p>/, "g"), "</h1><p>")
         .replace(new RegExp(/<\/h2>[\n]*?<p>/, "g"), "</h2><p>")
-        .replace(new RegExp(/<\/h3>[\n]*?<p>/, "g"), "</h3><p>")
-    );
+        .replace(new RegExp(/<\/h3>[\n]*?<p>/, "g"), "</h3><p>");
 
     const myDomElement = (node, index, siblings, parent, defaultRenderer) => {
       if (node.name === "blockquote") {
@@ -60,25 +53,32 @@ class CommentListItem extends Component {
               fontFamily: "Menlo",
               backgroundColor: colors.greyMidLight,
               fontSize: 13,
-              margin: node.parent.name === "pre" ? 12 : 3,
+              margin: node.parent.name === "pre" ? 12 : 3
             }}
           >
             {defaultRenderer(node.children, parent)}
           </Text>
         );
-      } else if (node.name === "h1" || node.name === "h2" || node.name === "h3") {
+      } else if (
+        node.name === "h1" ||
+        node.name === "h2" ||
+        node.name === "h3"
+      ) {
         return (
           <View
             style={{
               borderBottomWidth: node.name !== "h3" ? 1 : 0,
               borderBottomColor: colors.greyMid,
-              marginBottom: 12}}
+              marginBottom: 12
+            }}
           >
             <Text
               style={{
                 color: colors.primaryDark,
                 fontFamily: "AvenirNext-DemiBold",
-                fontSize: node.name === "h1" ? 26 : (node.name === "h2" ? 22 : 20),
+                fontSize: node.name === "h1"
+                  ? 26
+                  : node.name === "h2" ? 22 : 20,
                 paddingBottom: 4
               }}
             >
@@ -86,15 +86,38 @@ class CommentListItem extends Component {
             </Text>
           </View>
         );
+      } else if (node.name === 'a') {
+        return (
+          <Text
+            style={{fontFamily: "AvenirNext-DemiBold", fontWeight: '600', color: colors.primaryDark}}
+            onPress={() => onLinkPress(node)}
+          > 
+            {defaultRenderer(node.children, parent)}
+          </Text>
+        );
       }
 
       return undefined;
     };
 
+    const onLinkPress = (node) => {
+      if (node.attribs.class.includes('user-mention')) {
+        navigation.navigate("Profile", {
+          user: {login: node.children[0].data.substring(1)}
+        })
+      } else {
+        Linking.openURL(node.attribs.href)
+      }
+    }
+
+    const commentPresent =
+      (comment.body_html && comment.body_html !== "") ||
+      (comment.body && comment.body !== "");
+      
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          {comment.user && 
+          {comment.user &&
             <TouchableOpacity
               onPress={() =>
                 navigation.navigate("Profile", {
@@ -108,22 +131,20 @@ class CommentListItem extends Component {
                   priority: FastImage.priority.high
                 }}
               />
-            </TouchableOpacity>
-          }
+            </TouchableOpacity>}
 
           {comment.user &&
-          <TouchableOpacity
-            style={styles.titleSubtitleContainer}
-            onPress={() =>
-              navigation.navigate("Profile", {
-                user: comment.user
-              })}
-          >
-            <Text style={styles.linkDescription}>
-              {comment.user.login}{"  "}
-            </Text>
-          </TouchableOpacity>
-          }
+            <TouchableOpacity
+              style={styles.titleSubtitleContainer}
+              onPress={() =>
+                navigation.navigate("Profile", {
+                  user: comment.user
+                })}
+            >
+              <Text style={styles.linkDescription}>
+                {comment.user.login}{"  "}
+              </Text>
+            </TouchableOpacity>}
 
           <View style={styles.dateContainer}>
             <Text style={styles.date}>
@@ -132,22 +153,28 @@ class CommentListItem extends Component {
           </View>
         </View>
 
-        <View style={styles.commentContainer}>
-          {comment.body_html &&
-            comment.body_html !== "" &&
-            <HTMLView
-              value={commentBodyAdjusted()}
-              stylesheet={commentStyles}
-              renderNode={myDomElement}
-            />}
+        {commentPresent &&
+            <View style={styles.commentContainer}>
+              {comment.body_html &&
+                comment.body_html !== "" &&
+                <HTMLView
+                  value={commentBodyAdjusted()}
+                  stylesheet={commentStyles}
+                  renderNode={myDomElement}
+                  onLinkPress={(url) => onLinkPress(url)}
+                />}
 
-          {comment.body &&
-            comment.body !== "" && !comment.body_html &&
-            <Text
-              style={styles.commentText}
-            >{comment.body}</Text>}
-        </View>
-        
+              {comment.body &&
+                comment.body !== "" &&
+                !comment.body_html &&
+                <Text style={styles.commentText}>{comment.body}</Text>}
+            </View>}
+
+                    {!commentPresent &&
+            <View style={styles.commentContainer}>
+                <Text style={styles.commentTextNone}>No description provided.</Text>
+            </View>}
+
       </View>
     );
   }
@@ -200,12 +227,18 @@ const styles = StyleSheet.create({
     paddingTop: 4,
     paddingBottom: 22,
     marginLeft: 54,
+    marginRight: 20,
     borderBottomColor: colors.greyLight,
     borderBottomWidth: 1
   },
   commentText: {
     color: colors.primaryDark,
     fontFamily: "AvenirNext-Regular"
+  },
+  commentTextNone: {
+    color: colors.primaryDark,
+    fontFamily: "AvenirNext-Regular",
+    fontStyle: 'italic',
   }
 });
 

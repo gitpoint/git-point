@@ -44,7 +44,7 @@ class FollowerList extends Component {
               data={followers}
               keyExtractor={this.keyExtractor}
               renderItem={({ item }) => (
-                <UserListItem user={item} navigation={navigation} />
+                <UserListItem user={item} navigation={navigation} showFullName />
               )}
             />
           </View>}

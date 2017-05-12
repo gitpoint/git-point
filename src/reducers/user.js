@@ -13,7 +13,10 @@ import {
   GET_FOLLOWERS_HAD_ERROR,
   GET_FOLLOWING_IS_PENDING,
   GET_FOLLOWING_WAS_SUCCESSFUL,
-  GET_FOLLOWING_HAD_ERROR
+  GET_FOLLOWING_HAD_ERROR,
+  SEARCH_USER_REPOS_IS_PENDING,
+  SEARCH_USER_REPOS_WAS_SUCCESSFUL,
+  SEARCH_USER_REPOS_HAD_ERROR,
 } from '../constants';
 
 const initialState = {
@@ -22,11 +25,13 @@ const initialState = {
   repositories: [],
   followers: [],
   following: [],
+  searchedUserRepos: [],
   isPendingUser: false,
   isPendingOrgs: false,
   isPendingRepositories: false,
   isPendingFollowers: false,
   isPendingFollowing: false,  
+  isPendingSearchUserRepos: false,
   error: '',
 }
 
@@ -116,6 +121,23 @@ export default function userReducer(state = initialState, action={}) {
           ...state,
           error: action.payload,
           isPendingFollowing: false,
+        };
+      case SEARCH_USER_REPOS_IS_PENDING:
+        return {
+          ...state,
+          isPendingSearchUserRepos: true,
+        };
+      case SEARCH_USER_REPOS_WAS_SUCCESSFUL:
+        return {
+          ...state,
+          searchedUserRepos: action.payload,
+          isPendingSearchUserRepos: false,
+        };
+      case SEARCH_USER_REPOS_HAD_ERROR:
+        return {
+          ...state,
+          error: action.payload,
+          isPendingSearchUserRepos: false,
         };
       default:
         return state;

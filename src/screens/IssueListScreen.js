@@ -89,7 +89,7 @@ class IssueList extends Component {
 
   render() {
     const {searchedOpenIssues, searchedClosedIssues, isPendingSearchOpenIssues, isPendingSearchClosedIssues} = this.props;
-    const {query, searchType, searchStart} = this.state;
+    const {query, searchType, searchStart, searchFocus} = this.state;
     
     return (
       <ViewContainer>
@@ -101,7 +101,7 @@ class IssueList extends Component {
                 hideBackground={true}
                 textColor={colors.primaryDark}
                 textFieldBackgroundColor={colors.greyLight}
-                showsCancelButton={this.state.searchFocus}
+                showsCancelButton={searchFocus}
                 onFocus={() => this.setState({searchFocus: true})}
                 onCancelButtonPress={() => {
                   this.setState({ searchStart: false, query: '' });
@@ -218,11 +218,6 @@ const styles = StyleSheet.create({
   searchTitle: {
     fontSize: 20,
     textAlign: 'center',
-  },
-  listContainer: {
-    borderTopColor: colors.greyLight,
-    borderTopWidth: 1,
-    marginBottom: 105,
   },
 });
 

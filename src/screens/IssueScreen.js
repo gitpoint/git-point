@@ -1,22 +1,22 @@
-import React, {Component, PropTypes} from 'react';
-import {FlatList, KeyboardAvoidingView, Keyboard} from 'react-native';
-import {Icon} from 'react-native-elements';
+import React, { Component, PropTypes } from "react";
+import { FlatList, KeyboardAvoidingView, Keyboard } from "react-native";
+import { Icon } from "react-native-elements";
 
-import ViewContainer from '../components/ViewContainer';
-import LoadingUserListItem from '../components/LoadingUserListItem';
-import IssueDescriptionListItem from '../components/IssueDescriptionListItem';
-import CommentListItem from '../components/CommentListItem';
-import CommentInput from '../components/CommentInput';
+import ViewContainer from "../components/ViewContainer";
+import LoadingUserListItem from "../components/LoadingUserListItem";
+import IssueDescriptionListItem from "../components/IssueDescriptionListItem";
+import CommentListItem from "../components/CommentListItem";
+import CommentInput from "../components/CommentInput";
 
-import colors from '../config/colors';
+import colors from "../config/colors";
 
-import {connect} from 'react-redux';
+import { connect } from "react-redux";
 import {
   getIssueComments,
   postIssueComment,
   getDiff,
   getIssueFromUrl
-} from '../actions/issue';
+} from "../actions/issue";
 
 const mapStateToProps = state => ({
   authUser: state.authUser.user,
@@ -34,15 +34,13 @@ const mapDispatchToProps = dispatch => ({
   getIssueComments: url => dispatch(getIssueComments(url)),
   postIssueComment: (body, owner, repoName, issueNum) =>
     dispatch(postIssueComment(body, owner, repoName, issueNum)),
-  getDiff: (url) =>
-    dispatch(getDiff(url)),
-  getIssueFromUrl: (url) =>
-    dispatch(getIssueFromUrl(url)),
+  getDiff: url => dispatch(getDiff(url)),
+  getIssueFromUrl: url => dispatch(getIssueFromUrl(url))
 });
 
 class Issue extends Component {
   static navigationOptions = ({ navigation }) => {
-    const {state, navigate} = navigation;
+    const { state, navigate } = navigation;
 
     if (state.params.userHasPushPermission) {
       return {
@@ -51,21 +49,22 @@ class Issue extends Component {
             name="gear"
             color={colors.primarydark}
             type="octicon"
-            containerStyle={{marginRight: 5}}
+            containerStyle={{ marginRight: 5 }}
             underlayColor={colors.transparent}
-            onPress={() => navigate('IssueSettings', {
-              issue: state.params.issue,
-            })}
+            onPress={() =>
+              navigate("IssueSettings", {
+                issue: state.params.issue
+              })}
           />
-        ),
+        )
       };
     }
   };
 
   componentDidMount() {
-    const {navigation} = this.props;
+    const { navigation } = this.props;
     const issue = navigation.state.params.issue;
-    
+
     this.props.getIssueComments(issue);
 
     if (issue.pull_request) {
@@ -74,7 +73,7 @@ class Issue extends Component {
   }
 
   postComment = body => {
-    const {repository, navigation} = this.props;
+    const { repository, navigation } = this.props;
 
     const repoName = repository.name;
     const owner = repository.owner.login;
@@ -86,7 +85,7 @@ class Issue extends Component {
   };
 
   renderHeader = () => {
-    const {issue, diff, isPendingDiff, navigation} = this.props;
+    const { issue, diff, isPendingDiff, navigation } = this.props;
 
     return (
       <IssueDescriptionListItem
@@ -95,21 +94,21 @@ class Issue extends Component {
         isPendingDiff={isPendingDiff}
         navigation={navigation}
       />
-    )
+    );
   };
 
-  renderItem = ({item}) => (
+  renderItem = ({ item }) => (
     <CommentListItem
       issue={this.props.issue}
       comment={item}
-      commentType={item.issue_url ? 'comment' : 'issue'}
+      commentType={item.issue_url ? "comment" : "issue"}
       authUser={this.props.authUser.login}
       navigation={this.props.navigation}
     />
   );
 
   render() {
-    const {issue, comments, isPendingComments, navigation} = this.props;
+    const { issue, comments, isPendingComments, navigation } = this.props;
 
     return (
       <ViewContainer>
@@ -118,10 +117,11 @@ class Issue extends Component {
             <LoadingUserListItem key={i} />
           ))}
 
-        {!isPendingComments && issue &&
+        {!isPendingComments &&
+          issue &&
           <KeyboardAvoidingView
-            style={{flex: 1}}
-            behavior={'padding'}
+            style={{ flex: 1 }}
+            behavior={"padding"}
             keyboardVerticalOffset={65}
           >
 
@@ -134,7 +134,13 @@ class Issue extends Component {
               renderItem={this.renderItem}
             />
 
-            <CommentInput userHasPushPermission={navigation.state.params.userHasPushPermission} issueLocked={issue.locked} onSubmitEditing={this.postComment} />
+            <CommentInput
+              userHasPushPermission={
+                navigation.state.params.userHasPushPermission
+              }
+              issueLocked={issue.locked}
+              onSubmitEditing={this.postComment}
+            />
           </KeyboardAvoidingView>}
       </ViewContainer>
     );
@@ -158,7 +164,7 @@ Issue.propTypes = {
   isPendingDiff: PropTypes.bool,
   isPendingComments: PropTypes.bool,
   isPostingComment: PropTypes.bool,
-  navigation: PropTypes.object,
+  navigation: PropTypes.object
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Issue);
