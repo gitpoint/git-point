@@ -15,7 +15,7 @@ const RepositoryProfile = (
       <View>
         <View style={styles.profile}>
           <Icon
-            containerStyle={styles.icon}
+            containerStyle={[styles.icon, repository.fork ? {marginLeft: 15} : {marginLeft: 10}]}
             name={repository.fork ? 'repo-forked' : 'repo'}
             type="octicon"
             size={45}
@@ -115,6 +115,8 @@ const styles = StyleSheet.create({
   details: {
     flex: 1,
     flexDirection: 'row',
+    justifyContent: 'space-around',
+    minWidth: 300,
   },
   unit: {
     flex: 1,
@@ -125,14 +127,12 @@ const styles = StyleSheet.create({
     fontFamily: 'AvenirNext-Bold',
     fontSize: 18,
     fontWeight: 'bold',
-    backgroundColor: 'transparent',
   },
   unitText: {
     textAlign: 'center',
     color: colors.white,
     fontSize: 12,
     fontFamily: 'AvenirNext-Medium',
-    backgroundColor: 'transparent',
   },
   icon: {
     paddingBottom: 20,

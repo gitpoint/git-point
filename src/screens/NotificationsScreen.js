@@ -25,7 +25,7 @@ import {
   markRepoAsRead
 } from "../actions/notifications";
 
-import {getIssueFromUrl} from "../actions/issue";
+import { getIssueFromUrl } from "../actions/issue";
 
 const mapStateToProps = state => ({
   unread: state.notifications.unread,
@@ -108,9 +108,16 @@ class Notifications extends Component {
             }}
           />
 
-          <Text style={styles.repositoryTitle}>{item}</Text>
-          
-          <TouchableOpacity style={styles.markAsReadIconRepo} onPress={() => markRepoAsRead(item)}>
+          <Text 
+            style={styles.repositoryTitle}
+            onPress={() => this.navigateToRepo(item)}>
+              {item}
+          </Text>
+
+          <TouchableOpacity
+            style={styles.markAsReadIconRepo}
+            onPress={() => markRepoAsRead(item)}
+          >
             <Icon
               color={colors.greyDark}
               size={28}
@@ -126,7 +133,8 @@ class Notifications extends Component {
               key={i}
               notification={notification}
               iconAction={notificationID => markAsRead(notificationID)}
-              navigationAction={notification => this.navigateToThread(notification)}
+              navigationAction={notification =>
+                this.navigateToThread(notification)}
               navigation={this.props.navigation}
             />
           ))}
@@ -135,14 +143,25 @@ class Notifications extends Component {
     );
   };
 
+  navigateToRepo = (fullName) => {
+    const {navigation} = this.props;
+
+    navigation.navigate('Repository', {
+        repositoryUrl: `https://api.github.com/repos/${fullName}`
+      })
+  }
+
   navigateToThread(notification) {
-    const {getIssueFromUrl, navigation} = this.props;
-    
-    getIssueFromUrl(notification.subject.url.replace('pulls', 'issues')).then(() => {
-      navigation.navigate('Issue', {
-          issue: this.props.issue
-        })
-    })
+    const { markAsRead, getIssueFromUrl, navigation } = this.props;
+
+    markAsRead(notification.id);
+    getIssueFromUrl(
+      notification.subject.url.replace("pulls", "issues")
+    ).then(() => {
+      navigation.navigate("Issue", {
+        issue: this.props.issue
+      });
+    });
   }
 
   getImage(repoName) {
@@ -216,6 +235,10 @@ class Notifications extends Component {
       )
     ];
 
+    const sortedRepos = repositories.sort((a, b) => {
+      return a.toLowerCase() > b.toLowerCase() ? 1 : -1;
+    });
+
     return (
       <ViewContainer>
         {this.isLoading() &&
@@ -242,7 +265,7 @@ class Notifications extends Component {
             removeClippedSubviews={false}
             onRefresh={this.getNotifications()}
             refreshing={this.isLoading()}
-            data={repositories}
+            data={sortedRepos}
             keyExtractor={this.keyExtractor}
             renderItem={this.renderItem}
             disableVirtualization={true}
