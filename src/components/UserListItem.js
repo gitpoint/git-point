@@ -9,10 +9,12 @@ const UserListItem = (
   {
     user,
     title,
+    subtitle,
     titleStyle,
     onlyImageNavigate,
     navigation,
     icon,
+    noBorderBottom,
     iconAction
   }
 ) => {
@@ -25,7 +27,7 @@ const UserListItem = (
   <ContainerComponent
     onPress={() => navigation.navigate(user.type === 'User' ? 'Profile' : 'Organization', user.type === 'User' ? {user: user} : {organization: user})}
     underlayColor={colors.greyLight}
-    style={styles.container}
+    style={!noBorderBottom && styles.borderContainer}
   >
     <View style={styles.wrapper}>
       <UserComponent style={styles.userInfo}
@@ -48,9 +50,13 @@ const UserListItem = (
           />
         </ImageContainerComponent>
 
-        <View style={styles.titleContainer}>
+        <View style={styles.titleSubtitleContainer}>
           <Text
             style={[styles.title, titleStyle && titleStyle]}>{title ? title : user.login}</Text>
+
+          {subtitle &&
+            <Text style={styles.subtitle}>{subtitle}</Text>
+          }
         </View>
       </UserComponent>
 
@@ -69,15 +75,17 @@ const UserListItem = (
 UserListItem.propTypes = {
   user: PropTypes.object,
   title: PropTypes.any,
+  subtitle: PropTypes.string,
   onlyImageNavigate: PropTypes.bool,
   titleStyle: PropTypes.object,
   navigation: PropTypes.object,
   icon: PropTypes.string,
   iconAction: PropTypes.func,
+  noBorderBottom: PropTypes.bool,
 };
 
 const styles = StyleSheet.create({
-  container: {
+  borderContainer: {
     borderBottomColor: colors.greyLight,
     borderBottomWidth: 1,
   },
@@ -96,13 +104,21 @@ const styles = StyleSheet.create({
     width: 34,
     height: 34
   },
-  titleContainer: {
+  titleSubtitleContainer: {
+    justifyContent: 'center',
     flex: 1,
   },
   title: {
     color: colors.black,
     fontFamily: 'AvenirNext-Medium',
     fontSize: 16,
+    marginLeft: 10
+  },
+  subtitle: {
+    color: colors.greyDark,
+    fontSize: 12,
+    marginTop: 1,
+    fontWeight: '600',
     marginLeft: 10
   },
   iconContainer: {

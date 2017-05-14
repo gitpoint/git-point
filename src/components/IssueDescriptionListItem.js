@@ -38,6 +38,7 @@ const IssueDescriptionListItem = ({
         titleStyle={styles.titleSmall}
         leftIcon={{
           name: "repo",
+          size: 17,
           color: colors.grey,
           type: "octicon"
         }}
@@ -138,7 +139,7 @@ const styles = StyleSheet.create({
   titleSmall: {
     color: colors.primarydark,
     fontFamily: "AvenirNext-DemiBold",
-    fontSize: 14
+    fontSize: 12
   },
   listItemContainer: {
     borderBottomWidth: 0,

@@ -6,7 +6,7 @@ import {
   Text,
   Platform,
   FlatList,
-  Dimensions
+  View
 } from 'react-native';
 
 import LoadingUserListItem from '../components/LoadingUserListItem';
@@ -71,12 +71,14 @@ class Home extends Component {
       case 'GollumEvent':
         return `${userEvent.payload.pages[0].action}`; // TODO: need to specify for multiple pages
       case 'IssueCommentEvent': {
+        const type = userEvent.payload.issue.pull_request ? 'pull request': 'issue';
+
         if (userEvent.payload.action === 'created') {
-          return 'commented on issue';
+          return `commented on ${type}`;
         } else if (userEvent.payload.action === 'edited') {
-          return 'edited their comment on issue'; //haven't witnessed
+          return `edited their comment on ${type}`; //haven't witnessed
         } else if (userEvent.payload.action === 'deleted') {
-          return 'removed their comment on issue'; //haven't witnessed
+          return `removed their comment on ${type}`; //haven't witnessed
         }
       }
       case 'IssuesEvent':
@@ -374,14 +376,23 @@ class Home extends Component {
             refreshing={isPending}
             keyExtractor={this.keyExtractor}
             renderItem={({item}) => (
-              <UserListItem
-                user={item.actor}
-                title={this.renderDescription(item)}
-                titleStyle={{fontSize: 14}}
-                navigation={navigation}
-                onlyImageNavigate
-                icon={this.getIcon(item)}                
-              />
+              <View>
+                <UserListItem
+                  user={item.actor}
+                  title={this.renderDescription(item)}
+                  titleStyle={{fontSize: 14}}
+                  navigation={navigation}
+                  onlyImageNavigate
+                  noBorderBottom={item.type === 'IssueCommentEvent'}
+                  icon={this.getIcon(item)}                
+                />
+
+                {item.type === 'IssueCommentEvent' &&
+                  <View style={styles.subtitleContainer}>
+                    <Text numberOfLines={3} style={styles.subtitle}>{item.payload.comment.body.replace(/(\r\n|\n|\r)/gm," ")}</Text>
+                  </View>
+                }
+              </View>
             )}
           />
         }
@@ -439,6 +450,18 @@ const styles = StyleSheet.create({
   },
   date: {
     color: colors.greyDark,
+  },
+  subtitleContainer: {
+    paddingHorizontal: 15,
+    paddingBottom: 10,
+    borderBottomColor: colors.greyLight,
+    borderBottomWidth: 1,
+  },
+  subtitle: {
+    color: colors.greyDark,
+    fontSize: 13,
+    marginTop: 1,
+    fontWeight: '600',
   },
 });
 

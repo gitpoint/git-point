@@ -66,7 +66,7 @@ class Profile extends Component {
               size="large"
             />}
 
-          {!isPending &&
+          {!isPending && initialUser.login === user.login &&
             ((user.email !== null && user.email !== '') || (user.blog !== null && user.blog !== '')) &&
             <SectionList title="LINKS">
               {user.email !== null && user.email !== '' &&
@@ -101,7 +101,7 @@ class Profile extends Component {
                 />}
             </SectionList>}
 
-          {!isPending &&
+          {!isPending && initialUser.login === user.login &&
             <SectionList 
               title="ORGANIZATIONS"
               noItems={orgs.length === 0}

@@ -42,11 +42,22 @@ class Repository extends Component {
     const repoUrl = navigation.state.params.repositoryUrl;
     
     this.props.getRepositoryInfo(repo ? repo.url : repoUrl);
+  }
 
-    // if (repo) {
-    //   this.props.getContributors(repo.contributors_url);
-    //   this.props.getIssues(repo.issues_url.replace('{/number}', '?state=all&per_page=100'));
-    // }
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+  }
+
+  componentWillUpdate() {
+    console.log('fam');
+  }
+
+  componentWillUpdate() {
+    console.log('fam');
+  }
+
+  componentWillUnmount() {
+    console.log('whoa');
   }
 
   render() {
