@@ -80,17 +80,16 @@ class Organization extends Component {
             />}
 
           {!isPendingOrg &&
-            organization.blog &&
+            organization.blog && organization.blog !== null && organization.blog !== '' &&
             <SectionList title="LINKS">
-              {organization.blog &&
-                <ListItem
-                  title="Website"
-                  titleStyle={styles.listTitle}
-                  leftIcon={{name: 'link', color: colors.grey}}
-                  subtitle={organization.blog}
-                  onPress={() => Communications.web(organization.blog)}
-                  underlayColor={colors.greyLight}
-                />}
+              <ListItem
+                title="Website"
+                titleStyle={styles.listTitle}
+                leftIcon={{name: 'link', color: colors.grey}}
+                subtitle={organization.blog}
+                onPress={() => Communications.web(organization.blog)}
+                underlayColor={colors.greyLight}
+              />
             </SectionList>}
         </ParallaxScroll>
       </ViewContainer>

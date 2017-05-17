@@ -44,21 +44,21 @@ class Repository extends Component {
     this.props.getRepositoryInfo(repo ? repo.url : repoUrl);
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   console.log(nextProps);
+  // }
 
-  componentWillUpdate() {
-    console.log('fam');
-  }
+  // componentWillUpdate() {
+  //   console.log('fam');
+  // }
 
-  componentWillUpdate() {
-    console.log('fam');
-  }
+  // componentWillUpdate() {
+  //   console.log('fam');
+  // }
 
-  componentWillUnmount() {
-    console.log('whoa');
-  }
+  // componentWillUnmount() {
+  //   console.log('whoa');
+  // }
 
   render() {
     const {

@@ -125,25 +125,46 @@ class Home extends Component {
           userEvent.payload.ref_type === 'tag'
         ) {
           return (
-            <Text style={styles.linkDescription}>{userEvent.payload.ref}</Text>
+            <Text style={styles.linkBranchDescription}>{userEvent.payload.ref}</Text>
           );
         } else if (userEvent.payload.ref_type === 'repository') {
           return (
-            <Text style={styles.linkDescription}>{userEvent.repo.name}</Text>
+            <Text 
+            style={styles.linkDescription}
+            onPress={() =>
+              this.props.navigation.navigate('Repository', {
+                repositoryUrl: userEvent.repo.url
+              })}>
+                {userEvent.repo.name}
+            </Text>
           );
         }
       }
       case 'DeleteEvent':
-        return `${userEvent.payload.ref}`; //can only be branch or tag
+        return <Text style={styles.deletedLinkBranchDescription}>{userEvent.payload.ref}</Text> //can only be branch or tag
       case 'ForkEvent':
         return (
-          <Text style={styles.linkDescription}>{userEvent.repo.name}</Text>
+          <Text 
+            style={styles.linkDescription}
+            onPress={() =>
+              this.props.navigation.navigate('Repository', {
+                repositoryUrl: userEvent.repo.url
+              })}>
+                {userEvent.repo.name}
+          </Text>
         );
       case 'GollumEvent':
         return (
           <Text>
             the{' '}
-            <Text style={styles.linkDescription}>{userEvent.repo.name}</Text>
+            <Text 
+            style={styles.linkDescription}
+            onPress={() =>
+              this.props.navigation.navigate('Repository', {
+                repositoryUrl: userEvent.repo.url
+              })}>
+                {userEvent.repo.name}
+          </Text>
             {' '}wiki
           </Text>
         ); // TODO: need to specify for multiple pages
@@ -173,7 +194,15 @@ class Home extends Component {
         );
       case 'PublicEvent':
         return (
-          <Text style={styles.linkDescription}>{userEvent.repo.name}</Text>
+          <Text
+            style={styles.linkDescription}
+            onPress={() =>
+              this.props.navigation.navigate('Repository', {
+                repositoryUrl: userEvent.repo.url,
+              })}
+          >
+            {userEvent.repo.name}
+          </Text>
         );
       case 'PullRequestEvent':
         return (
@@ -195,24 +224,31 @@ class Home extends Component {
         );
       case 'PushEvent':
         return (
-          <Text style={styles.linkDescription}>{userEvent.payload.ref}</Text>
+          <Text style={styles.linkDescription}>{userEvent.payload.ref.replace('refs/heads/', '')}</Text>
         );
       case 'ReleaseEvent':
         return `${userEvent.payload.release.id}`;
       case 'RepositoryEvent':
         return (
-          <Text
-            style={styles.linkDescription && userEvent.action !== 'deleted'}
-          >
-            {userEvent.repo.name}
+          <Text 
+            style={styles.linkDescription}
+            onPress={() => {
+              if (userEvent.action !== 'deleted') {
+              this.props.navigation.navigate('Repository', {
+                repositoryUrl: userEvent.repo.url
+              })}}}>
+                {userEvent.repo.name}
           </Text>
         );
       case 'WatchEvent':
         return (
-          <Text
+          <Text 
             style={styles.linkDescription}
-          >
-            {userEvent.repo.name}
+            onPress={() =>
+              this.props.navigation.navigate('Repository', {
+                repositoryUrl: userEvent.repo.url
+              })}>
+                {userEvent.repo.name}
           </Text>
         );
     }
@@ -253,13 +289,28 @@ class Home extends Component {
           userEvent.payload.ref_type === 'tag'
         ) {
           return (
-            <Text style={styles.linkDescription}>{userEvent.repo.name}</Text>
+            <Text
+            style={styles.linkDescription}
+            onPress={() =>
+              this.props.navigation.navigate('Repository', {
+                repositoryUrl: userEvent.repo.url,
+              })}
+          >
+            {userEvent.repo.name}
+          </Text>
           );
         }
       }
       case 'DeleteEvent':
         return (
-          <Text style={styles.linkDescription}>{userEvent.repo.name}</Text>
+          <Text 
+            style={styles.linkDescription}
+            onPress={() =>
+              this.props.navigation.navigate('Repository', {
+                repositoryUrl: userEvent.repo.url
+              })}>
+                {userEvent.repo.name}
+          </Text>
         );
       case 'ForkEvent':
         return (
@@ -275,15 +326,39 @@ class Home extends Component {
         );
       case 'IssueCommentEvent':
         return (
-          <Text style={styles.linkDescription}>{userEvent.repo.name}</Text>
+          <Text
+            style={styles.linkDescription}
+            onPress={() =>
+              this.props.navigation.navigate('Repository', {
+                repositoryUrl: userEvent.repo.url,
+              })}
+          >
+            {userEvent.repo.name}
+          </Text>
         );
       case 'IssuesEvent':
         return (
-          <Text style={styles.linkDescription}>{userEvent.repo.name}</Text>
+          <Text
+            style={styles.linkDescription}
+            onPress={() =>
+              this.props.navigation.navigate('Repository', {
+                repositoryUrl: userEvent.repo.url,
+              })}
+          >
+            {userEvent.repo.name}
+          </Text>
         );
       case 'PushEvent':
         return (
-          <Text style={styles.linkDescription}>{userEvent.repo.name}</Text>
+          <Text
+            style={styles.linkDescription}
+            onPress={() =>
+              this.props.navigation.navigate('Repository', {
+                repositoryUrl: userEvent.repo.url,
+              })}
+          >
+            {userEvent.repo.name}
+          </Text>
         );
     }
   }
@@ -447,6 +522,13 @@ const styles = StyleSheet.create({
   },
   linkDescription: {
     fontFamily: 'AvenirNext-DemiBold',
+  },
+  linkBranchDescription: {
+    fontFamily: 'Menlo',
+  },
+  deletedLinkBranchDescription: {
+    color: colors.greyDarkest,
+    fontFamily: 'Menlo',
   },
   date: {
     color: colors.greyDark,

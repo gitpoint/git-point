@@ -117,7 +117,7 @@ export const fetchUserOrgs = (user, accessToken) => {
 };
 
 export const fetchUserEvents = (user, accessToken) => {
-  const EVENTS_ENDPOINT = `${root}/users/${user}/received_events`;
+  const EVENTS_ENDPOINT = `${root}/users/${user}/received_events?per_page=100`;
 
   return fetch(
     EVENTS_ENDPOINT,
