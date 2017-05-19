@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from "react";
 import { FlatList, KeyboardAvoidingView, Keyboard, Linking } from "react-native";
 import { Icon } from "react-native-elements";
 
+import { withNavigationFocus } from '../hoc/withNavigationFocus';
+
 import ViewContainer from "../components/ViewContainer";
 import LoadingUserListItem from "../components/LoadingUserListItem";
 import IssueDescriptionListItem from "../components/IssueDescriptionListItem";
@@ -199,4 +201,4 @@ Issue.propTypes = {
   navigation: PropTypes.object
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Issue);
+export default connect(mapStateToProps, mapDispatchToProps)(withNavigationFocus(Issue, 'Issue'));
