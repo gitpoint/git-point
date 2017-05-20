@@ -2,8 +2,6 @@ import React, { Component, PropTypes } from "react";
 import { StyleSheet, ActivityIndicator } from "react-native";
 import { ListItem } from "react-native-elements";
 
-import { withNavigationFocus } from '../hoc/withNavigationFocus';
-
 import ViewContainer from "../components/ViewContainer";
 import UserProfile from "../components/UserProfile";
 import SectionList from "../components/SectionList";
@@ -30,16 +28,6 @@ const mapDispatchToProps = dispatch => ({
 
 class Profile extends Component {
   componentDidMount() {
-    this.loadScreen();
-  }
-
-  componentWillReceiveProps(newProps) {
-    if (newProps.isFocused !== this.props.isFocused && newProps.isFocused && this.props.navigation.state.params.user.login !== this.props.user.login) {
-      this.loadScreen();
-    }
-  }
-
-  loadScreen() {
     this.props.getUser(this.props.navigation.state.params.user.login);
     this.props.getOrgs(this.props.navigation.state.params.user.login);
   }
@@ -150,4 +138,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withNavigationFocus(Profile, 'Profile'));
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

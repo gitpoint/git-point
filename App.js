@@ -41,9 +41,6 @@ import IssueSettings from './src/screens/IssueSettingsScreen';
 import ReadMe from './src/screens/ReadMe';
 import PullDiff from './src/screens/PullDiffScreen';
 
-// updateFromHOC
-import { updateFocus } from './src/hoc/withNavigationFocus'
-
 // Redux Store
 import {compose, createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
@@ -331,9 +328,7 @@ class App extends Component {
       );
     return (
       <Provider store={store}>
-        <GitPoint onNavigationStateChange={(prevState, currentState) => {
-          updateFocus(currentState)
-        }} />
+        <GitPoint />
       </Provider>
     );
   }
