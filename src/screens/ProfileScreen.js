@@ -12,7 +12,7 @@ import colors from "../config/colors";
 import Communications from "react-native-communications";
 
 import { connect } from "react-redux";
-import { getUser, getOrgs } from "../actions/user";
+import { getUserInfo } from "../actions/user";
 
 const mapStateToProps = state => ({
   user: state.user.user,
@@ -22,14 +22,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getUser: user => dispatch(getUser(user)),
-  getOrgs: user => dispatch(getOrgs(user))
+  getUserInfo: user => dispatch(getUserInfo(user)),
 });
 
 class Profile extends Component {
   componentDidMount() {
-    this.props.getUser(this.props.navigation.state.params.user.login);
-    this.props.getOrgs(this.props.navigation.state.params.user.login);
+    this.props.getUserInfo(this.props.navigation.state.params.user.login);
   }
 
   getUserBlog(url) {
@@ -118,8 +116,7 @@ class Profile extends Component {
 }
 
 Profile.propTypes = {
-  getUser: PropTypes.func,
-  getOrgs: PropTypes.func,
+  getUserInfo: PropTypes.func,
   user: PropTypes.object,
   orgs: PropTypes.array,
   isPendingUser: PropTypes.bool,

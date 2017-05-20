@@ -21,13 +21,21 @@ import {
 
 import { fetchUser, fetchUserOrgs, fetchUrl, USER_ENDPOINT, fetchSearch } from '../api';
 
-export const getUser = (user) => {
+export const getUserInfo = user => {
+  return (dispatch) => {
+    return dispatch(getUser(user)).then(() => {
+      dispatch(getOrgs(user));
+    });
+  };
+};
+
+const getUser = (user) => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 
     dispatch({ type: GET_USER_IS_PENDING });
 
-    fetchUser(user, accessToken)
+    return fetchUser(user, accessToken)
       .then(data => {
         dispatch({
           type: GET_USER_WAS_SUCCESSFUL,
@@ -43,13 +51,13 @@ export const getUser = (user) => {
   };
 };
 
-export const getOrgs = (user) => {
+const getOrgs = (user) => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 
     dispatch({ type: GET_ORGS_IS_PENDING });
 
-    fetchUserOrgs(user, accessToken).then(data => {
+    return fetchUserOrgs(user, accessToken).then(data => {
       dispatch({
         type: GET_ORGS_WAS_SUCCESSFUL,
         payload: data,
