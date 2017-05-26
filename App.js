@@ -23,8 +23,8 @@ import Welcome from './src/screens/WelcomeScreen';
 // Main Tab Screens
 import MyProfile from './src/screens/MyProfileScreen';
 import Profile from './src/screens/ProfileScreen';
-import Search from './src/screens/SearchScreen';
-import Notifications from './src/screens/NotificationsScreen';
+import { SearchScreen } from '@search';
+import { NotificationsScreen } from '@notifications';
 import Home from './src/screens/HomeScreen';
 
 //Stack Screen
@@ -157,7 +157,7 @@ const HomeStackNavigator = StackNavigator(
 const NotificationsStackNavigator = StackNavigator(
   {
     Notifications: {
-      screen: Notifications,
+      screen: NotificationsScreen,
       navigationOptions: {
         header: null,
       },
@@ -172,7 +172,7 @@ const NotificationsStackNavigator = StackNavigator(
 const SearchStackNavigator = StackNavigator(
   {
     Search: {
-      screen: Search,
+      screen: SearchScreen,
       navigationOptions: {
         header: null,
       },

@@ -1,3 +1,14 @@
 {
-"presets": ["react-native"]
+"presets": ["react-native"],
+"plugins": [
+    ["module-resolver", {
+      "root": ["./src"],
+      "alias": {
+        "@components": "components",
+        "@search": "search",
+        "@notifications": "notifications",
+        "@utils": "utils"
+      }
+    }]
+  ]
 }

@@ -1,20 +1,4 @@
-import {
-  SEARCH_REPOS_IS_PENDING,
-  SEARCH_REPOS_WAS_SUCCESSFUL,
-  SEARCH_REPOS_HAD_ERROR,
-  SEARCH_USERS_IS_PENDING,
-  SEARCH_USERS_WAS_SUCCESSFUL,
-  SEARCH_USERS_HAD_ERROR,
-  SEARCH_OPEN_ISSUES_IS_PENDING,
-  SEARCH_OPEN_ISSUES_WAS_SUCCESSFUL,
-  SEARCH_OPEN_ISSUES_HAD_ERROR,
-  SEARCH_CLOSED_ISSUES_IS_PENDING,
-  SEARCH_CLOSED_ISSUES_WAS_SUCCESSFUL,
-  SEARCH_CLOSED_ISSUES_HAD_ERROR,
-  SEARCH_PULLS_IS_PENDING,
-  SEARCH_PULLS_WAS_SUCCESSFUL,
-  SEARCH_PULLS_HAD_ERROR
-} from '../constants';
+import { SEARCH_REPOS, SEARCH_USERS } from './search.type'
 
 const initialState = {
   users: [],
@@ -24,39 +8,39 @@ const initialState = {
   error: '',
 }
 
-export default function searchReducer(state = initialState, action={}) {
+export const searchReducer = (state = initialState, action={}) => {
   switch (action.type) {
-      case SEARCH_REPOS_IS_PENDING:
+      case SEARCH_REPOS.PENDING:
         return {
           ...state,
           repos: [],
           isPendingSearchRepos: true,
         };
-      case SEARCH_REPOS_WAS_SUCCESSFUL:
+      case SEARCH_REPOS.SUCCESS:
         return {
           ...state,
           repos: action.payload,
           isPendingSearchRepos: false,
         };
-      case SEARCH_REPOS_HAD_ERROR:
+      case SEARCH_REPOS.ERROR:
         return {
           ...state,
           error: action.payload,
           isPendingSearchRepos: false,
         };
-      case SEARCH_USERS_IS_PENDING:
+      case SEARCH_USERS.PENDING:
         return {
           ...state,
           users: [],
           isPendingSearchUsers: true,
         };
-      case SEARCH_USERS_WAS_SUCCESSFUL:
+      case SEARCH_USERS.SUCCESS:
         return {
           ...state,
           users: action.payload,
           isPendingSearchUsers: false,
         };
-      case SEARCH_USERS_HAD_ERROR:
+      case SEARCH_USERS.ERROR:
         return {
           ...state,
           error: action.payload,

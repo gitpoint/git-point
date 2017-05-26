@@ -12,7 +12,7 @@ import FastImage from "react-native-fast-image";
 
 import ViewContainer from "../components/ViewContainer";
 import LoadingContainer from "../components/LoadingContainer";
-import NotificationListItem from "../components/NotificationListItem";
+import NotificationListItem from "./notification-list-item.component";
 
 import colors from "../config/colors";
 
@@ -23,7 +23,7 @@ import {
   getAllNotifications,
   markAsRead,
   markRepoAsRead
-} from "../actions/notifications";
+} from "./notifications.action";
 
 import { getIssueFromUrl } from "../actions/issue";
 
@@ -349,4 +349,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Notifications);
+export const NotificationsScreen = connect(mapStateToProps, mapDispatchToProps)(Notifications);

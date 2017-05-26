@@ -11,7 +11,7 @@ import LoadingContainer from '../components/LoadingContainer';
 import colors from '../config/colors';
 
 import {connect} from 'react-redux';
-import {searchRepos, searchUsers} from '../actions/search';
+import {searchRepos, searchUsers} from './search.action';
 
 const mapStateToProps = state => ({
   users: state.search.users,
@@ -230,4 +230,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Search);
+export const SearchScreen = connect(mapStateToProps, mapDispatchToProps)(Search);
