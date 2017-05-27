@@ -7,7 +7,7 @@ import {
   GET_AUTH_ORGS_HAD_ERROR
 } from '../constants';
 
-import { fetchAuthUser, fetchAuthUserOrgs } from '../api';
+import { fetchAuthUser, fetchAuthUserOrgs } from '@api';
 
 export const getUser = () => {
   return (dispatch, getState) => {

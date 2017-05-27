@@ -2,24 +2,24 @@ import React, {Component, PropTypes} from 'react';
 import {StyleSheet} from 'react-native';
 import {ListItem} from 'react-native-elements';
 
-import ViewContainer from '../components/ViewContainer';
-import UserProfile from '../components/UserProfile';
+import ViewContainer from '../../components/ViewContainer';
+import UserProfile from '../../components/UserProfile';
 import SectionList from '../components/SectionList';
 import LoadingContainer from '../components/LoadingContainer';
 import ParallaxScroll from '../components/ParallaxScroll';
 import UserListItem from '../components/UserListItem';
 
-import colors from '../config/colors';
+import config from '@config';
 import Communications from 'react-native-communications';
 
 import {connect} from 'react-redux';
-import {getUser, getOrgs} from '../actions/authUser';
+import {getUser, getOrgs} from '@auth';
 
 const mapStateToProps = state => ({
-  user: state.authUser.user,
-  orgs: state.authUser.orgs,
-  isPendingUser: state.authUser.isPendingUser,
-  isPendingOrgs: state.authUser.isPendingOrgs,
+  user: state.auth.user,
+  orgs: state.auth.orgs,
+  isPendingUser: state.auth.isPendingUser,
+  isPendingOrgs: state.auth.isPendingOrgs,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -27,7 +27,7 @@ const mapDispatchToProps = dispatch => ({
   getOrgs: () => dispatch(getOrgs()),
 });
 
-class MyProfile extends Component {
+class AuthProfile extends Component {
   componentDidMount() {
     this.props.getUser();
     this.props.getOrgs();
@@ -68,23 +68,23 @@ class MyProfile extends Component {
                   <ListItem
                     title="Email"
                     titleStyle={styles.listTitle}
-                    leftIcon={{name: 'mail', color: colors.grey, type: 'octicon'}}
+                    leftIcon={{name: 'mail', color: config.colors.grey, type: 'octicon'}}
                     subtitle={user.email}
                     subtitleStyle={styles.listSubTitle}
                     onPress={() =>
                       Communications.email([user.email], null, null, 'Hi!', '')}
-                    underlayColor={colors.greyLight}
+                    underlayColor={config.colors.greyLight}
                   />}
 
                 {user.blog &&
                   <ListItem
                     title="Website"
                     titleStyle={styles.listTitle}
-                    leftIcon={{name: 'link', color: colors.grey, type: 'octicon'}}
+                    leftIcon={{name: 'link', color: config.colors.grey, type: 'octicon'}}
                     subtitle={user.blog}
                     subtitleStyle={styles.listSubTitle}
                     onPress={() => Communications.web(this.getUserBlog(user.blog))}
-                    underlayColor={colors.greyLight}
+                    underlayColor={config.colors.greyLight}
                   />}
               </SectionList>}
 
@@ -102,7 +102,7 @@ class MyProfile extends Component {
   }
 }
 
-MyProfile.propTypes = {
+AuthProfile.propTypes = {
   getUser: PropTypes.func,
   getOrgs: PropTypes.func,
   user: PropTypes.object,
@@ -112,15 +112,15 @@ MyProfile.propTypes = {
   navigation: PropTypes.object,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MyProfile);
-
 const styles = StyleSheet.create({
   listTitle: {
-    color: colors.black,
+    color: config.colors.black,
     fontFamily: 'AvenirNext-Medium',
   },
   listSubTitle: {
-    color: colors.greyDark,
+    color: config.colors.greyDark,
     fontFamily: 'AvenirNext-Medium',
   },
 });
+
+export const AuthProfileScreen = connect(mapStateToProps, mapDispatchToProps)(AuthProfile);

@@ -1,6 +1,6 @@
 import { Animated } from 'react-native';
 
-export const cycleFadeAnimation = state => {
+export const loadingAnimation = state => {
   const duration = 500, iterations = 10;
 
   let opacity1 = 0.3, opacity2 = 0.7;

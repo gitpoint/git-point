@@ -8,7 +8,7 @@ import ViewContainer from '../components/ViewContainer';
 import DiffBlocks from '../components/DiffBlocks';
 import CodeLine from '../components/CodeLine';
 
-import colors from '../config/colors';
+import config from '@config';
 
 class PullDiff extends Component {
   renderHeader = () => {
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   fileTitleContainer: {
     flexDirection: 'row',
     paddingVertical: 15,
-    backgroundColor: colors.greyVeryLight,
+    backgroundColor: config.colors.greyVeryLight,
   },
   linesChanged: {
     flex: 0.30,
@@ -161,11 +161,11 @@ const styles = StyleSheet.create({
   },
   newIndicator: {
     fontFamily: 'AvenirNext-DemiBold',
-    color: colors.green,
+    color: config.colors.green,
   },
   deletedIndicator: {
     fontFamily: 'AvenirNext-DemiBold',
-    color: colors.red,
+    color: config.colors.red,
   },
   header: {
     paddingTop: 25,

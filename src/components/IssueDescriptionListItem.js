@@ -7,7 +7,7 @@ import MembersList from "./MembersList";
 import LabelButton from "./LabelButton";
 import DiffBlocks from "../components/DiffBlocks";
 
-import colors from "../config/colors";
+import config from '@config';
 import Parse from "parse-diff";
 import moment from "moment";
 
@@ -39,7 +39,7 @@ const IssueDescriptionListItem = ({
         leftIcon={{
           name: "repo",
           size: 17,
-          color: colors.grey,
+          color: config.colors.grey,
           type: "octicon"
         }}
         onPress={() => onRepositoryPress(issue.repository_url)}
@@ -55,7 +55,7 @@ const IssueDescriptionListItem = ({
           leftIcon={{
             name: issue.pull_request ? "git-pull-request" : "issue-opened",
             size: 36,
-            color: colors.grey,
+            color: config.colors.grey,
             type: "octicon"
           }}
           hideChevron
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   container: {
     // paddingBottom: 5,
     // borderBottomWidth: 2,
-    // borderBottomColor: colors.greyLight,
+    // borderBottomColor: config.colors.greyLight,
   },
   headerContainer: {
     flexDirection: "row",
@@ -130,14 +130,14 @@ const styles = StyleSheet.create({
   },
   borderBottom: {
     borderBottomWidth: 1,
-    borderBottomColor: colors.greyLight
+    borderBottomColor: config.colors.greyLight
   },
   title: {
-    color: colors.primarydark,
+    color: config.colors.primarydark,
     fontFamily: "AvenirNext-DemiBold"
   },
   titleSmall: {
-    color: colors.primarydark,
+    color: config.colors.primarydark,
     fontFamily: "AvenirNext-DemiBold",
     fontSize: 12
   },

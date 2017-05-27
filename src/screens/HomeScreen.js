@@ -37,10 +37,10 @@ import {getUserEvents} from '../actions/userEvents';
 import {ListItem} from 'react-native-elements';
 
 import ViewContainer from '../components/ViewContainer';
-import colors from '../config/colors';
+import config from '@config';
 
 const mapStateToProps = state => ({
-  user: state.authUser.user,
+  user: state.auth.user,
   userEvents: state.userEvents.userEvents,
   isPending: state.userEvents.isPending,
 });
@@ -486,7 +486,7 @@ const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : 0;
 const styles = StyleSheet.create({
   container: {
     paddingTop: STATUSBAR_HEIGHT,
-    backgroundColor: colors.greyLight,
+    backgroundColor: config.colors.greyLight,
     shadowColor: 'black',
     shadowOpacity: 0.1,
     shadowRadius: StyleSheet.hairlineWidth,
@@ -502,13 +502,13 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: Platform.OS === 'ios' ? 17 : 18,
     fontWeight: Platform.OS === 'ios' ? '600' : '500',
-    color: colors.primaryDark,
+    color: config.colors.primaryDark,
     textAlign: Platform.OS === 'ios' ? 'center' : 'left',
     marginHorizontal: 16,
     fontFamily: 'AvenirNext-Bold',
   },
   loadingContainer: {
-    backgroundColor: colors.white,
+    backgroundColor: config.colors.white,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -517,7 +517,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
     marginLeft: 10,
-    color: colors.primaryDark,
+    color: config.colors.primaryDark,
     fontFamily: 'AvenirNext-Regular',
   },
   linkDescription: {
@@ -527,20 +527,20 @@ const styles = StyleSheet.create({
     fontFamily: 'Menlo',
   },
   deletedLinkBranchDescription: {
-    color: colors.greyDarkest,
+    color: config.colors.greyDarkest,
     fontFamily: 'Menlo',
   },
   date: {
-    color: colors.greyDark,
+    color: config.colors.greyDark,
   },
   subtitleContainer: {
     paddingHorizontal: 15,
     paddingBottom: 10,
-    borderBottomColor: colors.greyLight,
+    borderBottomColor: config.colors.greyLight,
     borderBottomWidth: 1,
   },
   subtitle: {
-    color: colors.greyDark,
+    color: config.colors.greyDark,
     fontSize: 13,
     marginTop: 1,
     fontWeight: '600',

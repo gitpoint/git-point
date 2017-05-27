@@ -3,7 +3,7 @@ import {StyleSheet, Dimensions, View} from 'react-native';
 // import {SearchBar} from 'react-native-elements';
 import SearchBar from 'react-native-search-bar';
 
-import colors from '../config/colors';
+import config from '@config';
 
 const SearchInput = (
   {
@@ -26,7 +26,7 @@ const SearchInput = (
     <SearchBar
       placeholder="Search"
       hideBackground={true}
-      textFieldBackgroundColor={colors.greyLight}
+      textFieldBackgroundColor={config.colors.greyLight}
       onSearchButtonPress={() => {
         onSubmitEditing;
         this.unFocus();
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   searchBar: {
-    backgroundColor: colors.greyLight,
+    backgroundColor: config.colors.greyLight,
     fontSize: 15,
     borderRadius: 3,
     height: 40,

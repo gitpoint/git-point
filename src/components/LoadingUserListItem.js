@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {StyleSheet, Animated, View} from 'react-native';
-import colors from '../config/colors';
+import colors from '@config';
 
 import {
-  cycleFadeAnimation,
-} from '../config/animations.js';
+  loadingAnimation,
+} from '@config';
 
 class LoadingUserListItem extends Component {
   constructor() {
@@ -15,7 +15,7 @@ class LoadingUserListItem extends Component {
   }
 
   componentDidMount() {
-    cycleFadeAnimation(this.state.fadeAnimValue).start();
+    loadingAnimation(this.state.fadeAnimValue).start();
   }
 
   render() {
@@ -55,14 +55,14 @@ const styles = StyleSheet.create({
   avatar: {
     width: 34,
     height: 34,
-    backgroundColor: colors.greyDark,
+    backgroundColor: config.colors.greyDark,
     borderRadius: 17,
     marginRight: 10,
   },
   textBar: {
     height: 7,
     width: 80,
-    backgroundColor: colors.greyDark,
+    backgroundColor: config.colors.greyDark,
   },
 });
 

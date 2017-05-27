@@ -8,7 +8,7 @@ import SectionList from "../components/SectionList";
 import ParallaxScroll from "../components/ParallaxScroll";
 import UserListItem from "../components/UserListItem";
 
-import colors from "../config/colors";
+import config from '@config';
 import Communications from "react-native-communications";
 
 import { connect } from "react-redux";
@@ -73,14 +73,14 @@ class Profile extends Component {
                   titleStyle={styles.listTitle}
                   leftIcon={{
                     name: "mail",
-                    color: colors.grey,
+                    color: config.colors.grey,
                     type: "octicon"
                   }}
                   subtitle={user.email}
                   subtitleStyle={styles.listSubTitle}
                   onPress={() =>
                     Communications.email([user.email], null, null, "Hi!", "")}
-                  underlayColor={colors.greyLight}
+                  underlayColor={config.colors.greyLight}
                 />}
 
               {user.blog !== null && user.blog !== '' &&
@@ -89,13 +89,13 @@ class Profile extends Component {
                   titleStyle={styles.listTitle}
                   leftIcon={{
                     name: "link",
-                    color: colors.grey,
+                    color: config.colors.grey,
                     type: "octicon"
                   }}
                   subtitle={user.blog}
                   subtitleStyle={styles.listSubTitle}
                   onPress={() => Communications.web(this.getUserBlog(user.blog))}
-                  underlayColor={colors.greyLight}
+                  underlayColor={config.colors.greyLight}
                 />}
             </SectionList>}
 
@@ -126,11 +126,11 @@ Profile.propTypes = {
 
 const styles = StyleSheet.create({
   listTitle: {
-    color: colors.black,
+    color: config.colors.black,
     fontFamily: "AvenirNext-Medium"
   },
   listSubTitle: {
-    color: colors.greyDark,
+    color: config.colors.greyDark,
     fontFamily: "AvenirNext-Medium"
   }
 });

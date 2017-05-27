@@ -19,7 +19,7 @@ import {
   SEARCH_USER_REPOS_HAD_ERROR,
 } from '../constants';
 
-import { fetchUser, fetchUserOrgs, fetchUrl, USER_ENDPOINT, fetchSearch } from '../api';
+import { fetchUser, fetchUserOrgs, fetchUrl, USER_ENDPOINT, fetchSearch } from '@api';
 
 export const getUserInfo = user => {
   return (dispatch) => {

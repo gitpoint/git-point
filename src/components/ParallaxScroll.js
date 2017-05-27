@@ -4,7 +4,7 @@ import {View, Text, Dimensions, StyleSheet} from 'react-native';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import {Icon} from 'react-native-elements';
 
-import colors from '../config/colors';
+import config from '@config';
 
 const window = Dimensions.get('window');
 const PARALLAX_HEADER_HEIGHT = window.height / 2;
@@ -20,7 +20,7 @@ const ParallaxScroll = (
   },
 ) => (
   <ParallaxScrollView
-    backgroundColor={colors.primarydark}
+    backgroundColor={config.colors.primarydark}
     stickyHeaderHeight={STICKY_HEADER_HEIGHT}
     parallaxHeaderHeight={PARALLAX_HEADER_HEIGHT}
     backgroundSpeed={10}
@@ -43,7 +43,7 @@ const ParallaxScroll = (
               style={styles.headerIcon}
               name="chevron-left"
               size={42}
-              color={colors.white}
+              color={config.colors.white}
               onPress={() => navigation.goBack()}
               underlayColor="transparent"
             />
@@ -53,7 +53,7 @@ const ParallaxScroll = (
             style={styles.headerIcon}
             name="ellipsis-h"
             type="font-awesome"
-            color={colors.white}
+            color={config.colors.white}
           />
         </View>
       </View>
@@ -76,18 +76,18 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     width: window.width,
-    backgroundColor: colors.primarydark,
+    backgroundColor: config.colors.primarydark,
     height: PARALLAX_HEADER_HEIGHT,
   },
   stickySection: {
     height: STICKY_HEADER_HEIGHT,
-    backgroundColor: colors.primarydark,
+    backgroundColor: config.colors.primarydark,
     width: window.width,
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
   stickySectionText: {
-    color: colors.white,
+    color: config.colors.white,
     fontFamily: 'AvenirNext-Bold',
     fontSize: 18,
     fontWeight: 'bold',

@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {View, ScrollView, Text, StyleSheet, Dimensions} from 'react-native';
 
-import colors from '../config/colors';
+import config from '@config';
 
 const CodeLine = (
   {
@@ -61,25 +61,25 @@ const styles = StyleSheet.create({
     paddingVertical: 3,
   },
   newChunkLineNumbers: {
-    backgroundColor: colors.codeChunkLineNumberBlue,
+    backgroundColor: config.colors.codeChunkLineNumberBlue,
   },
   newChunkLineContainer: {
-    backgroundColor: colors.codeChunkBlue,
+    backgroundColor: config.colors.codeChunkBlue,
   },
   newChunkLine: {
-    color: colors.grey,
+    color: config.colors.grey,
   },
   addLine: {
-    backgroundColor: colors.addCodeGreen,
+    backgroundColor: config.colors.addCodeGreen,
   },
   addLineNumbers: {
-    backgroundColor: colors.addCodeLineNumberGreen,
+    backgroundColor: config.colors.addCodeLineNumberGreen,
   },
   delLine: {
-    backgroundColor: colors.delCodeRed,
+    backgroundColor: config.colors.delCodeRed,
   },
   delLineNumbers: {
-    backgroundColor: colors.delCodeLineNumberRed,
+    backgroundColor: config.colors.delCodeLineNumberRed,
   },
   lineNumbers: {
     width: 60,
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Menlo',
     fontSize: 12,
     flex: 1,
-    color: colors.grey,
+    color: config.colors.grey,
   },
 });
 

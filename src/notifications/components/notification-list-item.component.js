@@ -2,7 +2,7 @@ import React, { PropTypes } from "react";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import { Icon } from "react-native-elements";
 
-import colors from "../config/colors";
+import config from '@config';
 
 const NotificationListItem = ({
   notification,
@@ -21,7 +21,7 @@ const NotificationListItem = ({
           onPress={() => navigationAction(notification)}
         >
           <Icon
-            color={colors.grey}
+            color={config.colors.grey}
             size={22}
             name={
               notification.subject.type === "Commit"
@@ -43,7 +43,7 @@ const NotificationListItem = ({
             style={styles.iconContainer}
             onPress={() => iconAction(notification.id)}
           >
-            <Icon color={colors.grey} size={22} name="check" type="octicon" />
+            <Icon color={config.colors.grey} size={22} name="check" type="octicon" />
           </TouchableOpacity>}
       </View>
     </View>
@@ -58,7 +58,7 @@ NotificationListItem.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
-    borderBottomColor: colors.greyLight,
+    borderBottomColor: config.colors.greyLight,
     borderBottomWidth: 1
   },
   wrapper: {
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   avatar: {
-    backgroundColor: colors.greyLight,
+    backgroundColor: config.colors.greyLight,
     borderRadius: 17,
     width: 34,
     height: 34
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   title: {
-    color: colors.black,
+    color: config.colors.black,
     fontFamily: "AvenirNext-Medium",
     fontSize: 14,
     marginLeft: 10

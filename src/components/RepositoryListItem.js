@@ -2,8 +2,7 @@ import React, {PropTypes} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {ListItem, Icon} from 'react-native-elements';
 
-import colors from '../config/colors';
-import languageColors from '../config/language-colors';
+import config from '@config';
 
 const RepositoryListItem = (
   {
@@ -17,10 +16,10 @@ const RepositoryListItem = (
     titleStyle={styles.title}
     rightIcon={{
       name: repository.fork ? 'repo-forked' : 'repo',
-      color: colors.grey,
+      color: config.colors.grey,
       type: 'octicon'
     }}
-    underlayColor={colors.greyLight}
+    underlayColor={config.colors.greyLight}
     onPress={() => navigation.navigate('Repository', {repository: repository})}
   />
 );
@@ -41,7 +40,7 @@ const renderTitle = repository => (
         name="star"
         type="octicion"
         size={15}
-        color={colors.greyDark}
+        color={config.colors.greyDark}
       />
 
       <Text style={[styles.extraInfoSubject, {paddingTop: 2}]}>
@@ -53,7 +52,7 @@ const renderTitle = repository => (
           containerStyle={styles.extraInfoIcon}
           name="fiber-manual-record"
           size={15}
-          color={languageColors[repository.language]}
+          color={config.languageColors[repository.language]}
         />}
 
       <Text style={[styles.extraInfoSubject, {paddingTop: 2}]}>
@@ -75,7 +74,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   title: {
-    color: colors.primarydark,
+    color: config.colors.primarydark,
     fontFamily: 'AvenirNext-DemiBold',
   },
   extraInfo: {
@@ -84,7 +83,7 @@ const styles = StyleSheet.create({
     paddingTop: 5,
   },
   extraInfoSubject: {
-    color: colors.greyDark,
+    color: config.colors.greyDark,
     paddingLeft: 3,
     marginRight: 15,
     fontSize: 12,
@@ -93,7 +92,7 @@ const styles = StyleSheet.create({
   repositoryContainer: {
     justifyContent: 'center',
     flex: 1,
-    color: colors.primaryDark,
+    color: config.colors.primaryDark,
     fontFamily: 'AvenirNext-Regular',
   },
 });

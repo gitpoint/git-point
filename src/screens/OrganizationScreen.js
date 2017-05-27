@@ -9,7 +9,7 @@ import MembersList from '../components/MembersList';
 import SectionList from '../components/SectionList';
 import ParallaxScroll from '../components/ParallaxScroll';
 
-import colors from '../config/colors';
+import config from '@config';
 import Communications from 'react-native-communications';
 
 import {connect} from 'react-redux';
@@ -85,10 +85,10 @@ class Organization extends Component {
               <ListItem
                 title="Website"
                 titleStyle={styles.listTitle}
-                leftIcon={{name: 'link', color: colors.grey}}
+                leftIcon={{name: 'link', color: config.colors.grey}}
                 subtitle={organization.blog}
                 onPress={() => Communications.web(organization.blog)}
-                underlayColor={colors.greyLight}
+                underlayColor={config.colors.greyLight}
               />
             </SectionList>}
         </ParallaxScroll>
@@ -112,7 +112,7 @@ Organization.propTypes = {
 
 const styles = StyleSheet.create({
   listTitle: {
-    color: colors.black,
+    color: config.colors.black,
     fontFamily: 'AvenirNext-Medium',
   },
 });

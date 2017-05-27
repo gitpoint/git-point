@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image } from 'react-native';
 
-import colors from '../config/colors'
+import config from '@config';
 
-import { NavigationActions } from 'react-navigation'
+import { NavigationActions } from 'react-navigation';
 
 import { connect }  from 'react-redux';
 
@@ -35,7 +35,7 @@ class Splash extends Component {
       <View style={styles.logoContainer}>
         <Image
           style={styles.logo}
-          source={require('../images/logo-black.png')}
+          source={require('../../assets/logo-black.png')}
         />
       </View>
     )
@@ -44,7 +44,7 @@ class Splash extends Component {
 
 const styles = StyleSheet.create({
   logoContainer: {
-    backgroundColor: colors.white,
+    backgroundColor: config.colors.white,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -55,4 +55,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps)(Splash);
+export const SplashScreen = connect(mapStateToProps)(Splash);

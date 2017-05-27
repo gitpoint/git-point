@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image'
 
-import colors from '../config/colors';
+import config from '@config';
 
 const UserProfile = (
   {
@@ -94,18 +94,18 @@ const styles = StyleSheet.create({
     borderRadius: 37.5,
   },
   userAvatar: {
-    borderColor: colors.white,
+    borderColor: config.colors.white,
     borderWidth: 2,
   },
   title: {
-    color: colors.white,
+    color: config.colors.white,
     fontFamily: 'AvenirNext-Bold',
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 2,
   },
   subtitle: {
-    color: colors.white,
+    color: config.colors.white,
     fontFamily: 'AvenirNext-Medium',
     fontSize: 14,
     marginBottom: 40,
@@ -123,14 +123,14 @@ const styles = StyleSheet.create({
   },
   unitNumber: {
     textAlign: 'center',
-    color: colors.white,
+    color: config.colors.white,
     fontFamily: 'AvenirNext-Bold',
     fontSize: 18,
     fontWeight: 'bold',
   },
   unitText: {
     textAlign: 'center',
-    color: colors.white,
+    color: config.colors.white,
     fontSize: 12,
     fontFamily: 'AvenirNext-Medium',
   },

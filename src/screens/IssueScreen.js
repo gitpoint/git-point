@@ -8,7 +8,7 @@ import IssueDescriptionListItem from "../components/IssueDescriptionListItem";
 import CommentListItem from "../components/CommentListItem";
 import CommentInput from "../components/CommentInput";
 
-import colors from "../config/colors";
+import config from '@config';
 
 import { connect } from "react-redux";
 import {
@@ -23,7 +23,7 @@ import {
 } from '../actions/repository';
 
 const mapStateToProps = state => ({
-  authUser: state.authUser.user,
+  authUser: state.auth.user,
   repository: state.repository.repository,
   issue: state.issue.issue,
   diff: state.issue.diff,
@@ -52,10 +52,10 @@ class Issue extends Component {
         headerRight: (
           <Icon
             name="gear"
-            color={colors.primarydark}
+            color={config.colors.primarydark}
             type="octicon"
             containerStyle={{ marginRight: 5 }}
-            underlayColor={colors.transparent}
+            underlayColor={config.colors.transparent}
             onPress={() =>
               navigate("IssueSettings", {
                 issue: state.params.issue

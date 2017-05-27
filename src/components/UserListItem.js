@@ -3,7 +3,7 @@ import {StyleSheet, View, TouchableHighlight, TouchableOpacity, Text} from 'reac
 import {Icon} from 'react-native-elements';
 import FastImage from 'react-native-fast-image'
 
-import colors from '../config/colors';
+import config from '@config';
 
 const UserListItem = (
   {
@@ -26,7 +26,7 @@ const UserListItem = (
   return (
   <ContainerComponent
     onPress={() => navigation.navigate(user.type === 'User' ? 'Profile' : 'Organization', user.type === 'User' ? {user: user} : {organization: user})}
-    underlayColor={colors.greyLight}
+    underlayColor={config.colors.greyLight}
     style={!noBorderBottom && styles.borderContainer}
   >
     <View style={styles.wrapper}>
@@ -62,7 +62,7 @@ const UserListItem = (
 
       <IconComponent style={styles.iconContainer} onPress={() => iconAction(user.login)}>
         <Icon
-          color={colors.grey}
+          color={config.colors.grey}
           size={icon ? 24 : 28}
           name={icon ? icon : 'chevron-right'}
           type={icon && 'octicon'}
@@ -86,7 +86,7 @@ UserListItem.propTypes = {
 
 const styles = StyleSheet.create({
   borderContainer: {
-    borderBottomColor: colors.greyLight,
+    borderBottomColor: config.colors.greyLight,
     borderBottomWidth: 1,
   },
   wrapper: {
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   avatar: {
-    backgroundColor: colors.greyLight,
+    backgroundColor: config.colors.greyLight,
     borderRadius: 17,
     width: 34,
     height: 34
@@ -109,13 +109,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    color: colors.black,
+    color: config.colors.black,
     fontFamily: 'AvenirNext-Medium',
     fontSize: 16,
     marginLeft: 10
   },
   subtitle: {
-    color: colors.greyDark,
+    color: config.colors.greyDark,
     fontSize: 12,
     marginTop: 1,
     fontWeight: '600',

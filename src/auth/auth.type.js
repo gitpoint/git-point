@@ -1,4 +1,5 @@
 import { createActionSet } from '@utils';
 
-export const SEARCH_REPOS = createActionSet('SEARCH_REPOS');
-export const SEARCH_USERS = createActionSet('SEARCH_USERS');
+export const LOGIN = createActionSet('LOGIN');
+export const GET_AUTH_USER = createActionSet('GET_AUTH_USER');
+export const GET_AUTH_ORGS = createActionSet('GET_AUTH_ORGS');

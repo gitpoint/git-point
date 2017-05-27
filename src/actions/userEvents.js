@@ -4,7 +4,7 @@ import {
   GET_USER_EVENTS_HAD_ERROR,
 } from '../constants';
 
-import { fetchUserEvents } from '../api';
+import { fetchUserEvents } from '@api';
 
 export const getUserEvents = (user) => {
   return (dispatch, getState) => {

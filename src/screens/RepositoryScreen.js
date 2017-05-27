@@ -11,7 +11,7 @@ import UserListItem from '../components/UserListItem';
 import IssueListItem from '../components/IssueListItem';
 import LoadingMembersList from '../components/LoadingMembersList';
 
-import colors from '../config/colors';
+import config from '@config';
 
 import {connect} from 'react-redux';
 import {
@@ -115,22 +115,22 @@ class Repository extends Component {
             <SectionList title="SOURCE">
               <ListItem
                 title="README"
-                leftIcon={{name: 'book', color: colors.grey, type: 'octicon'}}
+                leftIcon={{name: 'book', color: config.colors.grey, type: 'octicon'}}
                 titleStyle={styles.listTitle}
                 onPress={() => navigation.navigate('ReadMe', {
                   repository: repository,
                 })}
-                underlayColor={colors.greyLight}
+                underlayColor={config.colors.greyLight}
               />
               <ListItem
                 title="View Code"
                 titleStyle={styles.listTitle}
-                leftIcon={{name: 'code', color: colors.grey, type: 'octicon'}}
+                leftIcon={{name: 'code', color: config.colors.grey, type: 'octicon'}}
                 onPress={() =>
                   navigation.navigate('RepositoryCodeList', {
                     topLevel: true,
                   })}
-                underlayColor={colors.greyLight}
+                underlayColor={config.colors.greyLight}
               />
             </SectionList>
 
@@ -198,7 +198,7 @@ Repository.propTypes = {
 
 const styles = StyleSheet.create({
   listTitle: {
-    color: colors.black,
+    color: config.colors.black,
     fontFamily: 'AvenirNext-Medium',
   },
 });

@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import { Text, View, StyleSheet } from 'react-native'
 
-import colors from '../config/colors';
+import config from '@config';
 
 const IssueStateBadge = ({ issue }) => {
   return (
@@ -24,15 +24,15 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   openIssue: {
-    backgroundColor: colors.green,
+    backgroundColor: config.colors.green,
   },
   closedIssue: {
-    backgroundColor: colors.red,
+    backgroundColor: config.colors.red,
   },
   text: {
     fontSize: 14,
     fontFamily: 'AvenirNext-DemiBold',
-    color: colors.white,
+    color: config.colors.white,
   }
 })
 

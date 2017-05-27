@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import {StyleSheet, StatusBar, View} from 'react-native';
-import colors from '../config/colors';
+import config from '@config';
 
 const ViewContainer = (
   {
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'stretch',
-    backgroundColor: colors.white,
+    backgroundColor: config.colors.white,
   },
 });
 

@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {List, ListItem, Button} from 'react-native-elements';
 
-import colors from '../config/colors';
+import config from '@config';
 
 const SectionList = (
   {
@@ -28,7 +28,7 @@ const SectionList = (
             title={buttonTitle}
             fontFamily="AvenirNext-DemiBold"
             fontSize={13}
-            color={showButton ? colors.primarydark : colors.white}
+            color={showButton ? config.colors.primarydark : config.colors.white}
             buttonStyle={styles.button}
             onPress={buttonAction}
           />}
@@ -63,17 +63,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   sectionTitle: {
-    color: colors.black,
+    color: config.colors.black,
     padding: 15,
     fontFamily: 'AvenirNext-Bold',
   },
   listTitle: {
-    color: colors.black,
+    color: config.colors.black,
     fontFamily: 'AvenirNext-Medium',
   },
   button: {
-    backgroundColor: colors.white,
-    borderColor: colors.primarydark,
+    backgroundColor: config.colors.white,
+    borderColor: config.colors.primarydark,
     borderWidth: 1,
     borderRadius: 3,
     paddingVertical: 5,

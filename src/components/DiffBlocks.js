@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 
-import colors from '../config/colors';
+import config from '@config';
 
 const DiffBlocks = (
   {
@@ -71,13 +71,13 @@ const styles = StyleSheet.create({
   numAdditions: {
     marginRight: 3,
     fontFamily: 'AvenirNext-DemiBold',
-    color: colors.green,
+    color: config.colors.green,
     letterSpacing: 1,
   },
   numDeletions: {
     marginRight: 2,
     fontFamily: 'AvenirNext-DemiBold',
-    color: colors.red,
+    color: config.colors.red,
     letterSpacing: 1,
   },
   block: {
@@ -86,13 +86,13 @@ const styles = StyleSheet.create({
     marginLeft: 1,
   },
   greenBlock: {
-    backgroundColor: colors.green,
+    backgroundColor: config.colors.green,
   },
   redBlock: {
-    backgroundColor: colors.darkRed,
+    backgroundColor: config.colors.darkRed,
   },
   greyBlock: {
-    backgroundColor: colors.greyMid,
+    backgroundColor: config.colors.greyMid,
   },
 });
 

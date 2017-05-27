@@ -7,7 +7,7 @@ import ViewContainer from '../components/ViewContainer';
 import IssueListItem from '../components/IssueListItem';
 import LoadingContainer from '../components/LoadingContainer';
 
-import colors from '../config/colors';
+import config from '@config';
 
 import {connect} from 'react-redux';
 import {searchOpenRepoPulls, searchClosedRepoPulls} from '../actions/repository';
@@ -99,8 +99,8 @@ class PullList extends Component {
               <SearchBar
                 ref="searchBar"
                 hideBackground={true}
-                textColor={colors.primaryDark}
-                textFieldBackgroundColor={colors.greyLight}
+                textColor={config.colors.primaryDark}
+                textFieldBackgroundColor={config.colors.greyLight}
                 showsCancelButton={this.state.searchFocus}
                 onFocus={() => this.setState({searchFocus: true})}
                 onCancelButtonPress={() => {
@@ -185,7 +185,7 @@ PullList.propTypes = {
 
 const styles = StyleSheet.create({
   header: {
-    borderBottomColor: colors.greyLight,
+    borderBottomColor: config.colors.greyLight,
     borderBottomWidth: 1,
   },
   searchBarWrapper: {
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     width: Dimensions.get('window').width,
-    backgroundColor: colors.white,
+    backgroundColor: config.colors.white,
     flex: 1,
   },
   list: {
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     fontFamily: 'AvenirNext-Bold',
   },
   buttonGroupTextSelected: {
-    color: colors.black,
+    color: config.colors.black,
   },
   loadingIndicatorContainer: {
     justifyContent: 'center',
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   listContainer: {
-    borderTopColor: colors.greyLight,
+    borderTopColor: config.colors.greyLight,
     borderTopWidth: 1,
     marginBottom: 105,
   },

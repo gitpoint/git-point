@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {StyleSheet, View, TouchableOpacity, Text, TextInput} from 'react-native';
 import {Icon} from 'react-native-elements';
 
-import colors from '../config/colors';
+import config from '@config';
 
 class CommentInput extends Component {
   constructor() {
@@ -32,7 +32,7 @@ class CommentInput extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.wrapper}>
-          <Icon name="send" color={colors.grey} />
+          <Icon name="send" color={config.colors.grey} />
 
           {userCanPost &&
             <TextInput
@@ -42,7 +42,7 @@ class CommentInput extends Component {
               onChangeText={text => this.setState({text})}
               onContentSizeChange={event => this.setState({height: event.nativeEvent.contentSize.height})}
               onSubmitEditing={event => this.handleSubmit(event.nativeEvent.text)}
-              placeholderTextColor={colors.grey}
+              placeholderTextColor={config.colors.grey}
               style={[
                 styles.textInput,
                 {height: Math.max(30, this.state.height)},
@@ -52,7 +52,7 @@ class CommentInput extends Component {
           }
 
           {!userCanPost &&
-            <Text style={[styles.textInput, {color: colors.grey}]}>Issue is locked</Text>
+            <Text style={[styles.textInput, {color: config.colors.grey}]}>Issue is locked</Text>
           }
 
           {!this.props.issueLocked &&
@@ -63,7 +63,7 @@ class CommentInput extends Component {
 
           {this.props.issueLocked &&
             <View style={styles.postButtonContainer}>
-              <Icon name="lock" type="octicon" color={colors.grey} />
+              <Icon name="lock" type="octicon" color={config.colors.grey} />
             </View>
           }
         </View>
@@ -80,7 +80,7 @@ CommentInput.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
-    borderTopColor: colors.greyLight,
+    borderTopColor: config.colors.greyLight,
     borderTopWidth: 1,
     backgroundColor: 'transparent',
   },
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 15,
     marginRight: 5,
-    color: colors.black,
+    color: config.colors.black,
     fontFamily: 'AvenirNext-Regular',
   },
   postButtonContainer: {
@@ -110,10 +110,10 @@ const styles = StyleSheet.create({
     fontFamily: 'AvenirNext-DemiBold',
   },
   postButtonDisabled: {
-    color: colors.grey,
+    color: config.colors.grey,
   },
   postButtonEnabled: {
-    color: colors.primaryDark,
+    color: config.colors.primaryDark,
   }
 });
 

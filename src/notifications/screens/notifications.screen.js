@@ -12,9 +12,9 @@ import FastImage from "react-native-fast-image";
 
 import ViewContainer from "../components/ViewContainer";
 import LoadingContainer from "../components/LoadingContainer";
-import NotificationListItem from "./notification-list-item.component";
+import NotificationListItem from "@notifications";
 
-import colors from "../config/colors";
+import config from '@config';
 
 import { connect } from "react-redux";
 import {
@@ -23,7 +23,7 @@ import {
   getAllNotifications,
   markAsRead,
   markRepoAsRead
-} from "./notifications.action";
+} from "@notifications";
 
 import { getIssueFromUrl } from "../actions/issue";
 
@@ -119,7 +119,7 @@ class Notifications extends Component {
             onPress={() => markRepoAsRead(item)}
           >
             <Icon
-              color={colors.greyDark}
+              color={config.colors.greyDark}
               size={28}
               name="check"
               type="octicon"
@@ -299,7 +299,7 @@ Notifications.propTypes = {
 
 const styles = StyleSheet.create({
   buttonGroupWrapper: {
-    backgroundColor: colors.greyLight,
+    backgroundColor: config.colors.greyLight,
     paddingTop: 28
   },
   buttonGroupContainer: {
@@ -309,7 +309,7 @@ const styles = StyleSheet.create({
     fontFamily: "AvenirNext-Bold"
   },
   buttonGroupTextSelected: {
-    color: colors.black
+    color: config.colors.black
   },
   repositoryContainer: {
     padding: 0,
@@ -320,7 +320,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingLeft: 5,
     paddingVertical: 8,
-    backgroundColor: colors.greyLight
+    backgroundColor: config.colors.greyLight
   },
   repositoryOwnerAvatar: {
     borderRadius: 13,
@@ -328,13 +328,13 @@ const styles = StyleSheet.create({
     height: 26
   },
   repositoryTitle: {
-    color: colors.primarydark,
+    color: config.colors.primarydark,
     fontFamily: "AvenirNext-DemiBold",
     marginLeft: 10,
     flex: 1
   },
   notificationTitle: {
-    color: colors.black,
+    color: config.colors.black,
     fontSize: 14,
     fontFamily: "AvenirNext-Regular"
   },

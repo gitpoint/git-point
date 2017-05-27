@@ -8,6 +8,8 @@
         "@search": "search",
         "@notifications": "notifications",
         "@auth": "auth",
+        "@api": "api",
+        "@config": "config",
         "@utils": "utils"
       }
     }]

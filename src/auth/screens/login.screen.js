@@ -2,14 +2,14 @@ import React, {Component} from 'react';
 import {Dimensions, Linking, View, StyleSheet, Image} from 'react-native';
 import {Button} from 'react-native-elements';
 
-import LoadingContainer from '../components/LoadingContainer';
+import LoadingContainer from '../../components/LoadingContainer';
 
-import colors from '../config/colors';
-import {CLIENT_ID} from '../api';
+import config from '@config';
+import {CLIENT_ID} from '@api';
 
 import queryString from 'query-string';
 import {connect} from 'react-redux';
-import {auth} from '../actions/auth';
+import {auth} from '@auth';
 
 const stateRandom = Math.random() + '';
 const window = Dimensions.get('window');
@@ -87,12 +87,12 @@ class Login extends Component {
           <View>
             <Image
               style={styles.image}
-              source={require('../images/login-background.png')}
+              source={require('../../assets/login-background.png')}
             >
               <View style={styles.logoContainer}>
                 <Image
                   style={styles.logo}
-                  source={require('../images/logo.png')}
+                  source={require('../../assets/logo.png')}
                 />
               </View>
             </Image>
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     width: window.width,
   },
   loadingContainer: {
-    backgroundColor: colors.white,
+    backgroundColor: config.colors.white,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: colors.white,
+    backgroundColor: config.colors.white,
   },
   logoContainer: {
     alignItems: 'center',
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'AvenirNext-Bold',
-    color: colors.white,
+    color: config.colors.white,
     marginTop: 20,
     width: 160,
     textAlign: 'center',
@@ -160,4 +160,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export const LoginScreen = connect(mapStateToProps, mapDispatchToProps)(Login);

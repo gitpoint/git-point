@@ -5,7 +5,7 @@ import {ListItem} from 'react-native-elements';
 import IssueStateBadge from './IssueStateBadge';
 import LabelButton from './LabelButton';
 
-import colors from '../config/colors';
+import config from '@config';
 import moment from 'moment';
 
 const IssueListItem = (
@@ -19,13 +19,13 @@ const IssueListItem = (
   <TouchableHighlight
     style={issue.state === 'closed' && styles.closedIssue}
     onPress={() => navigation.navigate('Issue', {issue: issue, userHasPushPermission: userHasPushPermission})}
-    underlayColor={colors.greyLight}>
+    underlayColor={config.colors.greyLight}>
     <View style={styles.container}>
       <ListItem
         containerStyle={styles.listItemContainer}
         title={issue.title}
         subtitle={moment(issue.created_at).fromNow()}
-        leftIcon={{name: type === 'issue' ? 'issue-opened' : 'git-pull-request', size: 36, color: colors.grey, type: 'octicon'}}
+        leftIcon={{name: type === 'issue' ? 'issue-opened' : 'git-pull-request', size: 36, color: config.colors.grey, type: 'octicon'}}
         hideChevron
         titleStyle={styles.title}
       />
@@ -49,10 +49,10 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     paddingVertical: 5,
     borderBottomWidth: 1,
-    borderBottomColor: colors.greyLight,
+    borderBottomColor: config.colors.greyLight,
   },
   closedIssue: {
-    backgroundColor: colors.greyVeryLight,
+    backgroundColor: config.colors.greyVeryLight,
     opacity: 0.6,
   },
   listItemContainer: {
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
   },
   title: {
-    color: colors.primarydark,
+    color: config.colors.primarydark,
     fontFamily: 'AvenirNext-Medium',
   },
   badge: {

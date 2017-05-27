@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {Icon} from 'react-native-elements';
 
-import colors from '../config/colors';
+import config from '@config';
 
 const RepositoryProfile = (
   {
@@ -19,7 +19,7 @@ const RepositoryProfile = (
             name={repository.fork ? 'repo-forked' : 'repo'}
             type="octicon"
             size={45}
-            color={colors.greyLight}
+            color={config.colors.greyLight}
           />
 
           <Text style={styles.title}>{repository.name}</Text>
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    color: colors.white,
+    color: config.colors.white,
     fontFamily: 'AvenirNext-Bold',
     fontSize: 18,
     fontWeight: 'bold',
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   subtitle: {
-    color: colors.white,
+    color: config.colors.white,
     fontFamily: 'AvenirNext-Medium',
     fontSize: 14,
     paddingLeft: 15,
@@ -123,14 +123,14 @@ const styles = StyleSheet.create({
   },
   unitNumber: {
     textAlign: 'center',
-    color: colors.white,
+    color: config.colors.white,
     fontFamily: 'AvenirNext-Bold',
     fontSize: 18,
     fontWeight: 'bold',
   },
   unitText: {
     textAlign: 'center',
-    color: colors.white,
+    color: config.colors.white,
     fontSize: 12,
     fontFamily: 'AvenirNext-Medium',
   },

@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {StyleSheet, Animated, View} from 'react-native';
-import colors from '../config/colors';
+import config from '@config';
 
 import {
-  cycleFadeAnimation,
-} from '../config/animations.js';
+  loadingAnimation,
+} from '@utils';
 
 class LoadingRepositoryListItem extends Component {
   constructor() {
@@ -15,7 +15,7 @@ class LoadingRepositoryListItem extends Component {
   }
 
   componentDidMount() {
-    cycleFadeAnimation(this.state.fadeAnimValue).start();
+    loadingAnimation(this.state.fadeAnimValue).start();
   }
 
   render() {
@@ -61,19 +61,19 @@ const styles = StyleSheet.create({
   textBarTitle: {
     height: 7,
     width: 100,
-    backgroundColor: colors.greyDarkest,
+    backgroundColor: config.colors.greyDarkest,
     marginBottom: 10,
   },
   textBarLine1: {
     height: 7,
     width: 250,
-    backgroundColor: colors.grey,
+    backgroundColor: config.colors.grey,
     marginBottom: 10,
   },
   textBarLine2: {
     height: 7,
     width: 80,
-    backgroundColor: colors.grey,
+    backgroundColor: config.colors.grey,
   },
 });
 

@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import {StyleSheet} from 'react-native';
 import {Button} from 'react-native-elements';
 
-import colors from '../config/colors';
+import config from '@config';
 
 const LabelButton = (
   {
@@ -33,7 +33,7 @@ const getFontColorByBackground = bgColor => {
 	const b = parseInt(bgColor.substr(4,2),16);
 	const yiq = ((r*299)+(g*587)+(b*114))/1000;
 
-	return (yiq >= 128) ? colors.black : colors.white;
+	return (yiq >= 128) ? config.colors.black : config.colors.white;
 }
 
 LabelButton.propTypes = {

@@ -6,7 +6,7 @@ import {
   MARK_REPO_AS_READ
 } from "./notifications.type";
 
-import { fetchNotifications, fetchMarkNotificationAsRead, fetchMarkRepoNotificationAsRead } from '../api';
+import { fetchNotifications, fetchMarkNotificationAsRead, fetchMarkRepoNotificationAsRead } from '@api';
 
 export const getUnreadNotifications = () => {
   return (dispatch, getState) => {

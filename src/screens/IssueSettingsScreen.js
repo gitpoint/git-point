@@ -7,14 +7,14 @@ import SectionList from '../components/SectionList';
 import UserListItem from '../components/UserListItem';
 import LabelListItem from '../components/LabelListItem';
 
-import colors from '../config/colors';
+import config from '@config';
 
 import {connect} from 'react-redux';
 import {editIssue, changeIssueLockStatus} from '../actions/issue';
 import {getLabels} from '../actions/repository';
 
 const mapStateToProps = state => ({
-  authUser: state.authUser.user,
+  authUser: state.auth.user,
   repository: state.repository.repository,
   labels: state.repository.labels,
   issue: state.issue.issue,
@@ -47,7 +47,7 @@ class IssueSettings extends Component {
             showButton
             buttonTitle="Apply Label"
             buttonAction={() => this.showAddLabelActionSheet()}
-            style={{borderBottomWidth: 1, borderBottomColor: colors.grey}}
+            style={{borderBottomWidth: 1, borderBottomColor: config.colors.grey}}
             noItems={issue.labels.length === 0}
             noItemsMessage="None yet"
             title="LABELS"
@@ -125,14 +125,14 @@ class IssueSettings extends Component {
             <ListItem
               title={issue.locked ? 'Unlock issue' : 'Lock Issue'}
               hideChevron
-              underlayColor={colors.greyLight}
+              underlayColor={config.colors.greyLight}
               titleStyle={styles.listItemTitle}
               onPress={() => this.showLockIssueActionSheet(issue.locked)}
             />
             <ListItem
               title={issue.state === 'open' ? 'Close Issue' : 'Reopen Issue'}
               hideChevron
-              underlayColor={colors.greyLight}
+              underlayColor={config.colors.greyLight}
               titleStyle={
                 issue.state === 'open'
                   ? styles.closeActionTitle
@@ -239,15 +239,15 @@ class IssueSettings extends Component {
 
 const styles = StyleSheet.create({
   listItemTitle: {
-    color: colors.black,
+    color: config.colors.black,
     fontFamily: 'AvenirNext-Medium',
   },
   closeActionTitle: {
-    color: colors.red,
+    color: config.colors.red,
     fontFamily: 'AvenirNext-Medium',
   },
   openActionTitle: {
-    color: colors.green,
+    color: config.colors.green,
     fontFamily: 'AvenirNext-Medium',
   },
 });

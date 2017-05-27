@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {StyleSheet, View, ActivityIndicator, Text} from 'react-native';
 
-import colors from '../config/colors';
+import config from '@config';
 
 const LoadingContainer = (
   {
@@ -28,7 +28,7 @@ LoadingContainer.propTypes = {
 
 const styles = StyleSheet.create({
   loadingContainer: {
-    backgroundColor: colors.white,
+    backgroundColor: config.colors.white,
     flex: 1,
     alignItems: 'center',
   },

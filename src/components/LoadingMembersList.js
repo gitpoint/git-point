@@ -1,8 +1,8 @@
 import React, {Component, PropTypes} from 'react';
 import {StyleSheet, View, Text, Animated} from 'react-native';
-import colors from '../config/colors';
+import config from '@config';
 
-import {cycleFadeAnimation} from '../config/animations.js';
+import {loadingAnimation} from '@utils';
 
 class LoadingMembersList extends Component {
   constructor() {
@@ -13,7 +13,7 @@ class LoadingMembersList extends Component {
   }
 
   componentDidMount() {
-    cycleFadeAnimation(this.state.fadeAnimValue).start();
+    loadingAnimation(this.state.fadeAnimValue).start();
   }
 
   render() {
@@ -51,11 +51,11 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     height: 30,
     width: 30,
-    backgroundColor: colors.grey,
+    backgroundColor: config.colors.grey,
     marginRight: 5,
   },
   sectionTitle: {
-    color: colors.black,
+    color: config.colors.black,
     fontFamily: 'AvenirNext-Bold',
     marginBottom: 10,
   },

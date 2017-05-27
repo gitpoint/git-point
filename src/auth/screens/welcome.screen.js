@@ -4,7 +4,7 @@ import {Button} from 'react-native-elements';
 
 import ViewContainer from '../components/ViewContainer';
 
-import colors from '../config/colors';
+import config from '@config';
 
 import {NavigationActions} from 'react-navigation';
 import {connect} from 'react-redux';
@@ -44,7 +44,7 @@ class Welcome extends Component {
               fontSize={16}
               fontWeight="bold"
               buttonStyle={styles.enterButton}
-              color={colors.white}
+              color={config.colors.white}
               onPress={() => this._navigateTo('Main')}
             />}
         </View>
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   welcomeMessage: {
-    color: colors.primarydark,
+    color: config.colors.primarydark,
     fontSize: 26,
     fontFamily: 'AvenirNext-Medium',
   },
@@ -75,11 +75,11 @@ const styles = StyleSheet.create({
   },
   enterButton: {
     marginTop: 30,
-    backgroundColor: colors.primarydark,
+    backgroundColor: config.colors.primarydark,
     borderRadius: 3,
     paddingVertical: 5,
     width: 100,
   },
 });
 
-export default connect(mapStateToProps)(Welcome);
+export const WelcomeScreen = connect(mapStateToProps)(Welcome);

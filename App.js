@@ -9,19 +9,15 @@ import {
 } from 'react-native';
 import {StackNavigator, TabNavigator} from 'react-navigation';
 import {Icon} from 'react-native-elements';
-import colors from './src/config/colors';
+import config from '@config';
 
-//SplashScreen
-import Splash from './src/screens/SplashScreen';
-
-// LoginScreen
-import Login from './src/screens/LoginScreen';
-
-// WelcomeScreen
-import Welcome from './src/screens/WelcomeScreen';
+//Auth
+import { SplashScreen } from '@auth';
+import { LoginScreen } from '@auth';
+import { WelcomeScreen } from '@auth';
+import { AuthProfileScreen } from '@auth';
 
 // Main Tab Screens
-import MyProfile from './src/screens/MyProfileScreen';
 import Profile from './src/screens/ProfileScreen';
 import { SearchScreen } from '@search';
 import { NotificationsScreen } from '@notifications';
@@ -187,7 +183,7 @@ const SearchStackNavigator = StackNavigator(
 const MyProfileStackNavigator = StackNavigator(
   {
     MyProfile: {
-      screen: MyProfile,
+      screen: AuthProfileScreen,
       navigationOptions: {
         header: null,
       },
@@ -257,8 +253,8 @@ const MainTabNavigator = TabNavigator(
   {
     tabBarOptions: {
       showLabel: false,
-      activeTintColor: colors.primarydark,
-      inactiveTintColor: colors.grey,
+      activeTintColor: config.colors.primarydark,
+      inactiveTintColor: config.colors.grey,
     },
   }
 );
@@ -266,19 +262,19 @@ const MainTabNavigator = TabNavigator(
 const GitPoint = StackNavigator(
   {
     Splash: {
-      screen: Splash,
+      screen: SplashScreen,
       navigationOptions: {
         header: null,
       },
     },
     Login: {
-      screen: Login,
+      screen: LoginScreen,
       navigationOptions: {
         header: null,
       },
     },
     Welcome: {
-      screen: Welcome,
+      screen: WelcomeScreen,
       navigationOptions: {
         header: null,
       },
@@ -322,7 +318,7 @@ class App extends Component {
         <View style={styles.logoContainer}>
           <Image
             style={styles.logo}
-            source={require('./src/images/logo-black.png')}
+            source={require('./src/assets/logo-black.png')}
           />
         </View>
       );
@@ -336,7 +332,7 @@ class App extends Component {
 
 const styles = StyleSheet.create({
   logoContainer: {
-    backgroundColor: colors.white,
+    backgroundColor: config.colors.white,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',

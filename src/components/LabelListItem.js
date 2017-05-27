@@ -4,7 +4,7 @@ import {Icon} from 'react-native-elements';
 
 import LabelButton from './LabelButton';
 
-import colors from '../config/colors';
+import config from '@config';
 
 const LabelListItem = (
   {
@@ -20,7 +20,7 @@ const LabelListItem = (
 
       <TouchableOpacity style={styles.iconContainer} onPress={() => removeLabel(label)}>
         <Icon
-          color={colors.grey}
+          color={config.colors.grey}
           name="x"
           type="octicon"
         />
@@ -36,7 +36,7 @@ LabelListItem.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
-    borderBottomColor: colors.greyLight,
+    borderBottomColor: config.colors.greyLight,
     borderBottomWidth: 1,
   },
   wrapper: {

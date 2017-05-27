@@ -8,10 +8,10 @@ import RepositoryListItem from '../components/RepositoryListItem';
 import UserListItem from '../components/UserListItem';
 import LoadingContainer from '../components/LoadingContainer';
 
-import colors from '../config/colors';
+import config from '@config';
 
 import {connect} from 'react-redux';
-import {searchRepos, searchUsers} from './search.action';
+import {searchRepos, searchUsers} from '@search';
 
 const mapStateToProps = state => ({
   users: state.search.users,
@@ -98,8 +98,8 @@ class Search extends Component {
               <SearchBar
                 ref="searchBar"
                 hideBackground={true}
-                textColor={colors.primaryDark}
-                textFieldBackgroundColor={colors.greyLight}
+                textColor={config.colors.primaryDark}
+                textFieldBackgroundColor={config.colors.greyLight}
                 showsCancelButton={this.state.searchFocus}
                 onFocus={() => this.setState({searchFocus: true})}
                 onCancelButtonPress={() => {
@@ -196,8 +196,8 @@ const styles = StyleSheet.create({
   searchContainer: {
     width: Dimensions.get('window').width,
     // borderBottomWidth: StyleSheet.hairlineWidth,
-    // borderBottomColor: colors.grey,
-    backgroundColor: colors.white,
+    // borderBottomColor: config.colors.grey,
+    backgroundColor: config.colors.white,
     flex: 1,
   },
   list: {
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     fontFamily: 'AvenirNext-Bold',
   },
   buttonGroupTextSelected: {
-    color: colors.black,
+    color: config.colors.black,
   },
   loadingIndicatorContainer: {
     justifyContent: 'center',
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   listContainer: {
-    borderTopColor: colors.greyLight,
+    borderTopColor: config.colors.greyLight,
     borderTopWidth: 1,
     marginBottom: 105,
   },

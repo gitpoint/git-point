@@ -4,7 +4,7 @@ import {ListItem} from 'react-native-elements';
 
 import ViewContainer from '../components/ViewContainer';
 
-import colors from '../config/colors';
+import config from '@config';
 
 import {connect} from 'react-redux';
 import {getContents} from '../actions/repository';
@@ -62,12 +62,12 @@ class RepositoryCodeList extends Component {
       title={item.name}
       leftIcon={{
         name: item.type === 'dir' ? 'file-directory' : 'file',
-        color: colors.grey,
+        color: config.colors.grey,
         type: 'octicon'
       }}
       titleStyle={item.type === 'dir' ? styles.titleBold : styles.title}
       onPress={() => this.goToPath(item)}
-      underlayColor={colors.greyLight}
+      underlayColor={config.colors.greyLight}
     />
   );
 
@@ -78,11 +78,11 @@ class RepositoryCodeList extends Component {
 
 const styles = StyleSheet.create({
   title: {
-    color: colors.black,
+    color: config.colors.black,
     fontFamily: 'AvenirNext-Regular',
   },
   titleBold: {
-    color: colors.black,
+    color: config.colors.black,
     fontFamily: 'AvenirNext-DemiBold',
   },
 });

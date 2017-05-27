@@ -6,7 +6,7 @@ import ViewContainer from "../components/ViewContainer";
 import RepositoryListItem from "../components/RepositoryListItem";
 import LoadingRepositoryListItem from "../components/LoadingRepositoryListItem";
 
-import colors from "../config/colors";
+import config from '@config';
 
 import { connect } from "react-redux";
 import { getRepositories, searchUserRepos } from "../actions/user";
@@ -86,8 +86,8 @@ class RepositoryList extends Component {
                 <SearchBar
                   ref="searchBar"
                   hideBackground={true}
-                  textColor={colors.primaryDark}
-                  textFieldBackgroundColor={colors.greyLight}
+                  textColor={config.colors.primaryDark}
+                  textFieldBackgroundColor={config.colors.greyLight}
                   showsCancelButton={searchFocus}
                   onFocus={() => this.setState({ searchFocus: true })}
                   onCancelButtonPress={() => {
@@ -145,7 +145,7 @@ RepositoryList.propTypes = {
 
 const styles = StyleSheet.create({
   header: {
-    borderBottomColor: colors.greyLight,
+    borderBottomColor: config.colors.greyLight,
     borderBottomWidth: 1
   },
   searchBarWrapper: {
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     width: Dimensions.get("window").width,
-    backgroundColor: colors.white,
+    backgroundColor: config.colors.white,
     flex: 1
   },
   listContainer: {

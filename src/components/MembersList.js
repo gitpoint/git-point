@@ -9,7 +9,7 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
-import colors from '../config/colors';
+import config from '@config';
 
 const MembersList = (
   {
@@ -68,18 +68,18 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   avatar: {
-    backgroundColor: colors.greyLight,
+    backgroundColor: config.colors.greyLight,
     borderRadius: 15,
     height: 30,
     width: 30,
   },
   sectionTitle: {
-    color: colors.black,
+    color: config.colors.black,
     fontFamily: 'AvenirNext-Bold',
     marginBottom: 10,
   },
   sectionTitleSmall: {
-    color: colors.primarydark,
+    color: config.colors.primarydark,
     fontFamily: 'AvenirNext-DemiBold',
     marginBottom: 10,
   },
