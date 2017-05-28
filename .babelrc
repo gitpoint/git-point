@@ -8,6 +8,9 @@
         "@search": "search",
         "@notifications": "notifications",
         "@auth": "auth",
+        "@user": "user",
+        "@organization": "organization",
+        "@repository": "repository",
         "@api": "api",
         "@config": "config",
         "@utils": "utils"

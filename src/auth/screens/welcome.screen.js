@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {StyleSheet, View, Text, ActivityIndicator} from 'react-native';
 import {Button} from 'react-native-elements';
 
-import ViewContainer from '../components/ViewContainer';
+import {ViewContainer} from "@components";
 
 import config from '@config';
 

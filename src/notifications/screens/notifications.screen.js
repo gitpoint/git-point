@@ -10,9 +10,12 @@ import {
 import { ButtonGroup, Card, Icon } from "react-native-elements";
 import FastImage from "react-native-fast-image";
 
-import ViewContainer from "../components/ViewContainer";
-import LoadingContainer from "../components/LoadingContainer";
-import NotificationListItem from "@notifications";
+import {
+  ViewContainer,
+  LoadingContainer
+} from "@components";
+
+import { NotificationListItem } from "@components";
 
 import config from '@config';
 
@@ -23,9 +26,9 @@ import {
   getAllNotifications,
   markAsRead,
   markRepoAsRead
-} from "@notifications";
+} from "../";
 
-import { getIssueFromUrl } from "../actions/issue";
+import { getIssueFromUrl } from "../../actions/issue";
 
 const mapStateToProps = state => ({
   unread: state.notifications.unread,

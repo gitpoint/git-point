@@ -1,4 +1,4 @@
-import { LOGIN, GET_AUTH_USER, GET_AUTH_ORGS } from './auth.type'
+import { LOGIN, GET_AUTH_USER, GET_AUTH_ORGS, GET_EVENTS } from './auth.type'
 
 const initialState = {
   isLoggingIn: false,
@@ -6,14 +6,16 @@ const initialState = {
   accessToken: null,
   user: '',
   orgs: [],
+  events: [],
   isPendingUser: false,
   isPendingOrgs: false,
+  isPendingEvents: false,
   error: '',
 }
 
-export default function authReducer(state = initialState, action={}) {
+export const authReducer = (state = initialState, action={}) => {
   switch(action.type) {
-    case LOGIN.REQUEST:
+    case LOGIN.PENDING:
       return {
         isLoggingIn: true,
         isAuthenticated: false
@@ -30,7 +32,7 @@ export default function authReducer(state = initialState, action={}) {
         isAuthenticated: false,
         error: action.payload
       }
-    case GET_AUTH_USER.REQUEST:
+    case GET_AUTH_USER.PENDING:
         return {
           ...state,
           isPendingUser: true,
@@ -47,7 +49,7 @@ export default function authReducer(state = initialState, action={}) {
         error: action.payload,
         isPendingUser: false,
       };
-    case GET_AUTH_ORGS.REQUEST:
+    case GET_AUTH_ORGS.PENDING:
       return {
         ...state,
         isPendingOrgs: true,
@@ -63,6 +65,23 @@ export default function authReducer(state = initialState, action={}) {
         ...state,
         error: action.payload,
         isPendingOrgs: false,
+      };
+    case GET_EVENTS.PENDING:
+      return {
+        ...state,
+        isPendingEvents: true,
+      };
+    case GET_EVENTS.SUCCESS:
+      return {
+        ...state,
+        events: action.payload,
+        isPendingEvents: false,
+      };
+    case GET_EVENTS.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isPendingEvents: false,
       };
     default:
       return state

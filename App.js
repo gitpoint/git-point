@@ -16,26 +16,34 @@ import { SplashScreen } from '@auth';
 import { LoginScreen } from '@auth';
 import { WelcomeScreen } from '@auth';
 import { AuthProfileScreen } from '@auth';
+import { EventsScreen } from '@auth';
 
-// Main Tab Screens
-import Profile from './src/screens/ProfileScreen';
+//User
+import { ProfileScreen } from '@user';
+import { RepositoryListScreen } from '@user';
+import { FollowerListScreen } from '@user';
+import { FollowingListScreen } from '@user';
+
+//Organization
+import { OrganizationProfileScreen } from '@organization';
+
+//Search
 import { SearchScreen } from '@search';
+
+//Notifications
 import { NotificationsScreen } from '@notifications';
-import Home from './src/screens/HomeScreen';
+
+//Repository
+import { RepositoryScreen } from '@repository';
+import { RepositoryCodeListScreen } from '@repository';
+import { IssueListScreen } from '@repository';
+import { PullListScreen } from '@repository';
+import { PullDiffScreen } from '@repository';
+import { ReadMeScreen } from '@repository';
 
 //Stack Screen
-import RepositoryList from './src/screens/RepositoryListScreen';
-import FollowerList from './src/screens/FollowerListScreen';
-import FollowingList from './src/screens/FollowingListScreen';
-import Organization from './src/screens/OrganizationScreen';
-import Repository from './src/screens/RepositoryScreen';
-import RepositoryCodeList from './src/screens/RepositoryCodeListScreen';
-import IssueList from './src/screens/IssueListScreen';
-import PullList from './src/screens/PullListScreen';
 import Issue from './src/screens/IssueScreen';
 import IssueSettings from './src/screens/IssueSettingsScreen';
-import ReadMe from './src/screens/ReadMe';
-import PullDiff from './src/screens/PullDiffScreen';
 
 // Redux Store
 import {compose, createStore, applyMiddleware} from 'redux';
@@ -56,55 +64,55 @@ const store = createStore(
 
 const sharedRoutes = {
   RepositoryList: {
-    screen: RepositoryList,
+    screen: RepositoryListScreen,
     navigationOptions: {
       title: 'Repositories',
     }
   },
   FollowerList: {
-    screen: FollowerList,
+    screen: FollowerListScreen,
     navigationOptions: {
       title: 'Followers',
     }
   },
   FollowingList: {
-    screen: FollowingList,
+    screen: FollowingListScreen,
     navigationOptions: {
       title: 'Following',
     }
   },
   Profile: {
-    screen: Profile,
+    screen: ProfileScreen,
     navigationOptions: {
       header: null,
     },
   },
   Organization: {
-    screen: Organization,
+    screen: OrganizationProfileScreen,
     navigationOptions: {
       header: null,
     },
   },
   Repository: {
-    screen: Repository,
+    screen: RepositoryScreen,
     navigationOptions: {
       header: null,
     },
   },
   RepositoryCodeList: {
-    screen: RepositoryCodeList,
+    screen: RepositoryCodeListScreen,
     navigationOptions: ({ navigation }) => ({
       title: navigation.state.params.topLevel ? 'Code' : navigation.state.params.content.name,
     })
   },
   IssueList: {
-    screen: IssueList,
+    screen: IssueListScreen,
     navigationOptions: {
       title: 'Issues',
     },
   },
   PullList: {
-    screen: PullList,
+    screen: PullListScreen,
     navigationOptions: {
       title: 'Pull Requests',
     },
@@ -122,13 +130,13 @@ const sharedRoutes = {
     },
   },
   PullDiff: {
-    screen: PullDiff,
+    screen: PullDiffScreen,
     navigationOptions: {
       title: 'Diff',
     },
   },
   ReadMe: {
-    screen: ReadMe,
+    screen: ReadMeScreen,
     navigationOptions: {
       title: 'README.md',
     },
@@ -137,8 +145,8 @@ const sharedRoutes = {
 
 const HomeStackNavigator = StackNavigator(
   {
-    Home: {
-      screen: Home,
+    Events: {
+      screen: EventsScreen,
       navigationOptions: {
         headerTitle: 'GitPoint',
       },

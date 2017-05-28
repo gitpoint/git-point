@@ -2,12 +2,14 @@ import React, {Component, PropTypes} from 'react';
 import {StyleSheet} from 'react-native';
 import {ListItem} from 'react-native-elements';
 
-import ViewContainer from '../../components/ViewContainer';
-import UserProfile from '../../components/UserProfile';
-import SectionList from '../components/SectionList';
-import LoadingContainer from '../components/LoadingContainer';
-import ParallaxScroll from '../components/ParallaxScroll';
-import UserListItem from '../components/UserListItem';
+import {
+  ViewContainer,
+  UserProfile,
+  SectionList,
+  LoadingContainer,
+  ParallaxScroll,
+  UserListItem
+} from "@components";
 
 import config from '@config';
 import Communications from 'react-native-communications';

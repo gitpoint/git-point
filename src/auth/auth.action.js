@@ -1,10 +1,10 @@
-import { LOGIN, GET_AUTH_USER, GET_AUTH_ORGS } from './auth.type'
-import { fetchAccessToken, fetchAuthUser, fetchAuthUserOrgs } from '@api';
+import { LOGIN, GET_AUTH_USER, GET_AUTH_ORGS, GET_EVENTS } from './auth.type'
+import { fetchAccessToken, fetchAuthUser, fetchAuthUserOrgs, fetchUserEvents } from '@api';
 
 export const auth = (code, state) => {
   return (dispatch) => {
 
-    dispatch({ type: LOGIN.REQUEST });
+    dispatch({ type: LOGIN.PENDING });
 
     fetchAccessToken(code, state).then(data => {
       dispatch({
@@ -25,7 +25,7 @@ export const getUser = () => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 
-    dispatch({ type: GET_AUTH_USER.REQUEST });
+    dispatch({ type: GET_AUTH_USER.PENDING });
 
     fetchAuthUser(accessToken).then(data => {
       dispatch({
@@ -46,7 +46,7 @@ export const getOrgs = () => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 
-    dispatch({ type: GET_AUTH_ORGS.REQUEST });
+    dispatch({ type: GET_AUTH_ORGS.PENDING });
 
     fetchAuthUserOrgs(accessToken).then(data => {
       dispatch({
@@ -60,5 +60,26 @@ export const getOrgs = () => {
         payload: error,
       })
     })
+  };
+};
+
+export const getUserEvents = (user) => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: GET_EVENTS.PENDING });
+
+      fetchUserEvents(user, accessToken).then(data => {
+        dispatch({
+          type: GET_EVENTS.SUCCESS,
+          payload: data,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: GET_EVENTS.ERROR,
+          payload: error,
+        })
+      })
   };
 };
