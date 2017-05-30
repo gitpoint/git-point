@@ -50,6 +50,12 @@ class PullList extends Component {
       });
 
       this.search(this.state.query, selectedType);
+    } else {
+      this.refs.pullListRef.scrollToOffset({
+        x: 0,
+        y: 0,
+        animated: false
+      });
     }
   }
 
@@ -145,6 +151,7 @@ class PullList extends Component {
         
         {this.getList().length > 0 &&
           <FlatList
+            ref="pullListRef"
             removeClippedSubviews={false}
             data={this.getList()}
             keyExtractor={this.keyExtractor}

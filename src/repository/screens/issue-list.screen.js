@@ -46,6 +46,12 @@ class IssueList extends Component {
       });
 
       this.search(this.state.query, selectedType);
+    } else {
+      this.refs.issueListRef.scrollToOffset({
+        x: 0,
+        y: 0,
+        animated: false
+      });
     }
   }
 
@@ -141,6 +147,7 @@ class IssueList extends Component {
         
         {this.getList().length > 0 &&
           <FlatList
+            ref="issueListRef"
             removeClippedSubviews={false}
             data={this.getList()}
             keyExtractor={this.keyExtractor}

@@ -12,7 +12,7 @@ import {
 
 import config from '@config';
 
-export class PullDiff extends Component {
+class PullDiff extends Component {
   renderHeader = () => {
     const filesChanged = Parse(this.props.navigation.state.params.diff);
 
@@ -184,3 +184,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
   }
 });
+
+export const PullDiffScreen = PullDiff;

@@ -12,8 +12,8 @@ import {
 import config from '@config';
 
 import {connect} from 'react-redux';
-import {editIssue, changeIssueLockStatus} from '../actions/issue';
-import {getLabels} from '../actions/repository';
+import {editIssue, changeIssueLockStatus} from '../issue.action';
+import {getLabels} from '@repository';
 
 const mapStateToProps = state => ({
   authUser: state.auth.user,
@@ -267,4 +267,4 @@ IssueSettings.propTypes = {
   navigation: PropTypes.object,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(IssueSettings);
+export const IssueSettingsScreen = connect(mapStateToProps, mapDispatchToProps)(IssueSettings);

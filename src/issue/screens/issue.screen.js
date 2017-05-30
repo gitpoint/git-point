@@ -23,9 +23,9 @@ import {
   postIssueComment,
   getDiff,
   getIssueFromUrl
-} from "../actions/issue";
+} from "../issue.action";
 
-import { getRepository } from "../actions/repository";
+import { getRepository } from "@repository";
 
 const mapStateToProps = state => ({
   authUser: state.auth.user,
@@ -209,4 +209,4 @@ Issue.propTypes = {
   navigation: PropTypes.object
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Issue);
+export const IssueScreen = connect(mapStateToProps, mapDispatchToProps)(Issue);

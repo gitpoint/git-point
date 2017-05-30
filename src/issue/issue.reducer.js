@@ -1,23 +1,11 @@
 import {
-  GET_ISSUE_COMMENTS_IS_PENDING,
-  GET_ISSUE_COMMENTS_WAS_SUCCESSFUL,
-  GET_ISSUE_COMMENTS_HAD_ERROR,
-  POST_ISSUE_COMMENT_IS_PENDING,
-  POST_ISSUE_COMMENT_WAS_SUCCESSFUL,
-  POST_ISSUE_COMMENT_HAD_ERROR,
-  EDIT_ISSUE_IS_PENDING,
-  EDIT_ISSUE_WAS_SUCCESSFUL,
-  EDIT_ISSUE_HAD_ERROR,
-  CHANGE_LOCK_STATUS_IS_PENDING,
-  CHANGE_LOCK_STATUS_WAS_SUCCESSFUL,
-  CHANGE_LOCK_STATUS_HAD_ERROR,
-  GET_ISSUE_DIFF_IS_PENDING,
-  GET_ISSUE_DIFF_WAS_SUCCESSFUL,
-  GET_ISSUE_DIFF_HAD_ERROR,
-  GET_ISSUE_FROM_URL_IS_PENDING,
-  GET_ISSUE_FROM_URL_WAS_SUCCESSFUL,
-  GET_ISSUE_FROM_URL_HAD_ERROR
-} from '../constants';
+  GET_ISSUE_COMMENTS,
+  POST_ISSUE_COMMENT,
+  EDIT_ISSUE,
+  CHANGE_LOCK_STATUS,
+  GET_ISSUE_DIFF,
+  GET_ISSUE_FROM_URL
+} from './issue.type';
 
 const initialState = {
   issue: {},
@@ -32,108 +20,108 @@ const initialState = {
   error: '',
 }
 
-export default function issueReducer(state = initialState, action={}) {
+export const issueReducer = (state = initialState, action={}) => {
   switch (action.type) {
-      case GET_ISSUE_COMMENTS_IS_PENDING:
+      case GET_ISSUE_COMMENTS.PENDING:
         return {
           ...state,
           issue: action.payload,
           isPendingComments: true,
         };
-      case GET_ISSUE_COMMENTS_WAS_SUCCESSFUL:
+      case GET_ISSUE_COMMENTS.SUCCESS:
         return {
           ...state,
           comments: action.payload,
           isPendingComments: false,
         };
-      case GET_ISSUE_COMMENTS_HAD_ERROR:
+      case GET_ISSUE_COMMENTS.ERROR:
         return {
           ...state,
           error: action.payload,
           isPendingComments: false,
         };
-      case POST_ISSUE_COMMENT_IS_PENDING:
+      case POST_ISSUE_COMMENT.PENDING:
         return {
           ...state,
           isPostingComment: true,
         };
-      case POST_ISSUE_COMMENT_WAS_SUCCESSFUL:
+      case POST_ISSUE_COMMENT.SUCCESS:
         return {
           ...state,
           comments: [...state.comments, action.payload],
           isPostingComment: false,
         };
-      case POST_ISSUE_COMMENT_HAD_ERROR:
+      case POST_ISSUE_COMMENT.ERROR:
         return {
           ...state,
           error: action.payload,
           isPostingComment: false,
         };
-      case EDIT_ISSUE_IS_PENDING:
+      case EDIT_ISSUE.PENDING:
         return {
           ...state,
           isEditingIssue: true,
         };
-      case EDIT_ISSUE_WAS_SUCCESSFUL: {
+      case EDIT_ISSUE.SUCCESS: {
         return {
           ...state,
           issue: {...state.issue, ...action.payload},
           isEditingIssue: false,
         };
       }
-      case EDIT_ISSUE_HAD_ERROR:
+      case EDIT_ISSUE.ERROR:
         return {
           ...state,
           error: action.payload,
           isEditingIssue: false,
         };
-      case CHANGE_LOCK_STATUS_IS_PENDING:
+      case CHANGE_LOCK_STATUS.PENDING:
         return {
           ...state,
           isChangingLockStatus: true,
         };
-      case CHANGE_LOCK_STATUS_WAS_SUCCESSFUL: {
+      case CHANGE_LOCK_STATUS.SUCCESS: {
         return {
           ...state,
           issue: {...state.issue, locked: !state.issue.locked},
           isChangingLockStatus: false,
         };
       }
-      case CHANGE_LOCK_STATUS_HAD_ERROR:
+      case CHANGE_LOCK_STATUS.ERROR:
         return {
           ...state,
           error: action.payload,
           isChangingLockStatus: false,
         };
-      case GET_ISSUE_DIFF_IS_PENDING:
+      case GET_ISSUE_DIFF.PENDING:
         return {
           ...state,
           isPendingDiff: true,
         };
-      case GET_ISSUE_DIFF_WAS_SUCCESSFUL:
+      case GET_ISSUE_DIFF.SUCCESS:
         return {
           ...state,
           diff: action.payload,
           isPendingDiff: false,
         };
-      case GET_ISSUE_DIFF_HAD_ERROR:
+      case GET_ISSUE_DIFF.ERROR:
         return {
           ...state,
           error: action.payload,
           isPendingDiff: false,
         };
-      case GET_ISSUE_FROM_URL_IS_PENDING:
+      case GET_ISSUE_FROM_URL.PENDING:
         return {
           ...state,
           isPendingIssue: true,
         };
-      case GET_ISSUE_FROM_URL_WAS_SUCCESSFUL:
+      case GET_ISSUE_FROM_URL.SUCCESS:
         return {
           ...state,
           issue: action.payload,
           isPendingIssue: false,
         };
-      case GET_ISSUE_FROM_URL_HAD_ERROR:
+      case GET_ISSUE_FROM_URL.ERROR:
         return {
           ...state,
           error: action.payload,

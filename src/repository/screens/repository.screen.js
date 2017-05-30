@@ -4,6 +4,7 @@ import {ListItem} from 'react-native-elements';
 
 import {
   ViewContainer,
+  LoadingRepositoryProfile,
   RepositoryProfile,
   MembersList,
   SectionList,
@@ -72,12 +73,18 @@ class Repository extends Component {
       <ViewContainer barColor="light">
 
         <ParallaxScroll
-          renderContent={() => (
-            <RepositoryProfile
-              repository={isPendingRepository ? initalRepository : repository}
-              navigation={navigation}
-            />
-          )}
+          renderContent={() => {
+            if (isPendingRepository && !initalRepository) {
+              return <LoadingRepositoryProfile/> 
+            } else {
+             return (
+               <RepositoryProfile
+                  repository={isPendingRepository ? initalRepository : repository}
+                  navigation={navigation}
+                />
+              ) 
+            }
+          }}
           stickyTitle={repository.name}
           navigateBack
           navigation={navigation}
@@ -120,8 +127,8 @@ class Repository extends Component {
               />
             </SectionList>
 
-          {!isPendingIssues &&
             <SectionList
+              loading={isPendingIssues}
               title="ISSUES"
               noItems={pureIssues.filter(issue => issue.state === 'open').length === 0}
               noItemsMessage={pureIssues.length === 0 ? "No issues" : "No open issues"}
@@ -139,10 +146,10 @@ class Repository extends Component {
                 .map((item, i) => (
                   <IssueListItem key={i} type="issue" issue={item} userHasPushPermission={repository.permissions.admin || repository.permissions.push} navigation={navigation} />
                 ))}
-            </SectionList>}
+            </SectionList>
 
-          {!isPendingIssues &&
             <SectionList
+              loading={isPendingIssues}
               title="PULL REQUESTS"
               noItems={pulls.filter(issue => issue.state === 'open').length === 0}
               noItemsMessage={pulls.length === 0 ? "No pull requests" : "No open pull requests"}
@@ -160,7 +167,7 @@ class Repository extends Component {
                 .map((item, i) => (
                   <IssueListItem key={i} type="pull" issue={item} userHasPushPermission={repository.permissions.admin || repository.permissions.push} navigation={navigation} />
                 ))}
-            </SectionList>}
+            </SectionList>
         </ParallaxScroll>
       </ViewContainer>
     );

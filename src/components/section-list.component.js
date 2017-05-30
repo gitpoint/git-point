@@ -1,11 +1,12 @@
 import React, {PropTypes} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, ActivityIndicator} from 'react-native';
 import {List, ListItem, Button} from 'react-native-elements';
 
 import config from '@config';
 
 export const SectionList = (
-  {
+  { 
+    loading,
     title,
     showButton,
     buttonTitle,
@@ -16,14 +17,22 @@ export const SectionList = (
     children,
   }
 ) => {
-  const listDisplay = noItems ? <ListItem title={noItemsMessage} titleStyle={styles.listTitle} hideChevron/> : children;
+  let listDisplay;
+
+  if (loading) {
+    listDisplay = <ActivityIndicator animating={loading} style={styles.loadingIcon}/>
+  } else if (noItems) {
+    listDisplay = <ListItem title={noItemsMessage} titleStyle={styles.listTitle} hideChevron/>;
+  } else {
+    listDisplay = children;
+  }
 
   return (
     <View style={styles.section}>
       <View style={styles.topHeader}>
         <Text style={styles.sectionTitle}>{title.toUpperCase()}</Text>
 
-        {showButton &&
+        {showButton && !loading &&
           <Button
             title={buttonTitle}
             fontFamily="AvenirNext-DemiBold"
@@ -41,6 +50,7 @@ export const SectionList = (
 };
 
 SectionList.propTypes = {
+  loading: PropTypes.bool,
   title: PropTypes.string,
   children: PropTypes.any,
   showButton: PropTypes.bool,
@@ -86,5 +96,8 @@ const styles = StyleSheet.create({
   noOuterBorders: {
     borderTopWidth: 0,
     borderBottomWidth: 0,
+  },
+  loadingIcon: {
+    marginVertical: 20,
   }
 });

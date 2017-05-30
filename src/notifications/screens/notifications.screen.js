@@ -271,7 +271,6 @@ class Notifications extends Component {
             data={sortedRepos}
             keyExtractor={this.keyExtractor}
             renderItem={this.renderItem}
-            disableVirtualization={true}
           />
         </View>
       </ViewContainer>

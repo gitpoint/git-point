@@ -41,14 +41,14 @@ import { PullListScreen } from '@repository';
 import { PullDiffScreen } from '@repository';
 import { ReadMeScreen } from '@repository';
 
-//Stack Screen
-import Issue from './src/screens/IssueScreen';
-import IssueSettings from './src/screens/IssueSettingsScreen';
+//Issue
+import { IssueScreen } from '@issue';
+import { IssueSettingsScreen } from '@issue';
 
 // Redux Store
 import {compose, createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
-import rootReducer from './src/reducers';
+import rootReducer from './reducer';
 
 import {persistStore, autoRehydrate} from 'redux-persist';
 
@@ -118,13 +118,13 @@ const sharedRoutes = {
     },
   },
   Issue: {
-    screen: Issue,
+    screen: IssueScreen,
     navigationOptions: ({ navigation }) => ({
       title: `#${navigation.state.params.issue ? navigation.state.params.issue.number : 'Issue'}`,
     })
   },
   IssueSettings: {
-    screen: IssueSettings,
+    screen: IssueSettingsScreen,
     navigationOptions: {
       title: 'Settings',
     },

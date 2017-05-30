@@ -23,6 +23,7 @@ export const RepositoryProfile = (
           />
 
           <Text style={styles.title}>{repository.name}</Text>
+          
           <Text style={[styles.subtitle, styles.subtitleDescription]}>
             {repository.description}
           </Text>

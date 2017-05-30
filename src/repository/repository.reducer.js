@@ -35,7 +35,7 @@ const initialState = {
   error: '',
 }
 
-export default function repositoryReducer(state = initialState, action={}) {
+export const repositoryReducer = (state = initialState, action={}) => {
   switch (action.type) {
       case GET_REPOSITORY.PENDING:
         return {

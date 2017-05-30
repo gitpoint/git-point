@@ -61,4 +61,4 @@ FollowerList.propTypes = {
   navigation: PropTypes.object
 };
 
-export const FollowerListScren = connect(mapStateToProps, mapDispatchToProps)(FollowerList);
+export const FollowerListScreen = connect(mapStateToProps, mapDispatchToProps)(FollowerList);
