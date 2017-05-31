@@ -13,7 +13,9 @@ const STICKY_HEADER_HEIGHT = 62;
 type Props = {
   renderContent: any,
   stickyTitle: string,
-  navigateBack: boolean,
+  navigateBack?: boolean,
+  showMenu?: boolean,
+  menuAction?: Function,
   navigation: Object,
   children?: React.Element<*>
 };
@@ -22,6 +24,8 @@ export const ParallaxScroll = ({
   renderContent,
   stickyTitle,
   navigateBack,
+  showMenu,
+  menuAction,
   navigation,
   children
 }: Props) => (
@@ -54,14 +58,17 @@ export const ParallaxScroll = ({
               underlayColor="transparent"
             />
           </View>}
-        <View style={styles.fixedSectionRight}>
-          <Icon
-            style={styles.headerIcon}
-            name="ellipsis-h"
-            type="font-awesome"
-            color={config.colors.white}
-          />
-        </View>
+
+        {showMenu &&
+          <View style={styles.fixedSectionRight}>
+            <Icon
+              style={styles.headerIcon}
+              name="ellipsis-h"
+              type="font-awesome"
+              onPress={menuAction}
+              color={config.colors.white}
+            />
+          </View>}
       </View>
     )}
   >

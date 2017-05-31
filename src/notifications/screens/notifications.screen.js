@@ -25,7 +25,7 @@ import {
   markRepoAsRead
 } from "../";
 
-import { getIssueFromUrl } from "../../actions/issue";
+import { getIssueFromUrl } from "issue";
 
 const mapStateToProps = state => ({
   unread: state.notifications.unread,

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, ActionSheetIOS } from "react-native";
 import { ListItem } from "react-native-elements";
 
 import {
@@ -27,9 +27,11 @@ const mapStateToProps = state => ({
   repository: state.repository.repository,
   contributors: state.repository.contributors,
   issues: state.repository.issues,
+  starred: state.repository.starred,
   isPendingRepository: state.repository.isPendingRepository,
   isPendingContributors: state.repository.isPendingContributors,
-  isPendingIssues: state.repository.isPendingIssues
+  isPendingIssues: state.repository.isPendingIssues,
+  isPendingCheckStarred: state.repository.isPendingCheckStarred
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -47,9 +49,11 @@ class Repository extends Component {
     repository: Object,
     contributors: Array,
     issues: Array,
+    starred: boolean,
     isPendingRepository: boolean,
     isPendingContributors: boolean,
     isPendingIssues: boolean,
+    isPendingCheckStarred: boolean,
     navigation: Object
   };
 
@@ -61,6 +65,22 @@ class Repository extends Component {
     this.props.getRepositoryInfo(repo ? repo.url : repoUrl);
   }
 
+  showMenuActionSheet() {
+    const { starred } = this.props;
+    const repositoryActions = ["Watch", starred ? "★ Unstar" : "★ Star"];
+
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        title: "Repository Actions",
+        options: [...repositoryActions, "Cancel"],
+        cancelButtonIndex: 2
+      },
+      buttonIndex => {
+        console.log(repositoryActions[buttonIndex]);
+      }
+    );
+  }
+
   render() {
     const {
       repository,
@@ -69,6 +89,7 @@ class Repository extends Component {
       isPendingRepository,
       isPendingContributors,
       isPendingIssues,
+      isPendingCheckStarred,
       navigation
     } = this.props;
 
@@ -99,6 +120,8 @@ class Repository extends Component {
           }}
           stickyTitle={repository.name}
           navigateBack
+          showMenu={!isPendingCheckStarred}
+          menuAction={() => this.showMenuActionSheet()}
           navigation={navigation}
         >
 
