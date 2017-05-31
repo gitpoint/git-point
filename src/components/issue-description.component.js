@@ -1,4 +1,6 @@
-import React, { PropTypes } from "react";
+// @flow
+
+import React from "react";
 import { StyleSheet, View, ActivityIndicator } from "react-native";
 import { ListItem } from "react-native-elements";
 
@@ -7,11 +9,19 @@ import {
   MembersList,
   LabelButton,
   DiffBlocks
-} from "@components";
+} from "components";
 
-import config from "@config";
+import config from "config";
 import Parse from "parse-diff";
 import moment from "moment";
+
+type Props = {
+  issue: Object,
+  diff: string,
+  isPendingDiff: boolean,
+  onRepositoryPress: Function,
+  navigation: Object
+};
 
 export const IssueDescriptionListItem = ({
   issue,
@@ -19,7 +29,7 @@ export const IssueDescriptionListItem = ({
   isPendingDiff,
   onRepositoryPress,
   navigation
-}) => {
+}: Props) => {
   const filesChanged = Parse(diff);
 
   let lineAdditions = 0;
@@ -108,14 +118,6 @@ const renderLabelButtons = labels => {
   return labels
     .slice(0, 3)
     .map((label, i) => <LabelButton key={i} label={label} />);
-};
-
-IssueDescriptionListItem.propTypes = {
-  issue: PropTypes.object,
-  diff: PropTypes.string,
-  onRepositoryPress: PropTypes.func,
-  isPendingDiff: PropTypes.bool,
-  navigation: PropTypes.object
 };
 
 const styles = StyleSheet.create({

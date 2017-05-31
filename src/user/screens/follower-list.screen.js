@@ -1,10 +1,10 @@
-import React, { Component, PropTypes } from "react";
+import React, { Component } from "react";
 import { FlatList, View } from "react-native";
 
-import {ViewContainer, UserListItem, LoadingUserListItem} from "@components";
+import { ViewContainer, UserListItem, LoadingUserListItem } from "components";
 
 import { connect } from "react-redux";
-import { getFollowers } from "@user";
+import { getFollowers } from "user";
 
 const mapStateToProps = state => ({
   user: state.user.user,
@@ -17,6 +17,13 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class FollowerList extends Component {
+  props: {
+    getFollowers: Function,
+    followers: Array,
+    isPendingFollowers: boolean,
+    navigation: Object
+  };
+
   componentDidMount() {
     const user = this.props.navigation.state.params.user;
     this.props.getFollowers(user);
@@ -41,7 +48,11 @@ class FollowerList extends Component {
               data={followers}
               keyExtractor={this.keyExtractor}
               renderItem={({ item }) => (
-                <UserListItem user={item} navigation={navigation} showFullName />
+                <UserListItem
+                  user={item}
+                  navigation={navigation}
+                  showFullName
+                />
               )}
             />
           </View>}
@@ -54,11 +65,6 @@ class FollowerList extends Component {
   };
 }
 
-FollowerList.propTypes = {
-  getFollowers: PropTypes.func,
-  followers: PropTypes.array,
-  isPendingFollowers: PropTypes.bool,
-  navigation: PropTypes.object
-};
-
-export const FollowerListScreen = connect(mapStateToProps, mapDispatchToProps)(FollowerList);
+export const FollowerListScreen = connect(mapStateToProps, mapDispatchToProps)(
+  FollowerList
+);

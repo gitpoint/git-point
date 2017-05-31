@@ -1,19 +1,25 @@
-import React, {PropTypes} from 'react';
-import { Text, View, StyleSheet } from 'react-native'
+import React from "react";
+import { Text, View, StyleSheet } from "react-native";
 
-import config from '@config';
+import config from "config";
 
-export const IssueStateBadge = ({ issue }) => {
+type Props = {
+  issue: Object
+};
+
+export const IssueStateBadge = ({ issue }: Props) => {
   return (
-    <View style={[styles.badge, issue.state ===  'open' ? styles.openIssue : styles.closedIssue]}>
-      <Text style={styles.text}>{issue.state === 'open' ? 'Open' : 'Closed'}</Text>
+    <View
+      style={[
+        styles.badge,
+        issue.state === "open" ? styles.openIssue : styles.closedIssue
+      ]}
+    >
+      <Text style={styles.text}>
+        {issue.state === "open" ? "Open" : "Closed"}
+      </Text>
     </View>
-  )
-}
-
-IssueStateBadge.propTypes = {
-  issue: PropTypes.object,
-  navigation: PropTypes.object,
+  );
 };
 
 const styles = StyleSheet.create({
@@ -21,17 +27,17 @@ const styles = StyleSheet.create({
     padding: 12,
     paddingTop: 3,
     paddingBottom: 3,
-    borderRadius: 20,
+    borderRadius: 20
   },
   openIssue: {
-    backgroundColor: config.colors.green,
+    backgroundColor: config.colors.green
   },
   closedIssue: {
-    backgroundColor: config.colors.red,
+    backgroundColor: config.colors.red
   },
   text: {
     fontSize: 14,
-    fontFamily: 'AvenirNext-DemiBold',
-    color: config.colors.white,
+    fontFamily: "AvenirNext-DemiBold",
+    color: config.colors.white
   }
-})
+});

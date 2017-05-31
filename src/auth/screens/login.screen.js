@@ -1,49 +1,54 @@
-import React, {Component} from 'react';
-import {Dimensions, Linking, View, StyleSheet, Image} from 'react-native';
-import {Button} from 'react-native-elements';
+import React, { Component } from "react";
+import { Dimensions, Linking, View, StyleSheet, Image } from "react-native";
+import { Button } from "react-native-elements";
 
-import {LoadingContainer} from "@components";
+import { LoadingContainer } from "components";
 
-import config from '@config';
-import {CLIENT_ID} from '@api';
+import config from "config";
+import { CLIENT_ID } from "api";
 
-import queryString from 'query-string';
-import {connect} from 'react-redux';
-import {auth} from '@auth';
+import queryString from "query-string";
+import { connect } from "react-redux";
+import { auth } from "auth";
 
-const stateRandom = Math.random() + '';
-const window = Dimensions.get('window');
+const stateRandom = Math.random() + "";
+const window = Dimensions.get("window");
 
 const mapStateToProps = state => ({
   isLoggingIn: state.auth.isLoggingIn,
-  isAuthenticated: state.auth.isAuthenticated,
-  accessToken: state.auth.accessToken,
+  isAuthenticated: state.auth.isAuthenticated
 });
 
 const mapDispatchToProps = dispatch => ({
-  auth: (code, state) => dispatch(auth(code, state)),
+  auth: (code, state) => dispatch(auth(code, state))
 });
 
 class Login extends Component {
+  props: {
+    isAuthenticated: boolean,
+    isLoggingIn: boolean,
+    auth: Function
+  };
+
   constructor() {
     super();
 
     this.state = {
       code: null,
-      asyncStorageChecked: false,
+      asyncStorageChecked: false
     };
   }
 
   componentDidMount() {
     if (this.props.isAuthenticated) {
-      this.props.navigation.navigate('Main');
+      this.props.navigation.navigate("Main");
     } else {
-      this.setState({asyncStorageChecked: true});
+      this.setState({ asyncStorageChecked: true });
     }
   }
 
   githubOauth(client_id, callback) {
-    Linking.addEventListener('url', handleUrl);
+    Linking.addEventListener("url", handleUrl);
 
     function handleUrl(event) {
       var [, query_string] = event.url.match(/\?(.*)/);
@@ -51,9 +56,9 @@ class Login extends Component {
       if (stateRandom === query.state) {
         callback(null, query.code);
       } else {
-        callback(new Error('Oauth2 security error'));
+        callback(new Error("Oauth2 security error"));
       }
-      Linking.removeEventListener('url', handleUrl);
+      Linking.removeEventListener("url", handleUrl);
     }
 
     Linking.openURL(
@@ -71,14 +76,14 @@ class Login extends Component {
       if (err) {
         console.log(err);
       }
-      this.setState({code});
+      this.setState({ code });
 
       this.props.auth(code, stateRandom);
     });
   }
 
   render() {
-    const {isLoggingIn, isAuthenticated, accessToken} = this.props;
+    const { isLoggingIn, isAuthenticated } = this.props;
 
     return (
       <View>
@@ -87,12 +92,12 @@ class Login extends Component {
           <View>
             <Image
               style={styles.image}
-              source={require('../../assets/login-background.png')}
+              source={require("../../assets/login-background.png")}
             >
               <View style={styles.logoContainer}>
                 <Image
                   style={styles.logo}
-                  source={require('../../assets/logo.png')}
+                  source={require("../../assets/logo.png")}
                 />
               </View>
             </Image>
@@ -101,7 +106,7 @@ class Login extends Component {
               raised
               title="Sign In"
               buttonStyle={styles.buttonSignIn}
-              textStyle={{fontWeight: 'bold', fontSize: 18}}
+              textStyle={{ fontWeight: "bold", fontSize: 18 }}
               onPress={() => this.signIn()}
             />
           </View>}
@@ -114,50 +119,50 @@ class Login extends Component {
 
 const styles = StyleSheet.create({
   image: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     height: window.height,
-    width: window.width,
+    width: window.width
   },
   loadingContainer: {
     backgroundColor: config.colors.white,
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center"
   },
   buttonSignIn: {
-    backgroundColor: 'rgba(105,105,105,0.8)',
+    backgroundColor: "rgba(105,105,105,0.8)",
     borderRadius: 5,
     paddingVertical: 15,
     width: window.width - 30,
-    position: 'absolute',
+    position: "absolute",
     right: 15,
     bottom: 20,
-    shadowColor: 'transparent',
+    shadowColor: "transparent"
   },
   container: {
     flex: 1,
-    backgroundColor: config.colors.white,
+    backgroundColor: config.colors.white
   },
   logoContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     flexGrow: 1,
-    justifyContent: 'center',
+    justifyContent: "center"
   },
   logo: {
     width: 100,
-    height: 100,
+    height: 100
   },
   title: {
-    fontFamily: 'AvenirNext-Bold',
+    fontFamily: "AvenirNext-Bold",
     color: config.colors.white,
     marginTop: 20,
     width: 160,
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 24,
-    fontWeight: 'bold',
-    opacity: 0.9,
-  },
+    fontWeight: "bold",
+    opacity: 0.9
+  }
 });
 
 export const LoginScreen = connect(mapStateToProps, mapDispatchToProps)(Login);

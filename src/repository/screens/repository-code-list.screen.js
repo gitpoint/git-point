@@ -1,51 +1,57 @@
-import React, {Component, PropTypes} from 'react';
-import {StyleSheet, FlatList} from 'react-native';
-import {ListItem} from 'react-native-elements';
+import React, { Component } from "react";
+import { StyleSheet, FlatList } from "react-native";
+import { ListItem } from "react-native-elements";
 
-import {
-  ViewContainer
-} from "@components";
+import { ViewContainer } from "components";
 
-import config from '@config';
+import config from "config";
 
-import {connect} from 'react-redux';
-import {getContents} from '../repository.action';
+import { connect } from "react-redux";
+import { getContents } from "../repository.action";
 
 const mapStateToProps = state => ({
   repository: state.repository.repository,
   contents: state.repository.contents,
-  isPendingContents: state.repository.isPendingContents,
+  isPendingContents: state.repository.isPendingContents
 });
 
 const mapDispatchToProps = dispatch => ({
-  getContents: url => dispatch(getContents(url)),
+  getContents: url => dispatch(getContents(url))
 });
 
 class RepositoryCodeList extends Component {
+  props: {
+    getContents: Function,
+    repository: Object,
+    contents: Array,
+    isPendingContents: boolean,
+    navigation: Object
+  };
+
   componentDidMount() {
     const navigationParams = this.props.navigation.state.params;
-    const url = navigationParams.topLevel ? this.props.repository.contents_url.replace('{+path}', '') : navigationParams.content.url;
+    const url = navigationParams.topLevel
+      ? this.props.repository.contents_url.replace("{+path}", "")
+      : navigationParams.content.url;
     this.props.getContents(url);
   }
 
-  sortedContents = contents => contents.sort((a, b) => {
-    return a.type === b.type ? 0 : a.type === 'dir' ? -1 : 1;
-  });
+  sortedContents = contents =>
+    contents.sort((a, b) => {
+      return a.type === b.type ? 0 : a.type === "dir" ? -1 : 1;
+    });
 
   goToPath = content => {
-    if (content.type === 'dir') {
-      return this.props.navigation.navigate('RepositoryCodeList', {
+    if (content.type === "dir") {
+      return this.props.navigation.navigate("RepositoryCodeList", {
         topLevel: false,
-        content: content,
+        content: content
       });
     }
   };
 
   render() {
-    const {
-      contents,
-      isPendingContents,
-    } = this.props;
+    const { contents, isPendingContents } = this.props;
 
     return (
       <ViewContainer barColor="dark">
@@ -59,15 +65,15 @@ class RepositoryCodeList extends Component {
     );
   }
 
-  renderItem = ({item}) => (
+  renderItem = ({ item }) => (
     <ListItem
       title={item.name}
       leftIcon={{
-        name: item.type === 'dir' ? 'file-directory' : 'file',
+        name: item.type === "dir" ? "file-directory" : "file",
         color: config.colors.grey,
-        type: 'octicon'
+        type: "octicon"
       }}
-      titleStyle={item.type === 'dir' ? styles.titleBold : styles.title}
+      titleStyle={item.type === "dir" ? styles.titleBold : styles.title}
       onPress={() => this.goToPath(item)}
       underlayColor={config.colors.greyLight}
     />
@@ -81,20 +87,15 @@ class RepositoryCodeList extends Component {
 const styles = StyleSheet.create({
   title: {
     color: config.colors.black,
-    fontFamily: 'AvenirNext-Regular',
+    fontFamily: "AvenirNext-Regular"
   },
   titleBold: {
     color: config.colors.black,
-    fontFamily: 'AvenirNext-DemiBold',
-  },
+    fontFamily: "AvenirNext-DemiBold"
+  }
 });
 
-RepositoryCodeList.propTypes = {
-  getContents: PropTypes.func,
-  repository: PropTypes.object,
-  contents: PropTypes.array,
-  isPendingContents: PropTypes.bool,
-  navigation: PropTypes.object,
-};
-
-export const RepositoryCodeListScreen = connect(mapStateToProps, mapDispatchToProps)(RepositoryCodeList);
+export const RepositoryCodeListScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RepositoryCodeList);

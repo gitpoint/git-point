@@ -1,16 +1,23 @@
-import React, {PropTypes} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+// @flow
 
-import config from '@config';
+import React from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-export const DiffBlocks = (
-  {
-    additions,
-    deletions,
-    showNumbers,
-    onPress,
-  },
-) => {
+import config from "config";
+
+type Props = {
+  additions: number,
+  deletions: number,
+  showNumbers: boolean,
+  onPress: Function
+};
+
+export const DiffBlocks = ({
+  additions,
+  deletions,
+  showNumbers,
+  onPress
+}: Props) => {
   const linesChanged = additions + deletions;
 
   let greenBlocks = null;
@@ -52,46 +59,39 @@ export const DiffBlocks = (
   );
 };
 
-DiffBlocks.propTypes = {
-  additions: PropTypes.number,
-  deletions: PropTypes.number,
-  showNumbers: PropTypes.bool,
-  onPress: PropTypes.func,
-};
-
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center"
   },
   linesChanged: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center"
   },
   numAdditions: {
     marginRight: 3,
-    fontFamily: 'AvenirNext-DemiBold',
+    fontFamily: "AvenirNext-DemiBold",
     color: config.colors.green,
-    letterSpacing: 1,
+    letterSpacing: 1
   },
   numDeletions: {
     marginRight: 2,
-    fontFamily: 'AvenirNext-DemiBold',
+    fontFamily: "AvenirNext-DemiBold",
     color: config.colors.red,
-    letterSpacing: 1,
+    letterSpacing: 1
   },
   block: {
     width: 7,
     height: 7,
-    marginLeft: 1,
+    marginLeft: 1
   },
   greenBlock: {
-    backgroundColor: config.colors.green,
+    backgroundColor: config.colors.green
   },
   redBlock: {
-    backgroundColor: config.colors.darkRed,
+    backgroundColor: config.colors.darkRed
   },
   greyBlock: {
-    backgroundColor: config.colors.greyMid,
-  },
+    backgroundColor: config.colors.greyMid
+  }
 });

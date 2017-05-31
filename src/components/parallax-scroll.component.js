@@ -1,24 +1,30 @@
-import React, {PropTypes} from 'react';
-import {View, Text, Dimensions, StyleSheet} from 'react-native';
+import React from "react";
+import { View, Text, Dimensions, StyleSheet } from "react-native";
 
-import ParallaxScrollView from 'react-native-parallax-scroll-view';
-import {Icon} from 'react-native-elements';
+import ParallaxScrollView from "react-native-parallax-scroll-view";
+import { Icon } from "react-native-elements";
 
-import config from '@config';
+import config from "config";
 
-const window = Dimensions.get('window');
+const window = Dimensions.get("window");
 const PARALLAX_HEADER_HEIGHT = window.height / 2;
 const STICKY_HEADER_HEIGHT = 62;
 
-export const ParallaxScroll = (
-  {
-    renderContent,
-    stickyTitle,
-    navigateBack,
-    navigation,
-    children,
-  },
-) => (
+type Props = {
+  renderContent: any,
+  stickyTitle: string,
+  navigateBack: boolean,
+  navigation: Object,
+  children?: React.Element<*>
+};
+
+export const ParallaxScroll = ({
+  renderContent,
+  stickyTitle,
+  navigateBack,
+  navigation,
+  children
+}: Props) => (
   <ParallaxScrollView
     backgroundColor={config.colors.primarydark}
     stickyHeaderHeight={STICKY_HEADER_HEIGHT}
@@ -63,43 +69,35 @@ export const ParallaxScroll = (
   </ParallaxScrollView>
 );
 
-ParallaxScroll.propTypes = {
-  renderContent: PropTypes.any,
-  stickyTitle: PropTypes.string,
-  navigateBack: PropTypes.bool,
-  children: PropTypes.any,
-  navigation: PropTypes.object,
-};
-
 const styles = StyleSheet.create({
   background: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     width: window.width,
     backgroundColor: config.colors.primarydark,
-    height: PARALLAX_HEADER_HEIGHT,
+    height: PARALLAX_HEADER_HEIGHT
   },
   stickySection: {
     height: STICKY_HEADER_HEIGHT,
     backgroundColor: config.colors.primarydark,
     width: window.width,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
+    alignItems: "center",
+    justifyContent: "flex-end"
   },
   stickySectionText: {
     color: config.colors.white,
-    fontFamily: 'AvenirNext-Bold',
+    fontFamily: "AvenirNext-Bold",
     fontSize: 18,
-    fontWeight: 'bold',
-    margin: 10,
+    fontWeight: "bold",
+    margin: 10
   },
   fixedSectionLeft: {
-    position: 'absolute',
-    bottom: 0,
+    position: "absolute",
+    bottom: 0
   },
   fixedSectionRight: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 10,
-    right: 10,
-  },
+    right: 10
+  }
 });

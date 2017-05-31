@@ -1,28 +1,47 @@
-import React, {PropTypes} from 'react';
-import {StyleSheet, Text, View, ActivityIndicator} from 'react-native';
-import {List, ListItem, Button} from 'react-native-elements';
+import React from "react";
+import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
+import { List, ListItem, Button } from "react-native-elements";
 
-import config from '@config';
+import config from "config";
 
-export const SectionList = (
-  { 
-    loading,
-    title,
-    showButton,
-    buttonTitle,
-    buttonAction,
-    noOuterBorders,
-    noItems,
-    noItemsMessage,
-    children,
-  }
-) => {
+type Props = {
+  loading: boolean,
+  title: string,
+  children?: React.Element<*>,
+  showButton: boolean,
+  showActionButton: boolean,
+  buttonTitle: string,
+  noOuterBorders: boolean,
+  noItems: boolean,
+  noItemsMessage: string,
+  buttonAction: Function
+};
+
+export const SectionList = ({
+  loading,
+  title,
+  showButton,
+  buttonTitle,
+  buttonAction,
+  noOuterBorders,
+  noItems,
+  noItemsMessage,
+  children
+}: Props) => {
   let listDisplay;
 
   if (loading) {
-    listDisplay = <ActivityIndicator animating={loading} style={styles.loadingIcon}/>
+    listDisplay = (
+      <ActivityIndicator animating={loading} style={styles.loadingIcon} />
+    );
   } else if (noItems) {
-    listDisplay = <ListItem title={noItemsMessage} titleStyle={styles.listTitle} hideChevron/>;
+    listDisplay = (
+      <ListItem
+        title={noItemsMessage}
+        titleStyle={styles.listTitle}
+        hideChevron
+      />
+    );
   } else {
     listDisplay = children;
   }
@@ -32,7 +51,8 @@ export const SectionList = (
       <View style={styles.topHeader}>
         <Text style={styles.sectionTitle}>{title.toUpperCase()}</Text>
 
-        {showButton && !loading &&
+        {showButton &&
+          !loading &&
           <Button
             title={buttonTitle}
             fontFamily="AvenirNext-DemiBold"
@@ -42,44 +62,33 @@ export const SectionList = (
             onPress={buttonAction}
           />}
       </View>
-      <List containerStyle={[styles.list, noOuterBorders && styles.noOuterBorders]}>
+      <List
+        containerStyle={[styles.list, noOuterBorders && styles.noOuterBorders]}
+      >
         {listDisplay}
       </List>
     </View>
-  )
-};
-
-SectionList.propTypes = {
-  loading: PropTypes.bool,
-  title: PropTypes.string,
-  children: PropTypes.any,
-  showButton: PropTypes.bool,
-  showActionButton: PropTypes.bool,
-  buttonTitle: PropTypes.string,
-  noOuterBorders: PropTypes.bool,
-  noItems: PropTypes.bool,
-  noItemsMessage: PropTypes.string,
-  buttonAction: PropTypes.func,
+  );
 };
 
 const styles = StyleSheet.create({
   section: {
-    marginTop: 15,
+    marginTop: 15
   },
   topHeader: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
   },
   sectionTitle: {
     color: config.colors.black,
     padding: 15,
-    fontFamily: 'AvenirNext-Bold',
+    fontFamily: "AvenirNext-Bold"
   },
   listTitle: {
     color: config.colors.black,
-    fontFamily: 'AvenirNext-Medium',
+    fontFamily: "AvenirNext-Medium"
   },
   button: {
     backgroundColor: config.colors.white,
@@ -88,16 +97,16 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     paddingVertical: 5,
     paddingHorizontal: 10,
-    margin: 0,
+    margin: 0
   },
   list: {
-    marginTop: 0,
+    marginTop: 0
   },
   noOuterBorders: {
     borderTopWidth: 0,
-    borderBottomWidth: 0,
+    borderBottomWidth: 0
   },
   loadingIcon: {
-    marginVertical: 20,
+    marginVertical: 20
   }
 });

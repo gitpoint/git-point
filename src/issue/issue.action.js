@@ -13,7 +13,7 @@ import {
   fetchPostIssueComment,
   fetchEditIssue,
   fetchChangeIssueLockStatus
-} from '@api';
+} from 'api';
 
 export const getIssueComments = issue => {
   return (dispatch, getState) => {

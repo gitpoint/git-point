@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {StyleSheet, Animated, View} from 'react-native';
-import config from '@config';
+import config from 'config';
 
 import {
   loadingAnimation,
-} from '@utils';
+} from 'utils';
 
 export class LoadingUserListItem extends Component {
   constructor() {

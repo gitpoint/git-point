@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from "react";
+import React, { Component } from "react";
 import { FlatList, View, Dimensions, StyleSheet } from "react-native";
 import SearchBar from "react-native-search-bar";
 
@@ -6,12 +6,12 @@ import {
   ViewContainer,
   RepositoryListItem,
   LoadingRepositoryListItem
-} from "@components";
+} from "components";
 
-import config from '@config';
+import config from "config";
 
 import { connect } from "react-redux";
-import { getRepositories, searchUserRepos } from "@user";
+import { getRepositories, searchUserRepos } from "user";
 
 const mapStateToProps = state => ({
   user: state.user.user,
@@ -27,6 +27,23 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class RepositoryList extends Component {
+  state: {
+    query: string,
+    searchStart: boolean,
+    searchFocus: boolean
+  };
+
+  props: {
+    getRepositories: Function,
+    searchUserRepos: Function,
+    user: Object,
+    repositories: Array,
+    searchedUserRepos: Array,
+    isPendingRepositories: boolean,
+    isPendingSearchUserRepos: boolean,
+    navigation: Object
+  };
+
   constructor() {
     super();
 
@@ -134,17 +151,6 @@ class RepositoryList extends Component {
   };
 }
 
-RepositoryList.propTypes = {
-  getRepositories: PropTypes.func,
-  searchUserRepos: PropTypes.func,
-  user: PropTypes.object,
-  repositories: PropTypes.array,
-  searchedUserRepos: PropTypes.array,
-  isPendingRepositories: PropTypes.bool,
-  isPendingSearchUserRepos: PropTypes.bool,
-  navigation: PropTypes.object
-};
-
 const styles = StyleSheet.create({
   header: {
     borderBottomColor: config.colors.greyLight,
@@ -163,4 +169,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const RepositoryListScreen = connect(mapStateToProps, mapDispatchToProps)(RepositoryList);
+export const RepositoryListScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RepositoryList);

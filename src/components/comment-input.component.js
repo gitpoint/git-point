@@ -1,26 +1,44 @@
-import React, {Component, PropTypes} from 'react';
-import {StyleSheet, View, TouchableOpacity, Text, TextInput} from 'react-native';
-import {Icon} from 'react-native-elements';
+// @flow
 
-import config from '@config';
+import React, { Component } from "react";
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Text,
+  TextInput
+} from "react-native";
+import { Icon } from "react-native-elements";
+
+import config from "config";
 
 export class CommentInput extends Component {
+  state: {
+    text: string,
+    height: number
+  };
+  props: {
+    userHasPushPermission: boolean,
+    issueLocked: boolean,
+    onSubmitEditing: Function
+  };
+
   constructor() {
     super();
 
     this.state = {
-      text: '',
-      height: 0,
+      text: "",
+      height: 0
     };
   }
 
-  handleSubmit = (body) => {
+  handleSubmit = (body: string): void => {
     this.props.onSubmitEditing(body);
-    this.setState({text: ''});
-  }
+    this.setState({ text: "" });
+  };
 
   render() {
-    const {userHasPushPermission, issueLocked} = this.props;
+    const { userHasPushPermission, issueLocked } = this.props;
 
     let userCanPost = null;
     if (issueLocked && !userHasPushPermission) {
@@ -36,60 +54,71 @@ export class CommentInput extends Component {
 
           {userCanPost &&
             <TextInput
-              placeholder={(issueLocked && userHasPushPermission) ? "Locked, but you can still comment..." : "Add a comment..."}
-              multiline={true}
-              blurOnSubmit={true}
-              onChangeText={text => this.setState({text})}
-              onContentSizeChange={event => this.setState({height: event.nativeEvent.contentSize.height})}
-              onSubmitEditing={event => this.handleSubmit(event.nativeEvent.text)}
+              placeholder={
+                issueLocked && userHasPushPermission
+                  ? "Locked, but you can still comment..."
+                  : "Add a comment..."
+              }
+              multiline
+              blurOnSubmit
+              onChangeText={text => this.setState({ text })}
+              onContentSizeChange={event =>
+                this.setState({ height: event.nativeEvent.contentSize.height })}
+              onSubmitEditing={event =>
+                this.handleSubmit(event.nativeEvent.text)}
               placeholderTextColor={config.colors.grey}
               style={[
                 styles.textInput,
-                {height: Math.max(30, this.state.height)},
+                { height: Math.max(30, this.state.height) }
               ]}
               value={this.state.text}
-            />
-          }
+            />}
 
           {!userCanPost &&
-            <Text style={[styles.textInput, {color: config.colors.grey}]}>Issue is locked</Text>
-          }
+            <Text style={[styles.textInput, { color: config.colors.grey }]}>
+              Issue is locked
+            </Text>}
 
           {!this.props.issueLocked &&
-            <TouchableOpacity disabled={this.state.text === ''} style={styles.postButtonContainer} onPress={() => this.handleSubmit(this.state.text)}>
-              <Text style={[styles.postButton, this.state.text === '' ? styles.postButtonDisabled : styles.postButtonEnabled]}>Post</Text>
-            </TouchableOpacity>
-          }
+            <TouchableOpacity
+              disabled={this.state.text === ""}
+              style={styles.postButtonContainer}
+              onPress={() => this.handleSubmit(this.state.text)}
+            >
+              <Text
+                style={[
+                  styles.postButton,
+                  this.state.text === ""
+                    ? styles.postButtonDisabled
+                    : styles.postButtonEnabled
+                ]}
+              >
+                Post
+              </Text>
+            </TouchableOpacity>}
 
           {this.props.issueLocked &&
             <View style={styles.postButtonContainer}>
               <Icon name="lock" type="octicon" color={config.colors.grey} />
-            </View>
-          }
+            </View>}
         </View>
       </View>
     );
   }
 }
 
-CommentInput.propTypes = {
-  userHasPushPermission: PropTypes.bool,
-  issueLocked: PropTypes.bool,
-  onSubmitEditing: PropTypes.func,
-};
-
 const styles = StyleSheet.create({
   container: {
     borderTopColor: config.colors.greyLight,
     borderTopWidth: 1,
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent"
   },
   wrapper: {
     padding: 10,
     marginLeft: 5,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center"
   },
   textInput: {
     fontSize: 14,
@@ -97,22 +126,22 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     marginRight: 5,
     color: config.colors.black,
-    fontFamily: 'AvenirNext-Regular',
+    fontFamily: "AvenirNext-Regular"
   },
   postButtonContainer: {
     flex: 0.15,
-    alignItems: 'flex-end',
-    justifyContent: 'center',
+    alignItems: "flex-end",
+    justifyContent: "center"
   },
   postButton: {
     fontSize: 14,
     letterSpacing: 1,
-    fontFamily: 'AvenirNext-DemiBold',
+    fontFamily: "AvenirNext-DemiBold"
   },
   postButtonDisabled: {
-    color: config.colors.grey,
+    color: config.colors.grey
   },
   postButtonEnabled: {
-    color: config.colors.primaryDark,
+    color: config.colors.primaryDark
   }
 });

@@ -22,6 +22,8 @@ node_modules/react-native/flow
 flow/
 
 [options]
+module.system.node.resolve_dirname=node_modules
+module.system.node.resolve_dirname=src
 emoji=true
 
 module.system=haste

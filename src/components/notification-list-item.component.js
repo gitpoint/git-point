@@ -2,13 +2,19 @@ import React, { PropTypes } from "react";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import { Icon } from "react-native-elements";
 
-import config from '@config';
+import config from "config";
+
+type Props = {
+  notification: Object,
+  iconAction: Function,
+  navigationAction: Function
+};
 
 export const NotificationListItem = ({
   notification,
   iconAction,
   navigationAction
-}) => {
+}: Props) => {
   const TitleComponent = notification.subject.type === "Commit"
     ? View
     : TouchableOpacity;
@@ -43,14 +49,19 @@ export const NotificationListItem = ({
             style={styles.iconContainer}
             onPress={() => iconAction(notification.id)}
           >
-            <Icon color={config.colors.grey} size={22} name="check" type="octicon" />
+            <Icon
+              color={config.colors.grey}
+              size={22}
+              name="check"
+              type="octicon"
+            />
           </TouchableOpacity>}
       </View>
     </View>
   );
 };
 
-NotificationListItem.propTypes = {
+NotificationListItem.props = {
   notification: PropTypes.object,
   iconAction: PropTypes.func,
   navigationAction: PropTypes.func

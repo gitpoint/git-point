@@ -1,30 +1,36 @@
-import React, {Component, PropTypes} from 'react';
-import {StyleSheet, View, Text, ActivityIndicator} from 'react-native';
-import {Button} from 'react-native-elements';
+import React, { Component } from "react";
+import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
+import { Button } from "react-native-elements";
 
-import {ViewContainer} from "@components";
+import { ViewContainer } from "components";
 
-import config from '@config';
+import config from "config";
 
-import {NavigationActions} from 'react-navigation';
-import {connect} from 'react-redux';
+import { NavigationActions } from "react-navigation";
+import { connect } from "react-redux";
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
-  isLoggingIn: state.auth.isLoggingIn,
+  isLoggingIn: state.auth.isLoggingIn
 });
 
 class Welcome extends Component {
+  props: {
+    isAuthenticated: boolean,
+    isLoggingIn: boolean,
+    navigation: Object
+  };
+
   _navigateTo = (routeName: string) => {
     const resetAction = NavigationActions.reset({
       index: 0,
-      actions: [NavigationActions.navigate({routeName})],
+      actions: [NavigationActions.navigate({ routeName })]
     });
     this.props.navigation.dispatch(resetAction);
   };
 
   render() {
-    const {isAuthenticated, isLoggingIn} = this.props;
+    const { isAuthenticated, isLoggingIn } = this.props;
 
     return (
       <ViewContainer barColor="dark">
@@ -45,7 +51,7 @@ class Welcome extends Component {
               fontWeight="bold"
               buttonStyle={styles.enterButton}
               color={config.colors.white}
-              onPress={() => this._navigateTo('Main')}
+              onPress={() => this._navigateTo("Main")}
             />}
         </View>
       </ViewContainer>
@@ -53,33 +59,27 @@ class Welcome extends Component {
   }
 }
 
-Welcome.propTypes = {
-  isAuthenticated: PropTypes.bool,
-  isLoggingIn: PropTypes.bool,
-  navigation: PropTypes.object,
-};
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center"
   },
   welcomeMessage: {
     color: config.colors.primarydark,
     fontSize: 26,
-    fontFamily: 'AvenirNext-Medium',
+    fontFamily: "AvenirNext-Medium"
   },
   loadingIcon: {
-    marginTop: 30,
+    marginTop: 30
   },
   enterButton: {
     marginTop: 30,
     backgroundColor: config.colors.primarydark,
     borderRadius: 3,
     paddingVertical: 5,
-    width: 100,
-  },
+    width: 100
+  }
 });
 
 export const WelcomeScreen = connect(mapStateToProps)(Welcome);

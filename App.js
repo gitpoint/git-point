@@ -9,41 +9,41 @@ import {
 } from 'react-native';
 import {StackNavigator, TabNavigator} from 'react-navigation';
 import {Icon} from 'react-native-elements';
-import config from '@config';
+import config from 'config';
 
 //Auth
-import { SplashScreen } from '@auth';
-import { LoginScreen } from '@auth';
-import { WelcomeScreen } from '@auth';
-import { AuthProfileScreen } from '@auth';
-import { EventsScreen } from '@auth';
+import { SplashScreen } from 'auth';
+import { LoginScreen } from 'auth';
+import { WelcomeScreen } from 'auth';
+import { AuthProfileScreen } from 'auth';
+import { EventsScreen } from 'auth';
 
 //User
-import { ProfileScreen } from '@user';
-import { RepositoryListScreen } from '@user';
-import { FollowerListScreen } from '@user';
-import { FollowingListScreen } from '@user';
+import { ProfileScreen } from 'user';
+import { RepositoryListScreen } from 'user';
+import { FollowerListScreen } from 'user';
+import { FollowingListScreen } from 'user';
 
 //Organization
-import { OrganizationProfileScreen } from '@organization';
+import { OrganizationProfileScreen } from 'organization';
 
 //Search
-import { SearchScreen } from '@search';
+import { SearchScreen } from 'search';
 
 //Notifications
-import { NotificationsScreen } from '@notifications';
+import { NotificationsScreen } from 'notifications';
 
 //Repository
-import { RepositoryScreen } from '@repository';
-import { RepositoryCodeListScreen } from '@repository';
-import { IssueListScreen } from '@repository';
-import { PullListScreen } from '@repository';
-import { PullDiffScreen } from '@repository';
-import { ReadMeScreen } from '@repository';
+import { RepositoryScreen } from 'repository';
+import { RepositoryCodeListScreen } from 'repository';
+import { IssueListScreen } from 'repository';
+import { PullListScreen } from 'repository';
+import { PullDiffScreen } from 'repository';
+import { ReadMeScreen } from 'repository';
 
 //Issue
-import { IssueScreen } from '@issue';
-import { IssueSettingsScreen } from '@issue';
+import { IssueScreen } from 'issue';
+import { IssueSettingsScreen } from 'issue';
 
 // Redux Store
 import {compose, createStore, applyMiddleware} from 'redux';

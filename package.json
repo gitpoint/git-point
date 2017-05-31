@@ -1,10 +1,14 @@
 {
-  "name": "GitPoint",
+  "name": "gitpoint",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "flow-start": "flow start",
+    "flow-stop": "flow stop",
+    "flow-status": "flow status",
+    "flow-coverage": "flow coverage"
   },
   "dependencies": {
     "moment": "^2.17.1",
@@ -29,6 +33,7 @@
     "babel-eslint": "^7.1.1",
     "babel-jest": "18.0.0",
     "babel-plugin-module-resolver": "^2.7.1",
+    "babel-preset-flow": "^6.23.0",
     "babel-preset-react-native": "1.9.1",
     "eslint": "^3.15.0",
     "eslint-config-airbnb": "^14.1.0",
@@ -36,6 +41,7 @@
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.0",
     "eslint-plugin-react-native": "^2.2.1",
+    "flow-bin": "^0.38.0",
     "jest": "18.1.0",
     "react-native-htmlview": "^0.9.0",
     "react-test-renderer": "16.0.0-alpha.6"

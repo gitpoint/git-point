@@ -4,7 +4,8 @@
         "browser": true
     },
     "plugins": [
-        "react"
+        "react",
+        "react-native"
     ],
     "extends": [
         "eslint:recommended",

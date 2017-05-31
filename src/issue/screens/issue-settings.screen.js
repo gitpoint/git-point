@@ -1,19 +1,19 @@
-import React, {Component, PropTypes} from 'react';
-import {ScrollView, StyleSheet, ActionSheetIOS} from 'react-native';
-import {ListItem} from 'react-native-elements';
+import React, { Component } from "react";
+import { ScrollView, StyleSheet, ActionSheetIOS } from "react-native";
+import { ListItem } from "react-native-elements";
 
 import {
   ViewContainer,
   SectionList,
   UserListItem,
   LabelListItem
-} from "@components";
+} from "components";
 
-import config from '@config';
+import config from "config";
 
-import {connect} from 'react-redux';
-import {editIssue, changeIssueLockStatus} from '../issue.action';
-import {getLabels} from '@repository';
+import { connect } from "react-redux";
+import { editIssue, changeIssueLockStatus } from "../issue.action";
+import { getLabels } from "repository";
 
 const mapStateToProps = state => ({
   authUser: state.auth.user,
@@ -21,7 +21,7 @@ const mapStateToProps = state => ({
   labels: state.repository.labels,
   issue: state.issue.issue,
   isEditingIssue: state.issue.isEditingIssue,
-  isPendingLabels: state.repository.isPendingLabels,
+  isPendingLabels: state.repository.isPendingLabels
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -29,18 +29,31 @@ const mapDispatchToProps = dispatch => ({
     dispatch(editIssue(owner, repoName, issueNum, editParams, updateParams)),
   changeIssueLockStatus: (owner, repoName, issueNum, currentStatus) =>
     dispatch(changeIssueLockStatus(owner, repoName, issueNum, currentStatus)),
-  getLabels: url => dispatch(getLabels(url)),
+  getLabels: url => dispatch(getLabels(url))
 });
 
 class IssueSettings extends Component {
+  props: {
+    editIssue: Function,
+    changeIssueLockStatus: Function,
+    getLabels: Function,
+    authUser: Object,
+    repository: Object,
+    labels: Array,
+    issue: Object,
+    isEditingIssue: boolean,
+    isPendingLabels: boolean,
+    navigation: Object
+  };
+
   componentDidMount() {
     this.props.getLabels(
-      this.props.repository.labels_url.replace('{/name}', '')
+      this.props.repository.labels_url.replace("{/name}", "")
     );
   }
 
   render() {
-    const {issue, authUser, navigation} = this.props;
+    const { issue, authUser, navigation } = this.props;
 
     return (
       <ViewContainer>
@@ -49,7 +62,10 @@ class IssueSettings extends Component {
             showButton
             buttonTitle="Apply Label"
             buttonAction={() => this.showAddLabelActionSheet()}
-            style={{borderBottomWidth: 1, borderBottomColor: config.colors.grey}}
+            style={{
+              borderBottomWidth: 1,
+              borderBottomColor: config.colors.grey
+            }}
             noItems={issue.labels.length === 0}
             noItemsMessage="None yet"
             title="LABELS"
@@ -64,16 +80,16 @@ class IssueSettings extends Component {
                       labels: [
                         ...issue.labels
                           .map(label => label.name)
-                          .filter(labelName => labelName !== labelToRemove.name),
-                      ],
+                          .filter(labelName => labelName !== labelToRemove.name)
+                      ]
                     },
                     {
                       labels: issue.labels.filter(
                         label => label.name !== labelToRemove.name
-                      ),
+                      )
                     }
                   )}
-                />
+              />
             ))}
           </SectionList>
 
@@ -89,10 +105,10 @@ class IssueSettings extends Component {
                 {
                   assignees: [
                     ...issue.assignees.map(user => user.login),
-                    authUser.login,
-                  ],
+                    authUser.login
+                  ]
                 },
-                {assignees: [...issue.assignees, authUser]}
+                { assignees: [...issue.assignees, authUser] }
               )}
             noItems={issue.assignees.length === 0}
             noItemsMessage="None yet"
@@ -110,13 +126,13 @@ class IssueSettings extends Component {
                       assignees: [
                         ...issue.assignees
                           .map(user => user.login)
-                          .filter(user => user !== userToRemove),
-                      ],
+                          .filter(user => user !== userToRemove)
+                      ]
                     },
                     {
                       assignees: issue.assignees.filter(
                         assignee => assignee.login !== userToRemove
-                      ),
+                      )
                     }
                   )}
               />
@@ -125,24 +141,24 @@ class IssueSettings extends Component {
 
           <SectionList title="Actions">
             <ListItem
-              title={issue.locked ? 'Unlock issue' : 'Lock Issue'}
+              title={issue.locked ? "Unlock issue" : "Lock Issue"}
               hideChevron
               underlayColor={config.colors.greyLight}
               titleStyle={styles.listItemTitle}
               onPress={() => this.showLockIssueActionSheet(issue.locked)}
             />
             <ListItem
-              title={issue.state === 'open' ? 'Close Issue' : 'Reopen Issue'}
+              title={issue.state === "open" ? "Close Issue" : "Reopen Issue"}
               hideChevron
               underlayColor={config.colors.greyLight}
               titleStyle={
-                issue.state === 'open'
+                issue.state === "open"
                   ? styles.closeActionTitle
                   : styles.openActionTitle
               }
               onPress={() =>
                 this.showChangeIssueStateActionSheet(
-                  issue.state === 'open' ? 'close' : 'reopen'
+                  issue.state === "open" ? "close" : "reopen"
                 )}
             />
           </SectionList>
@@ -152,7 +168,7 @@ class IssueSettings extends Component {
   }
 
   editIssue = (editParams, stateChangeParams) => {
-    const {issue, repository} = this.props;
+    const { issue, repository } = this.props;
     const repoName = repository.name;
     const owner = repository.owner.login;
     const updateStateParams = stateChangeParams
@@ -173,23 +189,28 @@ class IssueSettings extends Component {
       ActionSheetIOS.showActionSheetWithOptions(
         {
           title: `Apply a label to this issue`,
-          options: [...this.props.labels.map(label => label.name), 'Cancel'],
-          cancelButtonIndex: this.props.labels.length,
+          options: [...this.props.labels.map(label => label.name), "Cancel"],
+          cancelButtonIndex: this.props.labels.length
         },
         buttonIndex => {
-          const {issue, labels} = this.props;
+          const { issue, labels } = this.props;
           const labelChoices = [...labels.map(label => label.name)];
 
-          if (buttonIndex !== labelChoices.length && !issue.labels.some(label => label.name === labelChoices[buttonIndex])) {
+          if (
+            buttonIndex !== labelChoices.length &&
+            !issue.labels.some(
+              label => label.name === labelChoices[buttonIndex]
+            )
+          ) {
             this.editIssue(
               {
                 labels: [
                   ...issue.labels.map(label => label.name),
-                  labelChoices[buttonIndex],
-                ],
+                  labelChoices[buttonIndex]
+                ]
               },
-              {labels: [...issue.labels, labels[buttonIndex]]}
-            )
+              { labels: [...issue.labels, labels[buttonIndex]] }
+            );
           }
         }
       );
@@ -200,15 +221,15 @@ class IssueSettings extends Component {
     ActionSheetIOS.showActionSheetWithOptions(
       {
         title: `Are you sure you want to ${stateChange} this issue?`,
-        options: ['Yes', 'Cancel'],
+        options: ["Yes", "Cancel"],
         destructiveButtonIndex: 0,
-        cancelButtonIndex: 1,
+        cancelButtonIndex: 1
       },
       buttonIndex => {
-        const newState = stateChange === 'open' ? 'open' : 'closed';
+        const newState = stateChange === "open" ? "open" : "closed";
 
         if (buttonIndex === 0) {
-          this.editIssue({state: newState});
+          this.editIssue({ state: newState });
         }
       }
     );
@@ -217,12 +238,12 @@ class IssueSettings extends Component {
   showLockIssueActionSheet = issueLocked => {
     ActionSheetIOS.showActionSheetWithOptions(
       {
-        title: `Are you sure you want to ${issueLocked ? 'unlock' : 'lock'} this issue?`,
-        options: ['Yes', 'Cancel'],
-        cancelButtonIndex: 1,
+        title: `Are you sure you want to ${issueLocked ? "unlock" : "lock"} this issue?`,
+        options: ["Yes", "Cancel"],
+        cancelButtonIndex: 1
       },
       buttonIndex => {
-        const {issue, repository} = this.props;
+        const { issue, repository } = this.props;
         const repoName = repository.name;
         const owner = repository.owner.login;
 
@@ -242,29 +263,18 @@ class IssueSettings extends Component {
 const styles = StyleSheet.create({
   listItemTitle: {
     color: config.colors.black,
-    fontFamily: 'AvenirNext-Medium',
+    fontFamily: "AvenirNext-Medium"
   },
   closeActionTitle: {
     color: config.colors.red,
-    fontFamily: 'AvenirNext-Medium',
+    fontFamily: "AvenirNext-Medium"
   },
   openActionTitle: {
     color: config.colors.green,
-    fontFamily: 'AvenirNext-Medium',
-  },
+    fontFamily: "AvenirNext-Medium"
+  }
 });
 
-IssueSettings.propTypes = {
-  editIssue: PropTypes.func,
-  changeIssueLockStatus: PropTypes.func,
-  getLabels: PropTypes.func,
-  authUser: PropTypes.object,
-  repository: PropTypes.object,
-  labels: PropTypes.array,
-  issue: PropTypes.object,
-  isEditingIssue: PropTypes.bool,
-  isPendingLabels: PropTypes.bool,
-  navigation: PropTypes.object,
-};
-
-export const IssueSettingsScreen = connect(mapStateToProps, mapDispatchToProps)(IssueSettings);
+export const IssueSettingsScreen = connect(mapStateToProps, mapDispatchToProps)(
+  IssueSettings
+);

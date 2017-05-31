@@ -1,13 +1,21 @@
-import React, { Component, PropTypes } from "react";
+// @flow
+
+import React, { Component } from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import FastImage from "react-native-fast-image";
 
-import config from '@config';
+import config from "config";
 import moment from "moment";
 
 import HTMLView from "react-native-htmlview";
 
 export class CommentListItem extends Component {
+  props: {
+    comment: Object,
+    onLinkPress: Function,
+    navigation: Object
+  };
+
   render() {
     const { comment, navigation } = this.props;
     const commentBodyAdjusted = () =>
@@ -46,7 +54,9 @@ export class CommentListItem extends Component {
         );
       } else if (node.name === "hr") {
         return (
-          <View style={{ height: 4, backgroundColor: config.colors.greyLight }} />
+          <View
+            style={{ height: 4, backgroundColor: config.colors.greyLight }}
+          />
         );
       } else if (node.name === "code") {
         return (
@@ -62,9 +72,7 @@ export class CommentListItem extends Component {
           </Text>
         );
       } else if (
-        node.name === "h1" ||
-        node.name === "h2" ||
-        node.name === "h3"
+        node.name === "h1" || node.name === "h2" || node.name === "h3"
       ) {
         return (
           <View
@@ -88,12 +96,16 @@ export class CommentListItem extends Component {
             </Text>
           </View>
         );
-      } else if (node.name === 'a') {
+      } else if (node.name === "a") {
         return (
           <Text
-            style={{fontFamily: "AvenirNext-DemiBold", fontWeight: '600', color: config.colors.primaryDark}}
+            style={{
+              fontFamily: "AvenirNext-DemiBold",
+              fontWeight: "600",
+              color: config.colors.primaryDark
+            }}
             onPress={() => onLinkPress(node)}
-          > 
+          >
             {defaultRenderer(node.children, parent)}
           </Text>
         );
@@ -105,7 +117,7 @@ export class CommentListItem extends Component {
     const commentPresent =
       (comment.body_html && comment.body_html !== "") ||
       (comment.body && comment.body !== "");
-      
+
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -146,36 +158,30 @@ export class CommentListItem extends Component {
         </View>
 
         {commentPresent &&
-            <View style={styles.commentContainer}>
-              {comment.body_html &&
-                comment.body_html !== "" &&
-                <HTMLView
-                  value={commentBodyAdjusted()}
-                  stylesheet={commentStyles}
-                  renderNode={myDomElement}
-                />}
+          <View style={styles.commentContainer}>
+            {comment.body_html &&
+              comment.body_html !== "" &&
+              <HTMLView
+                value={commentBodyAdjusted()}
+                stylesheet={commentStyles}
+                renderNode={myDomElement}
+              />}
 
-              {comment.body &&
-                comment.body !== "" &&
-                !comment.body_html &&
-                <Text style={styles.commentText}>{comment.body}</Text>}
-            </View>}
+            {comment.body &&
+              comment.body !== "" &&
+              !comment.body_html &&
+              <Text style={styles.commentText}>{comment.body}</Text>}
+          </View>}
 
-                    {!commentPresent &&
-            <View style={styles.commentContainer}>
-                <Text style={styles.commentTextNone}>No description provided.</Text>
-            </View>}
+        {!commentPresent &&
+          <View style={styles.commentContainer}>
+            <Text style={styles.commentTextNone}>No description provided.</Text>
+          </View>}
 
       </View>
     );
   }
 }
-
-CommentListItem.propTypes = {
-  comment: PropTypes.object,
-  onLinkPress: PropTypes.func,
-  navigation: PropTypes.object
-};
 
 const styles = StyleSheet.create({
   container: {
@@ -227,7 +233,7 @@ const styles = StyleSheet.create({
   commentTextNone: {
     color: config.colors.primaryDark,
     fontFamily: "AvenirNext-Regular",
-    fontStyle: 'italic',
+    fontStyle: "italic"
   }
 });
 

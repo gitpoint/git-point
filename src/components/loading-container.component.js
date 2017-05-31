@@ -1,15 +1,15 @@
-import React, {PropTypes} from 'react';
-import {StyleSheet, View, ActivityIndicator, Text} from 'react-native';
+import React from "react";
+import { StyleSheet, View, ActivityIndicator, Text } from "react-native";
 
-import config from '@config';
+import config from "config";
 
-export const LoadingContainer = (
-  {
-    animating,
-    text,
-    center,
-  },
-) => (
+type Props = {
+  animating: boolean,
+  text: string,
+  center: boolean
+};
+
+export const LoadingContainer = ({ animating, text, center }: Props) => (
   <View style={[styles.loadingContainer, center && styles.center]}>
     <ActivityIndicator
       animating={animating}
@@ -20,25 +20,19 @@ export const LoadingContainer = (
   </View>
 );
 
-LoadingContainer.propTypes = {
-  animating: PropTypes.bool,
-  text: PropTypes.string,
-  center: PropTypes.bool,
-};
-
 const styles = StyleSheet.create({
   loadingContainer: {
     backgroundColor: config.colors.white,
     flex: 1,
-    alignItems: 'center',
+    alignItems: "center"
   },
   center: {
-    justifyContent: 'center',
+    justifyContent: "center"
   },
   loadingIcon: {
-    height: 80,
+    height: 80
   },
   text: {
-    fontFamily: 'AvenirNext-Medium',
+    fontFamily: "AvenirNext-Medium"
   }
 });

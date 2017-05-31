@@ -1,29 +1,32 @@
-import React, {PropTypes} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {Icon} from 'react-native-elements';
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { Icon } from "react-native-elements";
 
-import config from '@config';
+import config from "config";
 
-export const RepositoryProfile = (
-  {
-    repository,
-    navigation,
-  }
-) => (
+type Props = {
+  repository: Object,
+  navigation: Object
+};
+
+export const RepositoryProfile = ({ repository, navigation }: Props) => (
   <View style={styles.container}>
     {repository &&
       <View>
         <View style={styles.profile}>
           <Icon
-            containerStyle={[styles.icon, repository.fork ? {marginLeft: 15} : {marginLeft: 10}]}
-            name={repository.fork ? 'repo-forked' : 'repo'}
+            containerStyle={[
+              styles.icon,
+              repository.fork ? { marginLeft: 15 } : { marginLeft: 10 }
+            ]}
+            name={repository.fork ? "repo-forked" : "repo"}
             type="octicon"
             size={45}
             color={config.colors.greyLight}
           />
 
           <Text style={styles.title}>{repository.name}</Text>
-          
+
           <Text style={[styles.subtitle, styles.subtitleDescription]}>
             {repository.description}
           </Text>
@@ -35,16 +38,15 @@ export const RepositoryProfile = (
                 <Text>
                   <Text>forked from</Text>
                   <Text
-                    style={{fontWeight: 'bold'}}
+                    style={{ fontWeight: "bold" }}
                     onPress={() =>
-                      navigation.navigate('Repository', {
-                        repository: repository.parent,
+                      navigation.navigate("Repository", {
+                        repository: repository.parent
                       })}
                   >
-                    {' '}{repository.parent.full_name}
+                    {" "}{repository.parent.full_name}
                   </Text>
-                </Text>
-              }
+                </Text>}
 
             </Text>}
         </View>
@@ -65,77 +67,71 @@ export const RepositoryProfile = (
             <Text style={styles.unitText}>Forks</Text>
           </View>
         </View>
-      </View>
-    }
+      </View>}
   </View>
 );
-
-RepositoryProfile.propTypes = {
-  repository: PropTypes.object,
-  navigation: PropTypes.object,
-};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center"
   },
   darkenContainer: {
-    backgroundColor: 'rgba(0,0,0,.6)',
+    backgroundColor: "rgba(0,0,0,.6)"
   },
   profile: {
     flex: 2,
     marginTop: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center"
   },
   title: {
     color: config.colors.white,
-    fontFamily: 'AvenirNext-Bold',
+    fontFamily: "AvenirNext-Bold",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 2,
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent"
   },
   subtitle: {
     color: config.colors.white,
-    fontFamily: 'AvenirNext-Medium',
+    fontFamily: "AvenirNext-Medium",
     fontSize: 14,
     paddingLeft: 15,
     paddingRight: 15,
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent"
   },
   subtitleDescription: {
-    textAlign: 'center',
+    textAlign: "center"
   },
   subtitleFork: {
     marginTop: 20,
-    fontSize: 12,
+    fontSize: 12
   },
   details: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    minWidth: 300,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    minWidth: 300
   },
   unit: {
-    flex: 1,
+    flex: 1
   },
   unitNumber: {
-    textAlign: 'center',
+    textAlign: "center",
     color: config.colors.white,
-    fontFamily: 'AvenirNext-Bold',
+    fontFamily: "AvenirNext-Bold",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold"
   },
   unitText: {
-    textAlign: 'center',
+    textAlign: "center",
     color: config.colors.white,
     fontSize: 12,
-    fontFamily: 'AvenirNext-Medium',
+    fontFamily: "AvenirNext-Medium"
   },
   icon: {
-    paddingBottom: 20,
-  },
+    paddingBottom: 20
+  }
 });

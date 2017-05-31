@@ -1,18 +1,17 @@
-import React, {Component, PropTypes} from 'react';
-import { FlatList, View, StyleSheet, Dimensions, Text } from 'react-native';
-import {ButtonGroup} from 'react-native-elements';
-import SearchBar from 'react-native-search-bar';
+import React, { Component } from "react";
+import { FlatList, View, StyleSheet, Dimensions, Text } from "react-native";
+import { ButtonGroup } from "react-native-elements";
+import SearchBar from "react-native-search-bar";
 
+import { ViewContainer, IssueListItem, LoadingContainer } from "components";
+
+import config from "config";
+
+import { connect } from "react-redux";
 import {
-  ViewContainer,
-  IssueListItem,
-  LoadingContainer
-} from "@components";
-
-import config from '@config';
-
-import {connect} from 'react-redux';
-import {searchOpenRepoPulls, searchClosedRepoPulls} from '../repository.action';
+  searchOpenRepoPulls,
+  searchClosedRepoPulls
+} from "../repository.action";
 
 const mapStateToProps = state => ({
   repository: state.repository.repository,
@@ -23,19 +22,39 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  searchOpenRepoPulls: (query, repo) => dispatch(searchOpenRepoPulls(query, repo)),
-  searchClosedRepoPulls: (query, repo) => dispatch(searchClosedRepoPulls(query, repo)),
+  searchOpenRepoPulls: (query, repo) =>
+    dispatch(searchOpenRepoPulls(query, repo)),
+  searchClosedRepoPulls: (query, repo) =>
+    dispatch(searchClosedRepoPulls(query, repo))
 });
 
 class PullList extends Component {
+  state: {
+    query: string,
+    searchType: number,
+    searchStart: boolean,
+    searchFocus: boolean
+  };
+
+  props: {
+    repository: Object,
+    searchedOpenPulls: Array,
+    searchedClosedPulls: Array,
+    isPendingSearchOpenPulls: boolean,
+    isPendingSearchClosedPulls: boolean,
+    searchOpenRepoPulls: Function,
+    searchClosedRepoPulls: Function,
+    navigation: Object
+  };
+
   constructor() {
     super();
 
     this.state = {
-      query: '',
+      query: "",
       searchType: 0,
       searchStart: false,
-      searchFocus: false,
+      searchFocus: false
     };
 
     this.switchQueryType = this.switchQueryType.bind(this);
@@ -46,7 +65,7 @@ class PullList extends Component {
   switchQueryType(selectedType) {
     if (this.state.searchType !== selectedType) {
       this.setState({
-        searchType: selectedType,
+        searchType: selectedType
       });
 
       this.search(this.state.query, selectedType);
@@ -60,45 +79,61 @@ class PullList extends Component {
   }
 
   search(query, selectedType = null) {
-    const {searchOpenRepoPulls, searchClosedRepoPulls, repository} = this.props;
+    const {
+      searchOpenRepoPulls,
+      searchClosedRepoPulls,
+      repository
+    } = this.props;
 
     const selectedSearchType = selectedType !== null
       ? selectedType
       : this.state.searchType;
 
-    if (query !== '') {
+    if (query !== "") {
       this.setState({
         query: query,
-        searchStart: true,
+        searchStart: true
       });
 
-      selectedSearchType === 0 ? searchOpenRepoPulls(query, repository.full_name) : searchClosedRepoPulls(query, repository.full_name);
+      selectedSearchType === 0
+        ? searchOpenRepoPulls(query, repository.full_name)
+        : searchClosedRepoPulls(query, repository.full_name);
     }
   }
 
-  renderItem = ({item}) => (
+  renderItem = ({ item }) => (
     <IssueListItem
       type={this.props.navigation.state.params.type}
       issue={item}
-      userHasPushPermission={this.props.navigation.state.params.userHasPushPermission}
-      navigation={this.props.navigation} />
-  )
-
+      userHasPushPermission={
+        this.props.navigation.state.params.userHasPushPermission
+      }
+      navigation={this.props.navigation}
+    />
+  );
   getList = () => {
-    const {searchedOpenPulls, searchedClosedPulls, navigation} = this.props;    
-    const {searchType, searchStart} = this.state;
-    
+    const { searchedOpenPulls, searchedClosedPulls, navigation } = this.props;
+    const { searchType, searchStart } = this.state;
+
     if (searchStart) {
       return searchType === 0 ? searchedOpenPulls : searchedClosedPulls;
     } else {
-      return searchType === 0 ? navigation.state.params.issues.filter(issue => issue.state === 'open') : navigation.state.params.issues.filter(issue => issue.state === 'closed');
+      return searchType === 0
+        ? navigation.state.params.issues.filter(issue => issue.state === "open")
+        : navigation.state.params.issues.filter(
+            issue => issue.state === "closed"
+          );
     }
-  }
-
+  };
   render() {
-    const {searchedOpenPulls, searchedClosedPulls, isPendingSearchOpenPulls, isPendingSearchClosedPulls} = this.props;
-    const {query, searchType, searchStart} = this.state;
-    
+    const {
+      searchedOpenPulls,
+      searchedClosedPulls,
+      isPendingSearchOpenPulls,
+      isPendingSearchClosedPulls
+    } = this.props;
+    const { query, searchType, searchStart } = this.state;
+
     return (
       <ViewContainer>
         <View style={styles.header}>
@@ -110,12 +145,12 @@ class PullList extends Component {
                 textColor={config.colors.primaryDark}
                 textFieldBackgroundColor={config.colors.greyLight}
                 showsCancelButton={this.state.searchFocus}
-                onFocus={() => this.setState({searchFocus: true})}
+                onFocus={() => this.setState({ searchFocus: true })}
                 onCancelButtonPress={() => {
-                  this.setState({ searchStart: false, query: '' });
+                  this.setState({ searchStart: false, query: "" });
                   this.refs.searchBar.unFocus();
                 }}
-                onSearchButtonPress={(query) => {
+                onSearchButtonPress={query => {
                   this.search(query);
                   this.refs.searchBar.unFocus();
                 }}
@@ -126,7 +161,7 @@ class PullList extends Component {
           <ButtonGroup
             onPress={this.switchQueryType}
             selectedIndex={searchType}
-            buttons={['Open', 'Closed']}
+            buttons={["Open", "Closed"]}
             textStyle={styles.buttonGroupText}
             selectedTextStyle={styles.buttonGroupTextSelected}
             containerStyle={styles.buttonGroupContainer}
@@ -148,7 +183,7 @@ class PullList extends Component {
             text={`Searching for ${query}`}
             style={styles.marginSpacing}
           />}
-        
+
         {this.getList().length > 0 &&
           <FlatList
             ref="pullListRef"
@@ -156,83 +191,79 @@ class PullList extends Component {
             data={this.getList()}
             keyExtractor={this.keyExtractor}
             renderItem={this.renderItem}
-          />
-        }
+          />}
 
-        {searchStart && !isPendingSearchOpenPulls && searchedOpenPulls.length === 0 && searchType === 0 &&
+        {searchStart &&
+          !isPendingSearchOpenPulls &&
+          searchedOpenPulls.length === 0 &&
+          searchType === 0 &&
           <View style={styles.marginSpacing}>
             <Text style={styles.searchTitle}>
               No open pull requests found!
             </Text>
           </View>}
 
-        {searchStart && !isPendingSearchClosedPulls && searchedClosedPulls.length === 0 && searchType === 1 &&
+        {searchStart &&
+          !isPendingSearchClosedPulls &&
+          searchedClosedPulls.length === 0 &&
+          searchType === 1 &&
           <View style={styles.marginSpacing}>
             <Text style={styles.searchTitle}>
               No closed pull requests found!
             </Text>
           </View>}
       </ViewContainer>
-    )
+    );
   }
 
-  keyExtractor = (item) => {
+  keyExtractor = item => {
     return item.id;
-  }
+  };
 }
-
-PullList.propTypes = {
-  repository: PropTypes.object,
-  searchedOpenPulls: PropTypes.array,
-  searchedClosedPulls: PropTypes.array,
-  isPendingSearchOpenPulls: PropTypes.bool,
-  isPendingSearchClosedPulls: PropTypes.bool,
-  searchOpenRepoPulls: PropTypes.func,
-  searchClosedRepoPulls: PropTypes.func,
-  navigation: PropTypes.object,
-};
 
 const styles = StyleSheet.create({
   header: {
     borderBottomColor: config.colors.greyLight,
-    borderBottomWidth: 1,
+    borderBottomWidth: 1
   },
   searchBarWrapper: {
-    flexDirection: 'row',
+    flexDirection: "row"
   },
   searchContainer: {
-    width: Dimensions.get('window').width,
+    width: Dimensions.get("window").width,
     backgroundColor: config.colors.white,
-    flex: 1,
+    flex: 1
   },
   list: {
-    marginTop: 0,
+    marginTop: 0
   },
   buttonGroupContainer: {
-    height: 30,
+    height: 30
   },
   buttonGroupText: {
-    fontFamily: 'AvenirNext-Bold',
+    fontFamily: "AvenirNext-Bold"
   },
   buttonGroupTextSelected: {
-    color: config.colors.black,
+    color: config.colors.black
   },
   loadingIndicatorContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center"
   },
   marginSpacing: {
-    marginTop: 40,
+    marginTop: 40
   },
   searchTitle: {
     fontSize: 20,
-    textAlign: 'center',
+    textAlign: "center"
   },
   listContainer: {
     borderTopColor: config.colors.greyLight,
     borderTopWidth: 1,
-    marginBottom: 105,
-  },
+    marginBottom: 105
+  }
 });
 
-export const PullListScreen = connect(mapStateToProps, mapDispatchToProps)(PullList);
+export const PullListScreen = connect(mapStateToProps, mapDispatchToProps)(
+  PullList
+);

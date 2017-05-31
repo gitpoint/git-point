@@ -1,26 +1,27 @@
-import React, {PropTypes} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {ListItem, Icon} from 'react-native-elements';
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { ListItem, Icon } from "react-native-elements";
 
-import config from '@config';
+import config from "config";
 
-export const RepositoryListItem = (
-  {
-    repository,
-    navigation,
-  }
-) => (
+type Props = {
+  repository: Object,
+  navigation: Object
+};
+
+export const RepositoryListItem = ({ repository, navigation }: Props) => (
   <ListItem
     key={repository.id}
     title={renderTitle(repository)}
     titleStyle={styles.title}
     rightIcon={{
-      name: repository.fork ? 'repo-forked' : 'repo',
+      name: repository.fork ? "repo-forked" : "repo",
       color: config.colors.grey,
-      type: 'octicon'
+      type: "octicon"
     }}
     underlayColor={config.colors.greyLight}
-    onPress={() => navigation.navigate('Repository', {repository: repository})}
+    onPress={() =>
+      navigation.navigate("Repository", { repository: repository })}
   />
 );
 
@@ -28,7 +29,7 @@ const renderTitle = repository => (
   <View style={styles.wrapper}>
     <Text style={styles.repositoryContainer}>
       <Text style={styles.title}>
-        {repository.name}{repository.description && '\n'}
+        {repository.name}{repository.description && "\n"}
       </Text>
       <Text>
         {repository.description}
@@ -43,7 +44,7 @@ const renderTitle = repository => (
         color={config.colors.greyDark}
       />
 
-      <Text style={[styles.extraInfoSubject, {paddingTop: 2}]}>
+      <Text style={[styles.extraInfoSubject, { paddingTop: 2 }]}>
         {repository.stargazers_count}
       </Text>
 
@@ -55,44 +56,39 @@ const renderTitle = repository => (
           color={config.languageColors[repository.language]}
         />}
 
-      <Text style={[styles.extraInfoSubject, {paddingTop: 2}]}>
+      <Text style={[styles.extraInfoSubject, { paddingTop: 2 }]}>
         {repository.language}
       </Text>
     </View>
   </View>
 );
 
-RepositoryListItem.propTypes = {
-  repository: PropTypes.object,
-  navigation: PropTypes.object,
-};
-
 const styles = StyleSheet.create({
   wrapper: {
     marginTop: 5,
     marginBottom: 5,
-    marginLeft: 5,
+    marginLeft: 5
   },
   title: {
     color: config.colors.primarydark,
-    fontFamily: 'AvenirNext-DemiBold',
+    fontFamily: "AvenirNext-DemiBold"
   },
   extraInfo: {
-    flexDirection: 'row',
+    flexDirection: "row",
     flex: 1,
-    paddingTop: 5,
+    paddingTop: 5
   },
   extraInfoSubject: {
     color: config.colors.greyDark,
     paddingLeft: 3,
     marginRight: 15,
     fontSize: 12,
-    fontFamily: 'AvenirNext-Medium',
+    fontFamily: "AvenirNext-Medium"
   },
   repositoryContainer: {
-    justifyContent: 'center',
+    justifyContent: "center",
     flex: 1,
     color: config.colors.primaryDark,
-    fontFamily: 'AvenirNext-Regular',
-  },
+    fontFamily: "AvenirNext-Regular"
+  }
 });

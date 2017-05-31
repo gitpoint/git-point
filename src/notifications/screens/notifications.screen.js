@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from "react";
+import React, { Component } from "react";
 import {
   StyleSheet,
   FlatList,
@@ -10,14 +10,11 @@ import {
 import { ButtonGroup, Card, Icon } from "react-native-elements";
 import FastImage from "react-native-fast-image";
 
-import {
-  ViewContainer,
-  LoadingContainer
-} from "@components";
+import { ViewContainer, LoadingContainer } from "components";
 
-import { NotificationListItem } from "@components";
+import { NotificationListItem } from "components";
 
-import config from '@config';
+import config from "config";
 
 import { connect } from "react-redux";
 import {
@@ -51,6 +48,23 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class Notifications extends Component {
+  props: {
+    getUnreadNotifications: Function,
+    getParticipatingNotifications: Function,
+    getAllNotifications: Function,
+    getIssueFromUrl: Function,
+    issue: Object,
+    markAsRead: Function,
+    markRepoAsRead: Function,
+    unread: Array,
+    participating: Array,
+    all: Array,
+    isPendingUnread: boolean,
+    isPendingParticipating: boolean,
+    isPendingAll: boolean,
+    navigation: Object
+  };
+
   constructor() {
     super();
 
@@ -111,10 +125,11 @@ class Notifications extends Component {
             }}
           />
 
-          <Text 
+          <Text
             style={styles.repositoryTitle}
-            onPress={() => this.navigateToRepo(item)}>
-              {item}
+            onPress={() => this.navigateToRepo(item)}
+          >
+            {item}
           </Text>
 
           <TouchableOpacity
@@ -146,14 +161,13 @@ class Notifications extends Component {
     );
   };
 
-  navigateToRepo = (fullName) => {
-    const {navigation} = this.props;
+  navigateToRepo = fullName => {
+    const { navigation } = this.props;
 
-    navigation.navigate('Repository', {
-        repositoryUrl: `https://api.github.com/repos/${fullName}`
-      })
-  }
-
+    navigation.navigate("Repository", {
+      repositoryUrl: `https://api.github.com/repos/${fullName}`
+    });
+  };
   navigateToThread(notification) {
     const { markAsRead, getIssueFromUrl, navigation } = this.props;
 
@@ -282,23 +296,6 @@ class Notifications extends Component {
   };
 }
 
-Notifications.propTypes = {
-  getUnreadNotifications: PropTypes.func,
-  getParticipatingNotifications: PropTypes.func,
-  getAllNotifications: PropTypes.func,
-  getIssueFromUrl: PropTypes.func,
-  issue: PropTypes.object,
-  markAsRead: PropTypes.func,
-  markRepoAsRead: PropTypes.func,
-  unread: PropTypes.array,
-  participating: PropTypes.array,
-  all: PropTypes.array,
-  isPendingUnread: PropTypes.bool,
-  isPendingParticipating: PropTypes.bool,
-  isPendingAll: PropTypes.bool,
-  navigation: PropTypes.object
-};
-
 const styles = StyleSheet.create({
   buttonGroupWrapper: {
     backgroundColor: config.colors.greyLight,
@@ -351,4 +348,6 @@ const styles = StyleSheet.create({
   }
 });
 
-export const NotificationsScreen = connect(mapStateToProps, mapDispatchToProps)(Notifications);
+export const NotificationsScreen = connect(mapStateToProps, mapDispatchToProps)(
+  Notifications
+);

@@ -1,6 +1,6 @@
-import React, {Component, PropTypes} from 'react';
-import {StyleSheet} from 'react-native';
-import {ListItem} from 'react-native-elements';
+import React, { Component } from "react";
+import { StyleSheet } from "react-native";
+import { ListItem } from "react-native-elements";
 
 import {
   ViewContainer,
@@ -9,46 +9,59 @@ import {
   LoadingContainer,
   ParallaxScroll,
   UserListItem
-} from "@components";
+} from "components";
 
-import config from '@config';
-import Communications from 'react-native-communications';
+import config from "config";
+import Communications from "react-native-communications";
 
-import {connect} from 'react-redux';
-import {getUser, getOrgs} from '@auth';
+import { connect } from "react-redux";
+import { getUser, getOrgs } from "auth";
 
 const mapStateToProps = state => ({
   user: state.auth.user,
   orgs: state.auth.orgs,
   isPendingUser: state.auth.isPendingUser,
-  isPendingOrgs: state.auth.isPendingOrgs,
+  isPendingOrgs: state.auth.isPendingOrgs
 });
 
 const mapDispatchToProps = dispatch => ({
   getUser: () => dispatch(getUser()),
-  getOrgs: () => dispatch(getOrgs()),
+  getOrgs: () => dispatch(getOrgs())
 });
 
 class AuthProfile extends Component {
+  props: {
+    getUser: Function,
+    getOrgs: Function,
+    user: Object,
+    orgs: Array,
+    isPendingUser: boolean,
+    isPendingOrgs: boolean,
+    navigation: Object
+  };
+
   componentDidMount() {
     this.props.getUser();
     this.props.getOrgs();
   }
 
   getUserBlog(url) {
-    const prefix = 'http';
-    return url.substr(0, prefix.length) === prefix ? url : `http://${url}`
+    const prefix = "http";
+    return url.substr(0, prefix.length) === prefix ? url : `http://${url}`;
   }
 
   render() {
-    const {user, orgs, isPendingUser, isPendingOrgs, navigation} = this.props;
+    const { user, orgs, isPendingUser, isPendingOrgs, navigation } = this.props;
 
     return (
       <ViewContainer barColor="light">
 
         {isPendingUser ||
           (isPendingOrgs &&
-            <LoadingContainer animating={isPendingUser || isPendingOrgs} center />)}
+            <LoadingContainer
+              animating={isPendingUser || isPendingOrgs}
+              center
+            />)}
 
         {!isPendingUser &&
           !isPendingOrgs &&
@@ -70,11 +83,15 @@ class AuthProfile extends Component {
                   <ListItem
                     title="Email"
                     titleStyle={styles.listTitle}
-                    leftIcon={{name: 'mail', color: config.colors.grey, type: 'octicon'}}
+                    leftIcon={{
+                      name: "mail",
+                      color: config.colors.grey,
+                      type: "octicon"
+                    }}
                     subtitle={user.email}
                     subtitleStyle={styles.listSubTitle}
                     onPress={() =>
-                      Communications.email([user.email], null, null, 'Hi!', '')}
+                      Communications.email([user.email], null, null, "Hi!", "")}
                     underlayColor={config.colors.greyLight}
                   />}
 
@@ -82,47 +99,45 @@ class AuthProfile extends Component {
                   <ListItem
                     title="Website"
                     titleStyle={styles.listTitle}
-                    leftIcon={{name: 'link', color: config.colors.grey, type: 'octicon'}}
+                    leftIcon={{
+                      name: "link",
+                      color: config.colors.grey,
+                      type: "octicon"
+                    }}
                     subtitle={user.blog}
                     subtitleStyle={styles.listSubTitle}
-                    onPress={() => Communications.web(this.getUserBlog(user.blog))}
+                    onPress={() =>
+                      Communications.web(this.getUserBlog(user.blog))}
                     underlayColor={config.colors.greyLight}
                   />}
               </SectionList>}
 
-              <SectionList 
-                title="ORGANIZATIONS"
-                noItems={orgs.length === 0}
-                noItemsMessage={'No organizations'}>
-                {orgs.map((item, i) => (
-                  <UserListItem key={i} user={item} navigation={navigation} />
-                ))}
-              </SectionList>
+            <SectionList
+              title="ORGANIZATIONS"
+              noItems={orgs.length === 0}
+              noItemsMessage={"No organizations"}
+            >
+              {orgs.map((item, i) => (
+                <UserListItem key={i} user={item} navigation={navigation} />
+              ))}
+            </SectionList>
           </ParallaxScroll>}
       </ViewContainer>
     );
   }
 }
 
-AuthProfile.propTypes = {
-  getUser: PropTypes.func,
-  getOrgs: PropTypes.func,
-  user: PropTypes.object,
-  orgs: PropTypes.array,
-  isPendingUser: PropTypes.bool,
-  isPendingOrgs: PropTypes.bool,
-  navigation: PropTypes.object,
-};
-
 const styles = StyleSheet.create({
   listTitle: {
     color: config.colors.black,
-    fontFamily: 'AvenirNext-Medium',
+    fontFamily: "AvenirNext-Medium"
   },
   listSubTitle: {
     color: config.colors.greyDark,
-    fontFamily: 'AvenirNext-Medium',
-  },
+    fontFamily: "AvenirNext-Medium"
+  }
 });
 
-export const AuthProfileScreen = connect(mapStateToProps, mapDispatchToProps)(AuthProfile);
+export const AuthProfileScreen = connect(mapStateToProps, mapDispatchToProps)(
+  AuthProfile
+);

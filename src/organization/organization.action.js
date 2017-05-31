@@ -4,7 +4,7 @@ import {
   GET_ORG_MEMBERS
 } from "./organization.type";
 
-import { fetchOrg, fetchOrgMembers, fetchUrl } from '@api';
+import { fetchOrg, fetchOrgMembers, fetchUrl } from 'api';
 
 export const getOrg = (orgName) => {
   return (dispatch, getState) => {

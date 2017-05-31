@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from "react";
+import React, { Component } from "react";
 import { StyleSheet, ActivityIndicator } from "react-native";
 import { ListItem } from "react-native-elements";
 
@@ -8,9 +8,9 @@ import {
   SectionList,
   ParallaxScroll,
   UserListItem
-} from "@components";
+} from "components";
 
-import config from '@config';
+import config from "config";
 import Communications from "react-native-communications";
 
 import { connect } from "react-redux";
@@ -24,17 +24,26 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getUserInfo: user => dispatch(getUserInfo(user)),
+  getUserInfo: user => dispatch(getUserInfo(user))
 });
 
 class Profile extends Component {
+  props: {
+    getUserInfo: Function,
+    user: Object,
+    orgs: Array,
+    isPendingUser: boolean,
+    isPendingOrgs: boolean,
+    navigation: Object
+  };
+
   componentDidMount() {
     this.props.getUserInfo(this.props.navigation.state.params.user.login);
   }
 
   getUserBlog(url) {
-    const prefix = 'http';
-    return url.substr(0, prefix.length) === prefix ? url : `http://${url}`
+    const prefix = "http";
+    return url.substr(0, prefix.length) === prefix ? url : `http://${url}`;
   }
 
   render() {
@@ -66,10 +75,13 @@ class Profile extends Component {
               size="large"
             />}
 
-          {!isPending && initialUser.login === user.login &&
-            ((user.email !== null && user.email !== '') || (user.blog !== null && user.blog !== '')) &&
+          {!isPending &&
+            initialUser.login === user.login &&
+            ((user.email !== null && user.email !== "") ||
+              (user.blog !== null && user.blog !== "")) &&
             <SectionList title="LINKS">
-              {user.email !== null && user.email !== '' &&
+              {user.email !== null &&
+                user.email !== "" &&
                 <ListItem
                   title="Email"
                   titleStyle={styles.listTitle}
@@ -85,7 +97,8 @@ class Profile extends Component {
                   underlayColor={config.colors.greyLight}
                 />}
 
-              {user.blog !== null && user.blog !== '' &&
+              {user.blog !== null &&
+                user.blog !== "" &&
                 <ListItem
                   title="Website"
                   titleStyle={styles.listTitle}
@@ -96,35 +109,29 @@ class Profile extends Component {
                   }}
                   subtitle={user.blog}
                   subtitleStyle={styles.listSubTitle}
-                  onPress={() => Communications.web(this.getUserBlog(user.blog))}
+                  onPress={() =>
+                    Communications.web(this.getUserBlog(user.blog))}
                   underlayColor={config.colors.greyLight}
                 />}
             </SectionList>}
 
-          {!isPending && initialUser.login === user.login &&
-            <SectionList 
+          {!isPending &&
+            initialUser.login === user.login &&
+            <SectionList
               title="ORGANIZATIONS"
               noItems={orgs.length === 0}
-              noItemsMessage={'No organizations'}>
+              noItemsMessage={"No organizations"}
+            >
               {orgs.map((item, i) => (
                 <UserListItem key={i} user={item} navigation={navigation} />
               ))}
             </SectionList>}
-          
+
         </ParallaxScroll>
       </ViewContainer>
     );
   }
 }
-
-Profile.propTypes = {
-  getUserInfo: PropTypes.func,
-  user: PropTypes.object,
-  orgs: PropTypes.array,
-  isPendingUser: PropTypes.bool,
-  isPendingOrgs: PropTypes.bool,
-  navigation: PropTypes.object
-};
 
 const styles = StyleSheet.create({
   listTitle: {
@@ -137,4 +144,6 @@ const styles = StyleSheet.create({
   }
 });
 
-export const ProfileScreen = connect(mapStateToProps, mapDispatchToProps)(Profile);
+export const ProfileScreen = connect(mapStateToProps, mapDispatchToProps)(
+  Profile
+);

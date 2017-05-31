@@ -1,8 +1,8 @@
-import { createActionSet } from '@utils';
+import { createActionSet } from "utils";
 
-export const GET_USER = createActionSet('GET_USER');
-export const GET_ORGS = createActionSet('GET_ORGS');
-export const GET_REPOSITORIES = createActionSet('GET_REPOSITORIES');
-export const GET_FOLLOWERS = createActionSet('GET_FOLLOWERS');
-export const GET_FOLLOWING = createActionSet('GET_FOLLOWING');
-export const SEARCH_USER_REPOS = createActionSet('SEARCH_USER_REPOS');
+export const GET_USER = createActionSet("GET_USER");
+export const GET_ORGS = createActionSet("GET_ORGS");
+export const GET_REPOSITORIES = createActionSet("GET_REPOSITORIES");
+export const GET_FOLLOWERS = createActionSet("GET_FOLLOWERS");
+export const GET_FOLLOWING = createActionSet("GET_FOLLOWING");
+export const SEARCH_USER_REPOS = createActionSet("SEARCH_USER_REPOS");

@@ -1,18 +1,19 @@
-import React, {Component, PropTypes} from 'react';
-import {View, ScrollView, Text, FlatList, StyleSheet} from 'react-native';
-import {Card} from 'react-native-elements';
+import React, { Component } from "react";
+import { View, ScrollView, Text, FlatList, StyleSheet } from "react-native";
+import { Card } from "react-native-elements";
 
-import Parse from 'parse-diff';
+import Parse from "parse-diff";
 
-import {
-  ViewContainer,
-  DiffBlocks,
-  CodeLine
-} from "@components";
+import { ViewContainer, DiffBlocks, CodeLine } from "components";
 
-import config from '@config';
+import config from "config";
 
 class PullDiff extends Component {
+  props: {
+    diff: string,
+    navigation: Object
+  };
+
   renderHeader = () => {
     const filesChanged = Parse(this.props.navigation.state.params.diff);
 
@@ -26,7 +27,9 @@ class PullDiff extends Component {
 
     return (
       <View style={styles.header}>
-        <Text style={[styles.headerItem, styles.headerText]}>{`${filesChanged.length} ${filesChanged.length === 1 ? 'file' : 'files'}`}</Text>
+        <Text
+          style={[styles.headerItem, styles.headerText]}
+        >{`${filesChanged.length} ${filesChanged.length === 1 ? "file" : "files"}`}</Text>
 
         <DiffBlocks
           style={styles.headerItem}
@@ -35,18 +38,19 @@ class PullDiff extends Component {
           showNumbers
         />
       </View>
-    )
+    );
   };
 
-  renderItem = ({item}) => {
+  renderItem = ({ item }) => {
     var chunks = item.chunks.map((chunk, i) => {
       return (
         <ScrollView
           automaticallyAdjustContentInsets={false}
           horizontal={true}
-          showsHorizontalScrollIndicator={false}>
-          <View style={{flexDirection: 'column'}}>
-            <CodeLine key={i} newChunk change={{content: chunk.content}} />
+          showsHorizontalScrollIndicator={false}
+        >
+          <View style={{ flexDirection: "column" }}>
+            <CodeLine key={i} newChunk change={{ content: chunk.content }} />
 
             {chunk.changes.map((change, i) => (
               <CodeLine key={i} change={change} />
@@ -76,31 +80,37 @@ class PullDiff extends Component {
 
           {item.new &&
             <Text style={styles.fileTitle}>
-              <Text style={styles.newIndicator}>NEW{'\n'}</Text>
-              <Text style={[styles.fileTitle, styles.codeStyle]}>{item.to}</Text>
-            </Text>
-          }
+              <Text style={styles.newIndicator}>NEW{"\n"}</Text>
+              <Text style={[styles.fileTitle, styles.codeStyle]}>
+                {item.to}
+              </Text>
+            </Text>}
 
           {item.deleted &&
             <Text style={styles.fileTitle}>
-              <Text style={styles.deletedIndicator}>DELETED{'\n'}</Text>
-              <Text style={[styles.fileTitle, styles.codeStyle]}>{item.from}</Text>
-            </Text>
-          }
+              <Text style={styles.deletedIndicator}>DELETED{"\n"}</Text>
+              <Text style={[styles.fileTitle, styles.codeStyle]}>
+                {item.from}
+              </Text>
+            </Text>}
 
-          {!item.new && !item.deleted &&
-            <Text style={[styles.fileTitle, styles.codeStyle]}>{item.from === item.to ? item.to : `${item.from} \n → ${item.to}`}</Text>
-          }
+          {!item.new &&
+            !item.deleted &&
+            <Text style={[styles.fileTitle, styles.codeStyle]}>
+              {item.from === item.to ? item.to : `${item.from} \n → ${item.to}`}
+            </Text>}
         </ScrollView>
-        {item.chunks.length > 0 ? chunks : <Text style={styles.noChangesMessage}>File renamed without changes.</Text>}
+        {item.chunks.length > 0
+          ? chunks
+          : <Text style={styles.noChangesMessage}>
+              File renamed without changes.
+            </Text>}
       </Card>
     );
   };
-
   render() {
-    const {navigation} = this.props;
+    const { navigation } = this.props;
     const filesChanged = Parse(navigation.state.params.diff);
-
     return (
       <ViewContainer>
         <FlatList
@@ -114,75 +124,67 @@ class PullDiff extends Component {
       </ViewContainer>
     );
   }
-
   keyExtractor = (item, index) => {
     return index;
   };
 }
-
-PullDiff.propTypes = {
-  diff: PropTypes.string,
-  navigation: PropTypes.object,
-};
-
 const styles = StyleSheet.create({
   fileChangeContainer: {
     padding: 0,
-    marginVertical: 25,
+    marginVertical: 25
   },
   fileTitleContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     paddingVertical: 15,
-    backgroundColor: config.colors.greyVeryLight,
+    backgroundColor: config.colors.greyVeryLight
   },
   linesChanged: {
     flex: 0.30,
     paddingLeft: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center"
   },
   lineNumbersChanged: {
-    fontFamily: 'Menlo',
-    marginRight: 5,
+    fontFamily: "Menlo",
+    marginRight: 5
   },
   fileTitle: {
     flex: 1,
-    marginLeft: 10,
+    marginLeft: 10
   },
   codeStyle: {
-    fontFamily: 'Menlo',
-    fontSize: 12,
+    fontFamily: "Menlo",
+    fontSize: 12
   },
   dividerStyle: {
-    marginBottom: 0,
+    marginBottom: 0
   },
   noChangesMessage: {
-    fontFamily: 'AvenirNext-DemiBold',
+    fontFamily: "AvenirNext-DemiBold",
     paddingVertical: 5,
-    paddingLeft: 10,
+    paddingLeft: 10
   },
   newIndicator: {
-    fontFamily: 'AvenirNext-DemiBold',
-    color: config.colors.green,
+    fontFamily: "AvenirNext-DemiBold",
+    color: config.colors.green
   },
   deletedIndicator: {
-    fontFamily: 'AvenirNext-DemiBold',
-    color: config.colors.red,
+    fontFamily: "AvenirNext-DemiBold",
+    color: config.colors.red
   },
   header: {
     paddingTop: 25,
     paddingHorizontal: 25,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between'
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
   },
   headerItem: {
-    flex: 1,
+    flex: 1
   },
   headerText: {
-    fontFamily: 'AvenirNext-DemiBold',
-    fontSize: 16,
+    fontFamily: "AvenirNext-DemiBold",
+    fontSize: 16
   }
 });
-
 export const PullDiffScreen = PullDiff;

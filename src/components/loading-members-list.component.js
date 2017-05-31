@@ -1,14 +1,18 @@
-import React, {Component, PropTypes} from 'react';
-import {StyleSheet, View, Text, Animated} from 'react-native';
-import config from '@config';
+import React, { Component } from "react";
+import { StyleSheet, View, Text, Animated } from "react-native";
+import config from "config";
 
-import {loadingAnimation} from '@utils';
+import { loadingAnimation } from "utils";
 
 export class LoadingMembersList extends Component {
+  props: {
+    title: string
+  };
+
   constructor() {
     super();
     this.state = {
-      fadeAnimValue: new Animated.Value(0),
+      fadeAnimValue: new Animated.Value(0)
     };
   }
 
@@ -17,7 +21,7 @@ export class LoadingMembersList extends Component {
   }
 
   render() {
-    const {title} = this.props;
+    const { title } = this.props;
     return (
       <View style={styles.wrapper}>
         <Text style={styles.sectionTitle}>{title}</Text>
@@ -25,7 +29,10 @@ export class LoadingMembersList extends Component {
         <View style={styles.avatarContainer}>
           {[...Array(10)].map((item, i) => {
             return (
-              <Animated.View key={i} style={[styles.avatar, {opacity: this.state.fadeAnimValue}]} />
+              <Animated.View
+                key={i}
+                style={[styles.avatar, { opacity: this.state.fadeAnimValue }]}
+              />
             );
           })}
         </View>
@@ -34,29 +41,25 @@ export class LoadingMembersList extends Component {
   }
 }
 
-LoadingMembersList.propTypes = {
-  title: PropTypes.string,
-};
-
 const styles = StyleSheet.create({
   wrapper: {
     marginTop: 15,
-    padding: 15,
+    padding: 15
   },
   avatarContainer: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: "row"
   },
   avatar: {
     borderRadius: 15,
     height: 30,
     width: 30,
     backgroundColor: config.colors.grey,
-    marginRight: 5,
+    marginRight: 5
   },
   sectionTitle: {
     color: config.colors.black,
-    fontFamily: 'AvenirNext-Bold',
-    marginBottom: 10,
-  },
+    fontFamily: "AvenirNext-Bold",
+    marginBottom: 10
+  }
 });

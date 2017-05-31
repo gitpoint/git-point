@@ -11,7 +11,7 @@ import {
   SEARCH_CLOSED_PULLS
 } from './repository.type';
 
-import {fetchUrl, fetchCommentHTML, fetchReadMe, fetchSearch} from '@api';
+import {fetchUrl, fetchCommentHTML, fetchReadMe, fetchSearch} from 'api';
 
 export const getRepositoryInfo = url => {
   return (dispatch, getState) => {

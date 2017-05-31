@@ -9,7 +9,7 @@ import {
   View
 } from 'react-native';
 
-import {LoadingUserListItem, UserListItem} from "@components"
+import {LoadingUserListItem, UserListItem} from "components"
 
 import moment from 'moment';
 
@@ -33,9 +33,9 @@ moment.updateLocale('en', {
 import {connect} from 'react-redux';
 import {getUserEvents} from '../auth.action';
 
-import {ViewContainer} from "@components"
+import {ViewContainer} from "components"
 
-import config from '@config';
+import config from 'config';
 
 const mapStateToProps = state => ({
   user: state.auth.user,

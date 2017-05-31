@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from "react";
+import React, { Component } from "react";
 import {
   FlatList,
   KeyboardAvoidingView,
@@ -13,9 +13,9 @@ import {
   IssueDescriptionListItem,
   CommentListItem,
   CommentInput
-} from "@components";
+} from "components";
 
-import config from "@config";
+import config from "config";
 
 import { connect } from "react-redux";
 import {
@@ -25,7 +25,7 @@ import {
   getIssueFromUrl
 } from "../issue.action";
 
-import { getRepository } from "@repository";
+import { getRepository } from "repository";
 
 const mapStateToProps = state => ({
   authUser: state.auth.user,
@@ -49,6 +49,23 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class Issue extends Component {
+  props: {
+    getIssueComments: Function,
+    getDiff: Function,
+    getRepository: Function,
+    postIssueComment: Function,
+    getIssueFromUrl: Function,
+    issue: Object,
+    diff: string,
+    authUser: Object,
+    repository: Object,
+    comments: Array,
+    isPendingDiff: boolean,
+    isPendingComments: boolean,
+    isPostingComment: boolean,
+    navigation: Object
+  };
+
   static navigationOptions = ({ navigation }) => {
     const { state, navigate } = navigation;
 
@@ -125,8 +142,7 @@ class Issue extends Component {
         user: { login: node.children[0].data.substring(1) }
       });
     } else if (
-      node.attribs.class &&
-      node.attribs.class.includes("issue-link")
+      node.attribs.class && node.attribs.class.includes("issue-link")
     ) {
       getIssueFromUrl(
         node.attribs["data-url"].replace("github.com", "api.github.com/repos")
@@ -191,22 +207,5 @@ class Issue extends Component {
     return item.id;
   };
 }
-
-Issue.propTypes = {
-  getIssueComments: PropTypes.func,
-  getDiff: PropTypes.func,
-  getRepository: PropTypes.func,
-  postIssueComment: PropTypes.func,
-  getIssueFromUrl: PropTypes.func,
-  issue: PropTypes.object,
-  diff: PropTypes.string,
-  authUser: PropTypes.object,
-  repository: PropTypes.object,
-  comments: PropTypes.array,
-  isPendingDiff: PropTypes.bool,
-  isPendingComments: PropTypes.bool,
-  isPostingComment: PropTypes.bool,
-  navigation: PropTypes.object
-};
 
 export const IssueScreen = connect(mapStateToProps, mapDispatchToProps)(Issue);
