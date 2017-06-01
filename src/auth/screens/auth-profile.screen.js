@@ -56,15 +56,15 @@ class AuthProfile extends Component {
     return (
       <ViewContainer barColor="light">
 
-        {isPendingUser ||
-          (isPendingOrgs &&
-            <LoadingContainer
-              animating={isPendingUser || isPendingOrgs}
-              center
-            />)}
+        {(isPendingUser || isPendingOrgs || !user) &&
+          <LoadingContainer
+            animating={isPendingUser || isPendingOrgs || !user}
+            center
+          />}
 
         {!isPendingUser &&
           !isPendingOrgs &&
+          user &&
           <ParallaxScroll
             renderContent={() => (
               <UserProfile

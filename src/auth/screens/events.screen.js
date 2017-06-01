@@ -505,11 +505,11 @@ class Events extends Component {
     return (
       <ViewContainer barColor="dark">
 
-        {isPendingEvents &&
-          userEvents.length === 0 &&
+        {(isPendingEvents || !userEvents) &&
           [...Array(10)].map((item, i) => <LoadingUserListItem key={i} />)}
 
-        {userEvents.length > 0 &&
+        {userEvents &&
+          userEvents.length > 0 &&
           <FlatList
             removeClippedSubviews={false}
             data={userEvents}
