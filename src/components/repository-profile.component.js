@@ -6,10 +6,17 @@ import config from "config";
 
 type Props = {
   repository: Object,
+  subscribed: boolean,
+  starred: boolean,
   navigation: Object
 };
 
-export const RepositoryProfile = ({ repository, navigation }: Props) => (
+export const RepositoryProfile = ({
+  repository,
+  subscribed,
+  starred,
+  navigation
+}: Props) => (
   <View style={styles.container}>
     {repository &&
       <View>
@@ -54,10 +61,12 @@ export const RepositoryProfile = ({ repository, navigation }: Props) => (
         <View style={styles.details}>
 
           <View style={styles.unit}>
-            <Text style={styles.unitNumber}>
+            <Text style={[styles.unitNumber, starred && styles.green]}>
               {repository.stargazers_count}
             </Text>
-            <Text style={styles.unitText}>Stars</Text>
+            <Text style={styles.unitText}>
+              Stars
+            </Text>
           </View>
 
           <View style={styles.unit}>
@@ -130,6 +139,9 @@ const styles = StyleSheet.create({
     color: config.colors.white,
     fontSize: 12,
     fontFamily: "AvenirNext-Medium"
+  },
+  green: {
+    color: config.colors.lightGreen
   },
   icon: {
     paddingBottom: 20

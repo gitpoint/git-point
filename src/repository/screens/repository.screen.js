@@ -9,6 +9,7 @@ import {
   MembersList,
   SectionList,
   ParallaxScroll,
+  LoadingUserListItem,
   UserListItem,
   IssueListItem,
   LoadingMembersList
@@ -68,7 +69,6 @@ class Repository extends Component {
   showMenuActionSheet() {
     const { starred } = this.props;
     const repositoryActions = ["Watch", starred ? "★ Unstar" : "★ Star"];
-
     ActionSheetIOS.showActionSheetWithOptions(
       {
         title: "Repository Actions",
@@ -80,26 +80,23 @@ class Repository extends Component {
       }
     );
   }
-
   render() {
     const {
       repository,
       contributors,
       issues,
+      starred,
       isPendingRepository,
       isPendingContributors,
       isPendingIssues,
       isPendingCheckStarred,
       navigation
     } = this.props;
-
     const initalRepository = navigation.state.params.repository;
-
     const pulls = issues.filter(issue => issue.hasOwnProperty("pull_request"));
     const pureIssues = issues.filter(
       issue => !issue.hasOwnProperty("pull_request")
     );
-
     return (
       <ViewContainer barColor="light">
 
@@ -113,6 +110,11 @@ class Repository extends Component {
                   repository={
                     isPendingRepository ? initalRepository : repository
                   }
+                  starred={
+                    isPendingRepository || isPendingCheckStarred
+                      ? false
+                      : starred
+                  }
                   navigation={navigation}
                 />
               );
@@ -120,18 +122,32 @@ class Repository extends Component {
           }}
           stickyTitle={repository.name}
           navigateBack
-          showMenu={!isPendingCheckStarred}
+          showMenu={!isPendingRepository && !isPendingCheckStarred}
           menuAction={() => this.showMenuActionSheet()}
           navigation={navigation}
         >
 
-          <SectionList title="OWNER">
-            {[
-              initalRepository ? initalRepository.owner : repository.owner
-            ].map((item, i) => (
-              <UserListItem key={i} user={item} navigation={navigation} />
-            ))}
-          </SectionList>
+          {initalRepository &&
+            !initalRepository.owner &&
+            isPendingRepository &&
+            <SectionList title="OWNER">
+              <LoadingUserListItem />
+            </SectionList>}
+
+          {!(initalRepository && initalRepository.owner) &&
+            !isPendingRepository &&
+            <SectionList title="OWNER">
+              <UserListItem user={repository.owner} navigation={navigation} />
+            </SectionList>}
+
+          {initalRepository &&
+            initalRepository.owner &&
+            <SectionList title="OWNER">
+              <UserListItem
+                user={initalRepository.owner}
+                navigation={navigation}
+              />
+            </SectionList>}
 
           {isPendingContributors && <LoadingMembersList title="CONTRIBUTORS" />}
 
@@ -245,14 +261,12 @@ class Repository extends Component {
     );
   }
 }
-
 const styles = StyleSheet.create({
   listTitle: {
     color: config.colors.black,
     fontFamily: "AvenirNext-Medium"
   }
 });
-
 export const RepositoryScreen = connect(mapStateToProps, mapDispatchToProps)(
   Repository
 );

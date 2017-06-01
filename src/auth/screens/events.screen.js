@@ -129,7 +129,12 @@ class Events extends Component {
               style={styles.linkDescription}
               onPress={() =>
                 this.props.navigation.navigate("Repository", {
-                  repositoryUrl: userEvent.repo.url
+                  repository: {
+                    ...userEvent.repo,
+                    name: userEvent.repo.name.substring(
+                      userEvent.repo.name.indexOf("/") + 1
+                    )
+                  }
                 })}
             >
               {userEvent.repo.name}
@@ -149,7 +154,12 @@ class Events extends Component {
             style={styles.linkDescription}
             onPress={() =>
               this.props.navigation.navigate("Repository", {
-                repositoryUrl: userEvent.repo.url
+                repository: {
+                  ...userEvent.repo,
+                  name: userEvent.repo.name.substring(
+                    userEvent.repo.name.indexOf("/") + 1
+                  )
+                }
               })}
           >
             {userEvent.repo.name}
@@ -163,7 +173,12 @@ class Events extends Component {
               style={styles.linkDescription}
               onPress={() =>
                 this.props.navigation.navigate("Repository", {
-                  repositoryUrl: userEvent.repo.url
+                  repository: {
+                    ...userEvent.repo,
+                    name: userEvent.repo.name.substring(
+                      userEvent.repo.name.indexOf("/") + 1
+                    )
+                  }
                 })}
             >
               {userEvent.repo.name}
@@ -201,7 +216,12 @@ class Events extends Component {
             style={styles.linkDescription}
             onPress={() =>
               this.props.navigation.navigate("Repository", {
-                repositoryUrl: userEvent.repo.url
+                repository: {
+                  ...userEvent.repo,
+                  name: userEvent.repo.name.substring(
+                    userEvent.repo.name.indexOf("/") + 1
+                  )
+                }
               })}
           >
             {userEvent.repo.name}
@@ -240,7 +260,12 @@ class Events extends Component {
             onPress={() => {
               if (userEvent.action !== "deleted") {
                 this.props.navigation.navigate("Repository", {
-                  repositoryUrl: userEvent.repo.url
+                  repository: {
+                    ...userEvent.repo,
+                    name: userEvent.repo.name.substring(
+                      userEvent.repo.name.indexOf("/") + 1
+                    )
+                  }
                 });
               }
             }}
@@ -254,7 +279,12 @@ class Events extends Component {
             style={styles.linkDescription}
             onPress={() =>
               this.props.navigation.navigate("Repository", {
-                repositoryUrl: userEvent.repo.url
+                repository: {
+                  ...userEvent.repo,
+                  name: userEvent.repo.name.substring(
+                    userEvent.repo.name.indexOf("/") + 1
+                  )
+                }
               })}
           >
             {userEvent.repo.name}
@@ -302,7 +332,12 @@ class Events extends Component {
               style={styles.linkDescription}
               onPress={() =>
                 this.props.navigation.navigate("Repository", {
-                  repositoryUrl: userEvent.repo.url
+                  repository: {
+                    ...userEvent.repo,
+                    name: userEvent.repo.name.substring(
+                      userEvent.repo.name.indexOf("/") + 1
+                    )
+                  }
                 })}
             >
               {userEvent.repo.name}
@@ -316,7 +351,12 @@ class Events extends Component {
             style={styles.linkDescription}
             onPress={() =>
               this.props.navigation.navigate("Repository", {
-                repositoryUrl: userEvent.repo.url
+                repository: {
+                  ...userEvent.repo,
+                  name: userEvent.repo.name.substring(
+                    userEvent.repo.name.indexOf("/") + 1
+                  )
+                }
               })}
           >
             {userEvent.repo.name}
@@ -340,7 +380,12 @@ class Events extends Component {
             style={styles.linkDescription}
             onPress={() =>
               this.props.navigation.navigate("Repository", {
-                repositoryUrl: userEvent.repo.url
+                repository: {
+                  ...userEvent.repo,
+                  name: userEvent.repo.name.substring(
+                    userEvent.repo.name.indexOf("/") + 1
+                  )
+                }
               })}
           >
             {userEvent.repo.name}
@@ -352,7 +397,12 @@ class Events extends Component {
             style={styles.linkDescription}
             onPress={() =>
               this.props.navigation.navigate("Repository", {
-                repositoryUrl: userEvent.repo.url
+                repository: {
+                  ...userEvent.repo,
+                  name: userEvent.repo.name.substring(
+                    userEvent.repo.name.indexOf("/") + 1
+                  )
+                }
               })}
           >
             {userEvent.repo.name}
@@ -364,7 +414,12 @@ class Events extends Component {
             style={styles.linkDescription}
             onPress={() =>
               this.props.navigation.navigate("Repository", {
-                repositoryUrl: userEvent.repo.url
+                repository: {
+                  ...userEvent.repo,
+                  name: userEvent.repo.name.substring(
+                    userEvent.repo.name.indexOf("/") + 1
+                  )
+                }
               })}
           >
             {userEvent.repo.name}
