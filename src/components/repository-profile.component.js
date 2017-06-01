@@ -6,14 +6,12 @@ import config from "config";
 
 type Props = {
   repository: Object,
-  subscribed: boolean,
   starred: boolean,
   navigation: Object
 };
 
 export const RepositoryProfile = ({
   repository,
-  subscribed,
   starred,
   navigation
 }: Props) => (

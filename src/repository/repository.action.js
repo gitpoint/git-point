@@ -3,7 +3,8 @@ import {
   GET_REPOSITORY_CONTRIBUTORS,
   GET_REPOSITORY_CONTENTS,
   GET_REPOSITORY_ISSUES,
-  CHECK_REPO_STARRED,
+  GET_REPO_STARRED_STATUS,
+  CHANGE_STAR_STATUS,
   GET_REPOSITORY_README,
   GET_REPOSITORY_LABELS,
   SEARCH_OPEN_ISSUES,
@@ -17,7 +18,8 @@ import {
   fetchUrlNormal,
   fetchCommentHTML,
   fetchReadMe,
-  fetchSearch
+  fetchSearch,
+  fetchChangeStarStatusRepo
 } from "api";
 
 export const getRepositoryInfo = url => {
@@ -133,18 +135,40 @@ export const checkRepoStarred = url => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 
-    dispatch({ type: CHECK_REPO_STARRED.PENDING });
+    dispatch({ type: GET_REPO_STARRED_STATUS.PENDING });
 
     fetchUrlNormal(url, accessToken)
       .then(data => {
         dispatch({
-          type: CHECK_REPO_STARRED.SUCCESS,
+          type: GET_REPO_STARRED_STATUS.SUCCESS,
           payload: data.status === 404 ? false : true
         });
       })
       .catch(error => {
         dispatch({
-          type: CHECK_REPO_STARRED.ERROR,
+          type: GET_REPO_STARRED_STATUS.ERROR,
+          payload: error
+        });
+      });
+  };
+};
+
+export const changeStarStatusRepo = (owner, repo, starred) => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: CHANGE_STAR_STATUS.PENDING });
+
+    fetchChangeStarStatusRepo(owner, repo, starred, accessToken)
+      .then(() => {
+        dispatch({
+          type: CHANGE_STAR_STATUS.SUCCESS,
+          payload: !starred
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: CHANGE_STAR_STATUS.ERROR,
           payload: error
         });
       });

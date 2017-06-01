@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, ActivityIndicator } from "react-native";
+import { StyleSheet, ActivityIndicator, ActionSheetIOS } from "react-native";
 import { ListItem } from "react-native-elements";
 
 import {
@@ -14,26 +14,33 @@ import config from "config";
 import Communications from "react-native-communications";
 
 import { connect } from "react-redux";
-import { getUserInfo } from "../";
+import { getUserInfo, changeFollowStatus } from "../user.action";
 
 const mapStateToProps = state => ({
   user: state.user.user,
   orgs: state.user.orgs,
+  isFollowing: state.user.isFollowing,
   isPendingUser: state.user.isPendingUser,
-  isPendingOrgs: state.user.isPendingOrgs
+  isPendingOrgs: state.user.isPendingOrgs,
+  isPendingCheckFollowing: state.user.isPendingCheckFollowing
 });
 
 const mapDispatchToProps = dispatch => ({
-  getUserInfo: user => dispatch(getUserInfo(user))
+  getUserInfo: user => dispatch(getUserInfo(user)),
+  changeFollowStatus: (user, isFollowing) =>
+    dispatch(changeFollowStatus(user, isFollowing))
 });
 
 class Profile extends Component {
   props: {
     getUserInfo: Function,
+    changeFollowStatus: Function,
     user: Object,
     orgs: Array,
+    isFollowing: boolean,
     isPendingUser: boolean,
     isPendingOrgs: boolean,
+    isPendingCheckFollowing: boolean,
     navigation: Object
   };
 
@@ -46,8 +53,33 @@ class Profile extends Component {
     return url.substr(0, prefix.length) === prefix ? url : `http://${url}`;
   }
 
+  showMenuActionSheet() {
+    const { user, isFollowing, changeFollowStatus } = this.props;
+    const userActions = [isFollowing ? "Unfollow" : "Follow"];
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        title: "User Actions",
+        options: [...userActions, "Cancel"],
+        cancelButtonIndex: 1
+      },
+      buttonIndex => {
+        if (buttonIndex === 0) {
+          changeFollowStatus(user.login, isFollowing);
+        }
+      }
+    );
+  }
+
   render() {
-    const { user, orgs, isPendingUser, isPendingOrgs, navigation } = this.props;
+    const {
+      user,
+      orgs,
+      isFollowing,
+      isPendingUser,
+      isPendingOrgs,
+      isPendingCheckFollowing,
+      navigation
+    } = this.props;
     const initialUser = navigation.state.params.user;
     const isPending = isPendingUser || isPendingOrgs;
 
@@ -59,11 +91,16 @@ class Profile extends Component {
             <UserProfile
               type="user"
               initialUser={initialUser}
+              isFollowing={
+                isPendingUser || isPendingCheckFollowing ? false : isFollowing
+              }
               user={initialUser.login === user.login ? user : {}}
               navigation={navigation}
             />
           )}
           stickyTitle={user.login}
+          showMenu={!isPendingUser && !isPendingCheckFollowing}
+          menuAction={() => this.showMenuActionSheet()}
           navigateBack
           navigation={navigation}
         >

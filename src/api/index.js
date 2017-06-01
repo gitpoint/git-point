@@ -219,6 +219,33 @@ export const fetchMarkRepoNotificationAsRead = (repoFullName, accessToken) => {
   return fetch(POST_ENDPOINT, accessTokenParametersPUT(accessToken));
 };
 
+export const fetchChangeStarStatusRepo = (
+  owner,
+  repo,
+  starred,
+  accessToken
+) => {
+  const POST_ENDPOINT = `https://api.github.com/user/starred/${owner}/${repo}`;
+
+  return fetch(
+    POST_ENDPOINT,
+    starred
+      ? accessTokenParametersDELETE(accessToken)
+      : accessTokenParametersPUT(accessToken)
+  );
+};
+
+export const fetchChangeFollowStatus = (user, isFollowing, accessToken) => {
+  const POST_ENDPOINT = `https://api.github.com/user/following/${user}`;
+
+  return fetch(
+    POST_ENDPOINT,
+    isFollowing
+      ? accessTokenParametersDELETE(accessToken)
+      : accessTokenParametersPUT(accessToken)
+  );
+};
+
 ///
 
 export const fetchDiff = (url, accessToken) => {

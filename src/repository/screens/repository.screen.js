@@ -21,7 +21,8 @@ import { connect } from "react-redux";
 import {
   getRepositoryInfo,
   getContributors,
-  getIssues
+  getIssues,
+  changeStarStatusRepo
 } from "../repository.action";
 
 const mapStateToProps = state => ({
@@ -38,7 +39,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getRepositoryInfo: url => dispatch(getRepositoryInfo(url)),
   getContributors: url => dispatch(getContributors(url)),
-  getIssues: url => dispatch(getIssues(url))
+  getIssues: url => dispatch(getIssues(url)),
+  changeStarStatusRepo: (owner, repo, starred) =>
+    dispatch(changeStarStatusRepo(owner, repo, starred))
 });
 
 class Repository extends Component {
@@ -46,6 +49,7 @@ class Repository extends Component {
     selectRepository: Function,
     getRepositoryInfo: Function,
     getIssues: Function,
+    changeStarStatusRepo: Function,
     repositoryName: string,
     repository: Object,
     contributors: Array,
@@ -67,19 +71,26 @@ class Repository extends Component {
   }
 
   showMenuActionSheet() {
-    const { starred } = this.props;
-    const repositoryActions = ["Watch", starred ? "★ Unstar" : "★ Star"];
+    const { starred, repository, changeStarStatusRepo } = this.props;
+    const repositoryActions = [starred ? "★ Unstar" : "★ Star"];
     ActionSheetIOS.showActionSheetWithOptions(
       {
         title: "Repository Actions",
         options: [...repositoryActions, "Cancel"],
-        cancelButtonIndex: 2
+        cancelButtonIndex: 1
       },
       buttonIndex => {
-        console.log(repositoryActions[buttonIndex]);
+        if (buttonIndex === 0) {
+          changeStarStatusRepo(
+            repository.owner.login,
+            repository.name,
+            starred
+          );
+        }
       }
     );
   }
+
   render() {
     const {
       repository,
@@ -121,9 +132,9 @@ class Repository extends Component {
             }
           }}
           stickyTitle={repository.name}
-          navigateBack
           showMenu={!isPendingRepository && !isPendingCheckStarred}
           menuAction={() => this.showMenuActionSheet()}
+          navigateBack
           navigation={navigation}
         >
 

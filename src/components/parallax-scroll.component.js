@@ -67,6 +67,7 @@ export const ParallaxScroll = ({
               type="font-awesome"
               onPress={menuAction}
               color={config.colors.white}
+              underlayColor="transparent"
             />
           </View>}
       </View>

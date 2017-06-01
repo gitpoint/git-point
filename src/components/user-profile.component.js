@@ -8,10 +8,17 @@ type Props = {
   type: string,
   initialUser: Object,
   user: Object,
+  isFollowing: boolean,
   navigation: Object
 };
 
-export const UserProfile = ({ type, initialUser, user, navigation }: Props) => (
+export const UserProfile = ({
+  type,
+  initialUser,
+  user,
+  isFollowing,
+  navigation
+}: Props) => (
   <View style={styles.container}>
     <View style={styles.profile}>
       <FastImage
@@ -54,7 +61,7 @@ export const UserProfile = ({ type, initialUser, user, navigation }: Props) => (
               followerCount: user.followers > 10 ? 10 : user.followers
             })}
         >
-          <Text style={styles.unitNumber}>
+          <Text style={[styles.unitNumber, isFollowing && styles.green]}>
             {user.followers}
           </Text>
           <Text style={styles.unitText}>Followers</Text>
@@ -135,5 +142,8 @@ const styles = StyleSheet.create({
     color: config.colors.white,
     fontSize: 12,
     fontFamily: "AvenirNext-Medium"
+  },
+  green: {
+    color: config.colors.lightGreen
   }
 });

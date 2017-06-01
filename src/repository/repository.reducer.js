@@ -3,7 +3,8 @@ import {
   GET_REPOSITORY_CONTRIBUTORS,
   GET_REPOSITORY_CONTENTS,
   GET_REPOSITORY_ISSUES,
-  CHECK_REPO_STARRED,
+  GET_REPO_STARRED_STATUS,
+  CHANGE_STAR_STATUS,
   GET_REPOSITORY_README,
   GET_REPOSITORY_LABELS,
   SEARCH_OPEN_ISSUES,
@@ -30,6 +31,7 @@ const initialState = {
   isPendingContents: false,
   isPendingIssues: false,
   isPendingCheckStarred: false,
+  isPendingChangeStarred: false,
   isPendingCheckSubscribed: false,
   isPendingReadMe: false,
   isPendingLabels: false,
@@ -111,22 +113,45 @@ export const repositoryReducer = (state = initialState, action = {}) => {
         error: action.payload,
         isPendingIssues: false
       };
-    case CHECK_REPO_STARRED.PENDING:
+    case GET_REPO_STARRED_STATUS.PENDING:
       return {
         ...state,
         isPendingCheckStarred: true
       };
-    case CHECK_REPO_STARRED.SUCCESS:
+    case GET_REPO_STARRED_STATUS.SUCCESS:
       return {
         ...state,
         starred: action.payload,
         isPendingCheckStarred: false
       };
-    case CHECK_REPO_STARRED.ERROR:
+    case GET_REPO_STARRED_STATUS.ERROR:
       return {
         ...state,
         error: action.payload,
         isPendingCheckStarred: false
+      };
+    case CHANGE_STAR_STATUS.PENDING:
+      return {
+        ...state,
+        isPendingChangeStarred: true
+      };
+    case CHANGE_STAR_STATUS.SUCCESS:
+      return {
+        ...state,
+        starred: action.payload,
+        repository: {
+          ...state.repository,
+          stargazers_count: action.payload
+            ? state.repository.stargazers_count + 1
+            : state.repository.stargazers_count - 1
+        },
+        isPendingChangeStarred: false
+      };
+    case CHANGE_STAR_STATUS.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isPendingChangeStarred: false
       };
     case GET_REPOSITORY_README.PENDING:
       return {
