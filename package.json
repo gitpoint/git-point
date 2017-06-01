@@ -4,6 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
+    "link": "./node_modules/.bin/react-native link",
+    "ios": "./node_modules/.bin/react-native run-ios",
+    "android": "./node_modules/.bin/react-native run-android",
     "test": "jest",
     "flow-start": "flow start",
     "flow-stop": "flow stop",
