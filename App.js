@@ -36,6 +36,7 @@ import { NotificationsScreen } from "notifications";
 //Repository
 import { RepositoryScreen } from "repository";
 import { RepositoryCodeListScreen } from "repository";
+import { RepositoryFileScreen } from "repository";
 import { IssueListScreen } from "repository";
 import { PullListScreen } from "repository";
 import { PullDiffScreen } from "repository";
@@ -105,6 +106,12 @@ const sharedRoutes = {
       title: navigation.state.params.topLevel
         ? "Code"
         : navigation.state.params.content.name
+    })
+  },
+  RepositoryFile: {
+    screen: RepositoryFileScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.content.name
     })
   },
   IssueList: {

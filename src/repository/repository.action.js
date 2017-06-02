@@ -2,6 +2,7 @@ import {
   GET_REPOSITORY,
   GET_REPOSITORY_CONTRIBUTORS,
   GET_REPOSITORY_CONTENTS,
+  GET_REPOSITORY_FILE,
   GET_REPOSITORY_ISSUES,
   GET_REPO_STARRED_STATUS,
   CHANGE_STAR_STATUS,
@@ -16,6 +17,7 @@ import {
 import {
   fetchUrl,
   fetchUrlNormal,
+  fetchUrlFile,
   fetchCommentHTML,
   fetchReadMe,
   fetchSearch,
@@ -87,7 +89,7 @@ export const getContributors = url => {
   };
 };
 
-export const getContents = url => {
+export const getContents = (url, level) => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 
@@ -97,12 +99,35 @@ export const getContents = url => {
       .then(data => {
         dispatch({
           type: GET_REPOSITORY_CONTENTS.SUCCESS,
-          payload: data
+          results: data,
+          level: level
         });
       })
       .catch(error => {
         dispatch({
           type: GET_REPOSITORY_CONTENTS.ERROR,
+          payload: error
+        });
+      });
+  };
+};
+
+export const getRepositoryFile = url => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: GET_REPOSITORY_FILE.PENDING });
+
+    fetchUrlFile(url, accessToken)
+      .then(data => {
+        dispatch({
+          type: GET_REPOSITORY_FILE.SUCCESS,
+          payload: data
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: GET_REPOSITORY_FILE.ERROR,
           payload: error
         });
       });

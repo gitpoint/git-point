@@ -54,6 +54,13 @@ const accessTokenParametersDiff = accessToken => ({
   }
 });
 
+const accessTokenParametersRaw = accessToken => ({
+  headers: {
+    Accept: "application/vnd.github.v3.raw",
+    Authorization: `token ${accessToken}`
+  }
+});
+
 const authParameters = (code, state) => ({
   method: "POST",
   headers: {
@@ -273,6 +280,12 @@ export const fetchUrlNormal = (url, accessToken) => {
 };
 
 ///
+
+export const fetchUrlFile = (url, accessToken) => {
+  return fetch(url, accessTokenParametersRaw(accessToken)).then(response =>
+    response.text()
+  );
+};
 
 ///
 

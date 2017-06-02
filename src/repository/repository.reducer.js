@@ -2,6 +2,7 @@ import {
   GET_REPOSITORY,
   GET_REPOSITORY_CONTRIBUTORS,
   GET_REPOSITORY_CONTENTS,
+  GET_REPOSITORY_FILE,
   GET_REPOSITORY_ISSUES,
   GET_REPO_STARRED_STATUS,
   CHANGE_STAR_STATUS,
@@ -17,7 +18,8 @@ const initialState = {
   repository: {},
   contributors: [],
   labels: [],
-  contents: [],
+  contents: {},
+  fileContent: "",
   issues: [],
   readMe: "",
   starred: false,
@@ -29,6 +31,7 @@ const initialState = {
   isPendingRepository: false,
   isPendingContributors: false,
   isPendingContents: false,
+  isPendingFile: false,
   isPendingIssues: false,
   isPendingCheckStarred: false,
   isPendingChangeStarred: false,
@@ -87,7 +90,9 @@ export const repositoryReducer = (state = initialState, action = {}) => {
     case GET_REPOSITORY_CONTENTS.SUCCESS:
       return {
         ...state,
-        contents: action.payload,
+        contents: action.level === "top"
+          ? { ...state.contents, top: action.results }
+          : { ...state.contents, [action.level]: action.results },
         isPendingContents: false
       };
     case GET_REPOSITORY_CONTENTS.ERROR:
@@ -95,6 +100,23 @@ export const repositoryReducer = (state = initialState, action = {}) => {
         ...state,
         error: action.payload,
         isPendingContents: false
+      };
+    case GET_REPOSITORY_FILE.PENDING:
+      return {
+        ...state,
+        isPendingFile: true
+      };
+    case GET_REPOSITORY_FILE.SUCCESS:
+      return {
+        ...state,
+        fileContent: action.payload,
+        isPendingFile: false
+      };
+    case GET_REPOSITORY_FILE.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isPendingFile: false
       };
     case GET_REPOSITORY_ISSUES.PENDING:
       return {

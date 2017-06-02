@@ -16,7 +16,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getContents: url => dispatch(getContents(url))
+  getContents: (url, level) => dispatch(getContents(url, level))
 });
 
 class RepositoryCodeList extends Component {
@@ -33,13 +33,20 @@ class RepositoryCodeList extends Component {
     const url = navigationParams.topLevel
       ? this.props.repository.contents_url.replace("{+path}", "")
       : navigationParams.content.url;
-    this.props.getContents(url);
+    const level = navigationParams.topLevel
+      ? "top"
+      : navigationParams.content.name;
+
+    this.props.getContents(url, level);
   }
 
-  sortedContents = contents =>
-    contents.sort((a, b) => {
-      return a.type === b.type ? 0 : a.type === "dir" ? -1 : 1;
-    });
+  sortedContents = contents => {
+    if (contents) {
+      return contents.sort((a, b) => {
+        return a.type === b.type ? 0 : a.type === "dir" ? -1 : 1;
+      });
+    }
+  };
 
   goToPath = content => {
     if (content.type === "dir") {
@@ -47,17 +54,27 @@ class RepositoryCodeList extends Component {
         topLevel: false,
         content: content
       });
+    } else {
+      return this.props.navigation.navigate("RepositoryFile", {
+        content: content
+      });
     }
   };
 
   render() {
-    const { contents, isPendingContents } = this.props;
+    const { contents, isPendingContents, navigation } = this.props;
 
     return (
       <ViewContainer barColor="dark">
         {!isPendingContents &&
           <FlatList
-            data={this.sortedContents(contents)}
+            data={
+              navigation.state.params.topLevel
+                ? this.sortedContents(contents.top)
+                : this.sortedContents(
+                    contents[navigation.state.params.content.name]
+                  )
+            }
             keyExtractor={this.keyExtractor}
             renderItem={this.renderItem}
           />}
