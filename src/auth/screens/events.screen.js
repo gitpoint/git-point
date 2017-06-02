@@ -505,7 +505,8 @@ class Events extends Component {
     return (
       <ViewContainer barColor="dark">
 
-        {(isPendingEvents || !userEvents) &&
+        {isPendingEvents &&
+          !userEvents &&
           [...Array(10)].map((item, i) => <LoadingUserListItem key={i} />)}
 
         {userEvents &&

@@ -1,5 +1,6 @@
 const config = {
   colors: {
+    blue: "#0366d6",
     black: "#000000",
     primarydark: "#262626",
     grey: "#bbb",

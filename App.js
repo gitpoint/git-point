@@ -1,61 +1,61 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
 import {
   AppRegistry,
   AsyncStorage,
   Image,
   StyleSheet,
   View,
-  LayoutAnimation,
-} from 'react-native';
-import {StackNavigator, TabNavigator} from 'react-navigation';
-import {Icon} from 'react-native-elements';
-import config from 'config';
+  LayoutAnimation
+} from "react-native";
+import { StackNavigator, TabNavigator } from "react-navigation";
+import { Icon } from "react-native-elements";
+import config from "config";
 
 //Auth
-import { SplashScreen } from 'auth';
-import { LoginScreen } from 'auth';
-import { WelcomeScreen } from 'auth';
-import { AuthProfileScreen } from 'auth';
-import { EventsScreen } from 'auth';
+import { SplashScreen } from "auth";
+import { LoginScreen } from "auth";
+import { WelcomeScreen } from "auth";
+import { AuthProfileScreen } from "auth";
+import { EventsScreen } from "auth";
 
 //User
-import { ProfileScreen } from 'user';
-import { RepositoryListScreen } from 'user';
-import { FollowerListScreen } from 'user';
-import { FollowingListScreen } from 'user';
+import { ProfileScreen } from "user";
+import { RepositoryListScreen } from "user";
+import { FollowerListScreen } from "user";
+import { FollowingListScreen } from "user";
 
 //Organization
-import { OrganizationProfileScreen } from 'organization';
+import { OrganizationProfileScreen } from "organization";
 
 //Search
-import { SearchScreen } from 'search';
+import { SearchScreen } from "search";
 
 //Notifications
-import { NotificationsScreen } from 'notifications';
+import { NotificationsScreen } from "notifications";
 
 //Repository
-import { RepositoryScreen } from 'repository';
-import { RepositoryCodeListScreen } from 'repository';
-import { IssueListScreen } from 'repository';
-import { PullListScreen } from 'repository';
-import { PullDiffScreen } from 'repository';
-import { ReadMeScreen } from 'repository';
+import { RepositoryScreen } from "repository";
+import { RepositoryCodeListScreen } from "repository";
+import { IssueListScreen } from "repository";
+import { PullListScreen } from "repository";
+import { PullDiffScreen } from "repository";
+import { ReadMeScreen } from "repository";
 
 //Issue
-import { IssueScreen } from 'issue';
-import { IssueSettingsScreen } from 'issue';
+import { IssueScreen } from "issue";
+import { IssueSettingsScreen } from "issue";
 
 // Redux Store
-import {compose, createStore, applyMiddleware} from 'redux';
-import {Provider} from 'react-redux';
-import rootReducer from './reducer';
+import { compose, createStore, applyMiddleware } from "redux";
+import { Provider } from "react-redux";
+import rootReducer from "./reducer";
 
-import {persistStore, autoRehydrate} from 'redux-persist';
+import { persistStore, autoRehydrate } from "redux-persist";
 
-import createLogger from 'redux-logger';
+import createLogger from "redux-logger";
 
 const logger = createLogger();
-import reduxThunk from 'redux-thunk';
+import reduxThunk from "redux-thunk";
 
 const store = createStore(
   rootReducer,
@@ -66,81 +66,83 @@ const sharedRoutes = {
   RepositoryList: {
     screen: RepositoryListScreen,
     navigationOptions: {
-      title: 'Repositories',
+      title: "Repositories"
     }
   },
   FollowerList: {
     screen: FollowerListScreen,
     navigationOptions: {
-      title: 'Followers',
+      title: "Followers"
     }
   },
   FollowingList: {
     screen: FollowingListScreen,
     navigationOptions: {
-      title: 'Following',
+      title: "Following"
     }
   },
   Profile: {
     screen: ProfileScreen,
     navigationOptions: {
-      header: null,
-    },
+      header: null
+    }
   },
   Organization: {
     screen: OrganizationProfileScreen,
     navigationOptions: {
-      header: null,
-    },
+      header: null
+    }
   },
   Repository: {
     screen: RepositoryScreen,
     navigationOptions: {
-      header: null,
-    },
+      header: null
+    }
   },
   RepositoryCodeList: {
     screen: RepositoryCodeListScreen,
     navigationOptions: ({ navigation }) => ({
-      title: navigation.state.params.topLevel ? 'Code' : navigation.state.params.content.name,
+      title: navigation.state.params.topLevel
+        ? "Code"
+        : navigation.state.params.content.name
     })
   },
   IssueList: {
     screen: IssueListScreen,
     navigationOptions: {
-      title: 'Issues',
-    },
+      title: "Issues"
+    }
   },
   PullList: {
     screen: PullListScreen,
     navigationOptions: {
-      title: 'Pull Requests',
-    },
+      title: "Pull Requests"
+    }
   },
   Issue: {
     screen: IssueScreen,
     navigationOptions: ({ navigation }) => ({
-      title: `#${navigation.state.params.issue ? navigation.state.params.issue.number : 'Issue'}`,
+      title: `#${navigation.state.params.issue ? navigation.state.params.issue.number : "Issue"}`
     })
   },
   IssueSettings: {
     screen: IssueSettingsScreen,
     navigationOptions: {
-      title: 'Settings',
-    },
+      title: "Settings"
+    }
   },
   PullDiff: {
     screen: PullDiffScreen,
     navigationOptions: {
-      title: 'Diff',
-    },
+      title: "Diff"
+    }
   },
   ReadMe: {
     screen: ReadMeScreen,
     navigationOptions: {
-      title: 'README.md',
-    },
-  },
+      title: "README.md"
+    }
+  }
 };
 
 const HomeStackNavigator = StackNavigator(
@@ -148,13 +150,13 @@ const HomeStackNavigator = StackNavigator(
     Events: {
       screen: EventsScreen,
       navigationOptions: {
-        headerTitle: 'GitPoint',
-      },
+        headerTitle: "GitPoint"
+      }
     },
     ...sharedRoutes
   },
   {
-    headerMode: 'screen',
+    headerMode: "screen"
   }
 );
 
@@ -163,13 +165,13 @@ const NotificationsStackNavigator = StackNavigator(
     Notifications: {
       screen: NotificationsScreen,
       navigationOptions: {
-        header: null,
-      },
+        header: null
+      }
     },
-    ...sharedRoutes,
+    ...sharedRoutes
   },
   {
-    headerMode: 'screen',
+    headerMode: "screen"
   }
 );
 
@@ -178,13 +180,13 @@ const SearchStackNavigator = StackNavigator(
     Search: {
       screen: SearchScreen,
       navigationOptions: {
-        header: null,
-      },
+        header: null
+      }
     },
-    ...sharedRoutes,
+    ...sharedRoutes
   },
   {
-    headerMode: 'screen',
+    headerMode: "screen"
   }
 );
 
@@ -193,13 +195,13 @@ const MyProfileStackNavigator = StackNavigator(
     MyProfile: {
       screen: AuthProfileScreen,
       navigationOptions: {
-        header: null,
-      },
+        header: null
+      }
     },
-    ...sharedRoutes,
+    ...sharedRoutes
   },
   {
-    headerMode: 'screen',
+    headerMode: "screen"
   }
 );
 
@@ -208,62 +210,62 @@ const MainTabNavigator = TabNavigator(
     Home: {
       screen: HomeStackNavigator,
       navigationOptions: {
-        tabBarIcon: ({tintColor}) => (
+        tabBarIcon: ({ tintColor }) => (
           <Icon
-            containerStyle={{justifyContent: 'center', alignItems: 'center'}}
+            containerStyle={{ justifyContent: "center", alignItems: "center" }}
             color={tintColor}
             name="home"
             size={33}
           />
-        ),
-      },
+        )
+      }
     },
     Notifications: {
       screen: NotificationsStackNavigator,
       navigationOptions: {
-        tabBarIcon: ({tintColor}) => (
+        tabBarIcon: ({ tintColor }) => (
           <Icon
-            containerStyle={{justifyContent: 'center', alignItems: 'center'}}
+            containerStyle={{ justifyContent: "center", alignItems: "center" }}
             color={tintColor}
             name="notifications"
             size={33}
           />
-        ),
-      },
+        )
+      }
     },
     Search: {
       screen: SearchStackNavigator,
       navigationOptions: {
-        tabBarIcon: ({tintColor}) => (
+        tabBarIcon: ({ tintColor }) => (
           <Icon
-            containerStyle={{justifyContent: 'center', alignItems: 'center'}}
+            containerStyle={{ justifyContent: "center", alignItems: "center" }}
             color={tintColor}
             name="search"
             size={33}
           />
-        ),
-      },
+        )
+      }
     },
     MyProfile: {
       screen: MyProfileStackNavigator,
       navigationOptions: {
-        tabBarIcon: ({tintColor}) => (
+        tabBarIcon: ({ tintColor }) => (
           <Icon
-            containerStyle={{justifyContent: 'center', alignItems: 'center'}}
+            containerStyle={{ justifyContent: "center", alignItems: "center" }}
             color={tintColor}
             name="person"
             size={33}
           />
-        ),
-      },
-    },
+        )
+      }
+    }
   },
   {
     tabBarOptions: {
       showLabel: false,
       activeTintColor: config.colors.primarydark,
-      inactiveTintColor: config.colors.grey,
-    },
+      inactiveTintColor: config.colors.grey
+    }
   }
 );
 
@@ -272,32 +274,32 @@ const GitPoint = StackNavigator(
     Splash: {
       screen: SplashScreen,
       navigationOptions: {
-        header: null,
-      },
+        header: null
+      }
     },
     Login: {
       screen: LoginScreen,
       navigationOptions: {
-        header: null,
-      },
+        header: null
+      }
     },
     Welcome: {
       screen: WelcomeScreen,
       navigationOptions: {
-        header: null,
+        header: null
       },
-      path: 'welcome',
+      path: "welcome"
     },
     Main: {
       screen: MainTabNavigator,
       navigationOptions: {
-        header: null,
-      },
-    },
+        header: null
+      }
+    }
   },
   {
-    headerMode: 'screen',
-    URIPrefix: 'gitpoint://',
+    headerMode: "screen",
+    URIPrefix: "gitpoint://"
   }
 );
 
@@ -306,13 +308,13 @@ class App extends Component {
     super();
 
     this.state = {
-      rehydrated: false,
+      rehydrated: false
     };
   }
 
   componentWillMount() {
-    persistStore(store, {storage: AsyncStorage}, () => {
-      this.setState({rehydrated: true});
+    persistStore(store, { storage: AsyncStorage }, () => {
+      this.setState({ rehydrated: true });
     });
   }
 
@@ -326,7 +328,7 @@ class App extends Component {
         <View style={styles.logoContainer}>
           <Image
             style={styles.logo}
-            source={require('./src/assets/logo-black.png')}
+            source={require("./src/assets/logo-black.png")}
           />
         </View>
       );
@@ -342,13 +344,13 @@ const styles = StyleSheet.create({
   logoContainer: {
     backgroundColor: config.colors.white,
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center"
   },
   logo: {
     width: 100,
-    height: 100,
-  },
+    height: 100
+  }
 });
 
-AppRegistry.registerComponent('GitPoint', () => App);
+AppRegistry.registerComponent("GitPoint", () => App);

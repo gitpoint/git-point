@@ -22,7 +22,7 @@ export const RepositoryProfile = ({
           <Icon
             containerStyle={[
               styles.icon,
-              repository.fork ? { marginLeft: 15 } : { marginLeft: 10 }
+              repository.fork ? { marginLeft: 17 } : { marginLeft: 13 }
             ]}
             name={repository.fork ? "repo-forked" : "repo"}
             type="octicon"

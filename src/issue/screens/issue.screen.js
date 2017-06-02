@@ -63,6 +63,7 @@ class Issue extends Component {
     isPendingDiff: boolean,
     isPendingComments: boolean,
     isPostingComment: boolean,
+    isPendingIssue: boolean,
     navigation: Object
   };
 
@@ -112,18 +113,26 @@ class Issue extends Component {
   };
 
   renderHeader = () => {
-    const { issue, diff, isPendingDiff, navigation } = this.props;
+    const {
+      issue,
+      diff,
+      isPendingIssue,
+      isPendingDiff,
+      navigation
+    } = this.props;
 
-    return (
-      <IssueDescriptionListItem
-        issue={issue}
-        diff={diff}
-        isPendingDiff={isPendingDiff}
-        onRepositoryPress={url => this.onRepositoryPress(url)}
-        onLinkPress={node => this.onLinkPress(node)}
-        navigation={navigation}
-      />
-    );
+    if (!isPendingIssue && issue) {
+      return (
+        <IssueDescriptionListItem
+          issue={issue}
+          diff={diff}
+          isPendingDiff={isPendingDiff}
+          onRepositoryPress={url => this.onRepositoryPress(url)}
+          onLinkPress={node => this.onLinkPress(node)}
+          navigation={navigation}
+        />
+      );
+    }
   };
 
   renderItem = ({ item }) => (

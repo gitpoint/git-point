@@ -90,7 +90,6 @@ class Repository extends Component {
       }
     );
   }
-
   render() {
     const {
       repository,
@@ -146,6 +145,7 @@ class Repository extends Component {
             </SectionList>}
 
           {!(initalRepository && initalRepository.owner) &&
+            (repository && repository.owner) &&
             !isPendingRepository &&
             <SectionList title="OWNER">
               <UserListItem user={repository.owner} navigation={navigation} />
