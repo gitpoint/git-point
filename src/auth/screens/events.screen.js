@@ -241,37 +241,19 @@ class Events extends Component {
         );
       case "PullRequestEvent":
         return (
-          <Text
-            style={styles.linkDescription}
-            onPress={() =>
-              this.props.navigation.navigate("Issue", {
-                issue: userEvent.payload.pull_request
-              })}
-          >
+          <Text style={styles.linkDescription}>
             {userEvent.repo.name}#{userEvent.payload.pull_request.number}
           </Text>
         );
       case "PullRequestReviewEvent":
         return (
-          <Text
-            style={styles.linkDescription}
-            onPress={() =>
-              this.props.navigation.navigate("Issue", {
-                issue: userEvent.payload.pull_request
-              })}
-          >
+          <Text style={styles.linkDescription}>
             {userEvent.repo.name}#{userEvent.payload.pull_request.number}
           </Text>
         );
       case "PullRequestReviewCommentEvent":
         return (
-          <Text
-            style={styles.linkDescription}
-            onPress={() =>
-              this.props.navigation.navigate("Issue", {
-                issue: userEvent.payload.pull_request
-              })}
-          >
+          <Text style={styles.linkDescription}>
             {userEvent.repo.name}#{userEvent.payload.pull_request.number}
           </Text>
         );

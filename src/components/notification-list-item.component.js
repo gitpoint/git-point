@@ -1,4 +1,4 @@
-import React, { PropTypes } from "react";
+import React from "react";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import { Icon } from "react-native-elements";
 
@@ -59,12 +59,6 @@ export const NotificationListItem = ({
       </View>
     </View>
   );
-};
-
-NotificationListItem.props = {
-  notification: PropTypes.object,
-  iconAction: PropTypes.func,
-  navigationAction: PropTypes.func
 };
 
 const styles = StyleSheet.create({

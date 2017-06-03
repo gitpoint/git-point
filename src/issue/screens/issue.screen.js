@@ -108,8 +108,8 @@ class Issue extends Component {
     const issueNum = navigation.state.params.issue.number;
 
     this.props.postIssueComment(body, owner, repoName, issueNum);
-    this.refs.commentsListRef.scrollToEnd();
     Keyboard.dismiss();
+    this.refs.commentsListRef.scrollToEnd();
   };
 
   renderHeader = () => {
@@ -193,6 +193,7 @@ class Issue extends Component {
 
             <FlatList
               ref="commentsListRef"
+              contentContainerStyle={{ flexGrow: 1 }}
               ListHeaderComponent={this.renderHeader}
               removeClippedSubviews={false}
               data={[issue, ...comments]}

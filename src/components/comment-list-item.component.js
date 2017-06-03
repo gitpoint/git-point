@@ -25,10 +25,12 @@ export class CommentListItem extends Component {
         .replace(new RegExp(/<\/li>[\n]*?<\/ul>/, "g"), "</li></ul>")
         .replace(new RegExp(/<ol>[\n]*?<li>/, "g"), "<ol><li>")
         .replace(new RegExp(/<\/li>[\n]*?<\/ol>/, "g"), "</li></ol>")
-        .replace(new RegExp(/<li>[\n]*?<p>/, "g"), "<li><p>")
-        .replace(new RegExp(/<\/h1>[\n]*?<p>/, "g"), "</h1><p>")
-        .replace(new RegExp(/<\/h2>[\n]*?<p>/, "g"), "</h2><p>")
-        .replace(new RegExp(/<\/h3>[\n]*?<p>/, "g"), "</h3><p>");
+        .replace(new RegExp(/<li>[\n]*?<p>/, "g"), "<li><span>")
+        .replace(new RegExp(/<\/h1>[\n]*?<p>/, "g"), "</h1><span>")
+        .replace(new RegExp(/<\/h2>[\n]*?<p>/, "g"), "</h2><span>")
+        .replace(new RegExp(/<\/h3>[\n]*?<p>/, "g"), "</h3><span>")
+        .replace(new RegExp(/<p>*>/, "g"), "<span>")
+        .replace(new RegExp(/<\/p>*>/, "g"), "</span>");
 
     const myDomElement = (node, index, siblings, parent, defaultRenderer) => {
       const onLinkPress = this.props.onLinkPress;
@@ -36,6 +38,7 @@ export class CommentListItem extends Component {
       if (node.name === "blockquote") {
         return (
           <View
+            key={index}
             style={{
               paddingHorizontal: 12,
               borderLeftWidth: 3,
@@ -55,12 +58,14 @@ export class CommentListItem extends Component {
       } else if (node.name === "hr") {
         return (
           <View
+            key={index}
             style={{ height: 4, backgroundColor: config.colors.greyLight }}
           />
         );
       } else if (node.name === "code") {
         return (
           <Text
+            key={index}
             style={{
               fontFamily: "Menlo",
               backgroundColor: config.colors.greyMidLight,
@@ -76,6 +81,7 @@ export class CommentListItem extends Component {
       ) {
         return (
           <View
+            key={index}
             style={{
               borderBottomWidth: node.name !== "h3" ? 1 : 0,
               borderBottomColor: config.colors.greyMid,
@@ -99,6 +105,7 @@ export class CommentListItem extends Component {
       } else if (node.name === "a") {
         return (
           <Text
+            key={index}
             style={{
               fontFamily: "AvenirNext-DemiBold",
               fontWeight: "600",
@@ -248,8 +255,9 @@ const linkStyle = {
 };
 
 const commentStyles = StyleSheet.create({
+  span: textStyle,
   p: textStyle,
-  // h1: {...textStyle, fontSize: 26},
+  h1: textStyle,
   h2: textStyle,
   h3: textStyle,
   h4: textStyle,

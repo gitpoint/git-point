@@ -7,7 +7,12 @@ import {
   View,
   LayoutAnimation
 } from "react-native";
-import { StackNavigator, TabNavigator } from "react-navigation";
+import {
+  StackNavigator,
+  TabNavigator,
+  TabBarBottom,
+  NavigationActions
+} from "react-navigation";
 import { Icon } from "react-native-elements";
 import config from "config";
 
@@ -157,7 +162,7 @@ const HomeStackNavigator = StackNavigator(
     Events: {
       screen: EventsScreen,
       navigationOptions: {
-        headerTitle: "GitPoint"
+        headerTitle: "Events"
       }
     },
     ...sharedRoutes
@@ -272,7 +277,35 @@ const MainTabNavigator = TabNavigator(
       showLabel: false,
       activeTintColor: config.colors.primarydark,
       inactiveTintColor: config.colors.grey
-    }
+    },
+    tabBarComponent: ({ jumpToIndex, ...props }) => (
+      <TabBarBottom
+        {...props}
+        jumpToIndex={index => {
+          const { dispatch, state } = props.navigation;
+
+          if (state.index === index) {
+            const stackRouteName = [
+              "Events",
+              "Notifications",
+              "Search",
+              "MyProfile"
+            ][index];
+
+            dispatch(
+              NavigationActions.reset({
+                index: 0,
+                actions: [
+                  NavigationActions.navigate({ routeName: stackRouteName })
+                ]
+              })
+            );
+          } else {
+            jumpToIndex(index);
+          }
+        }}
+      />
+    )
   }
 );
 

@@ -52,8 +52,8 @@ class PullDiff extends Component {
           <View style={{ flexDirection: "column" }}>
             <CodeLine key={i} newChunk change={{ content: chunk.content }} />
 
-            {chunk.changes.map((change, i) => (
-              <CodeLine key={i} change={change} />
+            {chunk.changes.map((change, index) => (
+              <CodeLine key={index} change={change} />
             ))}
           </View>
         </ScrollView>
