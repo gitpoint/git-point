@@ -23,7 +23,7 @@ type Props = {
   navigation: Object
 };
 
-export const IssueDescriptionListItem = ({
+export const IssueDescription = ({
   issue,
   diff,
   isPendingDiff,

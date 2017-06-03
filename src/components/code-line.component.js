@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   codeLineContainer: {
-    minWidth: Dimensions.get("window").width - 60,
+    minWidth: Dimensions.get("window").width - 80,
     flex: 0.85
   },
   codeLine: {
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     backgroundColor: config.colors.delCodeLineNumberRed
   },
   lineNumbers: {
-    width: 60,
+    width: 80,
     paddingLeft: 10,
     paddingVertical: 3,
     flexDirection: "row",
@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
     fontFamily: "Menlo",
     fontSize: 12,
     flex: 1,
+    alignItems: "center",
     color: config.colors.grey
   }
 });

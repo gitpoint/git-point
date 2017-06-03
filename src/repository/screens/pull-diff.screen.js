@@ -100,11 +100,15 @@ class PullDiff extends Component {
               {item.from === item.to ? item.to : `${item.from} \n → ${item.to}`}
             </Text>}
         </ScrollView>
-        {item.chunks.length > 0
-          ? chunks
-          : <Text style={styles.noChangesMessage}>
-              File renamed without changes.
-            </Text>}
+
+        {item.chunks.length > 0 && chunks}
+
+        {item.chunks.length === 0 &&
+          !item.new &&
+          !item.deleted &&
+          <Text style={styles.noChangesMessage}>
+            File renamed without changes.
+          </Text>}
       </Card>
     );
   };
@@ -131,7 +135,8 @@ class PullDiff extends Component {
 const styles = StyleSheet.create({
   fileChangeContainer: {
     padding: 0,
-    marginVertical: 25
+    marginTop: 12,
+    marginBottom: 12
   },
   fileTitleContainer: {
     flexDirection: "row",

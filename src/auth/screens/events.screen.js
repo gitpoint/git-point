@@ -188,13 +188,25 @@ class Events extends Component {
         ); // TODO: need to specify for multiple pages
       case "IssueCommentEvent":
         return (
-          <Text style={styles.linkDescription}>
+          <Text
+            style={styles.linkDescription}
+            onPress={() =>
+              this.props.navigation.navigate("Issue", {
+                issue: userEvent.payload.issue
+              })}
+          >
             {userEvent.payload.issue.title}
           </Text>
         );
       case "IssuesEvent":
         return (
-          <Text style={styles.linkDescription}>
+          <Text
+            style={styles.linkDescription}
+            onPress={() =>
+              this.props.navigation.navigate("Issue", {
+                issue: userEvent.payload.issue
+              })}
+          >
             {userEvent.payload.issue.title}
           </Text>
         );
@@ -229,19 +241,37 @@ class Events extends Component {
         );
       case "PullRequestEvent":
         return (
-          <Text style={styles.linkDescription}>
+          <Text
+            style={styles.linkDescription}
+            onPress={() =>
+              this.props.navigation.navigate("Issue", {
+                issue: userEvent.payload.pull_request
+              })}
+          >
             {userEvent.repo.name}#{userEvent.payload.pull_request.number}
           </Text>
         );
       case "PullRequestReviewEvent":
         return (
-          <Text style={styles.linkDescription}>
+          <Text
+            style={styles.linkDescription}
+            onPress={() =>
+              this.props.navigation.navigate("Issue", {
+                issue: userEvent.payload.pull_request
+              })}
+          >
             {userEvent.repo.name}#{userEvent.payload.pull_request.number}
           </Text>
         );
       case "PullRequestReviewCommentEvent":
         return (
-          <Text style={styles.linkDescription}>
+          <Text
+            style={styles.linkDescription}
+            onPress={() =>
+              this.props.navigation.navigate("Issue", {
+                issue: userEvent.payload.pull_request
+              })}
+          >
             {userEvent.repo.name}#{userEvent.payload.pull_request.number}
           </Text>
         );

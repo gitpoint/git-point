@@ -10,7 +10,7 @@ import { Icon } from "react-native-elements";
 import {
   ViewContainer,
   LoadingUserListItem,
-  IssueDescriptionListItem,
+  IssueDescription,
   CommentListItem,
   CommentInput
 } from "components";
@@ -123,7 +123,7 @@ class Issue extends Component {
 
     if (!isPendingIssue && issue) {
       return (
-        <IssueDescriptionListItem
+        <IssueDescription
           issue={issue}
           diff={diff}
           isPendingDiff={isPendingDiff}
