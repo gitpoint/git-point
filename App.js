@@ -57,6 +57,7 @@ import { Provider } from "react-redux";
 import rootReducer from "./reducer";
 
 import { persistStore, autoRehydrate } from "redux-persist";
+import createEncryptor from "redux-persist-transform-encrypt";
 
 import createLogger from "redux-logger";
 
@@ -67,6 +68,12 @@ const store = createStore(
   rootReducer,
   compose(applyMiddleware(reduxThunk, __DEV__ && logger), autoRehydrate())
 );
+
+// Device Info
+import DeviceInfo from "react-native-device-info";
+
+// md5
+import md5 from "md5";
 
 const sharedRoutes = {
   RepositoryList: {
@@ -284,7 +291,7 @@ const MainTabNavigator = TabNavigator(
         jumpToIndex={index => {
           const { dispatch, state } = props.navigation;
 
-          if (state.index === index) {
+          if (state.index === index && state.routes[index].routes.length > 1) {
             const stackRouteName = [
               "Events",
               "Notifications",
@@ -353,9 +360,17 @@ class App extends Component {
   }
 
   componentWillMount() {
-    persistStore(store, { storage: AsyncStorage }, () => {
-      this.setState({ rehydrated: true });
+    const encryptor = createEncryptor({
+      secretKey: md5(DeviceInfo.getUniqueID())
     });
+
+    persistStore(
+      store,
+      { storage: AsyncStorage, transforms: [encryptor] },
+      () => {
+        this.setState({ rehydrated: true });
+      }
+    );
   }
 
   componentWillUpdate() {

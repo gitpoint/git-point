@@ -9,7 +9,7 @@ import { Icon } from "react-native-elements";
 
 import {
   ViewContainer,
-  LoadingUserListItem,
+  LoadingContainer,
   IssueDescription,
   CommentListItem,
   CommentInput
@@ -174,14 +174,21 @@ class Issue extends Component {
   };
 
   render() {
-    const { issue, comments, isPendingComments, navigation } = this.props;
+    const {
+      issue,
+      comments,
+      isPendingIssue,
+      isPendingComments,
+      navigation
+    } = this.props;
 
     return (
       <ViewContainer>
-        {isPendingComments &&
-          [...Array(issue.comments)].map((item, i) => (
-            <LoadingUserListItem key={i} />
-          ))}
+        {(isPendingIssue || isPendingComments) &&
+          <LoadingContainer
+            animating={isPendingIssue || isPendingComments}
+            center
+          />}
 
         {!isPendingComments &&
           issue &&

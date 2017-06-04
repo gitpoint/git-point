@@ -65,7 +65,7 @@ class RepositoryCodeList extends Component {
     const { contents, isPendingContents, navigation } = this.props;
 
     return (
-      <ViewContainer barColor="dark">
+      <ViewContainer>
         {!isPendingContents &&
           <FlatList
             data={
