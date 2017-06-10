@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { View, ScrollView, Text, StyleSheet, Dimensions } from "react-native";
+import {
+  View,
+  ScrollView,
+  Text,
+  StyleSheet,
+  Dimensions,
+  Image
+} from "react-native";
 import FastImage from "react-native-fast-image";
 import { Card, Icon } from "react-native-elements";
 
@@ -27,14 +34,48 @@ class RepositoryFile extends Component {
     navigation: Object
   };
 
+  constructor() {
+    super();
+
+    this.state = {
+      imageWidth: null,
+      imageHeight: null
+    };
+  }
+
   componentDidMount() {
     const { navigation } = this.props;
     const content = navigation.state.params.content;
     const fileType = content.name.split(".").pop();
 
-    if (!fileType === "gif" && !fileType === "png") {
+    if (!this.isImage(fileType)) {
       this.props.getRepositoryFile(content.download_url);
+    } else {
+      this.setImageSize(content.download_url);
     }
+  }
+
+  setImageSize = uri => {
+    Image.getSize(uri, (imageWidth, imageHeight) => {
+      if (imageWidth > Dimensions.get("window").width) {
+        this.setState({
+          imageWidth: Dimensions.get("window").width,
+          imageHeight: 400
+        });
+      } else {
+        this.setState({ imageWidth, imageHeight });
+      }
+    });
+  };
+  isImage(fileType) {
+    return (
+      fileType === "gif" ||
+      fileType === "png" ||
+      fileType === "jpg" ||
+      fileType === "jpeg" ||
+      fileType === "psd" ||
+      fileType === "svg"
+    );
   }
 
   render() {
@@ -64,8 +105,7 @@ class RepositoryFile extends Component {
                 </Text>
               </View>
 
-              {!fileType === "gif" &&
-                !fileType === "png" &&
+              {!this.isImage(fileType) &&
                 <View style={styles.content}>
                   <ScrollView
                     automaticallyAdjustContentInsets={false}
@@ -77,11 +117,13 @@ class RepositoryFile extends Component {
                   </ScrollView>
                 </View>}
 
-              {!fileType === "gif" &&
-                !fileType === "png" &&
+              {this.isImage(fileType) &&
                 <View style={styles.imageContainer}>
                   <FastImage
-                    style={styles.image}
+                    style={{
+                      width: this.state.imageWidth,
+                      height: this.state.imageHeight
+                    }}
                     source={{
                       uri: navigation.state.params.content.download_url,
                       priority: FastImage.priority.high
@@ -131,11 +173,8 @@ const styles = StyleSheet.create({
   imageContainer: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center"
-  },
-  image: {
-    height: 400,
-    width: Dimensions.get("window").width
+    justifyContent: "center",
+    height: 400
   }
 });
 
