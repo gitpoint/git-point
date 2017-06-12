@@ -214,8 +214,6 @@ class Repository extends Component {
             buttonAction={() =>
               navigation.navigate("IssueList", {
                 type: "issue",
-                userHasPushPermission: repository.permissions.admin ||
-                  repository.permissions.push,
                 issues: pureIssues
               })}
           >
@@ -227,9 +225,6 @@ class Repository extends Component {
                   key={i}
                   type="issue"
                   issue={item}
-                  userHasPushPermission={
-                    repository.permissions.admin || repository.permissions.push
-                  }
                   navigation={navigation}
                 />
               ))}
@@ -247,8 +242,6 @@ class Repository extends Component {
             buttonAction={() =>
               navigation.navigate("PullList", {
                 type: "pull",
-                userHasPushPermission: repository.permissions.admin ||
-                  repository.permissions.push,
                 issues: pulls
               })}
           >
@@ -260,9 +253,6 @@ class Repository extends Component {
                   key={i}
                   type="pull"
                   issue={item}
-                  userHasPushPermission={
-                    repository.permissions.admin || repository.permissions.push
-                  }
                   navigation={navigation}
                 />
               ))}

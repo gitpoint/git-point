@@ -105,9 +105,6 @@ class PullList extends Component {
     <IssueListItem
       type={this.props.navigation.state.params.type}
       issue={item}
-      userHasPushPermission={
-        this.props.navigation.state.params.userHasPushPermission
-      }
       navigation={this.props.navigation}
     />
   );

@@ -10,22 +10,15 @@ import moment from "moment";
 type Props = {
   type: string,
   issue: Object,
-  userHasPushPermission: boolean,
   navigation: Object
 };
 
-export const IssueListItem = ({
-  type,
-  issue,
-  userHasPushPermission,
-  navigation
-}: Props) => (
+export const IssueListItem = ({ type, issue, navigation }: Props) => (
   <TouchableHighlight
     style={issue.state === "closed" && styles.closedIssue}
     onPress={() =>
       navigation.navigate("Issue", {
-        issue: issue,
-        userHasPushPermission: userHasPushPermission
+        issue: issue
       })}
     underlayColor={config.colors.greyLight}
   >

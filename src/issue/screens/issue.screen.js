@@ -90,15 +90,41 @@ class Issue extends Component {
   };
 
   componentDidMount() {
-    const { navigation } = this.props;
+    const {
+      navigation,
+      repository,
+      getIssueComments,
+      getRepository,
+      getDiff
+    } = this.props;
     const issue = navigation.state.params.issue;
 
-    this.props.getIssueComments(issue);
+    getIssueComments(issue);
+
+    if (
+      repository.full_name !==
+      issue.repository_url.replace("https://api.github.com/repos/", "")
+    ) {
+      getRepository(issue.repository_url).then(() =>
+        this.setNavigationParams()
+      );
+    } else {
+      this.setNavigationParams();
+    }
 
     if (issue.pull_request) {
-      this.props.getDiff(issue.pull_request.diff_url);
+      getDiff(issue.pull_request.diff_url);
     }
   }
+
+  setNavigationParams = () => {
+    const { navigation, repository } = this.props;
+
+    navigation.setParams({
+      userHasPushPermission: repository.permissions.admin ||
+        repository.permissions.push
+    });
+  };
 
   postComment = body => {
     const { repository, navigation } = this.props;
@@ -113,26 +139,18 @@ class Issue extends Component {
   };
 
   renderHeader = () => {
-    const {
-      issue,
-      diff,
-      isPendingIssue,
-      isPendingDiff,
-      navigation
-    } = this.props;
+    const { issue, diff, isPendingDiff, navigation } = this.props;
 
-    if (!isPendingIssue && issue) {
-      return (
-        <IssueDescription
-          issue={issue}
-          diff={diff}
-          isPendingDiff={isPendingDiff}
-          onRepositoryPress={url => this.onRepositoryPress(url)}
-          onLinkPress={node => this.onLinkPress(node)}
-          navigation={navigation}
-        />
-      );
-    }
+    return (
+      <IssueDescription
+        issue={issue}
+        diff={diff}
+        isPendingDiff={isPendingDiff}
+        onRepositoryPress={url => this.onRepositoryPress(url)}
+        onLinkPress={node => this.onLinkPress(node)}
+        navigation={navigation}
+      />
+    );
   };
 
   renderItem = ({ item }) => (
@@ -174,21 +192,12 @@ class Issue extends Component {
   };
 
   render() {
-    const {
-      issue,
-      comments,
-      isPendingIssue,
-      isPendingComments,
-      navigation
-    } = this.props;
+    const { issue, comments, isPendingComments, navigation } = this.props;
 
     return (
       <ViewContainer>
-        {(isPendingIssue || isPendingComments) &&
-          <LoadingContainer
-            animating={isPendingIssue || isPendingComments}
-            center
-          />}
+        {isPendingComments &&
+          <LoadingContainer animating={isPendingComments} center />}
 
         {!isPendingComments &&
           issue &&
