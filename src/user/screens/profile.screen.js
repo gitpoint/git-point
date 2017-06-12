@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { StyleSheet, ActivityIndicator, ActionSheetIOS } from "react-native";
+import {
+  StyleSheet,
+  ActivityIndicator,
+  ActionSheetIOS,
+  Dimensions
+} from "react-native";
 import { ListItem } from "react-native-elements";
 
 import {
@@ -108,7 +113,7 @@ class Profile extends Component {
           {isPending &&
             <ActivityIndicator
               animating={isPending}
-              style={{ height: 80 }}
+              style={{ height: Dimensions.get("window").height / 3 }}
               size="large"
             />}
 

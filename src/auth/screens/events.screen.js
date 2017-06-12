@@ -53,7 +53,7 @@ class Events extends Component {
 
     switch (eventType) {
       case "CommitCommentEvent":
-        return "commented on commit"; //may need rechecking (on commit for repository?)
+        return "commented on commit";
       case "CreateEvent":
         return `created ${userEvent.payload.ref_type}`;
       case "DeleteEvent":
@@ -61,7 +61,7 @@ class Events extends Component {
       case "ForkEvent":
         return "forked";
       case "GollumEvent":
-        return `${userEvent.payload.pages[0].action}`; // TODO: need to specify for multiple pages
+        return `${userEvent.payload.pages[0].action}`;
       case "IssueCommentEvent": {
         const type = userEvent.payload.issue.pull_request
           ? "pull request"
@@ -70,19 +70,15 @@ class Events extends Component {
         if (userEvent.payload.action === "created") {
           return `commented on ${type}`;
         } else if (userEvent.payload.action === "edited") {
-          return `edited their comment on ${type}`; //haven't witnessed
+          return `edited their comment on ${type}`;
         } else if (userEvent.payload.action === "deleted") {
-          return `removed their comment on ${type}`; //haven't witnessed
+          return `removed their comment on ${type}`;
         }
       }
       case "IssuesEvent":
         return `${userEvent.payload.action} issue`;
       case "MemberEvent":
         return `${userEvent.payload.action} user`;
-      // case 'OrgBlockEvent': return userEvent.payload.action;
-      // case 'ProjectCardEvent': return `${userEvent.payload.action} project card`;
-      // case 'ProjectColumnEvent': return userEvent.payload.action;
-      // case 'ProjectEvent': return userEvent.payload.action;
       case "PublicEvent":
         return "open sourced";
       case "PullRequestEvent":
@@ -185,7 +181,7 @@ class Events extends Component {
             </Text>
             {" "}wiki
           </Text>
-        ); // TODO: need to specify for multiple pages
+        );
       case "IssueCommentEvent":
         return (
           <Text
@@ -242,19 +238,19 @@ class Events extends Component {
       case "PullRequestEvent":
         return (
           <Text style={styles.linkDescription}>
-            {userEvent.repo.name}#{userEvent.payload.pull_request.number}
+            {userEvent.payload.pull_request.title}
           </Text>
         );
       case "PullRequestReviewEvent":
         return (
           <Text style={styles.linkDescription}>
-            {userEvent.repo.name}#{userEvent.payload.pull_request.number}
+            {userEvent.payload.pull_request.title}
           </Text>
         );
       case "PullRequestReviewCommentEvent":
         return (
           <Text style={styles.linkDescription}>
-            {userEvent.repo.name}#{userEvent.payload.pull_request.number}
+            {userEvent.payload.pull_request.title}
           </Text>
         );
       case "PushEvent":
@@ -537,11 +533,15 @@ class Events extends Component {
                   titleStyle={{ fontSize: 14 }}
                   navigation={navigation}
                   onlyImageNavigate
-                  noBorderBottom={item.type === "IssueCommentEvent"}
+                  noBorderBottom={
+                    item.type === "IssueCommentEvent" ||
+                      item.type === "PullRequestReviewCommentEvent"
+                  }
                   icon={this.getIcon(item)}
                 />
 
-                {item.type === "IssueCommentEvent" &&
+                {(item.type === "IssueCommentEvent" ||
+                  item.type === "PullRequestReviewCommentEvent") &&
                   <View style={styles.subtitleContainer}>
                     <Text numberOfLines={3} style={styles.subtitle}>
                       {item.payload.comment.body.replace(/(\r\n|\n|\r)/gm, " ")}
