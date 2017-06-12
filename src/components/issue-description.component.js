@@ -42,21 +42,23 @@ export const IssueDescription = ({
 
   return (
     <View style={(styles.container, styles.borderBottom)}>
-      <ListItem
-        title={issue.repository_url.replace(
-          "https://api.github.com/repos/",
-          ""
-        )}
-        titleStyle={styles.titleSmall}
-        leftIcon={{
-          name: "repo",
-          size: 17,
-          color: config.colors.grey,
-          type: "octicon"
-        }}
-        onPress={() => onRepositoryPress(issue.repository_url)}
-        hideChevron
-      />
+
+      {issue.repository_url &&
+        <ListItem
+          title={issue.repository_url.replace(
+            "https://api.github.com/repos/",
+            ""
+          )}
+          titleStyle={styles.titleSmall}
+          leftIcon={{
+            name: "repo",
+            size: 17,
+            color: config.colors.grey,
+            type: "octicon"
+          }}
+          onPress={() => onRepositoryPress(issue.repository_url)}
+          hideChevron
+        />}
 
       <View style={styles.headerContainer}>
         <ListItem
