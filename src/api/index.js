@@ -265,6 +265,16 @@ export const fetchDiff = (url, accessToken) => {
 
 ///
 
+export const fetchMergeStatus = (repo, issueNum, accessToken) => {
+  const ENDPOINT = `https://api.github.com/repos/${repo}/pulls/${issueNum}/merge`;
+
+  return fetch(ENDPOINT, accessTokenParameters(accessToken));
+};
+
+///
+
+///
+
 export const fetchUrl = (url, accessToken) => {
   return fetch(url, accessTokenParameters(accessToken)).then(response =>
     response.json()

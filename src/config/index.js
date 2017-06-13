@@ -22,7 +22,8 @@ const config = {
     addCodeGreen: "#eaffea",
     addCodeLineNumberGreen: "#DBFFD6",
     delCodeRed: "#ffecec",
-    delCodeLineNumberRed: "#ffdddd"
+    delCodeLineNumberRed: "#ffdddd",
+    purple: "#6f42c1"
   },
   languageColors: {
     Mercury: "#ff2b2b",

@@ -18,7 +18,9 @@ import moment from "moment";
 type Props = {
   issue: Object,
   diff: string,
+  isMerged: boolean,
   isPendingDiff: boolean,
+  isPendingCheckMerge: boolean,
   onRepositoryPress: Function,
   navigation: Object
 };
@@ -26,7 +28,9 @@ type Props = {
 export const IssueDescription = ({
   issue,
   diff,
+  isMerged,
   isPendingDiff,
+  isPendingCheckMerge,
   onRepositoryPress,
   navigation
 }: Props) => {
@@ -74,7 +78,15 @@ export const IssueDescription = ({
           }}
           hideChevron
         />
-        <IssueStateBadge style={styles.badge} issue={issue} />
+
+        {!issue.pull_request ||
+          (issue.pull_request &&
+            !isPendingCheckMerge &&
+            <IssueStateBadge
+              style={styles.badge}
+              issue={issue}
+              isMerged={isMerged && issue.pull_request}
+            />)}
       </View>
 
       {issue.pull_request &&

@@ -21,7 +21,7 @@ import { connect } from "react-redux";
 import {
   getIssueComments,
   postIssueComment,
-  getDiff,
+  getPullRequestDetails,
   getIssueFromUrl
 } from "../issue.action";
 
@@ -32,8 +32,10 @@ const mapStateToProps = state => ({
   repository: state.repository.repository,
   issue: state.issue.issue,
   diff: state.issue.diff,
+  isMerged: state.issue.isMerged,
   comments: state.issue.comments,
   isPendingDiff: state.issue.isPendingDiff,
+  isPendingCheckMerge: state.issue.isPendingCheckMerge,
   isPendingComments: state.issue.isPendingComments,
   isPostingComment: state.issue.isPostingComment,
   isPendingIssue: state.issue.isPendingIssue
@@ -43,7 +45,7 @@ const mapDispatchToProps = dispatch => ({
   getIssueComments: url => dispatch(getIssueComments(url)),
   postIssueComment: (body, owner, repoName, issueNum) =>
     dispatch(postIssueComment(body, owner, repoName, issueNum)),
-  getDiff: url => dispatch(getDiff(url)),
+  getPullRequestDetails: url => dispatch(getPullRequestDetails(url)),
   getIssueFromUrl: url => dispatch(getIssueFromUrl(url)),
   getRepository: url => dispatch(getRepository(url))
 });
@@ -51,16 +53,18 @@ const mapDispatchToProps = dispatch => ({
 class Issue extends Component {
   props: {
     getIssueComments: Function,
-    getDiff: Function,
+    getPullRequestDetails: Function,
     getRepository: Function,
     postIssueComment: Function,
     getIssueFromUrl: Function,
     issue: Object,
     diff: string,
+    isMerged: boolean,
     authUser: Object,
     repository: Object,
     comments: Array,
     isPendingDiff: boolean,
+    isPendingCheckMerge: boolean,
     isPendingComments: boolean,
     isPostingComment: boolean,
     isPendingIssue: boolean,
@@ -95,7 +99,7 @@ class Issue extends Component {
       repository,
       getIssueComments,
       getRepository,
-      getDiff
+      getPullRequestDetails
     } = this.props;
     const issue = navigation.state.params.issue;
 
@@ -105,15 +109,19 @@ class Issue extends Component {
       repository.full_name !==
       issue.repository_url.replace("https://api.github.com/repos/", "")
     ) {
-      getRepository(issue.repository_url).then(() =>
-        this.setNavigationParams()
-      );
+      getRepository(issue.repository_url).then(() => {
+        this.setNavigationParams();
+
+        if (issue.pull_request) {
+          getPullRequestDetails(issue);
+        }
+      });
     } else {
       this.setNavigationParams();
-    }
 
-    if (issue.pull_request) {
-      getDiff(issue.pull_request.diff_url);
+      if (issue.pull_request) {
+        getPullRequestDetails(issue);
+      }
     }
   }
 
@@ -139,13 +147,22 @@ class Issue extends Component {
   };
 
   renderHeader = () => {
-    const { issue, diff, isPendingDiff, navigation } = this.props;
+    const {
+      issue,
+      diff,
+      isMerged,
+      isPendingDiff,
+      isPendingCheckMerge,
+      navigation
+    } = this.props;
 
     return (
       <IssueDescription
         issue={issue}
         diff={diff}
+        isMerged={isMerged}
         isPendingDiff={isPendingDiff}
+        isPendingCheckMerge={isPendingCheckMerge}
         onRepositoryPress={url => this.onRepositoryPress(url)}
         onLinkPress={node => this.onLinkPress(node)}
         navigation={navigation}

@@ -209,7 +209,7 @@ class Repository extends Component {
             noItemsMessage={
               pureIssues.length === 0 ? "No issues" : "No open issues"
             }
-            showButton={pureIssues.length > 3}
+            showButton={pureIssues.length > 0}
             buttonTitle="View All"
             buttonAction={() =>
               navigation.navigate("IssueList", {
@@ -237,7 +237,7 @@ class Repository extends Component {
             noItemsMessage={
               pulls.length === 0 ? "No pull requests" : "No open pull requests"
             }
-            showButton={pulls.length > 3}
+            showButton={pulls.length > 0}
             buttonTitle="View All"
             buttonAction={() =>
               navigation.navigate("PullList", {
