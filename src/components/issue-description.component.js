@@ -1,8 +1,6 @@
-// @flow
-
-import React from "react";
+import React, { Component } from "react";
 import { StyleSheet, View, ActivityIndicator } from "react-native";
-import { ListItem } from "react-native-elements";
+import { ListItem, Button } from "react-native-elements";
 
 import {
   IssueStateBadge,
@@ -15,131 +13,153 @@ import config from "config";
 import Parse from "parse-diff";
 import moment from "moment";
 
-type Props = {
-  issue: Object,
-  diff: string,
-  isMerged: boolean,
-  isPendingDiff: boolean,
-  isPendingCheckMerge: boolean,
-  onRepositoryPress: Function,
-  navigation: Object
-};
+const mergeMethodTypes = ["merge", "squash", "rebase"];
+const mergeMethodMessages = [
+  "Create a merge commit",
+  "Squash and merge",
+  "Rebase and merge"
+];
 
-export const IssueDescription = ({
-  issue,
-  diff,
-  isMerged,
-  isPendingDiff,
-  isPendingCheckMerge,
-  onRepositoryPress,
-  navigation
-}: Props) => {
-  const filesChanged = Parse(diff);
+export class IssueDescription extends Component {
+  props: {
+    issue: Object,
+    diff: string,
+    isMerged: boolean,
+    isPendingDiff: boolean,
+    isPendingCheckMerge: boolean,
+    onRepositoryPress: Function,
+    navigation: Object
+  };
 
-  let lineAdditions = 0;
-  let lineDeletions = 0;
+  constructor() {
+    super();
 
-  filesChanged.forEach(function(file) {
-    lineAdditions = lineAdditions + file.additions;
-    lineDeletions = lineDeletions + file.deletions;
-  });
+    this.state = {
+      mergeMethod: 0
+    };
+  }
 
-  return (
-    <View style={(styles.container, styles.borderBottom)}>
+  renderLabelButtons = labels => {
+    return labels
+      .slice(0, 3)
+      .map((label, i) => <LabelButton key={i} label={label} />);
+  };
 
-      {issue.repository_url &&
-        <ListItem
-          title={issue.repository_url.replace(
-            "https://api.github.com/repos/",
-            ""
-          )}
-          titleStyle={styles.titleSmall}
-          leftIcon={{
-            name: "repo",
-            size: 17,
-            color: config.colors.grey,
-            type: "octicon"
-          }}
-          onPress={() => onRepositoryPress(issue.repository_url)}
-          hideChevron
-        />}
+  render() {
+    const {
+      diff,
+      issue,
+      isMerged,
+      isPendingDiff,
+      isPendingCheckMerge,
+      onRepositoryPress,
+      navigation
+    } = this.props;
 
-      <View style={styles.headerContainer}>
-        <ListItem
-          title={issue.title}
-          titleStyle={styles.title}
-          subtitle={moment(issue.created_at).fromNow()}
-          containerStyle={styles.listItemContainer}
-          leftIcon={{
-            name: issue.pull_request ? "git-pull-request" : "issue-opened",
-            size: 36,
-            color: config.colors.grey,
-            type: "octicon"
-          }}
-          hideChevron
-        />
+    const { mergeMethod } = this.state;
+    const filesChanged = Parse(diff);
 
-        {!issue.pull_request ||
-          (issue.pull_request &&
-            !isPendingCheckMerge &&
-            <IssueStateBadge
-              style={styles.badge}
-              issue={issue}
-              isMerged={isMerged && issue.pull_request}
-            />)}
-      </View>
+    let lineAdditions = 0;
+    let lineDeletions = 0;
 
-      {issue.pull_request &&
-        <View style={styles.diffBlocksContainer}>
+    filesChanged.forEach(function(file) {
+      lineAdditions = lineAdditions + file.additions;
+      lineDeletions = lineDeletions + file.deletions;
+    });
 
-          {isPendingDiff &&
-            <ActivityIndicator animating={isPendingDiff} size="small" />}
+    return (
+      <View style={(styles.container, styles.borderBottom)}>
 
-          {!isPendingDiff &&
-            (lineAdditions !== 0 || lineDeletions !== 0) &&
-            <DiffBlocks
-              additions={lineAdditions}
-              deletions={lineDeletions}
-              showNumbers
-              onPress={() =>
-                navigation.navigate("PullDiff", {
-                  diff: diff
-                })}
-            />}
-        </View>}
+        {issue.repository_url &&
+          <ListItem
+            title={issue.repository_url.replace(
+              "https://api.github.com/repos/",
+              ""
+            )}
+            titleStyle={styles.titleSmall}
+            leftIcon={{
+              name: "repo",
+              size: 17,
+              color: config.colors.grey,
+              type: "octicon"
+            }}
+            onPress={() => onRepositoryPress(issue.repository_url)}
+            hideChevron
+          />}
 
-      {issue.labels &&
-        issue.labels.length > 0 &&
-        <View style={styles.labelButtonGroup}>
-          {renderLabelButtons(issue.labels)}
-        </View>}
-      {issue.assignees &&
-        issue.assignees.length > 0 &&
-        <View style={styles.assigneesSection}>
-          <MembersList
-            title="Assignees"
-            members={issue.assignees}
-            containerStyle={{ marginTop: 0, paddingTop: 0, paddingLeft: 0 }}
-            smallTitle
-            navigation={navigation}
+        <View style={styles.headerContainer}>
+          <ListItem
+            title={issue.title}
+            titleStyle={styles.title}
+            subtitle={moment(issue.created_at).fromNow()}
+            containerStyle={styles.listItemContainer}
+            leftIcon={{
+              name: issue.pull_request ? "git-pull-request" : "issue-opened",
+              size: 36,
+              color: config.colors.grey,
+              type: "octicon"
+            }}
+            hideChevron
           />
-        </View>}
-    </View>
-  );
-};
 
-const renderLabelButtons = labels => {
-  return labels
-    .slice(0, 3)
-    .map((label, i) => <LabelButton key={i} label={label} />);
-};
+          {!issue.pull_request ||
+            (issue.pull_request &&
+              !isPendingCheckMerge &&
+              <IssueStateBadge
+                style={styles.badge}
+                issue={issue}
+                isMerged={isMerged && issue.pull_request}
+              />)}
+        </View>
+
+        {issue.pull_request &&
+          <View style={styles.diffBlocksContainer}>
+
+            {isPendingDiff &&
+              <ActivityIndicator animating={isPendingDiff} size="small" />}
+
+            {!isPendingDiff &&
+              (lineAdditions !== 0 || lineDeletions !== 0) &&
+              <DiffBlocks
+                additions={lineAdditions}
+                deletions={lineDeletions}
+                showNumbers
+                onPress={() =>
+                  navigation.navigate("PullDiff", {
+                    diff: diff
+                  })}
+              />}
+          </View>}
+
+        {issue.labels &&
+          issue.labels.length > 0 &&
+          <View style={styles.labelButtonGroup}>
+            {this.renderLabelButtons(issue.labels)}
+          </View>}
+        {issue.assignees &&
+          issue.assignees.length > 0 &&
+          <View style={styles.assigneesSection}>
+            <MembersList
+              title="Assignees"
+              members={issue.assignees}
+              containerStyle={{ marginTop: 0, paddingTop: 0, paddingLeft: 0 }}
+              smallTitle
+              navigation={navigation}
+            />
+          </View>}
+
+        <Button
+          large
+          iconRight
+          icon={{ name: "chevron-down", type: "octicon" }}
+          title={mergeMethodMessages[mergeMethod]}
+        />
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
-  container: {
-    // paddingBottom: 5,
-    // borderBottomWidth: 2,
-    // borderBottomColor: config.colors.greyLight,
-  },
   headerContainer: {
     flexDirection: "row",
     alignItems: "center",
