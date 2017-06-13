@@ -1,23 +1,23 @@
-import React, { Component } from "react";
-import { StyleSheet, View, ActivityIndicator } from "react-native";
-import { ListItem, Button } from "react-native-elements";
+import React, { Component } from 'react';
+import { StyleSheet, View, ActivityIndicator } from 'react-native';
+import { ListItem, Button } from 'react-native-elements';
 
 import {
   IssueStateBadge,
   MembersList,
   LabelButton,
   DiffBlocks
-} from "components";
+} from 'components';
 
-import config from "config";
-import Parse from "parse-diff";
-import moment from "moment";
+import config from 'config';
+import Parse from 'parse-diff';
+import moment from 'moment';
 
-const mergeMethodTypes = ["merge", "squash", "rebase"];
+const mergeMethodTypes = ['merge', 'squash', 'rebase'];
 const mergeMethodMessages = [
-  "Create a merge commit",
-  "Squash and merge",
-  "Rebase and merge"
+  'Create a merge commit',
+  'Squash and merge',
+  'Rebase and merge'
 ];
 
 export class IssueDescription extends Component {
@@ -28,6 +28,7 @@ export class IssueDescription extends Component {
     isPendingDiff: boolean,
     isPendingCheckMerge: boolean,
     onRepositoryPress: Function,
+    userHasPushPermission: boolean,
     navigation: Object
   };
 
@@ -53,6 +54,7 @@ export class IssueDescription extends Component {
       isPendingDiff,
       isPendingCheckMerge,
       onRepositoryPress,
+      userHasPushPermission,
       navigation
     } = this.props;
 
@@ -73,15 +75,15 @@ export class IssueDescription extends Component {
         {issue.repository_url &&
           <ListItem
             title={issue.repository_url.replace(
-              "https://api.github.com/repos/",
-              ""
+              'https://api.github.com/repos/',
+              ''
             )}
             titleStyle={styles.titleSmall}
             leftIcon={{
-              name: "repo",
+              name: 'repo',
               size: 17,
               color: config.colors.grey,
-              type: "octicon"
+              type: 'octicon'
             }}
             onPress={() => onRepositoryPress(issue.repository_url)}
             hideChevron
@@ -94,10 +96,10 @@ export class IssueDescription extends Component {
             subtitle={moment(issue.created_at).fromNow()}
             containerStyle={styles.listItemContainer}
             leftIcon={{
-              name: issue.pull_request ? "git-pull-request" : "issue-opened",
+              name: issue.pull_request ? 'git-pull-request' : 'issue-opened',
               size: 36,
               color: config.colors.grey,
-              type: "octicon"
+              type: 'octicon'
             }}
             hideChevron
           />
@@ -125,7 +127,7 @@ export class IssueDescription extends Component {
                 deletions={lineDeletions}
                 showNumbers
                 onPress={() =>
-                  navigation.navigate("PullDiff", {
+                  navigation.navigate('PullDiff', {
                     diff: diff
                   })}
               />}
@@ -148,12 +150,22 @@ export class IssueDescription extends Component {
             />
           </View>}
 
-        <Button
-          large
-          iconRight
-          icon={{ name: "chevron-down", type: "octicon" }}
-          title={mergeMethodMessages[mergeMethod]}
-        />
+        {issue.pull_request &&
+          !isMerged &&
+          userHasPushPermission &&
+          <View style={styles.mergeButtonContainer}>
+            <Button
+              borderRadius={10}
+              backgroundColor={config.colors.green}
+              title={mergeMethodMessages[mergeMethod]}
+            />
+            <Button
+              borderRadius={10}
+              iconRight
+              backgroundColor={config.colors.green}
+              icon={{ name: 'keyboard-arrow-down' }}
+            />
+          </View>}
       </View>
     );
   }
@@ -161,9 +173,9 @@ export class IssueDescription extends Component {
 
 const styles = StyleSheet.create({
   headerContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     paddingRight: 10
   },
   borderBottom: {
@@ -172,11 +184,11 @@ const styles = StyleSheet.create({
   },
   title: {
     color: config.colors.primarydark,
-    fontFamily: "AvenirNext-DemiBold"
+    fontFamily: 'AvenirNext-DemiBold'
   },
   titleSmall: {
     color: config.colors.primarydark,
-    fontFamily: "AvenirNext-DemiBold",
+    fontFamily: 'AvenirNext-DemiBold',
     fontSize: 12
   },
   listItemContainer: {
@@ -184,25 +196,30 @@ const styles = StyleSheet.create({
     flex: 1
   },
   diffBlocksContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-end",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
     paddingRight: 10,
     paddingBottom: 10
   },
   badge: {
     flex: 0.15,
-    alignItems: "flex-end",
-    justifyContent: "center"
+    alignItems: 'flex-end',
+    justifyContent: 'center'
   },
   labelButtonGroup: {
-    flexWrap: "wrap",
-    flexDirection: "row",
+    flexWrap: 'wrap',
+    flexDirection: 'row',
     marginLeft: 54,
     paddingBottom: 15
   },
   assigneesSection: {
     marginLeft: 54,
     paddingBottom: 5
+  },
+  mergeButtonContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    paddingBottom: 15
   }
 });

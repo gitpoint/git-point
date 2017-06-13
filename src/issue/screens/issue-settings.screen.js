@@ -54,6 +54,7 @@ class IssueSettings extends Component {
 
   render() {
     const { issue, authUser, navigation } = this.props;
+    const issueType = issue.pull_request ? "Pull Request" : "Issue";
 
     return (
       <ViewContainer>
@@ -141,14 +142,18 @@ class IssueSettings extends Component {
 
           <SectionList title="Actions">
             <ListItem
-              title={issue.locked ? "Unlock issue" : "Lock Issue"}
+              title={issue.locked ? `Unlock ${issueType}` : `Lock ${issueType}`}
               hideChevron
               underlayColor={config.colors.greyLight}
               titleStyle={styles.listItemTitle}
               onPress={() => this.showLockIssueActionSheet(issue.locked)}
             />
             <ListItem
-              title={issue.state === "open" ? "Close Issue" : "Reopen Issue"}
+              title={
+                issue.state === "open"
+                  ? `Close ${issueType}`
+                  : `Reopen ${issueType}`
+              }
               hideChevron
               underlayColor={config.colors.greyLight}
               titleStyle={

@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   FlatList,
   KeyboardAvoidingView,
   Keyboard,
   Linking
-} from "react-native";
-import { Icon } from "react-native-elements";
+} from 'react-native';
+import { Icon } from 'react-native-elements';
 
 import {
   ViewContainer,
@@ -13,19 +13,19 @@ import {
   IssueDescription,
   CommentListItem,
   CommentInput
-} from "components";
+} from 'components';
 
-import config from "config";
+import config from 'config';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import {
   getIssueComments,
   postIssueComment,
   getPullRequestDetails,
   getIssueFromUrl
-} from "../issue.action";
+} from '../issue.action';
 
-import { getRepository } from "repository";
+import { getRepository } from 'repository';
 
 const mapStateToProps = state => ({
   authUser: state.auth.user,
@@ -84,7 +84,7 @@ class Issue extends Component {
             containerStyle={{ marginRight: 5 }}
             underlayColor={config.colors.transparent}
             onPress={() =>
-              navigate("IssueSettings", {
+              navigate('IssueSettings', {
                 issue: state.params.issue
               })}
           />
@@ -107,7 +107,7 @@ class Issue extends Component {
 
     if (
       repository.full_name !==
-      issue.repository_url.replace("https://api.github.com/repos/", "")
+      issue.repository_url.replace('https://api.github.com/repos/', '')
     ) {
       getRepository(issue.repository_url).then(() => {
         this.setNavigationParams();
@@ -165,6 +165,7 @@ class Issue extends Component {
         isPendingCheckMerge={isPendingCheckMerge}
         onRepositoryPress={url => this.onRepositoryPress(url)}
         onLinkPress={node => this.onLinkPress(node)}
+        userHasPushPermission={navigation.state.params.userHasPushPermission}
         navigation={navigation}
       />
     );
@@ -181,17 +182,17 @@ class Issue extends Component {
   onLinkPress = node => {
     const { getIssueFromUrl, navigation } = this.props;
 
-    if (node.attribs.class && node.attribs.class.includes("user-mention")) {
-      navigation.navigate("Profile", {
+    if (node.attribs.class && node.attribs.class.includes('user-mention')) {
+      navigation.navigate('Profile', {
         user: { login: node.children[0].data.substring(1) }
       });
     } else if (
-      node.attribs.class && node.attribs.class.includes("issue-link")
+      node.attribs.class && node.attribs.class.includes('issue-link')
     ) {
       getIssueFromUrl(
-        node.attribs["data-url"].replace("github.com", "api.github.com/repos")
+        node.attribs['data-url'].replace('github.com', 'api.github.com/repos')
       ).then(() => {
-        navigation.navigate("Issue", {
+        navigation.navigate('Issue', {
           issue: this.props.issue
         });
       });
@@ -203,7 +204,7 @@ class Issue extends Component {
   onRepositoryPress = url => {
     const { navigation } = this.props;
 
-    navigation.navigate("Repository", {
+    navigation.navigate('Repository', {
       repositoryUrl: url
     });
   };
@@ -220,7 +221,7 @@ class Issue extends Component {
           issue &&
           <KeyboardAvoidingView
             style={{ flex: 1 }}
-            behavior={"padding"}
+            behavior={'padding'}
             keyboardVerticalOffset={65}
           >
 
