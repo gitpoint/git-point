@@ -155,15 +155,9 @@ export class IssueDescription extends Component {
           userHasPushPermission &&
           <View style={styles.mergeButtonContainer}>
             <Button
-              borderRadius={10}
               backgroundColor={config.colors.green}
-              title={mergeMethodMessages[mergeMethod]}
-            />
-            <Button
               borderRadius={10}
-              iconRight
-              backgroundColor={config.colors.green}
-              icon={{ name: 'keyboard-arrow-down' }}
+              title={'Merge Pull Request'}
             />
           </View>}
       </View>
@@ -220,6 +214,8 @@ const styles = StyleSheet.create({
   mergeButtonContainer: {
     flex: 1,
     flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     paddingBottom: 15
   }
 });
