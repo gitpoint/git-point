@@ -13,13 +13,6 @@ import config from 'config';
 import Parse from 'parse-diff';
 import moment from 'moment';
 
-const mergeMethodTypes = ['merge', 'squash', 'rebase'];
-const mergeMethodMessages = [
-  'Create a merge commit',
-  'Squash and merge',
-  'Rebase and merge'
-];
-
 export class IssueDescription extends Component {
   props: {
     issue: Object,
@@ -31,14 +24,6 @@ export class IssueDescription extends Component {
     userHasPushPermission: boolean,
     navigation: Object
   };
-
-  constructor() {
-    super();
-
-    this.state = {
-      mergeMethod: 0
-    };
-  }
 
   renderLabelButtons = labels => {
     return labels
@@ -58,7 +43,6 @@ export class IssueDescription extends Component {
       navigation
     } = this.props;
 
-    const { mergeMethod } = this.state;
     const filesChanged = Parse(diff);
 
     let lineAdditions = 0;
@@ -157,6 +141,8 @@ export class IssueDescription extends Component {
             <Button
               backgroundColor={config.colors.green}
               borderRadius={10}
+              fontSize={14}
+              onPress={() => navigation.navigate('PullMerge')}
               title={'Merge Pull Request'}
             />
           </View>}
@@ -216,6 +202,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingBottom: 15
+    paddingVertical: 15
   }
 });

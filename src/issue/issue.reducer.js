@@ -5,13 +5,14 @@ import {
   CHANGE_LOCK_STATUS,
   GET_ISSUE_DIFF,
   GET_ISSUE_MERGE_STATUS,
+  MERGE_PULL_REQUEST,
   GET_ISSUE_FROM_URL
-} from "./issue.type";
+} from './issue.type';
 
 const initialState = {
   issue: {},
   comments: [],
-  diff: "",
+  diff: '',
   isMerged: false,
   isPendingComments: false,
   isPostingComment: false,
@@ -19,8 +20,9 @@ const initialState = {
   isChangingLockStatus: false,
   isPendingDiff: false,
   isPendingCheckMerge: false,
+  isPendingMerging: false,
   isPendingIssue: false,
-  error: ""
+  error: ''
 };
 
 export const issueReducer = (state = initialState, action = {}) => {
@@ -129,6 +131,23 @@ export const issueReducer = (state = initialState, action = {}) => {
         ...state,
         error: action.payload,
         isPendingCheckMerge: false
+      };
+    case MERGE_PULL_REQUEST.PENDING:
+      return {
+        ...state,
+        isPendingMerging: true
+      };
+    case MERGE_PULL_REQUEST.SUCCESS:
+      return {
+        ...state,
+        isMerged: action.payload,
+        isPendingMerging: false
+      };
+    case MERGE_PULL_REQUEST.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isPendingMerging: false
       };
     case GET_ISSUE_FROM_URL.PENDING:
       return {

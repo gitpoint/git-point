@@ -1,66 +1,67 @@
-import React from "react";
+import React from 'react';
 import {
   StackNavigator,
   TabNavigator,
   TabBarBottom,
   NavigationActions
-} from "react-navigation";
-import { Icon } from "react-native-elements";
+} from 'react-navigation';
+import { Icon } from 'react-native-elements';
 
-import config from "config";
+import config from 'config';
 
 //Auth
-import { SplashScreen } from "auth";
-import { LoginScreen } from "auth";
-import { WelcomeScreen } from "auth";
-import { AuthProfileScreen } from "auth";
-import { EventsScreen } from "auth";
+import { SplashScreen } from 'auth';
+import { LoginScreen } from 'auth';
+import { WelcomeScreen } from 'auth';
+import { AuthProfileScreen } from 'auth';
+import { EventsScreen } from 'auth';
 
 //User
-import { ProfileScreen } from "user";
-import { RepositoryListScreen } from "user";
-import { FollowerListScreen } from "user";
-import { FollowingListScreen } from "user";
+import { ProfileScreen } from 'user';
+import { RepositoryListScreen } from 'user';
+import { FollowerListScreen } from 'user';
+import { FollowingListScreen } from 'user';
 
 //Organization
-import { OrganizationProfileScreen } from "organization";
+import { OrganizationProfileScreen } from 'organization';
 
 //Search
-import { SearchScreen } from "search";
+import { SearchScreen } from 'search';
 
 //Notifications
-import { NotificationsScreen } from "notifications";
+import { NotificationsScreen } from 'notifications';
 
 //Repository
-import { RepositoryScreen } from "repository";
-import { RepositoryCodeListScreen } from "repository";
-import { RepositoryFileScreen } from "repository";
-import { IssueListScreen } from "repository";
-import { PullListScreen } from "repository";
-import { PullDiffScreen } from "repository";
-import { ReadMeScreen } from "repository";
+import { RepositoryScreen } from 'repository';
+import { RepositoryCodeListScreen } from 'repository';
+import { RepositoryFileScreen } from 'repository';
+import { IssueListScreen } from 'repository';
+import { PullListScreen } from 'repository';
+import { PullDiffScreen } from 'repository';
+import { ReadMeScreen } from 'repository';
 
 //Issue
-import { IssueScreen } from "issue";
-import { IssueSettingsScreen } from "issue";
+import { IssueScreen } from 'issue';
+import { IssueSettingsScreen } from 'issue';
+import { PullMergeScreen } from 'issue';
 
 const sharedRoutes = {
   RepositoryList: {
     screen: RepositoryListScreen,
     navigationOptions: {
-      title: "Repositories"
+      title: 'Repositories'
     }
   },
   FollowerList: {
     screen: FollowerListScreen,
     navigationOptions: {
-      title: "Followers"
+      title: 'Followers'
     }
   },
   FollowingList: {
     screen: FollowingListScreen,
     navigationOptions: {
-      title: "Following"
+      title: 'Following'
     }
   },
   Profile: {
@@ -85,7 +86,7 @@ const sharedRoutes = {
     screen: RepositoryCodeListScreen,
     navigationOptions: ({ navigation }) => ({
       title: navigation.state.params.topLevel
-        ? "Code"
+        ? 'Code'
         : navigation.state.params.content.name
     })
   },
@@ -98,37 +99,43 @@ const sharedRoutes = {
   IssueList: {
     screen: IssueListScreen,
     navigationOptions: {
-      title: "Issues"
+      title: 'Issues'
     }
   },
   PullList: {
     screen: PullListScreen,
     navigationOptions: {
-      title: "Pull Requests"
+      title: 'Pull Requests'
     }
   },
   Issue: {
     screen: IssueScreen,
     navigationOptions: ({ navigation }) => ({
-      title: `#${navigation.state.params.issue ? navigation.state.params.issue.number : "Issue"}`
+      title: `#${navigation.state.params.issue ? navigation.state.params.issue.number : 'Issue'}`
     })
   },
   IssueSettings: {
     screen: IssueSettingsScreen,
     navigationOptions: {
-      title: "Settings"
+      title: 'Settings'
     }
   },
   PullDiff: {
     screen: PullDiffScreen,
     navigationOptions: {
-      title: "Diff"
+      title: 'Diff'
+    }
+  },
+  PullMerge: {
+    screen: PullMergeScreen,
+    navigationOptions: {
+      title: 'Merge'
     }
   },
   ReadMe: {
     screen: ReadMeScreen,
     navigationOptions: {
-      title: "README.md"
+      title: 'README.md'
     }
   }
 };
@@ -138,13 +145,13 @@ const HomeStackNavigator = StackNavigator(
     Events: {
       screen: EventsScreen,
       navigationOptions: {
-        headerTitle: "Events"
+        headerTitle: 'Events'
       }
     },
     ...sharedRoutes
   },
   {
-    headerMode: "screen"
+    headerMode: 'screen'
   }
 );
 
@@ -159,7 +166,7 @@ const NotificationsStackNavigator = StackNavigator(
     ...sharedRoutes
   },
   {
-    headerMode: "screen"
+    headerMode: 'screen'
   }
 );
 
@@ -174,7 +181,7 @@ const SearchStackNavigator = StackNavigator(
     ...sharedRoutes
   },
   {
-    headerMode: "screen"
+    headerMode: 'screen'
   }
 );
 
@@ -189,7 +196,7 @@ const MyProfileStackNavigator = StackNavigator(
     ...sharedRoutes
   },
   {
-    headerMode: "screen"
+    headerMode: 'screen'
   }
 );
 
@@ -200,7 +207,7 @@ const MainTabNavigator = TabNavigator(
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => (
           <Icon
-            containerStyle={{ justifyContent: "center", alignItems: "center" }}
+            containerStyle={{ justifyContent: 'center', alignItems: 'center' }}
             color={tintColor}
             name="home"
             size={33}
@@ -213,7 +220,7 @@ const MainTabNavigator = TabNavigator(
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => (
           <Icon
-            containerStyle={{ justifyContent: "center", alignItems: "center" }}
+            containerStyle={{ justifyContent: 'center', alignItems: 'center' }}
             color={tintColor}
             name="notifications"
             size={33}
@@ -226,7 +233,7 @@ const MainTabNavigator = TabNavigator(
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => (
           <Icon
-            containerStyle={{ justifyContent: "center", alignItems: "center" }}
+            containerStyle={{ justifyContent: 'center', alignItems: 'center' }}
             color={tintColor}
             name="search"
             size={33}
@@ -239,7 +246,7 @@ const MainTabNavigator = TabNavigator(
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => (
           <Icon
-            containerStyle={{ justifyContent: "center", alignItems: "center" }}
+            containerStyle={{ justifyContent: 'center', alignItems: 'center' }}
             color={tintColor}
             name="person"
             size={33}
@@ -262,10 +269,10 @@ const MainTabNavigator = TabNavigator(
 
           if (state.index === index && state.routes[index].routes.length > 1) {
             const stackRouteName = [
-              "Events",
-              "Notifications",
-              "Search",
-              "MyProfile"
+              'Events',
+              'Notifications',
+              'Search',
+              'MyProfile'
             ][index];
 
             dispatch(
@@ -304,7 +311,7 @@ export const GitPoint = StackNavigator(
       navigationOptions: {
         header: null
       },
-      path: "welcome"
+      path: 'welcome'
     },
     Main: {
       screen: MainTabNavigator,
@@ -314,7 +321,7 @@ export const GitPoint = StackNavigator(
     }
   },
   {
-    headerMode: "screen",
-    URIPrefix: "gitpoint://"
+    headerMode: 'screen',
+    URIPrefix: 'gitpoint://'
   }
 );

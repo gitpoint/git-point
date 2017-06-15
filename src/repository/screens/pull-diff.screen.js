@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { View, ScrollView, Text, FlatList, StyleSheet } from "react-native";
-import { Card } from "react-native-elements";
+import React, { Component } from 'react';
+import { View, ScrollView, Text, FlatList, StyleSheet } from 'react-native';
+import { Card } from 'react-native-elements';
 
-import Parse from "parse-diff";
+import Parse from 'parse-diff';
 
-import { ViewContainer, DiffBlocks, CodeLine } from "components";
+import { ViewContainer, DiffBlocks, CodeLine } from 'components';
 
-import config from "config";
+import config from 'config';
 
 class PullDiff extends Component {
   props: {
@@ -15,7 +15,9 @@ class PullDiff extends Component {
   };
 
   renderHeader = () => {
-    const filesChanged = Parse(this.props.navigation.state.params.diff);
+    const filesChanged = this.props.navigation.state.params
+      ? Parse(this.props.navigation.state.params.diff)
+      : [];
 
     let lineAdditions = 0;
     let lineDeletions = 0;
@@ -29,7 +31,7 @@ class PullDiff extends Component {
       <View style={styles.header}>
         <Text
           style={[styles.headerItem, styles.headerText]}
-        >{`${filesChanged.length} ${filesChanged.length === 1 ? "file" : "files"}`}</Text>
+        >{`${filesChanged.length} ${filesChanged.length === 1 ? 'file' : 'files'}`}</Text>
 
         <DiffBlocks
           style={styles.headerItem}
@@ -49,7 +51,7 @@ class PullDiff extends Component {
           horizontal={true}
           showsHorizontalScrollIndicator={false}
         >
-          <View style={{ flexDirection: "column" }}>
+          <View style={{ flexDirection: 'column' }}>
             <CodeLine key={i} newChunk change={{ content: chunk.content }} />
 
             {chunk.changes.map((change, index) => (
@@ -80,7 +82,7 @@ class PullDiff extends Component {
 
           {item.new &&
             <Text style={styles.fileTitle}>
-              <Text style={styles.newIndicator}>NEW{"\n"}</Text>
+              <Text style={styles.newIndicator}>NEW{'\n'}</Text>
               <Text style={[styles.fileTitle, styles.codeStyle]}>
                 {item.to}
               </Text>
@@ -88,7 +90,7 @@ class PullDiff extends Component {
 
           {item.deleted &&
             <Text style={styles.fileTitle}>
-              <Text style={styles.deletedIndicator}>DELETED{"\n"}</Text>
+              <Text style={styles.deletedIndicator}>DELETED{'\n'}</Text>
               <Text style={[styles.fileTitle, styles.codeStyle]}>
                 {item.from}
               </Text>
@@ -114,7 +116,9 @@ class PullDiff extends Component {
   };
   render() {
     const { navigation } = this.props;
-    const filesChanged = Parse(navigation.state.params.diff);
+    const filesChanged = navigation.state.params
+      ? Parse(navigation.state.params.diff)
+      : [];
     return (
       <ViewContainer>
         <FlatList
@@ -139,18 +143,18 @@ const styles = StyleSheet.create({
     marginBottom: 12
   },
   fileTitleContainer: {
-    flexDirection: "row",
+    flexDirection: 'row',
     paddingVertical: 15,
     backgroundColor: config.colors.greyVeryLight
   },
   linesChanged: {
     flex: 0.30,
     paddingLeft: 10,
-    flexDirection: "row",
-    alignItems: "center"
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   lineNumbersChanged: {
-    fontFamily: "Menlo",
+    fontFamily: 'Menlo',
     marginRight: 5
   },
   fileTitle: {
@@ -158,37 +162,37 @@ const styles = StyleSheet.create({
     marginLeft: 10
   },
   codeStyle: {
-    fontFamily: "Menlo",
+    fontFamily: 'Menlo',
     fontSize: 12
   },
   dividerStyle: {
     marginBottom: 0
   },
   noChangesMessage: {
-    fontFamily: "AvenirNext-DemiBold",
+    fontFamily: 'AvenirNext-DemiBold',
     paddingVertical: 5,
     paddingLeft: 10
   },
   newIndicator: {
-    fontFamily: "AvenirNext-DemiBold",
+    fontFamily: 'AvenirNext-DemiBold',
     color: config.colors.green
   },
   deletedIndicator: {
-    fontFamily: "AvenirNext-DemiBold",
+    fontFamily: 'AvenirNext-DemiBold',
     color: config.colors.red
   },
   header: {
     paddingTop: 25,
     paddingHorizontal: 25,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between"
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
   },
   headerItem: {
     flex: 1
   },
   headerText: {
-    fontFamily: "AvenirNext-DemiBold",
+    fontFamily: 'AvenirNext-DemiBold',
     fontSize: 16
   }
 });

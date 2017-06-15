@@ -1,17 +1,17 @@
-import React, { Component } from "react";
-import { FlatList, View, StyleSheet, Dimensions, Text } from "react-native";
-import { ButtonGroup } from "react-native-elements";
-import SearchBar from "react-native-search-bar";
+import React, { Component } from 'react';
+import { FlatList, View, StyleSheet, Dimensions, Text } from 'react-native';
+import { ButtonGroup } from 'react-native-elements';
+import SearchBar from 'react-native-search-bar';
 
-import { ViewContainer, IssueListItem, LoadingContainer } from "components";
+import { ViewContainer, IssueListItem, LoadingContainer } from 'components';
 
-import config from "config";
+import config from 'config';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import {
   searchOpenRepoIssues,
   searchClosedRepoIssues
-} from "../repository.action";
+} from '../repository.action';
 
 const mapStateToProps = state => ({
   repository: state.repository.repository,
@@ -51,18 +51,14 @@ class IssueList extends Component {
     super();
 
     this.state = {
-      query: "",
+      query: '',
       searchType: 0,
       searchStart: false,
       searchFocus: false
     };
-
-    this.switchQueryType = this.switchQueryType.bind(this);
-    this.search = this.search.bind(this);
-    this.getList = this.getList.bind(this);
   }
 
-  switchQueryType(selectedType) {
+  switchQueryType = selectedType => {
     if (this.state.searchType !== selectedType) {
       this.setState({
         searchType: selectedType
@@ -76,9 +72,9 @@ class IssueList extends Component {
         animated: false
       });
     }
-  }
+  };
 
-  search(query, selectedType = null) {
+  search = (query, selectedType = null) => {
     const {
       searchOpenRepoIssues,
       searchClosedRepoIssues,
@@ -89,7 +85,7 @@ class IssueList extends Component {
       ? selectedType
       : this.state.searchType;
 
-    if (query !== "") {
+    if (query !== '') {
       this.setState({
         query: query,
         searchStart: true
@@ -99,7 +95,7 @@ class IssueList extends Component {
         ? searchOpenRepoIssues(query, repository.full_name)
         : searchClosedRepoIssues(query, repository.full_name);
     }
-  }
+  };
 
   renderItem = ({ item }) => (
     <IssueListItem
@@ -116,9 +112,9 @@ class IssueList extends Component {
       return searchType === 0 ? searchedOpenIssues : searchedClosedIssues;
     } else {
       return searchType === 0
-        ? navigation.state.params.issues.filter(issue => issue.state === "open")
+        ? navigation.state.params.issues.filter(issue => issue.state === 'open')
         : navigation.state.params.issues.filter(
-            issue => issue.state === "closed"
+            issue => issue.state === 'closed'
           );
     }
   };
@@ -144,7 +140,7 @@ class IssueList extends Component {
                 showsCancelButton={searchFocus}
                 onFocus={() => this.setState({ searchFocus: true })}
                 onCancelButtonPress={() => {
-                  this.setState({ searchStart: false, query: "" });
+                  this.setState({ searchStart: false, query: '' });
                   this.refs.searchBar.unFocus();
                 }}
                 onSearchButtonPress={query => {
@@ -158,7 +154,7 @@ class IssueList extends Component {
           <ButtonGroup
             onPress={this.switchQueryType}
             selectedIndex={searchType}
-            buttons={["Open", "Closed"]}
+            buttons={['Open', 'Closed']}
             textStyle={styles.buttonGroupText}
             selectedTextStyle={styles.buttonGroupTextSelected}
             containerStyle={styles.buttonGroupContainer}
@@ -224,10 +220,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1
   },
   searchBarWrapper: {
-    flexDirection: "row"
+    flexDirection: 'row'
   },
   searchContainer: {
-    width: Dimensions.get("window").width,
+    width: Dimensions.get('window').width,
     backgroundColor: config.colors.white,
     flex: 1
   },
@@ -238,21 +234,21 @@ const styles = StyleSheet.create({
     height: 30
   },
   buttonGroupText: {
-    fontFamily: "AvenirNext-Bold"
+    fontFamily: 'AvenirNext-Bold'
   },
   buttonGroupTextSelected: {
     color: config.colors.black
   },
   loadingIndicatorContainer: {
-    justifyContent: "center",
-    alignItems: "center"
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   marginSpacing: {
     marginTop: 40
   },
   searchTitle: {
     fontSize: 20,
-    textAlign: "center"
+    textAlign: 'center'
   }
 });
 

@@ -1,31 +1,31 @@
-export const CLIENT_ID = "87c7f05700c052937cfb";
-export const CLIENT_SECRET = "3a70aee4d5e26c457720a31c3efe2f9062a4997a";
+export const CLIENT_ID = '87c7f05700c052937cfb';
+export const CLIENT_SECRET = '3a70aee4d5e26c457720a31c3efe2f9062a4997a';
 
 const accessTokenParameters = accessToken => ({
   headers: {
     Authorization: `token ${accessToken}`,
-    "Cache-Control": "no-cache"
+    'Cache-Control': 'no-cache'
   }
 });
 
 const accessTokenParametersPUT = (accessToken, body = {}) => ({
-  method: "PUT",
+  method: 'PUT',
   headers: {
     Authorization: `token ${accessToken}`,
-    "Content-Length": 0
+    'Content-Length': 0
   },
   body: JSON.stringify(body)
 });
 
 const accessTokenParametersDELETE = accessToken => ({
-  method: "DELETE",
+  method: 'DELETE',
   headers: {
     Authorization: `token ${accessToken}`
   }
 });
 
 const accessTokenParametersPATCH = (editParams, accessToken) => ({
-  method: "PATCH",
+  method: 'PATCH',
   headers: {
     Authorization: `token ${accessToken}`
   },
@@ -33,7 +33,7 @@ const accessTokenParametersPATCH = (editParams, accessToken) => ({
 });
 
 const accessTokenParametersPOST = (accessToken, body) => ({
-  method: "POST",
+  method: 'POST',
   headers: {
     Authorization: `token ${accessToken}`
   },
@@ -42,30 +42,30 @@ const accessTokenParametersPOST = (accessToken, body) => ({
 
 const accessTokenParametersHTML = accessToken => ({
   headers: {
-    Accept: "application/vnd.github.v3.html",
+    Accept: 'application/vnd.github.v3.html',
     Authorization: `token ${accessToken}`
   }
 });
 
 const accessTokenParametersDiff = accessToken => ({
   headers: {
-    Accept: "application/vnd.github.v3.diff",
+    Accept: 'application/vnd.github.v3.diff',
     Authorization: `token ${accessToken}`
   }
 });
 
 const accessTokenParametersRaw = accessToken => ({
   headers: {
-    Accept: "application/vnd.github.v3.raw",
+    Accept: 'application/vnd.github.v3.raw',
     Authorization: `token ${accessToken}`
   }
 });
 
 const authParameters = (code, state) => ({
-  method: "POST",
+  method: 'POST',
   headers: {
-    Accept: "application/json",
-    "Content-Type": "application/json"
+    Accept: 'application/json',
+    'Content-Type': 'application/json'
   },
   body: JSON.stringify({
     client_id: CLIENT_ID,
@@ -75,10 +75,10 @@ const authParameters = (code, state) => ({
   })
 });
 
-const root = "https://api.github.com";
+const root = 'https://api.github.com';
 
 export const fetchAccessToken = (code, state) => {
-  const GITHUB_OAUTH_ENDPOINT = "https://github.com/login/oauth/access_token";
+  const GITHUB_OAUTH_ENDPOINT = 'https://github.com/login/oauth/access_token';
 
   return fetch(
     GITHUB_OAUTH_ENDPOINT,
@@ -155,10 +155,10 @@ export const fetchPostIssueComment = (
   issueNum,
   accessToken
 ) => {
-  const POST_ENDPOINT = `${root}/repos/${owner}/${repoName}/issues/${issueNum}/comments`;
+  const ENDPOINT = `${root}/repos/${owner}/${repoName}/issues/${issueNum}/comments`;
 
   return fetch(
-    POST_ENDPOINT,
+    ENDPOINT,
     accessTokenParametersPOST(accessToken, { body: body })
   ).then(response => response.json());
 };
@@ -171,12 +171,9 @@ export const fetchEditIssue = (
   updateParams,
   accessToken
 ) => {
-  const POST_ENDPOINT = `${root}/repos/${owner}/${repoName}/issues/${issueNum}`;
+  const ENDPOINT = `${root}/repos/${owner}/${repoName}/issues/${issueNum}`;
 
-  return fetch(
-    POST_ENDPOINT,
-    accessTokenParametersPATCH(editParams, accessToken)
-  );
+  return fetch(ENDPOINT, accessTokenParametersPATCH(editParams, accessToken));
 };
 
 export const fetchChangeIssueLockStatus = (
@@ -186,44 +183,42 @@ export const fetchChangeIssueLockStatus = (
   currentStatus,
   accessToken
 ) => {
-  const POST_ENDPOINT = `${root}/repos/${owner}/${repoName}/issues/${issueNum}/lock`;
+  const ENDPOINT = `${root}/repos/${owner}/${repoName}/issues/${issueNum}/lock`;
 
   return fetch(
-    POST_ENDPOINT,
+    ENDPOINT,
     currentStatus
       ? accessTokenParametersDELETE(accessToken)
       : accessTokenParametersPUT(accessToken)
   );
 };
 
-export const fetchSearch = (type, query, accessToken, params = "") => {
-  const POST_ENDPOINT = `https://api.github.com/search/${type}?q=${query}${params}`;
+export const fetchSearch = (type, query, accessToken, params = '') => {
+  const ENDPOINT = `https://api.github.com/search/${type}?q=${query}${params}`;
 
-  return fetch(
-    POST_ENDPOINT,
-    accessTokenParameters(accessToken)
-  ).then(response => response.json());
+  return fetch(ENDPOINT, accessTokenParameters(accessToken)).then(response =>
+    response.json()
+  );
 };
 
 export const fetchNotifications = (participating, all, accessToken) => {
-  const POST_ENDPOINT = `https://api.github.com/notifications?participating=${participating}&all=${all}`;
+  const ENDPOINT = `https://api.github.com/notifications?participating=${participating}&all=${all}`;
 
-  return fetch(
-    POST_ENDPOINT,
-    accessTokenParameters(accessToken)
-  ).then(response => response.json());
+  return fetch(ENDPOINT, accessTokenParameters(accessToken)).then(response =>
+    response.json()
+  );
 };
 
 export const fetchMarkNotificationAsRead = (notificationID, accessToken) => {
-  const POST_ENDPOINT = `https://api.github.com/notifications/threads/${notificationID}`;
+  const ENDPOINT = `https://api.github.com/notifications/threads/${notificationID}`;
 
-  return fetch(POST_ENDPOINT, accessTokenParametersPATCH(null, accessToken));
+  return fetch(ENDPOINT, accessTokenParametersPATCH(null, accessToken));
 };
 
 export const fetchMarkRepoNotificationAsRead = (repoFullName, accessToken) => {
-  const POST_ENDPOINT = `https://api.github.com/repos/${repoFullName}/notifications`;
+  const ENDPOINT = `https://api.github.com/repos/${repoFullName}/notifications`;
 
-  return fetch(POST_ENDPOINT, accessTokenParametersPUT(accessToken));
+  return fetch(ENDPOINT, accessTokenParametersPUT(accessToken));
 };
 
 export const fetchChangeStarStatusRepo = (
@@ -232,10 +227,10 @@ export const fetchChangeStarStatusRepo = (
   starred,
   accessToken
 ) => {
-  const POST_ENDPOINT = `https://api.github.com/user/starred/${owner}/${repo}`;
+  const ENDPOINT = `https://api.github.com/user/starred/${owner}/${repo}`;
 
   return fetch(
-    POST_ENDPOINT,
+    ENDPOINT,
     starred
       ? accessTokenParametersDELETE(accessToken)
       : accessTokenParametersPUT(accessToken)
@@ -243,10 +238,10 @@ export const fetchChangeStarStatusRepo = (
 };
 
 export const fetchChangeFollowStatus = (user, isFollowing, accessToken) => {
-  const POST_ENDPOINT = `https://api.github.com/user/following/${user}`;
+  const ENDPOINT = `https://api.github.com/user/following/${user}`;
 
   return fetch(
-    POST_ENDPOINT,
+    ENDPOINT,
     isFollowing
       ? accessTokenParametersDELETE(accessToken)
       : accessTokenParametersPUT(accessToken)
@@ -269,6 +264,30 @@ export const fetchMergeStatus = (repo, issueNum, accessToken) => {
   const ENDPOINT = `https://api.github.com/repos/${repo}/pulls/${issueNum}/merge`;
 
   return fetch(ENDPOINT, accessTokenParameters(accessToken));
+};
+
+///
+
+///
+
+export const fetchMergePullRequest = (
+  repo,
+  issueNum,
+  commitTitle,
+  commitMessage,
+  mergeMethod,
+  accessToken
+) => {
+  const ENDPOINT = `https://api.github.com/repos/${repo}/pulls/${issueNum}/merge`;
+
+  return fetch(
+    ENDPOINT,
+    accessTokenParametersPUT(accessToken, {
+      commit_title: commitTitle,
+      commit_message: commitMessage,
+      merge_method: mergeMethod
+    })
+  );
 };
 
 ///

@@ -5,8 +5,9 @@ import {
   CHANGE_LOCK_STATUS,
   GET_ISSUE_DIFF,
   GET_ISSUE_MERGE_STATUS,
+  MERGE_PULL_REQUEST,
   GET_ISSUE_FROM_URL
-} from "./issue.type";
+} from './issue.type';
 
 import {
   fetchDiff,
@@ -14,8 +15,9 @@ import {
   fetchCommentHTML,
   fetchPostIssueComment,
   fetchEditIssue,
-  fetchChangeIssueLockStatus
-} from "api";
+  fetchChangeIssueLockStatus,
+  fetchMergePullRequest
+} from 'api';
 
 export const getIssueComments = issue => {
   return (dispatch, getState) => {
@@ -197,6 +199,41 @@ const getMergeStatus = (repo, issueNum) => {
       .catch(error => {
         dispatch({
           type: GET_ISSUE_MERGE_STATUS.ERROR,
+          payload: error
+        });
+      });
+  };
+};
+
+export const mergePullRequest = (
+  repo,
+  issueNum,
+  commitTitle,
+  commitMessage,
+  mergeMethod
+) => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: MERGE_PULL_REQUEST.PENDING });
+
+    return fetchMergePullRequest(
+      repo,
+      issueNum,
+      commitTitle,
+      commitMessage,
+      mergeMethod,
+      accessToken
+    )
+      .then(data => {
+        dispatch({
+          type: MERGE_PULL_REQUEST.SUCCESS,
+          payload: data.merged
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: MERGE_PULL_REQUEST.ERROR,
           payload: error
         });
       });
