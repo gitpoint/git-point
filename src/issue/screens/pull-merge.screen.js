@@ -4,7 +4,8 @@ import {
   ScrollView,
   StyleSheet,
   TextInput,
-  ActionSheetIOS
+  ActionSheetIOS,
+  Alert
 } from 'react-native';
 import { ListItem, Icon } from 'react-native-elements';
 
@@ -13,7 +14,7 @@ import { ViewContainer, SectionList } from 'components';
 import config from 'config';
 
 import { connect } from 'react-redux';
-import { fetchMergePullRequest } from '../issue.action';
+import { mergePullRequest } from '../issue.action';
 
 const mapStateToProps = state => ({
   repository: state.repository.repository,
@@ -22,7 +23,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchMergePullRequest: (
+  mergePullRequest: (
     repoFullName,
     issueNum,
     commitTitle,
@@ -30,7 +31,7 @@ const mapDispatchToProps = dispatch => ({
     mergeMethod
   ) =>
     dispatch(
-      fetchMergePullRequest(
+      mergePullRequest(
         repoFullName,
         issueNum,
         commitTitle,
@@ -48,7 +49,7 @@ class PullMerge extends Component {
   };
 
   props: {
-    fetchMergePullRequest: Function,
+    mergePullRequest: Function,
     repository: Object,
     issue: Object,
     isPendingMerging: boolean,
@@ -69,7 +70,6 @@ class PullMerge extends Component {
 
   render() {
     const { mergeMethod, commitTitle, commitMessage } = this.state;
-    const mergeMethodTypes = ['merge', 'squash'];
     const mergeMethodMessages = ['Create a merge commit', 'Squash and merge'];
 
     return (
@@ -140,6 +140,24 @@ class PullMerge extends Component {
       </ViewContainer>
     );
   }
+
+  mergePullRequest = () => {
+    const { repository, issue, mergePullRequest } = this.props;
+    const { mergeMethod, commitTitle, commitMessage } = this.state;
+    const mergeMethodTypes = ['merge', 'squash'];
+
+    if (commitTitle === '') {
+      Alert.alert('You need to have a commit title!', null, [{ text: 'OK' }]);
+    } else {
+      mergePullRequest(
+        repository.full_name,
+        issue.number,
+        commitTitle,
+        commitMessage,
+        mergeMethodTypes[mergeMethod]
+      );
+    }
+  };
 
   changeMergeMethod = mergeMethodMessages => {
     ActionSheetIOS.showActionSheetWithOptions(

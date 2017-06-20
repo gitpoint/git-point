@@ -1,25 +1,26 @@
-import React, { Component } from "react";
-import { ScrollView, StyleSheet, ActionSheetIOS } from "react-native";
-import { ListItem } from "react-native-elements";
+import React, { Component } from 'react';
+import { ScrollView, StyleSheet, ActionSheetIOS } from 'react-native';
+import { ListItem } from 'react-native-elements';
 
 import {
   ViewContainer,
   SectionList,
   UserListItem,
   LabelListItem
-} from "components";
+} from 'components';
 
-import config from "config";
+import config from 'config';
 
-import { connect } from "react-redux";
-import { editIssue, changeIssueLockStatus } from "../issue.action";
-import { getLabels } from "repository";
+import { connect } from 'react-redux';
+import { editIssue, changeIssueLockStatus } from '../issue.action';
+import { getLabels } from 'repository';
 
 const mapStateToProps = state => ({
   authUser: state.auth.user,
   repository: state.repository.repository,
   labels: state.repository.labels,
   issue: state.issue.issue,
+  isMerged: state.issue.isMerged,
   isEditingIssue: state.issue.isEditingIssue,
   isPendingLabels: state.repository.isPendingLabels
 });
@@ -48,13 +49,13 @@ class IssueSettings extends Component {
 
   componentDidMount() {
     this.props.getLabels(
-      this.props.repository.labels_url.replace("{/name}", "")
+      this.props.repository.labels_url.replace('{/name}', '')
     );
   }
 
   render() {
     const { issue, authUser, navigation } = this.props;
-    const issueType = issue.pull_request ? "Pull Request" : "Issue";
+    const issueType = issue.pull_request ? 'Pull Request' : 'Issue';
 
     return (
       <ViewContainer>
@@ -150,20 +151,20 @@ class IssueSettings extends Component {
             />
             <ListItem
               title={
-                issue.state === "open"
+                issue.state === 'open'
                   ? `Close ${issueType}`
                   : `Reopen ${issueType}`
               }
               hideChevron
               underlayColor={config.colors.greyLight}
               titleStyle={
-                issue.state === "open"
+                issue.state === 'open'
                   ? styles.closeActionTitle
                   : styles.openActionTitle
               }
               onPress={() =>
                 this.showChangeIssueStateActionSheet(
-                  issue.state === "open" ? "close" : "reopen"
+                  issue.state === 'open' ? 'close' : 'reopen'
                 )}
             />
           </SectionList>
@@ -194,7 +195,7 @@ class IssueSettings extends Component {
       ActionSheetIOS.showActionSheetWithOptions(
         {
           title: `Apply a label to this issue`,
-          options: [...this.props.labels.map(label => label.name), "Cancel"],
+          options: [...this.props.labels.map(label => label.name), 'Cancel'],
           cancelButtonIndex: this.props.labels.length
         },
         buttonIndex => {
@@ -226,12 +227,12 @@ class IssueSettings extends Component {
     ActionSheetIOS.showActionSheetWithOptions(
       {
         title: `Are you sure you want to ${stateChange} this issue?`,
-        options: ["Yes", "Cancel"],
+        options: ['Yes', 'Cancel'],
         destructiveButtonIndex: 0,
         cancelButtonIndex: 1
       },
       buttonIndex => {
-        const newState = stateChange === "open" ? "open" : "closed";
+        const newState = stateChange === 'open' ? 'open' : 'closed';
 
         if (buttonIndex === 0) {
           this.editIssue({ state: newState });
@@ -243,8 +244,8 @@ class IssueSettings extends Component {
   showLockIssueActionSheet = issueLocked => {
     ActionSheetIOS.showActionSheetWithOptions(
       {
-        title: `Are you sure you want to ${issueLocked ? "unlock" : "lock"} this issue?`,
-        options: ["Yes", "Cancel"],
+        title: `Are you sure you want to ${issueLocked ? 'unlock' : 'lock'} this issue?`,
+        options: ['Yes', 'Cancel'],
         cancelButtonIndex: 1
       },
       buttonIndex => {
@@ -268,15 +269,15 @@ class IssueSettings extends Component {
 const styles = StyleSheet.create({
   listItemTitle: {
     color: config.colors.black,
-    fontFamily: "AvenirNext-Medium"
+    fontFamily: 'AvenirNext-Medium'
   },
   closeActionTitle: {
     color: config.colors.red,
-    fontFamily: "AvenirNext-Medium"
+    fontFamily: 'AvenirNext-Medium'
   },
   openActionTitle: {
     color: config.colors.green,
-    fontFamily: "AvenirNext-Medium"
+    fontFamily: 'AvenirNext-Medium'
   }
 });
 
