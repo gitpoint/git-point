@@ -1,7 +1,7 @@
-import React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import React from 'react';
+import { Text, View, StyleSheet } from 'react-native';
 
-import config from "config";
+import { colors } from 'config';
 
 type Props = {
   issue: Object,
@@ -14,8 +14,8 @@ export const IssueStateBadge = ({ issue, isMerged }: Props) => {
       style={[
         styles.badge,
         isMerged && styles.mergedIssue,
-        issue.state === "open" && !isMerged && styles.openIssue,
-        issue.state === "closed" && !isMerged && styles.closedIssue
+        issue.state === 'open' && !isMerged && styles.openIssue,
+        issue.state === 'closed' && !isMerged && styles.closedIssue
       ]}
     >
       {isMerged &&
@@ -25,7 +25,7 @@ export const IssueStateBadge = ({ issue, isMerged }: Props) => {
 
       {!isMerged &&
         <Text style={styles.text}>
-          {issue.state === "open" ? "Open" : "Closed"}
+          {issue.state === 'open' ? 'Open' : 'Closed'}
         </Text>}
     </View>
   );
@@ -39,17 +39,17 @@ const styles = StyleSheet.create({
     borderRadius: 20
   },
   mergedIssue: {
-    backgroundColor: config.colors.purple
+    backgroundColor: colors.purple
   },
   openIssue: {
-    backgroundColor: config.colors.green
+    backgroundColor: colors.green
   },
   closedIssue: {
-    backgroundColor: config.colors.red
+    backgroundColor: colors.red
   },
   text: {
     fontSize: 14,
-    fontFamily: "AvenirNext-DemiBold",
-    color: config.colors.white
+    fontFamily: 'AvenirNext-DemiBold',
+    color: colors.white
   }
 });

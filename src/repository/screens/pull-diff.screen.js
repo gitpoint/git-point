@@ -6,7 +6,7 @@ import Parse from 'parse-diff';
 
 import { ViewContainer, DiffBlocks, CodeLine } from 'components';
 
-import config from 'config';
+import { colors } from 'config';
 
 class PullDiff extends Component {
   props: {
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
   fileTitleContainer: {
     flexDirection: 'row',
     paddingVertical: 15,
-    backgroundColor: config.colors.greyVeryLight
+    backgroundColor: colors.greyVeryLight
   },
   linesChanged: {
     flex: 0.30,
@@ -175,11 +175,11 @@ const styles = StyleSheet.create({
   },
   newIndicator: {
     fontFamily: 'AvenirNext-DemiBold',
-    color: config.colors.green
+    color: colors.green
   },
   deletedIndicator: {
     fontFamily: 'AvenirNext-DemiBold',
-    color: config.colors.red
+    color: colors.red
   },
   header: {
     paddingTop: 25,

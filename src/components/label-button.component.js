@@ -1,8 +1,8 @@
-import React from "react";
-import { StyleSheet } from "react-native";
-import { Button } from "react-native-elements";
+import React from 'react';
+import { StyleSheet } from 'react-native';
+import { Button } from 'react-native-elements';
 
-import config from "config";
+import { colors } from 'config';
 
 type Props = {
   label: Object,
@@ -21,8 +21,8 @@ export const LabelButton = ({ label, largeWithTag }: Props) => (
     backgroundColor={`#${label.color}`}
     icon={
       largeWithTag && {
-        name: "tag",
-        type: "octicon",
+        name: 'tag',
+        type: 'octicon',
         color: getFontColorByBackground(label.color)
       }
     }
@@ -35,7 +35,7 @@ const getFontColorByBackground = bgColor => {
   const b = parseInt(bgColor.substr(4, 2), 16);
   const yiq = (r * 299 + g * 587 + b * 114) / 1000;
 
-  return yiq >= 128 ? config.colors.black : config.colors.white;
+  return yiq >= 128 ? colors.black : colors.white;
 };
 
 const styles = StyleSheet.create({

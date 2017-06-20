@@ -1,8 +1,8 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { ListItem, Icon } from "react-native-elements";
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { ListItem, Icon } from 'react-native-elements';
 
-import config from "config";
+import { colors, languageColors } from 'config';
 
 type Props = {
   repository: Object,
@@ -15,13 +15,13 @@ export const RepositoryListItem = ({ repository, navigation }: Props) => (
     title={renderTitle(repository)}
     titleStyle={styles.title}
     rightIcon={{
-      name: repository.fork ? "repo-forked" : "repo",
-      color: config.colors.grey,
-      type: "octicon"
+      name: repository.fork ? 'repo-forked' : 'repo',
+      color: colors.grey,
+      type: 'octicon'
     }}
-    underlayColor={config.colors.greyLight}
+    underlayColor={colors.greyLight}
     onPress={() =>
-      navigation.navigate("Repository", { repository: repository })}
+      navigation.navigate('Repository', { repository: repository })}
   />
 );
 
@@ -29,7 +29,7 @@ const renderTitle = repository => (
   <View style={styles.wrapper}>
     <Text style={styles.repositoryContainer}>
       <Text style={styles.title}>
-        {repository.name}{repository.description && "\n"}
+        {repository.name}{repository.description && '\n'}
       </Text>
       <Text>
         {repository.description}
@@ -41,7 +41,7 @@ const renderTitle = repository => (
         name="star"
         type="octicion"
         size={15}
-        color={config.colors.greyDark}
+        color={colors.greyDark}
       />
 
       <Text style={[styles.extraInfoSubject, { paddingTop: 2 }]}>
@@ -53,7 +53,7 @@ const renderTitle = repository => (
           containerStyle={styles.extraInfoIcon}
           name="fiber-manual-record"
           size={15}
-          color={config.languageColors[repository.language]}
+          color={languageColors[repository.language]}
         />}
 
       <Text style={[styles.extraInfoSubject, { paddingTop: 2 }]}>
@@ -70,25 +70,25 @@ const styles = StyleSheet.create({
     marginLeft: 5
   },
   title: {
-    color: config.colors.primarydark,
-    fontFamily: "AvenirNext-DemiBold"
+    color: colors.primarydark,
+    fontFamily: 'AvenirNext-DemiBold'
   },
   extraInfo: {
-    flexDirection: "row",
+    flexDirection: 'row',
     flex: 1,
     paddingTop: 5
   },
   extraInfoSubject: {
-    color: config.colors.greyDark,
+    color: colors.greyDark,
     paddingLeft: 3,
     marginRight: 15,
     fontSize: 12,
-    fontFamily: "AvenirNext-Medium"
+    fontFamily: 'AvenirNext-Medium'
   },
   repositoryContainer: {
-    justifyContent: "center",
+    justifyContent: 'center',
     flex: 1,
-    color: config.colors.primaryDark,
-    fontFamily: "AvenirNext-Regular"
+    color: colors.primaryDark,
+    fontFamily: 'AvenirNext-Regular'
   }
 });

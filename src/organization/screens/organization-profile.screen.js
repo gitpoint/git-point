@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { StyleSheet } from "react-native";
-import { ListItem } from "react-native-elements";
+import React, { Component } from 'react';
+import { StyleSheet } from 'react-native';
+import { ListItem } from 'react-native-elements';
 
 import {
   ViewContainer,
@@ -9,13 +9,13 @@ import {
   MembersList,
   SectionList,
   ParallaxScroll
-} from "components";
+} from 'components';
 
-import config from "config";
-import Communications from "react-native-communications";
+import { colors } from 'config';
+import Communications from 'react-native-communications';
 
-import { connect } from "react-redux";
-import { getOrg, getOrgRepos, getOrgMembers } from "../";
+import { connect } from 'react-redux';
+import { getOrg, getOrgRepos, getOrgMembers } from '../';
 
 const mapStateToProps = state => ({
   organization: state.organization.organization,
@@ -97,15 +97,15 @@ class OrganizationProfile extends Component {
           {!!(!isPendingOrg &&
             organization.blog &&
             organization.blog !== null &&
-            organization.blog !== "") &&
+            organization.blog !== '') &&
             <SectionList title="LINKS">
               <ListItem
                 title="Website"
                 titleStyle={styles.listTitle}
-                leftIcon={{ name: "link", color: config.colors.grey }}
+                leftIcon={{ name: 'link', color: colors.grey }}
                 subtitle={organization.blog}
                 onPress={() => Communications.web(organization.blog)}
-                underlayColor={config.colors.greyLight}
+                underlayColor={colors.greyLight}
               />
             </SectionList>}
         </ParallaxScroll>
@@ -116,8 +116,8 @@ class OrganizationProfile extends Component {
 
 const styles = StyleSheet.create({
   listTitle: {
-    color: config.colors.black,
-    fontFamily: "AvenirNext-Medium"
+    color: colors.black,
+    fontFamily: 'AvenirNext-Medium'
   }
 });
 

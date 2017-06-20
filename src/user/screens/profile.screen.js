@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   StyleSheet,
   ActivityIndicator,
   ActionSheetIOS,
   Dimensions
-} from "react-native";
-import { ListItem } from "react-native-elements";
+} from 'react-native';
+import { ListItem } from 'react-native-elements';
 
 import {
   ViewContainer,
@@ -13,13 +13,13 @@ import {
   SectionList,
   ParallaxScroll,
   UserListItem
-} from "components";
+} from 'components';
 
-import config from "config";
-import Communications from "react-native-communications";
+import { colors } from 'config';
+import Communications from 'react-native-communications';
 
-import { connect } from "react-redux";
-import { getUserInfo, changeFollowStatus } from "../user.action";
+import { connect } from 'react-redux';
+import { getUserInfo, changeFollowStatus } from '../user.action';
 
 const mapStateToProps = state => ({
   user: state.user.user,
@@ -54,17 +54,17 @@ class Profile extends Component {
   }
 
   getUserBlog(url) {
-    const prefix = "http";
+    const prefix = 'http';
     return url.substr(0, prefix.length) === prefix ? url : `http://${url}`;
   }
 
   showMenuActionSheet() {
     const { user, isFollowing, changeFollowStatus } = this.props;
-    const userActions = [isFollowing ? "Unfollow" : "Follow"];
+    const userActions = [isFollowing ? 'Unfollow' : 'Follow'];
     ActionSheetIOS.showActionSheetWithOptions(
       {
-        title: "User Actions",
-        options: [...userActions, "Cancel"],
+        title: 'User Actions',
+        options: [...userActions, 'Cancel'],
         cancelButtonIndex: 1
       },
       buttonIndex => {
@@ -104,7 +104,11 @@ class Profile extends Component {
             />
           )}
           stickyTitle={user.login}
-          showMenu={!isPendingUser && !isPendingCheckFollowing}
+          showMenu={
+            !isPendingUser &&
+              !isPendingCheckFollowing &&
+              initialUser.login === user.login
+          }
           menuAction={() => this.showMenuActionSheet()}
           navigateBack
           navigation={navigation}
@@ -113,47 +117,47 @@ class Profile extends Component {
           {isPending &&
             <ActivityIndicator
               animating={isPending}
-              style={{ height: Dimensions.get("window").height / 3 }}
+              style={{ height: Dimensions.get('window').height / 3 }}
               size="large"
             />}
 
           {!isPending &&
             initialUser.login === user.login &&
-            ((user.email !== null && user.email !== "") ||
-              (user.blog !== null && user.blog !== "")) &&
+            ((user.email !== null && user.email !== '') ||
+              (user.blog !== null && user.blog !== '')) &&
             <SectionList title="LINKS">
               {user.email !== null &&
-                user.email !== "" &&
+                user.email !== '' &&
                 <ListItem
                   title="Email"
                   titleStyle={styles.listTitle}
                   leftIcon={{
-                    name: "mail",
-                    color: config.colors.grey,
-                    type: "octicon"
+                    name: 'mail',
+                    color: colors.grey,
+                    type: 'octicon'
                   }}
                   subtitle={user.email}
                   subtitleStyle={styles.listSubTitle}
                   onPress={() =>
-                    Communications.email([user.email], null, null, "Hi!", "")}
-                  underlayColor={config.colors.greyLight}
+                    Communications.email([user.email], null, null, 'Hi!', '')}
+                  underlayColor={colors.greyLight}
                 />}
 
               {user.blog !== null &&
-                user.blog !== "" &&
+                user.blog !== '' &&
                 <ListItem
                   title="Website"
                   titleStyle={styles.listTitle}
                   leftIcon={{
-                    name: "link",
-                    color: config.colors.grey,
-                    type: "octicon"
+                    name: 'link',
+                    color: colors.grey,
+                    type: 'octicon'
                   }}
                   subtitle={user.blog}
                   subtitleStyle={styles.listSubTitle}
                   onPress={() =>
                     Communications.web(this.getUserBlog(user.blog))}
-                  underlayColor={config.colors.greyLight}
+                  underlayColor={colors.greyLight}
                 />}
             </SectionList>}
 
@@ -162,7 +166,7 @@ class Profile extends Component {
             <SectionList
               title="ORGANIZATIONS"
               noItems={orgs.length === 0}
-              noItemsMessage={"No organizations"}
+              noItemsMessage={'No organizations'}
             >
               {orgs.map((item, i) => (
                 <UserListItem key={i} user={item} navigation={navigation} />
@@ -177,12 +181,12 @@ class Profile extends Component {
 
 const styles = StyleSheet.create({
   listTitle: {
-    color: config.colors.black,
-    fontFamily: "AvenirNext-Medium"
+    color: colors.black,
+    fontFamily: 'AvenirNext-Medium'
   },
   listSubTitle: {
-    color: config.colors.greyDark,
-    fontFamily: "AvenirNext-Medium"
+    color: colors.greyDark,
+    fontFamily: 'AvenirNext-Medium'
   }
 });
 

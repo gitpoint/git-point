@@ -1,8 +1,8 @@
-import React from "react";
-import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
-import { List, ListItem, Button } from "react-native-elements";
+import React from 'react';
+import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
+import { List, ListItem, Button } from 'react-native-elements';
 
-import config from "config";
+import { colors } from 'config';
 
 type Props = {
   loading: boolean,
@@ -57,7 +57,7 @@ export const SectionList = ({
             title={buttonTitle}
             fontFamily="AvenirNext-DemiBold"
             fontSize={13}
-            color={showButton ? config.colors.primarydark : config.colors.white}
+            color={showButton ? colors.primarydark : colors.white}
             buttonStyle={styles.button}
             onPress={buttonAction}
           />}
@@ -77,22 +77,22 @@ const styles = StyleSheet.create({
   },
   topHeader: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   sectionTitle: {
-    color: config.colors.black,
+    color: colors.black,
     padding: 15,
-    fontFamily: "AvenirNext-Bold"
+    fontFamily: 'AvenirNext-Bold'
   },
   listTitle: {
-    color: config.colors.black,
-    fontFamily: "AvenirNext-Medium"
+    color: colors.black,
+    fontFamily: 'AvenirNext-Medium'
   },
   button: {
-    backgroundColor: config.colors.white,
-    borderColor: config.colors.primarydark,
+    backgroundColor: colors.white,
+    borderColor: colors.primarydark,
     borderWidth: 1,
     borderRadius: 3,
     paddingVertical: 5,

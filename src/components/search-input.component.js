@@ -1,8 +1,8 @@
-import React from "react";
-import { StyleSheet, Dimensions, View } from "react-native";
-import SearchBar from "react-native-search-bar";
+import React from 'react';
+import { StyleSheet, Dimensions, View } from 'react-native';
+import SearchBar from 'react-native-search-bar';
 
-import config from "config";
+import { colors } from 'config';
 
 type Props = {
   onSubmitEditing: Function
@@ -13,7 +13,7 @@ export const SearchInput = ({ onSubmitEditing }: Props) => (
     <SearchBar
       placeholder="Search"
       hideBackground={true}
-      textFieldBackgroundColor={config.colors.greyLight}
+      textFieldBackgroundColor={colors.greyLight}
       onSearchButtonPress={() => {
         onSubmitEditing;
         this.unFocus();
@@ -24,14 +24,14 @@ export const SearchInput = ({ onSubmitEditing }: Props) => (
 
 const styles = StyleSheet.create({
   searchContainer: {
-    width: Dimensions.get("window").width,
+    width: Dimensions.get('window').width,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: "#bbb",
-    backgroundColor: "white",
+    borderBottomColor: '#bbb',
+    backgroundColor: 'white',
     flex: 1
   },
   searchBar: {
-    backgroundColor: config.colors.greyLight,
+    backgroundColor: colors.greyLight,
     fontSize: 15,
     borderRadius: 3,
     height: 40,

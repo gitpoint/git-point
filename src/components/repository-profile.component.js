@@ -1,8 +1,8 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Icon } from "react-native-elements";
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { Icon } from 'react-native-elements';
 
-import config from "config";
+import { colors } from 'config';
 
 type Props = {
   repository: Object,
@@ -24,10 +24,10 @@ export const RepositoryProfile = ({
               styles.icon,
               repository.fork ? { marginLeft: 17 } : { marginLeft: 13 }
             ]}
-            name={repository.fork ? "repo-forked" : "repo"}
+            name={repository.fork ? 'repo-forked' : 'repo'}
             type="octicon"
             size={45}
-            color={config.colors.greyLight}
+            color={colors.greyLight}
           />
 
           <Text style={styles.title}>{repository.name}</Text>
@@ -43,13 +43,13 @@ export const RepositoryProfile = ({
                 <Text>
                   <Text>forked from</Text>
                   <Text
-                    style={{ fontWeight: "bold" }}
+                    style={{ fontWeight: 'bold' }}
                     onPress={() =>
-                      navigation.navigate("Repository", {
+                      navigation.navigate('Repository', {
                         repository: repository.parent
                       })}
                   >
-                    {" "}{repository.parent.full_name}
+                    {' '}{repository.parent.full_name}
                   </Text>
                 </Text>}
 
@@ -81,36 +81,36 @@ export const RepositoryProfile = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   darkenContainer: {
-    backgroundColor: "rgba(0,0,0,.6)"
+    backgroundColor: 'rgba(0,0,0,.6)'
   },
   profile: {
     flex: 2,
     marginTop: 50,
-    alignItems: "center",
-    justifyContent: "center"
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   title: {
-    color: config.colors.white,
-    fontFamily: "AvenirNext-Bold",
+    color: colors.white,
+    fontFamily: 'AvenirNext-Bold',
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 2,
-    backgroundColor: "transparent"
+    backgroundColor: 'transparent'
   },
   subtitle: {
-    color: config.colors.white,
-    fontFamily: "AvenirNext-Medium",
+    color: colors.white,
+    fontFamily: 'AvenirNext-Medium',
     fontSize: 14,
     paddingLeft: 15,
     paddingRight: 15,
-    backgroundColor: "transparent"
+    backgroundColor: 'transparent'
   },
   subtitleDescription: {
-    textAlign: "center"
+    textAlign: 'center'
   },
   subtitleFork: {
     marginTop: 20,
@@ -118,28 +118,28 @@ const styles = StyleSheet.create({
   },
   details: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-around",
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     minWidth: 300
   },
   unit: {
     flex: 1
   },
   unitNumber: {
-    textAlign: "center",
-    color: config.colors.white,
-    fontFamily: "AvenirNext-Bold",
+    textAlign: 'center',
+    color: colors.white,
+    fontFamily: 'AvenirNext-Bold',
     fontSize: 18,
-    fontWeight: "bold"
+    fontWeight: 'bold'
   },
   unitText: {
-    textAlign: "center",
-    color: config.colors.white,
+    textAlign: 'center',
+    color: colors.white,
     fontSize: 12,
-    fontFamily: "AvenirNext-Medium"
+    fontFamily: 'AvenirNext-Medium'
   },
   green: {
-    color: config.colors.lightGreen
+    color: colors.lightGreen
   },
   icon: {
     paddingBottom: 20

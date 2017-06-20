@@ -5,7 +5,7 @@ import SearchBar from 'react-native-search-bar';
 
 import { ViewContainer, IssueListItem, LoadingContainer } from 'components';
 
-import config from 'config';
+import { colors } from 'config';
 
 import { connect } from 'react-redux';
 import {
@@ -135,8 +135,8 @@ class IssueList extends Component {
               <SearchBar
                 ref="searchBar"
                 hideBackground={true}
-                textColor={config.colors.primaryDark}
-                textFieldBackgroundColor={config.colors.greyLight}
+                textColor={colors.primaryDark}
+                textFieldBackgroundColor={colors.greyLight}
                 showsCancelButton={searchFocus}
                 onFocus={() => this.setState({ searchFocus: true })}
                 onCancelButtonPress={() => {
@@ -216,7 +216,7 @@ class IssueList extends Component {
 
 const styles = StyleSheet.create({
   header: {
-    borderBottomColor: config.colors.greyLight,
+    borderBottomColor: colors.greyLight,
     borderBottomWidth: 1
   },
   searchBarWrapper: {
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     width: Dimensions.get('window').width,
-    backgroundColor: config.colors.white,
+    backgroundColor: colors.white,
     flex: 1
   },
   list: {
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     fontFamily: 'AvenirNext-Bold'
   },
   buttonGroupTextSelected: {
-    color: config.colors.black
+    color: colors.black
   },
   loadingIndicatorContainer: {
     justifyContent: 'center',

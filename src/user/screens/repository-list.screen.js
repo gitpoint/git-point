@@ -1,17 +1,17 @@
-import React, { Component } from "react";
-import { FlatList, View, Dimensions, StyleSheet } from "react-native";
-import SearchBar from "react-native-search-bar";
+import React, { Component } from 'react';
+import { FlatList, View, Dimensions, StyleSheet } from 'react-native';
+import SearchBar from 'react-native-search-bar';
 
 import {
   ViewContainer,
   RepositoryListItem,
   LoadingRepositoryListItem
-} from "components";
+} from 'components';
 
-import config from "config";
+import { colors } from 'config';
 
-import { connect } from "react-redux";
-import { getRepositories, searchUserRepos } from "user";
+import { connect } from 'react-redux';
+import { getRepositories, searchUserRepos } from 'user';
 
 const mapStateToProps = state => ({
   user: state.user.user,
@@ -48,7 +48,7 @@ class RepositoryList extends Component {
     super();
 
     this.state = {
-      query: "",
+      query: '',
       searchStart: false,
       searchFocus: false
     };
@@ -66,7 +66,7 @@ class RepositoryList extends Component {
     const { searchUserRepos, navigation } = this.props;
     const user = this.props.navigation.state.params.user;
 
-    if (query !== "") {
+    if (query !== '') {
       this.setState({
         query: query,
         searchStart: true
@@ -105,12 +105,12 @@ class RepositoryList extends Component {
                 <SearchBar
                   ref="searchBar"
                   hideBackground={true}
-                  textColor={config.colors.primaryDark}
-                  textFieldBackgroundColor={config.colors.greyLight}
+                  textColor={colors.primaryDark}
+                  textFieldBackgroundColor={colors.greyLight}
                   showsCancelButton={searchFocus}
                   onFocus={() => this.setState({ searchFocus: true })}
                   onCancelButtonPress={() => {
-                    this.setState({ searchStart: false, query: "" });
+                    this.setState({ searchStart: false, query: '' });
                     this.refs.searchBar.unFocus();
                   }}
                   onSearchButtonPress={query => {
@@ -153,15 +153,15 @@ class RepositoryList extends Component {
 
 const styles = StyleSheet.create({
   header: {
-    borderBottomColor: config.colors.greyLight,
+    borderBottomColor: colors.greyLight,
     borderBottomWidth: 1
   },
   searchBarWrapper: {
-    flexDirection: "row"
+    flexDirection: 'row'
   },
   searchContainer: {
-    width: Dimensions.get("window").width,
-    backgroundColor: config.colors.white,
+    width: Dimensions.get('window').width,
+    backgroundColor: colors.white,
     flex: 1
   },
   listContainer: {

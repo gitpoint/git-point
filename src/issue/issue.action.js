@@ -228,7 +228,7 @@ export const mergePullRequest = (
       .then(data => {
         dispatch({
           type: MERGE_PULL_REQUEST.SUCCESS,
-          payload: data.merged
+          payload: data.ok
         });
       })
       .catch(error => {

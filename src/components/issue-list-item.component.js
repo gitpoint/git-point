@@ -1,11 +1,11 @@
-import React from "react";
-import { StyleSheet, TouchableHighlight, View } from "react-native";
-import { ListItem } from "react-native-elements";
+import React from 'react';
+import { StyleSheet, TouchableHighlight, View } from 'react-native';
+import { ListItem } from 'react-native-elements';
 
-import { IssueStateBadge } from "components";
+import { IssueStateBadge } from 'components';
 
-import config from "config";
-import moment from "moment";
+import { colors } from 'config';
+import moment from 'moment';
 
 type Props = {
   type: string,
@@ -15,12 +15,12 @@ type Props = {
 
 export const IssueListItem = ({ type, issue, navigation }: Props) => (
   <TouchableHighlight
-    style={issue.state === "closed" && styles.closedIssue}
+    style={issue.state === 'closed' && styles.closedIssue}
     onPress={() =>
-      navigation.navigate("Issue", {
+      navigation.navigate('Issue', {
         issue: issue
       })}
-    underlayColor={config.colors.greyLight}
+    underlayColor={colors.greyLight}
   >
     <View style={styles.container}>
       <ListItem
@@ -28,10 +28,10 @@ export const IssueListItem = ({ type, issue, navigation }: Props) => (
         title={issue.title}
         subtitle={moment(issue.created_at).fromNow()}
         leftIcon={{
-          name: type === "issue" ? "issue-opened" : "git-pull-request",
+          name: type === 'issue' ? 'issue-opened' : 'git-pull-request',
           size: 36,
-          color: config.colors.grey,
-          type: "octicon"
+          color: colors.grey,
+          type: 'octicon'
         }}
         hideChevron
         titleStyle={styles.title}
@@ -43,16 +43,16 @@ export const IssueListItem = ({ type, issue, navigation }: Props) => (
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     paddingRight: 10,
     paddingVertical: 5,
     borderBottomWidth: 1,
-    borderBottomColor: config.colors.greyLight
+    borderBottomColor: colors.greyLight
   },
   closedIssue: {
-    backgroundColor: config.colors.greyVeryLight,
+    backgroundColor: colors.greyVeryLight,
     opacity: 0.6
   },
   listItemContainer: {
@@ -60,12 +60,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0
   },
   title: {
-    color: config.colors.primarydark,
-    fontFamily: "AvenirNext-Medium"
+    color: colors.primarydark,
+    fontFamily: 'AvenirNext-Medium'
   },
   badge: {
     flex: 0.15,
-    alignItems: "flex-end",
-    justifyContent: "center"
+    alignItems: 'flex-end',
+    justifyContent: 'center'
   }
 });

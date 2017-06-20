@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   View,
   ScrollView,
@@ -6,16 +6,16 @@ import {
   StyleSheet,
   Dimensions,
   Image
-} from "react-native";
-import FastImage from "react-native-fast-image";
-import { Card, Icon } from "react-native-elements";
+} from 'react-native';
+import FastImage from 'react-native-fast-image';
+import { Card, Icon } from 'react-native-elements';
 
-import { ViewContainer, LoadingContainer } from "components";
+import { ViewContainer, LoadingContainer } from 'components';
 
-import config from "config";
+import { colors } from 'config';
 
-import { connect } from "react-redux";
-import { getRepositoryFile } from "../repository.action";
+import { connect } from 'react-redux';
+import { getRepositoryFile } from '../repository.action';
 
 const mapStateToProps = state => ({
   fileContent: state.repository.fileContent,
@@ -46,7 +46,7 @@ class RepositoryFile extends Component {
   componentDidMount() {
     const { navigation } = this.props;
     const content = navigation.state.params.content;
-    const fileType = content.name.split(".").pop();
+    const fileType = content.name.split('.').pop();
 
     if (!this.isImage(fileType)) {
       this.props.getRepositoryFile(content.download_url);
@@ -57,9 +57,9 @@ class RepositoryFile extends Component {
 
   setImageSize = uri => {
     Image.getSize(uri, (imageWidth, imageHeight) => {
-      if (imageWidth > Dimensions.get("window").width) {
+      if (imageWidth > Dimensions.get('window').width) {
         this.setState({
-          imageWidth: Dimensions.get("window").width,
+          imageWidth: Dimensions.get('window').width,
           imageHeight: 400
         });
       } else {
@@ -69,18 +69,18 @@ class RepositoryFile extends Component {
   };
   isImage(fileType) {
     return (
-      fileType === "gif" ||
-      fileType === "png" ||
-      fileType === "jpg" ||
-      fileType === "jpeg" ||
-      fileType === "psd" ||
-      fileType === "svg"
+      fileType === 'gif' ||
+      fileType === 'png' ||
+      fileType === 'jpg' ||
+      fileType === 'jpeg' ||
+      fileType === 'psd' ||
+      fileType === 'svg'
     );
   }
 
   render() {
     const { fileContent, isPendingFile, navigation } = this.props;
-    const fileType = navigation.state.params.content.name.split(".").pop();
+    const fileType = navigation.state.params.content.name.split('.').pop();
 
     return (
       <ViewContainer>
@@ -148,18 +148,18 @@ const styles = StyleSheet.create({
     marginBottom: 0
   },
   header: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingVertical: 10,
-    backgroundColor: config.colors.greyVeryLight,
+    backgroundColor: colors.greyVeryLight,
     paddingHorizontal: 10
   },
   branchIcon: {
     marginRight: 5
   },
   headerText: {
-    color: config.colors.primaryDark,
-    fontFamily: "AvenirNext-DemiBold",
+    color: colors.primaryDark,
+    fontFamily: 'AvenirNext-DemiBold',
     fontSize: 14
   },
   content: {
@@ -167,13 +167,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10
   },
   contentText: {
-    fontFamily: "Menlo",
+    fontFamily: 'Menlo',
     fontSize: 12
   },
   imageContainer: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     height: 400
   }
 });

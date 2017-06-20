@@ -1,7 +1,7 @@
-import React from "react";
-import { StyleSheet, View, ActivityIndicator, Text } from "react-native";
+import React from 'react';
+import { StyleSheet, View, ActivityIndicator, Text } from 'react-native';
 
-import config from "config";
+import { colors } from 'config';
 
 type Props = {
   animating: boolean,
@@ -22,17 +22,17 @@ export const LoadingContainer = ({ animating, text, center }: Props) => (
 
 const styles = StyleSheet.create({
   loadingContainer: {
-    backgroundColor: config.colors.white,
+    backgroundColor: colors.white,
     flex: 1,
-    alignItems: "center"
+    alignItems: 'center'
   },
   center: {
-    justifyContent: "center"
+    justifyContent: 'center'
   },
   loadingIcon: {
     height: 80
   },
   text: {
-    fontFamily: "AvenirNext-Medium"
+    fontFamily: 'AvenirNext-Medium'
   }
 });

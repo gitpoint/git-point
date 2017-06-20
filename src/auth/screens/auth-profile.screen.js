@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { StyleSheet } from "react-native";
-import { ListItem } from "react-native-elements";
+import React, { Component } from 'react';
+import { StyleSheet } from 'react-native';
+import { ListItem } from 'react-native-elements';
 
 import {
   ViewContainer,
@@ -9,13 +9,13 @@ import {
   LoadingContainer,
   ParallaxScroll,
   UserListItem
-} from "components";
+} from 'components';
 
-import config from "config";
-import Communications from "react-native-communications";
+import { colors } from 'config';
+import Communications from 'react-native-communications';
 
-import { connect } from "react-redux";
-import { getUser, getOrgs } from "auth";
+import { connect } from 'react-redux';
+import { getUser, getOrgs } from 'auth';
 
 const mapStateToProps = state => ({
   user: state.auth.user,
@@ -46,7 +46,7 @@ class AuthProfile extends Component {
   }
 
   getUserBlog(url) {
-    const prefix = "http";
+    const prefix = 'http';
     return url.substr(0, prefix.length) === prefix ? url : `http://${url}`;
   }
 
@@ -84,15 +84,15 @@ class AuthProfile extends Component {
                     title="Email"
                     titleStyle={styles.listTitle}
                     leftIcon={{
-                      name: "mail",
-                      color: config.colors.grey,
-                      type: "octicon"
+                      name: 'mail',
+                      color: colors.grey,
+                      type: 'octicon'
                     }}
                     subtitle={user.email}
                     subtitleStyle={styles.listSubTitle}
                     onPress={() =>
-                      Communications.email([user.email], null, null, "Hi!", "")}
-                    underlayColor={config.colors.greyLight}
+                      Communications.email([user.email], null, null, 'Hi!', '')}
+                    underlayColor={colors.greyLight}
                   />}
 
                 {user.blog &&
@@ -100,22 +100,22 @@ class AuthProfile extends Component {
                     title="Website"
                     titleStyle={styles.listTitle}
                     leftIcon={{
-                      name: "link",
-                      color: config.colors.grey,
-                      type: "octicon"
+                      name: 'link',
+                      color: colors.grey,
+                      type: 'octicon'
                     }}
                     subtitle={user.blog}
                     subtitleStyle={styles.listSubTitle}
                     onPress={() =>
                       Communications.web(this.getUserBlog(user.blog))}
-                    underlayColor={config.colors.greyLight}
+                    underlayColor={colors.greyLight}
                   />}
               </SectionList>}
 
             <SectionList
               title="ORGANIZATIONS"
               noItems={orgs.length === 0}
-              noItemsMessage={"No organizations"}
+              noItemsMessage={'No organizations'}
             >
               {orgs.map((item, i) => (
                 <UserListItem key={i} user={item} navigation={navigation} />
@@ -129,12 +129,12 @@ class AuthProfile extends Component {
 
 const styles = StyleSheet.create({
   listTitle: {
-    color: config.colors.black,
-    fontFamily: "AvenirNext-Medium"
+    color: colors.black,
+    fontFamily: 'AvenirNext-Medium'
   },
   listSubTitle: {
-    color: config.colors.greyDark,
-    fontFamily: "AvenirNext-Medium"
+    color: colors.greyDark,
+    fontFamily: 'AvenirNext-Medium'
   }
 });
 

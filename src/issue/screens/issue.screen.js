@@ -15,7 +15,7 @@ import {
   CommentInput
 } from 'components';
 
-import config from 'config';
+import { colors } from 'config';
 
 import { connect } from 'react-redux';
 import {
@@ -79,10 +79,10 @@ class Issue extends Component {
         headerRight: (
           <Icon
             name="gear"
-            color={config.colors.primarydark}
+            color={colors.primarydark}
             type="octicon"
             containerStyle={{ marginRight: 5 }}
-            underlayColor={config.colors.transparent}
+            underlayColor={colors.transparent}
             onPress={() =>
               navigate('IssueSettings', {
                 issue: state.params.issue

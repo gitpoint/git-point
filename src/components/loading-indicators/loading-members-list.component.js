@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { StyleSheet, View, Text, Animated } from "react-native";
-import config from "config";
+import React, { Component } from 'react';
+import { StyleSheet, View, Text, Animated } from 'react-native';
+import { colors } from 'config';
 
-import { loadingAnimation } from "utils";
+import { loadingAnimation } from 'utils';
 
 export class LoadingMembersList extends Component {
   props: {
@@ -48,18 +48,18 @@ const styles = StyleSheet.create({
   },
   avatarContainer: {
     flex: 1,
-    flexDirection: "row"
+    flexDirection: 'row'
   },
   avatar: {
     borderRadius: 15,
     height: 30,
     width: 30,
-    backgroundColor: config.colors.grey,
+    backgroundColor: colors.grey,
     marginRight: 5
   },
   sectionTitle: {
-    color: config.colors.black,
-    fontFamily: "AvenirNext-Bold",
+    color: colors.black,
+    fontFamily: 'AvenirNext-Bold',
     marginBottom: 10
   }
 });

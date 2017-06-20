@@ -9,7 +9,7 @@ import {
   LabelListItem
 } from 'components';
 
-import config from 'config';
+import { colors } from 'config';
 
 import { connect } from 'react-redux';
 import { editIssue, changeIssueLockStatus } from '../issue.action';
@@ -42,6 +42,7 @@ class IssueSettings extends Component {
     repository: Object,
     labels: Array,
     issue: Object,
+    isMerged: boolean,
     isEditingIssue: boolean,
     isPendingLabels: boolean,
     navigation: Object
@@ -54,7 +55,7 @@ class IssueSettings extends Component {
   }
 
   render() {
-    const { issue, authUser, navigation } = this.props;
+    const { issue, isMerged, authUser, navigation } = this.props;
     const issueType = issue.pull_request ? 'Pull Request' : 'Issue';
 
     return (
@@ -66,7 +67,7 @@ class IssueSettings extends Component {
             buttonAction={() => this.showAddLabelActionSheet()}
             style={{
               borderBottomWidth: 1,
-              borderBottomColor: config.colors.grey
+              borderBottomColor: colors.grey
             }}
             noItems={issue.labels.length === 0}
             noItemsMessage="None yet"
@@ -145,28 +146,30 @@ class IssueSettings extends Component {
             <ListItem
               title={issue.locked ? `Unlock ${issueType}` : `Lock ${issueType}`}
               hideChevron
-              underlayColor={config.colors.greyLight}
+              underlayColor={colors.greyLight}
               titleStyle={styles.listItemTitle}
               onPress={() => this.showLockIssueActionSheet(issue.locked)}
             />
-            <ListItem
-              title={
-                issue.state === 'open'
-                  ? `Close ${issueType}`
-                  : `Reopen ${issueType}`
-              }
-              hideChevron
-              underlayColor={config.colors.greyLight}
-              titleStyle={
-                issue.state === 'open'
-                  ? styles.closeActionTitle
-                  : styles.openActionTitle
-              }
-              onPress={() =>
-                this.showChangeIssueStateActionSheet(
-                  issue.state === 'open' ? 'close' : 'reopen'
-                )}
-            />
+
+            {!isMerged &&
+              <ListItem
+                title={
+                  issue.state === 'open'
+                    ? `Close ${issueType}`
+                    : `Reopen ${issueType}`
+                }
+                hideChevron
+                underlayColor={colors.greyLight}
+                titleStyle={
+                  issue.state === 'open'
+                    ? styles.closeActionTitle
+                    : styles.openActionTitle
+                }
+                onPress={() =>
+                  this.showChangeIssueStateActionSheet(
+                    issue.state === 'open' ? 'close' : 'reopen'
+                  )}
+              />}
           </SectionList>
         </ScrollView>
       </ViewContainer>
@@ -226,16 +229,19 @@ class IssueSettings extends Component {
   showChangeIssueStateActionSheet = stateChange => {
     ActionSheetIOS.showActionSheetWithOptions(
       {
-        title: `Are you sure you want to ${stateChange} this issue?`,
+        title: `Are you sure you want to ${stateChange} this?`,
         options: ['Yes', 'Cancel'],
-        destructiveButtonIndex: 0,
         cancelButtonIndex: 1
       },
       buttonIndex => {
-        const newState = stateChange === 'open' ? 'open' : 'closed';
+        const { navigation } = this.props;
+
+        const newState = stateChange === 'close' ? 'closed' : 'open';
 
         if (buttonIndex === 0) {
-          this.editIssue({ state: newState });
+          this.editIssue({ state: newState }).then(() => {
+            navigation.goBack();
+          });
         }
       }
     );
@@ -244,7 +250,7 @@ class IssueSettings extends Component {
   showLockIssueActionSheet = issueLocked => {
     ActionSheetIOS.showActionSheetWithOptions(
       {
-        title: `Are you sure you want to ${issueLocked ? 'unlock' : 'lock'} this issue?`,
+        title: `Are you sure you want to ${issueLocked ? 'unlock' : 'lock'} this conversation?`,
         options: ['Yes', 'Cancel'],
         cancelButtonIndex: 1
       },
@@ -268,15 +274,15 @@ class IssueSettings extends Component {
 
 const styles = StyleSheet.create({
   listItemTitle: {
-    color: config.colors.black,
+    color: colors.black,
     fontFamily: 'AvenirNext-Medium'
   },
   closeActionTitle: {
-    color: config.colors.red,
+    color: colors.red,
     fontFamily: 'AvenirNext-Medium'
   },
   openActionTitle: {
-    color: config.colors.green,
+    color: colors.green,
     fontFamily: 'AvenirNext-Medium'
   }
 });

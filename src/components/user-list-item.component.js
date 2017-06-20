@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 import {
   StyleSheet,
   View,
   TouchableHighlight,
   TouchableOpacity,
   Text
-} from "react-native";
-import { Icon } from "react-native-elements";
-import FastImage from "react-native-fast-image";
+} from 'react-native';
+import { Icon } from 'react-native-elements';
+import FastImage from 'react-native-fast-image';
 
-import config from "config";
+import { colors } from 'config';
 
 type Props = {
   user: Object,
@@ -47,24 +47,24 @@ export const UserListItem = ({
     <ContainerComponent
       onPress={() =>
         navigation.navigate(
-          user.type === "User" ? "Profile" : "Organization",
-          user.type === "User" ? { user: user } : { organization: user }
+          user.type === 'User' ? 'Profile' : 'Organization',
+          user.type === 'User' ? { user: user } : { organization: user }
         )}
-      underlayColor={config.colors.greyLight}
+      underlayColor={colors.greyLight}
       style={!noBorderBottom && styles.borderContainer}
     >
       <View style={styles.wrapper}>
         <UserComponent
           style={styles.userInfo}
           onPress={() =>
-            navigation.navigate("Profile", {
+            navigation.navigate('Profile', {
               user: user
             })}
         >
 
           <ImageContainerComponent
             onPress={() =>
-              navigation.navigate("Profile", {
+              navigation.navigate('Profile', {
                 user: user
               })}
           >
@@ -75,7 +75,7 @@ export const UserListItem = ({
                 priority: FastImage.priority.high
               }}
               onPress={() =>
-                navigation.navigate("Profile", {
+                navigation.navigate('Profile', {
                   user: user
                 })}
             />
@@ -95,10 +95,10 @@ export const UserListItem = ({
           onPress={() => iconAction(user.login)}
         >
           <Icon
-            color={config.colors.grey}
+            color={colors.grey}
             size={icon ? 24 : 28}
-            name={icon ? icon : "chevron-right"}
-            type={icon && "octicon"}
+            name={icon ? icon : 'chevron-right'}
+            type={icon && 'octicon'}
           />
         </IconComponent>
       </View>
@@ -108,44 +108,44 @@ export const UserListItem = ({
 
 const styles = StyleSheet.create({
   borderContainer: {
-    borderBottomColor: config.colors.greyLight,
+    borderBottomColor: colors.greyLight,
     borderBottomWidth: 1
   },
   wrapper: {
     padding: 10,
-    flexDirection: "row"
+    flexDirection: 'row'
   },
   userInfo: {
     flex: 1,
-    flexDirection: "row",
-    alignItems: "center"
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   avatar: {
-    backgroundColor: config.colors.greyLight,
+    backgroundColor: colors.greyLight,
     borderRadius: 17,
     width: 34,
     height: 34
   },
   titleSubtitleContainer: {
-    justifyContent: "center",
+    justifyContent: 'center',
     flex: 1
   },
   title: {
-    color: config.colors.black,
-    fontFamily: "AvenirNext-Medium",
+    color: colors.black,
+    fontFamily: 'AvenirNext-Medium',
     fontSize: 16,
     marginLeft: 10
   },
   subtitle: {
-    color: config.colors.greyDark,
+    color: colors.greyDark,
     fontSize: 12,
     marginTop: 1,
-    fontWeight: "600",
+    fontWeight: '600',
     marginLeft: 10
   },
   iconContainer: {
     flex: 0.15,
-    alignItems: "flex-end",
-    justifyContent: "center"
+    alignItems: 'flex-end',
+    justifyContent: 'center'
   }
 });

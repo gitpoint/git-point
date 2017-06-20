@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { StyleSheet, ActionSheetIOS } from "react-native";
-import { ListItem } from "react-native-elements";
+import React, { Component } from 'react';
+import { StyleSheet, ActionSheetIOS } from 'react-native';
+import { ListItem } from 'react-native-elements';
 
 import {
   ViewContainer,
@@ -13,17 +13,17 @@ import {
   UserListItem,
   IssueListItem,
   LoadingMembersList
-} from "components";
+} from 'components';
 
-import config from "config";
+import { colors } from 'config';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import {
   getRepositoryInfo,
   getContributors,
   getIssues,
   changeStarStatusRepo
-} from "../repository.action";
+} from '../repository.action';
 
 const mapStateToProps = state => ({
   repository: state.repository.repository,
@@ -72,11 +72,11 @@ class Repository extends Component {
 
   showMenuActionSheet() {
     const { starred, repository, changeStarStatusRepo } = this.props;
-    const repositoryActions = [starred ? "★ Unstar" : "★ Star"];
+    const repositoryActions = [starred ? '★ Unstar' : '★ Star'];
     ActionSheetIOS.showActionSheetWithOptions(
       {
-        title: "Repository Actions",
-        options: [...repositoryActions, "Cancel"],
+        title: 'Repository Actions',
+        options: [...repositoryActions, 'Cancel'],
         cancelButtonIndex: 1
       },
       buttonIndex => {
@@ -103,9 +103,9 @@ class Repository extends Component {
       navigation
     } = this.props;
     const initalRepository = navigation.state.params.repository;
-    const pulls = issues.filter(issue => issue.hasOwnProperty("pull_request"));
+    const pulls = issues.filter(issue => issue.hasOwnProperty('pull_request'));
     const pureIssues = issues.filter(
-      issue => !issue.hasOwnProperty("pull_request")
+      issue => !issue.hasOwnProperty('pull_request')
     );
     return (
       <ViewContainer barColor="light">
@@ -173,30 +173,30 @@ class Repository extends Component {
             <ListItem
               title="README"
               leftIcon={{
-                name: "book",
-                color: config.colors.grey,
-                type: "octicon"
+                name: 'book',
+                color: colors.grey,
+                type: 'octicon'
               }}
               titleStyle={styles.listTitle}
               onPress={() =>
-                navigation.navigate("ReadMe", {
+                navigation.navigate('ReadMe', {
                   repository: repository
                 })}
-              underlayColor={config.colors.greyLight}
+              underlayColor={colors.greyLight}
             />
             <ListItem
               title="View Code"
               titleStyle={styles.listTitle}
               leftIcon={{
-                name: "code",
-                color: config.colors.grey,
-                type: "octicon"
+                name: 'code',
+                color: colors.grey,
+                type: 'octicon'
               }}
               onPress={() =>
-                navigation.navigate("RepositoryCodeList", {
+                navigation.navigate('RepositoryCodeList', {
                   topLevel: true
                 })}
-              underlayColor={config.colors.greyLight}
+              underlayColor={colors.greyLight}
             />
           </SectionList>
 
@@ -204,21 +204,21 @@ class Repository extends Component {
             loading={isPendingIssues}
             title="ISSUES"
             noItems={
-              pureIssues.filter(issue => issue.state === "open").length === 0
+              pureIssues.filter(issue => issue.state === 'open').length === 0
             }
             noItemsMessage={
-              pureIssues.length === 0 ? "No issues" : "No open issues"
+              pureIssues.length === 0 ? 'No issues' : 'No open issues'
             }
             showButton={pureIssues.length > 0}
             buttonTitle="View All"
             buttonAction={() =>
-              navigation.navigate("IssueList", {
-                type: "issue",
+              navigation.navigate('IssueList', {
+                type: 'issue',
                 issues: pureIssues
               })}
           >
             {pureIssues
-              .filter(issue => issue.state === "open")
+              .filter(issue => issue.state === 'open')
               .slice(0, 3)
               .map((item, i) => (
                 <IssueListItem
@@ -233,20 +233,20 @@ class Repository extends Component {
           <SectionList
             loading={isPendingIssues}
             title="PULL REQUESTS"
-            noItems={pulls.filter(issue => issue.state === "open").length === 0}
+            noItems={pulls.filter(issue => issue.state === 'open').length === 0}
             noItemsMessage={
-              pulls.length === 0 ? "No pull requests" : "No open pull requests"
+              pulls.length === 0 ? 'No pull requests' : 'No open pull requests'
             }
             showButton={pulls.length > 0}
             buttonTitle="View All"
             buttonAction={() =>
-              navigation.navigate("PullList", {
-                type: "pull",
+              navigation.navigate('PullList', {
+                type: 'pull',
                 issues: pulls
               })}
           >
             {pulls
-              .filter(issue => issue.state === "open")
+              .filter(issue => issue.state === 'open')
               .slice(0, 3)
               .map((item, i) => (
                 <IssueListItem
@@ -264,8 +264,8 @@ class Repository extends Component {
 }
 const styles = StyleSheet.create({
   listTitle: {
-    color: config.colors.black,
-    fontFamily: "AvenirNext-Medium"
+    color: colors.black,
+    fontFamily: 'AvenirNext-Medium'
   }
 });
 export const RepositoryScreen = connect(mapStateToProps, mapDispatchToProps)(

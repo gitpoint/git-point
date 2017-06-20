@@ -1,9 +1,9 @@
 // @flow
 
-import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-import config from "config";
+import { colors } from 'config';
 
 type Props = {
   additions: number,
@@ -61,23 +61,23 @@ export const DiffBlocks = ({
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    alignItems: "center"
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   linesChanged: {
-    flexDirection: "row",
-    alignItems: "center"
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   numAdditions: {
     marginRight: 3,
-    fontFamily: "AvenirNext-DemiBold",
-    color: config.colors.green,
+    fontFamily: 'AvenirNext-DemiBold',
+    color: colors.green,
     letterSpacing: 1
   },
   numDeletions: {
     marginRight: 2,
-    fontFamily: "AvenirNext-DemiBold",
-    color: config.colors.red,
+    fontFamily: 'AvenirNext-DemiBold',
+    color: colors.red,
     letterSpacing: 1
   },
   block: {
@@ -86,12 +86,12 @@ const styles = StyleSheet.create({
     marginLeft: 1
   },
   greenBlock: {
-    backgroundColor: config.colors.green
+    backgroundColor: colors.green
   },
   redBlock: {
-    backgroundColor: config.colors.darkRed
+    backgroundColor: colors.darkRed
   },
   greyBlock: {
-    backgroundColor: config.colors.greyMid
+    backgroundColor: colors.greyMid
   }
 });

@@ -1,5 +1,5 @@
-import React from "react";
-import FastImage from "react-native-fast-image";
+import React from 'react';
+import FastImage from 'react-native-fast-image';
 
 import {
   StyleSheet,
@@ -7,9 +7,9 @@ import {
   Text,
   FlatList,
   TouchableHighlight
-} from "react-native";
+} from 'react-native';
 
-import config from "config";
+import { colors } from 'config';
 
 type Props = {
   title: string,
@@ -37,7 +37,7 @@ export const MembersList = ({
       renderItem={({ item }) => (
         <TouchableHighlight
           onPress={() =>
-            navigation.navigate("Profile", {
+            navigation.navigate('Profile', {
               user: item
             })}
           underlayColor="transparent"
@@ -69,19 +69,19 @@ const styles = StyleSheet.create({
     marginRight: 5
   },
   avatar: {
-    backgroundColor: config.colors.greyLight,
+    backgroundColor: colors.greyLight,
     borderRadius: 15,
     height: 30,
     width: 30
   },
   sectionTitle: {
-    color: config.colors.black,
-    fontFamily: "AvenirNext-Bold",
+    color: colors.black,
+    fontFamily: 'AvenirNext-Bold',
     marginBottom: 10
   },
   sectionTitleSmall: {
-    color: config.colors.primarydark,
-    fontFamily: "AvenirNext-DemiBold",
+    color: colors.primarydark,
+    fontFamily: 'AvenirNext-DemiBold',
     marginBottom: 10
   }
 });

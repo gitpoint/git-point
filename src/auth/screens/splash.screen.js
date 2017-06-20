@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import { StyleSheet, View, Image } from "react-native";
+import React, { Component } from 'react';
+import { StyleSheet, View, Image } from 'react-native';
 
-import config from "config";
+import { colors } from 'config';
 
-import { NavigationActions } from "react-navigation";
+import { NavigationActions } from 'react-navigation';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated
@@ -19,9 +19,9 @@ class Splash extends Component {
 
   componentDidMount() {
     if (this.props.isAuthenticated) {
-      this._navigateTo("Main");
+      this._navigateTo('Main');
     } else {
-      this._navigateTo("Login");
+      this._navigateTo('Login');
     }
   }
 
@@ -37,7 +37,7 @@ class Splash extends Component {
       <View style={styles.logoContainer}>
         <Image
           style={styles.logo}
-          source={require("../../assets/logo-black.png")}
+          source={require('../../assets/logo-black.png')}
         />
       </View>
     );
@@ -46,10 +46,10 @@ class Splash extends Component {
 
 const styles = StyleSheet.create({
   logoContainer: {
-    backgroundColor: config.colors.white,
+    backgroundColor: colors.white,
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   logo: {
     width: 100,

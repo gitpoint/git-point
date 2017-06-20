@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   StyleSheet,
   FlatList,
@@ -6,26 +6,26 @@ import {
   ScrollView,
   Text,
   TouchableOpacity
-} from "react-native";
-import { ButtonGroup, Card, Icon } from "react-native-elements";
-import FastImage from "react-native-fast-image";
+} from 'react-native';
+import { ButtonGroup, Card, Icon } from 'react-native-elements';
+import FastImage from 'react-native-fast-image';
 
-import { ViewContainer, LoadingContainer } from "components";
+import { ViewContainer, LoadingContainer } from 'components';
 
-import { NotificationListItem } from "components";
+import { NotificationListItem } from 'components';
 
-import config from "config";
+import { colors } from 'config';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import {
   getUnreadNotifications,
   getParticipatingNotifications,
   getAllNotifications,
   markAsRead,
   markRepoAsRead
-} from "../";
+} from '../';
 
-import { getIssueFromUrl } from "issue";
+import { getIssueFromUrl } from 'issue';
 
 const mapStateToProps = state => ({
   unread: state.notifications.unread,
@@ -137,7 +137,7 @@ class Notifications extends Component {
             onPress={() => markRepoAsRead(item)}
           >
             <Icon
-              color={config.colors.greyDark}
+              color={colors.greyDark}
               size={28}
               name="check"
               type="octicon"
@@ -164,7 +164,7 @@ class Notifications extends Component {
   navigateToRepo = fullName => {
     const { navigation } = this.props;
 
-    navigation.navigate("Repository", {
+    navigation.navigate('Repository', {
       repositoryUrl: `https://api.github.com/repos/${fullName}`
     });
   };
@@ -173,9 +173,9 @@ class Notifications extends Component {
 
     markAsRead(notification.id);
     getIssueFromUrl(
-      notification.subject.url.replace("pulls", "issues")
+      notification.subject.url.replace('pulls', 'issues')
     ).then(() => {
-      navigation.navigate("Issue", {
+      navigation.navigate('Issue', {
         issue: this.props.issue
       });
     });
@@ -262,7 +262,7 @@ class Notifications extends Component {
           this.notifications().length === 0 &&
           <LoadingContainer
             animating={this.isLoading() && this.notifications().length === 0}
-            text={`Retrieving ${type === 0 ? "unread" : type === 1 ? "pending" : "all"} notifications`}
+            text={`Retrieving ${type === 0 ? 'unread' : type === 1 ? 'pending' : 'all'} notifications`}
             style={styles.marginSpacing}
           />}
 
@@ -271,7 +271,7 @@ class Notifications extends Component {
             <ButtonGroup
               onPress={this.switchType}
               selectedIndex={this.state.type}
-              buttons={["Unread", "Participating", "All"]}
+              buttons={['Unread', 'Participating', 'All']}
               textStyle={styles.buttonGroupText}
               selectedTextStyle={styles.buttonGroupTextSelected}
               containerStyle={styles.buttonGroupContainer}
@@ -298,28 +298,28 @@ class Notifications extends Component {
 
 const styles = StyleSheet.create({
   buttonGroupWrapper: {
-    backgroundColor: config.colors.greyLight,
+    backgroundColor: colors.greyLight,
     paddingTop: 28
   },
   buttonGroupContainer: {
     height: 30
   },
   buttonGroupText: {
-    fontFamily: "AvenirNext-Bold"
+    fontFamily: 'AvenirNext-Bold'
   },
   buttonGroupTextSelected: {
-    color: config.colors.black
+    color: colors.black
   },
   repositoryContainer: {
     padding: 0,
     marginVertical: 25
   },
   headerContainer: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingLeft: 5,
     paddingVertical: 8,
-    backgroundColor: config.colors.greyLight
+    backgroundColor: colors.greyLight
   },
   repositoryOwnerAvatar: {
     borderRadius: 13,
@@ -327,24 +327,24 @@ const styles = StyleSheet.create({
     height: 26
   },
   repositoryTitle: {
-    color: config.colors.primarydark,
-    fontFamily: "AvenirNext-DemiBold",
+    color: colors.primarydark,
+    fontFamily: 'AvenirNext-DemiBold',
     marginLeft: 10,
     flex: 1
   },
   notificationTitle: {
-    color: config.colors.black,
+    color: colors.black,
     fontSize: 14,
-    fontFamily: "AvenirNext-Regular"
+    fontFamily: 'AvenirNext-Regular'
   },
   markAsReadIconRepo: {
     flex: 0.15,
-    justifyContent: "center",
-    alignItems: "center"
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   marginBottom: {
     marginBottom: 70,
-    backgroundColor: "transparent"
+    backgroundColor: 'transparent'
   }
 });
 

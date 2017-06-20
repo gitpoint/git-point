@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   AppRegistry,
   AsyncStorage,
@@ -6,25 +6,25 @@ import {
   StyleSheet,
   View,
   LayoutAnimation
-} from "react-native";
+} from 'react-native';
 
-import config from "config";
+import { colors } from 'config';
 
 //Routes
-import { GitPoint } from "./routes";
+import { GitPoint } from './routes';
 
 // Redux Store
-import { configureStore } from "./root.store";
-import { Provider } from "react-redux";
+import { configureStore } from './root.store';
+import { Provider } from 'react-redux';
 
-import { persistStore } from "redux-persist";
-import createEncryptor from "redux-persist-transform-encrypt";
+import { persistStore } from 'redux-persist';
+import createEncryptor from 'redux-persist-transform-encrypt';
 
 // Device Info
-import DeviceInfo from "react-native-device-info";
+import DeviceInfo from 'react-native-device-info';
 
 // md5
-import md5 from "md5";
+import md5 from 'md5';
 
 class App extends Component {
   constructor() {
@@ -59,7 +59,7 @@ class App extends Component {
         <View style={styles.logoContainer}>
           <Image
             style={styles.logo}
-            source={require("./src/assets/logo-black.png")}
+            source={require('./src/assets/logo-black.png')}
           />
         </View>
       );
@@ -73,10 +73,10 @@ class App extends Component {
 
 const styles = StyleSheet.create({
   logoContainer: {
-    backgroundColor: config.colors.white,
+    backgroundColor: colors.white,
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   logo: {
     width: 100,
@@ -84,4 +84,4 @@ const styles = StyleSheet.create({
   }
 });
 
-AppRegistry.registerComponent("GitPoint", () => App);
+AppRegistry.registerComponent('GitPoint', () => App);

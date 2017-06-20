@@ -3,6 +3,7 @@ export const CLIENT_SECRET = '3a70aee4d5e26c457720a31c3efe2f9062a4997a';
 
 const accessTokenParameters = accessToken => ({
   headers: {
+    Accept: 'application/vnd.github.v3+json',
     Authorization: `token ${accessToken}`,
     'Cache-Control': 'no-cache'
   }
@@ -11,6 +12,7 @@ const accessTokenParameters = accessToken => ({
 const accessTokenParametersPUT = (accessToken, body = {}) => ({
   method: 'PUT',
   headers: {
+    Accept: 'application/vnd.github.v3+json',
     Authorization: `token ${accessToken}`,
     'Content-Length': 0
   },
@@ -20,6 +22,7 @@ const accessTokenParametersPUT = (accessToken, body = {}) => ({
 const accessTokenParametersDELETE = accessToken => ({
   method: 'DELETE',
   headers: {
+    Accept: 'application/vnd.github.v3+json',
     Authorization: `token ${accessToken}`
   }
 });
@@ -27,6 +30,7 @@ const accessTokenParametersDELETE = accessToken => ({
 const accessTokenParametersPATCH = (editParams, accessToken) => ({
   method: 'PATCH',
   headers: {
+    Accept: 'application/vnd.github.v3+json',
     Authorization: `token ${accessToken}`
   },
   body: JSON.stringify(editParams)
@@ -35,6 +39,7 @@ const accessTokenParametersPATCH = (editParams, accessToken) => ({
 const accessTokenParametersPOST = (accessToken, body) => ({
   method: 'POST',
   headers: {
+    Accept: 'application/vnd.github.v3+json',
     Authorization: `token ${accessToken}`
   },
   body: JSON.stringify(body)
@@ -42,21 +47,21 @@ const accessTokenParametersPOST = (accessToken, body) => ({
 
 const accessTokenParametersHTML = accessToken => ({
   headers: {
-    Accept: 'application/vnd.github.v3.html',
+    Accept: 'application/vnd.github.v3.html+json',
     Authorization: `token ${accessToken}`
   }
 });
 
 const accessTokenParametersDiff = accessToken => ({
   headers: {
-    Accept: 'application/vnd.github.v3.diff',
+    Accept: 'application/vnd.github.v3.diff+json',
     Authorization: `token ${accessToken}`
   }
 });
 
 const accessTokenParametersRaw = accessToken => ({
   headers: {
-    Accept: 'application/vnd.github.v3.raw',
+    Accept: 'application/vnd.github.v3.raw+json',
     Authorization: `token ${accessToken}`
   }
 });

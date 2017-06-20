@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { StyleSheet, Animated, View } from "react-native";
-import config from "config";
+import React, { Component } from 'react';
+import { StyleSheet, Animated, View } from 'react-native';
+import { colors } from 'config';
 
-import { loadingAnimation } from "utils";
+import { loadingAnimation } from 'utils';
 
 export class LoadingRepositoryListItem extends Component {
   constructor() {
@@ -43,30 +43,30 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     paddingBottom: 20,
     height: 100,
-    borderBottomColor: "#ededed",
+    borderBottomColor: '#ededed',
     borderBottomWidth: 1,
-    backgroundColor: "transparent"
+    backgroundColor: 'transparent'
   },
   wrapper: {
     flex: 1,
-    flexDirection: "column",
+    flexDirection: 'column',
     marginLeft: 10
   },
   textBarTitle: {
     height: 7,
     width: 100,
-    backgroundColor: config.colors.greyDarkest,
+    backgroundColor: colors.greyDarkest,
     marginBottom: 10
   },
   textBarLine1: {
     height: 7,
     width: 250,
-    backgroundColor: config.colors.grey,
+    backgroundColor: colors.grey,
     marginBottom: 10
   },
   textBarLine2: {
     height: 7,
     width: 80,
-    backgroundColor: config.colors.grey
+    backgroundColor: colors.grey
   }
 });

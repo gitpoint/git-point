@@ -1,11 +1,11 @@
 // @flow
 
-import React, { Component } from "react";
-import { StyleSheet, Text, View, Animated } from "react-native";
-import { Icon } from "react-native-elements";
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, Animated } from 'react-native';
+import { Icon } from 'react-native-elements';
 
-import config from "config";
-import { loadingAnimation } from "utils";
+import { colors } from 'config';
+import { loadingAnimation } from 'utils';
 
 export class LoadingRepositoryProfile extends Component {
   state: {
@@ -35,10 +35,10 @@ export class LoadingRepositoryProfile extends Component {
           <View style={styles.profile}>
             <Icon
               containerStyle={[styles.icon, { marginLeft: 10 }]}
-              name={"repo"}
+              name={'repo'}
               type="octicon"
               size={45}
-              color={config.colors.greyLight}
+              color={colors.greyLight}
             />
           </View>
 
@@ -62,48 +62,48 @@ export class LoadingRepositoryProfile extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   darkenContainer: {
-    backgroundColor: "rgba(0,0,0,.6)"
+    backgroundColor: 'rgba(0,0,0,.6)'
   },
   profile: {
     flex: 2,
     marginTop: 50,
-    alignItems: "center",
-    justifyContent: "center"
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   title: {
-    color: config.colors.white,
-    fontFamily: "AvenirNext-Bold",
+    color: colors.white,
+    fontFamily: 'AvenirNext-Bold',
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 2,
-    backgroundColor: "transparent"
+    backgroundColor: 'transparent'
   },
   subtitle: {
-    color: config.colors.white,
-    fontFamily: "AvenirNext-Medium",
+    color: colors.white,
+    fontFamily: 'AvenirNext-Medium',
     fontSize: 14,
     paddingLeft: 15,
     paddingRight: 15,
-    backgroundColor: "transparent"
+    backgroundColor: 'transparent'
   },
   details: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-around",
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     minWidth: 300
   },
   unit: {
     flex: 1
   },
   unitText: {
-    textAlign: "center",
-    color: config.colors.white,
+    textAlign: 'center',
+    color: colors.white,
     fontSize: 12,
-    fontFamily: "AvenirNext-Medium"
+    fontFamily: 'AvenirNext-Medium'
   },
   icon: {
     paddingBottom: 20

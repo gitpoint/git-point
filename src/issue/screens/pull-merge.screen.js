@@ -11,7 +11,7 @@ import { ListItem, Icon } from 'react-native-elements';
 
 import { ViewContainer, SectionList } from 'components';
 
-import config from 'config';
+import { colors } from 'config';
 
 import { connect } from 'react-redux';
 import { mergePullRequest } from '../issue.action';
@@ -85,7 +85,7 @@ class PullMerge extends Component {
                   commitTitleHeight: event.nativeEvent.contentSize.height
                 })}
               onChangeText={commitTitle => this.setState({ commitTitle })}
-              placeholderTextColor={config.colors.grey}
+              placeholderTextColor={colors.grey}
               style={[
                 styles.textInput,
                 { height: Math.max(60, this.state.commitTitleHeight) }
@@ -104,7 +104,7 @@ class PullMerge extends Component {
                 this.setState({
                   commitMessageHeight: event.nativeEvent.contentSize.height
                 })}
-              placeholderTextColor={config.colors.grey}
+              placeholderTextColor={colors.grey}
               style={[
                 styles.textInput,
                 { height: Math.max(60, this.state.commitMessageHeight) }
@@ -119,7 +119,7 @@ class PullMerge extends Component {
                 <ListItem
                   title={mergeMethodMessages[mergeMethod]}
                   hideChevron
-                  underlayColor={config.colors.greyLight}
+                  underlayColor={colors.greyLight}
                   titleStyle={styles.mergeActionTitle}
                   onPress={() => this.mergePullRequest()}
                 />
@@ -127,7 +127,7 @@ class PullMerge extends Component {
 
               <View style={styles.iconContainer}>
                 <Icon
-                  color={config.colors.grey}
+                  color={colors.grey}
                   size={24}
                   name="pencil"
                   type="octicon"
@@ -142,7 +142,7 @@ class PullMerge extends Component {
   }
 
   mergePullRequest = () => {
-    const { repository, issue, mergePullRequest } = this.props;
+    const { repository, issue, mergePullRequest, navigation } = this.props;
     const { mergeMethod, commitTitle, commitMessage } = this.state;
     const mergeMethodTypes = ['merge', 'squash'];
 
@@ -155,7 +155,9 @@ class PullMerge extends Component {
         commitTitle,
         commitMessage,
         mergeMethodTypes[mergeMethod]
-      );
+      ).then(() => {
+        navigation.goBack();
+      });
     }
   };
 
@@ -179,18 +181,18 @@ class PullMerge extends Component {
 
 const styles = StyleSheet.create({
   listItemTitle: {
-    color: config.colors.black,
+    color: colors.black,
     fontFamily: 'AvenirNext-Medium'
   },
   textInput: {
     fontSize: 14,
     marginHorizontal: 15,
     flex: 1,
-    color: config.colors.black,
+    color: colors.black,
     fontFamily: 'AvenirNext-Regular'
   },
   mergeActionTitle: {
-    color: config.colors.green,
+    color: colors.green,
     fontFamily: 'AvenirNext-Medium'
   },
   mergeListItemContainer: {

@@ -9,7 +9,7 @@ import {
   DiffBlocks
 } from 'components';
 
-import config from 'config';
+import { colors } from 'config';
 import Parse from 'parse-diff';
 import moment from 'moment';
 
@@ -66,7 +66,7 @@ export class IssueDescription extends Component {
             leftIcon={{
               name: 'repo',
               size: 17,
-              color: config.colors.grey,
+              color: colors.grey,
               type: 'octicon'
             }}
             onPress={() => onRepositoryPress(issue.repository_url)}
@@ -82,7 +82,7 @@ export class IssueDescription extends Component {
             leftIcon={{
               name: issue.pull_request ? 'git-pull-request' : 'issue-opened',
               size: 36,
-              color: config.colors.grey,
+              color: colors.grey,
               type: 'octicon'
             }}
             hideChevron
@@ -136,10 +136,11 @@ export class IssueDescription extends Component {
 
         {issue.pull_request &&
           !isMerged &&
+          issue.state === 'open' &&
           userHasPushPermission &&
           <View style={styles.mergeButtonContainer}>
             <Button
-              backgroundColor={config.colors.green}
+              backgroundColor={colors.green}
               borderRadius={10}
               fontSize={14}
               onPress={() => navigation.navigate('PullMerge')}
@@ -160,14 +161,14 @@ const styles = StyleSheet.create({
   },
   borderBottom: {
     borderBottomWidth: 1,
-    borderBottomColor: config.colors.greyLight
+    borderBottomColor: colors.greyLight
   },
   title: {
-    color: config.colors.primarydark,
+    color: colors.primarydark,
     fontFamily: 'AvenirNext-DemiBold'
   },
   titleSmall: {
-    color: config.colors.primarydark,
+    color: colors.primarydark,
     fontFamily: 'AvenirNext-DemiBold',
     fontSize: 12
   },

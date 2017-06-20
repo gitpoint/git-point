@@ -1,13 +1,13 @@
 // @flow
 
-import React, { Component } from "react";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
-import FastImage from "react-native-fast-image";
+import React, { Component } from 'react';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import FastImage from 'react-native-fast-image';
 
-import config from "config";
-import moment from "moment";
+import { colors } from 'config';
+import moment from 'moment';
 
-import HTMLView from "react-native-htmlview";
+import HTMLView from 'react-native-htmlview';
 
 export class CommentListItem extends Component {
   props: {
@@ -20,81 +20,81 @@ export class CommentListItem extends Component {
     const { comment, navigation } = this.props;
     const commentBodyAdjusted = () =>
       comment.body_html
-        .replace(new RegExp(/<img[^>]*>/, "g"), "Image")
-        .replace(new RegExp(/<ul>[\n]*?<li>/, "g"), "<ul><li>")
-        .replace(new RegExp(/<\/li>[\n]*?<\/ul>/, "g"), "</li></ul>")
-        .replace(new RegExp(/<ol>[\n]*?<li>/, "g"), "<ol><li>")
-        .replace(new RegExp(/<\/li>[\n]*?<\/ol>/, "g"), "</li></ol>")
-        .replace(new RegExp(/<li>[\n]*?<p>/, "g"), "<li><span>")
-        .replace(new RegExp(/<\/h1>[\n]*?<p>/, "g"), "</h1><span>")
-        .replace(new RegExp(/<\/h2>[\n]*?<p>/, "g"), "</h2><span>")
-        .replace(new RegExp(/<\/h3>[\n]*?<p>/, "g"), "</h3><span>")
-        .replace(new RegExp(/<p>*>/, "g"), "<span>")
-        .replace(new RegExp(/<\/p>*>/, "g"), "</span>");
+        .replace(new RegExp(/<img[^>]*>/, 'g'), 'Image')
+        .replace(new RegExp(/<ul>[\n]*?<li>/, 'g'), '<ul><li>')
+        .replace(new RegExp(/<\/li>[\n]*?<\/ul>/, 'g'), '</li></ul>')
+        .replace(new RegExp(/<ol>[\n]*?<li>/, 'g'), '<ol><li>')
+        .replace(new RegExp(/<\/li>[\n]*?<\/ol>/, 'g'), '</li></ol>')
+        .replace(new RegExp(/<li>[\n]*?<p>/, 'g'), '<li><span>')
+        .replace(new RegExp(/<\/h1>[\n]*?<p>/, 'g'), '</h1><span>')
+        .replace(new RegExp(/<\/h2>[\n]*?<p>/, 'g'), '</h2><span>')
+        .replace(new RegExp(/<\/h3>[\n]*?<p>/, 'g'), '</h3><span>')
+        .replace(new RegExp(/<p>*>/, 'g'), '<span>')
+        .replace(new RegExp(/<\/p>*>/, 'g'), '</span>');
 
     const myDomElement = (node, index, siblings, parent, defaultRenderer) => {
       const onLinkPress = this.props.onLinkPress;
 
-      if (node.name === "blockquote") {
+      if (node.name === 'blockquote') {
         return (
           <View
             key={index}
             style={{
               paddingHorizontal: 12,
               borderLeftWidth: 3,
-              borderLeftColor: config.colors.greyMid
+              borderLeftColor: colors.greyMid
             }}
           >
             <Text
               style={{
-                color: config.colors.greyBlue,
-                fontFamily: "AvenirNext-Regular"
+                color: colors.greyBlue,
+                fontFamily: 'AvenirNext-Regular'
               }}
             >
               {defaultRenderer(node.children, parent)}
             </Text>
           </View>
         );
-      } else if (node.name === "hr") {
+      } else if (node.name === 'hr') {
         return (
           <View
             key={index}
-            style={{ height: 4, backgroundColor: config.colors.greyLight }}
+            style={{ height: 4, backgroundColor: colors.greyLight }}
           />
         );
-      } else if (node.name === "code") {
+      } else if (node.name === 'code') {
         return (
           <Text
             key={index}
             style={{
-              fontFamily: "Menlo",
-              backgroundColor: config.colors.greyMidLight,
+              fontFamily: 'Menlo',
+              backgroundColor: colors.greyMidLight,
               fontSize: 13,
-              margin: node.parent.name === "pre" ? 12 : 3
+              margin: node.parent.name === 'pre' ? 12 : 3
             }}
           >
             {defaultRenderer(node.children, parent)}
           </Text>
         );
       } else if (
-        node.name === "h1" || node.name === "h2" || node.name === "h3"
+        node.name === 'h1' || node.name === 'h2' || node.name === 'h3'
       ) {
         return (
           <View
             key={index}
             style={{
-              borderBottomWidth: node.name !== "h3" ? 1 : 0,
-              borderBottomColor: config.colors.greyMid,
+              borderBottomWidth: node.name !== 'h3' ? 1 : 0,
+              borderBottomColor: colors.greyMid,
               marginBottom: 12
             }}
           >
             <Text
               style={{
-                color: config.colors.primaryDark,
-                fontFamily: "AvenirNext-DemiBold",
-                fontSize: node.name === "h1"
+                color: colors.primaryDark,
+                fontFamily: 'AvenirNext-DemiBold',
+                fontSize: node.name === 'h1'
                   ? 26
-                  : node.name === "h2" ? 22 : 20,
+                  : node.name === 'h2' ? 22 : 20,
                 paddingBottom: 4
               }}
             >
@@ -102,14 +102,14 @@ export class CommentListItem extends Component {
             </Text>
           </View>
         );
-      } else if (node.name === "a") {
+      } else if (node.name === 'a') {
         return (
           <Text
             key={index}
             style={{
-              fontFamily: "AvenirNext-DemiBold",
-              fontWeight: "600",
-              color: config.colors.primaryDark
+              fontFamily: 'AvenirNext-DemiBold',
+              fontWeight: '600',
+              color: colors.primaryDark
             }}
             onPress={() => onLinkPress(node)}
           >
@@ -122,8 +122,8 @@ export class CommentListItem extends Component {
     };
 
     const commentPresent =
-      (comment.body_html && comment.body_html !== "") ||
-      (comment.body && comment.body !== "");
+      (comment.body_html && comment.body_html !== '') ||
+      (comment.body && comment.body !== '');
 
     return (
       <View style={styles.container}>
@@ -131,7 +131,7 @@ export class CommentListItem extends Component {
           {comment.user &&
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate("Profile", {
+                navigation.navigate('Profile', {
                   user: comment.user
                 })}
             >
@@ -148,12 +148,12 @@ export class CommentListItem extends Component {
             <TouchableOpacity
               style={styles.titleSubtitleContainer}
               onPress={() =>
-                navigation.navigate("Profile", {
+                navigation.navigate('Profile', {
                   user: comment.user
                 })}
             >
               <Text style={styles.linkDescription}>
-                {comment.user.login}{"  "}
+                {comment.user.login}{'  '}
               </Text>
             </TouchableOpacity>}
 
@@ -167,7 +167,7 @@ export class CommentListItem extends Component {
         {commentPresent &&
           <View style={styles.commentContainer}>
             {comment.body_html &&
-              comment.body_html !== "" &&
+              comment.body_html !== '' &&
               <HTMLView
                 value={commentBodyAdjusted()}
                 stylesheet={commentStyles}
@@ -175,7 +175,7 @@ export class CommentListItem extends Component {
               />}
 
             {comment.body &&
-              comment.body !== "" &&
+              comment.body !== '' &&
               !comment.body_html &&
               <Text style={styles.commentText}>{comment.body}</Text>}
           </View>}
@@ -195,63 +195,63 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingRight: 10,
     paddingBottom: 10,
-    backgroundColor: "transparent"
+    backgroundColor: 'transparent'
   },
   header: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginLeft: 10,
-    alignItems: "center"
+    alignItems: 'center'
   },
   avatar: {
-    backgroundColor: config.colors.greyLight,
+    backgroundColor: colors.greyLight,
     width: 34,
     height: 34,
     borderRadius: 17
   },
   titleSubtitleContainer: {
-    justifyContent: "center",
+    justifyContent: 'center',
     flex: 1,
     marginLeft: 10
   },
   dateContainer: {
     flex: 0.15,
-    alignItems: "flex-end",
-    justifyContent: "center"
+    alignItems: 'flex-end',
+    justifyContent: 'center'
   },
   linkDescription: {
-    fontFamily: "AvenirNext-DemiBold",
-    color: config.colors.primaryDark
+    fontFamily: 'AvenirNext-DemiBold',
+    color: colors.primaryDark
   },
   date: {
-    color: config.colors.greyDark
+    color: colors.greyDark
   },
   commentContainer: {
     paddingTop: 4,
     paddingBottom: 22,
     marginLeft: 54,
     marginRight: 20,
-    borderBottomColor: config.colors.greyLight,
+    borderBottomColor: colors.greyLight,
     borderBottomWidth: 1
   },
   commentText: {
-    color: config.colors.primaryDark,
-    fontFamily: "AvenirNext-Regular"
+    color: colors.primaryDark,
+    fontFamily: 'AvenirNext-Regular'
   },
   commentTextNone: {
-    color: config.colors.primaryDark,
-    fontFamily: "AvenirNext-Regular",
-    fontStyle: "italic"
+    color: colors.primaryDark,
+    fontFamily: 'AvenirNext-Regular',
+    fontStyle: 'italic'
   }
 });
 
 const textStyle = {
-  color: config.colors.primaryDark,
-  fontFamily: "AvenirNext-Regular"
+  color: colors.primaryDark,
+  fontFamily: 'AvenirNext-Regular'
 };
 
 const linkStyle = {
-  color: config.colors.primaryDark,
-  fontFamily: "AvenirNext-DemiBold"
+  color: colors.primaryDark,
+  fontFamily: 'AvenirNext-DemiBold'
 };
 
 const commentStyles = StyleSheet.create({

@@ -7,7 +7,7 @@ import {
 } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
-import config from 'config';
+import { colors } from 'config';
 
 //Auth
 import { SplashScreen } from 'auth';
@@ -258,8 +258,8 @@ const MainTabNavigator = TabNavigator(
   {
     tabBarOptions: {
       showLabel: false,
-      activeTintColor: config.colors.primarydark,
-      inactiveTintColor: config.colors.grey
+      activeTintColor: colors.primarydark,
+      inactiveTintColor: colors.grey
     },
     tabBarComponent: ({ jumpToIndex, ...props }) => (
       <TabBarBottom

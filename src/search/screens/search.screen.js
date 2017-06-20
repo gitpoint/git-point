@@ -1,19 +1,19 @@
-import React, { Component } from "react";
-import { StyleSheet, Text, View, FlatList, Dimensions } from "react-native";
-import { ButtonGroup } from "react-native-elements";
-import SearchBar from "react-native-search-bar";
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, FlatList, Dimensions } from 'react-native';
+import { ButtonGroup } from 'react-native-elements';
+import SearchBar from 'react-native-search-bar';
 
 import {
   ViewContainer,
   RepositoryListItem,
   UserListItem,
   LoadingContainer
-} from "components";
+} from 'components';
 
-import config from "config";
+import { colors } from 'config';
 
-import { connect } from "react-redux";
-import { searchRepos, searchUsers } from "../";
+import { connect } from 'react-redux';
+import { searchRepos, searchUsers } from '../';
 
 const mapStateToProps = state => ({
   users: state.search.users,
@@ -49,7 +49,7 @@ class Search extends Component {
     super();
 
     this.state = {
-      query: "",
+      query: '',
       searchType: 0,
       searchStart: false,
       searchFocus: false
@@ -67,7 +67,7 @@ class Search extends Component {
       ? selectedType
       : this.state.searchType;
 
-    if (query !== "") {
+    if (query !== '') {
       this.setState({
         query: query,
         searchStart: true
@@ -117,12 +117,12 @@ class Search extends Component {
               <SearchBar
                 ref="searchBar"
                 hideBackground={true}
-                textColor={config.colors.primaryDark}
-                textFieldBackgroundColor={config.colors.greyLight}
+                textColor={colors.primaryDark}
+                textFieldBackgroundColor={colors.greyLight}
                 showsCancelButton={this.state.searchFocus}
                 onFocus={() => this.setState({ searchFocus: true })}
                 onCancelButtonPress={() => {
-                  this.setState({ searchStart: false, query: "" });
+                  this.setState({ searchStart: false, query: '' });
                   this.refs.searchBar.unFocus();
                 }}
                 onSearchButtonPress={query => {
@@ -136,7 +136,7 @@ class Search extends Component {
           <ButtonGroup
             onPress={this.switchQueryType}
             selectedIndex={this.state.searchType}
-            buttons={["Repositories", "Users"]}
+            buttons={['Repositories', 'Users']}
             textStyle={styles.buttonGroupText}
             selectedTextStyle={styles.buttonGroupTextSelected}
             containerStyle={styles.buttonGroupContainer}
@@ -171,7 +171,7 @@ class Search extends Component {
         {!searchStart &&
           <View style={styles.marginSpacing}>
             <Text style={styles.searchTitle}>
-              {`Search for any ${searchType === 0 ? "repository" : "user"}`}
+              {`Search for any ${searchType === 0 ? 'repository' : 'user'}`}
             </Text>
           </View>}
 
@@ -205,14 +205,14 @@ class Search extends Component {
 
 const styles = StyleSheet.create({
   searchBarWrapper: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginTop: 20
   },
   searchContainer: {
-    width: Dimensions.get("window").width,
+    width: Dimensions.get('window').width,
     // borderBottomWidth: StyleSheet.hairlineWidth,
-    // borderBottomColor: config.colors.grey,
-    backgroundColor: config.colors.white,
+    // borderBottomColor: colors.grey,
+    backgroundColor: colors.white,
     flex: 1
   },
   list: {
@@ -222,24 +222,24 @@ const styles = StyleSheet.create({
     height: 30
   },
   buttonGroupText: {
-    fontFamily: "AvenirNext-Bold"
+    fontFamily: 'AvenirNext-Bold'
   },
   buttonGroupTextSelected: {
-    color: config.colors.black
+    color: colors.black
   },
   loadingIndicatorContainer: {
-    justifyContent: "center",
-    alignItems: "center"
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   marginSpacing: {
     marginTop: 40
   },
   searchTitle: {
     fontSize: 20,
-    textAlign: "center"
+    textAlign: 'center'
   },
   listContainer: {
-    borderTopColor: config.colors.greyLight,
+    borderTopColor: colors.greyLight,
     borderTopWidth: 1,
     marginBottom: 105
   }

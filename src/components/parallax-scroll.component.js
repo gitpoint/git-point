@@ -1,12 +1,12 @@
-import React from "react";
-import { View, Text, Dimensions, StyleSheet } from "react-native";
+import React from 'react';
+import { View, Text, Dimensions, StyleSheet } from 'react-native';
 
-import ParallaxScrollView from "react-native-parallax-scroll-view";
-import { Icon } from "react-native-elements";
+import ParallaxScrollView from 'react-native-parallax-scroll-view';
+import { Icon } from 'react-native-elements';
 
-import config from "config";
+import { colors } from 'config';
 
-const window = Dimensions.get("window");
+const window = Dimensions.get('window');
 const PARALLAX_HEADER_HEIGHT = window.height / 2;
 const STICKY_HEADER_HEIGHT = 62;
 
@@ -30,7 +30,7 @@ export const ParallaxScroll = ({
   children
 }: Props) => (
   <ParallaxScrollView
-    backgroundColor={config.colors.primarydark}
+    backgroundColor={colors.primarydark}
     stickyHeaderHeight={STICKY_HEADER_HEIGHT}
     parallaxHeaderHeight={PARALLAX_HEADER_HEIGHT}
     backgroundSpeed={10}
@@ -53,7 +53,7 @@ export const ParallaxScroll = ({
               style={styles.headerIcon}
               name="chevron-left"
               size={42}
-              color={config.colors.white}
+              color={colors.white}
               onPress={() => navigation.goBack()}
               underlayColor="transparent"
             />
@@ -66,7 +66,7 @@ export const ParallaxScroll = ({
               name="ellipsis-h"
               type="font-awesome"
               onPress={menuAction}
-              color={config.colors.white}
+              color={colors.white}
               underlayColor="transparent"
             />
           </View>}
@@ -79,32 +79,32 @@ export const ParallaxScroll = ({
 
 const styles = StyleSheet.create({
   background: {
-    position: "absolute",
+    position: 'absolute',
     top: 0,
     width: window.width,
-    backgroundColor: config.colors.primarydark,
+    backgroundColor: colors.primarydark,
     height: PARALLAX_HEADER_HEIGHT
   },
   stickySection: {
     height: STICKY_HEADER_HEIGHT,
-    backgroundColor: config.colors.primarydark,
+    backgroundColor: colors.primarydark,
     width: window.width,
-    alignItems: "center",
-    justifyContent: "flex-end"
+    alignItems: 'center',
+    justifyContent: 'flex-end'
   },
   stickySectionText: {
-    color: config.colors.white,
-    fontFamily: "AvenirNext-Bold",
+    color: colors.white,
+    fontFamily: 'AvenirNext-Bold',
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     margin: 10
   },
   fixedSectionLeft: {
-    position: "absolute",
+    position: 'absolute',
     bottom: 0
   },
   fixedSectionRight: {
-    position: "absolute",
+    position: 'absolute',
     bottom: 10,
     right: 10
   }

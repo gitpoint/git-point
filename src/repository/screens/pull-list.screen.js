@@ -1,17 +1,17 @@
-import React, { Component } from "react";
-import { FlatList, View, StyleSheet, Dimensions, Text } from "react-native";
-import { ButtonGroup } from "react-native-elements";
-import SearchBar from "react-native-search-bar";
+import React, { Component } from 'react';
+import { FlatList, View, StyleSheet, Dimensions, Text } from 'react-native';
+import { ButtonGroup } from 'react-native-elements';
+import SearchBar from 'react-native-search-bar';
 
-import { ViewContainer, IssueListItem, LoadingContainer } from "components";
+import { ViewContainer, IssueListItem, LoadingContainer } from 'components';
 
-import config from "config";
+import { colors } from 'config';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import {
   searchOpenRepoPulls,
   searchClosedRepoPulls
-} from "../repository.action";
+} from '../repository.action';
 
 const mapStateToProps = state => ({
   repository: state.repository.repository,
@@ -51,7 +51,7 @@ class PullList extends Component {
     super();
 
     this.state = {
-      query: "",
+      query: '',
       searchType: 0,
       searchStart: false,
       searchFocus: false
@@ -89,7 +89,7 @@ class PullList extends Component {
       ? selectedType
       : this.state.searchType;
 
-    if (query !== "") {
+    if (query !== '') {
       this.setState({
         query: query,
         searchStart: true
@@ -116,9 +116,9 @@ class PullList extends Component {
       return searchType === 0 ? searchedOpenPulls : searchedClosedPulls;
     } else {
       return searchType === 0
-        ? navigation.state.params.issues.filter(issue => issue.state === "open")
+        ? navigation.state.params.issues.filter(issue => issue.state === 'open')
         : navigation.state.params.issues.filter(
-            issue => issue.state === "closed"
+            issue => issue.state === 'closed'
           );
     }
   };
@@ -139,12 +139,12 @@ class PullList extends Component {
               <SearchBar
                 ref="searchBar"
                 hideBackground={true}
-                textColor={config.colors.primaryDark}
-                textFieldBackgroundColor={config.colors.greyLight}
+                textColor={colors.primaryDark}
+                textFieldBackgroundColor={colors.greyLight}
                 showsCancelButton={this.state.searchFocus}
                 onFocus={() => this.setState({ searchFocus: true })}
                 onCancelButtonPress={() => {
-                  this.setState({ searchStart: false, query: "" });
+                  this.setState({ searchStart: false, query: '' });
                   this.refs.searchBar.unFocus();
                 }}
                 onSearchButtonPress={query => {
@@ -158,7 +158,7 @@ class PullList extends Component {
           <ButtonGroup
             onPress={this.switchQueryType}
             selectedIndex={searchType}
-            buttons={["Open", "Closed"]}
+            buttons={['Open', 'Closed']}
             textStyle={styles.buttonGroupText}
             selectedTextStyle={styles.buttonGroupTextSelected}
             containerStyle={styles.buttonGroupContainer}
@@ -220,15 +220,15 @@ class PullList extends Component {
 
 const styles = StyleSheet.create({
   header: {
-    borderBottomColor: config.colors.greyLight,
+    borderBottomColor: colors.greyLight,
     borderBottomWidth: 1
   },
   searchBarWrapper: {
-    flexDirection: "row"
+    flexDirection: 'row'
   },
   searchContainer: {
-    width: Dimensions.get("window").width,
-    backgroundColor: config.colors.white,
+    width: Dimensions.get('window').width,
+    backgroundColor: colors.white,
     flex: 1
   },
   list: {
@@ -238,24 +238,24 @@ const styles = StyleSheet.create({
     height: 30
   },
   buttonGroupText: {
-    fontFamily: "AvenirNext-Bold"
+    fontFamily: 'AvenirNext-Bold'
   },
   buttonGroupTextSelected: {
-    color: config.colors.black
+    color: colors.black
   },
   loadingIndicatorContainer: {
-    justifyContent: "center",
-    alignItems: "center"
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   marginSpacing: {
     marginTop: 40
   },
   searchTitle: {
     fontSize: 20,
-    textAlign: "center"
+    textAlign: 'center'
   },
   listContainer: {
-    borderTopColor: config.colors.greyLight,
+    borderTopColor: colors.greyLight,
     borderTopWidth: 1,
     marginBottom: 105
   }

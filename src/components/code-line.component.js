@@ -1,9 +1,9 @@
 // @flow
 
-import React from "react";
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import React from 'react';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 
-import config from "config";
+import { colors } from 'config';
 
 type Props = { newChunk: boolean, change: Object };
 
@@ -14,23 +14,23 @@ export const CodeLine = ({ newChunk, change }: Props) => (
         style={[
           styles.lineNumbers,
           newChunk && styles.newChunkLineNumbers,
-          change.type === "add" && styles.addLineNumbers,
-          change.type === "del" && styles.delLineNumbers
+          change.type === 'add' && styles.addLineNumbers,
+          change.type === 'del' && styles.delLineNumbers
         ]}
       >
         <Text style={styles.codeLineNumber}>
-          {change.type === "del"
+          {change.type === 'del'
             ? change.ln
-            : change.type === "normal"
+            : change.type === 'normal'
                 ? change.ln1
-                : change.type === "add" ? "" : "..."}
+                : change.type === 'add' ? '' : '...'}
         </Text>
         <Text style={styles.codeLineNumber}>
-          {change.type === "add"
+          {change.type === 'add'
             ? change.ln
-            : change.type === "normal"
+            : change.type === 'normal'
                 ? change.ln2
-                : change.type === "del" ? "" : "..."}
+                : change.type === 'del' ? '' : '...'}
         </Text>
       </View>
 
@@ -38,8 +38,8 @@ export const CodeLine = ({ newChunk, change }: Props) => (
         style={[
           styles.codeLineContainer,
           newChunk && styles.newChunkLineContainer,
-          change.type === "add" && styles.addLine,
-          change.type === "del" && styles.delLine
+          change.type === 'add' && styles.addLine,
+          change.type === 'del' && styles.delLine
         ]}
       >
         <Text style={[styles.codeLine, newChunk && styles.newChunkLine]}>
@@ -52,55 +52,55 @@ export const CodeLine = ({ newChunk, change }: Props) => (
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row"
+    flexDirection: 'row'
   },
   wrapper: {
-    flexDirection: "row",
+    flexDirection: 'row',
     flex: 1
   },
   codeLineContainer: {
-    minWidth: Dimensions.get("window").width - 80,
+    minWidth: Dimensions.get('window').width - 80,
     flex: 0.85
   },
   codeLine: {
-    fontFamily: "Menlo",
+    fontFamily: 'Menlo',
     fontSize: 12,
     paddingHorizontal: 10,
     paddingVertical: 3
   },
   newChunkLineNumbers: {
-    backgroundColor: config.colors.codeChunkLineNumberBlue
+    backgroundColor: colors.codeChunkLineNumberBlue
   },
   newChunkLineContainer: {
-    backgroundColor: config.colors.codeChunkBlue
+    backgroundColor: colors.codeChunkBlue
   },
   newChunkLine: {
-    color: config.colors.grey
+    color: colors.grey
   },
   addLine: {
-    backgroundColor: config.colors.addCodeGreen
+    backgroundColor: colors.addCodeGreen
   },
   addLineNumbers: {
-    backgroundColor: config.colors.addCodeLineNumberGreen
+    backgroundColor: colors.addCodeLineNumberGreen
   },
   delLine: {
-    backgroundColor: config.colors.delCodeRed
+    backgroundColor: colors.delCodeRed
   },
   delLineNumbers: {
-    backgroundColor: config.colors.delCodeLineNumberRed
+    backgroundColor: colors.delCodeLineNumberRed
   },
   lineNumbers: {
     width: 80,
     paddingLeft: 10,
     paddingVertical: 3,
-    flexDirection: "row",
-    justifyContent: "space-between"
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   codeLineNumber: {
-    fontFamily: "Menlo",
+    fontFamily: 'Menlo',
     fontSize: 12,
     flex: 1,
-    alignItems: "center",
-    color: config.colors.grey
+    alignItems: 'center',
+    color: colors.grey
   }
 });

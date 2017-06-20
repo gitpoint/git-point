@@ -1,8 +1,8 @@
-import React from "react";
-import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
-import { Icon } from "react-native-elements";
+import React from 'react';
+import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import { Icon } from 'react-native-elements';
 
-import config from "config";
+import { colors } from 'config';
 
 type Props = {
   notification: Object,
@@ -15,7 +15,7 @@ export const NotificationListItem = ({
   iconAction,
   navigationAction
 }: Props) => {
-  const TitleComponent = notification.subject.type === "Commit"
+  const TitleComponent = notification.subject.type === 'Commit'
     ? View
     : TouchableOpacity;
 
@@ -27,14 +27,14 @@ export const NotificationListItem = ({
           onPress={() => navigationAction(notification)}
         >
           <Icon
-            color={config.colors.grey}
+            color={colors.grey}
             size={22}
             name={
-              notification.subject.type === "Commit"
-                ? "git-commit"
-                : notification.subject.type === "PullRequest"
-                    ? "git-pull-request"
-                    : "issue-opened"
+              notification.subject.type === 'Commit'
+                ? 'git-commit'
+                : notification.subject.type === 'PullRequest'
+                    ? 'git-pull-request'
+                    : 'issue-opened'
             }
             type="octicon"
           />
@@ -50,7 +50,7 @@ export const NotificationListItem = ({
             onPress={() => iconAction(notification.id)}
           >
             <Icon
-              color={config.colors.grey}
+              color={colors.grey}
               size={22}
               name="check"
               type="octicon"
@@ -63,20 +63,20 @@ export const NotificationListItem = ({
 
 const styles = StyleSheet.create({
   container: {
-    borderBottomColor: config.colors.greyLight,
+    borderBottomColor: colors.greyLight,
     borderBottomWidth: 1
   },
   wrapper: {
     padding: 10,
-    flexDirection: "row"
+    flexDirection: 'row'
   },
   notificationInfo: {
     flex: 1,
-    flexDirection: "row",
-    alignItems: "center"
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   avatar: {
-    backgroundColor: config.colors.greyLight,
+    backgroundColor: colors.greyLight,
     borderRadius: 17,
     width: 34,
     height: 34
@@ -85,14 +85,14 @@ const styles = StyleSheet.create({
     flex: 1
   },
   title: {
-    color: config.colors.black,
-    fontFamily: "AvenirNext-Medium",
+    color: colors.black,
+    fontFamily: 'AvenirNext-Medium',
     fontSize: 14,
     marginLeft: 10
   },
   iconContainer: {
     flex: 0.15,
-    alignItems: "flex-end",
-    justifyContent: "center"
+    alignItems: 'flex-end',
+    justifyContent: 'center'
   }
 });

@@ -1,8 +1,8 @@
-import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import FastImage from "react-native-fast-image";
+import React from 'react';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import FastImage from 'react-native-fast-image';
 
-import config from "config";
+import { colors } from 'config';
 
 type Props = {
   type: string,
@@ -24,7 +24,7 @@ export const UserProfile = ({
       <FastImage
         style={[
           styles.avatar,
-          (initialUser.type === "User" || user.type === "User") &&
+          (initialUser.type === 'User' || user.type === 'User') &&
             styles.userAvatar
         ]}
         source={{
@@ -41,7 +41,7 @@ export const UserProfile = ({
       <TouchableOpacity
         style={styles.unit}
         onPress={() =>
-          navigation.navigate("RepositoryList", {
+          navigation.navigate('RepositoryList', {
             user: user,
             repoCount: user.public_repos > 10 ? 10 : user.public_repos
           })}
@@ -52,11 +52,11 @@ export const UserProfile = ({
         <Text style={styles.unitText}>Repositories</Text>
       </TouchableOpacity>
 
-      {type !== "org" &&
+      {type !== 'org' &&
         <TouchableOpacity
           style={styles.unit}
           onPress={() =>
-            navigation.navigate("FollowerList", {
+            navigation.navigate('FollowerList', {
               user: user,
               followerCount: user.followers > 10 ? 10 : user.followers
             })}
@@ -67,11 +67,11 @@ export const UserProfile = ({
           <Text style={styles.unitText}>Followers</Text>
         </TouchableOpacity>}
 
-      {type !== "org" &&
+      {type !== 'org' &&
         <TouchableOpacity
           style={styles.unit}
           onPress={() =>
-            navigation.navigate("FollowingList", {
+            navigation.navigate('FollowingList', {
               user: user,
               followingCount: user.following > 10 ? 10 : user.following
             })}
@@ -88,12 +88,12 @@ export const UserProfile = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   profile: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 70
   },
   avatar: {
@@ -103,47 +103,47 @@ const styles = StyleSheet.create({
     borderRadius: 37.5
   },
   userAvatar: {
-    borderColor: config.colors.white,
+    borderColor: colors.white,
     borderWidth: 2
   },
   title: {
-    color: config.colors.white,
-    fontFamily: "AvenirNext-Bold",
+    color: colors.white,
+    fontFamily: 'AvenirNext-Bold',
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 2
   },
   subtitle: {
-    color: config.colors.white,
-    fontFamily: "AvenirNext-Medium",
+    color: colors.white,
+    fontFamily: 'AvenirNext-Medium',
     fontSize: 14,
     marginBottom: 40,
     paddingLeft: 15,
     paddingRight: 15,
-    textAlign: "center"
+    textAlign: 'center'
   },
   details: {
     flex: 2,
-    flexDirection: "row",
+    flexDirection: 'row',
     paddingBottom: 30
   },
   unit: {
     flex: 1
   },
   unitNumber: {
-    textAlign: "center",
-    color: config.colors.white,
-    fontFamily: "AvenirNext-Bold",
+    textAlign: 'center',
+    color: colors.white,
+    fontFamily: 'AvenirNext-Bold',
     fontSize: 18,
-    fontWeight: "bold"
+    fontWeight: 'bold'
   },
   unitText: {
-    textAlign: "center",
-    color: config.colors.white,
+    textAlign: 'center',
+    color: colors.white,
     fontSize: 12,
-    fontFamily: "AvenirNext-Medium"
+    fontFamily: 'AvenirNext-Medium'
   },
   green: {
-    color: config.colors.lightGreen
+    color: colors.lightGreen
   }
 });
