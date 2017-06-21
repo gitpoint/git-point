@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, FlatList, View } from 'react-native';
+import { StyleSheet, FlatList, View, Text } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
-import { ViewContainer } from 'components';
+import { ViewContainer, LoadingListItem } from 'components';
 
 import { colors, normalize } from 'config';
 
@@ -63,28 +63,31 @@ class RepositoryCodeList extends Component {
 
   render() {
     const { contents, isPendingContents, navigation } = this.props;
+    const currentContents = navigation.state.params.topLevel
+      ? contents.top
+      : contents[navigation.state.params.content.name];
 
     return (
       <ViewContainer>
+
+        {isPendingContents &&
+          [...Array(15)].map((item, i) => <LoadingListItem key={i} />)}
+
         {!isPendingContents &&
-          contents.length > 0 &&
+          currentContents &&
+          currentContents.length > 0 &&
           <FlatList
-            data={
-              navigation.state.params.topLevel
-                ? this.sortedContents(contents.top)
-                : this.sortedContents(
-                    contents[navigation.state.params.content.name]
-                  )
-            }
+            data={this.sortedContents(currentContents)}
             keyExtractor={this.keyExtractor}
             renderItem={this.renderItem}
           />}
 
         {!isPendingContents &&
-          contents.length === 0 &&
-          <View style={styles.marginSpacing}>
+          navigation.state.params.topLevel &&
+          contents.top.message &&
+          <View style={styles.textContainer}>
             <Text style={styles.noCodeTitle}>
-              There's no code in this repository
+              {contents.top.message}
             </Text>
           </View>}
       </ViewContainer>
@@ -119,8 +122,10 @@ const styles = StyleSheet.create({
     color: colors.black,
     fontFamily: 'AvenirNext-DemiBold'
   },
-  marginSpacing: {
-    marginTop: 40
+  textContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   noCodeTitle: {
     fontSize: normalize(18),

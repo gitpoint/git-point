@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { WebView, StyleSheet, View } from 'react-native';
+import { WebView, StyleSheet, View, Text } from 'react-native';
 
 import { ViewContainer, LoadingContainer } from 'components';
 
@@ -30,20 +30,34 @@ class ReadMe extends Component {
     this.props.getReadMe(repo.owner.login, repo.name);
   }
 
+  isJsonString(str) {
+    try {
+      JSON.parse(str);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  }
+
   render() {
     const { readMe, isPendingReadMe } = this.props;
+    let noReadMe = null;
+
+    if (this.isJsonString(readMe)) {
+      noReadMe = JSON.parse(readMe).message;
+    }
 
     return (
       <ViewContainer>
         {isPendingReadMe &&
           <LoadingContainer animating={isPendingReadMe} center />}
-        {!isPendingReadMe && readMe && <WebView source={{ html: readMe }} />}
+        {!isPendingReadMe && !noReadMe && <WebView source={{ html: readMe }} />}
 
         {!isPendingReadMe &&
-          !readMe &&
-          <View style={styles.marginSpacing}>
+          noReadMe &&
+          <View style={styles.textContainer}>
             <Text style={styles.noReadMeTitle}>
-              No README.md file available
+              No README.md found
             </Text>
           </View>}
       </ViewContainer>
@@ -56,8 +70,10 @@ export const ReadMeScreen = connect(mapStateToProps, mapDispatchToProps)(
 );
 
 const styles = StyleSheet.create({
-  marginSpacing: {
-    marginTop: 40
+  textContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   noReadMeTitle: {
     fontSize: normalize(18),

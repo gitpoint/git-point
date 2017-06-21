@@ -108,6 +108,17 @@ class Search extends Component {
       isPendingSearchRepos
     } = this.props;
     const { query, searchType, searchStart } = this.state;
+    const noReposFound =
+      searchStart &&
+      !isPendingSearchRepos &&
+      repos.length === 0 &&
+      searchType === 0;
+
+    const noUsersFound =
+      searchStart &&
+      !isPendingSearchUsers &&
+      users.length === 0 &&
+      searchType === 1;
 
     return (
       <ViewContainer>
@@ -160,6 +171,8 @@ class Search extends Component {
           />}
 
         {searchStart &&
+          !noUsersFound &&
+          !noReposFound &&
           <View style={styles.listContainer}>
             <FlatList
               data={searchType === 0 ? repos : users}
@@ -169,7 +182,7 @@ class Search extends Component {
           </View>}
 
         {!searchStart &&
-          <View style={styles.marginSpacing}>
+          <View style={styles.textContainer}>
             <Text style={styles.searchTitle}>
               {`Search for any ${searchType === 0 ? 'repository' : 'user'}`}
             </Text>
@@ -179,7 +192,7 @@ class Search extends Component {
           !isPendingSearchRepos &&
           repos.length === 0 &&
           searchType === 0 &&
-          <View style={styles.marginSpacing}>
+          <View style={styles.textContainer}>
             <Text style={styles.searchTitle}>
               No repositories found :(
             </Text>
@@ -189,7 +202,7 @@ class Search extends Component {
           !isPendingSearchUsers &&
           users.length === 0 &&
           searchType === 1 &&
-          <View style={styles.marginSpacing}>
+          <View style={styles.textContainer}>
             <Text style={styles.searchTitle}>
               No users found :(
             </Text>
@@ -210,8 +223,6 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     width: Dimensions.get('window').width,
-    // borderBottomWidth: StyleSheet.hairlineWidth,
-    // borderBottomColor: colors.grey,
     backgroundColor: colors.white,
     flex: 1
   },
@@ -231,12 +242,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  marginSpacing: {
-    marginTop: 40
+  textContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   searchTitle: {
-    fontSize: normalize(18),
-    textAlign: 'center'
+    fontSize: normalize(18)
   },
   listContainer: {
     borderTopColor: colors.greyLight,
