@@ -108,7 +108,7 @@ class Repository extends Component {
       issue => !issue.hasOwnProperty('pull_request')
     );
     return (
-      <ViewContainer barColor="light">
+      <ViewContainer>
 
         <ParallaxScroll
           renderContent={() => {

@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
-import { colors } from 'config';
+import { colors, normalize } from 'config';
 import moment from 'moment';
 
 import HTMLView from 'react-native-htmlview';
@@ -69,7 +69,7 @@ export class CommentListItem extends Component {
             style={{
               fontFamily: 'Menlo',
               backgroundColor: colors.greyMidLight,
-              fontSize: 13,
+              fontSize: normalize(11),
               margin: node.parent.name === 'pre' ? 12 : 3
             }}
           >
@@ -93,8 +93,8 @@ export class CommentListItem extends Component {
                 color: colors.primaryDark,
                 fontFamily: 'AvenirNext-DemiBold',
                 fontSize: node.name === 'h1'
-                  ? 26
-                  : node.name === 'h2' ? 22 : 20,
+                  ? normalize(24)
+                  : node.name === 'h2' ? normalize(20) : normalize(18),
                 paddingBottom: 4
               }}
             >

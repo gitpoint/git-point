@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Dimensions, Linking, View, StyleSheet, Image } from 'react-native';
 import { Button } from 'react-native-elements';
 
-import { LoadingContainer } from 'components';
+import { ViewContainer, LoadingContainer } from 'components';
 
-import { colors } from 'config';
+import { normalize } from 'config';
 import { CLIENT_ID } from 'api';
 
 import queryString from 'query-string';
@@ -86,7 +86,7 @@ class Login extends Component {
     const { isLoggingIn, isAuthenticated } = this.props;
 
     return (
-      <View>
+      <ViewContainer>
         {!isAuthenticated &&
           this.state.asyncStorageChecked &&
           <View>
@@ -105,14 +105,14 @@ class Login extends Component {
             <Button
               raised
               title="Sign In"
-              buttonStyle={styles.buttonSignIn}
-              textStyle={{ fontWeight: 'bold', fontSize: 18 }}
+              buttonStyle={styles.button}
+              textStyle={styles.buttonText}
               onPress={() => this.signIn()}
             />
           </View>}
 
         {isAuthenticated && <LoadingContainer animating={isLoggingIn} center />}
-      </View>
+      </ViewContainer>
     );
   }
 }
@@ -124,13 +124,7 @@ const styles = StyleSheet.create({
     height: window.height,
     width: window.width
   },
-  loadingContainer: {
-    backgroundColor: colors.white,
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  buttonSignIn: {
+  button: {
     backgroundColor: 'rgba(105,105,105,0.8)',
     borderRadius: 5,
     paddingVertical: 15,
@@ -139,10 +133,6 @@ const styles = StyleSheet.create({
     right: 15,
     bottom: 20,
     shadowColor: 'transparent'
-  },
-  container: {
-    flex: 1,
-    backgroundColor: colors.white
   },
   logoContainer: {
     alignItems: 'center',
@@ -153,15 +143,9 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100
   },
-  title: {
-    fontFamily: 'AvenirNext-Bold',
-    color: colors.white,
-    marginTop: 20,
-    width: 160,
-    textAlign: 'center',
-    fontSize: 24,
+  buttonText: {
     fontWeight: 'bold',
-    opacity: 0.9
+    fontSize: normalize(16)
   }
 });
 

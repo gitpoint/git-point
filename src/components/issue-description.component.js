@@ -9,7 +9,7 @@ import {
   DiffBlocks
 } from 'components';
 
-import { colors } from 'config';
+import { colors, normalize } from 'config';
 import Parse from 'parse-diff';
 import moment from 'moment';
 
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
   titleSmall: {
     color: colors.primarydark,
     fontFamily: 'AvenirNext-DemiBold',
-    fontSize: 12
+    fontSize: normalize(10)
   },
   listItemContainer: {
     borderBottomWidth: 0,

@@ -12,7 +12,7 @@ import { Card, Icon } from 'react-native-elements';
 
 import { ViewContainer, LoadingContainer } from 'components';
 
-import { colors } from 'config';
+import { colors, normalize } from 'config';
 
 import { connect } from 'react-redux';
 import { getRepositoryFile } from '../repository.action';
@@ -67,6 +67,7 @@ class RepositoryFile extends Component {
       }
     });
   };
+
   isImage(fileType) {
     return (
       fileType === 'gif' ||
@@ -160,7 +161,7 @@ const styles = StyleSheet.create({
   headerText: {
     color: colors.primaryDark,
     fontFamily: 'AvenirNext-DemiBold',
-    fontSize: 14
+    fontSize: normalize(12)
   },
   content: {
     paddingVertical: 10,
@@ -168,7 +169,7 @@ const styles = StyleSheet.create({
   },
   contentText: {
     fontFamily: 'Menlo',
-    fontSize: 12
+    fontSize: normalize(10)
   },
   imageContainer: {
     flex: 1,

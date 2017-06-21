@@ -4,7 +4,7 @@ import { Button } from 'react-native-elements';
 
 import { ViewContainer } from 'components';
 
-import { colors } from 'config';
+import { colors, normalize } from 'config';
 
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
@@ -33,7 +33,7 @@ class Welcome extends Component {
     const { isAuthenticated, isLoggingIn } = this.props;
 
     return (
-      <ViewContainer barColor="dark">
+      <ViewContainer>
         <View style={styles.container}>
           <Text style={styles.welcomeMessage}>Welcome to GitPoint</Text>
 
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   },
   welcomeMessage: {
     color: colors.primarydark,
-    fontSize: 26,
+    fontSize: normalize(24),
     fontFamily: 'AvenirNext-Medium'
   },
   loadingIcon: {

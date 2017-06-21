@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
-import { colors } from 'config';
+import { colors, normalize } from 'config';
 
 type Props = {
   type: string,
@@ -43,7 +43,7 @@ export const UserProfile = ({
         onPress={() =>
           navigation.navigate('RepositoryList', {
             user: user,
-            repoCount: user.public_repos > 10 ? 10 : user.public_repos
+            repoCount: user.public_repos > 15 ? 15 : user.public_repos
           })}
       >
         <Text style={styles.unitNumber}>
@@ -58,7 +58,7 @@ export const UserProfile = ({
           onPress={() =>
             navigation.navigate('FollowerList', {
               user: user,
-              followerCount: user.followers > 10 ? 10 : user.followers
+              followerCount: user.followers > 15 ? 15 : user.followers
             })}
         >
           <Text style={[styles.unitNumber, isFollowing && styles.green]}>
@@ -73,7 +73,7 @@ export const UserProfile = ({
           onPress={() =>
             navigation.navigate('FollowingList', {
               user: user,
-              followingCount: user.following > 10 ? 10 : user.following
+              followingCount: user.following > 15 ? 15 : user.following
             })}
         >
           <Text style={styles.unitNumber}>
@@ -92,9 +92,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   profile: {
+    flex: 3,
     alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 70
+    justifyContent: 'flex-end'
   },
   avatar: {
     width: 75,
@@ -109,23 +109,22 @@ const styles = StyleSheet.create({
   title: {
     color: colors.white,
     fontFamily: 'AvenirNext-Bold',
-    fontSize: 18,
+    fontSize: normalize(16),
     fontWeight: 'bold',
     marginBottom: 2
   },
   subtitle: {
     color: colors.white,
     fontFamily: 'AvenirNext-Medium',
-    fontSize: 14,
-    marginBottom: 40,
+    fontSize: normalize(12),
+    marginBottom: 50,
     paddingLeft: 15,
     paddingRight: 15,
     textAlign: 'center'
   },
   details: {
-    flex: 2,
-    flexDirection: 'row',
-    paddingBottom: 30
+    flex: 1,
+    flexDirection: 'row'
   },
   unit: {
     flex: 1
@@ -134,13 +133,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: colors.white,
     fontFamily: 'AvenirNext-Bold',
-    fontSize: 18,
+    fontSize: normalize(16),
     fontWeight: 'bold'
   },
   unitText: {
     textAlign: 'center',
     color: colors.white,
-    fontSize: 12,
+    fontSize: normalize(10),
     fontFamily: 'AvenirNext-Medium'
   },
   green: {

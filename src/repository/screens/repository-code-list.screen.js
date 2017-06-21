@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { StyleSheet, FlatList } from 'react-native';
+import { StyleSheet, FlatList, View } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
 import { ViewContainer } from 'components';
 
-import { colors } from 'config';
+import { colors, normalize } from 'config';
 
 import { connect } from 'react-redux';
 import { getContents } from '../repository.action';
@@ -67,6 +67,7 @@ class RepositoryCodeList extends Component {
     return (
       <ViewContainer>
         {!isPendingContents &&
+          contents.length > 0 &&
           <FlatList
             data={
               navigation.state.params.topLevel
@@ -78,6 +79,14 @@ class RepositoryCodeList extends Component {
             keyExtractor={this.keyExtractor}
             renderItem={this.renderItem}
           />}
+
+        {!isPendingContents &&
+          contents.length === 0 &&
+          <View style={styles.marginSpacing}>
+            <Text style={styles.noCodeTitle}>
+              There's no code in this repository
+            </Text>
+          </View>}
       </ViewContainer>
     );
   }
@@ -109,6 +118,13 @@ const styles = StyleSheet.create({
   titleBold: {
     color: colors.black,
     fontFamily: 'AvenirNext-DemiBold'
+  },
+  marginSpacing: {
+    marginTop: 40
+  },
+  noCodeTitle: {
+    fontSize: normalize(18),
+    textAlign: 'center'
   }
 });
 

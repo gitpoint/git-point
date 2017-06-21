@@ -1,7 +1,7 @@
 /* eslint react/prop-types: 0 */
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, Platform, FlatList, View } from 'react-native';
+import { StyleSheet, Text, FlatList, View } from 'react-native';
 
 import { LoadingUserListItem, UserListItem } from 'components';
 
@@ -29,7 +29,7 @@ import { getUserEvents } from '../auth.action';
 
 import { ViewContainer } from 'components';
 
-import { colors } from 'config';
+import { colors, normalize } from 'config';
 
 const mapStateToProps = state => ({
   user: state.auth.user,
@@ -511,11 +511,11 @@ class Events extends Component {
     const { isPendingEvents, userEvents, navigation } = this.props;
 
     return (
-      <ViewContainer barColor="dark">
+      <ViewContainer>
 
         {isPendingEvents &&
           !userEvents &&
-          [...Array(10)].map((item, i) => <LoadingUserListItem key={i} />)}
+          [...Array(15)].map((item, i) => <LoadingUserListItem key={i} />)}
 
         {userEvents &&
           userEvents.length > 0 &&
@@ -530,7 +530,7 @@ class Events extends Component {
                 <UserListItem
                   user={item.actor}
                   title={this.renderDescription(item)}
-                  titleStyle={{ fontSize: 14 }}
+                  titleStyle={{ fontSize: normalize(12) }}
                   navigation={navigation}
                   onlyImageNavigate
                   noBorderBottom={
@@ -559,39 +559,7 @@ class Events extends Component {
   };
 }
 
-const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
-const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : 0;
-
 const styles = StyleSheet.create({
-  container: {
-    paddingTop: STATUSBAR_HEIGHT,
-    backgroundColor: colors.greyLight,
-    shadowColor: 'black',
-    shadowOpacity: 0.1,
-    shadowRadius: StyleSheet.hairlineWidth,
-    shadowOffset: {
-      height: StyleSheet.hairlineWidth
-    },
-    elevation: 4
-  },
-  appBar: {
-    height: APPBAR_HEIGHT
-  },
-  appBarTitle: {
-    flex: 1,
-    fontSize: Platform.OS === 'ios' ? 17 : 18,
-    fontWeight: Platform.OS === 'ios' ? '600' : '500',
-    color: colors.primaryDark,
-    textAlign: Platform.OS === 'ios' ? 'center' : 'left',
-    marginHorizontal: 16,
-    fontFamily: 'AvenirNext-Bold'
-  },
-  loadingContainer: {
-    backgroundColor: colors.white,
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
   descriptionContainer: {
     justifyContent: 'center',
     flex: 1,
@@ -620,7 +588,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     color: colors.greyDark,
-    fontSize: 13,
+    fontSize: normalize(11),
     marginTop: 1,
     fontWeight: '600'
   }

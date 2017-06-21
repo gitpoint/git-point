@@ -5,7 +5,7 @@ import SearchBar from 'react-native-search-bar';
 
 import { ViewContainer, IssueListItem, LoadingContainer } from 'components';
 
-import { colors } from 'config';
+import { colors, normalize } from 'config';
 
 import { connect } from 'react-redux';
 import {
@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
     marginTop: 40
   },
   searchTitle: {
-    fontSize: 20,
+    fontSize: normalize(18),
     textAlign: 'center'
   },
   listContainer: {

@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-import { colors } from 'config';
+import { colors, normalize } from 'config';
 
 type Props = {
   repository: Object,
@@ -88,15 +88,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,.6)'
   },
   profile: {
-    flex: 2,
-    marginTop: 50,
+    flex: 3,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'flex-end'
   },
   title: {
     color: colors.white,
     fontFamily: 'AvenirNext-Bold',
-    fontSize: 18,
+    fontSize: normalize(16),
     fontWeight: 'bold',
     marginBottom: 2,
     backgroundColor: 'transparent'
@@ -104,9 +103,10 @@ const styles = StyleSheet.create({
   subtitle: {
     color: colors.white,
     fontFamily: 'AvenirNext-Medium',
-    fontSize: 14,
+    fontSize: normalize(12),
     paddingLeft: 15,
     paddingRight: 15,
+    marginBottom: 50,
     backgroundColor: 'transparent'
   },
   subtitleDescription: {
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   },
   subtitleFork: {
     marginTop: 20,
-    fontSize: 12
+    fontSize: normalize(10)
   },
   details: {
     flex: 1,
@@ -129,13 +129,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: colors.white,
     fontFamily: 'AvenirNext-Bold',
-    fontSize: 18,
+    fontSize: normalize(16),
     fontWeight: 'bold'
   },
   unitText: {
     textAlign: 'center',
     color: colors.white,
-    fontSize: 12,
+    fontSize: normalize(10),
     fontFamily: 'AvenirNext-Medium'
   },
   green: {

@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-import { colors } from 'config';
+import { colors, normalize } from 'config';
 
 export class CommentInput extends Component {
   state: {
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   textInput: {
-    fontSize: 14,
+    fontSize: normalize(12),
     flex: 1,
     marginLeft: 15,
     marginRight: 5,
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   postButton: {
-    fontSize: 14,
+    fontSize: normalize(12),
     letterSpacing: 1,
     fontFamily: 'AvenirNext-DemiBold'
   },

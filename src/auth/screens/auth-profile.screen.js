@@ -54,7 +54,7 @@ class AuthProfile extends Component {
     const { user, orgs, isPendingUser, isPendingOrgs, navigation } = this.props;
 
     return (
-      <ViewContainer barColor="light">
+      <ViewContainer>
 
         {(isPendingUser || isPendingOrgs || !user) &&
           <LoadingContainer

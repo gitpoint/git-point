@@ -89,8 +89,7 @@ class Profile extends Component {
     const isPending = isPendingUser || isPendingOrgs;
 
     return (
-      <ViewContainer barColor="light">
-
+      <ViewContainer>
         <ParallaxScroll
           renderContent={() => (
             <UserProfile

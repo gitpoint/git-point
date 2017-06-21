@@ -10,7 +10,7 @@ import {
   LoadingContainer
 } from 'components';
 
-import { colors } from 'config';
+import { colors, normalize } from 'config';
 
 import { connect } from 'react-redux';
 import { searchRepos, searchUsers } from '../';
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
     marginTop: 40
   },
   searchTitle: {
-    fontSize: 20,
+    fontSize: normalize(18),
     textAlign: 'center'
   },
   listContainer: {

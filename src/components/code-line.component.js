@@ -3,7 +3,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 
-import { colors } from 'config';
+import { colors, normalize } from 'config';
 
 type Props = { newChunk: boolean, change: Object };
 
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   },
   codeLine: {
     fontFamily: 'Menlo',
-    fontSize: 12,
+    fontSize: normalize(10),
     paddingHorizontal: 10,
     paddingVertical: 3
   },
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
   },
   codeLineNumber: {
     fontFamily: 'Menlo',
-    fontSize: 12,
+    fontSize: normalize(10),
     flex: 1,
     alignItems: 'center',
     color: colors.grey

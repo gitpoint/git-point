@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { ListItem, Icon } from 'react-native-elements';
 
-import { colors, languageColors } from 'config';
+import { colors, languageColors, normalize } from 'config';
 
 type Props = {
   repository: Object,
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     color: colors.greyDark,
     paddingLeft: 3,
     marginRight: 15,
-    fontSize: 12,
+    fontSize: normalize(10),
     fontFamily: 'AvenirNext-Medium'
   },
   repositoryContainer: {

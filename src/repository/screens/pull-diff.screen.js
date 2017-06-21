@@ -6,7 +6,7 @@ import Parse from 'parse-diff';
 
 import { ViewContainer, DiffBlocks, CodeLine } from 'components';
 
-import { colors } from 'config';
+import { colors, normalize } from 'config';
 
 class PullDiff extends Component {
   props: {
@@ -108,6 +108,7 @@ class PullDiff extends Component {
         {item.chunks.length === 0 &&
           !item.new &&
           !item.deleted &&
+          item.from !== item.to &&
           <Text style={styles.noChangesMessage}>
             File renamed without changes.
           </Text>}
@@ -163,7 +164,7 @@ const styles = StyleSheet.create({
   },
   codeStyle: {
     fontFamily: 'Menlo',
-    fontSize: 12
+    fontSize: normalize(10)
   },
   dividerStyle: {
     marginBottom: 0
@@ -193,7 +194,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontFamily: 'AvenirNext-DemiBold',
-    fontSize: 16
+    fontSize: normalize(14)
   }
 });
 export const PullDiffScreen = PullDiff;

@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, Animated } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-import { colors } from 'config';
+import { colors, normalize } from 'config';
 import { loadingAnimation } from 'utils';
 
 export class LoadingRepositoryProfile extends Component {
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   title: {
     color: colors.white,
     fontFamily: 'AvenirNext-Bold',
-    fontSize: 18,
+    fontSize: normalize(16),
     fontWeight: 'bold',
     marginBottom: 2,
     backgroundColor: 'transparent'
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   subtitle: {
     color: colors.white,
     fontFamily: 'AvenirNext-Medium',
-    fontSize: 14,
+    fontSize: normalize(12),
     paddingLeft: 15,
     paddingRight: 15,
     backgroundColor: 'transparent'
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   unitText: {
     textAlign: 'center',
     color: colors.white,
-    fontSize: 12,
+    fontSize: normalize(10),
     fontFamily: 'AvenirNext-Medium'
   },
   icon: {

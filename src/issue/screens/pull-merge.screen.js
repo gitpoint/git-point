@@ -11,7 +11,7 @@ import { ListItem, Icon } from 'react-native-elements';
 
 import { ViewContainer, SectionList } from 'components';
 
-import { colors } from 'config';
+import { colors, normalize } from 'config';
 
 import { connect } from 'react-redux';
 import { mergePullRequest } from '../issue.action';
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     fontFamily: 'AvenirNext-Medium'
   },
   textInput: {
-    fontSize: 14,
+    fontSize: normalize(12),
     marginHorizontal: 15,
     flex: 1,
     color: colors.black,

@@ -65,7 +65,7 @@ class OrganizationProfile extends Component {
     const initialOrganization = this.props.navigation.state.params.organization;
 
     return (
-      <ViewContainer barColor="light">
+      <ViewContainer>
 
         <ParallaxScroll
           renderContent={() => (

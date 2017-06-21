@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-import { colors } from 'config';
+import { colors, normalize } from 'config';
 
 type Props = {
   notification: Object,
@@ -49,12 +49,7 @@ export const NotificationListItem = ({
             style={styles.iconContainer}
             onPress={() => iconAction(notification.id)}
           >
-            <Icon
-              color={colors.grey}
-              size={22}
-              name="check"
-              type="octicon"
-            />
+            <Icon color={colors.grey} size={22} name="check" type="octicon" />
           </TouchableOpacity>}
       </View>
     </View>
@@ -87,7 +82,7 @@ const styles = StyleSheet.create({
   title: {
     color: colors.black,
     fontFamily: 'AvenirNext-Medium',
-    fontSize: 14,
+    fontSize: normalize(12),
     marginLeft: 10
   },
   iconContainer: {

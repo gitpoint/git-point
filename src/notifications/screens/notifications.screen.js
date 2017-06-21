@@ -14,7 +14,7 @@ import { ViewContainer, LoadingContainer } from 'components';
 
 import { NotificationListItem } from 'components';
 
-import { colors } from 'config';
+import { colors, normalize } from 'config';
 
 import { connect } from 'react-redux';
 import {
@@ -334,7 +334,7 @@ const styles = StyleSheet.create({
   },
   notificationTitle: {
     color: colors.black,
-    fontSize: 14,
+    fontSize: normalize(12),
     fontFamily: 'AvenirNext-Regular'
   },
   markAsReadIconRepo: {

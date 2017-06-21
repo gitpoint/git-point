@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Dimensions, View } from 'react-native';
 import SearchBar from 'react-native-search-bar';
 
-import { colors } from 'config';
+import { colors, normalize } from 'config';
 
 type Props = {
   onSubmitEditing: Function
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   },
   searchBar: {
     backgroundColor: colors.greyLight,
-    fontSize: 15,
+    fontSize: normalize(13),
     borderRadius: 3,
     height: 40,
     width: 500

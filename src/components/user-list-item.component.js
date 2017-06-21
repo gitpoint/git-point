@@ -9,7 +9,7 @@ import {
 import { Icon } from 'react-native-elements';
 import FastImage from 'react-native-fast-image';
 
-import { colors } from 'config';
+import { colors, normalize } from 'config';
 
 type Props = {
   user: Object,
@@ -133,12 +133,12 @@ const styles = StyleSheet.create({
   title: {
     color: colors.black,
     fontFamily: 'AvenirNext-Medium',
-    fontSize: 16,
+    fontSize: normalize(14),
     marginLeft: 10
   },
   subtitle: {
     color: colors.greyDark,
-    fontSize: 12,
+    fontSize: normalize(10),
     marginTop: 1,
     fontWeight: '600',
     marginLeft: 10

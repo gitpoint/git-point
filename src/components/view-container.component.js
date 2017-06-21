@@ -10,7 +10,7 @@ type Props = {
 export const ViewContainer = ({ barColor, children }: Props) => (
   <View style={styles.viewContainer}>
     <StatusBar
-      barStyle={barColor === 'light ' ? 'light-content' : 'dark-content'}
+      barStyle={barColor === 'light' ? 'light-content' : 'dark-content'}
     />
     {children}
   </View>
