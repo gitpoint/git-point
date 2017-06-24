@@ -86,7 +86,7 @@ class Login extends Component {
     const { isLoggingIn, isAuthenticated } = this.props;
 
     return (
-      <ViewContainer>
+      <ViewContainer barColor="light">
         {!isAuthenticated &&
           this.state.asyncStorageChecked &&
           <View>
