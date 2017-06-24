@@ -1,8 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import FastImage from 'react-native-fast-image';
+import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 
 import { colors, normalize } from 'config';
 import moment from 'moment';
@@ -135,11 +134,10 @@ export class CommentListItem extends Component {
                   user: comment.user
                 })}
             >
-              <FastImage
+              <Image
                 style={styles.avatar}
                 source={{
-                  uri: comment.user.avatar_url,
-                  priority: FastImage.priority.high
+                  uri: comment.user.avatar_url
                 }}
               />
             </TouchableOpacity>}

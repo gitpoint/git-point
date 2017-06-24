@@ -1,12 +1,12 @@
 import React from 'react';
-import FastImage from 'react-native-fast-image';
 
 import {
   StyleSheet,
   View,
   Text,
   FlatList,
-  TouchableHighlight
+  TouchableHighlight,
+  Image
 } from 'react-native';
 
 import { colors } from 'config';
@@ -44,11 +44,10 @@ export const MembersList = ({
           style={styles.avatarContainer}
         >
           <View style={styles.avatarContainer}>
-            <FastImage
+            <Image
               style={styles.avatar}
               source={{
-                uri: item.avatar_url,
-                priority: FastImage.priority.high
+                uri: item.avatar_url
               }}
             />
           </View>

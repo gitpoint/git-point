@@ -1,6 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import FastImage from 'react-native-fast-image';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 
 import { colors, normalize } from 'config';
 
@@ -21,17 +20,14 @@ export const UserProfile = ({
 }: Props) => (
   <View style={styles.container}>
     <View style={styles.profile}>
-      <FastImage
+      <Image
         style={[
           styles.avatar,
           (initialUser.type === 'User' || user.type === 'User') &&
             styles.userAvatar
         ]}
         source={{
-          uri: initialUser.avatar_url
-            ? initialUser.avatar_url
-            : user.avatar_url,
-          priority: FastImage.priority.high
+          uri: initialUser.avatar_url ? initialUser.avatar_url : user.avatar_url
         }}
       />
       <Text style={styles.title}>{user.name}</Text>

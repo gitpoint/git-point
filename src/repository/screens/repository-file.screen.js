@@ -7,7 +7,6 @@ import {
   Dimensions,
   Image
 } from 'react-native';
-import FastImage from 'react-native-fast-image';
 import { Card, Icon } from 'react-native-elements';
 
 import { ViewContainer, LoadingContainer } from 'components';
@@ -120,14 +119,13 @@ class RepositoryFile extends Component {
 
               {this.isImage(fileType) &&
                 <View style={styles.imageContainer}>
-                  <FastImage
+                  <Image
                     style={{
                       width: this.state.imageWidth,
                       height: this.state.imageHeight
                     }}
                     source={{
-                      uri: navigation.state.params.content.download_url,
-                      priority: FastImage.priority.high
+                      uri: navigation.state.params.content.download_url
                     }}
                   />
                 </View>}

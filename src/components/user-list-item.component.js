@@ -4,10 +4,10 @@ import {
   View,
   TouchableHighlight,
   TouchableOpacity,
-  Text
+  Text,
+  Image
 } from 'react-native';
 import { Icon } from 'react-native-elements';
-import FastImage from 'react-native-fast-image';
 
 import { colors, normalize } from 'config';
 
@@ -68,16 +68,11 @@ export const UserListItem = ({
                 user: user
               })}
           >
-            <FastImage
+            <Image
               style={styles.avatar}
               source={{
-                uri: user.avatar_url,
-                priority: FastImage.priority.high
+                uri: user.avatar_url
               }}
-              onPress={() =>
-                navigation.navigate('Profile', {
-                  user: user
-                })}
             />
           </ImageContainerComponent>
 

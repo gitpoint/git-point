@@ -5,10 +5,10 @@ import {
   View,
   ScrollView,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
+  Image
 } from 'react-native';
 import { ButtonGroup, Card, Icon } from 'react-native-elements';
-import FastImage from 'react-native-fast-image';
 
 import { ViewContainer, LoadingContainer } from 'components';
 
@@ -117,11 +117,10 @@ class Notifications extends Component {
       <Card containerStyle={styles.repositoryContainer}>
 
         <View style={styles.headerContainer}>
-          <FastImage
+          <Image
             style={styles.repositoryOwnerAvatar}
             source={{
-              uri: this.getImage(item),
-              priority: FastImage.priority.high
+              uri: this.getImage(item)
             }}
           />
 
