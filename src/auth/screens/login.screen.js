@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
-import { Dimensions, Linking, View, StyleSheet, Image } from 'react-native';
+import {
+  Dimensions,
+  Linking,
+  View,
+  StyleSheet,
+  Image,
+  Platform
+} from 'react-native';
 import { Button } from 'react-native-elements';
+import SafariView from 'react-native-safari-view';
 
 import { ViewContainer, LoadingContainer } from 'components';
 
@@ -39,48 +47,58 @@ class Login extends Component {
     };
   }
 
+  // Set up Linking
   componentDidMount() {
     if (this.props.isAuthenticated) {
       this.props.navigation.navigate('Main');
     } else {
       this.setState({ asyncStorageChecked: true });
+
+      Linking.addEventListener('url', this.handleOpenURL);
+
+      Linking.getInitialURL().then(url => {
+        if (url) {
+          this.handleOpenURL({ url });
+        }
+      });
     }
   }
 
-  githubOauth(client_id, callback) {
-    Linking.addEventListener('url', handleUrl);
-
-    function handleUrl(event) {
-      var [, query_string] = event.url.match(/\?(.*)/);
-      var query = queryString.parse(query_string);
-      if (stateRandom === query.state) {
-        callback(null, query.code);
-      } else {
-        callback(new Error('Oauth2 security error'));
-      }
-      Linking.removeEventListener('url', handleUrl);
-    }
-
-    Linking.openURL(
-      `https://github.com/login/oauth/authorize\
-?response_type=token\
-&client_id=${client_id}\
-&redirect_uri=gitpoint://welcome\
-&scope=user%20repo\
-&state=${stateRandom}`
-    );
+  componentWillUnmount() {
+    Linking.removeEventListener('url', this.handleOpenURL);
   }
 
-  signIn() {
-    this.githubOauth(CLIENT_ID, (err, code) => {
-      if (err) {
-        console.log(err);
-      }
+  handleOpenURL = ({ url }) => {
+    const [, query_string] = url.match(/\?(.*)/);
+    const { state, code } = queryString.parse(query_string);
+
+    if (stateRandom === state) {
       this.setState({ code });
 
-      this.props.auth(code, stateRandom);
-    });
-  }
+      this.props.auth(code, state);
+    }
+
+    if (Platform.OS === 'ios') {
+      SafariView.dismiss();
+    }
+  };
+
+  openURL = url => {
+    // Use SafariView on iOS
+    if (Platform.OS === 'ios') {
+      SafariView.show({
+        url: url,
+        fromBottom: true
+      });
+    } else {
+      Linking.openURL(url);
+    }
+  };
+
+  signIn = () =>
+    this.openURL(
+      `https://github.com/login/oauth/authorize?response_type=token&client_id=${CLIENT_ID}&redirect_uri=gitpoint://welcome&scope=user%20repo&state=${stateRandom}`
+    );
 
   render() {
     const { isLoggingIn, isAuthenticated } = this.props;
