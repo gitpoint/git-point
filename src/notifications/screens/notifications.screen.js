@@ -100,11 +100,13 @@ class Notifications extends Component {
       this.props.getAllNotifications();
     }
 
-    this.refs.notificationsListRef.scrollToOffset({
-      x: 0,
-      y: 0,
-      animated: false
-    });
+    if (this.notifications().length > 0) {
+      this.refs.notificationsListRef.scrollToOffset({
+        x: 0,
+        y: 0,
+        animated: false
+      });
+    }
   }
 
   renderItem = ({ item }) => {
@@ -257,15 +259,7 @@ class Notifications extends Component {
 
     return (
       <ViewContainer>
-        {this.isLoading() &&
-          this.notifications().length === 0 &&
-          <LoadingContainer
-            animating={this.isLoading() && this.notifications().length === 0}
-            text={`Retrieving ${type === 0 ? 'unread' : type === 1 ? 'pending' : 'all'} notifications`}
-            style={styles.marginSpacing}
-          />}
-
-        <View style={styles.marginBottom}>
+        <View style={styles.container}>
           <View style={styles.buttonGroupWrapper}>
             <ButtonGroup
               onPress={this.switchType}
@@ -276,15 +270,33 @@ class Notifications extends Component {
               containerStyle={styles.buttonGroupContainer}
             />
           </View>
-          <FlatList
-            ref="notificationsListRef"
-            removeClippedSubviews={false}
-            onRefresh={this.getNotifications()}
-            refreshing={this.isLoading()}
-            data={sortedRepos}
-            keyExtractor={this.keyExtractor}
-            renderItem={this.renderItem}
-          />
+
+          {this.isLoading() &&
+            this.notifications().length === 0 &&
+            <LoadingContainer
+              animating={this.isLoading() && this.notifications().length === 0}
+              text={`Retrieving ${type === 0 ? 'unread' : type === 1 ? 'pending' : 'all'} notifications`}
+              style={styles.marginSpacing}
+            />}
+
+          {!this.isLoading() &&
+            this.notifications().length === 0 &&
+            <View style={styles.textContainer}>
+              <Text style={styles.noneTitle}>
+                {`You don't have any${type === 0 ? ' unread' : type === 1 ? ' pending' : ''} notifications!`}
+              </Text>
+            </View>}
+
+          {this.notifications().length > 0 &&
+            <FlatList
+              ref="notificationsListRef"
+              removeClippedSubviews={false}
+              onRefresh={this.getNotifications()}
+              refreshing={this.isLoading()}
+              data={sortedRepos}
+              keyExtractor={this.keyExtractor}
+              renderItem={this.renderItem}
+            />}
         </View>
       </ViewContainer>
     );
@@ -341,9 +353,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  marginBottom: {
-    marginBottom: 70,
+  container: {
+    flex: 1,
     backgroundColor: 'transparent'
+  },
+  textContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  noneTitle: {
+    fontSize: normalize(16),
+    textAlign: 'center',
+    fontFamily: 'AvenirNext-Medium'
   }
 });
 

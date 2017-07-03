@@ -38,15 +38,25 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getUserEvents: () => dispatch(getUserEvents('housseindjirdeh'))
+  getUserEvents: user => dispatch(getUserEvents(user))
 });
 
 class Events extends Component {
-  componentWillMount() {
-    this.getUserEvents();
+  componentDidMount() {
+    if (this.props.user.login) {
+      this.getUserEvents(this.props.user);
+    }
   }
 
-  getUserEvents = () => this.props.getUserEvents();
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.user.login && !this.props.user.login) {
+      this.getUserEvents(nextProps.user);
+    }
+  }
+
+  getUserEvents = (user = this.props.user) => {
+    this.props.getUserEvents(user.login);
+  };
 
   getAction(userEvent) {
     const eventType = userEvent.type;
@@ -509,47 +519,57 @@ class Events extends Component {
 
   render() {
     const { isPendingEvents, userEvents, navigation } = this.props;
+    let content;
+    if (isPendingEvents && !userEvents) {
+      content = [...Array(15)].map((item, i) => (
+        <LoadingUserListItem key={i} />
+      ));
+    } else if (!isPendingEvents && userEvents && userEvents.length === 0) {
+      content = (
+        <View style={styles.textContainer}>
+          <Text style={styles.noneTitle}>
+            Welcome! This is your news feed - it'll help you keep up with recent activity on repositories you watch and people you follow.
+          </Text>
+        </View>
+      );
+    } else {
+      content = (
+        <FlatList
+          removeClippedSubviews={false}
+          data={userEvents}
+          onRefresh={this.getUserEvents}
+          refreshing={isPendingEvents}
+          keyExtractor={this.keyExtractor}
+          renderItem={({ item }) => (
+            <View>
+              <UserListItem
+                user={item.actor}
+                title={this.renderDescription(item)}
+                titleStyle={{ fontSize: normalize(12) }}
+                navigation={navigation}
+                onlyImageNavigate
+                noBorderBottom={
+                  item.type === 'IssueCommentEvent' ||
+                    item.type === 'PullRequestReviewCommentEvent'
+                }
+                icon={this.getIcon(item)}
+              />
 
+              {(item.type === 'IssueCommentEvent' ||
+                item.type === 'PullRequestReviewCommentEvent') &&
+                <View style={styles.subtitleContainer}>
+                  <Text numberOfLines={3} style={styles.subtitle}>
+                    {item.payload.comment.body.replace(/(\r\n|\n|\r)/gm, ' ')}
+                  </Text>
+                </View>}
+            </View>
+          )}
+        />
+      );
+    }
     return (
       <ViewContainer>
-
-        {isPendingEvents &&
-          !userEvents &&
-          [...Array(15)].map((item, i) => <LoadingUserListItem key={i} />)}
-
-        {userEvents &&
-          userEvents.length > 0 &&
-          <FlatList
-            removeClippedSubviews={false}
-            data={userEvents}
-            onRefresh={this.getUserEvents}
-            refreshing={isPendingEvents}
-            keyExtractor={this.keyExtractor}
-            renderItem={({ item }) => (
-              <View>
-                <UserListItem
-                  user={item.actor}
-                  title={this.renderDescription(item)}
-                  titleStyle={{ fontSize: normalize(12) }}
-                  navigation={navigation}
-                  onlyImageNavigate
-                  noBorderBottom={
-                    item.type === 'IssueCommentEvent' ||
-                      item.type === 'PullRequestReviewCommentEvent'
-                  }
-                  icon={this.getIcon(item)}
-                />
-
-                {(item.type === 'IssueCommentEvent' ||
-                  item.type === 'PullRequestReviewCommentEvent') &&
-                  <View style={styles.subtitleContainer}>
-                    <Text numberOfLines={3} style={styles.subtitle}>
-                      {item.payload.comment.body.replace(/(\r\n|\n|\r)/gm, ' ')}
-                    </Text>
-                  </View>}
-              </View>
-            )}
-          />}
+        {content}
       </ViewContainer>
     );
   }
@@ -591,6 +611,17 @@ const styles = StyleSheet.create({
     fontSize: normalize(11),
     marginTop: 1,
     fontWeight: '600'
+  },
+  textContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 15
+  },
+  noneTitle: {
+    fontSize: normalize(14),
+    textAlign: 'center',
+    fontFamily: 'AvenirNext-Medium'
   }
 });
 

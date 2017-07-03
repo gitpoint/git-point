@@ -7,7 +7,7 @@ import {
   GET_FOLLOWING,
   SEARCH_USER_REPOS,
   CHANGE_FOLLOW_STATUS
-} from "./user.type";
+} from './user.type';
 
 const initialState = {
   user: {},
@@ -24,7 +24,7 @@ const initialState = {
   isPendingFollowers: false,
   isPendingFollowing: false,
   isPendingSearchUserRepos: false,
-  error: ""
+  error: ''
 };
 
 export const userReducer = (state = initialState, action = {}) => {

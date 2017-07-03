@@ -52,19 +52,13 @@ class AuthProfile extends Component {
 
   render() {
     const { user, orgs, isPendingUser, isPendingOrgs, navigation } = this.props;
+    const loading = isPendingUser || isPendingOrgs;
 
     return (
       <ViewContainer>
+        {loading && <LoadingContainer animating={loading} center />}
 
-        {(isPendingUser || isPendingOrgs || !user) &&
-          <LoadingContainer
-            animating={isPendingUser || isPendingOrgs || !user}
-            center
-          />}
-
-        {!isPendingUser &&
-          !isPendingOrgs &&
-          user &&
+        {!loading &&
           <ParallaxScroll
             renderContent={() => (
               <UserProfile
@@ -77,40 +71,46 @@ class AuthProfile extends Component {
             stickyTitle={user.login}
           >
 
-            {(user.email || user.blog) &&
-              <SectionList title="LINKS">
-                {user.email &&
-                  <ListItem
-                    title="Email"
-                    titleStyle={styles.listTitle}
-                    leftIcon={{
-                      name: 'mail',
-                      color: colors.grey,
-                      type: 'octicon'
-                    }}
-                    subtitle={user.email}
-                    subtitleStyle={styles.listSubTitle}
-                    onPress={() =>
-                      Communications.email([user.email], null, null, 'Hi!', '')}
-                    underlayColor={colors.greyLight}
-                  />}
+            <SectionList
+              title="EMAIL"
+              noItems={!user.email || user.email === ''}
+              noItemsMessage={'No email associated with account'}
+            >
+              <ListItem
+                title="Email"
+                titleStyle={styles.listTitle}
+                leftIcon={{
+                  name: 'mail',
+                  color: colors.grey,
+                  type: 'octicon'
+                }}
+                subtitle={user.email}
+                subtitleStyle={styles.listSubTitle}
+                onPress={() =>
+                  Communications.email([user.email], null, null, 'Hi!', '')}
+                underlayColor={colors.greyLight}
+              />
+            </SectionList>
 
-                {user.blog &&
-                  <ListItem
-                    title="Website"
-                    titleStyle={styles.listTitle}
-                    leftIcon={{
-                      name: 'link',
-                      color: colors.grey,
-                      type: 'octicon'
-                    }}
-                    subtitle={user.blog}
-                    subtitleStyle={styles.listSubTitle}
-                    onPress={() =>
-                      Communications.web(this.getUserBlog(user.blog))}
-                    underlayColor={colors.greyLight}
-                  />}
-              </SectionList>}
+            <SectionList
+              title="WEBSITE"
+              noItems={!user.blog || user.blog === ''}
+              noItemsMessage={'No website associated with account'}
+            >
+              <ListItem
+                title="Website"
+                titleStyle={styles.listTitle}
+                leftIcon={{
+                  name: 'link',
+                  color: colors.grey,
+                  type: 'octicon'
+                }}
+                subtitle={user.blog}
+                subtitleStyle={styles.listSubTitle}
+                onPress={() => Communications.web(this.getUserBlog(user.blog))}
+                underlayColor={colors.greyLight}
+              />
+            </SectionList>
 
             <SectionList
               title="ORGANIZATIONS"

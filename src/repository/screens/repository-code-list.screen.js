@@ -84,10 +84,11 @@ class RepositoryCodeList extends Component {
 
         {!isPendingContents &&
           navigation.state.params.topLevel &&
-          contents.top.message &&
+          currentContents &&
+          currentContents.message &&
           <View style={styles.textContainer}>
             <Text style={styles.noCodeTitle}>
-              {contents.top.message}
+              {currentContents.message}
             </Text>
           </View>}
       </ViewContainer>

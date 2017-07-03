@@ -248,7 +248,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   searchTitle: {
-    fontSize: normalize(18)
+    fontSize: normalize(18),
+    textAlign: 'center',
+    fontFamily: 'AvenirNext-Medium'
   },
   listContainer: {
     borderTopColor: colors.greyLight,

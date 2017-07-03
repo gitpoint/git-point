@@ -3,7 +3,8 @@ import {
   StyleSheet,
   ActivityIndicator,
   ActionSheetIOS,
-  Dimensions
+  Dimensions,
+  View
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
@@ -122,11 +123,12 @@ class Profile extends Component {
 
           {!isPending &&
             initialUser.login === user.login &&
-            ((user.email !== null && user.email !== '') ||
-              (user.blog !== null && user.blog !== '')) &&
-            <SectionList title="LINKS">
-              {user.email !== null &&
-                user.email !== '' &&
+            <View>
+              <SectionList
+                title="EMAIL"
+                noItems={!user.email || user.email === ''}
+                noItemsMessage={'No email associated with account'}
+              >
                 <ListItem
                   title="Email"
                   titleStyle={styles.listTitle}
@@ -140,12 +142,16 @@ class Profile extends Component {
                   onPress={() =>
                     Communications.email([user.email], null, null, 'Hi!', '')}
                   underlayColor={colors.greyLight}
-                />}
+                />
+              </SectionList>
 
-              {user.blog !== null &&
-                user.blog !== '' &&
+              <SectionList
+                title="WEBSITE"
+                noItems={!user.blog || user.blog === ''}
+                noItemsMessage={'No website associated with account'}
+              >
                 <ListItem
-                  title="Website"
+                  title={'Website'}
                   titleStyle={styles.listTitle}
                   leftIcon={{
                     name: 'link',
@@ -157,21 +163,19 @@ class Profile extends Component {
                   onPress={() =>
                     Communications.web(this.getUserBlog(user.blog))}
                   underlayColor={colors.greyLight}
-                />}
-            </SectionList>}
+                />
+              </SectionList>
 
-          {!isPending &&
-            initialUser.login === user.login &&
-            <SectionList
-              title="ORGANIZATIONS"
-              noItems={orgs.length === 0}
-              noItemsMessage={'No organizations'}
-            >
-              {orgs.map((item, i) => (
-                <UserListItem key={i} user={item} navigation={navigation} />
-              ))}
-            </SectionList>}
-
+              <SectionList
+                title="ORGANIZATIONS"
+                noItems={orgs.length === 0}
+                noItemsMessage={'No organizations'}
+              >
+                {orgs.map((item, i) => (
+                  <UserListItem key={i} user={item} navigation={navigation} />
+                ))}
+              </SectionList>
+            </View>}
         </ParallaxScroll>
       </ViewContainer>
     );
