@@ -1253,6 +1253,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.houssein.GitPoint;
 				PRODUCT_NAME = GitPoint;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1283,6 +1285,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.houssein.GitPoint;
 				PRODUCT_NAME = GitPoint;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
