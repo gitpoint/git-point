@@ -106,14 +106,13 @@ const styles = StyleSheet.create({
     fontSize: normalize(12),
     paddingLeft: 15,
     paddingRight: 15,
-    marginBottom: 50,
+    marginBottom: 20,
     backgroundColor: 'transparent'
   },
   subtitleDescription: {
     textAlign: 'center'
   },
   subtitleFork: {
-    marginTop: 20,
     fontSize: normalize(10)
   },
   details: {
