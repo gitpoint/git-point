@@ -1,7 +1,11 @@
 <p align="center">
   <a href="https://gitpoint.co/">
-    <img alt="GitPoint" title="GitPoint" src="http://i.imgur.com/vGXbQHn.png" width="600">
+    <img alt="GitPoint" title="GitPoint" src="http://i.imgur.com/VShxJHs.png" width="600">
   </a>
+</p>
+
+<p align="center">
+  GitHub for iOS. Built with React Native.
 </p>
 
 <p align="center">
@@ -12,28 +16,25 @@
 
 ---
 
-<h1 align="center">
-  GitPoint
-</h1>
+<img alt="Download on the App Store" title="App Store" src="http://i.imgur.com/WOVV3Bb.png" width="30"> Built entirely with [React Native](https://facebook.github.io/react-native/)
 
-<p align="center">
-  <img alt="Download on the App Store" title="App Store" src="http://i.imgur.com/WOVV3Bb.png" width="30">
-  <p align="center">Built entirely with <a href="https://facebook.github.io/react-native/">React Native</a></p>
-</p>
+:zap: Feature-rich and 100% free
 
-<p align="center">
-  :zap:
-  <p align="center">Feature-rich and 100% free</p>
-</p>
-
-<p align="center">
-  :large_blue_diamond:
-  <p align="center">Minimal and beautiful UI</p>
-</p>
+:large_blue_diamond: Minimal and beautiful UI
 
 <p align="center">
   <img src = "http://i.imgur.com/KhBsmXH.png" width=250>
 </p>
+
+## Features
+
+* View user activity feed
+* Communicate on your issue and pull request conversations
+* Close or lock issues
+* Apply labels and assignees
+* Review and merge pull requests
+* Control your unread and participating notifications 
+* Easily search for any user or repository
 
 ## Android Version
 
@@ -56,6 +57,6 @@ Feel free to send me feedback on [twitter](https://twitter.com/hdjirdeh) or [fil
 
 ## Contributors
 
-A million thanks to some awesome people :)
+A million thanks to the following contributors:
 
 * [George Jose](https://github.com/G2Jose)
