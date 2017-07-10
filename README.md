@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://gitpoint.co/">
-    <img alt="GitPoint" title="GitPoint" src="http://i.imgur.com/VShxJHs.png" width="600">
+    <img alt="GitPoint" title="GitPoint" src="http://i.imgur.com/VShxJHs.png" width="450">
   </a>
 </p>
 
@@ -16,11 +16,9 @@
 
 ---
 
-<img alt="Download on the App Store" title="App Store" src="http://i.imgur.com/WOVV3Bb.png" width="30"> Built entirely with [React Native](https://facebook.github.io/react-native/)
+# GitPoint
 
-:zap: Feature-rich and 100% free
-
-:large_blue_diamond: Minimal and beautiful UI
+View repository and user information, control your notifications and even manage your issues and pull requests. GitPoint is the most feature-rich unofficial GitHub iOS client that is 100% free.
 
 <p align="center">
   <img src = "http://i.imgur.com/KhBsmXH.png" width=250>
