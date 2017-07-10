@@ -32,6 +32,10 @@ View repository and user information, control your notifications and even manage
 * Control your unread and participating notifications 
 * Easily search for any user or repository
 
+<p align="center">
+  <img src = "http://i.imgur.com/P4YoYYu.png">
+</p>
+
 ## Android Version
 
 [Coming Soon](https://github.com/housseindjirdeh/git-point/issues/2)
