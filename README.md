@@ -14,8 +14,6 @@
   </a>
 </p>
 
----
-
 # GitPoint
 
 View repository and user information, control your notifications and even manage your issues and pull requests. GitPoint is the most feature-rich unofficial GitHub iOS client that is 100% free.
