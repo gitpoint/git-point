@@ -16,7 +16,8 @@ import {
   fetchUrlNormal,
   USER_ENDPOINT,
   fetchSearch,
-  fetchChangeFollowStatus
+  fetchChangeFollowStatus,
+  root as apiRoot
 } from "api";
 
 export const getUserInfo = user => {
@@ -122,11 +123,13 @@ export const changeFollowStatus = (user, isFollowing) => {
 
 export const getRepositories = user => {
   return (dispatch, getState) => {
-    const accessToken = getState().auth.accessToken;
+    const { accessToken, user: authUser } = getState().auth;
 
     dispatch({ type: GET_REPOSITORIES.PENDING });
 
-    fetchUrl(`${USER_ENDPOINT(user.login)}/repos?per_page=50`, accessToken)
+    const url = user.login === authUser.login ? `${apiRoot}/user` : USER_ENDPOINT(user.login);
+
+    fetchUrl(`${url}/repos?per_page=50`, accessToken)
       .then(data => {
         dispatch({
           type: GET_REPOSITORIES.SUCCESS,
