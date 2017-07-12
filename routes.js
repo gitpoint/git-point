@@ -256,6 +256,7 @@ const MainTabNavigator = TabNavigator(
     }
   },
   {
+    tabBarPosition: 'bottom',
     tabBarOptions: {
       showLabel: false,
       activeTintColor: colors.primarydark,
