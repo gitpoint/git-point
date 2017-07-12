@@ -86,6 +86,7 @@ class Profile extends Component {
       isPendingCheckFollowing,
       navigation
     } = this.props;
+
     const initialUser = navigation.state.params.user;
     const isPending = isPendingUser || isPendingOrgs;
 

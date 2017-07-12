@@ -14,6 +14,7 @@
     "flow-coverage": "flow coverage"
   },
   "dependencies": {
+    "lodash.get": "^4.4.2",
     "md5": "^2.2.1",
     "moment": "^2.17.1",
     "parse-diff": "^0.4.0",

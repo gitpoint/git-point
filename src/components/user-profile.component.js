@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import get from 'lodash.get';
 
 import { colors, normalize } from 'config';
 
@@ -32,6 +33,9 @@ export const UserProfile = ({
       />
       <Text style={styles.title}>{user.name}</Text>
       <Text style={styles.subtitle}>{initialUser.login}</Text>
+      <Text style={styles.bio}>
+        {get(initialUser, ['bio', 'length'], 0) ? initialUser.bio : user.bio}
+      </Text>
     </View>
     <View style={styles.details}>
       <TouchableOpacity
@@ -85,7 +89,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginTop: 15
   },
   profile: {
     flex: 3,
@@ -113,7 +118,16 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontFamily: 'AvenirNext-Medium',
     fontSize: normalize(12),
-    marginBottom: 50,
+    marginBottom: 8,
+    paddingLeft: 15,
+    paddingRight: 15,
+    textAlign: 'center'
+  },
+  bio: {
+    color: colors.white,
+    fontFamily: 'AvenirNext-Medium',
+    fontSize: normalize(12),
+    marginBottom: 10,
     paddingLeft: 15,
     paddingRight: 15,
     textAlign: 'center'
@@ -123,7 +137,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   unit: {
-    flex: 1
+    flex: 1,
+    marginTop: 10
   },
   unitNumber: {
     textAlign: 'center',
