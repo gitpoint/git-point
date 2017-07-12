@@ -15,7 +15,7 @@ Even if you have little to no experience with React Native, I'll be more than ha
 8. `yarn start` in one terminal tab to start the packager
 9. `yarn run ios` in another tab to run the app in the iOS simulator
 10. Work your magic! Run the app on an [actual device](http://facebook.github.io/react-native/releases/0.46/docs/running-on-device.html#running-on-device) as well to test your feature/fix.
-11. Add yourself to the [contributor's list](https://github.com/housseindjirdeh/git-point#contributors) in the README!
+11. Add yourself to the [contributor's list](https://github.com/housseindjirdeh/git-point#contributors) by doing `yarn contributors:add`
 12. Commit your changes and reference the issue you're addressing (for example: `git commit -am 'Commit message. Closes #5'`)
 13. Push your branch to your fork
 14. Create a pull request from your branch on your fork to `master` on this repo
