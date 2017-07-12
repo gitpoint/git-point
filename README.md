@@ -60,3 +60,4 @@ Feel free to send me feedback on [twitter](https://twitter.com/hdjirdeh) or [fil
 A million thanks to the following contributors:
 
 * [George Jose](https://github.com/G2Jose)
+* [Hosmel Quintana](https://github.com/hosmelq)
