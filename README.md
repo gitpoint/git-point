@@ -1,4 +1,5 @@
 <p align="center">
+[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors)
   <a href="https://gitpoint.co/">
     <img alt="GitPoint" title="GitPoint" src="http://i.imgur.com/VShxJHs.png" width="450">
   </a>
@@ -57,6 +58,10 @@ Feel free to send me feedback on [twitter](https://twitter.com/hdjirdeh) or [fil
 
 ## Contributors
 
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+| [<img src="https://avatars0.githubusercontent.com/u/12476932?v=3" width="100px;"/><br /><sub>Houssein Djirdeh</sub>](https://houssein.me)<br />[💬](#question-housseindjirdeh "Answering Questions") [💻](https://github.com/gitpoint/git-point/commits?author=housseindjirdeh "Code") [🎨](#design-housseindjirdeh "Design") [📖](https://github.com/gitpoint/git-point/commits?author=housseindjirdeh "Documentation") [👀](#review-housseindjirdeh "Reviewed Pull Requests") | [<img src="https://avatars2.githubusercontent.com/u/16705071?v=3" width="100px;"/><br /><sub>gejose</sub>](https://github.com/gejose)<br />[💻](https://github.com/gitpoint/git-point/commits?author=gejose "Code") | [<img src="https://avatars3.githubusercontent.com/u/14151327?v=3" width="100px;"/><br /><sub>rmevans9</sub>](https://github.com/rmevans9)<br />[💻](https://github.com/gitpoint/git-point/commits?author=rmevans9 "Code") | [<img src="https://avatars1.githubusercontent.com/u/4408379?v=3" width="100px;"/><br /><sub>Alexey Pyltsyn</sub>](http://lex111.ru)<br />[💻](https://github.com/gitpoint/git-point/commits?author=lex111 "Code") | [<img src="https://avatars2.githubusercontent.com/u/10660468?v=3" width="100px;"/><br /><sub>Jason Etcovitch</sub>](https://jasonet.co)<br />[💻](https://github.com/gitpoint/git-point/commits?author=JasonEtco "Code") |
+| :---: | :---: | :---: | :---: | :---: |
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 A million thanks to the following contributors:
 
 * [George Jose](https://github.com/G2Jose)

@@ -11,7 +11,8 @@
     "flow-start": "flow start",
     "flow-stop": "flow stop",
     "flow-status": "flow status",
-    "flow-coverage": "flow coverage"
+    "flow-coverage": "flow coverage",
+    "contributors:add": "all-contributors add"
   },
   "dependencies": {
     "md5": "^2.2.1",
@@ -37,6 +38,7 @@
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
+    "all-contributors-cli": "^4.3.0",
     "babel-eslint": "^7.1.1",
     "babel-jest": "18.0.0",
     "babel-plugin-module-resolver": "^2.7.1",
