@@ -45,7 +45,7 @@ View repository and user information, control your notifications and even manage
 
 ## Android Version
 
-[Coming Soon](https://github.com/housseindjirdeh/git-point/issues/2)
+[Coming Soon](https://github.com/gitpoint/git-point/issues/2)
 
 ## Feedback/Contributing
 
