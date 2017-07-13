@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, ActionSheetIOS } from 'react-native';
+import { ScrollView, StyleSheet, Text } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import ActionSheet from 'react-native-actionsheet';
 
 import {
   ViewContainer,
@@ -54,6 +55,68 @@ class IssueSettings extends Component {
     );
   }
 
+  showChangeIssueStateActionSheet = () => {
+    this.IssueActionSheet.show();
+  };
+
+  showLockIssueActionSheet = () => {
+    this.LockIssueActionSheet.show();
+  };
+
+  showAddLabelActionSheet = () => {
+    if (!this.props.isPendingLabels) {
+      this.AddLabelActionSheet.show();
+    }
+  };
+
+  handleIssueActionPress = (i) => {
+    const { issue, navigation } = this.props;
+    const newState = issue.state === 'open' ? 'close' : 'reopen';
+
+    if (i === 0) {
+      this.editIssue({ state: newState }).then(() => {
+        navigation.goBack();
+      });
+    }
+  };
+
+  handleLockIssueActionPress = (i) => {
+    const { issue, repository } = this.props;
+    const repoName = repository.name;
+    const owner = repository.owner.login;
+
+    if (i === 0) {
+      this.props.changeIssueLockStatus(
+        owner,
+        repoName,
+        issue.number,
+        issue.locked,
+      );
+    }
+  };
+
+  handleAddLabelActionPress = (i) => {
+    const { issue, labels } = this.props;
+    const labelChoices = [...labels.map(label => label.name)];
+
+    if (
+      i !== labelChoices.length &&
+      !issue.labels.some(
+        label => label.name === labelChoices[i]
+      )
+    ) {
+      this.editIssue(
+        {
+          labels: [
+            ...issue.labels.map(label => label.name),
+            labelChoices[i]
+          ]
+        },
+        { labels: [...issue.labels, labels[i]] }
+      );
+    }
+  };
+
   render() {
     const { issue, isMerged, authUser, navigation } = this.props;
     const issueType = issue.pull_request ? 'Pull Request' : 'Issue';
@@ -64,7 +127,7 @@ class IssueSettings extends Component {
           <SectionList
             showButton
             buttonTitle="Apply Label"
-            buttonAction={() => this.showAddLabelActionSheet()}
+            buttonAction={this.showAddLabelActionSheet}
             style={{
               borderBottomWidth: 1,
               borderBottomColor: colors.grey
@@ -148,7 +211,7 @@ class IssueSettings extends Component {
               hideChevron
               underlayColor={colors.greyLight}
               titleStyle={styles.listItemTitle}
-              onPress={() => this.showLockIssueActionSheet(issue.locked)}
+              onPress={this.showLockIssueActionSheet}
             />
 
             {!isMerged &&
@@ -165,13 +228,32 @@ class IssueSettings extends Component {
                     ? styles.closeActionTitle
                     : styles.openActionTitle
                 }
-                onPress={() =>
-                  this.showChangeIssueStateActionSheet(
-                    issue.state === 'open' ? 'close' : 'reopen'
-                  )}
+                onPress={this.showChangeIssueStateActionSheet}
               />}
           </SectionList>
         </ScrollView>
+
+        <ActionSheet
+          ref={o => this.IssueActionSheet = o}
+          title={`Are you sure you want to ${issue.state === 'open' ? 'close' : 'reopen'} this?`}
+          options={['Yes', 'Cancel']}
+          cancelButtonIndex={1}
+          onPress={this.handleIssueActionPress}
+        />
+        <ActionSheet
+          ref={o => this.LockIssueActionSheet = o}
+          title={`Are you sure you want to ${issue.locked ? 'unlock' : 'lock'} this conversation?`}
+          options={['Yes', 'Cancel']}
+          cancelButtonIndex={1}
+          onPress={this.handleLockIssueActionPress}
+        />
+        <ActionSheet
+          ref={o => this.AddLabelActionSheet = o}
+          title={'Apply a label to this issue'}
+          options={[...this.props.labels.map(label => label.name), 'Cancel']}
+          cancelButtonIndex={this.props.labels.length}
+          onPress={this.handleAddLabelActionPress}
+        />
       </ViewContainer>
     );
   }
@@ -190,84 +272,6 @@ class IssueSettings extends Component {
       issue.number,
       editParams,
       updateStateParams
-    );
-  };
-
-  showAddLabelActionSheet = () => {
-    if (!this.props.isPendingLabels) {
-      ActionSheetIOS.showActionSheetWithOptions(
-        {
-          title: `Apply a label to this issue`,
-          options: [...this.props.labels.map(label => label.name), 'Cancel'],
-          cancelButtonIndex: this.props.labels.length
-        },
-        buttonIndex => {
-          const { issue, labels } = this.props;
-          const labelChoices = [...labels.map(label => label.name)];
-
-          if (
-            buttonIndex !== labelChoices.length &&
-            !issue.labels.some(
-              label => label.name === labelChoices[buttonIndex]
-            )
-          ) {
-            this.editIssue(
-              {
-                labels: [
-                  ...issue.labels.map(label => label.name),
-                  labelChoices[buttonIndex]
-                ]
-              },
-              { labels: [...issue.labels, labels[buttonIndex]] }
-            );
-          }
-        }
-      );
-    }
-  };
-
-  showChangeIssueStateActionSheet = stateChange => {
-    ActionSheetIOS.showActionSheetWithOptions(
-      {
-        title: `Are you sure you want to ${stateChange} this?`,
-        options: ['Yes', 'Cancel'],
-        cancelButtonIndex: 1
-      },
-      buttonIndex => {
-        const { navigation } = this.props;
-
-        const newState = stateChange === 'close' ? 'closed' : 'open';
-
-        if (buttonIndex === 0) {
-          this.editIssue({ state: newState }).then(() => {
-            navigation.goBack();
-          });
-        }
-      }
-    );
-  };
-
-  showLockIssueActionSheet = issueLocked => {
-    ActionSheetIOS.showActionSheetWithOptions(
-      {
-        title: `Are you sure you want to ${issueLocked ? 'unlock' : 'lock'} this conversation?`,
-        options: ['Yes', 'Cancel'],
-        cancelButtonIndex: 1
-      },
-      buttonIndex => {
-        const { issue, repository } = this.props;
-        const repoName = repository.name;
-        const owner = repository.owner.login;
-
-        if (buttonIndex === 0) {
-          this.props.changeIssueLockStatus(
-            owner,
-            repoName,
-            issue.number,
-            issueLocked
-          );
-        }
-      }
     );
   };
 }

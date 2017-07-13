@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   ActivityIndicator,
-  ActionSheetIOS,
   Dimensions,
+  Text,
   View
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import ActionSheet from 'react-native-actionsheet';
 
 import {
   ViewContainer,
@@ -59,21 +60,16 @@ class Profile extends Component {
     return url.substr(0, prefix.length) === prefix ? url : `http://${url}`;
   }
 
-  showMenuActionSheet() {
+  showMenuActionSheet = () => {
+    this.ActionSheet.show();
+  }
+
+  handlePress = (i) => {
     const { user, isFollowing, changeFollowStatus } = this.props;
-    const userActions = [isFollowing ? 'Unfollow' : 'Follow'];
-    ActionSheetIOS.showActionSheetWithOptions(
-      {
-        title: 'User Actions',
-        options: [...userActions, 'Cancel'],
-        cancelButtonIndex: 1
-      },
-      buttonIndex => {
-        if (buttonIndex === 0) {
-          changeFollowStatus(user.login, isFollowing);
-        }
-      }
-    );
+
+    if (i === 0) {
+      changeFollowStatus(user.login, isFollowing);
+    }
   }
 
   render() {
@@ -84,11 +80,12 @@ class Profile extends Component {
       isPendingUser,
       isPendingOrgs,
       isPendingCheckFollowing,
-      navigation
+      navigation,
     } = this.props;
 
     const initialUser = navigation.state.params.user;
     const isPending = isPendingUser || isPendingOrgs;
+    const userActions = [isFollowing ? 'Unfollow' : 'Follow'];
 
     return (
       <ViewContainer>
@@ -191,6 +188,14 @@ class Profile extends Component {
               </SectionList>
             </View>}
         </ParallaxScroll>
+
+        <ActionSheet
+          ref={o => this.ActionSheet = o}
+          title="User Actions"
+          options={[...userActions, 'Cancel']}
+          cancelButtonIndex={1}
+          onPress={this.handlePress}
+        />
       </ViewContainer>
     );
   }
