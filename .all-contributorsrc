@@ -1,0 +1,60 @@
+{
+  "projectName": "git-point",
+  "projectOwner": "gitpoint",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "housseindjirdeh",
+      "name": "Houssein Djirdeh",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/12476932?v=3",
+      "profile": "https://houssein.me",
+      "contributions": [
+        "question",
+        "code",
+        "design",
+        "doc",
+        "review"
+      ]
+    },
+    {
+      "login": "gejose",
+      "name": "gejose",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/16705071?v=3",
+      "profile": "https://github.com/gejose",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "rmevans9",
+      "name": "rmevans9",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/14151327?v=3",
+      "profile": "https://github.com/rmevans9",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "lex111",
+      "name": "Alexey Pyltsyn",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/4408379?v=3",
+      "profile": "http://lex111.ru",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "JasonEtco",
+      "name": "Jason Etcovitch",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/10660468?v=3",
+      "profile": "https://jasonet.co",
+      "contributions": [
+        "code"
+      ]
+    }
+  ]
+}
