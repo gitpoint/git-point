@@ -2,7 +2,8 @@
   <a href="https://github.com/gitpoint/git-point#contributors">
     <img alt="All Contributors" title="All Contributors" src="https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square">
   </a>
-  <a href="https://gitpoint.co/">
+  <br>
+  <a href="https://gitpoint.co/">
     <img alt="GitPoint" title="GitPoint" src="http://i.imgur.com/VShxJHs.png" width="450">
   </a>
 </p>
