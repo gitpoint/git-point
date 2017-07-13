@@ -23,6 +23,7 @@
     "query-string": "^4.3.1",
     "react": "16.0.0-alpha.12",
     "react-native": "0.46.2",
+    "react-native-actionsheet": "^2.2.0",
     "react-native-communications": "^2.2.1",
     "react-native-device-info": "^0.10.2",
     "react-native-elements": "^0.9.3",
