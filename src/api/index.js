@@ -83,7 +83,7 @@ const authParameters = (code, state) => ({
   })
 });
 
-const root = 'https://api.github.com';
+export const root = 'https://api.github.com';
 
 export const fetchAccessToken = (code, state) => {
   const GITHUB_OAUTH_ENDPOINT = 'https://github.com/login/oauth/access_token';

@@ -47,7 +47,7 @@ export const UserProfile = ({
           })}
       >
         <Text style={styles.unitNumber}>
-          {user.public_repos}
+          {user.public_repos + (user.total_private_repos || 0)}
         </Text>
         <Text style={styles.unitText}>Repositories</Text>
       </TouchableOpacity>
