@@ -129,6 +129,7 @@ class Search extends Component {
                 ref="searchBar"
                 inputStyle={colors.primaryDark}
                 backgroundColor={colors.greyLight}
+                cancelButtonStyle={styles.searchCancelButton}
                 onFocus={() => this.setState({ searchFocus: true })}
                 onCancel={() => {
                   this.setState({ searchStart: false, query: '' });
@@ -249,6 +250,9 @@ const styles = StyleSheet.create({
     fontSize: normalize(18),
     textAlign: 'center',
     fontFamily: 'AvenirNext-Medium'
+  },
+  searchCancelButton: {
+    color: colors.black,
   },
   listContainer: {
     borderTopColor: colors.greyLight,

@@ -106,6 +106,7 @@ class RepositoryList extends Component {
                   ref="searchBar"
                   inputStyle={colors.primaryDark}
                   backgroundColor={colors.greyLight}
+                  cancelButtonStyle={styles.searchCancelButton}
                   onFocus={() => this.setState({ searchFocus: true })}
                   onCancel={() => {
                     this.setState({ searchStart: false, query: '' });
@@ -161,6 +162,9 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     backgroundColor: colors.white,
     flex: 1
+  },
+  searchCancelButton: {
+    color: colors.black,
   },
   listContainer: {
     marginBottom: 90

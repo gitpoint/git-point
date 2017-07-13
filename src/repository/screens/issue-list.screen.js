@@ -136,6 +136,7 @@ class IssueList extends Component {
                 ref="searchBar"
                 inputStyle={colors.primaryDark}
                 backgroundColor={colors.greyLight}
+                cancelButtonStyle={styles.searchCancelButton}
                 onFocus={() => this.setState({ searchFocus: true })}
                 onCancel={() => {
                   this.setState({ searchStart: false, query: '' });
@@ -247,7 +248,10 @@ const styles = StyleSheet.create({
   searchTitle: {
     fontSize: normalize(18),
     textAlign: 'center'
-  }
+  },
+  searchCancelButton: {
+    color: colors.black,
+  },
 });
 
 export const IssueListScreen = connect(mapStateToProps, mapDispatchToProps)(

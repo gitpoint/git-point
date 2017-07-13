@@ -13,6 +13,7 @@ export const SearchInput = ({ onSubmitEditing }: Props) => (
     <SearchBar
       placeholder="Search"
       inputStyle={colors.greyLight}
+      cancelButtonStyle={styles.searchCancelButton}
       onSearch={() => {
         onSubmitEditing;
         this.unFocus();
@@ -35,5 +36,8 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     height: 40,
     width: 500
-  }
+  },
+  searchCancelButton: {
+    color: colors.black,
+  },
 });
