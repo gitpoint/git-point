@@ -12,6 +12,7 @@ export const GET_REPOSITORY_ISSUES = createActionSet("GET_REPOSITORY_ISSUES");
 export const GET_REPO_STARRED_STATUS = createActionSet(
   "GET_REPO_STARRED_STATUS"
 );
+export const FORK_REPO_STATUS = createActionSet("FORK_REPO_STATUS");
 export const CHANGE_STAR_STATUS = createActionSet("CHANGE_STAR_STATUS");
 export const GET_REPOSITORY_README = createActionSet("GET_REPOSITORY_README");
 export const GET_REPOSITORY_LABELS = createActionSet("GET_REPOSITORY_LABELS");

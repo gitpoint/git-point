@@ -12,7 +12,8 @@ import {
   LoadingUserListItem,
   UserListItem,
   IssueListItem,
-  LoadingMembersList
+  LoadingMembersList,
+  LoadingModal
 } from 'components';
 
 import { colors } from 'config';
@@ -22,18 +23,22 @@ import {
   getRepositoryInfo,
   getContributors,
   getIssues,
-  changeStarStatusRepo
+  changeStarStatusRepo,
+  forkRepo,
 } from '../repository.action';
 
 const mapStateToProps = state => ({
+  username: state.auth.user.login,
   repository: state.repository.repository,
   contributors: state.repository.contributors,
   issues: state.repository.issues,
   starred: state.repository.starred,
+  forked: state.repository.forked,
   isPendingRepository: state.repository.isPendingRepository,
   isPendingContributors: state.repository.isPendingContributors,
   isPendingIssues: state.repository.isPendingIssues,
-  isPendingCheckStarred: state.repository.isPendingCheckStarred
+  isPendingCheckStarred: state.repository.isPendingCheckStarred,
+  isPendingFork: state.repository.isPendingFork
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -41,7 +46,8 @@ const mapDispatchToProps = dispatch => ({
   getContributors: url => dispatch(getContributors(url)),
   getIssues: url => dispatch(getIssues(url)),
   changeStarStatusRepo: (owner, repo, starred) =>
-    dispatch(changeStarStatusRepo(owner, repo, starred))
+    dispatch(changeStarStatusRepo(owner, repo, starred)),
+  forkRepo: (owner, repo) => dispatch(forkRepo(owner, repo))
 });
 
 class Repository extends Component {
@@ -55,10 +61,12 @@ class Repository extends Component {
     contributors: Array,
     issues: Array,
     starred: boolean,
+    forked: boolean,
     isPendingRepository: boolean,
     isPendingContributors: boolean,
     isPendingIssues: boolean,
     isPendingCheckStarred: boolean,
+    isPendingCheckForked: boolean,
     navigation: Object
   };
 
@@ -71,13 +79,25 @@ class Repository extends Component {
   }
 
   showMenuActionSheet() {
-    const { starred, repository, changeStarStatusRepo } = this.props;
-    const repositoryActions = [starred ? '★ Unstar' : '★ Star'];
+    const {
+      starred,
+      repository,
+      changeStarStatusRepo,
+      forkRepo,
+      navigation,
+      username
+    } = this.props;
+    let repositoryActions = [ starred ? '★ Unstar' : '★ Star'];
+    const showFork = repository.owner.login !== username;
+    if (showFork) {
+      repositoryActions.push('Fork');
+    }
+
     ActionSheetIOS.showActionSheetWithOptions(
       {
         title: 'Repository Actions',
         options: [...repositoryActions, 'Cancel'],
-        cancelButtonIndex: 1
+        cancelButtonIndex: repositoryActions.length
       },
       buttonIndex => {
         if (buttonIndex === 0) {
@@ -86,6 +106,14 @@ class Repository extends Component {
             repository.name,
             starred
           );
+        }
+        if (buttonIndex === 1 && showFork) {
+          forkRepo(
+            repository.owner.login,
+            repository.name
+          ).then(json => {
+            navigation.navigate('Repository', { repository: json })
+          });
         }
       }
     );
@@ -100,6 +128,7 @@ class Repository extends Component {
       isPendingContributors,
       isPendingIssues,
       isPendingCheckStarred,
+      isPendingFork,
       navigation
     } = this.props;
     const initalRepository = navigation.state.params.repository;
@@ -107,8 +136,15 @@ class Repository extends Component {
     const pureIssues = issues.filter(
       issue => !issue.hasOwnProperty('pull_request')
     );
+
+    const loader = isPendingFork ?
+      (<LoadingModal />) :
+      null;
+
     return (
       <ViewContainer>
+
+        {loader}
 
         <ParallaxScroll
           renderContent={() => {

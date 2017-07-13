@@ -5,6 +5,7 @@ import {
   GET_REPOSITORY_FILE,
   GET_REPOSITORY_ISSUES,
   GET_REPO_STARRED_STATUS,
+  FORK_REPO_STATUS,
   CHANGE_STAR_STATUS,
   GET_REPOSITORY_README,
   GET_REPOSITORY_LABELS,
@@ -21,7 +22,8 @@ import {
   fetchCommentHTML,
   fetchReadMe,
   fetchSearch,
-  fetchChangeStarStatusRepo
+  fetchChangeStarStatusRepo,
+  fetchForkRepo
 } from "api";
 
 export const getRepositoryInfo = url => {
@@ -194,6 +196,32 @@ export const changeStarStatusRepo = (owner, repo, starred) => {
       .catch(error => {
         dispatch({
           type: CHANGE_STAR_STATUS.ERROR,
+          payload: error
+        });
+      });
+  };
+};
+
+export const forkRepo = (owner, repo) => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: FORK_REPO_STATUS.PENDING });
+
+    return fetchForkRepo(owner, repo, accessToken)
+      .then(data => {
+        return data.json();
+      })
+      .then(json => {
+        dispatch({
+          type: FORK_REPO_STATUS.SUCCESS,
+          payload: true
+        });
+        return json
+      })
+      .catch(error => {
+        dispatch({
+          type: FORK_REPO_STATUS.ERROR,
           payload: error
         });
       });

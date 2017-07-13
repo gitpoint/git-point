@@ -245,6 +245,19 @@ export const fetchChangeStarStatusRepo = (
   );
 };
 
+export const fetchForkRepo = (
+  owner,
+  repo,
+  accessToken
+) => {
+  const ENDPOINT = `https://api.github.com/repos/${owner}/${repo}/forks`;
+
+  return fetch(
+    ENDPOINT,
+    accessTokenParametersPOST(accessToken)
+  );
+};
+
 export const fetchChangeFollowStatus = (user, isFollowing, accessToken) => {
   const ENDPOINT = `https://api.github.com/user/following/${user}`;
 
