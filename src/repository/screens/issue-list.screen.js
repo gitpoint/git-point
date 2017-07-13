@@ -140,11 +140,9 @@ class IssueList extends Component {
                 onFocus={() => this.setState({ searchFocus: true })}
                 onCancel={() => {
                   this.setState({ searchStart: false, query: '' });
-                  this.refs.searchBar.unFocus();
                 }}
                 onSearch={query => {
                   this.search(query);
-                  this.refs.searchBar.unFocus();
                 }}
               />
             </View>

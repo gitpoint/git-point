@@ -16,7 +16,6 @@ export const SearchInput = ({ onSubmitEditing }: Props) => (
       cancelButtonStyle={styles.searchCancelButton}
       onSearch={() => {
         onSubmitEditing;
-        this.unFocus();
       }}
     />
   </View>
