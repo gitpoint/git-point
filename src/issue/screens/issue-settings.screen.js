@@ -71,7 +71,7 @@ class IssueSettings extends Component {
 
   handleIssueActionPress = (i) => {
     const { issue, navigation } = this.props;
-    const newState = issue.state === 'open' ? 'close' : 'reopen';
+    const newState = issue.state === 'open' ? 'close' : 'open';
 
     if (i === 0) {
       this.editIssue({ state: newState }).then(() => {
