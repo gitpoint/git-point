@@ -27,14 +27,17 @@ export const RepositoryListItem = ({ repository, navigation }: Props) => (
 
 const renderTitle = repository => (
   <View style={styles.wrapper}>
-    <Text style={styles.repositoryContainer}>
-      <Text style={styles.title}>
-        {repository.name}{repository.description && '\n'}
-      </Text>
-      <Text>
+    <View style={styles.repositoryContainer}>
+      <View style={styles.titleWrapper}>
+        <Text style={styles.title}>
+          {repository.name}
+        </Text>
+        {repository.private && <Text style={styles.private}>Private</Text>}
+      </View>
+      <Text style={styles.description}>
         {repository.description}
       </Text>
-    </Text>
+    </View>
     <View style={styles.extraInfo}>
       <Icon
         containerStyle={styles.extraInfoIcon}
@@ -69,9 +72,28 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     marginLeft: 5
   },
+  titleWrapper: {
+    flexDirection: 'row',
+  },
   title: {
     color: colors.primarydark,
     fontFamily: 'AvenirNext-DemiBold'
+  },
+  private: {
+    borderColor: 'rgba(27, 31, 35, 0.15)',
+    borderRadius: 2,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    color: colors.greyDark,
+    fontSize: normalize(10),
+    marginLeft: 8,
+    paddingLeft: 4,
+    paddingRight: 2,
+    paddingTop: 2,
+  },
+  description: {
+    color: colors.primaryDark,
+    fontFamily: 'AvenirNext-Regular',
   },
   extraInfo: {
     flexDirection: 'row',
@@ -88,7 +110,5 @@ const styles = StyleSheet.create({
   repositoryContainer: {
     justifyContent: 'center',
     flex: 1,
-    color: colors.primaryDark,
-    fontFamily: 'AvenirNext-Regular'
-  }
+  },
 });
