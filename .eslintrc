@@ -15,6 +15,7 @@
         "no-console": 0
     },
     "globals": {
-        "__DEV__": true
+        "__DEV__": true,
+        "module": true
     }
 }

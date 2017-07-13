@@ -35,6 +35,12 @@ const getEnhancers = () => {
 export default function configureStore() {
   const store = createStore(rootReducer, compose(getMiddleware(), ...getEnhancers()));
 
+  if (module.hot) {
+    module.hot.accept(() => {
+      store.replaceReducer(require('./root.reducer').default); // eslint-disable-line global-require
+    });
+  }
+
   if (__DEV__) {
     window.store = store;
     window.reducer = rootReducer;
