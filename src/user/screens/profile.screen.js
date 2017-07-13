@@ -126,6 +126,23 @@ class Profile extends Component {
             initialUser.login === user.login &&
             <View>
               <SectionList
+                title="BIO"
+                noItems={!user.bio || user.bio === ''}
+                noItemsMessage={'This user has no bio'}
+              >
+                <ListItem
+                  subtitle={user.bio}
+                  subtitleStyle={styles.listSubTitle}
+                  underlayColor={colors.greyLight}
+                  rightIcon={{
+                    style: {
+                      display: 'none'
+                    }
+                  }}
+                />
+              </SectionList>
+
+              <SectionList
                 title="EMAIL"
                 noItems={!user.email || user.email === ''}
                 noItemsMessage={'No email associated with account'}
