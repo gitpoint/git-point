@@ -26,6 +26,10 @@ import DeviceInfo from 'react-native-device-info';
 // md5
 import md5 from 'md5';
 
+if (console) {
+  console.disableYellowBox = true;
+}
+
 class App extends Component {
   constructor() {
     super();
