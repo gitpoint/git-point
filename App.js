@@ -30,6 +30,8 @@ if (console) {
   console.disableYellowBox = true;
 }
 
+let store = null;
+
 class App extends Component {
   constructor() {
     super();
@@ -44,8 +46,10 @@ class App extends Component {
       secretKey: md5(DeviceInfo.getUniqueID())
     });
 
+    store = configureStore();
+
     persistStore(
-      configureStore(),
+      store,
       { storage: AsyncStorage, transforms: [encryptor] },
       () => {
         this.setState({ rehydrated: true });
@@ -68,7 +72,7 @@ class App extends Component {
         </View>
       );
     return (
-      <Provider store={configureStore()}>
+      <Provider store={store}>
         <GitPoint />
       </Provider>
     );
