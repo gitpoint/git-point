@@ -12,7 +12,8 @@
     "flow-stop": "flow stop",
     "flow-status": "flow status",
     "flow-coverage": "flow coverage",
-    "contributors:add": "all-contributors add"
+    "contributors:add": "all-contributors add",
+    "postinstall": "remotedev-debugger --hostname localhost --port 5678 --injectserver"
   },
   "dependencies": {
     "lowlight": "^1.5.0",
@@ -56,7 +57,9 @@
     "eslint-plugin-react-native": "^2.2.1",
     "flow-bin": "^0.47.0",
     "jest": "18.1.0",
-    "react-test-renderer": "16.0.0-alpha.6"
+    "react-test-renderer": "16.0.0-alpha.6",
+    "remote-redux-devtools": "^0.5.12",
+    "remote-redux-devtools-on-debugger": "^0.7.1"
   },
   "jest": {
     "preset": "react-native"
