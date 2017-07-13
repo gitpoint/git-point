@@ -14,7 +14,7 @@ import { colors } from 'config';
 import { GitPoint } from './routes';
 
 // Redux Store
-import { configureStore } from './root.store';
+import configureStore from './root.store';
 import { Provider } from 'react-redux';
 
 import { persistStore } from 'redux-persist';
@@ -45,7 +45,7 @@ class App extends Component {
     });
 
     persistStore(
-      configureStore,
+      configureStore(),
       { storage: AsyncStorage, transforms: [encryptor] },
       () => {
         this.setState({ rehydrated: true });
@@ -68,7 +68,7 @@ class App extends Component {
         </View>
       );
     return (
-      <Provider store={configureStore}>
+      <Provider store={configureStore()}>
         <GitPoint />
       </Provider>
     );
