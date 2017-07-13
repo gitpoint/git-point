@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FlatList, View, Dimensions, StyleSheet } from 'react-native';
-import SearchBar from 'react-native-search-bar';
+import SearchBar from 'react-native-search-box';
 
 import {
   ViewContainer,
@@ -104,16 +104,14 @@ class RepositoryList extends Component {
               <View style={styles.searchContainer}>
                 <SearchBar
                   ref="searchBar"
-                  hideBackground={true}
-                  textColor={colors.primaryDark}
-                  textFieldBackgroundColor={colors.greyLight}
-                  showsCancelButton={searchFocus}
+                  inputStyle={colors.primaryDark}
+                  backgroundColor={colors.greyLight}
                   onFocus={() => this.setState({ searchFocus: true })}
-                  onCancelButtonPress={() => {
+                  onCancel={() => {
                     this.setState({ searchStart: false, query: '' });
                     this.refs.searchBar.unFocus();
                   }}
-                  onSearchButtonPress={query => {
+                  onSearch={query => {
                     this.search(query);
                     this.refs.searchBar.unFocus();
                   }}

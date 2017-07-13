@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Dimensions, View } from 'react-native';
-import SearchBar from 'react-native-search-bar';
+import SearchBar from 'react-native-search-box';
 
 import { colors, normalize } from 'config';
 
@@ -12,9 +12,8 @@ export const SearchInput = ({ onSubmitEditing }: Props) => (
   <View style={styles.searchContainer}>
     <SearchBar
       placeholder="Search"
-      hideBackground={true}
-      textFieldBackgroundColor={colors.greyLight}
-      onSearchButtonPress={() => {
+      inputStyle={colors.greyLight}
+      onSearch={() => {
         onSubmitEditing;
         this.unFocus();
       }}

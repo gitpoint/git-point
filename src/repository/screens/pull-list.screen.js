@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FlatList, View, StyleSheet, Dimensions, Text } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
-import SearchBar from 'react-native-search-bar';
+import SearchBar from 'react-native-search-box';
 
 import { ViewContainer, IssueListItem, LoadingContainer } from 'components';
 
@@ -138,16 +138,14 @@ class PullList extends Component {
             <View style={styles.searchContainer}>
               <SearchBar
                 ref="searchBar"
-                hideBackground={true}
-                textColor={colors.primaryDark}
-                textFieldBackgroundColor={colors.greyLight}
-                showsCancelButton={this.state.searchFocus}
+                inputStyle={colors.primaryDark}
+                backgroundColor={colors.greyLight}
                 onFocus={() => this.setState({ searchFocus: true })}
-                onCancelButtonPress={() => {
+                onCancel={() => {
                   this.setState({ searchStart: false, query: '' });
                   this.refs.searchBar.unFocus();
                 }}
-                onSearchButtonPress={query => {
+                onSearch={query => {
                   this.search(query);
                   this.refs.searchBar.unFocus();
                 }}
