@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     width: window.width - 30,
     position: 'absolute',
     right: 15,
-    bottom: 20,
+    bottom: Platform.OS === 'ios' ? 20 : 35,
     shadowColor: 'transparent'
   },
   logoContainer: {
