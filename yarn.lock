@@ -4779,6 +4779,12 @@ react-native-htmlview@^0.9.0:
     entities "^1.1.1"
     htmlparser2-without-node-native "^3.9.0"
 
+react-native-material-design-searchbar@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/react-native-material-design-searchbar/-/react-native-material-design-searchbar-1.1.4.tgz#69621af48d8f0e87399f5c2aaddba9aa3b4d1abd"
+  dependencies:
+    react-native-vector-icons "^2.0.3"
+
 react-native-parallax-scroll-view@^0.19.0:
   version "0.19.0"
   resolved "https://registry.yarnpkg.com/react-native-parallax-scroll-view/-/react-native-parallax-scroll-view-0.19.0.tgz#23b9af1f13249a610f4641e2582a58997df7d80a"
@@ -4819,6 +4825,13 @@ react-native-tab-view@^0.0.65:
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-0.0.65.tgz#b685ea3081ff7c96486cd997361026c407302c59"
   dependencies:
     prop-types "^15.5.8"
+
+react-native-vector-icons@^2.0.3:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-2.1.0.tgz#37ff40e2fc753a56624846e7471282b818b92edc"
+  dependencies:
+    lodash "^4.0.0"
+    yargs "^4.7.0"
 
 react-native-vector-icons@^4.0.0:
   version "4.0.0"
