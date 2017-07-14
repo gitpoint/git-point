@@ -86,6 +86,7 @@ class Profile extends Component {
       isPendingCheckFollowing,
       navigation
     } = this.props;
+
     const initialUser = navigation.state.params.user;
     const isPending = isPendingUser || isPendingOrgs;
 
@@ -124,6 +125,23 @@ class Profile extends Component {
           {!isPending &&
             initialUser.login === user.login &&
             <View>
+              <SectionList
+                title="BIO"
+                noItems={!user.bio || user.bio === ''}
+                noItemsMessage={'This user has no bio'}
+              >
+                <ListItem
+                  subtitle={user.bio}
+                  subtitleStyle={styles.listSubTitle}
+                  underlayColor={colors.greyLight}
+                  rightIcon={{
+                    style: {
+                      display: 'none'
+                    }
+                  }}
+                />
+              </SectionList>
+
               <SectionList
                 title="EMAIL"
                 noItems={!user.email || user.email === ''}
