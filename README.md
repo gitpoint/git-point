@@ -59,6 +59,8 @@ Feel free to send me feedback on [twitter](https://twitter.com/hdjirdeh) or [fil
 - `yarn start` in one terminal tab to start the packager
 - `yarn run ios` in another tab to run the app in the iOS simulator
 
+Please take a look at the [contributing guidelines](./CONTRIBUTING.md) for a detailed process on how to build your application as well as troubleshooting information.
+
 **Development Keys**: The `CLIENT_ID` and `CLIENT_SECRET` in `api/index.js` are for development purposes and do not represent the actual application keys. Feel free to use them or use a new set of keys by creating an [OAuth application](https://github.com/settings/applications/new) of your own
 
 ## Contributors
