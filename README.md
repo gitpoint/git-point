@@ -15,7 +15,7 @@
 
 <p align="center">
   <a href="https://github.com/gitpoint/git-point#contributors">
-    <img alt="All Contributors" title="All Contributors" src="https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square">
+    <img alt="All Contributors" title="All Contributors" src="https://img.shields.io/badge/all_contributors-10-orange.svg?style=flat-square">
   </a>
    <a href="/CONTRIBUTING.md"><img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg"></a>
 </p>
