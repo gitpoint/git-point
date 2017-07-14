@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { FlatList, View, StyleSheet, Dimensions, Text } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
-import SearchBar from 'react-native-search-box';
 
-import { ViewContainer, IssueListItem, LoadingContainer } from 'components';
+import { ViewContainer, IssueListItem, LoadingContainer, SearchBar } from 'components';
 
 import { colors, normalize } from 'config';
 
@@ -133,15 +132,12 @@ class IssueList extends Component {
           <View style={styles.searchBarWrapper}>
             <View style={styles.searchContainer}>
               <SearchBar
-                ref="searchBar"
-                inputStyle={colors.primaryDark}
-                backgroundColor={colors.greyLight}
-                cancelButtonStyle={styles.searchCancelButton}
+                textColor={colors.primaryDark}
+                textFieldBackgroundColor={colors.greyLight}
+                showsCancelButton={searchFocus}
                 onFocus={() => this.setState({ searchFocus: true })}
-                onCancel={() => {
-                  this.setState({ searchStart: false, query: '' });
-                }}
-                onSearch={query => {
+                onCancelButtonPress={() => this.setState({ searchStart: false, query: '' })}
+                onSearchButtonPress={query => {
                   this.search(query);
                 }}
               />
