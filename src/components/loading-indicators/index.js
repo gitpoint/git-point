@@ -4,3 +4,4 @@ export * from './loading-repository-list-item.component';
 export * from './loading-repository-profile.component';
 export * from './loading-user-list-item.component';
 export * from './loading-list-item.component';
+export * from './loading-modal.component';

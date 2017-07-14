@@ -5,6 +5,7 @@ import {
   GET_REPOSITORY_FILE,
   GET_REPOSITORY_ISSUES,
   GET_REPO_STARRED_STATUS,
+  FORK_REPO_STATUS,
   CHANGE_STAR_STATUS,
   GET_REPOSITORY_README,
   GET_REPOSITORY_LABELS,
@@ -23,6 +24,7 @@ const initialState = {
   issues: [],
   readMe: "",
   starred: false,
+  forked: false,
   subscribed: false,
   searchedOpenIssues: [],
   searchedClosedIssues: [],
@@ -42,6 +44,7 @@ const initialState = {
   isPendingSearchClosedIssues: false,
   isPendingSearchOpenPulls: false,
   isPendingSearchClosedPulls: false,
+  isPendingFork: false,
   error: ""
 };
 
@@ -151,6 +154,22 @@ export const repositoryReducer = (state = initialState, action = {}) => {
         ...state,
         error: action.payload,
         isPendingCheckStarred: false
+      };
+    case FORK_REPO_STATUS.PENDING:
+      return {
+        ...state,
+        isPendingFork: true
+      };
+    case FORK_REPO_STATUS.SUCCESS:
+      return {
+        ...state,
+        forked: action.payload,
+        isPendingFork: false
+      };
+    case FORK_REPO_STATUS.ERROR:
+      return {
+        ...state,
+        isPendingFork: false
       };
     case CHANGE_STAR_STATUS.PENDING:
       return {
