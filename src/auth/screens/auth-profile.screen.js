@@ -71,22 +71,17 @@ class AuthProfile extends Component {
             stickyTitle={user.login}
           >
 
-            <SectionList
-              title="BIO"
-              noItems={!user.bio || user.bio === ''}
-              noItemsMessage={'This user has no bio'}
-            >
-              <ListItem
-                subtitle={user.bio}
-                subtitleStyle={styles.listSubTitle}
-                underlayColor={colors.greyLight}
-                rightIcon={{
-                  style: {
-                    display: 'none'
-                  }
-                }}
-              />
-            </SectionList>
+            {user.bio && user.bio !== '' &&
+              <SectionList
+                title="BIO"
+              >
+                <ListItem
+                  subtitle={user.bio}
+                  subtitleStyle={styles.listSubTitle}
+                  hideChevron
+                />
+              </SectionList>
+            }
 
             <SectionList
               title="EMAIL"
