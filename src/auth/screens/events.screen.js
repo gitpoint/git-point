@@ -636,7 +636,9 @@ class Events extends Component {
                 item.type === 'PullRequestReviewCommentEvent') &&
                 <View style={styles.subtitleContainer}>
                   <Text numberOfLines={3} style={styles.subtitle}>
-                    {emojifyText(item.payload.comment.body.replace(linebreaksPattern, ' '))}
+                    {emojifyText(
+                      item.payload.comment.body.replace(linebreaksPattern, ' ')
+                    )}
                   </Text>
                 </View>}
             </View>}

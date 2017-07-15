@@ -30,47 +30,47 @@ const styles = StyleSheet.create({
   contentContainer: {
     padding: 0,
     marginTop: 25,
-    marginBottom: 25
+    marginBottom: 25,
   },
   dividerStyle: {
-    marginBottom: 0
+    marginBottom: 0,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 10,
     backgroundColor: colors.greyVeryLight,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
   },
   branchIcon: {
-    marginRight: 5
+    marginRight: 5,
   },
   headerText: {
     color: colors.primaryDark,
     fontFamily: 'AvenirNext-DemiBold',
-    fontSize: normalize(12)
+    fontSize: normalize(12),
   },
   content: {
     paddingVertical: 10,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
   },
   contentText: {
     fontFamily: 'Menlo',
-    fontSize: normalize(10)
+    fontSize: normalize(10),
   },
   contentCode: {
     paddingRight: 15,
-    paddingBottom: 0
+    paddingBottom: 0,
   },
   codeContainer: {
-    flex: 1
+    flex: 1,
   },
   imageContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    height: 400
-  }
+    height: 400,
+  },
 });
 
 class RepositoryFile extends Component {
@@ -133,7 +133,8 @@ class RepositoryFile extends Component {
   render() {
     const { fileContent, isPendingFile, navigation } = this.props;
     const fileType = navigation.state.params.content.name.split('.').pop();
-    const isUnknownType = (!this.isImage(fileType) && !this.isKnownType(fileType));
+    const isUnknownType =
+      !this.isImage(fileType) && !this.isKnownType(fileType);
 
     return (
       <ViewContainer>
@@ -166,20 +167,21 @@ class RepositoryFile extends Component {
                       {fileContent}
                     </Text>
                   </ScrollView>
-                </View>
-              }
+                </View>}
 
               {this.isKnownType(fileType) &&
                 <View style={styles.codeContainer}>
                   <SyntaxHighlighter
                     language={fileType}
                     CodeTag={Text}
-                    codeTagProps={{style: styles.contentCode}}
+                    codeTagProps={{ style: styles.contentCode }}
                     style={GithubStyle}
                     fontFamily={styles.contentText.fontFamily}
-                    fontSize={styles.contentText.fontSize}>{fileContent}</SyntaxHighlighter>
-                </View>
-              }
+                    fontSize={styles.contentText.fontSize}
+                  >
+                    {fileContent}
+                  </SyntaxHighlighter>
+                </View>}
 
               {this.isImage(fileType) &&
                 <View style={styles.imageContainer}>
