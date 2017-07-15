@@ -3,8 +3,7 @@ import {
   StyleSheet,
   ActivityIndicator,
   Dimensions,
-  Text,
-  View
+  View,
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
