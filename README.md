@@ -14,6 +14,7 @@
 </p>
 
 <p align="center">
+  [![All Contributors](https://img.shields.io/badge/all_contributors-12-orange.svg?style=flat-square)](#contributors)
   <a href="https://github.com/gitpoint/git-point#contributors">
     [![All Contributors](https://img.shields.io/badge/all_contributors-12-orange.svg?style=flat-square)](#contributors)
   </a>
