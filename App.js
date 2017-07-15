@@ -27,7 +27,7 @@ import DeviceInfo from 'react-native-device-info';
 import md5 from 'md5';
 
 if (console) {
-  console.disableYellowBox = true;
+  console.disableYellowBox = true; // eslint-disable-line no-console
 }
 
 class App extends Component {
