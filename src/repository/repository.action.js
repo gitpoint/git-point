@@ -12,7 +12,8 @@ import {
   SEARCH_OPEN_ISSUES,
   SEARCH_CLOSED_ISSUES,
   SEARCH_OPEN_PULLS,
-  SEARCH_CLOSED_PULLS
+  SEARCH_CLOSED_PULLS,
+  SUBSCRIBED_REPO_STATUS
 } from "./repository.type";
 
 import {
@@ -201,6 +202,31 @@ export const changeStarStatusRepo = (owner, repo, starred) => {
       });
   };
 };
+
+export const watchRepo = (owner, repo) => (dispatch, getState) => {
+  const accessToken = getState().auth.accessToken;
+  const isSubscribed = getState().auth.repository.subscribed;
+  // get current subscribed status from store and then "flip it"
+  // https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
+  // we should pass true for sub and false for unsub
+
+  dispatch({
+    type: SUBSCRIBED_REPO_STATUS.PENDING
+  });
+
+  return watchRepo(isSubscribed, owner, repo, accessToken)
+    .then(data => data.json())
+    .then(() => {
+      dispatch({
+        type: SUBSCRIBED_REPO_STATUS.SUCCESS
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: SUBSCRIBED_REPO_STATUS.ERROR
+      });
+    })
+}
 
 export const forkRepo = (owner, repo) => {
   return (dispatch, getState) => {

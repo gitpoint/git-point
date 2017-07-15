@@ -12,7 +12,8 @@ import {
   SEARCH_OPEN_ISSUES,
   SEARCH_CLOSED_ISSUES,
   SEARCH_OPEN_PULLS,
-  SEARCH_CLOSED_PULLS
+  SEARCH_CLOSED_PULLS,
+  SUBSCRIBED_REPO_STATUS
 } from "./repository.type";
 
 const initialState = {
@@ -45,6 +46,7 @@ const initialState = {
   isPendingSearchOpenPulls: false,
   isPendingSearchClosedPulls: false,
   isPendingFork: false,
+  isPendingSubscribe: false,
   error: ""
 };
 
@@ -171,6 +173,23 @@ export const repositoryReducer = (state = initialState, action = {}) => {
         ...state,
         isPendingFork: false
       };
+    case SUBSCRIBED_REPO_STATUS.PENDING:
+      return {
+        ...state,
+        isPendingSubscribe: true
+      }
+    case SUBSCRIBED_REPO_STATUS.SUCCESS:
+      return {
+        ...state,
+        subscribed: true,
+        isPendingSubscribe: false
+      }
+    case SUBSCRIBED_REPO_STATUS.ERROR:
+      return {
+        ...state,
+        isPendingCheckSubscribed: false,
+        isPendingSubscribe: false
+      }
     case CHANGE_STAR_STATUS.PENDING:
       return {
         ...state,

@@ -20,3 +20,4 @@ export const SEARCH_OPEN_ISSUES = createActionSet("SEARCH_OPEN_ISSUES");
 export const SEARCH_CLOSED_ISSUES = createActionSet("SEARCH_CLOSED_ISSUES");
 export const SEARCH_OPEN_PULLS = createActionSet("SEARCH_OPEN_PULLS");
 export const SEARCH_CLOSED_PULLS = createActionSet("SEARCH_CLOSED_PULLS");
+export const SUBSCRIBED_REPO_STATUS = createActionSet("SUBSCRIBED_REPO_STATUS");

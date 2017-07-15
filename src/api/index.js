@@ -258,6 +258,22 @@ export const fetchForkRepo = (
   );
 };
 
+export const watchRepo = (
+  isSubscribed,
+  owner,
+  repo,
+  accessToken
+) => {
+  const ENDPOINT = `https://api.github.com/repos/${owner}/${repo}/subscription`;
+
+  return fetch(
+    ENDPOINT,
+    accessTokenParametersPUT(accessToken, {
+      subscribed: !isSubscribed
+    })
+  )
+};
+
 export const fetchChangeFollowStatus = (user, isFollowing, accessToken) => {
   const ENDPOINT = `https://api.github.com/user/following/${user}`;
 

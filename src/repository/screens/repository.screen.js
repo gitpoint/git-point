@@ -34,6 +34,7 @@ const mapStateToProps = state => ({
   issues: state.repository.issues,
   starred: state.repository.starred,
   forked: state.repository.forked,
+  subscribed: state.repository.subscribed,
   isPendingRepository: state.repository.isPendingRepository,
   isPendingContributors: state.repository.isPendingContributors,
   isPendingIssues: state.repository.isPendingIssues,
@@ -45,8 +46,7 @@ const mapDispatchToProps = dispatch => ({
   getRepositoryInfo: url => dispatch(getRepositoryInfo(url)),
   getContributors: url => dispatch(getContributors(url)),
   getIssues: url => dispatch(getIssues(url)),
-  changeStarStatusRepo: (owner, repo, starred) =>
-    dispatch(changeStarStatusRepo(owner, repo, starred)),
+  changeStarStatusRepo: (owner, repo, starred) => dispatch(changeStarStatusRepo(owner, repo, starred)),
   forkRepo: (owner, repo) => dispatch(forkRepo(owner, repo))
 });
 
