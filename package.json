@@ -22,7 +22,7 @@
       "prettier --single-quote --print-width 120 --trailing-comma es5 --write",
       "git add",
       "eslint --cache --max-warnings 0"
-    ],
+    ]
   },
   "pre-commit": [
     "lint-staged",
