@@ -148,7 +148,6 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     width: window.width - 30,
     position: 'absolute',
-    right: 15,
     bottom: Platform.OS === 'ios' ? 20 : 35,
     shadowColor: 'transparent'
   },
