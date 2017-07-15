@@ -8,7 +8,7 @@
     "ios": "./node_modules/.bin/react-native run-ios",
     "android": "./node_modules/.bin/react-native run-android",
     "lint-staged": "lint-staged",
-    "lint-pass": "echo '\033[42mCOMMIT SUCCEEDED\033[0m 🎉🎉🎉\n'",
+    "lint-pass": "echo '\\033[42mCOMMIT SUCCEEDED\\033[0m 🎉 🎉 🎉\n'",
     "eslint": "eslint .",
     "test": "jest",
     "flow-start": "flow start",
