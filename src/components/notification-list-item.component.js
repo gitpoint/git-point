@@ -4,7 +4,7 @@ import React from 'react';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-import { colors, normalize } from '../config';
+import { colors, normalize } from 'config';
 
 type Props = {
   notification: Object,

@@ -13,7 +13,7 @@ import createEncryptor from 'redux-persist-transform-encrypt';
 import DeviceInfo from 'react-native-device-info';
 import md5 from 'md5';
 
-import { colors } from './src/config';
+import { colors } from 'config';
 import { GitPoint } from './routes';
 import { configureStore } from './root.store';
 

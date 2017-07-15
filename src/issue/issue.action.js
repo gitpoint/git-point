@@ -1,4 +1,13 @@
 import {
+  fetchDiff,
+  fetchMergeStatus,
+  fetchCommentHTML,
+  fetchPostIssueComment,
+  fetchEditIssue,
+  fetchChangeIssueLockStatus,
+  fetchMergePullRequest,
+} from 'api';
+import {
   GET_ISSUE_COMMENTS,
   POST_ISSUE_COMMENT,
   EDIT_ISSUE,
@@ -8,15 +17,6 @@ import {
   MERGE_PULL_REQUEST,
   GET_ISSUE_FROM_URL,
 } from './issue.type';
-import {
-  fetchDiff,
-  fetchMergeStatus,
-  fetchCommentHTML,
-  fetchPostIssueComment,
-  fetchEditIssue,
-  fetchChangeIssueLockStatus,
-  fetchMergePullRequest,
-} from '../api';
 
 export const getIssueComments = issue => {
   return (dispatch, getState) => {

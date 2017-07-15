@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import { List, ListItem, Button } from 'react-native-elements';
 
-import { colors } from '../config';
+import { colors } from 'config';
 
 type Props = {
   loading: boolean,

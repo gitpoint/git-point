@@ -14,9 +14,9 @@ import {
   IssueDescription,
   CommentListItem,
   CommentInput,
-} from '../../components';
-import { colors } from '../../config';
-import { getRepository } from '../../repository';
+} from 'components';
+import { colors } from 'config';
+import { getRepository } from 'repository';
 import {
   getIssueComments,
   postIssueComment,

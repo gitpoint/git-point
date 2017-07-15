@@ -3,8 +3,8 @@ import { StyleSheet, TouchableHighlight, View } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import moment from 'moment';
 
-import { IssueStateBadge } from '../components';
-import { colors } from '../config';
+import { IssueStateBadge } from 'components';
+import { colors } from 'config';
 
 type Props = {
   type: string,

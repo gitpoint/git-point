@@ -11,8 +11,8 @@ import {
   MembersList,
   SectionList,
   ParallaxScroll,
-} from '../../components';
-import { colors } from '../../config';
+} from 'components';
+import { colors } from 'config';
 import { getOrg, getOrgRepos, getOrgMembers } from '../index';
 
 const mapStateToProps = state => ({

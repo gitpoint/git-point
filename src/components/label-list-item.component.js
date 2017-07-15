@@ -2,8 +2,8 @@ import React from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-import { LabelButton } from '../components';
-import { colors } from '../config';
+import { LabelButton } from 'components';
+import { colors } from 'config';
 
 type Props = {
   label: Object,

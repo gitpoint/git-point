@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { StyleSheet, FlatList, View, Text } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
-import { ViewContainer, LoadingListItem } from '../../components';
-import { colors, normalize } from '../../config';
+import { ViewContainer, LoadingListItem } from 'components';
+import { colors, normalize } from 'config';
 import { getContents } from '../repository.action';
 
 const mapStateToProps = state => ({

@@ -1,5 +1,5 @@
+import { fetchOrg, fetchOrgMembers, fetchUrl } from 'api';
 import { GET_ORG, GET_ORG_REPOS, GET_ORG_MEMBERS } from './organization.type';
-import { fetchOrg, fetchOrgMembers, fetchUrl } from '../api';
 
 export const getOrg = orgName => {
   return (dispatch, getState) => {

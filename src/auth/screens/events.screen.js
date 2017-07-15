@@ -5,14 +5,10 @@ import { connect } from 'react-redux';
 import { StyleSheet, Text, FlatList, View } from 'react-native';
 import moment from 'moment';
 
-import {
-  LoadingUserListItem,
-  UserListItem,
-  ViewContainer,
-} from '../../components';
+import { LoadingUserListItem, UserListItem, ViewContainer } from 'components';
+import { colors, normalize } from 'config';
+import { emojifyText } from 'utils';
 import { getUserEvents } from '../auth.action';
-import { colors, normalize } from '../../config';
-import { emojifyText } from '../../utils';
 
 moment.updateLocale('en', {
   relativeTime: {

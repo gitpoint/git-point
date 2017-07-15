@@ -4,8 +4,8 @@ import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import { Button } from 'react-native-elements';
 import { NavigationActions } from 'react-navigation';
 
-import { ViewContainer } from '../../components';
-import { colors, normalize } from '../../config';
+import { ViewContainer } from 'components';
+import { colors, normalize } from 'config';
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,

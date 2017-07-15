@@ -4,8 +4,8 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, Animated } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-import { colors, normalize } from '../../config';
-import { loadingAnimation } from '../../utils';
+import { colors, normalize } from 'config';
+import { loadingAnimation } from 'utils';
 
 const styles = StyleSheet.create({
   container: {

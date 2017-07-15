@@ -9,8 +9,8 @@ import {
   RepositoryListItem,
   UserListItem,
   LoadingContainer,
-} from '../../components';
-import { colors, normalize } from '../../config';
+} from 'components';
+import { colors, normalize } from 'config';
 import { searchRepos, searchUsers } from '../index';
 
 const mapStateToProps = state => ({

@@ -6,7 +6,7 @@ import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import moment from 'moment';
 
-import { colors, normalize } from '../config';
+import { colors, normalize } from 'config';
 
 const styles = StyleSheet.create({
   container: {

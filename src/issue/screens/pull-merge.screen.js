@@ -10,8 +10,8 @@ import {
 } from 'react-native';
 import { ListItem, Icon } from 'react-native-elements';
 
-import { ViewContainer, SectionList } from '../../components';
-import { colors, normalize } from '../../config';
+import { ViewContainer, SectionList } from 'components';
+import { colors, normalize } from 'config';
 import { mergePullRequest } from '../issue.action';
 
 const mapStateToProps = state => ({

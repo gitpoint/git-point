@@ -1,4 +1,4 @@
-import { createActionSet } from '../utils';
+import { createActionSet } from 'utils';
 
 export const GET_USER = createActionSet('GET_USER');
 export const GET_ORGS = createActionSet('GET_ORGS');

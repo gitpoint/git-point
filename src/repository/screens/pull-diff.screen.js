@@ -4,8 +4,8 @@ import { View, ScrollView, Text, FlatList, StyleSheet } from 'react-native';
 import { Card } from 'react-native-elements';
 import Parse from 'parse-diff';
 
-import { ViewContainer, DiffBlocks, CodeLine } from '../../components';
-import { colors, normalize } from '../../config';
+import { ViewContainer, DiffBlocks, CodeLine } from 'components';
+import { colors, normalize } from 'config';
 
 const styles = StyleSheet.create({
   fileChangeContainer: {

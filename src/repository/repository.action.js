@@ -1,4 +1,14 @@
 import {
+  fetchUrl,
+  fetchUrlNormal,
+  fetchUrlFile,
+  fetchCommentHTML,
+  fetchReadMe,
+  fetchSearch,
+  fetchChangeStarStatusRepo,
+  fetchForkRepo,
+} from 'api';
+import {
   GET_REPOSITORY,
   GET_REPOSITORY_CONTRIBUTORS,
   GET_REPOSITORY_CONTENTS,
@@ -14,16 +24,6 @@ import {
   SEARCH_OPEN_PULLS,
   SEARCH_CLOSED_PULLS,
 } from './repository.type';
-import {
-  fetchUrl,
-  fetchUrlNormal,
-  fetchUrlFile,
-  fetchCommentHTML,
-  fetchReadMe,
-  fetchSearch,
-  fetchChangeStarStatusRepo,
-  fetchForkRepo,
-} from '../api';
 
 export const getRepository = url => {
   return (dispatch, getState) => {

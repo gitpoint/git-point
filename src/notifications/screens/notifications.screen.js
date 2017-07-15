@@ -16,16 +16,16 @@ import {
   ViewContainer,
   LoadingContainer,
   NotificationListItem,
-} from '../../components';
-import { colors, normalize } from '../../config';
+} from 'components';
+import { colors, normalize } from 'config';
+import { getIssueFromUrl } from 'issue';
 import {
   getUnreadNotifications,
   getParticipatingNotifications,
   getAllNotifications,
   markAsRead,
   markRepoAsRead,
-} from '../';
-import { getIssueFromUrl } from '../../issue';
+} from '../index';
 
 const mapStateToProps = state => ({
   unread: state.notifications.unread,

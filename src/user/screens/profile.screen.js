@@ -16,8 +16,8 @@ import {
   SectionList,
   ParallaxScroll,
   UserListItem,
-} from '../../components';
-import { colors } from '../../config';
+} from 'components';
+import { colors } from 'config';
 import { getUserInfo, changeFollowStatus } from '../user.action';
 
 const mapStateToProps = state => ({

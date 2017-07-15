@@ -9,8 +9,8 @@ import {
   MembersList,
   LabelButton,
   DiffBlocks,
-} from '../components';
-import { colors, normalize } from '../config';
+} from 'components';
+import { colors, normalize } from 'config';
 
 const styles = StyleSheet.create({
   headerContainer: {

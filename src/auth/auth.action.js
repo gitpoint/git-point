@@ -1,10 +1,10 @@
-import { LOGIN, GET_AUTH_USER, GET_AUTH_ORGS, GET_EVENTS } from './auth.type';
 import {
   fetchAccessToken,
   fetchAuthUser,
   fetchAuthUserOrgs,
   fetchUserEvents,
-} from '../api';
+} from 'api';
+import { LOGIN, GET_AUTH_USER, GET_AUTH_ORGS, GET_EVENTS } from './auth.type';
 
 export const auth = (code, state) => {
   return dispatch => {

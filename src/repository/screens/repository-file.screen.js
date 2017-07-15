@@ -13,8 +13,8 @@ import SyntaxHighlighter from 'react-native-syntax-highlighter';
 import { getLanguage } from 'lowlight';
 import { github as GithubStyle } from 'react-syntax-highlighter/dist/styles';
 
-import { ViewContainer, LoadingContainer } from '../../components';
-import { colors, normalize } from '../../config';
+import { ViewContainer, LoadingContainer } from 'components';
+import { colors, normalize } from 'config';
 import { getRepositoryFile } from '../repository.action';
 
 const mapStateToProps = state => ({

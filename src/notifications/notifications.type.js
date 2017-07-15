@@ -1,4 +1,4 @@
-import { createActionSet } from '../utils';
+import { createActionSet } from 'utils';
 
 export const GET_UNREAD_NOTIFICATIONS = createActionSet(
   'GET_UNREAD_NOTIFICATIONS'

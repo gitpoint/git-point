@@ -4,7 +4,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 
-import { colors, normalize } from '../config';
+import { colors, normalize } from 'config';
 
 type Props = { newChunk: boolean, change: Object };
 

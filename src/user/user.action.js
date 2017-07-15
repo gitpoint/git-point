@@ -1,4 +1,14 @@
 import {
+  fetchUser,
+  fetchUserOrgs,
+  fetchUrl,
+  fetchUrlNormal,
+  USER_ENDPOINT,
+  fetchSearch,
+  fetchChangeFollowStatus,
+  root as apiRoot,
+} from 'api';
+import {
   GET_USER,
   GET_ORGS,
   GET_FOLLOW_STATUS,
@@ -8,17 +18,6 @@ import {
   SEARCH_USER_REPOS,
   CHANGE_FOLLOW_STATUS,
 } from './user.type';
-
-import {
-  fetchUser,
-  fetchUserOrgs,
-  fetchUrl,
-  fetchUrlNormal,
-  USER_ENDPOINT,
-  fetchSearch,
-  fetchChangeFollowStatus,
-  root as apiRoot,
-} from '../api';
 
 const getUser = user => {
   return (dispatch, getState) => {

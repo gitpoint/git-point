@@ -2,12 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FlatList, View } from 'react-native';
 
-import {
-  ViewContainer,
-  UserListItem,
-  LoadingUserListItem,
-} from '../../components';
-import { getFollowing } from '../../user';
+import { ViewContainer, UserListItem, LoadingUserListItem } from 'components';
+import { getFollowing } from 'user';
 
 const mapStateToProps = state => ({
   user: state.user.user,

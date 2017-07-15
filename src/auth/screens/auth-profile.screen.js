@@ -11,9 +11,9 @@ import {
   LoadingContainer,
   ParallaxScroll,
   UserListItem,
-} from '../../components';
-import { colors } from '../../config';
-import { getUser, getOrgs } from '../../auth';
+} from 'components';
+import { colors } from 'config';
+import { getUser, getOrgs } from 'auth';
 
 const mapStateToProps = state => ({
   user: state.auth.user,

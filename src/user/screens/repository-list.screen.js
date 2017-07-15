@@ -7,9 +7,9 @@ import {
   ViewContainer,
   RepositoryListItem,
   LoadingRepositoryListItem,
-} from '../../components';
-import { colors } from '../../config';
-import { getRepositories, searchUserRepos } from '../../user';
+} from 'components';
+import { colors } from 'config';
+import { getRepositories, searchUserRepos } from 'user';
 
 const mapStateToProps = state => ({
   user: state.user.user,

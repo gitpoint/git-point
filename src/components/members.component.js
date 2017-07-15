@@ -9,7 +9,7 @@ import {
   Image,
 } from 'react-native';
 
-import { colors } from '../config';
+import { colors } from 'config';
 
 type Props = {
   title: string,

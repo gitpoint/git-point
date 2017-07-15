@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, Animated, View } from 'react-native';
 
-import { colors } from '../../config';
-import { loadingAnimation } from '../../utils';
+import { colors } from 'config';
+import { loadingAnimation } from 'utils';
 
 const styles = StyleSheet.create({
   container: {

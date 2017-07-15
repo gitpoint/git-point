@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { StyleSheet, View, Image } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 
-import { colors } from '../../config';
+import { colors } from 'config';
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,

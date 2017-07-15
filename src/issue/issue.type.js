@@ -1,4 +1,4 @@
-import { createActionSet } from '../utils';
+import { createActionSet } from 'utils';
 
 export const GET_ISSUE_COMMENTS = createActionSet('GET_ISSUE_COMMENTS');
 export const POST_ISSUE_COMMENT = createActionSet('POST_ISSUE_COMMENT');

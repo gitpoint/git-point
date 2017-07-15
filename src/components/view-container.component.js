@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, StatusBar, View } from 'react-native';
 
-import { colors } from '../config';
+import { colors } from 'config';
 
 type Props = {
   barColor: string,

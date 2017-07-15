@@ -8,10 +8,10 @@ import {
   SectionList,
   UserListItem,
   LabelListItem,
-} from '../../components';
-import { colors } from '../../config';
+} from 'components';
+import { colors } from 'config';
+import { getLabels } from 'repository';
 import { editIssue, changeIssueLockStatus } from '../issue.action';
-import { getLabels } from '../../repository';
 
 const mapStateToProps = state => ({
   authUser: state.auth.user,

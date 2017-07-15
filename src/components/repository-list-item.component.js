@@ -2,8 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { ListItem, Icon } from 'react-native-elements';
 
-import { emojifyText } from '../utils';
-import { colors, languageColors, normalize } from '../config';
+import { emojifyText } from 'utils';
+import { colors, languageColors, normalize } from 'config';
 
 type Props = {
   repository: Object,

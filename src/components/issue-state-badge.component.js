@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 
-import { colors, normalize } from '../config';
+import { colors, normalize } from 'config';
 
 type Props = {
   issue: Object,

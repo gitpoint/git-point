@@ -1,15 +1,15 @@
 import {
+  fetchNotifications,
+  fetchMarkNotificationAsRead,
+  fetchMarkRepoNotificationAsRead,
+} from 'api';
+import {
   GET_UNREAD_NOTIFICATIONS,
   GET_PARTICIPATING_NOTIFICATIONS,
   GET_ALL_NOTIFICATIONS,
   MARK_NOTIFICATION_AS_READ,
   MARK_REPO_AS_READ,
 } from './notifications.type';
-import {
-  fetchNotifications,
-  fetchMarkNotificationAsRead,
-  fetchMarkRepoNotificationAsRead,
-} from '../api';
 
 export const getUnreadNotifications = () => {
   return (dispatch, getState) => {

@@ -3,7 +3,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-import { colors } from '../config';
+import { colors } from 'config';
 
 type Props = {
   additions: number,

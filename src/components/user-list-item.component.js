@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-import { colors, normalize } from '../config';
+import { colors, normalize } from 'config';
 
 type Props = {
   user: Object,

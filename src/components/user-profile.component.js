@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 
-import { colors, normalize } from '../config';
+import { colors, normalize } from 'config';
 
 type Props = {
   type: string,

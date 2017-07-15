@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { WebView, StyleSheet, View, Text } from 'react-native';
 import { connect } from 'react-redux';
 
-import { ViewContainer, LoadingContainer } from '../../components';
-import { normalize } from '../../config';
+import { ViewContainer, LoadingContainer } from 'components';
+import { normalize } from 'config';
 import { getReadMe } from '../repository.action';
 
 const mapStateToProps = state => ({

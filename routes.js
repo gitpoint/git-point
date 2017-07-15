@@ -8,7 +8,7 @@ import {
 } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
-import { colors } from './src/config';
+import { colors } from 'config';
 
 // Auth
 import {
@@ -17,7 +17,7 @@ import {
   WelcomeScreen,
   AuthProfileScreen,
   EventsScreen,
-} from './src/auth';
+} from 'auth';
 
 // User
 import {
@@ -25,16 +25,16 @@ import {
   RepositoryListScreen,
   FollowerListScreen,
   FollowingListScreen,
-} from './src/user';
+} from 'user';
 
 // Organization
-import { OrganizationProfileScreen } from './src/organization';
+import { OrganizationProfileScreen } from 'organization';
 
 // Search
-import { SearchScreen } from './src/search';
+import { SearchScreen } from 'search';
 
 // Notifications
-import { NotificationsScreen } from './src/notifications';
+import { NotificationsScreen } from 'notifications';
 
 // Repository
 import {
@@ -45,10 +45,10 @@ import {
   PullListScreen,
   PullDiffScreen,
   ReadMeScreen,
-} from './src/repository';
+} from 'repository';
 
 // Issue
-import { IssueScreen, IssueSettingsScreen, PullMergeScreen } from './src/issue';
+import { IssueScreen, IssueSettingsScreen, PullMergeScreen } from 'issue';
 
 const sharedRoutes = {
   RepositoryList: {

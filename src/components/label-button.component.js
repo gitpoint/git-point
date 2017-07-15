@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Button } from 'react-native-elements';
 
-import { colors } from '../config';
+import { colors } from 'config';
 
 type Props = {
   label: Object,

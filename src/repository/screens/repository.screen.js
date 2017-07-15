@@ -15,8 +15,8 @@ import {
   IssueListItem,
   LoadingMembersList,
   LoadingModal,
-} from '../../components';
-import { colors } from '../../config';
+} from 'components';
+import { colors } from 'config';
 import {
   getRepositoryInfo,
   getContributors,
