@@ -126,18 +126,14 @@ class RepositoryFile extends Component {
               }
 
               {!this.isImage(fileType) && this.isKnownType(fileType) &&
-                <View>
-                  <ScrollView
-                    automaticallyAdjustContentInsets={false}
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}
-                  >
-                    <SyntaxHighlighter
-                      language={fileType}
-                      style={GithubStyle}
-                      fontFamily={styles.contentText.fontFamily}
-                      fontSize={styles.contentText.fontSize}>{fileContent}</SyntaxHighlighter>
-                  </ScrollView>
+                <View style={{flex:1}}>
+                  <SyntaxHighlighter
+                    language={fileType}
+                    CodeTag={Text}
+                    codeTagProps={{style: styles.contentCode}}
+                    style={GithubStyle}
+                    fontFamily={styles.contentText.fontFamily}
+                    fontSize={styles.contentText.fontSize}>{fileContent}</SyntaxHighlighter>
                 </View>
               }
 
@@ -192,6 +188,10 @@ const styles = StyleSheet.create({
   contentText: {
     fontFamily: 'Menlo',
     fontSize: normalize(10)
+  },
+  contentCode: {
+    paddingRight: 15,
+    paddingBottom: 0
   },
   imageContainer: {
     flex: 1,
