@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { ListItem, Icon } from 'react-native-elements';
 
 import { colors, languageColors, normalize } from 'config';
+import { emojifyText } from 'utils';
 
 type Props = {
   repository: Object,
@@ -35,7 +36,7 @@ const renderTitle = repository => (
         {repository.private && <Text style={styles.private}>Private</Text>}
       </View>
       <Text style={styles.description}>
-        {repository.description}
+        {emojifyText(repository.description)}
       </Text>
     </View>
     <View style={styles.extraInfo}>
