@@ -2182,6 +2182,13 @@ eslint-config-airbnb@~15.0.1:
   dependencies:
     eslint-config-airbnb-base "^11.2.0"
 
+eslint-import-resolver-babel-module@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-import-resolver-babel-module/-/eslint-import-resolver-babel-module-3.0.0.tgz#5cadaca5fa0ae2fe2fcb3566ed9db8ab15db39c0"
+  dependencies:
+    pkg-up "^1.0.0"
+    resolve "^1.2.0"
+
 eslint-import-resolver-node@^0.2.0:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/eslint-import-resolver-node/-/eslint-import-resolver-node-0.2.3.tgz#5add8106e8c928db2cba232bcd9efa846e3da16c"
