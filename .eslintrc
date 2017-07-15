@@ -4,7 +4,8 @@
         "jsx-a11y",
         "import",
         "react",
-        "react-native"
+        "react-native",
+        "flowtype"
     ],
     "parser": "babel-eslint",
     "env": {
@@ -19,6 +20,8 @@
         "__DEV__": true
     },
     "rules": {
+        "global-require": "off",
+        "import/prefer-default-export": "off",
         "jsx-a11y/anchor-has-content": "off",
         "jsx-a11y/no-noninteractive-element-interactions": "off",
         "jsx-a11y/no-static-element-interactions": "off",
@@ -56,6 +59,44 @@
         "react/jsx-indent-props": "off",
         "react/jsx-no-bind": "error",
         "react/no-multi-comp": "off",
-        "react/prefer-stateless-function": "off"
+        "react/prefer-stateless-function": "off",
+        "react/sort-comp": [
+          "error",
+          {
+            "order": [
+              "static-methods",
+              "lifecycle",
+              "/^on.+$/",
+              "/^(get|set)(?!(InitialState$|DefaultProps$|ChildContext$)).+$/",
+              "everything-else",
+              "/^render.+$/",
+              "render",
+            ],
+            "groups": {
+              "lifecycle": [
+                "displayName",
+                "props",
+                "propTypes",
+                "contextTypes",
+                "childContextTypes",
+                "mixins",
+                "statics",
+                "defaultProps",
+                "state",
+                "constructor",
+                "getDefaultProps",
+                "getInitialState",
+                "getChildContext",
+                "componentWillMount",
+                "componentDidMount",
+                "componentWillReceiveProps",
+                "shouldComponentUpdate",
+                "componentWillUpdate",
+                "componentDidUpdate",
+                "componentWillUnmount",
+              ],
+            },
+          },
+        ],
     }
 }
