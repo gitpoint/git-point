@@ -56,6 +56,7 @@ export const getRepository = url => {
 
     return fetchUrl(url, accessToken)
       .then(data => {
+        console.log(data);
         dispatch({
           type: GET_REPOSITORY.SUCCESS,
           payload: data
