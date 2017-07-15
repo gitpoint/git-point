@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, ActionSheetIOS } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import ActionSheet from 'react-native-actionsheet';
 
 import {
   ViewContainer,
@@ -56,6 +57,7 @@ class Repository extends Component {
     getRepositoryInfo: Function,
     getIssues: Function,
     changeStarStatusRepo: Function,
+    forkRepo: Function,
     repositoryName: string,
     repository: Object,
     contributors: Array,
@@ -67,7 +69,9 @@ class Repository extends Component {
     isPendingIssues: boolean,
     isPendingCheckStarred: boolean,
     isPendingCheckForked: boolean,
-    navigation: Object
+    isPendingFork: boolean,
+    navigation: Object,
+    username: string,
   };
 
   componentDidMount() {
@@ -78,46 +82,39 @@ class Repository extends Component {
     this.props.getRepositoryInfo(repo ? repo.url : repoUrl);
   }
 
-  showMenuActionSheet() {
+  showMenuActionSheet = () => {
+    this.ActionSheet.show();
+  };
+
+  handlePress = (index) => {
     const {
       starred,
       repository,
       changeStarStatusRepo,
       forkRepo,
       navigation,
-      username
+      username,
     } = this.props;
-    let repositoryActions = [ starred ? '★ Unstar' : '★ Star'];
     const showFork = repository.owner.login !== username;
-    if (showFork) {
-      repositoryActions.push('Fork');
+
+    if (index === 0) {
+      changeStarStatusRepo(
+        repository.owner.login,
+        repository.name,
+        starred,
+      );
     }
 
-    ActionSheetIOS.showActionSheetWithOptions(
-      {
-        title: 'Repository Actions',
-        options: [...repositoryActions, 'Cancel'],
-        cancelButtonIndex: repositoryActions.length
-      },
-      buttonIndex => {
-        if (buttonIndex === 0) {
-          changeStarStatusRepo(
-            repository.owner.login,
-            repository.name,
-            starred
-          );
-        }
-        if (buttonIndex === 1 && showFork) {
-          forkRepo(
-            repository.owner.login,
-            repository.name
-          ).then(json => {
-            navigation.navigate('Repository', { repository: json })
-          });
-        }
-      }
-    );
-  }
+    if (index === 1 && showFork) {
+      forkRepo(
+        repository.owner.login,
+        repository.name,
+      ).then(json => {
+        navigation.navigate('Repository', { repository: json })
+      });
+    }
+  };
+
   render() {
     const {
       repository,
@@ -129,13 +126,21 @@ class Repository extends Component {
       isPendingIssues,
       isPendingCheckStarred,
       isPendingFork,
-      navigation
+      navigation,
+      username,
     } = this.props;
     const initalRepository = navigation.state.params.repository;
     const pulls = issues.filter(issue => issue.hasOwnProperty('pull_request'));
     const pureIssues = issues.filter(
       issue => !issue.hasOwnProperty('pull_request')
     );
+
+    let repositoryActions = [starred ? '★ Unstar' : '★ Star'];
+    const showFork = repository && repository.owner && repository.owner.login !== username;
+
+    if (showFork) {
+      repositoryActions.push('Fork');
+    }
 
     const loader = isPendingFork ?
       (<LoadingModal />) :
@@ -294,6 +299,14 @@ class Repository extends Component {
               ))}
           </SectionList>
         </ParallaxScroll>
+
+        <ActionSheet
+          ref={o => this.ActionSheet = o}
+          title="Repository Actions"
+          options={[...repositoryActions, 'Cancel']}
+          cancelButtonIndex={repositoryActions.length}
+          onPress={this.handlePress}
+        />
       </ViewContainer>
     );
   }
