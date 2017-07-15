@@ -126,7 +126,7 @@ class RepositoryFile extends Component {
               }
 
               {!this.isImage(fileType) && this.isKnownType(fileType) &&
-                <View style={{flex:1}}>
+                <View style={styles.codeContainer}>
                   <SyntaxHighlighter
                     language={fileType}
                     CodeTag={Text}
@@ -192,6 +192,9 @@ const styles = StyleSheet.create({
   contentCode: {
     paddingRight: 15,
     paddingBottom: 0
+  },
+  codeContainer: {
+    flex: 1
   },
   imageContainer: {
     flex: 1,
