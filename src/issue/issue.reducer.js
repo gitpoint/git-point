@@ -6,7 +6,7 @@ import {
   GET_ISSUE_DIFF,
   GET_ISSUE_MERGE_STATUS,
   MERGE_PULL_REQUEST,
-  GET_ISSUE_FROM_URL
+  GET_ISSUE_FROM_URL,
 } from './issue.type';
 
 const initialState = {
@@ -22,7 +22,7 @@ const initialState = {
   isPendingCheckMerge: false,
   isPendingMerging: false,
   isPendingIssue: false,
-  error: ''
+  error: '',
 };
 
 export const issueReducer = (state = initialState, action = {}) => {
@@ -31,140 +31,140 @@ export const issueReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         issue: action.payload,
-        isPendingComments: true
+        isPendingComments: true,
       };
     case GET_ISSUE_COMMENTS.SUCCESS:
       return {
         ...state,
         comments: action.payload,
-        isPendingComments: false
+        isPendingComments: false,
       };
     case GET_ISSUE_COMMENTS.ERROR:
       return {
         ...state,
         error: action.payload,
-        isPendingComments: false
+        isPendingComments: false,
       };
     case POST_ISSUE_COMMENT.PENDING:
       return {
         ...state,
-        isPostingComment: true
+        isPostingComment: true,
       };
     case POST_ISSUE_COMMENT.SUCCESS:
       return {
         ...state,
         comments: [...state.comments, action.payload],
-        isPostingComment: false
+        isPostingComment: false,
       };
     case POST_ISSUE_COMMENT.ERROR:
       return {
         ...state,
         error: action.payload,
-        isPostingComment: false
+        isPostingComment: false,
       };
     case EDIT_ISSUE.PENDING:
       return {
         ...state,
-        isEditingIssue: true
+        isEditingIssue: true,
       };
     case EDIT_ISSUE.SUCCESS: {
       return {
         ...state,
         issue: { ...state.issue, ...action.payload },
-        isEditingIssue: false
+        isEditingIssue: false,
       };
     }
     case EDIT_ISSUE.ERROR:
       return {
         ...state,
         error: action.payload,
-        isEditingIssue: false
+        isEditingIssue: false,
       };
     case CHANGE_LOCK_STATUS.PENDING:
       return {
         ...state,
-        isChangingLockStatus: true
+        isChangingLockStatus: true,
       };
     case CHANGE_LOCK_STATUS.SUCCESS: {
       return {
         ...state,
         issue: { ...state.issue, locked: !state.issue.locked },
-        isChangingLockStatus: false
+        isChangingLockStatus: false,
       };
     }
     case CHANGE_LOCK_STATUS.ERROR:
       return {
         ...state,
         error: action.payload,
-        isChangingLockStatus: false
+        isChangingLockStatus: false,
       };
     case GET_ISSUE_DIFF.PENDING:
       return {
         ...state,
-        isPendingDiff: true
+        isPendingDiff: true,
       };
     case GET_ISSUE_DIFF.SUCCESS:
       return {
         ...state,
         diff: action.payload,
-        isPendingDiff: false
+        isPendingDiff: false,
       };
     case GET_ISSUE_DIFF.ERROR:
       return {
         ...state,
         error: action.payload,
-        isPendingDiff: false
+        isPendingDiff: false,
       };
     case GET_ISSUE_MERGE_STATUS.PENDING:
       return {
         ...state,
-        isPendingCheckMerge: true
+        isPendingCheckMerge: true,
       };
     case GET_ISSUE_MERGE_STATUS.SUCCESS:
       return {
         ...state,
         isMerged: action.payload,
-        isPendingCheckMerge: false
+        isPendingCheckMerge: false,
       };
     case GET_ISSUE_MERGE_STATUS.ERROR:
       return {
         ...state,
         error: action.payload,
-        isPendingCheckMerge: false
+        isPendingCheckMerge: false,
       };
     case MERGE_PULL_REQUEST.PENDING:
       return {
         ...state,
-        isPendingMerging: true
+        isPendingMerging: true,
       };
     case MERGE_PULL_REQUEST.SUCCESS:
       return {
         ...state,
         isMerged: action.payload,
-        isPendingMerging: false
+        isPendingMerging: false,
       };
     case MERGE_PULL_REQUEST.ERROR:
       return {
         ...state,
         error: action.payload,
-        isPendingMerging: false
+        isPendingMerging: false,
       };
     case GET_ISSUE_FROM_URL.PENDING:
       return {
         ...state,
-        isPendingIssue: true
+        isPendingIssue: true,
       };
     case GET_ISSUE_FROM_URL.SUCCESS:
       return {
         ...state,
         issue: action.payload,
-        isPendingIssue: false
+        isPendingIssue: false,
       };
     case GET_ISSUE_FROM_URL.ERROR:
       return {
         ...state,
         error: action.payload,
-        isPendingIssue: false
+        isPendingIssue: false,
       };
     default:
       return state;

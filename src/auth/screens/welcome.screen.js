@@ -1,31 +1,53 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import { Button } from 'react-native-elements';
-
-import { ViewContainer } from 'components';
-
-import { colors, normalize } from 'config';
-
 import { NavigationActions } from 'react-navigation';
-import { connect } from 'react-redux';
+
+import { ViewContainer } from '../../components';
+import { colors, normalize } from '../../config';
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
-  isLoggingIn: state.auth.isLoggingIn
+  isLoggingIn: state.auth.isLoggingIn,
+});
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  welcomeMessage: {
+    color: colors.primarydark,
+    fontSize: normalize(24),
+    fontFamily: 'AvenirNext-Medium',
+  },
+  loadingIcon: {
+    marginTop: 30,
+  },
+  enterButton: {
+    marginTop: 30,
+    backgroundColor: colors.primarydark,
+    borderRadius: 3,
+    paddingVertical: 5,
+    width: 100,
+  },
 });
 
 class Welcome extends Component {
   props: {
     isAuthenticated: boolean,
     isLoggingIn: boolean,
-    navigation: Object
+    navigation: Object,
   };
 
   _navigateTo = (routeName: string) => {
     const resetAction = NavigationActions.reset({
       index: 0,
-      actions: [NavigationActions.navigate({ routeName })]
+      actions: [NavigationActions.navigate({ routeName })],
     });
+
     this.props.navigation.dispatch(resetAction);
   };
 
@@ -38,10 +60,7 @@ class Welcome extends Component {
           <Text style={styles.welcomeMessage}>Welcome to GitPoint</Text>
 
           {!isAuthenticated &&
-            <ActivityIndicator
-              animating={isLoggingIn}
-              style={styles.loadingIcon}
-            />}
+            <ActivityIndicator animating={isLoggingIn} style={styles.loadingIcon} />}
 
           {isAuthenticated &&
             <Button
@@ -58,28 +77,5 @@ class Welcome extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  welcomeMessage: {
-    color: colors.primarydark,
-    fontSize: normalize(24),
-    fontFamily: 'AvenirNext-Medium'
-  },
-  loadingIcon: {
-    marginTop: 30
-  },
-  enterButton: {
-    marginTop: 30,
-    backgroundColor: colors.primarydark,
-    borderRadius: 3,
-    paddingVertical: 5,
-    width: 100
-  }
-});
 
 export const WelcomeScreen = connect(mapStateToProps)(Welcome);

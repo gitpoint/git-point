@@ -1,11 +1,14 @@
 /* eslint react/prop-types: 0 */
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { StyleSheet, Text, FlatList, View } from 'react-native';
-
-import { LoadingUserListItem, UserListItem } from 'components';
-
 import moment from 'moment';
+
+import { LoadingUserListItem, UserListItem, ViewContainer } from '../../components';
+import { getUserEvents } from '../auth.action';
+import { colors, normalize } from '../../config';
+import { emojifyText } from '../../utils';
 
 moment.updateLocale('en', {
   relativeTime: {
@@ -20,26 +23,64 @@ moment.updateLocale('en', {
     M: '%dmo',
     MM: '%dmo',
     y: '%dy',
-    yy: '%dy'
-  }
+    yy: '%dy',
+  },
 });
-
-import { connect } from 'react-redux';
-import { getUserEvents } from '../auth.action';
-
-import { ViewContainer } from 'components';
-import { emojifyText } from 'utils';
-
-import { colors, normalize } from 'config';
 
 const mapStateToProps = state => ({
   user: state.auth.user,
   userEvents: state.auth.events,
-  isPendingEvents: state.auth.isPendingEvents
+  isPendingEvents: state.auth.isPendingEvents,
 });
 
 const mapDispatchToProps = dispatch => ({
-  getUserEvents: user => dispatch(getUserEvents(user))
+  getUserEvents: user => dispatch(getUserEvents(user)),
+});
+
+const styles = StyleSheet.create({
+  descriptionContainer: {
+    justifyContent: 'center',
+    flex: 1,
+    marginLeft: 10,
+    color: colors.primaryDark,
+    fontFamily: 'AvenirNext-Regular',
+  },
+  linkDescription: {
+    fontFamily: 'AvenirNext-DemiBold',
+  },
+  linkBranchDescription: {
+    fontFamily: 'Menlo',
+  },
+  deletedLinkBranchDescription: {
+    color: colors.greyDarkest,
+    fontFamily: 'Menlo',
+  },
+  date: {
+    color: colors.greyDark,
+  },
+  subtitleContainer: {
+    paddingHorizontal: 15,
+    paddingBottom: 10,
+    borderBottomColor: colors.greyLight,
+    borderBottomWidth: 1,
+  },
+  subtitle: {
+    color: colors.greyDark,
+    fontSize: normalize(11),
+    marginTop: 1,
+    fontWeight: '600',
+  },
+  textContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 15,
+  },
+  noneTitle: {
+    fontSize: normalize(14),
+    textAlign: 'center',
+    fontFamily: 'AvenirNext-Medium',
+  },
 });
 
 class Events extends Component {
@@ -59,7 +100,7 @@ class Events extends Component {
     this.props.getUserEvents(user.login);
   };
 
-  getAction(userEvent) {
+  getAction = userEvent => {
     const eventType = userEvent.type;
 
     switch (eventType) {
@@ -74,9 +115,7 @@ class Events extends Component {
       case 'GollumEvent':
         return `${userEvent.payload.pages[0].action}`;
       case 'IssueCommentEvent': {
-        const type = userEvent.payload.issue.pull_request
-          ? 'pull request'
-          : 'issue';
+        const type = userEvent.payload.issue.pull_request ? 'pull request' : 'issue';
 
         if (userEvent.payload.action === 'created') {
           return `commented on ${type}`;
@@ -85,6 +124,8 @@ class Events extends Component {
         } else if (userEvent.payload.action === 'deleted') {
           return `removed their comment on ${type}`;
         }
+
+        return null;
       }
       case 'IssuesEvent':
         return `${userEvent.payload.action} issue`;
@@ -100,10 +141,12 @@ class Events extends Component {
         if (userEvent.payload.action === 'created') {
           return 'commented on pull request';
         } else if (userEvent.payload.action === 'edited') {
-          return 'edited their comment on pull request'; //haven't witnessed
+          return 'edited their comment on pull request'; // haven't witnessed
         } else if (userEvent.payload.action === 'deleted') {
-          return 'removed their comment on pull request'; //haven't witnessed
+          return 'removed their comment on pull request'; // haven't witnessed
         }
+
+        return null;
       }
       case 'PushEvent':
         return 'pushed to';
@@ -113,18 +156,17 @@ class Events extends Component {
         return userEvent.payload.action;
       case 'WatchEvent':
         return 'starred';
+      default:
+        return null;
     }
-  }
+  };
 
   getItem(userEvent) {
     const eventType = userEvent.type;
 
     switch (eventType) {
       case 'CreateEvent': {
-        if (
-          userEvent.payload.ref_type === 'branch' ||
-          userEvent.payload.ref_type === 'tag'
-        ) {
+        if (userEvent.payload.ref_type === 'branch' || userEvent.payload.ref_type === 'tag') {
           return (
             <Text style={styles.linkBranchDescription}>
               {userEvent.payload.ref}
@@ -138,23 +180,23 @@ class Events extends Component {
                 this.props.navigation.navigate('Repository', {
                   repository: {
                     ...userEvent.repo,
-                    name: userEvent.repo.name.substring(
-                      userEvent.repo.name.indexOf('/') + 1
-                    )
-                  }
+                    name: userEvent.repo.name.substring(userEvent.repo.name.indexOf('/') + 1),
+                  },
                 })}
             >
               {userEvent.repo.name}
             </Text>
           );
         }
+
+        return null;
       }
       case 'DeleteEvent':
         return (
           <Text style={styles.deletedLinkBranchDescription}>
             {userEvent.payload.ref}
           </Text>
-        ); //can only be branch or tag
+        ); // can only be branch or tag
       case 'ForkEvent':
         return (
           <Text
@@ -163,10 +205,8 @@ class Events extends Component {
               this.props.navigation.navigate('Repository', {
                 repository: {
                   ...userEvent.repo,
-                  name: userEvent.repo.name.substring(
-                    userEvent.repo.name.indexOf('/') + 1
-                  )
-                }
+                  name: userEvent.repo.name.substring(userEvent.repo.name.indexOf('/') + 1),
+                },
               })}
           >
             {userEvent.repo.name}
@@ -182,15 +222,13 @@ class Events extends Component {
                 this.props.navigation.navigate('Repository', {
                   repository: {
                     ...userEvent.repo,
-                    name: userEvent.repo.name.substring(
-                      userEvent.repo.name.indexOf('/') + 1
-                    )
-                  }
+                    name: userEvent.repo.name.substring(userEvent.repo.name.indexOf('/') + 1),
+                  },
                 })}
             >
               {userEvent.repo.name}
-            </Text>
-            {' '}wiki
+            </Text>{' '}
+            wiki
           </Text>
         );
       case 'IssueCommentEvent':
@@ -199,7 +237,7 @@ class Events extends Component {
             style={styles.linkDescription}
             onPress={() =>
               this.props.navigation.navigate('Issue', {
-                issue: userEvent.payload.issue
+                issue: userEvent.payload.issue,
               })}
           >
             {userEvent.payload.issue.title}
@@ -211,7 +249,7 @@ class Events extends Component {
             style={styles.linkDescription}
             onPress={() =>
               this.props.navigation.navigate('Issue', {
-                issue: userEvent.payload.issue
+                issue: userEvent.payload.issue,
               })}
           >
             {userEvent.payload.issue.title}
@@ -223,7 +261,7 @@ class Events extends Component {
             style={styles.linkDescription}
             onPress={() =>
               this.props.navigation.navigate('Profile', {
-                user: userEvent.payload.member
+                user: userEvent.payload.member,
               })}
           >
             {userEvent.payload.member.login}
@@ -237,10 +275,8 @@ class Events extends Component {
               this.props.navigation.navigate('Repository', {
                 repository: {
                   ...userEvent.repo,
-                  name: userEvent.repo.name.substring(
-                    userEvent.repo.name.indexOf('/') + 1
-                  )
-                }
+                  name: userEvent.repo.name.substring(userEvent.repo.name.indexOf('/') + 1),
+                },
               })}
           >
             {userEvent.repo.name}
@@ -281,10 +317,8 @@ class Events extends Component {
                 this.props.navigation.navigate('Repository', {
                   repository: {
                     ...userEvent.repo,
-                    name: userEvent.repo.name.substring(
-                      userEvent.repo.name.indexOf('/') + 1
-                    )
-                  }
+                    name: userEvent.repo.name.substring(userEvent.repo.name.indexOf('/') + 1),
+                  },
                 });
               }
             }}
@@ -300,29 +334,28 @@ class Events extends Component {
               this.props.navigation.navigate('Repository', {
                 repository: {
                   ...userEvent.repo,
-                  name: userEvent.repo.name.substring(
-                    userEvent.repo.name.indexOf('/') + 1
-                  )
-                }
+                  name: userEvent.repo.name.substring(userEvent.repo.name.indexOf('/') + 1),
+                },
               })}
           >
             {userEvent.repo.name}
           </Text>
         );
+      default:
+        return null;
     }
   }
 
-  getConnector(userEvent) {
+  getConnector = userEvent => {
     const eventType = userEvent.type;
 
     switch (eventType) {
       case 'CreateEvent': {
-        if (
-          userEvent.payload.ref_type === 'branch' ||
-          userEvent.payload.ref_type === 'tag'
-        ) {
+        if (userEvent.payload.ref_type === 'branch' || userEvent.payload.ref_type === 'tag') {
           return 'at';
         }
+
+        return null;
       }
       case 'DeleteEvent':
         return 'at';
@@ -334,18 +367,17 @@ class Events extends Component {
         return 'at';
       case 'PushEvent':
         return 'at';
+      default:
+        return null;
     }
-  }
+  };
 
   getSecondItem(userEvent) {
     const eventType = userEvent.type;
 
     switch (eventType) {
       case 'CreateEvent': {
-        if (
-          userEvent.payload.ref_type === 'branch' ||
-          userEvent.payload.ref_type === 'tag'
-        ) {
+        if (userEvent.payload.ref_type === 'branch' || userEvent.payload.ref_type === 'tag') {
           return (
             <Text
               style={styles.linkDescription}
@@ -353,16 +385,16 @@ class Events extends Component {
                 this.props.navigation.navigate('Repository', {
                   repository: {
                     ...userEvent.repo,
-                    name: userEvent.repo.name.substring(
-                      userEvent.repo.name.indexOf('/') + 1
-                    )
-                  }
+                    name: userEvent.repo.name.substring(userEvent.repo.name.indexOf('/') + 1),
+                  },
                 })}
             >
               {userEvent.repo.name}
             </Text>
           );
         }
+
+        return null;
       }
       case 'DeleteEvent':
         return (
@@ -372,10 +404,8 @@ class Events extends Component {
               this.props.navigation.navigate('Repository', {
                 repository: {
                   ...userEvent.repo,
-                  name: userEvent.repo.name.substring(
-                    userEvent.repo.name.indexOf('/') + 1
-                  )
-                }
+                  name: userEvent.repo.name.substring(userEvent.repo.name.indexOf('/') + 1),
+                },
               })}
           >
             {userEvent.repo.name}
@@ -387,7 +417,7 @@ class Events extends Component {
             style={styles.linkDescription}
             onPress={() =>
               this.props.navigation.navigate('Repository', {
-                repository: userEvent.payload.forkee
+                repository: userEvent.payload.forkee,
               })}
           >
             {userEvent.payload.forkee.full_name}
@@ -401,10 +431,8 @@ class Events extends Component {
               this.props.navigation.navigate('Repository', {
                 repository: {
                   ...userEvent.repo,
-                  name: userEvent.repo.name.substring(
-                    userEvent.repo.name.indexOf('/') + 1
-                  )
-                }
+                  name: userEvent.repo.name.substring(userEvent.repo.name.indexOf('/') + 1),
+                },
               })}
           >
             {userEvent.repo.name}
@@ -418,10 +446,8 @@ class Events extends Component {
               this.props.navigation.navigate('Repository', {
                 repository: {
                   ...userEvent.repo,
-                  name: userEvent.repo.name.substring(
-                    userEvent.repo.name.indexOf('/') + 1
-                  )
-                }
+                  name: userEvent.repo.name.substring(userEvent.repo.name.indexOf('/') + 1),
+                },
               })}
           >
             {userEvent.repo.name}
@@ -435,45 +461,20 @@ class Events extends Component {
               this.props.navigation.navigate('Repository', {
                 repository: {
                   ...userEvent.repo,
-                  name: userEvent.repo.name.substring(
-                    userEvent.repo.name.indexOf('/') + 1
-                  )
-                }
+                  name: userEvent.repo.name.substring(userEvent.repo.name.indexOf('/') + 1),
+                },
               })}
           >
             {userEvent.repo.name}
           </Text>
         );
+
+      default:
+        return null;
     }
   }
 
-  renderDescription(userEvent) {
-    return (
-      <Text style={styles.descriptionContainer}>
-        <Text
-          style={styles.linkDescription}
-          onPress={() =>
-            this.props.navigation.navigate('Profile', {
-              user: userEvent.actor
-            })}
-        >
-          {userEvent.actor.login}{' '}
-        </Text>
-        <Text>
-          {this.getAction(userEvent)}{' '}
-        </Text>
-        {this.getItem(userEvent)}{this.getAction(userEvent) && ' '}
-        {this.getConnector(userEvent)}{this.getItem(userEvent) && ' '}
-        {this.getSecondItem(userEvent)}
-        {this.getItem(userEvent) && this.getConnector(userEvent) && ' '}
-        <Text style={styles.date}>
-          {moment(userEvent.created_at).fromNow()}
-        </Text>
-      </Text>
-    );
-  }
-
-  getIcon(userEvent) {
+  getIcon = userEvent => {
     const eventType = userEvent.type;
 
     switch (eventType) {
@@ -494,9 +495,9 @@ class Events extends Component {
           return 'issue-reopened';
         } else if (userEvent.action === 'closed') {
           return 'issue-closed';
-        } else {
-          return 'issue-opened';
         }
+
+        return 'issue-opened';
       case 'MemberEvent':
         return 'person';
       case 'PublicEvent':
@@ -515,22 +516,56 @@ class Events extends Component {
         return 'repo';
       case 'WatchEvent':
         return 'star';
+      default:
+        return null;
     }
+  };
+
+  keyExtractor = item => {
+    return item.id;
+  };
+
+  renderDescription(userEvent) {
+    return (
+      <Text style={styles.descriptionContainer}>
+        <Text
+          style={styles.linkDescription}
+          onPress={() =>
+            this.props.navigation.navigate('Profile', {
+              user: userEvent.actor,
+            })}
+        >
+          {userEvent.actor.login}{' '}
+        </Text>
+        <Text>
+          {this.getAction(userEvent)}{' '}
+        </Text>
+        {this.getItem(userEvent)}
+        {this.getAction(userEvent) && ' '}
+        {this.getConnector(userEvent)}
+        {this.getItem(userEvent) && ' '}
+        {this.getSecondItem(userEvent)}
+        {this.getItem(userEvent) && this.getConnector(userEvent) && ' '}
+        <Text style={styles.date}>
+          {moment(userEvent.created_at).fromNow()}
+        </Text>
+      </Text>
+    );
   }
 
   render() {
     const { isPendingEvents, userEvents, navigation } = this.props;
     const linebreaksPattern = /(\r\n|\n|\r)/gm;
     let content;
+
     if (isPendingEvents && !userEvents) {
-      content = [...Array(15)].map((item, i) => (
-        <LoadingUserListItem key={i} />
-      ));
+      content = [...Array(15)].map((item, index) => <LoadingUserListItem key={index} />); // eslint-disable-line react/no-array-index-key
     } else if (!isPendingEvents && userEvents && userEvents.length === 0) {
       content = (
         <View style={styles.textContainer}>
           <Text style={styles.noneTitle}>
-            Welcome! This is your news feed - it'll help you keep up with recent activity on repositories you watch and people you follow.
+            Welcome! This is your news feed - it&apos;ll help you keep up with recent activity on
+            repositories you watch and people you follow.
           </Text>
         </View>
       );
@@ -542,7 +577,7 @@ class Events extends Component {
           onRefresh={this.getUserEvents}
           refreshing={isPendingEvents}
           keyExtractor={this.keyExtractor}
-          renderItem={({ item }) => (
+          renderItem={({ item }) =>
             <View>
               <UserListItem
                 user={item.actor}
@@ -551,8 +586,7 @@ class Events extends Component {
                 navigation={navigation}
                 onlyImageNavigate
                 noBorderBottom={
-                  item.type === 'IssueCommentEvent' ||
-                    item.type === 'PullRequestReviewCommentEvent'
+                  item.type === 'IssueCommentEvent' || item.type === 'PullRequestReviewCommentEvent'
                 }
                 icon={this.getIcon(item)}
               />
@@ -564,69 +598,17 @@ class Events extends Component {
                     {emojifyText(item.payload.comment.body.replace(linebreaksPattern, ' '))}
                   </Text>
                 </View>}
-            </View>
-          )}
+            </View>}
         />
       );
     }
+
     return (
       <ViewContainer>
         {content}
       </ViewContainer>
     );
   }
-
-  keyExtractor = item => {
-    return item.id;
-  };
 }
 
-const styles = StyleSheet.create({
-  descriptionContainer: {
-    justifyContent: 'center',
-    flex: 1,
-    marginLeft: 10,
-    color: colors.primaryDark,
-    fontFamily: 'AvenirNext-Regular'
-  },
-  linkDescription: {
-    fontFamily: 'AvenirNext-DemiBold'
-  },
-  linkBranchDescription: {
-    fontFamily: 'Menlo'
-  },
-  deletedLinkBranchDescription: {
-    color: colors.greyDarkest,
-    fontFamily: 'Menlo'
-  },
-  date: {
-    color: colors.greyDark
-  },
-  subtitleContainer: {
-    paddingHorizontal: 15,
-    paddingBottom: 10,
-    borderBottomColor: colors.greyLight,
-    borderBottomWidth: 1
-  },
-  subtitle: {
-    color: colors.greyDark,
-    fontSize: normalize(11),
-    marginTop: 1,
-    fontWeight: '600'
-  },
-  textContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginHorizontal: 15
-  },
-  noneTitle: {
-    fontSize: normalize(14),
-    textAlign: 'center',
-    fontFamily: 'AvenirNext-Medium'
-  }
-});
-
-export const EventsScreen = connect(mapStateToProps, mapDispatchToProps)(
-  Events
-);
+export const EventsScreen = connect(mapStateToProps, mapDispatchToProps)(Events);

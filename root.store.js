@@ -1,10 +1,9 @@
-import { compose, createStore, applyMiddleware } from "redux";
-import { rootReducer } from "./root.reducer";
+import { compose, createStore, applyMiddleware } from 'redux';
+import { autoRehydrate } from 'redux-persist';
+import createLogger from 'redux-logger';
+import reduxThunk from 'redux-thunk';
 
-import { autoRehydrate } from "redux-persist";
-
-import createLogger from "redux-logger";
-import reduxThunk from "redux-thunk";
+import { rootReducer } from './root.reducer';
 
 const getMiddleware = () => {
   const middlewares = [reduxThunk];
@@ -18,11 +17,10 @@ const getMiddleware = () => {
 
 const getEnhancers = () => {
   const enhancers = [];
+
   enhancers.push(autoRehydrate());
+
   return enhancers;
 };
 
-export const configureStore = createStore(
-  rootReducer,
-  compose(getMiddleware(), ...getEnhancers())
-);
+export const configureStore = createStore(rootReducer, compose(getMiddleware(), ...getEnhancers()));

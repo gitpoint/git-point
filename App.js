@@ -1,52 +1,45 @@
 import React, { Component } from 'react';
-import {
-  AppRegistry,
-  AsyncStorage,
-  Image,
-  StyleSheet,
-  View,
-  LayoutAnimation
-} from 'react-native';
-
-import { colors } from 'config';
-
-//Routes
-import { GitPoint } from './routes';
-
-// Redux Store
-import { configureStore } from './root.store';
 import { Provider } from 'react-redux';
-
+import { AppRegistry, AsyncStorage, Image, StyleSheet, View, LayoutAnimation } from 'react-native';
 import { persistStore } from 'redux-persist';
 import createEncryptor from 'redux-persist-transform-encrypt';
-
-// Device Info
 import DeviceInfo from 'react-native-device-info';
-
-// md5
 import md5 from 'md5';
+
+import { colors } from './src/config';
+import { GitPoint } from './routes';
+import { configureStore } from './root.store';
+
+const styles = StyleSheet.create({
+  logoContainer: {
+    backgroundColor: colors.white,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  logo: {
+    width: 100,
+    height: 100,
+  },
+});
 
 class App extends Component {
   constructor() {
     super();
 
     this.state = {
-      rehydrated: false
+      rehydrated: false,
     };
   }
 
   componentWillMount() {
     const encryptor = createEncryptor({
-      secretKey: md5(DeviceInfo.getUniqueID())
+      secretKey: md5(DeviceInfo.getUniqueID()),
     });
 
-    persistStore(
-      configureStore,
-      { storage: AsyncStorage, transforms: [encryptor] },
-      () => {
-        this.setState({ rehydrated: true });
-      }
-    );
+    persistStore(configureStore, { storage: AsyncStorage, transforms: [encryptor] }, () => {
+      this.setState({ rehydrated: true });
+    });
   }
 
   componentWillUpdate() {
@@ -54,15 +47,14 @@ class App extends Component {
   }
 
   render() {
-    if (!this.state.rehydrated)
+    if (!this.state.rehydrated) {
       return (
         <View style={styles.logoContainer}>
-          <Image
-            style={styles.logo}
-            source={require('./src/assets/logo-black.png')}
-          />
+          <Image style={styles.logo} source={require('./src/assets/logo-black.png')} />
         </View>
       );
+    }
+
     return (
       <Provider store={configureStore}>
         <GitPoint />
@@ -70,18 +62,5 @@ class App extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  logoContainer: {
-    backgroundColor: colors.white,
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  logo: {
-    width: 100,
-    height: 100
-  }
-});
 
 AppRegistry.registerComponent('GitPoint', () => App);
