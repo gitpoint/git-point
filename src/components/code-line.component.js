@@ -77,12 +77,16 @@ export const CodeLine = ({ newChunk, change }: Props) =>
         <Text style={styles.codeLineNumber}>
           {change.type === 'del'
             ? change.ln
-            : change.type === 'normal' ? change.ln1 : change.type === 'add' ? '' : '...'}
+            : change.type === 'normal'
+              ? change.ln1
+              : change.type === 'add' ? '' : '...'}
         </Text>
         <Text style={styles.codeLineNumber}>
           {change.type === 'add'
             ? change.ln
-            : change.type === 'normal' ? change.ln2 : change.type === 'del' ? '' : '...'}
+            : change.type === 'normal'
+              ? change.ln2
+              : change.type === 'del' ? '' : '...'}
         </Text>
       </View>
 

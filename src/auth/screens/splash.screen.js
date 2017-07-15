@@ -47,7 +47,10 @@ class Splash extends Component {
   render() {
     return (
       <View style={styles.logoContainer}>
-        <Image style={styles.logo} source={require('../../assets/logo-black.png')} />
+        <Image
+          style={styles.logo}
+          source={require('../../assets/logo-black.png')}
+        />
       </View>
     );
   }

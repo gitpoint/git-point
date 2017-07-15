@@ -48,8 +48,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export const NotificationListItem = ({ notification, iconAction, navigationAction }: Props) => {
-  const TitleComponent = notification.subject.type === 'Commit' ? View : TouchableOpacity;
+export const NotificationListItem = ({
+  notification,
+  iconAction,
+  navigationAction,
+}: Props) => {
+  const TitleComponent =
+    notification.subject.type === 'Commit' ? View : TouchableOpacity;
 
   return (
     <View style={styles.container}>
@@ -64,7 +69,9 @@ export const NotificationListItem = ({ notification, iconAction, navigationActio
             name={
               notification.subject.type === 'Commit'
                 ? 'git-commit'
-                : notification.subject.type === 'PullRequest' ? 'git-pull-request' : 'issue-opened'
+                : notification.subject.type === 'PullRequest'
+                  ? 'git-pull-request'
+                  : 'issue-opened'
             }
             type="octicon"
           />

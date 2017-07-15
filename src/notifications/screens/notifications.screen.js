@@ -12,7 +12,11 @@ import {
 } from 'react-native';
 import { ButtonGroup, Card, Icon } from 'react-native-elements';
 
-import { ViewContainer, LoadingContainer, NotificationListItem } from '../../components';
+import {
+  ViewContainer,
+  LoadingContainer,
+  NotificationListItem,
+} from '../../components';
 import { colors, normalize } from '../../config';
 import {
   getUnreadNotifications,
@@ -35,10 +39,12 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getUnreadNotificationsByDispatch: () => dispatch(getUnreadNotifications()),
-  getParticipatingNotificationsByDispatch: () => dispatch(getParticipatingNotifications()),
+  getParticipatingNotificationsByDispatch: () =>
+    dispatch(getParticipatingNotifications()),
   getAllNotificationsByDispatch: () => dispatch(getAllNotifications()),
   markAsReadByDispatch: notificationID => dispatch(markAsRead(notificationID)),
-  markRepoAsReadByDispatch: repoFullName => dispatch(markRepoAsRead(repoFullName)),
+  markRepoAsReadByDispatch: repoFullName =>
+    dispatch(markRepoAsRead(repoFullName)),
   getIssueFromUrlByDispatch: url => dispatch(getIssueFromUrl(url)),
 });
 
@@ -177,10 +183,16 @@ class Notifications extends Component {
   };
 
   navigateToThread(notification) {
-    const { markAsReadByDispatch, getIssueFromUrlByDispatch, navigation } = this.props;
+    const {
+      markAsReadByDispatch,
+      getIssueFromUrlByDispatch,
+      navigation,
+    } = this.props;
 
     markAsReadByDispatch(notification.id);
-    getIssueFromUrlByDispatch(notification.subject.url.replace('pulls', 'issues')).then(() => {
+    getIssueFromUrlByDispatch(
+      notification.subject.url.replace('pulls', 'issues')
+    ).then(() => {
       navigation.navigate('Issue', {
         issue: this.props.issue,
       });
@@ -272,7 +284,10 @@ class Notifications extends Component {
             }}
           />
 
-          <Text style={styles.repositoryTitle} onPress={() => this.navigateToRepo(item)}>
+          <Text
+            style={styles.repositoryTitle}
+            onPress={() => this.navigateToRepo(item)}
+          >
             {item}
           </Text>
 
@@ -280,7 +295,12 @@ class Notifications extends Component {
             style={styles.markAsReadIconRepo}
             onPress={() => markRepoAsReadByDispatch(item)}
           >
-            <Icon color={colors.greyDark} size={28} name="check" type="octicon" />
+            <Icon
+              color={colors.greyDark}
+              size={28}
+              name="check"
+              type="octicon"
+            />
           </TouchableOpacity>
         </View>
 
@@ -289,7 +309,8 @@ class Notifications extends Component {
             <NotificationListItem
               key={notification.id}
               notification={notification}
-              iconAction={notificationID => markAsReadByDispatch(notificationID)}
+              iconAction={notificationID =>
+                markAsReadByDispatch(notificationID)}
               navigationAction={notify => this.navigateToThread(notify)}
               navigation={this.props.navigation}
             />
@@ -302,7 +323,11 @@ class Notifications extends Component {
   render() {
     const { type } = this.state;
     const repositories = [
-      ...new Set(this.notifications().map(notification => notification.repository.full_name)),
+      ...new Set(
+        this.notifications().map(
+          notification => notification.repository.full_name
+        )
+      ),
     ];
 
     const sortedRepos = repositories.sort((a, b) => {
@@ -361,4 +386,6 @@ class Notifications extends Component {
   }
 }
 
-export const NotificationsScreen = connect(mapStateToProps, mapDispatchToProps)(Notifications);
+export const NotificationsScreen = connect(mapStateToProps, mapDispatchToProps)(
+  Notifications
+);

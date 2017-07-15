@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FlatList, View } from 'react-native';
 
-import { ViewContainer, UserListItem, LoadingUserListItem } from '../../components';
+import {
+  ViewContainer,
+  UserListItem,
+  LoadingUserListItem,
+} from '../../components';
 import { getFollowing } from '../../user';
 
 const mapStateToProps = state => ({
@@ -40,15 +44,18 @@ class FollowingList extends Component {
     return (
       <ViewContainer>
         {isPendingFollowing &&
-          [...Array(followingCount)].map((item, index) => <LoadingUserListItem key={index} />) // eslint-disable-line react/no-array-index-key
-        }
+          [...Array(followingCount)].map((item, index) => {
+            // eslint-disable-next-line react/no-array-index-key
+            return <LoadingUserListItem key={index} />;
+          })}
 
         {!isPendingFollowing &&
           <View>
             <FlatList
               data={following}
               keyExtractor={this.keyExtractor}
-              renderItem={({ item }) => <UserListItem user={item} navigation={navigation} />}
+              renderItem={({ item }) =>
+                <UserListItem user={item} navigation={navigation} />}
             />
           </View>}
       </ViewContainer>
@@ -56,4 +63,6 @@ class FollowingList extends Component {
   }
 }
 
-export const FollowingListScreen = connect(mapStateToProps, mapDispatchToProps)(FollowingList);
+export const FollowingListScreen = connect(mapStateToProps, mapDispatchToProps)(
+  FollowingList
+);

@@ -51,7 +51,9 @@ class RepositoryCodeList extends Component {
     const url = navigationParams.topLevel
       ? this.props.repository.contents_url.replace('{+path}', '')
       : navigationParams.content.url;
-    const level = navigationParams.topLevel ? 'top' : navigationParams.content.name;
+    const level = navigationParams.topLevel
+      ? 'top'
+      : navigationParams.content.name;
 
     this.props.getContentsByDispatch(url, level);
   }
@@ -104,7 +106,8 @@ class RepositoryCodeList extends Component {
 
     return (
       <ViewContainer>
-        {isPendingContents && [...Array(15)].map((item, index) => <LoadingListItem key={index} />) // eslint-disable-line react/no-array-index-key
+        {isPendingContents &&
+          [...Array(15)].map((item, index) => <LoadingListItem key={index} />) // eslint-disable-line react/no-array-index-key
         }
 
         {!isPendingContents &&
@@ -130,6 +133,7 @@ class RepositoryCodeList extends Component {
   }
 }
 
-export const RepositoryCodeListScreen = connect(mapStateToProps, mapDispatchToProps)(
-  RepositoryCodeList
-);
+export const RepositoryCodeListScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RepositoryCodeList);

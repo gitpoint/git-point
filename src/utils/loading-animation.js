@@ -8,7 +8,9 @@ export const loadingAnimation = state => {
   const animatedTimings = [];
 
   for (let i = 0; i < iterations; i += 1) {
-    animatedTimings.push(Animated.timing(state, { toValue: opacity1, duration }));
+    animatedTimings.push(
+      Animated.timing(state, { toValue: opacity1, duration })
+    );
     const tempFrom = opacity2;
 
     opacity2 = opacity1;

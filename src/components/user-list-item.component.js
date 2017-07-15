@@ -1,5 +1,12 @@
 import React from 'react';
-import { StyleSheet, View, TouchableHighlight, TouchableOpacity, Text, Image } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TouchableHighlight,
+  TouchableOpacity,
+  Text,
+  Image,
+} from 'react-native';
 import { Icon } from 'react-native-elements';
 
 import { colors, normalize } from '../config';
@@ -71,8 +78,10 @@ export const UserListItem = ({
   noBorderBottom,
   iconAction,
 }: Props) => {
-  const ContainerComponent = iconAction || onlyImageNavigate ? View : TouchableHighlight;
-  const UserComponent = iconAction && !onlyImageNavigate ? TouchableOpacity : View;
+  const ContainerComponent =
+    iconAction || onlyImageNavigate ? View : TouchableHighlight;
+  const UserComponent =
+    iconAction && !onlyImageNavigate ? TouchableOpacity : View;
   const ImageContainerComponent = onlyImageNavigate ? TouchableOpacity : View;
   const IconComponent = iconAction ? TouchableOpacity : View;
 
@@ -120,7 +129,10 @@ export const UserListItem = ({
           </View>
         </UserComponent>
 
-        <IconComponent style={styles.iconContainer} onPress={() => iconAction(user.login)}>
+        <IconComponent
+          style={styles.iconContainer}
+          onPress={() => iconAction(user.login)}
+        >
           <Icon
             color={colors.grey}
             size={icon ? 24 : 28}

@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Dimensions, Linking, View, StyleSheet, Image, Platform } from 'react-native';
+import {
+  Dimensions,
+  Linking,
+  View,
+  StyleSheet,
+  Image,
+  Platform,
+} from 'react-native';
 import { Button } from 'react-native-elements';
 import SafariView from 'react-native-safari-view';
 import queryString from 'query-string';
@@ -133,9 +140,15 @@ class Login extends Component {
         {!isAuthenticated &&
           this.state.asyncStorageChecked &&
           <View>
-            <Image style={styles.image} source={require('../../assets/login-background.png')}>
+            <Image
+              style={styles.image}
+              source={require('../../assets/login-background.png')}
+            >
               <View style={styles.logoContainer}>
-                <Image style={styles.logo} source={require('../../assets/logo.png')} />
+                <Image
+                  style={styles.logo}
+                  source={require('../../assets/logo.png')}
+                />
               </View>
             </Image>
 

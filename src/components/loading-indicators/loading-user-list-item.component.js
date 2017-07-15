@@ -48,9 +48,13 @@ export class LoadingUserListItem extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.wrapper}>
-          <Animated.View style={[styles.avatar, { opacity: this.state.fadeAnimValue }]} />
+          <Animated.View
+            style={[styles.avatar, { opacity: this.state.fadeAnimValue }]}
+          />
 
-          <Animated.View style={[styles.textBar, { opacity: this.state.fadeAnimValue }]} />
+          <Animated.View
+            style={[styles.textBar, { opacity: this.state.fadeAnimValue }]}
+          />
         </View>
       </View>
     );

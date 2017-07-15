@@ -91,9 +91,13 @@ export const userReducer = (state = initialState, action = {}) => {
         isFollowing: action.changeTo,
         user: {
           ...state.user,
-          followers: action.changeTo ? state.user.followers + 1 : state.user.followers - 1,
+          followers: action.changeTo
+            ? state.user.followers + 1
+            : state.user.followers - 1,
         },
-        followers: state.followers.filter(user => user.login !== action.authUser),
+        followers: state.followers.filter(
+          user => user.login !== action.authUser
+        ),
         isPendingChangeFollowing: false,
       };
     case CHANGE_FOLLOW_STATUS.ERROR:

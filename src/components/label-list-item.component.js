@@ -39,7 +39,10 @@ export const LabelListItem = ({ label, removeLabel }: Props) =>
         <LabelButton label={label} largeWithTag />
       </View>
 
-      <TouchableOpacity style={styles.iconContainer} onPress={() => removeLabel(label)}>
+      <TouchableOpacity
+        style={styles.iconContainer}
+        onPress={() => removeLabel(label)}
+      >
         <Icon color={colors.grey} name="x" type="octicon" />
       </TouchableOpacity>
     </View>

@@ -5,7 +5,11 @@ import { connect } from 'react-redux';
 import { StyleSheet, Text, FlatList, View } from 'react-native';
 import moment from 'moment';
 
-import { LoadingUserListItem, UserListItem, ViewContainer } from '../../components';
+import {
+  LoadingUserListItem,
+  UserListItem,
+  ViewContainer,
+} from '../../components';
 import { getUserEvents } from '../auth.action';
 import { colors, normalize } from '../../config';
 import { emojifyText } from '../../utils';
@@ -115,7 +119,9 @@ class Events extends Component {
       case 'GollumEvent':
         return `${userEvent.payload.pages[0].action}`;
       case 'IssueCommentEvent': {
-        const type = userEvent.payload.issue.pull_request ? 'pull request' : 'issue';
+        const type = userEvent.payload.issue.pull_request
+          ? 'pull request'
+          : 'issue';
 
         if (userEvent.payload.action === 'created') {
           return `commented on ${type}`;
@@ -166,7 +172,10 @@ class Events extends Component {
 
     switch (eventType) {
       case 'CreateEvent': {
-        if (userEvent.payload.ref_type === 'branch' || userEvent.payload.ref_type === 'tag') {
+        if (
+          userEvent.payload.ref_type === 'branch' ||
+          userEvent.payload.ref_type === 'tag'
+        ) {
           return (
             <Text style={styles.linkBranchDescription}>
               {userEvent.payload.ref}
@@ -180,7 +189,9 @@ class Events extends Component {
                 this.props.navigation.navigate('Repository', {
                   repository: {
                     ...userEvent.repo,
-                    name: userEvent.repo.name.substring(userEvent.repo.name.indexOf('/') + 1),
+                    name: userEvent.repo.name.substring(
+                      userEvent.repo.name.indexOf('/') + 1
+                    ),
                   },
                 })}
             >
@@ -205,7 +216,9 @@ class Events extends Component {
               this.props.navigation.navigate('Repository', {
                 repository: {
                   ...userEvent.repo,
-                  name: userEvent.repo.name.substring(userEvent.repo.name.indexOf('/') + 1),
+                  name: userEvent.repo.name.substring(
+                    userEvent.repo.name.indexOf('/') + 1
+                  ),
                 },
               })}
           >
@@ -222,7 +235,9 @@ class Events extends Component {
                 this.props.navigation.navigate('Repository', {
                   repository: {
                     ...userEvent.repo,
-                    name: userEvent.repo.name.substring(userEvent.repo.name.indexOf('/') + 1),
+                    name: userEvent.repo.name.substring(
+                      userEvent.repo.name.indexOf('/') + 1
+                    ),
                   },
                 })}
             >
@@ -275,7 +290,9 @@ class Events extends Component {
               this.props.navigation.navigate('Repository', {
                 repository: {
                   ...userEvent.repo,
-                  name: userEvent.repo.name.substring(userEvent.repo.name.indexOf('/') + 1),
+                  name: userEvent.repo.name.substring(
+                    userEvent.repo.name.indexOf('/') + 1
+                  ),
                 },
               })}
           >
@@ -317,7 +334,9 @@ class Events extends Component {
                 this.props.navigation.navigate('Repository', {
                   repository: {
                     ...userEvent.repo,
-                    name: userEvent.repo.name.substring(userEvent.repo.name.indexOf('/') + 1),
+                    name: userEvent.repo.name.substring(
+                      userEvent.repo.name.indexOf('/') + 1
+                    ),
                   },
                 });
               }
@@ -334,7 +353,9 @@ class Events extends Component {
               this.props.navigation.navigate('Repository', {
                 repository: {
                   ...userEvent.repo,
-                  name: userEvent.repo.name.substring(userEvent.repo.name.indexOf('/') + 1),
+                  name: userEvent.repo.name.substring(
+                    userEvent.repo.name.indexOf('/') + 1
+                  ),
                 },
               })}
           >
@@ -351,7 +372,10 @@ class Events extends Component {
 
     switch (eventType) {
       case 'CreateEvent': {
-        if (userEvent.payload.ref_type === 'branch' || userEvent.payload.ref_type === 'tag') {
+        if (
+          userEvent.payload.ref_type === 'branch' ||
+          userEvent.payload.ref_type === 'tag'
+        ) {
           return 'at';
         }
 
@@ -377,7 +401,10 @@ class Events extends Component {
 
     switch (eventType) {
       case 'CreateEvent': {
-        if (userEvent.payload.ref_type === 'branch' || userEvent.payload.ref_type === 'tag') {
+        if (
+          userEvent.payload.ref_type === 'branch' ||
+          userEvent.payload.ref_type === 'tag'
+        ) {
           return (
             <Text
               style={styles.linkDescription}
@@ -385,7 +412,9 @@ class Events extends Component {
                 this.props.navigation.navigate('Repository', {
                   repository: {
                     ...userEvent.repo,
-                    name: userEvent.repo.name.substring(userEvent.repo.name.indexOf('/') + 1),
+                    name: userEvent.repo.name.substring(
+                      userEvent.repo.name.indexOf('/') + 1
+                    ),
                   },
                 })}
             >
@@ -404,7 +433,9 @@ class Events extends Component {
               this.props.navigation.navigate('Repository', {
                 repository: {
                   ...userEvent.repo,
-                  name: userEvent.repo.name.substring(userEvent.repo.name.indexOf('/') + 1),
+                  name: userEvent.repo.name.substring(
+                    userEvent.repo.name.indexOf('/') + 1
+                  ),
                 },
               })}
           >
@@ -431,7 +462,9 @@ class Events extends Component {
               this.props.navigation.navigate('Repository', {
                 repository: {
                   ...userEvent.repo,
-                  name: userEvent.repo.name.substring(userEvent.repo.name.indexOf('/') + 1),
+                  name: userEvent.repo.name.substring(
+                    userEvent.repo.name.indexOf('/') + 1
+                  ),
                 },
               })}
           >
@@ -446,7 +479,9 @@ class Events extends Component {
               this.props.navigation.navigate('Repository', {
                 repository: {
                   ...userEvent.repo,
-                  name: userEvent.repo.name.substring(userEvent.repo.name.indexOf('/') + 1),
+                  name: userEvent.repo.name.substring(
+                    userEvent.repo.name.indexOf('/') + 1
+                  ),
                 },
               })}
           >
@@ -461,7 +496,9 @@ class Events extends Component {
               this.props.navigation.navigate('Repository', {
                 repository: {
                   ...userEvent.repo,
-                  name: userEvent.repo.name.substring(userEvent.repo.name.indexOf('/') + 1),
+                  name: userEvent.repo.name.substring(
+                    userEvent.repo.name.indexOf('/') + 1
+                  ),
                 },
               })}
           >
@@ -559,13 +596,16 @@ class Events extends Component {
     let content;
 
     if (isPendingEvents && !userEvents) {
-      content = [...Array(15)].map((item, index) => <LoadingUserListItem key={index} />); // eslint-disable-line react/no-array-index-key
+      content = [...Array(15)].map((item, index) => {
+        // eslint-disable-next-line react/no-array-index-key
+        return <LoadingUserListItem key={index} />;
+      });
     } else if (!isPendingEvents && userEvents && userEvents.length === 0) {
       content = (
         <View style={styles.textContainer}>
           <Text style={styles.noneTitle}>
-            Welcome! This is your news feed - it&apos;ll help you keep up with recent activity on
-            repositories you watch and people you follow.
+            Welcome! This is your news feed - it&apos;ll help you keep up with
+            recent activity on repositories you watch and people you follow.
           </Text>
         </View>
       );
@@ -586,7 +626,8 @@ class Events extends Component {
                 navigation={navigation}
                 onlyImageNavigate
                 noBorderBottom={
-                  item.type === 'IssueCommentEvent' || item.type === 'PullRequestReviewCommentEvent'
+                  item.type === 'IssueCommentEvent' ||
+                  item.type === 'PullRequestReviewCommentEvent'
                 }
                 icon={this.getIcon(item)}
               />
@@ -611,4 +652,6 @@ class Events extends Component {
   }
 }
 
-export const EventsScreen = connect(mapStateToProps, mapDispatchToProps)(Events);
+export const EventsScreen = connect(mapStateToProps, mapDispatchToProps)(
+  Events
+);

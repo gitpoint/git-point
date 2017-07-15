@@ -4,7 +4,12 @@ import { ListItem, Button } from 'react-native-elements';
 import Parse from 'parse-diff';
 import moment from 'moment';
 
-import { IssueStateBadge, MembersList, LabelButton, DiffBlocks } from '../components';
+import {
+  IssueStateBadge,
+  MembersList,
+  LabelButton,
+  DiffBlocks,
+} from '../components';
 import { colors, normalize } from '../config';
 
 const styles = StyleSheet.create({
@@ -75,7 +80,9 @@ export class IssueDescription extends Component {
   };
 
   renderLabelButtons = labels => {
-    return labels.slice(0, 3).map(label => <LabelButton key={label.id} label={label} />);
+    return labels
+      .slice(0, 3)
+      .map(label => <LabelButton key={label.id} label={label} />);
   };
 
   render() {
@@ -104,7 +111,10 @@ export class IssueDescription extends Component {
       <View style={(styles.container, styles.borderBottom)}>
         {issue.repository_url &&
           <ListItem
-            title={issue.repository_url.replace('https://api.github.com/repos/', '')}
+            title={issue.repository_url.replace(
+              'https://api.github.com/repos/',
+              ''
+            )}
             titleStyle={styles.titleSmall}
             leftIcon={{
               name: 'repo',
@@ -143,7 +153,8 @@ export class IssueDescription extends Component {
 
         {issue.pull_request &&
           <View style={styles.diffBlocksContainer}>
-            {isPendingDiff && <ActivityIndicator animating={isPendingDiff} size="small" />}
+            {isPendingDiff &&
+              <ActivityIndicator animating={isPendingDiff} size="small" />}
 
             {!isPendingDiff &&
               (lineAdditions !== 0 || lineDeletions !== 0) &&

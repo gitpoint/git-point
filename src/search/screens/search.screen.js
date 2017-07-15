@@ -104,7 +104,8 @@ class Search extends Component {
   search(query, selectedType = null) {
     const { searchReposByDispatch, searchUsersByDispatch } = this.props;
 
-    const selectedSearchType = selectedType !== null ? selectedType : this.state.searchType;
+    const selectedSearchType =
+      selectedType !== null ? selectedType : this.state.searchType;
 
     if (query !== '') {
       this.setState({
@@ -136,20 +137,36 @@ class Search extends Component {
 
   renderItem = ({ item }) => {
     if (this.state.searchType === 0) {
-      return <RepositoryListItem repository={item} navigation={this.props.navigation} />;
+      return (
+        <RepositoryListItem
+          repository={item}
+          navigation={this.props.navigation}
+        />
+      );
     }
 
     return <UserListItem user={item} navigation={this.props.navigation} />;
   };
 
   render() {
-    const { users, repos, isPendingSearchUsers, isPendingSearchRepos } = this.props;
+    const {
+      users,
+      repos,
+      isPendingSearchUsers,
+      isPendingSearchRepos,
+    } = this.props;
     const { query, searchType, searchStart } = this.state;
     const noReposFound =
-      searchStart && !isPendingSearchRepos && repos.length === 0 && searchType === 0;
+      searchStart &&
+      !isPendingSearchRepos &&
+      repos.length === 0 &&
+      searchType === 0;
 
     const noUsersFound =
-      searchStart && !isPendingSearchUsers && users.length === 0 && searchType === 1;
+      searchStart &&
+      !isPendingSearchUsers &&
+      users.length === 0 &&
+      searchType === 1;
 
     return (
       <ViewContainer>
@@ -241,4 +258,6 @@ class Search extends Component {
   }
 }
 
-export const SearchScreen = connect(mapStateToProps, mapDispatchToProps)(Search);
+export const SearchScreen = connect(mapStateToProps, mapDispatchToProps)(
+  Search
+);

@@ -70,9 +70,17 @@ export const SectionList = ({
   let listDisplay;
 
   if (loading) {
-    listDisplay = <ActivityIndicator animating={loading} style={styles.loadingIcon} />;
+    listDisplay = (
+      <ActivityIndicator animating={loading} style={styles.loadingIcon} />
+    );
   } else if (noItems) {
-    listDisplay = <ListItem title={noItemsMessage} titleStyle={styles.listTitle} hideChevron />;
+    listDisplay = (
+      <ListItem
+        title={noItemsMessage}
+        titleStyle={styles.listTitle}
+        hideChevron
+      />
+    );
   } else {
     listDisplay = children;
   }
@@ -95,7 +103,9 @@ export const SectionList = ({
             onPress={buttonAction}
           />}
       </View>
-      <List containerStyle={[styles.list, noOuterBorders && styles.noOuterBorders]}>
+      <List
+        containerStyle={[styles.list, noOuterBorders && styles.noOuterBorders]}
+      >
         {listDisplay}
       </List>
     </View>

@@ -54,11 +54,17 @@ export class LoadingRepositoryListItem extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.wrapper}>
-          <Animated.View style={[styles.textBarTitle, { opacity: this.state.fadeAnimValue }]} />
+          <Animated.View
+            style={[styles.textBarTitle, { opacity: this.state.fadeAnimValue }]}
+          />
 
-          <Animated.View style={[styles.textBarLine1, { opacity: this.state.fadeAnimValue }]} />
+          <Animated.View
+            style={[styles.textBarLine1, { opacity: this.state.fadeAnimValue }]}
+          />
 
-          <Animated.View style={[styles.textBarLine2, { opacity: this.state.fadeAnimValue }]} />
+          <Animated.View
+            style={[styles.textBarLine2, { opacity: this.state.fadeAnimValue }]}
+          />
         </View>
       </View>
     );

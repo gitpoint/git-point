@@ -95,7 +95,9 @@ class PullDiff extends Component {
       <View style={styles.header}>
         <Text
           style={[styles.headerItem, styles.headerText]}
-        >{`${filesChanged.length} ${filesChanged.length === 1 ? 'file' : 'files'}`}</Text>
+        >{`${filesChanged.length} ${filesChanged.length === 1
+          ? 'file'
+          : 'files'}`}</Text>
 
         <DiffBlocks
           style={styles.headerItem}
@@ -116,7 +118,11 @@ class PullDiff extends Component {
           horizontal
         >
           <View style={{ flexDirection: 'column' }}>
-            <CodeLine key={index} newChunk change={{ content: chunk.content }} />
+            <CodeLine
+              key={index}
+              newChunk
+              change={{ content: chunk.content }}
+            />
 
             {chunk.changes.map((change, changesIndex) =>
               <CodeLine key={changesIndex} change={change} />
@@ -127,7 +133,10 @@ class PullDiff extends Component {
     });
 
     return (
-      <Card containerStyle={styles.fileChangeContainer} dividerStyle={styles.dividerStyle}>
+      <Card
+        containerStyle={styles.fileChangeContainer}
+        dividerStyle={styles.dividerStyle}
+      >
         <ScrollView
           style={styles.fileTitleContainer}
           automaticallyAdjustContentInsets={false}
@@ -174,14 +183,18 @@ class PullDiff extends Component {
           !item.new &&
           !item.deleted &&
           item.from !== item.to &&
-          <Text style={styles.noChangesMessage}>File renamed without changes.</Text>}
+          <Text style={styles.noChangesMessage}>
+            File renamed without changes.
+          </Text>}
       </Card>
     );
   };
 
   render() {
     const { navigation } = this.props;
-    const filesChanged = navigation.state.params ? Parse(navigation.state.params.diff) : [];
+    const filesChanged = navigation.state.params
+      ? Parse(navigation.state.params.diff)
+      : [];
 
     return (
       <ViewContainer>

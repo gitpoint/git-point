@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { AppRegistry, AsyncStorage, Image, StyleSheet, View, LayoutAnimation } from 'react-native';
+import {
+  AppRegistry,
+  AsyncStorage,
+  Image,
+  StyleSheet,
+  View,
+  LayoutAnimation,
+} from 'react-native';
 import { persistStore } from 'redux-persist';
 import createEncryptor from 'redux-persist-transform-encrypt';
 import DeviceInfo from 'react-native-device-info';
@@ -37,9 +44,13 @@ class App extends Component {
       secretKey: md5(DeviceInfo.getUniqueID()),
     });
 
-    persistStore(configureStore, { storage: AsyncStorage, transforms: [encryptor] }, () => {
-      this.setState({ rehydrated: true });
-    });
+    persistStore(
+      configureStore,
+      { storage: AsyncStorage, transforms: [encryptor] },
+      () => {
+        this.setState({ rehydrated: true });
+      }
+    );
   }
 
   componentWillUpdate() {
@@ -50,7 +61,10 @@ class App extends Component {
     if (!this.state.rehydrated) {
       return (
         <View style={styles.logoContainer}>
-          <Image style={styles.logo} source={require('./src/assets/logo-black.png')} />
+          <Image
+            style={styles.logo}
+            source={require('./src/assets/logo-black.png')}
+          />
         </View>
       );
     }

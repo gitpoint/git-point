@@ -130,7 +130,12 @@ export class CommentListItem extends Component {
           </View>
         );
       } else if (node.name === 'hr') {
-        return <View key={index} style={{ height: 4, backgroundColor: colors.greyLight }} />;
+        return (
+          <View
+            key={index}
+            style={{ height: 4, backgroundColor: colors.greyLight }}
+          />
+        );
       } else if (node.name === 'code') {
         return (
           <Text
@@ -145,7 +150,11 @@ export class CommentListItem extends Component {
             {defaultRenderer(node.children, parent)}
           </Text>
         );
-      } else if (node.name === 'h1' || node.name === 'h2' || node.name === 'h3') {
+      } else if (
+        node.name === 'h1' ||
+        node.name === 'h2' ||
+        node.name === 'h3'
+      ) {
         return (
           <View
             key={index}
@@ -190,7 +199,8 @@ export class CommentListItem extends Component {
     };
 
     const commentPresent =
-      (comment.body_html && comment.body_html !== '') || (comment.body && comment.body !== '');
+      (comment.body_html && comment.body_html !== '') ||
+      (comment.body && comment.body !== '');
 
     return (
       <View style={styles.container}>

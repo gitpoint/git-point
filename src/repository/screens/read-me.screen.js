@@ -61,7 +61,8 @@ class ReadMe extends Component {
 
     return (
       <ViewContainer>
-        {isPendingReadMe && <LoadingContainer animating={isPendingReadMe} center />}
+        {isPendingReadMe &&
+          <LoadingContainer animating={isPendingReadMe} center />}
         {!isPendingReadMe && !noReadMe && <WebView source={{ html: readMe }} />}
 
         {!isPendingReadMe &&
@@ -74,4 +75,6 @@ class ReadMe extends Component {
   }
 }
 
-export const ReadMeScreen = connect(mapStateToProps, mapDispatchToProps)(ReadMe);
+export const ReadMeScreen = connect(mapStateToProps, mapDispatchToProps)(
+  ReadMe
+);

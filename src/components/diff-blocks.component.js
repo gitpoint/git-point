@@ -49,7 +49,12 @@ const styles = StyleSheet.create({
   },
 });
 
-export const DiffBlocks = ({ additions, deletions, showNumbers, onPress }: Props) => {
+export const DiffBlocks = ({
+  additions,
+  deletions,
+  showNumbers,
+  onPress,
+}: Props) => {
   const linesChanged = additions + deletions;
 
   let greenBlocks = null;

@@ -3,7 +3,12 @@ import { connect } from 'react-redux';
 import { ScrollView, StyleSheet, ActionSheetIOS } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
-import { ViewContainer, SectionList, UserListItem, LabelListItem } from '../../components';
+import {
+  ViewContainer,
+  SectionList,
+  UserListItem,
+  LabelListItem,
+} from '../../components';
 import { colors } from '../../config';
 import { editIssue, changeIssueLockStatus } from '../issue.action';
 import { getLabels } from '../../repository';
@@ -57,7 +62,9 @@ class IssueSettings extends Component {
   };
 
   componentDidMount() {
-    this.props.getLabels(this.props.repository.labels_url.replace('{/name}', ''));
+    this.props.getLabels(
+      this.props.repository.labels_url.replace('{/name}', '')
+    );
   }
 
   editIssue = (editParams, stateChangeParams) => {
@@ -66,7 +73,13 @@ class IssueSettings extends Component {
     const owner = repository.owner.login;
     const updateStateParams = stateChangeParams || editParams;
 
-    return this.props.editIssue(owner, repoName, issue.number, editParams, updateStateParams);
+    return this.props.editIssue(
+      owner,
+      repoName,
+      issue.number,
+      editParams,
+      updateStateParams
+    );
   };
 
   showAddLabelActionSheet = () => {
@@ -83,11 +96,16 @@ class IssueSettings extends Component {
 
           if (
             buttonIndex !== labelChoices.length &&
-            !issue.labels.some(label => label.name === labelChoices[buttonIndex])
+            !issue.labels.some(
+              label => label.name === labelChoices[buttonIndex]
+            )
           ) {
             this.editIssue(
               {
-                labels: [...issue.labels.map(label => label.name), labelChoices[buttonIndex]],
+                labels: [
+                  ...issue.labels.map(label => label.name),
+                  labelChoices[buttonIndex],
+                ],
               },
               { labels: [...issue.labels, labels[buttonIndex]] }
             );
@@ -121,7 +139,9 @@ class IssueSettings extends Component {
   showLockIssueActionSheet = issueLocked => {
     ActionSheetIOS.showActionSheetWithOptions(
       {
-        title: `Are you sure you want to ${issueLocked ? 'unlock' : 'lock'} this conversation?`,
+        title: `Are you sure you want to ${issueLocked
+          ? 'unlock'
+          : 'lock'} this conversation?`,
         options: ['Yes', 'Cancel'],
         cancelButtonIndex: 1,
       },
@@ -131,7 +151,12 @@ class IssueSettings extends Component {
         const owner = repository.owner.login;
 
         if (buttonIndex === 0) {
-          this.props.changeIssueLockStatus(owner, repoName, issue.number, issueLocked);
+          this.props.changeIssueLockStatus(
+            owner,
+            repoName,
+            issue.number,
+            issueLocked
+          );
         }
       }
     );
@@ -166,11 +191,15 @@ class IssueSettings extends Component {
                       labels: [
                         ...issue.labels
                           .map(label => label.name)
-                          .filter(labelName => labelName !== labelToRemove.name),
+                          .filter(
+                            labelName => labelName !== labelToRemove.name
+                          ),
                       ],
                     },
                     {
-                      labels: issue.labels.filter(label => label.name !== labelToRemove.name),
+                      labels: issue.labels.filter(
+                        label => label.name !== labelToRemove.name
+                      ),
                     }
                   )}
               />
@@ -178,12 +207,19 @@ class IssueSettings extends Component {
           </SectionList>
 
           <SectionList
-            showButton={!issue.assignees.some(assignee => assignee.login === authUser.login)}
+            showButton={
+              !issue.assignees.some(
+                assignee => assignee.login === authUser.login
+              )
+            }
             buttonTitle="Assign Yourself"
             buttonAction={() =>
               this.editIssue(
                 {
-                  assignees: [...issue.assignees.map(user => user.login), authUser.login],
+                  assignees: [
+                    ...issue.assignees.map(user => user.login),
+                    authUser.login,
+                  ],
                 },
                 { assignees: [...issue.assignees, authUser] }
               )}
@@ -227,14 +263,22 @@ class IssueSettings extends Component {
 
             {!isMerged &&
               <ListItem
-                title={issue.state === 'open' ? `Close ${issueType}` : `Reopen ${issueType}`}
+                title={
+                  issue.state === 'open'
+                    ? `Close ${issueType}`
+                    : `Reopen ${issueType}`
+                }
                 hideChevron
                 underlayColor={colors.greyLight}
                 titleStyle={
-                  issue.state === 'open' ? styles.closeActionTitle : styles.openActionTitle
+                  issue.state === 'open'
+                    ? styles.closeActionTitle
+                    : styles.openActionTitle
                 }
                 onPress={() =>
-                  this.showChangeIssueStateActionSheet(issue.state === 'open' ? 'close' : 'reopen')}
+                  this.showChangeIssueStateActionSheet(
+                    issue.state === 'open' ? 'close' : 'reopen'
+                  )}
               />}
           </SectionList>
         </ScrollView>
@@ -243,4 +287,6 @@ class IssueSettings extends Component {
   }
 }
 
-export const IssueSettingsScreen = connect(mapStateToProps, mapDispatchToProps)(IssueSettings);
+export const IssueSettingsScreen = connect(mapStateToProps, mapDispatchToProps)(
+  IssueSettings
+);

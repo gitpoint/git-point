@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { FlatList, KeyboardAvoidingView, Keyboard, Linking } from 'react-native';
+import {
+  FlatList,
+  KeyboardAvoidingView,
+  Keyboard,
+  Linking,
+} from 'react-native';
 import { Icon } from 'react-native-elements';
 
 import {
@@ -100,7 +105,8 @@ class Issue extends Component {
     getIssueCommentsByDispatch(issue);
 
     if (
-      repository.full_name !== issue.repository_url.replace('https://api.github.com/repos/', '')
+      repository.full_name !==
+      issue.repository_url.replace('https://api.github.com/repos/', '')
     ) {
       getRepositoryByDispatch(issue.repository_url).then(() => {
         this.setNavigationParams();
@@ -125,7 +131,10 @@ class Issue extends Component {
       navigation.navigate('Profile', {
         user: { login: node.children[0].data.substring(1) },
       });
-    } else if (node.attribs.class && node.attribs.class.includes('issue-link')) {
+    } else if (
+      node.attribs.class &&
+      node.attribs.class.includes('issue-link')
+    ) {
       getIssueFromUrlByDispatch(
         node.attribs['data-url'].replace('github.com', 'api.github.com/repos')
       ).then(() => {
@@ -150,7 +159,8 @@ class Issue extends Component {
     const { navigation, repository } = this.props;
 
     navigation.setParams({
-      userHasPushPermission: repository.permissions.admin || repository.permissions.push,
+      userHasPushPermission:
+        repository.permissions.admin || repository.permissions.push,
     });
   };
 
@@ -171,7 +181,14 @@ class Issue extends Component {
   };
 
   renderHeader = () => {
-    const { issue, diff, isMerged, isPendingDiff, isPendingCheckMerge, navigation } = this.props;
+    const {
+      issue,
+      diff,
+      isMerged,
+      isPendingDiff,
+      isPendingCheckMerge,
+      navigation,
+    } = this.props;
 
     return (
       <IssueDescription
@@ -200,7 +217,8 @@ class Issue extends Component {
 
     return (
       <ViewContainer>
-        {isPendingComments && <LoadingContainer animating={isPendingComments} center />}
+        {isPendingComments &&
+          <LoadingContainer animating={isPendingComments} center />}
 
         {!isPendingComments &&
           issue &&
@@ -222,7 +240,9 @@ class Issue extends Component {
             />
 
             <CommentInput
-              userHasPushPermission={navigation.state.params.userHasPushPermission}
+              userHasPushPermission={
+                navigation.state.params.userHasPushPermission
+              }
               issueLocked={issue.locked}
               onSubmitEditing={this.postComment}
             />

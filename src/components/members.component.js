@@ -1,6 +1,13 @@
 import React from 'react';
 
-import { StyleSheet, View, Text, FlatList, TouchableHighlight, Image } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  FlatList,
+  TouchableHighlight,
+  Image,
+} from 'react-native';
 
 import { colors } from '../config';
 
@@ -38,7 +45,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export const MembersList = ({ title, members, containerStyle, smallTitle, navigation }: Props) =>
+export const MembersList = ({
+  title,
+  members,
+  containerStyle,
+  smallTitle,
+  navigation,
+}: Props) =>
   <View style={[styles.container, containerStyle && containerStyle]}>
     <Text style={smallTitle ? styles.sectionTitleSmall : styles.sectionTitle}>
       {title}

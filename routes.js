@@ -1,6 +1,11 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { StackNavigator, TabNavigator, TabBarBottom, NavigationActions } from 'react-navigation';
+import {
+  StackNavigator,
+  TabNavigator,
+  TabBarBottom,
+  NavigationActions,
+} from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
 import { colors } from './src/config';
@@ -85,7 +90,9 @@ const sharedRoutes = {
   RepositoryCodeList: {
     screen: RepositoryCodeListScreen,
     navigationOptions: ({ navigation }) => ({
-      title: navigation.state.params.topLevel ? 'Code' : navigation.state.params.content.name,
+      title: navigation.state.params.topLevel
+        ? 'Code'
+        : navigation.state.params.content.name,
     }),
   },
   RepositoryFile: {
@@ -109,7 +116,9 @@ const sharedRoutes = {
   Issue: {
     screen: IssueScreen,
     navigationOptions: ({ navigation }) => ({
-      title: `#${navigation.state.params.issue ? navigation.state.params.issue.number : 'Issue'}`,
+      title: `#${navigation.state.params.issue
+        ? navigation.state.params.issue.number
+        : 'Issue'}`,
     }),
   },
   IssueSettings: {
@@ -263,12 +272,19 @@ const MainTabNavigator = TabNavigator(
           const { dispatch, state } = props.navigation;
 
           if (state.index === index && state.routes[index].routes.length > 1) {
-            const stackRouteName = ['Events', 'Notifications', 'Search', 'MyProfile'][index];
+            const stackRouteName = [
+              'Events',
+              'Notifications',
+              'Search',
+              'MyProfile',
+            ][index];
 
             dispatch(
               NavigationActions.reset({
                 index: 0,
-                actions: [NavigationActions.navigate({ routeName: stackRouteName })],
+                actions: [
+                  NavigationActions.navigate({ routeName: stackRouteName }),
+                ],
               })
             );
           } else {

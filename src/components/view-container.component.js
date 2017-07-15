@@ -20,7 +20,9 @@ const styles = StyleSheet.create({
 
 export const ViewContainer = ({ barColor, children }: Props) =>
   <View style={styles.viewContainer}>
-    <StatusBar barStyle={barColor === 'light' ? 'light-content' : 'dark-content'} />
+    <StatusBar
+      barStyle={barColor === 'light' ? 'light-content' : 'dark-content'}
+    />
     {children}
   </View>;
 

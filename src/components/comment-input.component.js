@@ -1,7 +1,13 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StyleSheet, View, TouchableOpacity, Text, TextInput } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Text,
+  TextInput,
+} from 'react-native';
 import { Icon } from 'react-native-elements';
 
 import { colors, normalize } from '../config';
@@ -99,14 +105,20 @@ export class CommentInput extends Component {
               onChangeText={text => this.setState({ text })}
               onContentSizeChange={event =>
                 this.setState({ height: event.nativeEvent.contentSize.height })}
-              onSubmitEditing={event => this.handleSubmit(event.nativeEvent.text)}
+              onSubmitEditing={event =>
+                this.handleSubmit(event.nativeEvent.text)}
               placeholderTextColor={colors.grey}
-              style={[styles.textInput, { height: Math.max(30, this.state.height) }]}
+              style={[
+                styles.textInput,
+                { height: Math.max(30, this.state.height) },
+              ]}
               value={this.state.text}
             />}
 
           {!userCanPost &&
-            <Text style={[styles.textInput, { color: colors.grey }]}>Issue is locked</Text>}
+            <Text style={[styles.textInput, { color: colors.grey }]}>
+              Issue is locked
+            </Text>}
 
           {!this.props.issueLocked &&
             <TouchableOpacity
@@ -117,7 +129,9 @@ export class CommentInput extends Component {
               <Text
                 style={[
                   styles.postButton,
-                  this.state.text === '' ? styles.postButtonDisabled : styles.postButtonEnabled,
+                  this.state.text === ''
+                    ? styles.postButtonDisabled
+                    : styles.postButtonEnabled,
                 ]}
               >
                 Post

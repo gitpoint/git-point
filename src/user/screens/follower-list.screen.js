@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FlatList, View } from 'react-native';
 
-import { ViewContainer, UserListItem, LoadingUserListItem } from '../../components';
+import {
+  ViewContainer,
+  UserListItem,
+  LoadingUserListItem,
+} from '../../components';
 import { getFollowers } from '../../user';
 
 const mapStateToProps = state => ({
@@ -40,8 +44,10 @@ class FollowerList extends Component {
     return (
       <ViewContainer>
         {isPendingFollowers &&
-          [...Array(followerCount)].map((item, index) => <LoadingUserListItem key={index} />) // eslint-disable-line react/no-array-index-key
-        }
+          [...Array(followerCount)].map((item, index) => {
+            // eslint-disable-next-line react/no-array-index-key
+            return <LoadingUserListItem key={index} />;
+          })}
 
         {!isPendingFollowers &&
           <View>
@@ -49,7 +55,11 @@ class FollowerList extends Component {
               data={followers}
               keyExtractor={this.keyExtractor}
               renderItem={({ item }) =>
-                <UserListItem user={item} navigation={navigation} showFullName />}
+                <UserListItem
+                  user={item}
+                  navigation={navigation}
+                  showFullName
+                />}
             />
           </View>}
       </ViewContainer>
@@ -57,4 +67,6 @@ class FollowerList extends Component {
   }
 }
 
-export const FollowerListScreen = connect(mapStateToProps, mapDispatchToProps)(FollowerList);
+export const FollowerListScreen = connect(mapStateToProps, mapDispatchToProps)(
+  FollowerList
+);

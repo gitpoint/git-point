@@ -3,7 +3,11 @@ import { connect } from 'react-redux';
 import { FlatList, View, Dimensions, StyleSheet } from 'react-native';
 import SearchBar from 'react-native-search-bar';
 
-import { ViewContainer, RepositoryListItem, LoadingRepositoryListItem } from '../../components';
+import {
+  ViewContainer,
+  RepositoryListItem,
+  LoadingRepositoryListItem,
+} from '../../components';
 import { colors } from '../../config';
 import { getRepositories, searchUserRepos } from '../../user';
 
@@ -16,8 +20,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getRepositoriesByDispatch: (user, type) => dispatch(getRepositories(user, type)),
-  searchUserReposByDispatch: (user, type) => dispatch(searchUserRepos(user, type)),
+  getRepositoriesByDispatch: (user, type) =>
+    dispatch(getRepositories(user, type)),
+  searchUserReposByDispatch: (user, type) =>
+    dispatch(searchUserRepos(user, type)),
 });
 
 const styles = StyleSheet.create({
@@ -101,11 +107,16 @@ class RepositoryList extends Component {
   };
 
   render() {
-    const { isPendingRepositories, isPendingSearchUserRepos, navigation } = this.props;
+    const {
+      isPendingRepositories,
+      isPendingSearchUserRepos,
+      navigation,
+    } = this.props;
     const repoCount = navigation.state.params.repoCount;
     const { searchStart, searchFocus } = this.state;
     const loading =
-      (isPendingRepositories && !searchStart) || (isPendingSearchUserRepos && searchStart);
+      (isPendingRepositories && !searchStart) ||
+      (isPendingSearchUserRepos && searchStart);
 
     return (
       <ViewContainer>
@@ -147,7 +158,10 @@ class RepositoryList extends Component {
                 data={this.getList()}
                 keyExtractor={this.keyExtractor}
                 renderItem={({ item }) =>
-                  <RepositoryListItem repository={item} navigation={navigation} />}
+                  <RepositoryListItem
+                    repository={item}
+                    navigation={navigation}
+                  />}
               />
             </View>}
         </View>
@@ -156,4 +170,7 @@ class RepositoryList extends Component {
   }
 }
 
-export const RepositoryListScreen = connect(mapStateToProps, mapDispatchToProps)(RepositoryList);
+export const RepositoryListScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RepositoryList);

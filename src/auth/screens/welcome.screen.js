@@ -60,7 +60,10 @@ class Welcome extends Component {
           <Text style={styles.welcomeMessage}>Welcome to GitPoint</Text>
 
           {!isAuthenticated &&
-            <ActivityIndicator animating={isLoggingIn} style={styles.loadingIcon} />}
+            <ActivityIndicator
+              animating={isLoggingIn}
+              style={styles.loadingIcon}
+            />}
 
           {isAuthenticated &&
             <Button

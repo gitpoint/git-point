@@ -73,16 +73,25 @@ const styles = StyleSheet.create({
   },
 });
 
-export const UserProfile = ({ type, initialUser, user, isFollowing, navigation }: Props) =>
+export const UserProfile = ({
+  type,
+  initialUser,
+  user,
+  isFollowing,
+  navigation,
+}: Props) =>
   <View style={styles.container}>
     <View style={styles.profile}>
       <Image
         style={[
           styles.avatar,
-          (initialUser.type === 'User' || user.type === 'User') && styles.userAvatar,
+          (initialUser.type === 'User' || user.type === 'User') &&
+            styles.userAvatar,
         ]}
         source={{
-          uri: initialUser.avatar_url ? initialUser.avatar_url : user.avatar_url,
+          uri: initialUser.avatar_url
+            ? initialUser.avatar_url
+            : user.avatar_url,
         }}
       />
       <Text style={styles.title}>

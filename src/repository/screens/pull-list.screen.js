@@ -4,9 +4,16 @@ import { FlatList, View, StyleSheet, Dimensions, Text } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
 import SearchBar from 'react-native-search-bar';
 
-import { ViewContainer, IssueListItem, LoadingContainer } from '../../components';
+import {
+  ViewContainer,
+  IssueListItem,
+  LoadingContainer,
+} from '../../components';
 import { colors, normalize } from '../../config';
-import { searchOpenRepoPulls, searchClosedRepoPulls } from '../repository.action';
+import {
+  searchOpenRepoPulls,
+  searchClosedRepoPulls,
+} from '../repository.action';
 
 const mapStateToProps = state => ({
   repository: state.repository.repository,
@@ -17,8 +24,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  searchOpenRepoPullsByDispatch: (query, repo) => dispatch(searchOpenRepoPulls(query, repo)),
-  searchClosedRepoPullsByDispatch: (query, repo) => dispatch(searchClosedRepoPulls(query, repo)),
+  searchOpenRepoPullsByDispatch: (query, repo) =>
+    dispatch(searchOpenRepoPulls(query, repo)),
+  searchClosedRepoPullsByDispatch: (query, repo) =>
+    dispatch(searchClosedRepoPulls(query, repo)),
 });
 
 const styles = StyleSheet.create({
@@ -108,7 +117,9 @@ class PullList extends Component {
 
     return searchType === 0
       ? navigation.state.params.issues.filter(issue => issue.state === 'open')
-      : navigation.state.params.issues.filter(issue => issue.state === 'closed');
+      : navigation.state.params.issues.filter(
+          issue => issue.state === 'closed'
+        );
   };
 
   switchQueryType(selectedType) {
@@ -134,7 +145,8 @@ class PullList extends Component {
       repository,
     } = this.props;
 
-    const selectedSearchType = selectedType !== null ? selectedType : this.state.searchType;
+    const selectedSearchType =
+      selectedType !== null ? selectedType : this.state.searchType;
 
     if (query !== '') {
       this.setState({
@@ -246,11 +258,15 @@ class PullList extends Component {
           searchedClosedPulls.length === 0 &&
           searchType === 1 &&
           <View style={styles.marginSpacing}>
-            <Text style={styles.searchTitle}>No closed pull requests found!</Text>
+            <Text style={styles.searchTitle}>
+              No closed pull requests found!
+            </Text>
           </View>}
       </ViewContainer>
     );
   }
 }
 
-export const PullListScreen = connect(mapStateToProps, mapDispatchToProps)(PullList);
+export const PullListScreen = connect(mapStateToProps, mapDispatchToProps)(
+  PullList
+);

@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, ScrollView, Text, StyleSheet, Dimensions, Image } from 'react-native';
+import {
+  View,
+  ScrollView,
+  Text,
+  StyleSheet,
+  Dimensions,
+  Image,
+} from 'react-native';
 import { Card, Icon } from 'react-native-elements';
 import SyntaxHighlighter from 'react-native-syntax-highlighter';
 import { getLanguage } from 'lowlight';
@@ -133,7 +140,10 @@ class RepositoryFile extends Component {
         {isPendingFile && <LoadingContainer animating={isPendingFile} center />}
 
         {!isPendingFile &&
-          <Card containerStyle={styles.contentContainer} dividerStyle={styles.dividerStyle}>
+          <Card
+            containerStyle={styles.contentContainer}
+            dividerStyle={styles.dividerStyle}
+          >
             <ScrollView>
               <View style={styles.header}>
                 <Icon

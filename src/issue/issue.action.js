@@ -62,13 +62,26 @@ export const postIssueComment = (body, owner, repoName, issueNum) => {
   };
 };
 
-export const editIssue = (owner, repoName, issueNum, editParams, updateParams) => {
+export const editIssue = (
+  owner,
+  repoName,
+  issueNum,
+  editParams,
+  updateParams
+) => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 
     dispatch({ type: EDIT_ISSUE.PENDING });
 
-    return fetchEditIssue(owner, repoName, issueNum, editParams, updateParams, accessToken)
+    return fetchEditIssue(
+      owner,
+      repoName,
+      issueNum,
+      editParams,
+      updateParams,
+      accessToken
+    )
       .then(() => {
         dispatch({
           type: EDIT_ISSUE.SUCCESS,
@@ -84,13 +97,24 @@ export const editIssue = (owner, repoName, issueNum, editParams, updateParams) =
   };
 };
 
-export const changeIssueLockStatus = (owner, repoName, issueNum, currentStatus) => {
+export const changeIssueLockStatus = (
+  owner,
+  repoName,
+  issueNum,
+  currentStatus
+) => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 
     dispatch({ type: CHANGE_LOCK_STATUS.PENDING });
 
-    return fetchChangeIssueLockStatus(owner, repoName, issueNum, currentStatus, accessToken)
+    return fetchChangeIssueLockStatus(
+      owner,
+      repoName,
+      issueNum,
+      currentStatus,
+      accessToken
+    )
       .then(() => {
         dispatch({
           type: CHANGE_LOCK_STATUS.SUCCESS,
@@ -180,7 +204,13 @@ export const getPullRequestDetails = issue => {
   };
 };
 
-export const mergePullRequest = (repo, issueNum, commitTitle, commitMessage, mergeMethod) => {
+export const mergePullRequest = (
+  repo,
+  issueNum,
+  commitTitle,
+  commitMessage,
+  mergeMethod
+) => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 

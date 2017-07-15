@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, ActivityIndicator, ActionSheetIOS, Dimensions, View } from 'react-native';
+import {
+  StyleSheet,
+  ActivityIndicator,
+  ActionSheetIOS,
+  Dimensions,
+  View,
+} from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Communications from 'react-native-communications';
 
@@ -54,7 +60,9 @@ class Profile extends Component {
   };
 
   componentDidMount() {
-    this.props.getUserInfoByDispatch(this.props.navigation.state.params.user.login);
+    this.props.getUserInfoByDispatch(
+      this.props.navigation.state.params.user.login
+    );
   }
 
   getUserBlog = url => {
@@ -102,12 +110,18 @@ class Profile extends Component {
             <UserProfile
               type="user"
               initialUser={initialUser}
-              isFollowing={isPendingUser || isPendingCheckFollowing ? false : isFollowing}
+              isFollowing={
+                isPendingUser || isPendingCheckFollowing ? false : isFollowing
+              }
               user={initialUser.login === user.login ? user : {}}
               navigation={navigation}
             />}
           stickyTitle={user.login}
-          showMenu={!isPendingUser && !isPendingCheckFollowing && initialUser.login === user.login}
+          showMenu={
+            !isPendingUser &&
+            !isPendingCheckFollowing &&
+            initialUser.login === user.login
+          }
           menuAction={() => this.showMenuActionSheet()}
           navigateBack
           navigation={navigation}
@@ -125,7 +139,11 @@ class Profile extends Component {
               {user.bio &&
                 user.bio !== '' &&
                 <SectionList title="BIO">
-                  <ListItem subtitle={user.bio} subtitleStyle={styles.listSubTitle} hideChevron />
+                  <ListItem
+                    subtitle={user.bio}
+                    subtitleStyle={styles.listSubTitle}
+                    hideChevron
+                  />
                 </SectionList>}
 
               <SectionList
@@ -143,7 +161,8 @@ class Profile extends Component {
                   }}
                   subtitle={user.email}
                   subtitleStyle={styles.listSubTitle}
-                  onPress={() => Communications.email([user.email], null, null, 'Hi!', '')}
+                  onPress={() =>
+                    Communications.email([user.email], null, null, 'Hi!', '')}
                   underlayColor={colors.greyLight}
                 />
               </SectionList>
@@ -163,7 +182,8 @@ class Profile extends Component {
                   }}
                   subtitle={user.blog}
                   subtitleStyle={styles.listSubTitle}
-                  onPress={() => Communications.web(this.getUserBlog(user.blog))}
+                  onPress={() =>
+                    Communications.web(this.getUserBlog(user.blog))}
                   underlayColor={colors.greyLight}
                 />
               </SectionList>
@@ -174,7 +194,11 @@ class Profile extends Component {
                 noItemsMessage={'No organizations'}
               >
                 {orgs.map(item =>
-                  <UserListItem key={item.id} user={item} navigation={navigation} />
+                  <UserListItem
+                    key={item.id}
+                    user={item}
+                    navigation={navigation}
+                  />
                 )}
               </SectionList>
             </View>}
@@ -184,4 +208,6 @@ class Profile extends Component {
   }
 }
 
-export const ProfileScreen = connect(mapStateToProps, mapDispatchToProps)(Profile);
+export const ProfileScreen = connect(mapStateToProps, mapDispatchToProps)(
+  Profile
+);

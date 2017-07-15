@@ -4,9 +4,16 @@ import { FlatList, View, StyleSheet, Dimensions, Text } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
 import SearchBar from 'react-native-search-bar';
 
-import { ViewContainer, IssueListItem, LoadingContainer } from '../../components';
+import {
+  ViewContainer,
+  IssueListItem,
+  LoadingContainer,
+} from '../../components';
 import { colors, normalize } from '../../config';
-import { searchOpenRepoIssues, searchClosedRepoIssues } from '../repository.action';
+import {
+  searchOpenRepoIssues,
+  searchClosedRepoIssues,
+} from '../repository.action';
 
 const mapStateToProps = state => ({
   repository: state.repository.repository,
@@ -17,8 +24,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  searchOpenRepoIssuesByDispatch: (query, repo) => dispatch(searchOpenRepoIssues(query, repo)),
-  searchClosedRepoIssuesByDispatch: (query, repo) => dispatch(searchClosedRepoIssues(query, repo)),
+  searchOpenRepoIssuesByDispatch: (query, repo) =>
+    dispatch(searchOpenRepoIssues(query, repo)),
+  searchClosedRepoIssuesByDispatch: (query, repo) =>
+    dispatch(searchClosedRepoIssues(query, repo)),
 });
 
 const styles = StyleSheet.create({
@@ -99,7 +108,9 @@ class IssueList extends Component {
 
     return searchType === 0
       ? navigation.state.params.issues.filter(issue => issue.state === 'open')
-      : navigation.state.params.issues.filter(issue => issue.state === 'closed');
+      : navigation.state.params.issues.filter(
+          issue => issue.state === 'closed'
+        );
   };
 
   switchQueryType = selectedType => {
@@ -125,7 +136,8 @@ class IssueList extends Component {
       repository,
     } = this.props;
 
-    const selectedSearchType = selectedType !== null ? selectedType : this.state.searchType;
+    const selectedSearchType =
+      selectedType !== null ? selectedType : this.state.searchType;
 
     if (query !== '') {
       this.setState({
@@ -244,4 +256,6 @@ class IssueList extends Component {
   }
 }
 
-export const IssueListScreen = connect(mapStateToProps, mapDispatchToProps)(IssueList);
+export const IssueListScreen = connect(mapStateToProps, mapDispatchToProps)(
+  IssueList
+);

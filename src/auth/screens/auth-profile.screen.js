@@ -71,13 +71,22 @@ class AuthProfile extends Component {
         {!loading &&
           <ParallaxScroll
             renderContent={() =>
-              <UserProfile type="user" initialUser={user} user={user} navigation={navigation} />}
+              <UserProfile
+                type="user"
+                initialUser={user}
+                user={user}
+                navigation={navigation}
+              />}
             stickyTitle={user.login}
           >
             {user.bio &&
               user.bio !== '' &&
               <SectionList title="BIO">
-                <ListItem subtitle={user.bio} subtitleStyle={styles.listSubTitle} hideChevron />
+                <ListItem
+                  subtitle={user.bio}
+                  subtitleStyle={styles.listSubTitle}
+                  hideChevron
+                />
               </SectionList>}
 
             <SectionList
@@ -95,7 +104,8 @@ class AuthProfile extends Component {
                 }}
                 subtitle={user.email}
                 subtitleStyle={styles.listSubTitle}
-                onPress={() => Communications.email([user.email], null, null, 'Hi!', '')}
+                onPress={() =>
+                  Communications.email([user.email], null, null, 'Hi!', '')}
                 underlayColor={colors.greyLight}
               />
             </SectionList>
@@ -125,7 +135,13 @@ class AuthProfile extends Component {
               noItems={orgs.length === 0}
               noItemsMessage={'No organizations'}
             >
-              {orgs.map(item => <UserListItem key={item.id} user={item} navigation={navigation} />)}
+              {orgs.map(item =>
+                <UserListItem
+                  key={item.id}
+                  user={item}
+                  navigation={navigation}
+                />
+              )}
             </SectionList>
           </ParallaxScroll>}
       </ViewContainer>
@@ -133,4 +149,6 @@ class AuthProfile extends Component {
   }
 }
 
-export const AuthProfileScreen = connect(mapStateToProps, mapDispatchToProps)(AuthProfile);
+export const AuthProfileScreen = connect(mapStateToProps, mapDispatchToProps)(
+  AuthProfile
+);

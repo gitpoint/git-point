@@ -44,7 +44,9 @@ export const LabelButton = ({ label, largeWithTag }: Props) =>
     fontFamily="AvenirNext-DemiBold"
     fontSize={largeWithTag ? 13 : 12}
     color={getFontColorByBackground(label.color)}
-    buttonStyle={largeWithTag ? styles.largeLabelButton : styles.smallLabelButton}
+    buttonStyle={
+      largeWithTag ? styles.largeLabelButton : styles.smallLabelButton
+    }
     backgroundColor={`#${label.color}`}
     icon={
       largeWithTag && {

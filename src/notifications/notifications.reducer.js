@@ -79,7 +79,9 @@ export const notificationsReducer = (state = initialState, action = {}) => {
     case MARK_NOTIFICATION_AS_READ.SUCCESS:
       return {
         ...state,
-        unread: state.unread.filter(notification => notification.id !== action.notificationID),
+        unread: state.unread.filter(
+          notification => notification.id !== action.notificationID
+        ),
         participating: state.participating.filter(
           notification => notification.id !== action.notificationID
         ),
@@ -106,10 +108,12 @@ export const notificationsReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         unread: state.unread.filter(
-          notification => notification.repository.full_name !== action.repoFullName
+          notification =>
+            notification.repository.full_name !== action.repoFullName
         ),
         participating: state.participating.filter(
-          notification => notification.repository.full_name !== action.repoFullName
+          notification =>
+            notification.repository.full_name !== action.repoFullName
         ),
         all: state.all.map(
           notification =>

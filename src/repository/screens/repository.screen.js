@@ -110,10 +110,17 @@ class Repository extends Component {
       },
       buttonIndex => {
         if (buttonIndex === 0) {
-          changeStarStatusRepoByDispatch(repository.owner.login, repository.name, starred);
+          changeStarStatusRepoByDispatch(
+            repository.owner.login,
+            repository.name,
+            starred
+          );
         }
         if (buttonIndex === 1 && showFork) {
-          forkRepoByDispatch(repository.owner.login, repository.name).then(json => {
+          forkRepoByDispatch(
+            repository.owner.login,
+            repository.name
+          ).then(json => {
             navigation.navigate('Repository', { repository: json });
           });
         }
@@ -135,7 +142,10 @@ class Repository extends Component {
     } = this.props;
     const initalRepository = navigation.state.params.repository;
     const pulls = issues.filter(issue => issue.hasOwnProperty('pull_request')); // eslint-disable-line no-prototype-builtins
-    const pureIssues = issues.filter(issue => !issue.hasOwnProperty('pull_request')); // eslint-disable-line no-prototype-builtins
+    const pureIssues = issues.filter(issue => {
+      // eslint-disable-next-line no-prototype-builtins
+      return !issue.hasOwnProperty('pull_request');
+    });
     const loader = isPendingFork ? <LoadingModal /> : null;
 
     return (
@@ -151,7 +161,9 @@ class Repository extends Component {
             return (
               <RepositoryProfile
                 repository={isPendingRepository ? initalRepository : repository}
-                starred={isPendingRepository || isPendingCheckStarred ? false : starred}
+                starred={
+                  isPendingRepository || isPendingCheckStarred ? false : starred
+                }
                 navigation={navigation}
               />
             );
@@ -179,13 +191,20 @@ class Repository extends Component {
           {initalRepository &&
             initalRepository.owner &&
             <SectionList title="OWNER">
-              <UserListItem user={initalRepository.owner} navigation={navigation} />
+              <UserListItem
+                user={initalRepository.owner}
+                navigation={navigation}
+              />
             </SectionList>}
 
           {isPendingContributors && <LoadingMembersList title="CONTRIBUTORS" />}
 
           {!isPendingContributors &&
-            <MembersList title="CONTRIBUTORS" members={contributors} navigation={navigation} />}
+            <MembersList
+              title="CONTRIBUTORS"
+              members={contributors}
+              navigation={navigation}
+            />}
 
           <SectionList title="SOURCE">
             <ListItem
@@ -221,8 +240,12 @@ class Repository extends Component {
           <SectionList
             loading={isPendingIssues}
             title="ISSUES"
-            noItems={pureIssues.filter(issue => issue.state === 'open').length === 0}
-            noItemsMessage={pureIssues.length === 0 ? 'No issues' : 'No open issues'}
+            noItems={
+              pureIssues.filter(issue => issue.state === 'open').length === 0
+            }
+            noItemsMessage={
+              pureIssues.length === 0 ? 'No issues' : 'No open issues'
+            }
             showButton={pureIssues.length > 0}
             buttonTitle="View All"
             buttonAction={() =>
@@ -235,7 +258,12 @@ class Repository extends Component {
               .filter(issue => issue.state === 'open')
               .slice(0, 3)
               .map(item =>
-                <IssueListItem key={item.id} type="issue" issue={item} navigation={navigation} />
+                <IssueListItem
+                  key={item.id}
+                  type="issue"
+                  issue={item}
+                  navigation={navigation}
+                />
               )}
           </SectionList>
 
@@ -243,7 +271,9 @@ class Repository extends Component {
             loading={isPendingIssues}
             title="PULL REQUESTS"
             noItems={pulls.filter(issue => issue.state === 'open').length === 0}
-            noItemsMessage={pulls.length === 0 ? 'No pull requests' : 'No open pull requests'}
+            noItemsMessage={
+              pulls.length === 0 ? 'No pull requests' : 'No open pull requests'
+            }
             showButton={pulls.length > 0}
             buttonTitle="View All"
             buttonAction={() =>
@@ -256,7 +286,12 @@ class Repository extends Component {
               .filter(issue => issue.state === 'open')
               .slice(0, 3)
               .map(item =>
-                <IssueListItem key={item.id} type="pull" issue={item} navigation={navigation} />
+                <IssueListItem
+                  key={item.id}
+                  type="pull"
+                  issue={item}
+                  navigation={navigation}
+                />
               )}
           </SectionList>
         </ParallaxScroll>
@@ -265,4 +300,6 @@ class Repository extends Component {
   }
 }
 
-export const RepositoryScreen = connect(mapStateToProps, mapDispatchToProps)(Repository);
+export const RepositoryScreen = connect(mapStateToProps, mapDispatchToProps)(
+  Repository
+);

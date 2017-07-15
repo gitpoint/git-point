@@ -90,7 +90,9 @@ export const getUserInfo = user => {
   return dispatch => {
     return dispatch(getUser(user)).then(() => {
       dispatch(getOrgs(user));
-      dispatch(checkFollowStatus(`https://api.github.com/user/following/${user}`));
+      dispatch(
+        checkFollowStatus(`https://api.github.com/user/following/${user}`)
+      );
     });
   };
 };
@@ -125,7 +127,10 @@ export const getRepositories = user => {
 
     dispatch({ type: GET_REPOSITORIES.PENDING });
 
-    const url = user.login === authUser.login ? `${apiRoot}/user` : USER_ENDPOINT(user.login);
+    const url =
+      user.login === authUser.login
+        ? `${apiRoot}/user`
+        : USER_ENDPOINT(user.login);
 
     fetchUrl(`${url}/repos?per_page=50`, accessToken)
       .then(data => {
@@ -193,7 +198,12 @@ export const searchUserRepos = (query, user) => {
 
     dispatch({ type: SEARCH_USER_REPOS.PENDING });
 
-    return fetchSearch('repositories', query, accessToken, `+user:${user.login}`)
+    return fetchSearch(
+      'repositories',
+      query,
+      accessToken,
+      `+user:${user.login}`
+    )
       .then(data => {
         dispatch({
           type: SEARCH_USER_REPOS.SUCCESS,

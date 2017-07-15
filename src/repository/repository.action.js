@@ -171,7 +171,9 @@ export const getRepositoryInfo = url => {
       dispatch(getContributors(contributorsUrl));
       dispatch(getIssues(issuesUrl));
       dispatch(
-        checkRepoStarred(`https://api.github.com/user/starred/${repo.owner.login}/${repo.name}`)
+        checkRepoStarred(
+          `https://api.github.com/user/starred/${repo.owner.login}/${repo.name}`
+        )
       );
     });
   };

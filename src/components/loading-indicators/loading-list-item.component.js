@@ -45,7 +45,9 @@ export class LoadingListItem extends Component {
         <View style={styles.wrapper}>
           <Animated.View style={{ opacity: this.state.fadeAnimValue }} />
 
-          <Animated.View style={[styles.textBar, { opacity: this.state.fadeAnimValue }]} />
+          <Animated.View
+            style={[styles.textBar, { opacity: this.state.fadeAnimValue }]}
+          />
         </View>
       </View>
     );

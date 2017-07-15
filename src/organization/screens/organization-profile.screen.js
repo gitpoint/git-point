@@ -59,7 +59,13 @@ class OrganizationProfile extends Component {
   }
 
   render() {
-    const { organization, members, isPendingOrg, isPendingMembers, navigation } = this.props;
+    const {
+      organization,
+      members,
+      isPendingOrg,
+      isPendingMembers,
+      navigation,
+    } = this.props;
     const initialOrganization = this.props.navigation.state.params.organization;
 
     return (
@@ -83,7 +89,11 @@ class OrganizationProfile extends Component {
           {isPendingMembers && <LoadingMembersList title="MEMBERS" />}
 
           {!isPendingMembers &&
-            <MembersList title="MEMBERS" members={members} navigation={navigation} />}
+            <MembersList
+              title="MEMBERS"
+              members={members}
+              navigation={navigation}
+            />}
 
           {!!(
             !isPendingOrg &&
@@ -107,6 +117,7 @@ class OrganizationProfile extends Component {
   }
 }
 
-export const OrganizationProfileScreen = connect(mapStateToProps, mapDispatchToProps)(
-  OrganizationProfile
-);
+export const OrganizationProfileScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(OrganizationProfile);

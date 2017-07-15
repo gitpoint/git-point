@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, ScrollView, StyleSheet, TextInput, ActionSheetIOS, Alert } from 'react-native';
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  ActionSheetIOS,
+  Alert,
+} from 'react-native';
 import { ListItem, Icon } from 'react-native-elements';
 
 import { ViewContainer, SectionList } from '../../components';
@@ -14,8 +21,22 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  mergePullRequestByDispatch: (repoFullName, issueNum, commitTitle, commitMessage, mergeMethod) =>
-    dispatch(mergePullRequest(repoFullName, issueNum, commitTitle, commitMessage, mergeMethod)),
+  mergePullRequestByDispatch: (
+    repoFullName,
+    issueNum,
+    commitTitle,
+    commitMessage,
+    mergeMethod
+  ) =>
+    dispatch(
+      mergePullRequest(
+        repoFullName,
+        issueNum,
+        commitTitle,
+        commitMessage,
+        mergeMethod
+      )
+    ),
 });
 
 const styles = StyleSheet.create({
@@ -78,7 +99,12 @@ class PullMerge extends Component {
   }
 
   mergePullRequest = () => {
-    const { repository, issue, mergePullRequestByDispatch, navigation } = this.props;
+    const {
+      repository,
+      issue,
+      mergePullRequestByDispatch,
+      navigation,
+    } = this.props;
     const { mergeMethod, commitTitle, commitMessage } = this.state;
     const mergeMethodTypes = ['merge', 'squash'];
 
@@ -132,7 +158,10 @@ class PullMerge extends Component {
                 })}
               onChangeText={text => this.setState({ commitTitle: text })}
               placeholderTextColor={colors.grey}
-              style={[styles.textInput, { height: Math.max(60, this.state.commitTitleHeight) }]}
+              style={[
+                styles.textInput,
+                { height: Math.max(60, this.state.commitTitleHeight) },
+              ]}
               value={commitTitle}
             />
           </SectionList>
@@ -148,7 +177,10 @@ class PullMerge extends Component {
                   commitMessageHeight: event.nativeEvent.contentSize.height,
                 })}
               placeholderTextColor={colors.grey}
-              style={[styles.textInput, { height: Math.max(60, this.state.commitMessageHeight) }]}
+              style={[
+                styles.textInput,
+                { height: Math.max(60, this.state.commitMessageHeight) },
+              ]}
               value={commitMessage}
             />
           </SectionList>
@@ -182,4 +214,6 @@ class PullMerge extends Component {
   }
 }
 
-export const PullMergeScreen = connect(mapStateToProps, mapDispatchToProps)(PullMerge);
+export const PullMergeScreen = connect(mapStateToProps, mapDispatchToProps)(
+  PullMerge
+);

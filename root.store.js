@@ -23,4 +23,7 @@ const getEnhancers = () => {
   return enhancers;
 };
 
-export const configureStore = createStore(rootReducer, compose(getMiddleware(), ...getEnhancers()));
+export const configureStore = createStore(
+  rootReducer,
+  compose(getMiddleware(), ...getEnhancers())
+);
