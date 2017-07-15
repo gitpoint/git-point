@@ -71,7 +71,8 @@
       "avatar_url": "https://avatars0.githubusercontent.com/u/464978?v=3",
       "profile": "http://co.linkedin.com/in/alejandronanez/",
       "contributions": [
-        "code"
+        "code",
+        "review"
       ]
     },
     {
@@ -120,19 +121,19 @@
       ]
     },
     {
-      "login": "swapnilmj",
-      "name": "Swapnil Joshi",
-      "avatar_url": "https://avatars4.githubusercontent.com/u/2190589?v=4",
-      "profile": "http://swapnilmj.users.sourceforge.net/",
+      "login": "wsdjeg",
+      "name": "Wang Shidong",
+      "avatar_url": "https://avatars6.githubusercontent.com/u/13142418?v=4",
+      "profile": "https://wsdjeg.github.io",
       "contributions": [
         "code"
       ]
     },
     {
-      "login": "wsdjeg",
-      "name": "Wang Shidong",
-      "avatar_url": "https://avatars6.githubusercontent.com/u/13142418?v=4",
-      "profile": "https://wsdjeg.github.io",
+      "login": "swapnilmj",
+      "name": "Swapnil Joshi",
+      "avatar_url": "https://avatars4.githubusercontent.com/u/2190589?v=4",
+      "profile": "http://swapnilmj.users.sourceforge.net/",
       "contributions": [
         "code"
       ]
