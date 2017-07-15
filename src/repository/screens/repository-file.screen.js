@@ -10,11 +10,9 @@ import {
 import { Card, Icon } from 'react-native-elements';
 
 import { ViewContainer, LoadingContainer } from 'components';
-
 import SyntaxHighlighter from 'react-native-syntax-highlighter';
 import { getLanguage } from 'lowlight';
 import { github as GithubStyle } from 'react-syntax-highlighter/dist/styles';
-
 import { colors, normalize } from 'config';
 
 import { connect } from 'react-redux';
@@ -83,12 +81,13 @@ class RepositoryFile extends Component {
   }
 
   isKnownType(fileType) {
-    return getLanguage(fileType);
+    return getLanguage(fileType) && !this.isImage(fileType);
   }
 
   render() {
     const { fileContent, isPendingFile, navigation } = this.props;
     const fileType = navigation.state.params.content.name.split('.').pop();
+    const isUnknownType = (!this.isImage(fileType) && !this.isKnownType(fileType));
 
     return (
       <ViewContainer>
@@ -113,7 +112,7 @@ class RepositoryFile extends Component {
                 </Text>
               </View>
 
-              {!this.isImage(fileType) && !this.isKnownType(fileType) &&
+              {isUnknownType &&
                 <View style={styles.content}>
                   <ScrollView
                     automaticallyAdjustContentInsets={false}
@@ -125,7 +124,7 @@ class RepositoryFile extends Component {
                 </View>
               }
 
-              {!this.isImage(fileType) && this.isKnownType(fileType) &&
+              {this.isKnownType(fileType) &&
                 <View style={styles.codeContainer}>
                   <SyntaxHighlighter
                     language={fileType}
