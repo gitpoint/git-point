@@ -64,10 +64,10 @@ class Profile extends Component {
     this.ActionSheet.show();
   }
 
-  handlePress = (i) => {
+  handlePress = (index) => {
     const { user, isFollowing, changeFollowStatus } = this.props;
 
-    if (i === 0) {
+    if (index === 0) {
       changeFollowStatus(user.login, isFollowing);
     }
   }
@@ -122,7 +122,7 @@ class Profile extends Component {
           {!isPending &&
             initialUser.login === user.login &&
             <View>
-              
+
               {user.bio && user.bio !== '' &&
                 <SectionList
                   title="BIO"

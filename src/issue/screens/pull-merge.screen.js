@@ -74,10 +74,10 @@ class PullMerge extends Component {
     this.ActionSheet.show();
   };
 
-  handlePress = (i) => {
-    if (i !== this.mergeMethodMessages.length) {
+  handlePress = (index) => {
+    if (index !== this.mergeMethodMessages.length) {
       this.setState({
-        mergeMethod: i,
+        mergeMethod: index,
       });
     }
   };

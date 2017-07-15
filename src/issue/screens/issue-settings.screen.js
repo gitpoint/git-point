@@ -69,23 +69,23 @@ class IssueSettings extends Component {
     }
   };
 
-  handleIssueActionPress = (i) => {
+  handleIssueActionPress = (index) => {
     const { issue, navigation } = this.props;
     const newState = issue.state === 'open' ? 'close' : 'open';
 
-    if (i === 0) {
+    if (index === 0) {
       this.editIssue({ state: newState }).then(() => {
         navigation.goBack();
       });
     }
   };
 
-  handleLockIssueActionPress = (i) => {
+  handleLockIssueActionPress = (index) => {
     const { issue, repository } = this.props;
     const repoName = repository.name;
     const owner = repository.owner.login;
 
-    if (i === 0) {
+    if (index === 0) {
       this.props.changeIssueLockStatus(
         owner,
         repoName,
@@ -95,24 +95,24 @@ class IssueSettings extends Component {
     }
   };
 
-  handleAddLabelActionPress = (i) => {
+  handleAddLabelActionPress = (index) => {
     const { issue, labels } = this.props;
     const labelChoices = [...labels.map(label => label.name)];
 
     if (
-      i !== labelChoices.length &&
+      index !== labelChoices.length &&
       !issue.labels.some(
-        label => label.name === labelChoices[i]
+        label => label.name === labelChoices[index]
       )
     ) {
       this.editIssue(
         {
           labels: [
             ...issue.labels.map(label => label.name),
-            labelChoices[i]
+            labelChoices[index]
           ]
         },
-        { labels: [...issue.labels, labels[i]] }
+        { labels: [...issue.labels, labels[index]] }
       );
     }
   };
