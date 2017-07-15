@@ -7,6 +7,9 @@
     "link": "./node_modules/.bin/react-native link",
     "ios": "./node_modules/.bin/react-native run-ios",
     "android": "./node_modules/.bin/react-native run-android",
+    "lint-staged": "lint-staged",
+    "lint-pass": "echo '\033[42mCOMMIT SUCCEEDED\033[0m 🎉🎉🎉\n'",
+    "eslint": "eslint .",
     "test": "jest",
     "flow-start": "flow start",
     "flow-stop": "flow stop",
@@ -14,6 +17,17 @@
     "flow-coverage": "flow coverage",
     "contributors:add": "all-contributors add"
   },
+  "lint-staged": {
+    "*.js": [
+      "prettier --single-quote --print-width 120 --trailing-comma es5 --write",
+      "git add",
+      "eslint --cache --max-warnings 0"
+    ],
+  },
+  "pre-commit": [
+    "lint-staged",
+    "lint-pass"
+  ],
   "dependencies": {
     "lowlight": "^1.5.0",
     "md5": "^2.2.1",
