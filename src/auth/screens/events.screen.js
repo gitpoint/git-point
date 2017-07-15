@@ -28,6 +28,7 @@ import { connect } from 'react-redux';
 import { getUserEvents } from '../auth.action';
 
 import { ViewContainer } from 'components';
+import { emojifyText } from 'utils';
 
 import { colors, normalize } from 'config';
 
@@ -519,6 +520,7 @@ class Events extends Component {
 
   render() {
     const { isPendingEvents, userEvents, navigation } = this.props;
+    const linebreaksPattern = /(\r\n|\n|\r)/gm;
     let content;
     if (isPendingEvents && !userEvents) {
       content = [...Array(15)].map((item, i) => (
@@ -559,7 +561,7 @@ class Events extends Component {
                 item.type === 'PullRequestReviewCommentEvent') &&
                 <View style={styles.subtitleContainer}>
                   <Text numberOfLines={3} style={styles.subtitle}>
-                    {item.payload.comment.body.replace(/(\r\n|\n|\r)/gm, ' ')}
+                    {emojifyText(item.payload.comment.body.replace(linebreaksPattern, ' '))}
                   </Text>
                 </View>}
             </View>

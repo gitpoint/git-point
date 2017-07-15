@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 import { colors, normalize } from 'config';
+import { emojifyText } from 'utils';
 
 type Props = {
   repository: Object,
@@ -33,7 +34,7 @@ export const RepositoryProfile = ({
           <Text style={styles.title}>{repository.name}</Text>
 
           <Text style={[styles.subtitle, styles.subtitleDescription]}>
-            {repository.description}
+            {emojifyText(repository.description)}
           </Text>
 
           {repository.fork &&

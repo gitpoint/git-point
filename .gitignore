@@ -51,3 +51,7 @@ buck-out/
 fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
+
+# react-native-packager
+react-native-packager-cache*
+haste-map-react-native-packager*

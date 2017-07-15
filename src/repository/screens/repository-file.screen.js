@@ -10,7 +10,9 @@ import {
 import { Card, Icon } from 'react-native-elements';
 
 import { ViewContainer, LoadingContainer } from 'components';
-
+import SyntaxHighlighter from 'react-native-syntax-highlighter';
+import { getLanguage } from 'lowlight';
+import { github as GithubStyle } from 'react-syntax-highlighter/dist/styles';
 import { colors, normalize } from 'config';
 
 import { connect } from 'react-redux';
@@ -78,9 +80,14 @@ class RepositoryFile extends Component {
     );
   }
 
+  isKnownType(fileType) {
+    return getLanguage(fileType) && !this.isImage(fileType);
+  }
+
   render() {
     const { fileContent, isPendingFile, navigation } = this.props;
     const fileType = navigation.state.params.content.name.split('.').pop();
+    const isUnknownType = (!this.isImage(fileType) && !this.isKnownType(fileType));
 
     return (
       <ViewContainer>
@@ -105,7 +112,7 @@ class RepositoryFile extends Component {
                 </Text>
               </View>
 
-              {!this.isImage(fileType) &&
+              {isUnknownType &&
                 <View style={styles.content}>
                   <ScrollView
                     automaticallyAdjustContentInsets={false}
@@ -113,9 +120,21 @@ class RepositoryFile extends Component {
                     showsHorizontalScrollIndicator={false}
                   >
                     <Text style={styles.contentText}>{fileContent}</Text>
-
                   </ScrollView>
-                </View>}
+                </View>
+              }
+
+              {this.isKnownType(fileType) &&
+                <View style={styles.codeContainer}>
+                  <SyntaxHighlighter
+                    language={fileType}
+                    CodeTag={Text}
+                    codeTagProps={{style: styles.contentCode}}
+                    style={GithubStyle}
+                    fontFamily={styles.contentText.fontFamily}
+                    fontSize={styles.contentText.fontSize}>{fileContent}</SyntaxHighlighter>
+                </View>
+              }
 
               {this.isImage(fileType) &&
                 <View style={styles.imageContainer}>
@@ -168,6 +187,13 @@ const styles = StyleSheet.create({
   contentText: {
     fontFamily: 'Menlo',
     fontSize: normalize(10)
+  },
+  contentCode: {
+    paddingRight: 15,
+    paddingBottom: 0
+  },
+  codeContainer: {
+    flex: 1
   },
   imageContainer: {
     flex: 1,
