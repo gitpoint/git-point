@@ -59,6 +59,7 @@
     "all-contributors-cli": "^4.3.0",
     "babel-eslint": "^7.1.1",
     "babel-jest": "18.0.0",
+    "babel-plugin-module-resolver": "^2.7.1",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react-native": "1.9.1",
     "eslint": "^3.19.0",
