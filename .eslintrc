@@ -52,6 +52,7 @@
         "wrap-iife": ["error", "inside", {
             "functionPrototypeMethods": false
         }],
+        "react/jsx-wrap-multilines": "off",
         "react/jsx-closing-bracket-location": "off",
         "react/jsx-curly-spacing": ["error", "never", { "allowMultiline": true }],
         "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
