@@ -14,7 +14,7 @@ import { colors } from 'config';
 import { GitPoint } from './routes';
 
 // Redux Store
-import configureStore from './root.store';
+import { configureStore } from './root.store';
 import { Provider } from 'react-redux';
 
 import { persistStore } from 'redux-persist';
@@ -30,8 +30,6 @@ if (console) {
   console.disableYellowBox = true;
 }
 
-let store = null;
-
 class App extends Component {
   constructor() {
     super();
@@ -46,10 +44,8 @@ class App extends Component {
       secretKey: md5(DeviceInfo.getUniqueID())
     });
 
-    store = configureStore();
-
     persistStore(
-      store,
+      configureStore,
       { storage: AsyncStorage, transforms: [encryptor] },
       () => {
         this.setState({ rehydrated: true });
@@ -72,7 +68,7 @@ class App extends Component {
         </View>
       );
     return (
-      <Provider store={store}>
+      <Provider store={configureStore}>
         <GitPoint />
       </Provider>
     );
