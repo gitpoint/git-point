@@ -1,4 +1,6 @@
+/* eslint-disable no-nested-ternary */
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   StyleSheet,
   FlatList,
@@ -6,26 +8,24 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  Image
+  Image,
 } from 'react-native';
 import { ButtonGroup, Card, Icon } from 'react-native-elements';
 
-import { ViewContainer, LoadingContainer } from 'components';
-
-import { NotificationListItem } from 'components';
-
+import {
+  ViewContainer,
+  LoadingContainer,
+  NotificationListItem,
+} from 'components';
 import { colors, normalize } from 'config';
-
-import { connect } from 'react-redux';
+import { getIssueFromUrl } from 'issue';
 import {
   getUnreadNotifications,
   getParticipatingNotifications,
   getAllNotifications,
   markAsRead,
-  markRepoAsRead
-} from '../';
-
-import { getIssueFromUrl } from 'issue';
+  markRepoAsRead,
+} from '../index';
 
 const mapStateToProps = state => ({
   unread: state.notifications.unread,
@@ -34,42 +34,105 @@ const mapStateToProps = state => ({
   issue: state.issue.issue,
   isPendingUnread: state.notifications.isPendingUnread,
   isPendingParticipating: state.notifications.isPendingParticipating,
-  isPendingAll: state.notifications.isPendingAll
+  isPendingAll: state.notifications.isPendingAll,
 });
 
 const mapDispatchToProps = dispatch => ({
-  getUnreadNotifications: () => dispatch(getUnreadNotifications()),
-  getParticipatingNotifications: () =>
+  getUnreadNotificationsByDispatch: () => dispatch(getUnreadNotifications()),
+  getParticipatingNotificationsByDispatch: () =>
     dispatch(getParticipatingNotifications()),
-  getAllNotifications: () => dispatch(getAllNotifications()),
-  markAsRead: notificationID => dispatch(markAsRead(notificationID)),
-  markRepoAsRead: repoFullName => dispatch(markRepoAsRead(repoFullName)),
-  getIssueFromUrl: url => dispatch(getIssueFromUrl(url))
+  getAllNotificationsByDispatch: () => dispatch(getAllNotifications()),
+  markAsReadByDispatch: notificationID => dispatch(markAsRead(notificationID)),
+  markRepoAsReadByDispatch: repoFullName =>
+    dispatch(markRepoAsRead(repoFullName)),
+  getIssueFromUrlByDispatch: url => dispatch(getIssueFromUrl(url)),
+});
+
+const styles = StyleSheet.create({
+  buttonGroupWrapper: {
+    backgroundColor: colors.greyLight,
+    paddingTop: 28,
+  },
+  buttonGroupContainer: {
+    height: 30,
+  },
+  buttonGroupText: {
+    fontFamily: 'AvenirNext-Bold',
+  },
+  buttonGroupTextSelected: {
+    color: colors.black,
+  },
+  repositoryContainer: {
+    padding: 0,
+    marginVertical: 25,
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: 5,
+    paddingVertical: 8,
+    backgroundColor: colors.greyLight,
+  },
+  repositoryOwnerAvatar: {
+    borderRadius: 13,
+    width: 26,
+    height: 26,
+  },
+  repositoryTitle: {
+    color: colors.primarydark,
+    fontFamily: 'AvenirNext-DemiBold',
+    marginLeft: 10,
+    flex: 1,
+  },
+  notificationTitle: {
+    color: colors.black,
+    fontSize: normalize(12),
+    fontFamily: 'AvenirNext-Regular',
+  },
+  markAsReadIconRepo: {
+    flex: 0.15,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  container: {
+    flex: 1,
+    backgroundColor: 'transparent',
+  },
+  textContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  noneTitle: {
+    fontSize: normalize(16),
+    textAlign: 'center',
+    fontFamily: 'AvenirNext-Medium',
+  },
 });
 
 class Notifications extends Component {
   props: {
-    getUnreadNotifications: Function,
-    getParticipatingNotifications: Function,
-    getAllNotifications: Function,
-    getIssueFromUrl: Function,
+    getUnreadNotificationsByDispatch: Function,
+    getParticipatingNotificationsByDispatch: Function,
+    getAllNotificationsByDispatch: Function,
+    getIssueFromUrlByDispatch: Function,
     issue: Object,
-    markAsRead: Function,
-    markRepoAsRead: Function,
+    markAsReadByDispatch: Function,
+    markRepoAsReadByDispatch: Function,
     unread: Array,
     participating: Array,
     all: Array,
     isPendingUnread: boolean,
     isPendingParticipating: boolean,
     isPendingAll: boolean,
-    navigation: Object
+    navigation: Object,
   };
 
   constructor() {
     super();
 
     this.state = {
-      type: 0
+      type: 0,
     };
 
     this.switchType = this.switchType.bind(this);
@@ -78,108 +141,9 @@ class Notifications extends Component {
   }
 
   componentDidMount() {
-    this.props.getUnreadNotifications();
-    this.props.getParticipatingNotifications();
-    this.props.getAllNotifications();
-  }
-
-  switchType(selectedType) {
-    const { unread, participating, all } = this.props;
-
-    if (this.state.type !== selectedType) {
-      this.setState({
-        type: selectedType
-      });
-    }
-
-    if (selectedType === 0 && unread.length === 0) {
-      this.props.getUnreadNotifications();
-    } else if (selectedType === 1 && participating.length === 0) {
-      this.props.getParticipatingNotifications();
-    } else if (selectedType === 2 && all.length === 0) {
-      this.props.getAllNotifications();
-    }
-
-    if (this.notifications().length > 0) {
-      this.refs.notificationsListRef.scrollToOffset({
-        x: 0,
-        y: 0,
-        animated: false
-      });
-    }
-  }
-
-  renderItem = ({ item }) => {
-    const { markAsRead, markRepoAsRead } = this.props;
-    const notifications = this.notifications().filter(
-      notification => notification.repository.full_name === item
-    );
-
-    return (
-      <Card containerStyle={styles.repositoryContainer}>
-
-        <View style={styles.headerContainer}>
-          <Image
-            style={styles.repositoryOwnerAvatar}
-            source={{
-              uri: this.getImage(item)
-            }}
-          />
-
-          <Text
-            style={styles.repositoryTitle}
-            onPress={() => this.navigateToRepo(item)}
-          >
-            {item}
-          </Text>
-
-          <TouchableOpacity
-            style={styles.markAsReadIconRepo}
-            onPress={() => markRepoAsRead(item)}
-          >
-            <Icon
-              color={colors.greyDark}
-              size={28}
-              name="check"
-              type="octicon"
-            />
-          </TouchableOpacity>
-        </View>
-
-        <ScrollView>
-          {notifications.map((notification, i) => (
-            <NotificationListItem
-              key={i}
-              notification={notification}
-              iconAction={notificationID => markAsRead(notificationID)}
-              navigationAction={notification =>
-                this.navigateToThread(notification)}
-              navigation={this.props.navigation}
-            />
-          ))}
-        </ScrollView>
-      </Card>
-    );
-  };
-
-  navigateToRepo = fullName => {
-    const { navigation } = this.props;
-
-    navigation.navigate('Repository', {
-      repositoryUrl: `https://api.github.com/repos/${fullName}`
-    });
-  };
-  navigateToThread(notification) {
-    const { markAsRead, getIssueFromUrl, navigation } = this.props;
-
-    markAsRead(notification.id);
-    getIssueFromUrl(
-      notification.subject.url.replace('pulls', 'issues')
-    ).then(() => {
-      navigation.navigate('Issue', {
-        issue: this.props.issue
-      });
-    });
+    this.props.getUnreadNotificationsByDispatch();
+    this.props.getParticipatingNotificationsByDispatch();
+    this.props.getAllNotificationsByDispatch();
   }
 
   getImage(repoName) {
@@ -188,6 +152,77 @@ class Notifications extends Component {
     );
 
     return notificationForRepo.repository.owner.avatar_url;
+  }
+
+  getNotifications() {
+    const {
+      getUnreadNotificationsByDispatch,
+      getParticipatingNotificationsByDispatch,
+      getAllNotificationsByDispatch,
+    } = this.props;
+    const { type } = this.state;
+
+    switch (type) {
+      case 0:
+        return getUnreadNotificationsByDispatch;
+      case 1:
+        return getParticipatingNotificationsByDispatch;
+      case 2:
+        return getAllNotificationsByDispatch;
+      default:
+        return null;
+    }
+  }
+
+  navigateToRepo = fullName => {
+    const { navigation } = this.props;
+
+    navigation.navigate('Repository', {
+      repositoryUrl: `https://api.github.com/repos/${fullName}`,
+    });
+  };
+
+  navigateToThread(notification) {
+    const {
+      markAsReadByDispatch,
+      getIssueFromUrlByDispatch,
+      navigation,
+    } = this.props;
+
+    markAsReadByDispatch(notification.id);
+    getIssueFromUrlByDispatch(
+      notification.subject.url.replace('pulls', 'issues')
+    ).then(() => {
+      navigation.navigate('Issue', {
+        issue: this.props.issue,
+      });
+    });
+  }
+
+  switchType(selectedType) {
+    const { unread, participating, all } = this.props;
+
+    if (this.state.type !== selectedType) {
+      this.setState({
+        type: selectedType,
+      });
+    }
+
+    if (selectedType === 0 && unread.length === 0) {
+      this.props.getUnreadNotificationsByDispatch();
+    } else if (selectedType === 1 && participating.length === 0) {
+      this.props.getParticipatingNotificationsByDispatch();
+    } else if (selectedType === 2 && all.length === 0) {
+      this.props.getAllNotificationsByDispatch();
+    }
+
+    if (this.notifications().length > 0) {
+      this.notificationsList.scrollToOffset({
+        x: 0,
+        y: 0,
+        animated: false,
+      });
+    }
   }
 
   notifications() {
@@ -201,6 +236,8 @@ class Notifications extends Component {
         return participating;
       case 2:
         return all;
+      default:
+        return null;
     }
   }
 
@@ -211,7 +248,7 @@ class Notifications extends Component {
       all,
       isPendingUnread,
       isPendingParticipating,
-      isPendingAll
+      isPendingAll,
     } = this.props;
     const { type } = this.state;
 
@@ -222,26 +259,66 @@ class Notifications extends Component {
         return participating && isPendingParticipating;
       case 2:
         return all && isPendingAll;
+      default:
+        return null;
     }
   }
 
-  getNotifications() {
-    const {
-      getUnreadNotifications,
-      getParticipatingNotifications,
-      getAllNotifications
-    } = this.props;
-    const { type } = this.state;
+  keyExtractor = (item, index) => {
+    return index;
+  };
 
-    switch (type) {
-      case 0:
-        return getUnreadNotifications;
-      case 1:
-        return getParticipatingNotifications;
-      case 2:
-        return getAllNotifications;
-    }
-  }
+  renderItem = ({ item }) => {
+    const { markAsReadByDispatch, markRepoAsReadByDispatch } = this.props;
+    const notifications = this.notifications().filter(
+      notification => notification.repository.full_name === item
+    );
+
+    return (
+      <Card containerStyle={styles.repositoryContainer}>
+        <View style={styles.headerContainer}>
+          <Image
+            style={styles.repositoryOwnerAvatar}
+            source={{
+              uri: this.getImage(item),
+            }}
+          />
+
+          <Text
+            style={styles.repositoryTitle}
+            onPress={() => this.navigateToRepo(item)}
+          >
+            {item}
+          </Text>
+
+          <TouchableOpacity
+            style={styles.markAsReadIconRepo}
+            onPress={() => markRepoAsReadByDispatch(item)}
+          >
+            <Icon
+              color={colors.greyDark}
+              size={28}
+              name="check"
+              type="octicon"
+            />
+          </TouchableOpacity>
+        </View>
+
+        <ScrollView>
+          {notifications.map(notification =>
+            <NotificationListItem
+              key={notification.id}
+              notification={notification}
+              iconAction={notificationID =>
+                markAsReadByDispatch(notificationID)}
+              navigationAction={notify => this.navigateToThread(notify)}
+              navigation={this.props.navigation}
+            />
+          )}
+        </ScrollView>
+      </Card>
+    );
+  };
 
   render() {
     const { type } = this.state;
@@ -250,7 +327,7 @@ class Notifications extends Component {
         this.notifications().map(
           notification => notification.repository.full_name
         )
-      )
+      ),
     ];
 
     const sortedRepos = repositories.sort((a, b) => {
@@ -275,7 +352,9 @@ class Notifications extends Component {
             this.notifications().length === 0 &&
             <LoadingContainer
               animating={this.isLoading() && this.notifications().length === 0}
-              text={`Retrieving ${type === 0 ? 'unread' : type === 1 ? 'pending' : 'all'} notifications`}
+              text={`Retrieving ${type === 0
+                ? 'unread'
+                : type === 1 ? 'pending' : 'all'} notifications`}
               style={styles.marginSpacing}
             />}
 
@@ -283,13 +362,17 @@ class Notifications extends Component {
             this.notifications().length === 0 &&
             <View style={styles.textContainer}>
               <Text style={styles.noneTitle}>
-                {`You don't have any${type === 0 ? ' unread' : type === 1 ? ' pending' : ''} notifications!`}
+                {`You don't have any${type === 0
+                  ? ' unread'
+                  : type === 1 ? ' pending' : ''} notifications!`}
               </Text>
             </View>}
 
           {this.notifications().length > 0 &&
             <FlatList
-              ref="notificationsListRef"
+              ref={ref => {
+                this.notificationsList = ref;
+              }}
               removeClippedSubviews={false}
               onRefresh={this.getNotifications()}
               refreshing={this.isLoading()}
@@ -301,73 +384,7 @@ class Notifications extends Component {
       </ViewContainer>
     );
   }
-
-  keyExtractor = (item, index) => {
-    return index;
-  };
 }
-
-const styles = StyleSheet.create({
-  buttonGroupWrapper: {
-    backgroundColor: colors.greyLight,
-    paddingTop: 28
-  },
-  buttonGroupContainer: {
-    height: 30
-  },
-  buttonGroupText: {
-    fontFamily: 'AvenirNext-Bold'
-  },
-  buttonGroupTextSelected: {
-    color: colors.black
-  },
-  repositoryContainer: {
-    padding: 0,
-    marginVertical: 25
-  },
-  headerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingLeft: 5,
-    paddingVertical: 8,
-    backgroundColor: colors.greyLight
-  },
-  repositoryOwnerAvatar: {
-    borderRadius: 13,
-    width: 26,
-    height: 26
-  },
-  repositoryTitle: {
-    color: colors.primarydark,
-    fontFamily: 'AvenirNext-DemiBold',
-    marginLeft: 10,
-    flex: 1
-  },
-  notificationTitle: {
-    color: colors.black,
-    fontSize: normalize(12),
-    fontFamily: 'AvenirNext-Regular'
-  },
-  markAsReadIconRepo: {
-    flex: 0.15,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  container: {
-    flex: 1,
-    backgroundColor: 'transparent'
-  },
-  textContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  noneTitle: {
-    fontSize: normalize(16),
-    textAlign: 'center',
-    fontFamily: 'AvenirNext-Medium'
-  }
-});
 
 export const NotificationsScreen = connect(mapStateToProps, mapDispatchToProps)(
   Notifications

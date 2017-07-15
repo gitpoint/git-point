@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { FlatList, View, StyleSheet, Dimensions, Text } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
 import SearchBar from 'react-native-search-bar';
 
 import { ViewContainer, IssueListItem, LoadingContainer } from 'components';
-
 import { colors, normalize } from 'config';
-
-import { connect } from 'react-redux';
 import {
   searchOpenRepoIssues,
-  searchClosedRepoIssues
+  searchClosedRepoIssues,
 } from '../repository.action';
 
 const mapStateToProps = state => ({
@@ -18,33 +16,71 @@ const mapStateToProps = state => ({
   searchedOpenIssues: state.repository.searchedOpenIssues,
   searchedClosedIssues: state.repository.searchedClosedIssues,
   isPendingSearchOpenIssues: state.repository.isPendingSearchOpenIssues,
-  isPendingSearchClosedIssues: state.repository.isPendingSearchClosedIssues
+  isPendingSearchClosedIssues: state.repository.isPendingSearchClosedIssues,
 });
 
 const mapDispatchToProps = dispatch => ({
-  searchOpenRepoIssues: (query, repo) =>
+  searchOpenRepoIssuesByDispatch: (query, repo) =>
     dispatch(searchOpenRepoIssues(query, repo)),
-  searchClosedRepoIssues: (query, repo) =>
-    dispatch(searchClosedRepoIssues(query, repo))
+  searchClosedRepoIssuesByDispatch: (query, repo) =>
+    dispatch(searchClosedRepoIssues(query, repo)),
+});
+
+const styles = StyleSheet.create({
+  header: {
+    borderBottomColor: colors.greyLight,
+    borderBottomWidth: 1,
+  },
+  searchBarWrapper: {
+    flexDirection: 'row',
+  },
+  searchContainer: {
+    width: Dimensions.get('window').width,
+    backgroundColor: colors.white,
+    flex: 1,
+  },
+  list: {
+    marginTop: 0,
+  },
+  buttonGroupContainer: {
+    height: 30,
+  },
+  buttonGroupText: {
+    fontFamily: 'AvenirNext-Bold',
+  },
+  buttonGroupTextSelected: {
+    color: colors.black,
+  },
+  loadingIndicatorContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  marginSpacing: {
+    marginTop: 40,
+  },
+  searchTitle: {
+    fontSize: normalize(18),
+    textAlign: 'center',
+  },
 });
 
 class IssueList extends Component {
-  state: {
-    query: string,
-    searchType: number,
-    searchStart: boolean,
-    searchFocus: boolean
-  };
-
   props: {
     repository: Object,
     searchedOpenIssues: Array,
     searchedClosedIssues: Array,
     isPendingSearchOpenIssues: boolean,
     isPendingSearchClosedIssues: boolean,
-    searchOpenRepoIssues: Function,
-    searchClosedRepoIssues: Function,
-    navigation: Object
+    searchOpenRepoIssuesByDispatch: Function,
+    searchClosedRepoIssuesByDispatch: Function,
+    navigation: Object,
+  };
+
+  state: {
+    query: string,
+    searchType: number,
+    searchStart: boolean,
+    searchFocus: boolean,
   };
 
   constructor() {
@@ -54,76 +90,82 @@ class IssueList extends Component {
       query: '',
       searchType: 0,
       searchStart: false,
-      searchFocus: false
+      searchFocus: false,
     };
   }
 
-  switchQueryType = selectedType => {
-    if (this.state.searchType !== selectedType) {
-      this.setState({
-        searchType: selectedType
-      });
-
-      this.search(this.state.query, selectedType);
-    } else {
-      this.refs.issueListRef.scrollToOffset({
-        x: 0,
-        y: 0,
-        animated: false
-      });
-    }
-  };
-
-  search = (query, selectedType = null) => {
-    const {
-      searchOpenRepoIssues,
-      searchClosedRepoIssues,
-      repository
-    } = this.props;
-
-    const selectedSearchType = selectedType !== null
-      ? selectedType
-      : this.state.searchType;
-
-    if (query !== '') {
-      this.setState({
-        query: query,
-        searchStart: true
-      });
-
-      selectedSearchType === 0
-        ? searchOpenRepoIssues(query, repository.full_name)
-        : searchClosedRepoIssues(query, repository.full_name);
-    }
-  };
-
-  renderItem = ({ item }) => (
-    <IssueListItem
-      type={this.props.navigation.state.params.type}
-      issue={item}
-      navigation={this.props.navigation}
-    />
-  );
   getList = () => {
     const { searchedOpenIssues, searchedClosedIssues, navigation } = this.props;
     const { searchType, searchStart } = this.state;
 
     if (searchStart) {
       return searchType === 0 ? searchedOpenIssues : searchedClosedIssues;
+    }
+
+    return searchType === 0
+      ? navigation.state.params.issues.filter(issue => issue.state === 'open')
+      : navigation.state.params.issues.filter(
+          issue => issue.state === 'closed'
+        );
+  };
+
+  switchQueryType = selectedType => {
+    if (this.state.searchType !== selectedType) {
+      this.setState({
+        searchType: selectedType,
+      });
+
+      this.search(this.state.query, selectedType);
     } else {
-      return searchType === 0
-        ? navigation.state.params.issues.filter(issue => issue.state === 'open')
-        : navigation.state.params.issues.filter(
-            issue => issue.state === 'closed'
-          );
+      this.issueList.scrollToOffset({
+        x: 0,
+        y: 0,
+        animated: false,
+      });
     }
   };
+
+  search = (query, selectedType = null) => {
+    const {
+      searchOpenRepoIssuesByDispatch,
+      searchClosedRepoIssuesByDispatch,
+      repository,
+    } = this.props;
+
+    const selectedSearchType =
+      selectedType !== null ? selectedType : this.state.searchType;
+
+    if (query !== '') {
+      this.setState({
+        searchStart: true,
+        query,
+      });
+
+      if (selectedSearchType === 0) {
+        searchOpenRepoIssuesByDispatch(query, repository.full_name);
+      } else {
+        searchClosedRepoIssuesByDispatch(query, repository.full_name);
+      }
+    }
+  };
+
+  keyExtractor = item => {
+    return item.id;
+  };
+
+  renderItem = ({ item }) =>
+    <IssueListItem
+      type={this.props.navigation.state.params.type}
+      issue={item}
+      navigation={this.props.navigation}
+    />;
+
   render() {
     const {
       searchedOpenIssues,
       searchedClosedIssues,
       isPendingSearchOpenIssues,
-      isPendingSearchClosedIssues
+      isPendingSearchClosedIssues,
     } = this.props;
     const { query, searchType, searchStart, searchFocus } = this.state;
 
@@ -133,20 +175,22 @@ class IssueList extends Component {
           <View style={styles.searchBarWrapper}>
             <View style={styles.searchContainer}>
               <SearchBar
-                ref="searchBar"
-                hideBackground={true}
+                ref={ref => {
+                  this.searchBar = ref;
+                }}
                 textColor={colors.primaryDark}
                 textFieldBackgroundColor={colors.greyLight}
                 showsCancelButton={searchFocus}
                 onFocus={() => this.setState({ searchFocus: true })}
                 onCancelButtonPress={() => {
                   this.setState({ searchStart: false, query: '' });
-                  this.refs.searchBar.unFocus();
+                  this.searchBar.unFocus();
                 }}
-                onSearchButtonPress={query => {
-                  this.search(query);
-                  this.refs.searchBar.unFocus();
+                onSearchButtonPress={text => {
+                  this.search(text);
+                  this.searchBar.unFocus();
                 }}
+                hideBackground
               />
             </View>
           </View>
@@ -179,7 +223,9 @@ class IssueList extends Component {
 
         {this.getList().length > 0 &&
           <FlatList
-            ref="issueListRef"
+            ref={ref => {
+              this.issueList = ref;
+            }}
             removeClippedSubviews={false}
             data={this.getList()}
             keyExtractor={this.keyExtractor}
@@ -191,9 +237,7 @@ class IssueList extends Component {
           searchedOpenIssues.length === 0 &&
           searchType === 0 &&
           <View style={styles.marginSpacing}>
-            <Text style={styles.searchTitle}>
-              No open issues found!
-            </Text>
+            <Text style={styles.searchTitle}>No open issues found!</Text>
           </View>}
 
         {searchStart &&
@@ -201,56 +245,12 @@ class IssueList extends Component {
           searchedClosedIssues.length === 0 &&
           searchType === 1 &&
           <View style={styles.marginSpacing}>
-            <Text style={styles.searchTitle}>
-              No closed issues found!
-            </Text>
+            <Text style={styles.searchTitle}>No closed issues found!</Text>
           </View>}
       </ViewContainer>
     );
   }
-
-  keyExtractor = item => {
-    return item.id;
-  };
 }
-
-const styles = StyleSheet.create({
-  header: {
-    borderBottomColor: colors.greyLight,
-    borderBottomWidth: 1
-  },
-  searchBarWrapper: {
-    flexDirection: 'row'
-  },
-  searchContainer: {
-    width: Dimensions.get('window').width,
-    backgroundColor: colors.white,
-    flex: 1
-  },
-  list: {
-    marginTop: 0
-  },
-  buttonGroupContainer: {
-    height: 30
-  },
-  buttonGroupText: {
-    fontFamily: 'AvenirNext-Bold'
-  },
-  buttonGroupTextSelected: {
-    color: colors.black
-  },
-  loadingIndicatorContainer: {
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  marginSpacing: {
-    marginTop: 40
-  },
-  searchTitle: {
-    fontSize: normalize(18),
-    textAlign: 'center'
-  }
-});
 
 export const IssueListScreen = connect(mapStateToProps, mapDispatchToProps)(
   IssueList

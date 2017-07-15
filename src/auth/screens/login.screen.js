@@ -1,41 +1,72 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   Dimensions,
   Linking,
   View,
   StyleSheet,
   Image,
-  Platform
+  Platform,
 } from 'react-native';
 import { Button } from 'react-native-elements';
 import SafariView from 'react-native-safari-view';
+import queryString from 'query-string';
 
 import { ViewContainer, LoadingContainer } from 'components';
-
 import { normalize } from 'config';
 import { CLIENT_ID } from 'api';
-
-import queryString from 'query-string';
-import { connect } from 'react-redux';
 import { auth } from 'auth';
 
-const stateRandom = Math.random() + '';
+const stateRandom = Math.random().toString();
 const window = Dimensions.get('window');
 
 const mapStateToProps = state => ({
   isLoggingIn: state.auth.isLoggingIn,
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+const styles = StyleSheet.create({
+  image: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: window.height,
+    width: window.width,
+  },
+  button: {
+    backgroundColor: 'rgba(105,105,105,0.8)',
+    borderRadius: 5,
+    paddingVertical: 15,
+    width: window.width - 30,
+    position: 'absolute',
+    right: 15,
+    bottom: 20,
+    shadowColor: 'transparent',
+  },
+  logoContainer: {
+    alignItems: 'center',
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
+  logo: {
+    width: 100,
+    height: 100,
+  },
+  buttonText: {
+    fontWeight: 'bold',
+    fontSize: normalize(16),
+  },
 });
 
 const mapDispatchToProps = dispatch => ({
-  auth: (code, state) => dispatch(auth(code, state))
+  auth: (code, state) => dispatch(auth(code, state)),
 });
 
 class Login extends Component {
   props: {
     isAuthenticated: boolean,
     isLoggingIn: boolean,
-    auth: Function
+    auth: Function,
+    navigation: Object,
   };
 
   constructor() {
@@ -43,7 +74,7 @@ class Login extends Component {
 
     this.state = {
       code: null,
-      asyncStorageChecked: false
+      asyncStorageChecked: false,
     };
   }
 
@@ -52,10 +83,11 @@ class Login extends Component {
     if (this.props.isAuthenticated) {
       this.props.navigation.navigate('Main');
     } else {
+      // FIXME
+      // eslint-disable-next-line react/no-did-mount-set-state
       this.setState({ asyncStorageChecked: true });
 
       Linking.addEventListener('url', this.handleOpenURL);
-
       Linking.getInitialURL().then(url => {
         if (url) {
           this.handleOpenURL({ url });
@@ -69,8 +101,8 @@ class Login extends Component {
   }
 
   handleOpenURL = ({ url }) => {
-    const [, query_string] = url.match(/\?(.*)/);
-    const { state, code } = queryString.parse(query_string);
+    const [, queryStringFromUrl] = url.match(/\?(.*)/);
+    const { state, code } = queryString.parse(queryStringFromUrl);
 
     if (stateRandom === state) {
       this.setState({ code });
@@ -87,8 +119,8 @@ class Login extends Component {
     // Use SafariView on iOS
     if (Platform.OS === 'ios') {
       SafariView.show({
-        url: url,
-        fromBottom: true
+        url,
+        fromBottom: true,
       });
     } else {
       Linking.openURL(url);
@@ -134,37 +166,5 @@ class Login extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  image: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: window.height,
-    width: window.width
-  },
-  button: {
-    backgroundColor: 'rgba(105,105,105,0.8)',
-    borderRadius: 5,
-    paddingVertical: 15,
-    width: window.width - 30,
-    position: 'absolute',
-    right: 15,
-    bottom: 20,
-    shadowColor: 'transparent'
-  },
-  logoContainer: {
-    alignItems: 'center',
-    flexGrow: 1,
-    justifyContent: 'center'
-  },
-  logo: {
-    width: 100,
-    height: 100
-  },
-  buttonText: {
-    fontWeight: 'bold',
-    fontSize: normalize(16)
-  }
-});
 
 export const LoginScreen = connect(mapStateToProps, mapDispatchToProps)(Login);

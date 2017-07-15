@@ -1,18 +1,41 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Animated } from 'react-native';
-import { colors } from 'config';
 
+import { colors } from 'config';
 import { loadingAnimation } from 'utils';
+
+const styles = StyleSheet.create({
+  wrapper: {
+    marginTop: 15,
+    padding: 15,
+  },
+  avatarContainer: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  avatar: {
+    borderRadius: 15,
+    height: 30,
+    width: 30,
+    backgroundColor: colors.grey,
+    marginRight: 5,
+  },
+  sectionTitle: {
+    color: colors.black,
+    fontFamily: 'AvenirNext-Bold',
+    marginBottom: 10,
+  },
+});
 
 export class LoadingMembersList extends Component {
   props: {
-    title: string
+    title: string,
   };
 
   constructor() {
     super();
     this.state = {
-      fadeAnimValue: new Animated.Value(0)
+      fadeAnimValue: new Animated.Value(0),
     };
   }
 
@@ -22,15 +45,18 @@ export class LoadingMembersList extends Component {
 
   render() {
     const { title } = this.props;
+
     return (
       <View style={styles.wrapper}>
-        <Text style={styles.sectionTitle}>{title}</Text>
+        <Text style={styles.sectionTitle}>
+          {title}
+        </Text>
 
         <View style={styles.avatarContainer}>
-          {[...Array(10)].map((item, i) => {
+          {[...Array(10)].map((item, index) => {
             return (
               <Animated.View
-                key={i}
+                key={index} // eslint-disable-line react/no-array-index-key
                 style={[styles.avatar, { opacity: this.state.fadeAnimValue }]}
               />
             );
@@ -40,26 +66,3 @@ export class LoadingMembersList extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  wrapper: {
-    marginTop: 15,
-    padding: 15
-  },
-  avatarContainer: {
-    flex: 1,
-    flexDirection: 'row'
-  },
-  avatar: {
-    borderRadius: 15,
-    height: 30,
-    width: 30,
-    backgroundColor: colors.grey,
-    marginRight: 5
-  },
-  sectionTitle: {
-    color: colors.black,
-    fontFamily: 'AvenirNext-Bold',
-    marginBottom: 10
-  }
-});

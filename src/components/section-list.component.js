@@ -9,13 +9,52 @@ type Props = {
   title: string,
   children?: React.Element<*>,
   showButton: boolean,
-  showActionButton: boolean,
   buttonTitle: string,
   noOuterBorders: boolean,
   noItems: boolean,
   noItemsMessage: string,
-  buttonAction: Function
+  buttonAction: Function,
 };
+
+const styles = StyleSheet.create({
+  section: {
+    marginTop: 15,
+  },
+  topHeader: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  sectionTitle: {
+    color: colors.black,
+    padding: 15,
+    fontFamily: 'AvenirNext-Bold',
+  },
+  listTitle: {
+    color: colors.black,
+    fontFamily: 'AvenirNext-Medium',
+  },
+  button: {
+    backgroundColor: colors.white,
+    borderColor: colors.primarydark,
+    borderWidth: 1,
+    borderRadius: 3,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    margin: 0,
+  },
+  list: {
+    marginTop: 0,
+  },
+  noOuterBorders: {
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
+  },
+  loadingIcon: {
+    marginVertical: 20,
+  },
+});
 
 export const SectionList = ({
   loading,
@@ -26,7 +65,7 @@ export const SectionList = ({
   noOuterBorders,
   noItems,
   noItemsMessage,
-  children
+  children,
 }: Props) => {
   let listDisplay;
 
@@ -49,7 +88,9 @@ export const SectionList = ({
   return (
     <View style={styles.section}>
       <View style={styles.topHeader}>
-        <Text style={styles.sectionTitle}>{title.toUpperCase()}</Text>
+        <Text style={styles.sectionTitle}>
+          {title.toUpperCase()}
+        </Text>
 
         {showButton &&
           !loading &&
@@ -71,42 +112,6 @@ export const SectionList = ({
   );
 };
 
-const styles = StyleSheet.create({
-  section: {
-    marginTop: 15
-  },
-  topHeader: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  sectionTitle: {
-    color: colors.black,
-    padding: 15,
-    fontFamily: 'AvenirNext-Bold'
-  },
-  listTitle: {
-    color: colors.black,
-    fontFamily: 'AvenirNext-Medium'
-  },
-  button: {
-    backgroundColor: colors.white,
-    borderColor: colors.primarydark,
-    borderWidth: 1,
-    borderRadius: 3,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    margin: 0
-  },
-  list: {
-    marginTop: 0
-  },
-  noOuterBorders: {
-    borderTopWidth: 0,
-    borderBottomWidth: 0
-  },
-  loadingIcon: {
-    marginVertical: 20
-  }
-});
+SectionList.defaultProps = {
+  children: null,
+};

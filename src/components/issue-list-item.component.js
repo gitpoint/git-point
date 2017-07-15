@@ -1,24 +1,52 @@
 import React from 'react';
 import { StyleSheet, TouchableHighlight, View } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import moment from 'moment';
 
 import { IssueStateBadge } from 'components';
-
 import { colors } from 'config';
-import moment from 'moment';
 
 type Props = {
   type: string,
   issue: Object,
-  navigation: Object
+  navigation: Object,
 };
 
-export const IssueListItem = ({ type, issue, navigation }: Props) => (
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingRight: 10,
+    paddingVertical: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.greyLight,
+  },
+  closedIssue: {
+    backgroundColor: colors.greyVeryLight,
+    opacity: 0.6,
+  },
+  listItemContainer: {
+    flex: 1,
+    borderBottomWidth: 0,
+  },
+  title: {
+    color: colors.primarydark,
+    fontFamily: 'AvenirNext-Medium',
+  },
+  badge: {
+    flex: 0.15,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+  },
+});
+
+export const IssueListItem = ({ type, issue, navigation }: Props) =>
   <TouchableHighlight
     style={issue.state === 'closed' && styles.closedIssue}
     onPress={() =>
       navigation.navigate('Issue', {
-        issue: issue
+        issue,
       })}
     underlayColor={colors.greyLight}
   >
@@ -31,41 +59,11 @@ export const IssueListItem = ({ type, issue, navigation }: Props) => (
           name: type === 'issue' ? 'issue-opened' : 'git-pull-request',
           size: 36,
           color: colors.grey,
-          type: 'octicon'
+          type: 'octicon',
         }}
         hideChevron
         titleStyle={styles.title}
       />
       <IssueStateBadge style={styles.badge} issue={issue} />
     </View>
-  </TouchableHighlight>
-);
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingRight: 10,
-    paddingVertical: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.greyLight
-  },
-  closedIssue: {
-    backgroundColor: colors.greyVeryLight,
-    opacity: 0.6
-  },
-  listItemContainer: {
-    flex: 1,
-    borderBottomWidth: 0
-  },
-  title: {
-    color: colors.primarydark,
-    fontFamily: 'AvenirNext-Medium'
-  },
-  badge: {
-    flex: 0.15,
-    alignItems: 'flex-end',
-    justifyContent: 'center'
-  }
-});
+  </TouchableHighlight>;

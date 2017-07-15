@@ -6,21 +6,61 @@ import {
   View,
   TouchableOpacity,
   Text,
-  TextInput
+  TextInput,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 import { colors, normalize } from 'config';
 
+const styles = StyleSheet.create({
+  container: {
+    borderTopColor: colors.greyLight,
+    borderTopWidth: 1,
+    backgroundColor: 'transparent',
+  },
+  wrapper: {
+    padding: 10,
+    marginLeft: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  textInput: {
+    fontSize: normalize(12),
+    flex: 1,
+    marginLeft: 15,
+    marginRight: 5,
+    color: colors.black,
+    fontFamily: 'AvenirNext-Regular',
+  },
+  postButtonContainer: {
+    flex: 0.15,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+  },
+  postButton: {
+    fontSize: normalize(12),
+    letterSpacing: 1,
+    fontFamily: 'AvenirNext-DemiBold',
+  },
+  postButtonDisabled: {
+    color: colors.grey,
+  },
+  postButtonEnabled: {
+    color: colors.primaryDark,
+  },
+});
+
 export class CommentInput extends Component {
-  state: {
-    text: string,
-    height: number
-  };
   props: {
     userHasPushPermission: boolean,
     issueLocked: boolean,
-    onSubmitEditing: Function
+    onSubmitEditing: Function,
+  };
+
+  state: {
+    text: string,
+    height: number,
   };
 
   constructor() {
@@ -28,7 +68,7 @@ export class CommentInput extends Component {
 
     this.state = {
       text: '',
-      height: 0
+      height: 0,
     };
   }
 
@@ -41,6 +81,7 @@ export class CommentInput extends Component {
     const { userHasPushPermission, issueLocked } = this.props;
 
     let userCanPost = null;
+
     if (issueLocked && !userHasPushPermission) {
       userCanPost = false;
     } else {
@@ -69,7 +110,7 @@ export class CommentInput extends Component {
               placeholderTextColor={colors.grey}
               style={[
                 styles.textInput,
-                { height: Math.max(30, this.state.height) }
+                { height: Math.max(30, this.state.height) },
               ]}
               value={this.state.text}
             />}
@@ -90,7 +131,7 @@ export class CommentInput extends Component {
                   styles.postButton,
                   this.state.text === ''
                     ? styles.postButtonDisabled
-                    : styles.postButtonEnabled
+                    : styles.postButtonEnabled,
                 ]}
               >
                 Post
@@ -106,42 +147,3 @@ export class CommentInput extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    borderTopColor: colors.greyLight,
-    borderTopWidth: 1,
-    backgroundColor: 'transparent'
-  },
-  wrapper: {
-    padding: 10,
-    marginLeft: 5,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  textInput: {
-    fontSize: normalize(12),
-    flex: 1,
-    marginLeft: 15,
-    marginRight: 5,
-    color: colors.black,
-    fontFamily: 'AvenirNext-Regular'
-  },
-  postButtonContainer: {
-    flex: 0.15,
-    alignItems: 'flex-end',
-    justifyContent: 'center'
-  },
-  postButton: {
-    fontSize: normalize(12),
-    letterSpacing: 1,
-    fontFamily: 'AvenirNext-DemiBold'
-  },
-  postButtonDisabled: {
-    color: colors.grey
-  },
-  postButtonEnabled: {
-    color: colors.primaryDark
-  }
-});

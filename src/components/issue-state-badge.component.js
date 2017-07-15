@@ -5,8 +5,31 @@ import { colors, normalize } from 'config';
 
 type Props = {
   issue: Object,
-  isMerged: boolean
+  isMerged: boolean,
 };
+
+const styles = StyleSheet.create({
+  badge: {
+    padding: 12,
+    paddingTop: 3,
+    paddingBottom: 3,
+    borderRadius: 20,
+  },
+  mergedIssue: {
+    backgroundColor: colors.purple,
+  },
+  openIssue: {
+    backgroundColor: colors.green,
+  },
+  closedIssue: {
+    backgroundColor: colors.red,
+  },
+  text: {
+    fontSize: normalize(12),
+    fontFamily: 'AvenirNext-DemiBold',
+    color: colors.white,
+  },
+});
 
 export const IssueStateBadge = ({ issue, isMerged }: Props) => {
   return (
@@ -15,13 +38,10 @@ export const IssueStateBadge = ({ issue, isMerged }: Props) => {
         styles.badge,
         isMerged && styles.mergedIssue,
         issue.state === 'open' && !isMerged && styles.openIssue,
-        issue.state === 'closed' && !isMerged && styles.closedIssue
+        issue.state === 'closed' && !isMerged && styles.closedIssue,
       ]}
     >
-      {isMerged &&
-        <Text style={styles.text}>
-          Merged
-        </Text>}
+      {isMerged && <Text style={styles.text}>Merged</Text>}
 
       {!isMerged &&
         <Text style={styles.text}>
@@ -30,26 +50,3 @@ export const IssueStateBadge = ({ issue, isMerged }: Props) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  badge: {
-    padding: 12,
-    paddingTop: 3,
-    paddingBottom: 3,
-    borderRadius: 20
-  },
-  mergedIssue: {
-    backgroundColor: colors.purple
-  },
-  openIssue: {
-    backgroundColor: colors.green
-  },
-  closedIssue: {
-    backgroundColor: colors.red
-  },
-  text: {
-    fontSize: normalize(12),
-    fontFamily: 'AvenirNext-DemiBold',
-    color: colors.white
-  }
-});

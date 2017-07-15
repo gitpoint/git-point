@@ -1,43 +1,55 @@
 import React, { Component } from 'react';
 import { WebView, StyleSheet, View, Text } from 'react-native';
+import { connect } from 'react-redux';
 
 import { ViewContainer, LoadingContainer } from 'components';
-
 import { normalize } from 'config';
-
-import { connect } from 'react-redux';
 import { getReadMe } from '../repository.action';
 
 const mapStateToProps = state => ({
   readMe: state.repository.readMe,
-  isPendingReadMe: state.repository.isPendingReadMe
+  isPendingReadMe: state.repository.isPendingReadMe,
 });
 
 const mapDispatchToProps = dispatch => ({
-  getReadMe: (user, repoName) => dispatch(getReadMe(user, repoName))
+  getReadMeByDispatch: (user, repoName) => dispatch(getReadMe(user, repoName)),
+});
+
+const styles = StyleSheet.create({
+  textContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  noReadMeTitle: {
+    fontSize: normalize(18),
+    textAlign: 'center',
+  },
 });
 
 class ReadMe extends Component {
   props: {
-    getReadMe: Function,
+    getReadMeByDispatch: Function,
     readMe: string,
     isPendingReadMe: boolean,
-    navigation: Object
+    navigation: Object,
   };
 
   componentDidMount() {
     const repo = this.props.navigation.state.params.repository;
-    this.props.getReadMe(repo.owner.login, repo.name);
+
+    this.props.getReadMeByDispatch(repo.owner.login, repo.name);
   }
 
-  isJsonString(str) {
+  isJsonString = str => {
     try {
       JSON.parse(str);
     } catch (e) {
       return false;
     }
+
     return true;
-  }
+  };
 
   render() {
     const { readMe, isPendingReadMe } = this.props;
@@ -56,9 +68,7 @@ class ReadMe extends Component {
         {!isPendingReadMe &&
           noReadMe &&
           <View style={styles.textContainer}>
-            <Text style={styles.noReadMeTitle}>
-              No README.md found
-            </Text>
+            <Text style={styles.noReadMeTitle}>No README.md found</Text>
           </View>}
       </ViewContainer>
     );
@@ -68,15 +78,3 @@ class ReadMe extends Component {
 export const ReadMeScreen = connect(mapStateToProps, mapDispatchToProps)(
   ReadMe
 );
-
-const styles = StyleSheet.create({
-  textContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  noReadMeTitle: {
-    fontSize: normalize(18),
-    textAlign: 'center'
-  }
-});

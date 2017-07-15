@@ -1,12 +1,15 @@
 import {
+  fetchNotifications,
+  fetchMarkNotificationAsRead,
+  fetchMarkRepoNotificationAsRead,
+} from 'api';
+import {
   GET_UNREAD_NOTIFICATIONS,
   GET_PARTICIPATING_NOTIFICATIONS,
   GET_ALL_NOTIFICATIONS,
   MARK_NOTIFICATION_AS_READ,
-  MARK_REPO_AS_READ
-} from "./notifications.type";
-
-import { fetchNotifications, fetchMarkNotificationAsRead, fetchMarkRepoNotificationAsRead } from 'api';
+  MARK_REPO_AS_READ,
+} from './notifications.type';
 
 export const getUnreadNotifications = () => {
   return (dispatch, getState) => {
@@ -25,8 +28,8 @@ export const getUnreadNotifications = () => {
         dispatch({
           type: GET_UNREAD_NOTIFICATIONS.ERROR,
           payload: error,
-        })
-      })
+        });
+      });
   };
 };
 
@@ -47,8 +50,8 @@ export const getParticipatingNotifications = () => {
         dispatch({
           type: GET_PARTICIPATING_NOTIFICATIONS.ERROR,
           payload: error,
-        })
-      })
+        });
+      });
   };
 };
 
@@ -69,12 +72,12 @@ export const getAllNotifications = () => {
         dispatch({
           type: GET_ALL_NOTIFICATIONS.ERROR,
           payload: error,
-        })
-      })
+        });
+      });
   };
 };
 
-export const markAsRead = (notificationID) => {
+export const markAsRead = notificationID => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 
@@ -84,19 +87,19 @@ export const markAsRead = (notificationID) => {
       .then(() => {
         dispatch({
           type: MARK_NOTIFICATION_AS_READ.SUCCESS,
-          notificationID
+          notificationID,
         });
       })
       .catch(error => {
         dispatch({
           type: MARK_NOTIFICATION_AS_READ.ERROR,
           payload: error,
-        })
-      })
+        });
+      });
   };
 };
 
-export const markRepoAsRead = (repoFullName) => {
+export const markRepoAsRead = repoFullName => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 
@@ -106,14 +109,14 @@ export const markRepoAsRead = (repoFullName) => {
       .then(() => {
         dispatch({
           type: MARK_REPO_AS_READ.SUCCESS,
-          repoFullName
+          repoFullName,
         });
       })
       .catch(error => {
         dispatch({
           type: MARK_REPO_AS_READ.ERROR,
           payload: error,
-        })
-      })
+        });
+      });
   };
 };

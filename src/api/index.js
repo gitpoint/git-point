@@ -4,12 +4,15 @@
 export const CLIENT_ID = '87c7f05700c052937cfb';
 export const CLIENT_SECRET = '3a70aee4d5e26c457720a31c3efe2f9062a4997a';
 
+export const root = 'https://api.github.com';
+export const USER_ENDPOINT = user => `${root}/users/${user}`;
+
 const accessTokenParameters = accessToken => ({
   headers: {
     Accept: 'application/vnd.github.v3+json',
     Authorization: `token ${accessToken}`,
-    'Cache-Control': 'no-cache'
-  }
+    'Cache-Control': 'no-cache',
+  },
 });
 
 const accessTokenParametersPUT = (accessToken, body = {}) => ({
@@ -17,73 +20,93 @@ const accessTokenParametersPUT = (accessToken, body = {}) => ({
   headers: {
     Accept: 'application/vnd.github.v3+json',
     Authorization: `token ${accessToken}`,
-    'Content-Length': 0
+    'Content-Length': 0,
   },
-  body: JSON.stringify(body)
+  body: JSON.stringify(body),
 });
 
 const accessTokenParametersDELETE = accessToken => ({
   method: 'DELETE',
   headers: {
     Accept: 'application/vnd.github.v3+json',
-    Authorization: `token ${accessToken}`
-  }
+    Authorization: `token ${accessToken}`,
+  },
 });
 
 const accessTokenParametersPATCH = (editParams, accessToken) => ({
   method: 'PATCH',
   headers: {
     Accept: 'application/vnd.github.v3+json',
-    Authorization: `token ${accessToken}`
+    Authorization: `token ${accessToken}`,
   },
-  body: JSON.stringify(editParams)
+  body: JSON.stringify(editParams),
 });
 
 const accessTokenParametersPOST = (accessToken, body) => ({
   method: 'POST',
   headers: {
     Accept: 'application/vnd.github.v3+json',
-    Authorization: `token ${accessToken}`
+    Authorization: `token ${accessToken}`,
   },
-  body: JSON.stringify(body)
+  body: JSON.stringify(body),
 });
 
 const accessTokenParametersHTML = accessToken => ({
   headers: {
     Accept: 'application/vnd.github.v3.html+json',
-    Authorization: `token ${accessToken}`
-  }
+    Authorization: `token ${accessToken}`,
+  },
 });
 
 const accessTokenParametersDiff = accessToken => ({
   headers: {
     Accept: 'application/vnd.github.v3.diff+json',
-    Authorization: `token ${accessToken}`
-  }
+    Authorization: `token ${accessToken}`,
+  },
 });
 
 const accessTokenParametersRaw = accessToken => ({
   headers: {
     Accept: 'application/vnd.github.v3.raw+json',
-    Authorization: `token ${accessToken}`
-  }
+    Authorization: `token ${accessToken}`,
+  },
 });
 
 const authParameters = (code, state) => ({
   method: 'POST',
   headers: {
     Accept: 'application/json',
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
   },
   body: JSON.stringify({
     client_id: CLIENT_ID,
     client_secret: CLIENT_SECRET,
     code,
-    state
-  })
+    state,
+  }),
 });
 
-export const root = 'https://api.github.com';
+export const fetchUrl = (url, accessToken) => {
+  return fetch(url, accessTokenParameters(accessToken)).then(response =>
+    response.json()
+  );
+};
+
+export const fetchUrlNormal = (url, accessToken) => {
+  return fetch(url, accessTokenParameters(accessToken));
+};
+
+export const fetchUrlFile = (url, accessToken) => {
+  return fetch(url, accessTokenParametersRaw(accessToken)).then(response =>
+    response.text()
+  );
+};
+
+export const fetchCommentHTML = (url, accessToken) => {
+  return fetch(url, accessTokenParametersHTML(accessToken)).then(response =>
+    response.json()
+  );
+};
 
 export const fetchAccessToken = (code, state) => {
   const GITHUB_OAUTH_ENDPOINT = 'https://github.com/login/oauth/access_token';
@@ -95,10 +118,10 @@ export const fetchAccessToken = (code, state) => {
 };
 
 export const fetchAuthUser = accessToken => {
-  const USER_ENDPOINT = `${root}/user`;
+  const FETCH_AUTH_USER_ENDPOINT = `${root}/user`;
 
   return fetch(
-    USER_ENDPOINT,
+    FETCH_AUTH_USER_ENDPOINT,
     accessTokenParameters(accessToken)
   ).then(response => response.json());
 };
@@ -113,10 +136,10 @@ export const fetchAuthUserOrgs = accessToken => {
 };
 
 export const fetchUser = (user, accessToken) => {
-  const USER_ENDPOINT = `${root}/users/${user}`;
+  const FETCH_USER_ENDPOINT = `${root}/users/${user}`;
 
   return fetch(
-    USER_ENDPOINT,
+    FETCH_USER_ENDPOINT,
     accessTokenParameters(accessToken)
   ).then(response => response.json());
 };
@@ -167,7 +190,7 @@ export const fetchPostIssueComment = (
 
   return fetch(
     ENDPOINT,
-    accessTokenParametersPOST(accessToken, { body: body })
+    accessTokenParametersPOST(accessToken, { body })
   ).then(response => response.json());
 };
 
@@ -245,17 +268,10 @@ export const fetchChangeStarStatusRepo = (
   );
 };
 
-export const fetchForkRepo = (
-  owner,
-  repo,
-  accessToken
-) => {
+export const fetchForkRepo = (owner, repo, accessToken) => {
   const ENDPOINT = `https://api.github.com/repos/${owner}/${repo}/forks`;
 
-  return fetch(
-    ENDPOINT,
-    accessTokenParametersPOST(accessToken)
-  );
+  return fetch(ENDPOINT, accessTokenParametersPOST(accessToken));
 };
 
 export const fetchChangeFollowStatus = (user, isFollowing, accessToken) => {
@@ -269,27 +285,17 @@ export const fetchChangeFollowStatus = (user, isFollowing, accessToken) => {
   );
 };
 
-///
-
 export const fetchDiff = (url, accessToken) => {
   return fetch(url, accessTokenParametersDiff(accessToken)).then(response =>
     response.text()
   );
 };
 
-///
-
-///
-
 export const fetchMergeStatus = (repo, issueNum, accessToken) => {
   const ENDPOINT = `https://api.github.com/repos/${repo}/pulls/${issueNum}/merge`;
 
   return fetch(ENDPOINT, accessTokenParameters(accessToken));
 };
-
-///
-
-///
 
 export const fetchMergePullRequest = (
   repo,
@@ -306,45 +312,7 @@ export const fetchMergePullRequest = (
     accessTokenParametersPUT(accessToken, {
       commit_title: commitTitle,
       commit_message: commitMessage,
-      merge_method: mergeMethod
+      merge_method: mergeMethod,
     })
   );
 };
-
-///
-
-///
-
-export const fetchUrl = (url, accessToken) => {
-  return fetch(url, accessTokenParameters(accessToken)).then(response =>
-    response.json()
-  );
-};
-
-///
-
-///
-
-export const fetchUrlNormal = (url, accessToken) => {
-  return fetch(url, accessTokenParameters(accessToken));
-};
-
-///
-
-export const fetchUrlFile = (url, accessToken) => {
-  return fetch(url, accessTokenParametersRaw(accessToken)).then(response =>
-    response.text()
-  );
-};
-
-///
-
-export const fetchCommentHTML = (url, accessToken) => {
-  return fetch(url, accessTokenParametersHTML(accessToken)).then(response =>
-    response.json()
-  );
-};
-
-///
-
-export const USER_ENDPOINT = user => `${root}/users/${user}`;

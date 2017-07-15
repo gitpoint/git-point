@@ -1,29 +1,27 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   View,
   ScrollView,
   StyleSheet,
   TextInput,
   ActionSheetIOS,
-  Alert
+  Alert,
 } from 'react-native';
 import { ListItem, Icon } from 'react-native-elements';
 
 import { ViewContainer, SectionList } from 'components';
-
 import { colors, normalize } from 'config';
-
-import { connect } from 'react-redux';
 import { mergePullRequest } from '../issue.action';
 
 const mapStateToProps = state => ({
   repository: state.repository.repository,
   issue: state.issue.issue,
-  isPendingMerging: state.repository.isPendingMerging
+  isPendingMerging: state.repository.isPendingMerging,
 });
 
 const mapDispatchToProps = dispatch => ({
-  mergePullRequest: (
+  mergePullRequestByDispatch: (
     repoFullName,
     issueNum,
     commitTitle,
@@ -38,22 +36,54 @@ const mapDispatchToProps = dispatch => ({
         commitMessage,
         mergeMethod
       )
-    )
+    ),
+});
+
+const styles = StyleSheet.create({
+  listItemTitle: {
+    color: colors.black,
+    fontFamily: 'AvenirNext-Medium',
+  },
+  textInput: {
+    fontSize: normalize(12),
+    marginHorizontal: 15,
+    flex: 1,
+    color: colors.black,
+    fontFamily: 'AvenirNext-Regular',
+  },
+  mergeActionTitle: {
+    color: colors.green,
+    fontFamily: 'AvenirNext-Medium',
+  },
+  mergeListItemContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingRight: 10,
+  },
+  listItemContainer: {
+    flex: 1,
+  },
+  iconContainer: {
+    flex: 0.15,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+  },
 });
 
 class PullMerge extends Component {
+  props: {
+    mergePullRequestByDispatch: Function,
+    repository: Object,
+    issue: Object,
+    // isPendingMerging: boolean,
+    navigation: Object,
+  };
+
   state: {
     mergeMethod: number,
     commitTitle: string,
-    commitMessage: string
-  };
-
-  props: {
-    mergePullRequest: Function,
-    repository: Object,
-    issue: Object,
-    isPendingMerging: boolean,
-    navigation: Object
+    commitMessage: string,
   };
 
   constructor() {
@@ -64,9 +94,51 @@ class PullMerge extends Component {
       commitTitle: '',
       commitTitleHeight: 0,
       commitMessage: '',
-      commitMessageHeight: 0
+      commitMessageHeight: 0,
     };
   }
+
+  mergePullRequest = () => {
+    const {
+      repository,
+      issue,
+      mergePullRequestByDispatch,
+      navigation,
+    } = this.props;
+    const { mergeMethod, commitTitle, commitMessage } = this.state;
+    const mergeMethodTypes = ['merge', 'squash'];
+
+    if (commitTitle === '') {
+      Alert.alert('You need to have a commit title!', null, [{ text: 'OK' }]);
+    } else {
+      mergePullRequestByDispatch(
+        repository.full_name,
+        issue.number,
+        commitTitle,
+        commitMessage,
+        mergeMethodTypes[mergeMethod]
+      ).then(() => {
+        navigation.goBack();
+      });
+    }
+  };
+
+  changeMergeMethod = mergeMethodMessages => {
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        title: 'Change Merge Type',
+        options: [...mergeMethodMessages, 'Cancel'],
+        cancelButtonIndex: mergeMethodMessages.length,
+      },
+      buttonIndex => {
+        if (buttonIndex !== mergeMethodMessages.length) {
+          this.setState({
+            mergeMethod: buttonIndex,
+          });
+        }
+      }
+    );
+  };
 
   render() {
     const { mergeMethod, commitTitle, commitMessage } = this.state;
@@ -82,13 +154,13 @@ class PullMerge extends Component {
               multiline
               onContentSizeChange={event =>
                 this.setState({
-                  commitTitleHeight: event.nativeEvent.contentSize.height
+                  commitTitleHeight: event.nativeEvent.contentSize.height,
                 })}
-              onChangeText={commitTitle => this.setState({ commitTitle })}
+              onChangeText={text => this.setState({ commitTitle: text })}
               placeholderTextColor={colors.grey}
               style={[
                 styles.textInput,
-                { height: Math.max(60, this.state.commitTitleHeight) }
+                { height: Math.max(60, this.state.commitTitleHeight) },
               ]}
               value={commitTitle}
             />
@@ -99,15 +171,15 @@ class PullMerge extends Component {
               placeholder="Write a message for your commit here"
               blurOnSubmit
               multiline
-              onChangeText={commitMessage => this.setState({ commitMessage })}
+              onChangeText={text => this.setState({ commitMessage: text })}
               onContentSizeChange={event =>
                 this.setState({
-                  commitMessageHeight: event.nativeEvent.contentSize.height
+                  commitMessageHeight: event.nativeEvent.contentSize.height,
                 })}
               placeholderTextColor={colors.grey}
               style={[
                 styles.textInput,
-                { height: Math.max(60, this.state.commitMessageHeight) }
+                { height: Math.max(60, this.state.commitMessageHeight) },
               ]}
               value={commitMessage}
             />
@@ -140,76 +212,7 @@ class PullMerge extends Component {
       </ViewContainer>
     );
   }
-
-  mergePullRequest = () => {
-    const { repository, issue, mergePullRequest, navigation } = this.props;
-    const { mergeMethod, commitTitle, commitMessage } = this.state;
-    const mergeMethodTypes = ['merge', 'squash'];
-
-    if (commitTitle === '') {
-      Alert.alert('You need to have a commit title!', null, [{ text: 'OK' }]);
-    } else {
-      mergePullRequest(
-        repository.full_name,
-        issue.number,
-        commitTitle,
-        commitMessage,
-        mergeMethodTypes[mergeMethod]
-      ).then(() => {
-        navigation.goBack();
-      });
-    }
-  };
-
-  changeMergeMethod = mergeMethodMessages => {
-    ActionSheetIOS.showActionSheetWithOptions(
-      {
-        title: `Change Merge Type`,
-        options: [...mergeMethodMessages, 'Cancel'],
-        cancelButtonIndex: mergeMethodMessages.length
-      },
-      buttonIndex => {
-        if (buttonIndex !== mergeMethodMessages.length) {
-          this.setState({
-            mergeMethod: buttonIndex
-          });
-        }
-      }
-    );
-  };
 }
-
-const styles = StyleSheet.create({
-  listItemTitle: {
-    color: colors.black,
-    fontFamily: 'AvenirNext-Medium'
-  },
-  textInput: {
-    fontSize: normalize(12),
-    marginHorizontal: 15,
-    flex: 1,
-    color: colors.black,
-    fontFamily: 'AvenirNext-Regular'
-  },
-  mergeActionTitle: {
-    color: colors.green,
-    fontFamily: 'AvenirNext-Medium'
-  },
-  mergeListItemContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingRight: 10
-  },
-  listItemContainer: {
-    flex: 1
-  },
-  iconContainer: {
-    flex: 0.15,
-    alignItems: 'flex-end',
-    justifyContent: 'center'
-  }
-});
 
 export const PullMergeScreen = connect(mapStateToProps, mapDispatchToProps)(
   PullMerge

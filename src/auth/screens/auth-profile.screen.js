@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import Communications from 'react-native-communications';
 
 import {
   ViewContainer,
@@ -8,25 +10,32 @@ import {
   SectionList,
   LoadingContainer,
   ParallaxScroll,
-  UserListItem
+  UserListItem,
 } from 'components';
-
 import { colors } from 'config';
-import Communications from 'react-native-communications';
-
-import { connect } from 'react-redux';
 import { getUser, getOrgs } from 'auth';
 
 const mapStateToProps = state => ({
   user: state.auth.user,
   orgs: state.auth.orgs,
   isPendingUser: state.auth.isPendingUser,
-  isPendingOrgs: state.auth.isPendingOrgs
+  isPendingOrgs: state.auth.isPendingOrgs,
 });
 
 const mapDispatchToProps = dispatch => ({
   getUser: () => dispatch(getUser()),
-  getOrgs: () => dispatch(getOrgs())
+  getOrgs: () => dispatch(getOrgs()),
+});
+
+const styles = StyleSheet.create({
+  listTitle: {
+    color: colors.black,
+    fontFamily: 'AvenirNext-Medium',
+  },
+  listSubTitle: {
+    color: colors.greyDark,
+    fontFamily: 'AvenirNext-Medium',
+  },
 });
 
 class AuthProfile extends Component {
@@ -37,7 +46,7 @@ class AuthProfile extends Component {
     orgs: Array,
     isPendingUser: boolean,
     isPendingOrgs: boolean,
-    navigation: Object
+    navigation: Object,
   };
 
   componentDidMount() {
@@ -45,10 +54,11 @@ class AuthProfile extends Component {
     this.props.getOrgs();
   }
 
-  getUserBlog(url) {
+  getUserBlog = url => {
     const prefix = 'http';
+
     return url.substr(0, prefix.length) === prefix ? url : `http://${url}`;
-  }
+  };
 
   render() {
     const { user, orgs, isPendingUser, isPendingOrgs, navigation } = this.props;
@@ -60,28 +70,24 @@ class AuthProfile extends Component {
 
         {!loading &&
           <ParallaxScroll
-            renderContent={() => (
+            renderContent={() =>
               <UserProfile
                 type="user"
                 initialUser={user}
                 user={user}
                 navigation={navigation}
-              />
-            )}
+              />}
             stickyTitle={user.login}
           >
-
-            {user.bio && user.bio !== '' &&
-              <SectionList
-                title="BIO"
-              >
+            {user.bio &&
+              user.bio !== '' &&
+              <SectionList title="BIO">
                 <ListItem
                   subtitle={user.bio}
                   subtitleStyle={styles.listSubTitle}
                   hideChevron
                 />
-              </SectionList>
-            }
+              </SectionList>}
 
             <SectionList
               title="EMAIL"
@@ -94,7 +100,7 @@ class AuthProfile extends Component {
                 leftIcon={{
                   name: 'mail',
                   color: colors.grey,
-                  type: 'octicon'
+                  type: 'octicon',
                 }}
                 subtitle={user.email}
                 subtitleStyle={styles.listSubTitle}
@@ -115,7 +121,7 @@ class AuthProfile extends Component {
                 leftIcon={{
                   name: 'link',
                   color: colors.grey,
-                  type: 'octicon'
+                  type: 'octicon',
                 }}
                 subtitle={user.blog}
                 subtitleStyle={styles.listSubTitle}
@@ -129,26 +135,19 @@ class AuthProfile extends Component {
               noItems={orgs.length === 0}
               noItemsMessage={'No organizations'}
             >
-              {orgs.map((item, i) => (
-                <UserListItem key={i} user={item} navigation={navigation} />
-              ))}
+              {orgs.map(item =>
+                <UserListItem
+                  key={item.id}
+                  user={item}
+                  navigation={navigation}
+                />
+              )}
             </SectionList>
           </ParallaxScroll>}
       </ViewContainer>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  listTitle: {
-    color: colors.black,
-    fontFamily: 'AvenirNext-Medium'
-  },
-  listSubTitle: {
-    color: colors.greyDark,
-    fontFamily: 'AvenirNext-Medium'
-  }
-});
 
 export const AuthProfileScreen = connect(mapStateToProps, mapDispatchToProps)(
   AuthProfile
