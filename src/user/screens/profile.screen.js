@@ -66,6 +66,7 @@ const updateText = {
   checking: 'Checking for update...',
   updated: 'App is up to date',
   available: 'Update is available!',
+  notApplicable: 'Not applicable in debug mode',
 };
 
 class Profile extends Component {
@@ -110,6 +111,10 @@ class Profile extends Component {
   };
 
   checkForUpdate = () => {
+    if (__DEV__) {
+      return this.setState({ updateText: updateText.notApplicable });
+    }
+
     this.setState({ updateText: updateText.checking });
 
     codePush
@@ -124,6 +129,8 @@ class Profile extends Component {
           this.setState({ updateText: updateText.available });
         }
       });
+
+    return true;
   };
 
   render() {
