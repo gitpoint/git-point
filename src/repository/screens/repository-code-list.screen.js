@@ -1,31 +1,49 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { StyleSheet, FlatList, View, Text } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
 import { ViewContainer, LoadingListItem } from 'components';
-
 import { colors, normalize } from 'config';
-
-import { connect } from 'react-redux';
 import { getContents } from '../repository.action';
 
 const mapStateToProps = state => ({
   repository: state.repository.repository,
   contents: state.repository.contents,
-  isPendingContents: state.repository.isPendingContents
+  isPendingContents: state.repository.isPendingContents,
 });
 
 const mapDispatchToProps = dispatch => ({
-  getContents: (url, level) => dispatch(getContents(url, level))
+  getContentsByDispatch: (url, level) => dispatch(getContents(url, level)),
+});
+
+const styles = StyleSheet.create({
+  title: {
+    color: colors.black,
+    fontFamily: 'AvenirNext-Regular',
+  },
+  titleBold: {
+    color: colors.black,
+    fontFamily: 'AvenirNext-DemiBold',
+  },
+  textContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  noCodeTitle: {
+    fontSize: normalize(18),
+    textAlign: 'center',
+  },
 });
 
 class RepositoryCodeList extends Component {
   props: {
-    getContents: Function,
+    getContentsByDispatch: Function,
     repository: Object,
     contents: Array,
     isPendingContents: boolean,
-    navigation: Object
+    navigation: Object,
   };
 
   componentDidMount() {
@@ -37,29 +55,48 @@ class RepositoryCodeList extends Component {
       ? 'top'
       : navigationParams.content.name;
 
-    this.props.getContents(url, level);
+    this.props.getContentsByDispatch(url, level);
   }
 
   sortedContents = contents => {
     if (contents) {
       return contents.sort((a, b) => {
-        return a.type === b.type ? 0 : a.type === 'dir' ? -1 : 1;
+        return a.type === b.type ? 0 : a.type === 'dir' ? -1 : 1; // eslint-disable-line no-nested-ternary
       });
     }
+
+    return null;
   };
 
   goToPath = content => {
     if (content.type === 'dir') {
       return this.props.navigation.navigate('RepositoryCodeList', {
         topLevel: false,
-        content: content
-      });
-    } else {
-      return this.props.navigation.navigate('RepositoryFile', {
-        content: content
+        content,
       });
     }
+
+    return this.props.navigation.navigate('RepositoryFile', {
+      content,
+    });
   };
+
+  keyExtractor = item => {
+    return item.id;
+  };
+
+  renderItem = ({ item }) =>
+    <ListItem
+      title={item.name}
+      leftIcon={{
+        name: item.type === 'dir' ? 'file-directory' : 'file',
+        color: colors.grey,
+        type: 'octicon',
+      }}
+      titleStyle={item.type === 'dir' ? styles.titleBold : styles.title}
+      onPress={() => this.goToPath(item)}
+      underlayColor={colors.greyLight}
+    />;
 
   render() {
     const { contents, isPendingContents, navigation } = this.props;
@@ -69,9 +106,9 @@ class RepositoryCodeList extends Component {
 
     return (
       <ViewContainer>
-
         {isPendingContents &&
-          [...Array(15)].map((item, i) => <LoadingListItem key={i} />)}
+          [...Array(15)].map((item, index) => <LoadingListItem key={index} />) // eslint-disable-line react/no-array-index-key
+        }
 
         {!isPendingContents &&
           currentContents &&
@@ -94,45 +131,7 @@ class RepositoryCodeList extends Component {
       </ViewContainer>
     );
   }
-
-  renderItem = ({ item }) => (
-    <ListItem
-      title={item.name}
-      leftIcon={{
-        name: item.type === 'dir' ? 'file-directory' : 'file',
-        color: colors.grey,
-        type: 'octicon'
-      }}
-      titleStyle={item.type === 'dir' ? styles.titleBold : styles.title}
-      onPress={() => this.goToPath(item)}
-      underlayColor={colors.greyLight}
-    />
-  );
-
-  keyExtractor = item => {
-    return item.id;
-  };
 }
-
-const styles = StyleSheet.create({
-  title: {
-    color: colors.black,
-    fontFamily: 'AvenirNext-Regular'
-  },
-  titleBold: {
-    color: colors.black,
-    fontFamily: 'AvenirNext-DemiBold'
-  },
-  textContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  noCodeTitle: {
-    fontSize: normalize(18),
-    textAlign: 'center'
-  }
-});
 
 export const RepositoryCodeListScreen = connect(
   mapStateToProps,

@@ -10,7 +10,7 @@ const initialState = {
   isPendingUser: false,
   isPendingOrgs: false,
   isPendingEvents: false,
-  error: ''
+  error: '',
 };
 
 export const authReducer = (state = initialState, action = {}) => {
@@ -19,72 +19,72 @@ export const authReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         isLoggingIn: true,
-        isAuthenticated: false
+        isAuthenticated: false,
       };
     case LOGIN.SUCCESS:
       return {
         ...state,
         isLoggingIn: false,
         isAuthenticated: true,
-        accessToken: action.payload
+        accessToken: action.payload,
       };
     case LOGIN.FAILURE:
       return {
         ...state,
         isLoggingIn: false,
         isAuthenticated: false,
-        error: action.payload
+        error: action.payload,
       };
     case GET_AUTH_USER.PENDING:
       return {
         ...state,
-        isPendingUser: true
+        isPendingUser: true,
       };
     case GET_AUTH_USER.SUCCESS:
       return {
         ...state,
         user: action.payload,
-        isPendingUser: false
+        isPendingUser: false,
       };
     case GET_AUTH_USER.ERROR:
       return {
         ...state,
         error: action.payload,
-        isPendingUser: false
+        isPendingUser: false,
       };
     case GET_AUTH_ORGS.PENDING:
       return {
         ...state,
-        isPendingOrgs: true
+        isPendingOrgs: true,
       };
     case GET_AUTH_ORGS.SUCCESS:
       return {
         ...state,
         orgs: action.payload,
-        isPendingOrgs: false
+        isPendingOrgs: false,
       };
     case GET_AUTH_ORGS.ERROR:
       return {
         ...state,
         error: action.payload,
-        isPendingOrgs: false
+        isPendingOrgs: false,
       };
     case GET_EVENTS.PENDING:
       return {
         ...state,
-        isPendingEvents: true
+        isPendingEvents: true,
       };
     case GET_EVENTS.SUCCESS:
       return {
         ...state,
         events: action.payload,
-        isPendingEvents: false
+        isPendingEvents: false,
       };
     case GET_EVENTS.ERROR:
       return {
         ...state,
         error: action.payload,
-        isPendingEvents: false
+        isPendingEvents: false,
       };
     default:
       return state;

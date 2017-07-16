@@ -6,28 +6,8 @@ import { colors } from 'config';
 
 type Props = {
   label: Object,
-  largeWithTag: boolean
+  largeWithTag: boolean,
 };
-
-export const LabelButton = ({ label, largeWithTag }: Props) => (
-  <Button
-    title={label.name}
-    fontFamily="AvenirNext-DemiBold"
-    fontSize={largeWithTag ? 13 : 12}
-    color={getFontColorByBackground(label.color)}
-    buttonStyle={
-      largeWithTag ? styles.largeLabelButton : styles.smallLabelButton
-    }
-    backgroundColor={`#${label.color}`}
-    icon={
-      largeWithTag && {
-        name: 'tag',
-        type: 'octicon',
-        color: getFontColorByBackground(label.color)
-      }
-    }
-  />
-);
 
 const getFontColorByBackground = bgColor => {
   const r = parseInt(bgColor.substr(0, 2), 16);
@@ -46,7 +26,7 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     marginLeft: 0,
     marginRight: 10,
-    minWidth: 70
+    minWidth: 70,
   },
   largeLabelButton: {
     paddingTop: 5,
@@ -54,6 +34,25 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
     marginLeft: 0,
-    borderRadius: 3
-  }
+    borderRadius: 3,
+  },
 });
+
+export const LabelButton = ({ label, largeWithTag }: Props) =>
+  <Button
+    title={label.name}
+    fontFamily="AvenirNext-DemiBold"
+    fontSize={largeWithTag ? 13 : 12}
+    color={getFontColorByBackground(label.color)}
+    buttonStyle={
+      largeWithTag ? styles.largeLabelButton : styles.smallLabelButton
+    }
+    backgroundColor={`#${label.color}`}
+    icon={
+      largeWithTag && {
+        name: 'tag',
+        type: 'octicon',
+        color: getFontColorByBackground(label.color),
+      }
+    }
+  />;

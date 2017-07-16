@@ -1,19 +1,18 @@
-import React, { Component } from "react";
-import { FlatList, View } from "react-native";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { FlatList, View } from 'react-native';
 
-import { ViewContainer, UserListItem, LoadingUserListItem } from "components";
-
-import { connect } from "react-redux";
-import { getFollowing } from "user";
+import { ViewContainer, UserListItem, LoadingUserListItem } from 'components';
+import { getFollowing } from 'user';
 
 const mapStateToProps = state => ({
   user: state.user.user,
   following: state.user.following,
-  isPendingFollowing: state.user.isPendingFollowing
+  isPendingFollowing: state.user.isPendingFollowing,
 });
 
 const mapDispatchToProps = dispatch => ({
-  getFollowing: (user, type) => dispatch(getFollowing(user, type))
+  getFollowing: (user, type) => dispatch(getFollowing(user, type)),
 });
 
 class FollowingList extends Component {
@@ -21,13 +20,18 @@ class FollowingList extends Component {
     getFollowing: Function,
     following: Array,
     isPendingFollowing: boolean,
-    navigation: Object
+    navigation: Object,
   };
 
   componentDidMount() {
     const user = this.props.navigation.state.params.user;
+
     this.props.getFollowing(user);
   }
+
+  keyExtractor = item => {
+    return item.id;
+  };
 
   render() {
     const { following, isPendingFollowing, navigation } = this.props;
@@ -35,30 +39,24 @@ class FollowingList extends Component {
 
     return (
       <ViewContainer>
-
         {isPendingFollowing &&
-          [...Array(followingCount)].map((item, i) => (
-            <LoadingUserListItem key={i} />
-          ))}
+          [...Array(followingCount)].map((item, index) => {
+            // eslint-disable-next-line react/no-array-index-key
+            return <LoadingUserListItem key={index} />;
+          })}
 
         {!isPendingFollowing &&
           <View>
-
             <FlatList
               data={following}
               keyExtractor={this.keyExtractor}
-              renderItem={({ item }) => (
-                <UserListItem user={item} navigation={navigation} />
-              )}
+              renderItem={({ item }) =>
+                <UserListItem user={item} navigation={navigation} />}
             />
           </View>}
       </ViewContainer>
     );
   }
-
-  keyExtractor = item => {
-    return item.id;
-  };
 }
 
 export const FollowingListScreen = connect(mapStateToProps, mapDispatchToProps)(

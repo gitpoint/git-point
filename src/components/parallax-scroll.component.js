@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, Dimensions, StyleSheet } from 'react-native';
-
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { Icon } from 'react-native-elements';
 
@@ -17,8 +16,41 @@ type Props = {
   showMenu?: boolean,
   menuAction?: Function,
   navigation: Object,
-  children?: React.Element<*>
+  children?: React.Element<*>,
 };
+
+const styles = StyleSheet.create({
+  background: {
+    position: 'absolute',
+    top: 0,
+    width: window.width,
+    backgroundColor: colors.primarydark,
+    height: PARALLAX_HEADER_HEIGHT,
+  },
+  stickySection: {
+    height: STICKY_HEADER_HEIGHT,
+    backgroundColor: colors.primarydark,
+    width: window.width,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  stickySectionText: {
+    color: colors.white,
+    fontFamily: 'AvenirNext-Bold',
+    fontSize: normalize(16),
+    fontWeight: 'bold',
+    margin: 10,
+  },
+  fixedSectionLeft: {
+    position: 'absolute',
+    bottom: 0,
+  },
+  fixedSectionRight: {
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
+  },
+});
 
 export const ParallaxScroll = ({
   renderContent,
@@ -27,25 +59,25 @@ export const ParallaxScroll = ({
   showMenu,
   menuAction,
   navigation,
-  children
-}: Props) => (
+  children,
+}: Props) =>
   <ParallaxScrollView
     backgroundColor={colors.primarydark}
     stickyHeaderHeight={STICKY_HEADER_HEIGHT}
     parallaxHeaderHeight={PARALLAX_HEADER_HEIGHT}
     backgroundSpeed={10}
-    renderBackground={() => (
+    renderBackground={() =>
       <View key="background">
         <View style={styles.background} />
-      </View>
-    )}
+      </View>}
     renderForeground={renderContent}
-    renderStickyHeader={() => (
+    renderStickyHeader={() =>
       <View key="sticky-header" style={styles.stickySection}>
-        <Text style={styles.stickySectionText}>{stickyTitle}</Text>
-      </View>
-    )}
-    renderFixedHeader={() => (
+        <Text style={styles.stickySectionText}>
+          {stickyTitle}
+        </Text>
+      </View>}
+    renderFixedHeader={() =>
       <View key="fixed-header">
         {navigateBack &&
           <View style={styles.fixedSectionLeft}>
@@ -70,42 +102,14 @@ export const ParallaxScroll = ({
               underlayColor="transparent"
             />
           </View>}
-      </View>
-    )}
+      </View>}
   >
     {children}
-  </ParallaxScrollView>
-);
+  </ParallaxScrollView>;
 
-const styles = StyleSheet.create({
-  background: {
-    position: 'absolute',
-    top: 0,
-    width: window.width,
-    backgroundColor: colors.primarydark,
-    height: PARALLAX_HEADER_HEIGHT
-  },
-  stickySection: {
-    height: STICKY_HEADER_HEIGHT,
-    backgroundColor: colors.primarydark,
-    width: window.width,
-    alignItems: 'center',
-    justifyContent: 'flex-end'
-  },
-  stickySectionText: {
-    color: colors.white,
-    fontFamily: 'AvenirNext-Bold',
-    fontSize: normalize(16),
-    fontWeight: 'bold',
-    margin: 10
-  },
-  fixedSectionLeft: {
-    position: 'absolute',
-    bottom: 0
-  },
-  fixedSectionRight: {
-    position: 'absolute',
-    bottom: 10,
-    right: 10
-  }
-});
+ParallaxScroll.defaultProps = {
+  navigateBack: false,
+  showMenu: false,
+  menuAction: undefined,
+  children: null,
+};

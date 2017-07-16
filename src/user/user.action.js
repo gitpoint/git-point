@@ -1,15 +1,4 @@
 import {
-  GET_USER,
-  GET_ORGS,
-  GET_FOLLOW_STATUS,
-  GET_REPOSITORIES,
-  GET_FOLLOWERS,
-  GET_FOLLOWING,
-  SEARCH_USER_REPOS,
-  CHANGE_FOLLOW_STATUS
-} from "./user.type";
-
-import {
   fetchUser,
   fetchUserOrgs,
   fetchUrl,
@@ -17,19 +6,18 @@ import {
   USER_ENDPOINT,
   fetchSearch,
   fetchChangeFollowStatus,
-  root as apiRoot
-} from "api";
-
-export const getUserInfo = user => {
-  return dispatch => {
-    return dispatch(getUser(user)).then(() => {
-      dispatch(getOrgs(user));
-      dispatch(
-        checkFollowStatus(`https://api.github.com/user/following/${user}`)
-      );
-    });
-  };
-};
+  root as apiRoot,
+} from 'api';
+import {
+  GET_USER,
+  GET_ORGS,
+  GET_FOLLOW_STATUS,
+  GET_REPOSITORIES,
+  GET_FOLLOWERS,
+  GET_FOLLOWING,
+  SEARCH_USER_REPOS,
+  CHANGE_FOLLOW_STATUS,
+} from './user.type';
 
 const getUser = user => {
   return (dispatch, getState) => {
@@ -41,13 +29,13 @@ const getUser = user => {
       .then(data => {
         dispatch({
           type: GET_USER.SUCCESS,
-          payload: data
+          payload: data,
         });
       })
       .catch(error => {
         dispatch({
           type: GET_USER.ERROR,
-          payload: error
+          payload: error,
         });
       });
   };
@@ -63,13 +51,13 @@ const getOrgs = user => {
       .then(data => {
         dispatch({
           type: GET_ORGS.SUCCESS,
-          payload: data
+          payload: data,
         });
       })
       .catch(error => {
         dispatch({
           type: GET_ORGS.ERROR,
-          payload: error
+          payload: error,
         });
       });
   };
@@ -85,15 +73,26 @@ export const checkFollowStatus = url => {
       .then(data => {
         dispatch({
           type: GET_FOLLOW_STATUS.SUCCESS,
-          payload: data.status === 404 ? false : true
+          payload: !(data.status === 404),
         });
       })
       .catch(error => {
         dispatch({
           type: GET_FOLLOW_STATUS.ERROR,
-          payload: error
+          payload: error,
         });
       });
+  };
+};
+
+export const getUserInfo = user => {
+  return dispatch => {
+    return dispatch(getUser(user)).then(() => {
+      dispatch(getOrgs(user));
+      dispatch(
+        checkFollowStatus(`https://api.github.com/user/following/${user}`)
+      );
+    });
   };
 };
 
@@ -109,13 +108,13 @@ export const changeFollowStatus = (user, isFollowing) => {
         dispatch({
           type: CHANGE_FOLLOW_STATUS.SUCCESS,
           changeTo: !isFollowing,
-          authUser: authUser
+          authUser,
         });
       })
       .catch(error => {
         dispatch({
           type: CHANGE_FOLLOW_STATUS.ERROR,
-          payload: error
+          payload: error,
         });
       });
   };
@@ -127,19 +126,22 @@ export const getRepositories = user => {
 
     dispatch({ type: GET_REPOSITORIES.PENDING });
 
-    const url = user.login === authUser.login ? `${apiRoot}/user` : USER_ENDPOINT(user.login);
+    const url =
+      user.login === authUser.login
+        ? `${apiRoot}/user`
+        : USER_ENDPOINT(user.login);
 
     fetchUrl(`${url}/repos?per_page=50`, accessToken)
       .then(data => {
         dispatch({
           type: GET_REPOSITORIES.SUCCESS,
-          payload: data
+          payload: data,
         });
       })
       .catch(error => {
         dispatch({
           type: GET_REPOSITORIES.ERROR,
-          payload: error
+          payload: error,
         });
       });
   };
@@ -155,13 +157,13 @@ export const getFollowers = user => {
       .then(data => {
         dispatch({
           type: GET_FOLLOWERS.SUCCESS,
-          payload: data
+          payload: data,
         });
       })
       .catch(error => {
         dispatch({
           type: GET_FOLLOWERS.ERROR,
-          payload: error
+          payload: error,
         });
       });
   };
@@ -177,13 +179,13 @@ export const getFollowing = user => {
       .then(data => {
         dispatch({
           type: GET_FOLLOWING.SUCCESS,
-          payload: data
+          payload: data,
         });
       })
       .catch(error => {
         dispatch({
           type: GET_FOLLOWING.ERROR,
-          payload: error
+          payload: error,
         });
       });
   };
@@ -196,7 +198,7 @@ export const searchUserRepos = (query, user) => {
     dispatch({ type: SEARCH_USER_REPOS.PENDING });
 
     return fetchSearch(
-      "repositories",
+      'repositories',
       query,
       accessToken,
       `+user:${user.login}`
@@ -204,13 +206,13 @@ export const searchUserRepos = (query, user) => {
       .then(data => {
         dispatch({
           type: SEARCH_USER_REPOS.SUCCESS,
-          payload: data.items
+          payload: data.items,
         });
       })
       .catch(error => {
         dispatch({
           type: SEARCH_USER_REPOS.ERROR,
-          payload: error
+          payload: error,
         });
       });
   };

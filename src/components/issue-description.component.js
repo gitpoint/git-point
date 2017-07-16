@@ -1,17 +1,71 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, ActivityIndicator } from 'react-native';
 import { ListItem, Button } from 'react-native-elements';
+import Parse from 'parse-diff';
+import moment from 'moment';
 
 import {
   IssueStateBadge,
   MembersList,
   LabelButton,
-  DiffBlocks
+  DiffBlocks,
 } from 'components';
-
 import { colors, normalize } from 'config';
-import Parse from 'parse-diff';
-import moment from 'moment';
+
+const styles = StyleSheet.create({
+  headerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingRight: 10,
+  },
+  borderBottom: {
+    borderBottomWidth: 1,
+    borderBottomColor: colors.greyLight,
+  },
+  title: {
+    color: colors.primarydark,
+    fontFamily: 'AvenirNext-DemiBold',
+  },
+  titleSmall: {
+    color: colors.primarydark,
+    fontFamily: 'AvenirNext-DemiBold',
+    fontSize: normalize(10),
+  },
+  listItemContainer: {
+    borderBottomWidth: 0,
+    flex: 1,
+  },
+  diffBlocksContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    paddingRight: 10,
+    paddingBottom: 10,
+  },
+  badge: {
+    flex: 0.15,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+  },
+  labelButtonGroup: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    marginLeft: 54,
+    paddingBottom: 15,
+  },
+  assigneesSection: {
+    marginLeft: 54,
+    paddingBottom: 5,
+  },
+  mergeButtonContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 15,
+  },
+});
 
 export class IssueDescription extends Component {
   props: {
@@ -22,13 +76,13 @@ export class IssueDescription extends Component {
     isPendingCheckMerge: boolean,
     onRepositoryPress: Function,
     userHasPushPermission: boolean,
-    navigation: Object
+    navigation: Object,
   };
 
   renderLabelButtons = labels => {
     return labels
       .slice(0, 3)
-      .map((label, i) => <LabelButton key={i} label={label} />);
+      .map(label => <LabelButton key={label.id} label={label} />);
   };
 
   render() {
@@ -40,7 +94,7 @@ export class IssueDescription extends Component {
       isPendingCheckMerge,
       onRepositoryPress,
       userHasPushPermission,
-      navigation
+      navigation,
     } = this.props;
 
     const filesChanged = Parse(diff);
@@ -48,14 +102,13 @@ export class IssueDescription extends Component {
     let lineAdditions = 0;
     let lineDeletions = 0;
 
-    filesChanged.forEach(function(file) {
-      lineAdditions = lineAdditions + file.additions;
-      lineDeletions = lineDeletions + file.deletions;
+    filesChanged.forEach(file => {
+      lineAdditions += file.additions;
+      lineDeletions += file.deletions;
     });
 
     return (
       <View style={(styles.container, styles.borderBottom)}>
-
         {issue.repository_url &&
           <ListItem
             title={issue.repository_url.replace(
@@ -67,7 +120,7 @@ export class IssueDescription extends Component {
               name: 'repo',
               size: 17,
               color: colors.grey,
-              type: 'octicon'
+              type: 'octicon',
             }}
             onPress={() => onRepositoryPress(issue.repository_url)}
             hideChevron
@@ -83,7 +136,7 @@ export class IssueDescription extends Component {
               name: issue.pull_request ? 'git-pull-request' : 'issue-opened',
               size: 36,
               color: colors.grey,
-              type: 'octicon'
+              type: 'octicon',
             }}
             hideChevron
           />
@@ -100,7 +153,6 @@ export class IssueDescription extends Component {
 
         {issue.pull_request &&
           <View style={styles.diffBlocksContainer}>
-
             {isPendingDiff &&
               <ActivityIndicator animating={isPendingDiff} size="small" />}
 
@@ -112,7 +164,7 @@ export class IssueDescription extends Component {
                 showNumbers
                 onPress={() =>
                   navigation.navigate('PullDiff', {
-                    diff: diff
+                    diff,
                   })}
               />}
           </View>}
@@ -151,58 +203,3 @@ export class IssueDescription extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  headerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingRight: 10
-  },
-  borderBottom: {
-    borderBottomWidth: 1,
-    borderBottomColor: colors.greyLight
-  },
-  title: {
-    color: colors.primarydark,
-    fontFamily: 'AvenirNext-DemiBold'
-  },
-  titleSmall: {
-    color: colors.primarydark,
-    fontFamily: 'AvenirNext-DemiBold',
-    fontSize: normalize(10)
-  },
-  listItemContainer: {
-    borderBottomWidth: 0,
-    flex: 1
-  },
-  diffBlocksContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    paddingRight: 10,
-    paddingBottom: 10
-  },
-  badge: {
-    flex: 0.15,
-    alignItems: 'flex-end',
-    justifyContent: 'center'
-  },
-  labelButtonGroup: {
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    marginLeft: 54,
-    paddingBottom: 15
-  },
-  assigneesSection: {
-    marginLeft: 54,
-    paddingBottom: 5
-  },
-  mergeButtonContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 15
-  }
-});

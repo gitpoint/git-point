@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import { connect } from 'react-redux';
+import { ScrollView, StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
 
@@ -7,14 +8,11 @@ import {
   ViewContainer,
   SectionList,
   UserListItem,
-  LabelListItem
+  LabelListItem,
 } from 'components';
-
 import { colors } from 'config';
-
-import { connect } from 'react-redux';
-import { editIssue, changeIssueLockStatus } from '../issue.action';
 import { getLabels } from 'repository';
+import { editIssue, changeIssueLockStatus } from '../issue.action';
 
 const mapStateToProps = state => ({
   authUser: state.auth.user,
@@ -23,7 +21,7 @@ const mapStateToProps = state => ({
   issue: state.issue.issue,
   isMerged: state.issue.isMerged,
   isEditingIssue: state.issue.isEditingIssue,
-  isPendingLabels: state.repository.isPendingLabels
+  isPendingLabels: state.repository.isPendingLabels,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -31,7 +29,22 @@ const mapDispatchToProps = dispatch => ({
     dispatch(editIssue(owner, repoName, issueNum, editParams, updateParams)),
   changeIssueLockStatus: (owner, repoName, issueNum, currentStatus) =>
     dispatch(changeIssueLockStatus(owner, repoName, issueNum, currentStatus)),
-  getLabels: url => dispatch(getLabels(url))
+  getLabels: url => dispatch(getLabels(url)),
+});
+
+const styles = StyleSheet.create({
+  listItemTitle: {
+    color: colors.black,
+    fontFamily: 'AvenirNext-Medium',
+  },
+  closeActionTitle: {
+    color: colors.red,
+    fontFamily: 'AvenirNext-Medium',
+  },
+  openActionTitle: {
+    color: colors.green,
+    fontFamily: 'AvenirNext-Medium',
+  },
 });
 
 class IssueSettings extends Component {
@@ -44,9 +57,9 @@ class IssueSettings extends Component {
     labels: Array,
     issue: Object,
     isMerged: boolean,
-    isEditingIssue: boolean,
+    // isEditingIssue: boolean,
     isPendingLabels: boolean,
-    navigation: Object
+    navigation: Object,
   };
 
   componentDidMount() {
@@ -130,33 +143,35 @@ class IssueSettings extends Component {
             buttonAction={this.showAddLabelActionSheet}
             style={{
               borderBottomWidth: 1,
-              borderBottomColor: colors.grey
+              borderBottomColor: colors.grey,
             }}
             noItems={issue.labels.length === 0}
             noItemsMessage="None yet"
             title="LABELS"
           >
-            {issue.labels.map((item, i) => (
+            {issue.labels.map(item =>
               <LabelListItem
                 label={item}
-                key={i}
+                key={item.id}
                 removeLabel={labelToRemove =>
                   this.editIssue(
                     {
                       labels: [
                         ...issue.labels
                           .map(label => label.name)
-                          .filter(labelName => labelName !== labelToRemove.name)
-                      ]
+                          .filter(
+                            labelName => labelName !== labelToRemove.name
+                          ),
+                      ],
                     },
                     {
                       labels: issue.labels.filter(
                         label => label.name !== labelToRemove.name
-                      )
+                      ),
                     }
                   )}
               />
-            ))}
+            )}
           </SectionList>
 
           <SectionList
@@ -171,8 +186,8 @@ class IssueSettings extends Component {
                 {
                   assignees: [
                     ...issue.assignees.map(user => user.login),
-                    authUser.login
-                  ]
+                    authUser.login,
+                  ],
                 },
                 { assignees: [...issue.assignees, authUser] }
               )}
@@ -180,10 +195,10 @@ class IssueSettings extends Component {
             noItemsMessage="None yet"
             title="ASSIGNEES"
           >
-            {issue.assignees.map((item, i) => (
+            {issue.assignees.map(item =>
               <UserListItem
                 user={item}
-                key={i}
+                key={item.id}
                 navigation={navigation}
                 icon="x"
                 iconAction={userToRemove =>
@@ -192,17 +207,17 @@ class IssueSettings extends Component {
                       assignees: [
                         ...issue.assignees
                           .map(user => user.login)
-                          .filter(user => user !== userToRemove)
-                      ]
+                          .filter(user => user !== userToRemove),
+                      ],
                     },
                     {
                       assignees: issue.assignees.filter(
                         assignee => assignee.login !== userToRemove
-                      )
+                      ),
                     }
                   )}
               />
-            ))}
+            )}
           </SectionList>
 
           <SectionList title="Actions">
@@ -275,21 +290,6 @@ class IssueSettings extends Component {
     );
   };
 }
-
-const styles = StyleSheet.create({
-  listItemTitle: {
-    color: colors.black,
-    fontFamily: 'AvenirNext-Medium'
-  },
-  closeActionTitle: {
-    color: colors.red,
-    fontFamily: 'AvenirNext-Medium'
-  },
-  openActionTitle: {
-    color: colors.green,
-    fontFamily: 'AvenirNext-Medium'
-  }
-});
 
 export const IssueSettingsScreen = connect(mapStateToProps, mapDispatchToProps)(
   IssueSettings

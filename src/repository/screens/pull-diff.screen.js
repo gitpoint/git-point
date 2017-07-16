@@ -1,17 +1,81 @@
+/* eslint-disable react/no-array-index-key */
 import React, { Component } from 'react';
 import { View, ScrollView, Text, FlatList, StyleSheet } from 'react-native';
 import { Card } from 'react-native-elements';
-
 import Parse from 'parse-diff';
 
 import { ViewContainer, DiffBlocks, CodeLine } from 'components';
-
 import { colors, normalize } from 'config';
+
+const styles = StyleSheet.create({
+  fileChangeContainer: {
+    padding: 0,
+    marginTop: 12,
+    marginBottom: 12,
+  },
+  fileTitleContainer: {
+    flexDirection: 'row',
+    paddingVertical: 15,
+    backgroundColor: colors.greyVeryLight,
+  },
+  linesChanged: {
+    flex: 0.3,
+    paddingLeft: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  lineNumbersChanged: {
+    fontFamily: 'Menlo',
+    marginRight: 5,
+  },
+  fileTitle: {
+    flex: 1,
+    marginLeft: 10,
+  },
+  codeStyle: {
+    fontFamily: 'Menlo',
+    fontSize: normalize(10),
+  },
+  dividerStyle: {
+    marginBottom: 0,
+  },
+  noChangesMessage: {
+    fontFamily: 'AvenirNext-DemiBold',
+    paddingVertical: 5,
+    paddingLeft: 10,
+  },
+  newIndicator: {
+    fontFamily: 'AvenirNext-DemiBold',
+    color: colors.green,
+  },
+  deletedIndicator: {
+    fontFamily: 'AvenirNext-DemiBold',
+    color: colors.red,
+  },
+  header: {
+    paddingTop: 25,
+    paddingHorizontal: 25,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  headerItem: {
+    flex: 1,
+  },
+  headerText: {
+    fontFamily: 'AvenirNext-DemiBold',
+    fontSize: normalize(14),
+  },
+});
 
 class PullDiff extends Component {
   props: {
     diff: string,
-    navigation: Object
+    navigation: Object,
+  };
+
+  keyExtractor = (item, index) => {
+    return index;
   };
 
   renderHeader = () => {
@@ -22,16 +86,18 @@ class PullDiff extends Component {
     let lineAdditions = 0;
     let lineDeletions = 0;
 
-    filesChanged.forEach(function(file) {
-      lineAdditions = lineAdditions + file.additions;
-      lineDeletions = lineDeletions + file.deletions;
+    filesChanged.forEach(file => {
+      lineAdditions += file.additions;
+      lineDeletions += file.deletions;
     });
 
     return (
       <View style={styles.header}>
         <Text
           style={[styles.headerItem, styles.headerText]}
-        >{`${filesChanged.length} ${filesChanged.length === 1 ? 'file' : 'files'}`}</Text>
+        >{`${filesChanged.length} ${filesChanged.length === 1
+          ? 'file'
+          : 'files'}`}</Text>
 
         <DiffBlocks
           style={styles.headerItem}
@@ -44,19 +110,23 @@ class PullDiff extends Component {
   };
 
   renderItem = ({ item }) => {
-    var chunks = item.chunks.map((chunk, i) => {
+    const chunks = item.chunks.map((chunk, index) => {
       return (
         <ScrollView
           automaticallyAdjustContentInsets={false}
-          horizontal={true}
           showsHorizontalScrollIndicator={false}
+          horizontal
         >
           <View style={{ flexDirection: 'column' }}>
-            <CodeLine key={i} newChunk change={{ content: chunk.content }} />
+            <CodeLine
+              key={index}
+              newChunk
+              change={{ content: chunk.content }}
+            />
 
-            {chunk.changes.map((change, index) => (
-              <CodeLine key={index} change={change} />
-            ))}
+            {chunk.changes.map((change, changesIndex) =>
+              <CodeLine key={changesIndex} change={change} />
+            )}
           </View>
         </ScrollView>
       );
@@ -70,8 +140,8 @@ class PullDiff extends Component {
         <ScrollView
           style={styles.fileTitleContainer}
           automaticallyAdjustContentInsets={false}
-          horizontal={true}
           showsHorizontalScrollIndicator={false}
+          horizontal
         >
           <View style={styles.linesChanged}>
             <Text style={[styles.codeStyle, styles.lineNumbersChanged]}>
@@ -82,7 +152,9 @@ class PullDiff extends Component {
 
           {item.new &&
             <Text style={styles.fileTitle}>
-              <Text style={styles.newIndicator}>NEW{'\n'}</Text>
+              <Text style={styles.newIndicator}>
+                NEW{'\n'}
+              </Text>
               <Text style={[styles.fileTitle, styles.codeStyle]}>
                 {item.to}
               </Text>
@@ -90,7 +162,9 @@ class PullDiff extends Component {
 
           {item.deleted &&
             <Text style={styles.fileTitle}>
-              <Text style={styles.deletedIndicator}>DELETED{'\n'}</Text>
+              <Text style={styles.deletedIndicator}>
+                DELETED{'\n'}
+              </Text>
               <Text style={[styles.fileTitle, styles.codeStyle]}>
                 {item.from}
               </Text>
@@ -115,11 +189,13 @@ class PullDiff extends Component {
       </Card>
     );
   };
+
   render() {
     const { navigation } = this.props;
     const filesChanged = navigation.state.params
       ? Parse(navigation.state.params.diff)
       : [];
+
     return (
       <ViewContainer>
         <FlatList
@@ -128,73 +204,11 @@ class PullDiff extends Component {
           data={filesChanged}
           keyExtractor={this.keyExtractor}
           renderItem={this.renderItem}
-          disableVirtualization={true}
+          disableVirtualization
         />
       </ViewContainer>
     );
   }
-  keyExtractor = (item, index) => {
-    return index;
-  };
 }
-const styles = StyleSheet.create({
-  fileChangeContainer: {
-    padding: 0,
-    marginTop: 12,
-    marginBottom: 12
-  },
-  fileTitleContainer: {
-    flexDirection: 'row',
-    paddingVertical: 15,
-    backgroundColor: colors.greyVeryLight
-  },
-  linesChanged: {
-    flex: 0.30,
-    paddingLeft: 10,
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  lineNumbersChanged: {
-    fontFamily: 'Menlo',
-    marginRight: 5
-  },
-  fileTitle: {
-    flex: 1,
-    marginLeft: 10
-  },
-  codeStyle: {
-    fontFamily: 'Menlo',
-    fontSize: normalize(10)
-  },
-  dividerStyle: {
-    marginBottom: 0
-  },
-  noChangesMessage: {
-    fontFamily: 'AvenirNext-DemiBold',
-    paddingVertical: 5,
-    paddingLeft: 10
-  },
-  newIndicator: {
-    fontFamily: 'AvenirNext-DemiBold',
-    color: colors.green
-  },
-  deletedIndicator: {
-    fontFamily: 'AvenirNext-DemiBold',
-    color: colors.red
-  },
-  header: {
-    paddingTop: 25,
-    paddingHorizontal: 25,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between'
-  },
-  headerItem: {
-    flex: 1
-  },
-  headerText: {
-    fontFamily: 'AvenirNext-DemiBold',
-    fontSize: normalize(14)
-  }
-});
+
 export const PullDiffScreen = PullDiff;

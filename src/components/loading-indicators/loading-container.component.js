@@ -6,33 +6,35 @@ import { colors } from 'config';
 type Props = {
   animating: boolean,
   text: string,
-  center: boolean
+  center: boolean,
 };
 
-export const LoadingContainer = ({ animating, text, center }: Props) => (
+const styles = StyleSheet.create({
+  loadingContainer: {
+    backgroundColor: colors.white,
+    flex: 1,
+    alignItems: 'center',
+  },
+  center: {
+    justifyContent: 'center',
+  },
+  loadingIcon: {
+    height: 80,
+  },
+  text: {
+    fontFamily: 'AvenirNext-Medium',
+  },
+});
+
+export const LoadingContainer = ({ animating, text, center }: Props) =>
   <View style={[styles.loadingContainer, center && styles.center]}>
     <ActivityIndicator
       animating={animating}
       style={styles.loadingIcon}
       size="large"
     />
-    {text && <Text style={styles.text}>{text}</Text>}
-  </View>
-);
-
-const styles = StyleSheet.create({
-  loadingContainer: {
-    backgroundColor: colors.white,
-    flex: 1,
-    alignItems: 'center'
-  },
-  center: {
-    justifyContent: 'center'
-  },
-  loadingIcon: {
-    height: 80
-  },
-  text: {
-    fontFamily: 'AvenirNext-Medium'
-  }
-});
+    {text &&
+      <Text style={styles.text}>
+        {text}
+      </Text>}
+  </View>;

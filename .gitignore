@@ -55,3 +55,6 @@ fastlane/screenshots
 # react-native-packager
 react-native-packager-cache*
 haste-map-react-native-packager*
+
+# eslint cache
+.eslintcache

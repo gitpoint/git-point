@@ -5,7 +5,7 @@ const initialState = {
   repos: [],
   isPendingSearchUsers: false,
   isPendingSearchRepos: false,
-  error: ''
+  error: '',
 };
 
 export const searchReducer = (state = initialState, action = {}) => {
@@ -14,37 +14,37 @@ export const searchReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         repos: [],
-        isPendingSearchRepos: true
+        isPendingSearchRepos: true,
       };
     case SEARCH_REPOS.SUCCESS:
       return {
         ...state,
         repos: action.payload,
-        isPendingSearchRepos: false
+        isPendingSearchRepos: false,
       };
     case SEARCH_REPOS.ERROR:
       return {
         ...state,
         error: action.payload,
-        isPendingSearchRepos: false
+        isPendingSearchRepos: false,
       };
     case SEARCH_USERS.PENDING:
       return {
         ...state,
         users: [],
-        isPendingSearchUsers: true
+        isPendingSearchUsers: true,
       };
     case SEARCH_USERS.SUCCESS:
       return {
         ...state,
         users: action.payload,
-        isPendingSearchUsers: false
+        isPendingSearchUsers: false,
       };
     case SEARCH_USERS.ERROR:
       return {
         ...state,
         error: action.payload,
-        isPendingSearchUsers: false
+        isPendingSearchUsers: false,
       };
     default:
       return state;

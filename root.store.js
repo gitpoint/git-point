@@ -1,10 +1,10 @@
-import { compose, createStore, applyMiddleware } from "redux";
-import { composeWithDevTools } from "remote-redux-devtools";
-import { autoRehydrate } from "redux-persist";
-import createLogger from "redux-logger";
-import reduxThunk from "redux-thunk";
 
+import { compose, createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from "remote-redux-devtools";
+import { autoRehydrate } from 'redux-persist';
 import { rootReducer } from "./root.reducer";
+import createLogger from 'redux-logger';
+import reduxThunk from 'redux-thunk';
 
 const getMiddleware = () => {
   const middlewares = [reduxThunk];
@@ -27,7 +27,9 @@ const getMiddleware = () => {
 
 const getEnhancers = () => {
   const enhancers = [];
+
   enhancers.push(autoRehydrate());
+
   return enhancers;
 };
 

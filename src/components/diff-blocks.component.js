@@ -9,14 +9,51 @@ type Props = {
   additions: number,
   deletions: number,
   showNumbers: boolean,
-  onPress: Function
+  onPress: Function,
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  linesChanged: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  numAdditions: {
+    marginRight: 3,
+    fontFamily: 'AvenirNext-DemiBold',
+    color: colors.green,
+    letterSpacing: 1,
+  },
+  numDeletions: {
+    marginRight: 2,
+    fontFamily: 'AvenirNext-DemiBold',
+    color: colors.red,
+    letterSpacing: 1,
+  },
+  block: {
+    width: 7,
+    height: 7,
+    marginLeft: 1,
+  },
+  greenBlock: {
+    backgroundColor: colors.green,
+  },
+  redBlock: {
+    backgroundColor: colors.darkRed,
+  },
+  greyBlock: {
+    backgroundColor: colors.greyMid,
+  },
+});
 
 export const DiffBlocks = ({
   additions,
   deletions,
   showNumbers,
-  onPress
+  onPress,
 }: Props) => {
   const linesChanged = additions + deletions;
 
@@ -34,7 +71,7 @@ export const DiffBlocks = ({
     greyBlocks = 5 - (greenBlocks + redBlocks);
   }
 
-  let Component = onPress ? TouchableOpacity : View;
+  const Component = onPress ? TouchableOpacity : View;
 
   return (
     <Component style={styles.container} onPress={onPress}>
@@ -44,54 +81,17 @@ export const DiffBlocks = ({
           <Text style={styles.numDeletions}>{`-${deletions}`}</Text>
         </View>}
 
-      {[...Array(greenBlocks)].map((item, i) => {
-        return <View key={i} style={[styles.block, styles.greenBlock]} />;
+      {[...Array(greenBlocks)].map((item, index) => {
+        return <View key={index} style={[styles.block, styles.greenBlock]} />; // eslint-disable-line react/no-array-index-key
       })}
 
-      {[...Array(redBlocks)].map((item, i) => {
-        return <View key={i} style={[styles.block, styles.redBlock]} />;
+      {[...Array(redBlocks)].map((item, index) => {
+        return <View key={index} style={[styles.block, styles.redBlock]} />; // eslint-disable-line react/no-array-index-key
       })}
 
-      {[...Array(greyBlocks)].map((item, i) => {
-        return <View key={i} style={[styles.block, styles.greyBlock]} />;
+      {[...Array(greyBlocks)].map((item, index) => {
+        return <View key={index} style={[styles.block, styles.greyBlock]} />; // eslint-disable-line react/no-array-index-key
       })}
     </Component>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  linesChanged: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  numAdditions: {
-    marginRight: 3,
-    fontFamily: 'AvenirNext-DemiBold',
-    color: colors.green,
-    letterSpacing: 1
-  },
-  numDeletions: {
-    marginRight: 2,
-    fontFamily: 'AvenirNext-DemiBold',
-    color: colors.red,
-    letterSpacing: 1
-  },
-  block: {
-    width: 7,
-    height: 7,
-    marginLeft: 1
-  },
-  greenBlock: {
-    backgroundColor: colors.green
-  },
-  redBlock: {
-    backgroundColor: colors.darkRed
-  },
-  greyBlock: {
-    backgroundColor: colors.greyMid
-  }
-});
