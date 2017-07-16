@@ -110,6 +110,7 @@ class PullDiff extends Component {
   };
 
   renderItem = ({ item }) => {
+    const filename = item.deleted ? item.from : item.to;
     const chunks = item.chunks.map((chunk, index) => {
       return (
         <ScrollView
@@ -122,11 +123,14 @@ class PullDiff extends Component {
               key={index}
               newChunk
               change={{ content: chunk.content }}
-            />
+              filename={filename} />
 
-            {chunk.changes.map((change, changesIndex) =>
-              <CodeLine key={changesIndex} change={change} />
-            )}
+            {chunk.changes.map((change, changesIndex) => (
+              <CodeLine
+                key={changesIndex}
+                change={change}
+                filename={filename} />
+            ))}
           </View>
         </ScrollView>
       );
