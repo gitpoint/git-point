@@ -16,6 +16,14 @@
     "flow-status": "flow status",
     "flow-coverage": "flow coverage",
     "contributors:add": "all-contributors add",
+    "cp-release:ios": "code-push release-react git-point-ios ios",
+    "cp-release:android": "code-push release-react git-point-android android",
+    "cp-promote:ios": "code-push promote git-point-ios Staging Production",
+    "cp-promote:android": "code-push promote git-point-android Staging Production",
+    "cp-history:ios-staging": "code-push deployment history git-point-ios Staging",
+    "cp-history:android-staging": "code-push deployment history git-point-android Staging",
+    "cp-history:android-production": "code-push deployment history git-point-android Production",
+    "cp-history:ios-production": "code-push deployment history git-point-ios Production",
     "postinstall": "remotedev-debugger --hostname localhost --port 5678 --injectserver"
   },
   "lint-staged": {
