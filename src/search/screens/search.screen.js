@@ -10,7 +10,7 @@ import {
   LoadingContainer,
   SearchBar,
 } from 'components';
-import { colors, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 import { searchRepos, searchUsers } from '../index';
 
 const mapStateToProps = state => ({
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     height: 30,
   },
   buttonGroupText: {
-    fontFamily: 'AvenirNext-Bold',
+    ...fonts.fontPrimaryBold,
   },
   buttonGroupTextSelected: {
     color: colors.black,
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   searchTitle: {
     fontSize: normalize(18),
     textAlign: 'center',
-    fontFamily: 'AvenirNext-Medium',
+    ...fonts.fontPrimary,
   },
   searchCancelButton: {
     color: colors.black,

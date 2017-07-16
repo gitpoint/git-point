@@ -5,7 +5,7 @@ import { Card } from 'react-native-elements';
 import Parse from 'parse-diff';
 
 import { ViewContainer, DiffBlocks, CodeLine } from 'components';
-import { colors, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 
 const styles = StyleSheet.create({
   fileChangeContainer: {
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   lineNumbersChanged: {
-    fontFamily: 'Menlo',
+    ...fonts.fontCode,
     marginRight: 5,
   },
   fileTitle: {
@@ -33,23 +33,23 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   codeStyle: {
-    fontFamily: 'Menlo',
+    ...fonts.fontCode,
     fontSize: normalize(10),
   },
   dividerStyle: {
     marginBottom: 0,
   },
   noChangesMessage: {
-    fontFamily: 'AvenirNext-DemiBold',
+    ...fonts.fontPrimarySemiBold,
     paddingVertical: 5,
     paddingLeft: 10,
   },
   newIndicator: {
-    fontFamily: 'AvenirNext-DemiBold',
+    ...fonts.fontPrimarySemiBold,
     color: colors.green,
   },
   deletedIndicator: {
-    fontFamily: 'AvenirNext-DemiBold',
+    ...fonts.fontPrimarySemiBold,
     color: colors.red,
   },
   header: {
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerText: {
-    fontFamily: 'AvenirNext-DemiBold',
+    ...fonts.fontPrimarySemiBold,
     fontSize: normalize(14),
   },
 });
@@ -123,14 +123,16 @@ class PullDiff extends Component {
               key={index}
               newChunk
               change={{ content: chunk.content }}
-              filename={filename} />
+              filename={filename}
+            />
 
-            {chunk.changes.map((change, changesIndex) => (
+            {chunk.changes.map((change, changesIndex) =>
               <CodeLine
                 key={changesIndex}
                 change={change}
-                filename={filename} />
-            ))}
+                filename={filename}
+              />
+            )}
           </View>
         </ScrollView>
       );

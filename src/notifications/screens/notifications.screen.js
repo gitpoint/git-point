@@ -17,7 +17,7 @@ import {
   LoadingContainer,
   NotificationListItem,
 } from 'components';
-import { colors, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 import { getIssueFromUrl } from 'issue';
 import {
   getUnreadNotifications,
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     height: 30,
   },
   buttonGroupText: {
-    fontFamily: 'AvenirNext-Bold',
+    ...fonts.fontPrimaryBold,
   },
   buttonGroupTextSelected: {
     color: colors.black,
@@ -80,14 +80,14 @@ const styles = StyleSheet.create({
   },
   repositoryTitle: {
     color: colors.primarydark,
-    fontFamily: 'AvenirNext-DemiBold',
+    ...fonts.fontPrimarySemiBold,
     marginLeft: 10,
     flex: 1,
   },
   notificationTitle: {
     color: colors.black,
     fontSize: normalize(12),
-    fontFamily: 'AvenirNext-Regular',
+    ...fonts.fontPrimaryLight,
   },
   markAsReadIconRepo: {
     flex: 0.15,
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   noneTitle: {
     fontSize: normalize(16),
     textAlign: 'center',
-    fontFamily: 'AvenirNext-Medium',
+    ...fonts.fontPrimary,
   },
 });
 

@@ -3,7 +3,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-import { colors } from 'config';
+import { colors, fonts } from 'config';
 
 type Props = {
   additions: number,
@@ -23,13 +23,13 @@ const styles = StyleSheet.create({
   },
   numAdditions: {
     marginRight: 3,
-    fontFamily: 'AvenirNext-DemiBold',
+    ...fonts.fontPrimarySemiBold,
     color: colors.green,
     letterSpacing: 1,
   },
   numDeletions: {
     marginRight: 2,
-    fontFamily: 'AvenirNext-DemiBold',
+    ...fonts.fontPrimarySemiBold,
     color: colors.red,
     letterSpacing: 1,
   },

@@ -6,7 +6,7 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import SyntaxHighlighter from 'react-native-syntax-highlighter';
 import { getLanguage } from 'lowlight';
 import { github as GithubStyle } from 'react-syntax-highlighter/dist/styles';
-import { colors, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 
 const styles = StyleSheet.create({
   container: {
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     flex: 0.85,
   },
   codeLine: {
-    fontFamily: 'Menlo',
+    ...fonts.fontCode,
     fontSize: normalize(10),
     paddingHorizontal: 10,
     paddingVertical: 3,
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   codeLineNumber: {
-    fontFamily: 'Menlo',
+    ...fonts.fontCode,
     fontSize: normalize(10),
     flex: 1,
     alignItems: 'center',

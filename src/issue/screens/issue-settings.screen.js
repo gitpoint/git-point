@@ -10,7 +10,7 @@ import {
   UserListItem,
   LabelListItem,
 } from 'components';
-import { colors } from 'config';
+import { colors, fonts } from 'config';
 import { getLabels } from 'repository';
 import { editIssue, changeIssueLockStatus } from '../issue.action';
 
@@ -35,15 +35,15 @@ const mapDispatchToProps = dispatch => ({
 const styles = StyleSheet.create({
   listItemTitle: {
     color: colors.black,
-    fontFamily: 'AvenirNext-Medium',
+    ...fonts.fontPrimary,
   },
   closeActionTitle: {
     color: colors.red,
-    fontFamily: 'AvenirNext-Medium',
+    ...fonts.fontPrimary,
   },
   openActionTitle: {
     color: colors.green,
-    fontFamily: 'AvenirNext-Medium',
+    ...fonts.fontPrimary,
   },
 });
 

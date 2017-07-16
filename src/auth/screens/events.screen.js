@@ -6,7 +6,7 @@ import { StyleSheet, Text, FlatList, View } from 'react-native';
 import moment from 'moment';
 
 import { LoadingUserListItem, UserListItem, ViewContainer } from 'components';
-import { colors, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 import { emojifyText } from 'utils';
 import { getUserEvents } from '../auth.action';
 
@@ -43,17 +43,17 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 10,
     color: colors.primaryDark,
-    fontFamily: 'AvenirNext-Regular',
+    ...fonts.fontPrimaryLight,
   },
   linkDescription: {
-    fontFamily: 'AvenirNext-DemiBold',
+    ...fonts.fontPrimarySemiBold,
   },
   linkBranchDescription: {
-    fontFamily: 'Menlo',
+    ...fonts.fontCode,
   },
   deletedLinkBranchDescription: {
     color: colors.greyDarkest,
-    fontFamily: 'Menlo',
+    ...fonts.fontCode,
   },
   date: {
     color: colors.greyDark,
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     color: colors.greyDark,
     fontSize: normalize(11),
     marginTop: 1,
-    fontWeight: '600',
+    ...fonts.fontPrimarySemiBold,
   },
   textContainer: {
     flex: 1,
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   noneTitle: {
     fontSize: normalize(14),
     textAlign: 'center',
-    fontFamily: 'AvenirNext-Medium',
+    ...fonts.fontPrimary,
   },
 });
 

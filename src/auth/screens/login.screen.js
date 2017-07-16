@@ -14,7 +14,7 @@ import SafariView from 'react-native-safari-view';
 import queryString from 'query-string';
 
 import { ViewContainer, LoadingContainer } from 'components';
-import { normalize } from 'config';
+import { fonts, normalize } from 'config';
 import { CLIENT_ID } from 'api';
 import { auth } from 'auth';
 
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     height: 100,
   },
   buttonText: {
-    fontWeight: 'bold',
+    ...fonts.fontPrimaryBold,
     fontSize: normalize(16),
   },
 });
