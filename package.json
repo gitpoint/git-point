@@ -15,8 +15,7 @@
     "flow-stop": "flow stop",
     "flow-status": "flow status",
     "flow-coverage": "flow coverage",
-    "contributors:add": "all-contributors add",
-    "postinstall": "remotedev-debugger --hostname localhost --port 5678 --injectserver"
+    "contributors:add": "all-contributors add"
   },
   "lint-staged": {
     "*.js": [
