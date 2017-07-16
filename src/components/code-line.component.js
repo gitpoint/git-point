@@ -67,7 +67,7 @@ export class CodeLine extends Component {
   props: {
     newChunk: boolean,
     change: Object,
-    filename: string
+    filename: string,
   };
 
   isKnownType(language) {
@@ -80,7 +80,7 @@ export class CodeLine extends Component {
     // SyntaxHighlighter doesn't allow Stylesheet class style
     const customStyle = {
       backgroundColor: 'transparent',
-      padding: 0
+      padding: 0,
     };
 
     return (
@@ -98,15 +98,15 @@ export class CodeLine extends Component {
               {change.type === 'del'
                 ? change.ln
                 : change.type === 'normal'
-                    ? change.ln1
-                    : change.type === 'add' ? '' : '...'}
+                  ? change.ln1
+                  : change.type === 'add' ? '' : '...'}
             </Text>
             <Text style={styles.codeLineNumber}>
               {change.type === 'add'
                 ? change.ln
                 : change.type === 'normal'
-                    ? change.ln2
-                    : change.type === 'del' ? '' : '...'}
+                  ? change.ln2
+                  : change.type === 'del' ? '' : '...'}
             </Text>
           </View>
 
@@ -121,17 +121,18 @@ export class CodeLine extends Component {
             {(newChunk || !this.isKnownType(language)) &&
               <Text style={[styles.codeLine, newChunk && styles.newChunkLine]}>
                 {change.content}
-              </Text>
-            }
+              </Text>}
 
             {this.isKnownType(language) &&
               <SyntaxHighlighter
                 language={language}
                 style={GithubStyle}
                 CodeTag={Text}
-                codeTagProps={{style: styles.codeLine}}
-                customStyle={customStyle}>{change.content}</SyntaxHighlighter>
-            }
+                codeTagProps={{ style: styles.codeLine }}
+                customStyle={customStyle}
+              >
+                {change.content}
+              </SyntaxHighlighter>}
           </View>
         </View>
       </View>
