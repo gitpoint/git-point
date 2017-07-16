@@ -9,23 +9,27 @@ export const SearchBar = ({
   onFocus,
   onCancelButtonPress,
   onSearchButtonPress,
-}) => (
+}) =>
   <MDSearchBar
     textStyle={textColor ? { color: textColor } : null}
-    inputStyle={textFieldBackgroundColor ? { backgroundColor: textFieldBackgroundColor } : null}
+    inputStyle={
+      textFieldBackgroundColor
+        ? { backgroundColor: textFieldBackgroundColor }
+        : null
+    }
     alwaysShowBackButton={showsCancelButton}
     placeholder={placeholder}
     onFocus={onFocus}
     onClose={onCancelButtonPress}
     onBackPress={onCancelButtonPress}
     onSubmitEditing={event => {
-      typeof onSearchButtonPress === 'function' && onSearchButtonPress(event.nativeEvent.text);
+      typeof onSearchButtonPress === 'function' &&
+        onSearchButtonPress(event.nativeEvent.text);
     }}
     height={50}
     autoCorrect={false}
     returnKeyType="search"
-  />
-);
+  />;
 
 SearchBar.propTypes = {
   textColor: PropTypes.string,

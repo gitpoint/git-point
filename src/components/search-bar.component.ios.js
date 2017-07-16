@@ -37,7 +37,8 @@ export class SearchBar extends Component {
           this.refs.searchBar.unFocus();
         }}
         onSearchButtonPress={query => {
-          typeof onSearchButtonPress === 'function' && onSearchButtonPress(query);
+          typeof onSearchButtonPress === 'function' &&
+            onSearchButtonPress(query);
           this.refs.searchBar.unFocus();
         }}
       />

@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FlatList, View, StyleSheet, Dimensions, Text } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
-import { ViewContainer, IssueListItem, LoadingContainer, SearchBar } from 'components';
+import {
+  ViewContainer,
+  IssueListItem,
+  LoadingContainer,
+  SearchBar,
+} from 'components';
 
 import { colors, normalize } from 'config';
 import {
@@ -181,7 +186,8 @@ class IssueList extends Component {
                 textFieldBackgroundColor={colors.greyLight}
                 showsCancelButton={searchFocus}
                 onFocus={() => this.setState({ searchFocus: true })}
-                onCancelButtonPress={() => this.setState({ searchStart: false, query: '' })}
+                onCancelButtonPress={() =>
+                  this.setState({ searchStart: false, query: '' })}
                 onSearchButtonPress={query => {
                   this.search(query);
                 }}

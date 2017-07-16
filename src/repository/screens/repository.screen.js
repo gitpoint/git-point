@@ -91,7 +91,7 @@ class Repository extends Component {
     this.ActionSheet.show();
   };
 
-  handlePress = (index) => {
+  handlePress = index => {
     const {
       starred,
       repository,
@@ -103,19 +103,12 @@ class Repository extends Component {
     const showFork = repository.owner.login !== username;
 
     if (index === 0) {
-      changeStarStatusRepo(
-        repository.owner.login,
-        repository.name,
-        starred,
-      );
+      changeStarStatusRepo(repository.owner.login, repository.name, starred);
     }
 
     if (index === 1 && showFork) {
-      forkRepo(
-        repository.owner.login,
-        repository.name,
-      ).then(json => {
-        navigation.navigate('Repository', { repository: json })
+      forkRepo(repository.owner.login, repository.name).then(json => {
+        navigation.navigate('Repository', { repository: json });
       });
     }
   };
@@ -142,7 +135,8 @@ class Repository extends Component {
     });
 
     let repositoryActions = [starred ? '★ Unstar' : '★ Star'];
-    const showFork = repository && repository.owner && repository.owner.login !== username;
+    const showFork =
+      repository && repository.owner && repository.owner.login !== username;
 
     if (showFork) {
       repositoryActions.push('Fork');
@@ -299,7 +293,7 @@ class Repository extends Component {
         </ParallaxScroll>
 
         <ActionSheet
-          ref={o => this.ActionSheet = o}
+          ref={o => (this.ActionSheet = o)}
           title="Repository Actions"
           options={[...repositoryActions, 'Cancel']}
           cancelButtonIndex={repositoryActions.length}

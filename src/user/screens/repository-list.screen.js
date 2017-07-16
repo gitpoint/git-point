@@ -132,7 +132,8 @@ class RepositoryList extends Component {
                   textFieldBackgroundColor={colors.greyLight}
                   showsCancelButton={searchFocus}
                   onFocus={() => this.setState({ searchFocus: true })}
-                  onCancelButtonPress={() => this.setState({ searchStart: false, query: '' })}
+                  onCancelButtonPress={() =>
+                    this.setState({ searchStart: false, query: '' })}
                   onSearchButtonPress={query => {
                     this.search(query);
                   }}
