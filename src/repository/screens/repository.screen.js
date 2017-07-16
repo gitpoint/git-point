@@ -293,7 +293,9 @@ class Repository extends Component {
         </ParallaxScroll>
 
         <ActionSheet
-          ref={o => (this.ActionSheet = o)}
+          ref={o => {
+            this.ActionSheet = o;
+          }}
           title="Repository Actions"
           options={[...repositoryActions, 'Cancel']}
           cancelButtonIndex={repositoryActions.length}

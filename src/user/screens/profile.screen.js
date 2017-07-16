@@ -195,7 +195,9 @@ class Profile extends Component {
         </ParallaxScroll>
 
         <ActionSheet
-          ref={o => (this.ActionSheet = o)}
+          ref={o => {
+            this.ActionSheet = o;
+          }}
           title="User Actions"
           options={[...userActions, 'Cancel']}
           cancelButtonIndex={1}

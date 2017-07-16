@@ -247,7 +247,9 @@ class IssueSettings extends Component {
         </ScrollView>
 
         <ActionSheet
-          ref={o => (this.IssueActionSheet = o)}
+          ref={o => {
+            this.IssueActionSheet = o;
+          }}
           title={`Are you sure you want to ${issue.state === 'open'
             ? 'close'
             : 'reopen'} this?`}
@@ -256,7 +258,9 @@ class IssueSettings extends Component {
           onPress={this.handleIssueActionPress}
         />
         <ActionSheet
-          ref={o => (this.LockIssueActionSheet = o)}
+          ref={o => {
+            this.LockIssueActionSheet = o;
+          }}
           title={`Are you sure you want to ${issue.locked
             ? 'unlock'
             : 'lock'} this conversation?`}
@@ -265,7 +269,9 @@ class IssueSettings extends Component {
           onPress={this.handleLockIssueActionPress}
         />
         <ActionSheet
-          ref={o => (this.AddLabelActionSheet = o)}
+          ref={o => {
+            this.AddLabelActionSheet = o;
+          }}
           title={'Apply a label to this issue'}
           options={[...this.props.labels.map(label => label.name), 'Cancel']}
           cancelButtonIndex={this.props.labels.length}

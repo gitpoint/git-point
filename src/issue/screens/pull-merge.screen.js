@@ -196,7 +196,9 @@ class PullMerge extends Component {
         </ScrollView>
 
         <ActionSheet
-          ref={o => (this.ActionSheet = o)}
+          ref={o => {
+            this.ActionSheet = o;
+          }}
           title="Change Merge Type"
           options={[...this.mergeMethodMessages, 'Cancel']}
           cancelButtonIndex={this.mergeMethodMessages.length}
