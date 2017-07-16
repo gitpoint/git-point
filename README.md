@@ -55,6 +55,7 @@ Feel free to send me feedback on [twitter](https://twitter.com/hdjirdeh) or [fil
 - `yarn run link` to link react-native dependencies
 - `yarn start` in one terminal tab to start the packager
 - `yarn run ios` in another tab to run the app in the iOS simulator
+- `yarn run android` in another tab to run the app in the Android device/emulator
 
 Please take a look at the [contributing guidelines](./CONTRIBUTING.md) for a detailed process on how to build your application as well as troubleshooting information.
 

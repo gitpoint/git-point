@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import {
   StyleSheet,
   ActivityIndicator,
-  ActionSheetIOS,
   Dimensions,
   View,
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import ActionSheet from 'react-native-actionsheet';
 import Communications from 'react-native-communications';
 
 import {
@@ -71,22 +71,16 @@ class Profile extends Component {
     return url.substr(0, prefix.length) === prefix ? url : `http://${url}`;
   };
 
-  showMenuActionSheet() {
-    const { user, isFollowing, changeFollowStatusByDispatch } = this.props;
-    const userActions = [isFollowing ? 'Unfollow' : 'Follow'];
+  showMenuActionSheet = () => {
+    this.ActionSheet.show();
+  }
 
-    ActionSheetIOS.showActionSheetWithOptions(
-      {
-        title: 'User Actions',
-        options: [...userActions, 'Cancel'],
-        cancelButtonIndex: 1,
-      },
-      buttonIndex => {
-        if (buttonIndex === 0) {
-          changeFollowStatusByDispatch(user.login, isFollowing);
-        }
-      }
-    );
+  handlePress = (index) => {
+    const { user, isFollowing, changeFollowStatus } = this.props;
+
+    if (index === 0) {
+      changeFollowStatus(user.login, isFollowing);
+    }
   }
 
   render() {
@@ -102,6 +96,7 @@ class Profile extends Component {
 
     const initialUser = navigation.state.params.user;
     const isPending = isPendingUser || isPendingOrgs;
+    const userActions = [isFollowing ? 'Unfollow' : 'Follow'];
 
     return (
       <ViewContainer>
@@ -136,6 +131,7 @@ class Profile extends Component {
           {!isPending &&
             initialUser.login === user.login &&
             <View>
+            
               {user.bio &&
                 user.bio !== '' &&
                 <SectionList title="BIO">
@@ -203,6 +199,14 @@ class Profile extends Component {
               </SectionList>
             </View>}
         </ParallaxScroll>
+
+        <ActionSheet
+          ref={o => this.ActionSheet = o}
+          title="User Actions"
+          options={[...userActions, 'Cancel']}
+          cancelButtonIndex={1}
+          onPress={this.handlePress}
+        />
       </ViewContainer>
     );
   }

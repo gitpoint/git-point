@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     width: window.width - 30,
     position: 'absolute',
-    bottom: 20,
+    bottom: Platform.OS === 'ios' ? 20 : 35,
     shadowColor: 'transparent',
   },
   logoContainer: {

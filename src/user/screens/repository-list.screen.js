@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FlatList, View, Dimensions, StyleSheet } from 'react-native';
-import SearchBar from 'react-native-search-bar';
 
 import {
   ViewContainer,
   RepositoryListItem,
   LoadingRepositoryListItem,
+  SearchBar,
 } from 'components';
 import { colors } from 'config';
 import { getRepositories, searchUserRepos } from 'user';
@@ -38,6 +38,9 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     backgroundColor: colors.white,
     flex: 1,
+  },
+  searchCancelButton: {
+    color: colors.black,
   },
   listContainer: {
     marginBottom: 90,
@@ -125,20 +128,13 @@ class RepositoryList extends Component {
             <View style={styles.searchBarWrapper}>
               <View style={styles.searchContainer}>
                 <SearchBar
-                  ref={ref => {
-                    this.searchBar = ref;
-                  }}
                   textColor={colors.primaryDark}
                   textFieldBackgroundColor={colors.greyLight}
                   showsCancelButton={searchFocus}
                   onFocus={() => this.setState({ searchFocus: true })}
-                  onCancelButtonPress={() => {
-                    this.setState({ searchStart: false, query: '' });
-                    this.searchBar.unFocus();
-                  }}
-                  onSearchButtonPress={text => {
-                    this.search(text);
-                    this.searchBar.unFocus();
+                  onCancelButtonPress={() => this.setState({ searchStart: false, query: '' })}
+                  onSearchButtonPress={query => {
+                    this.search(query);
                   }}
                   hideBackground
                 />

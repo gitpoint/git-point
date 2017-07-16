@@ -5,10 +5,10 @@ import {
   ScrollView,
   StyleSheet,
   TextInput,
-  ActionSheetIOS,
   Alert,
 } from 'react-native';
 import { ListItem, Icon } from 'react-native-elements';
+import ActionSheet from 'react-native-actionsheet';
 
 import { ViewContainer, SectionList } from 'components';
 import { colors, normalize } from 'config';
@@ -98,20 +98,29 @@ class PullMerge extends Component {
     };
   }
 
-  mergePullRequest = () => {
-    const {
-      repository,
-      issue,
-      mergePullRequestByDispatch,
-      navigation,
-    } = this.props;
+  mergeMethodMessages = ['Create a merge commit', 'Squash and merge'];
+
+  showActionSheet = () => {
+    this.ActionSheet.show();
+  };
+
+  handlePress = (index) => {
+    if (index !== this.mergeMethodMessages.length) {
+      this.setState({
+        mergeMethod: index,
+      });
+    }
+  };
+
+   mergePullRequest = () => {
+    const { repository, issue, mergePullRequest, navigation } = this.props;
     const { mergeMethod, commitTitle, commitMessage } = this.state;
     const mergeMethodTypes = ['merge', 'squash'];
 
     if (commitTitle === '') {
       Alert.alert('You need to have a commit title!', null, [{ text: 'OK' }]);
     } else {
-      mergePullRequestByDispatch(
+      mergePullRequest(
         repository.full_name,
         issue.number,
         commitTitle,
@@ -123,26 +132,8 @@ class PullMerge extends Component {
     }
   };
 
-  changeMergeMethod = mergeMethodMessages => {
-    ActionSheetIOS.showActionSheetWithOptions(
-      {
-        title: 'Change Merge Type',
-        options: [...mergeMethodMessages, 'Cancel'],
-        cancelButtonIndex: mergeMethodMessages.length,
-      },
-      buttonIndex => {
-        if (buttonIndex !== mergeMethodMessages.length) {
-          this.setState({
-            mergeMethod: buttonIndex,
-          });
-        }
-      }
-    );
-  };
-
   render() {
     const { mergeMethod, commitTitle, commitMessage } = this.state;
-    const mergeMethodMessages = ['Create a merge commit', 'Squash and merge'];
 
     return (
       <ViewContainer>
@@ -189,7 +180,7 @@ class PullMerge extends Component {
             <View style={styles.mergeListItemContainer}>
               <View style={styles.listItemContainer}>
                 <ListItem
-                  title={mergeMethodMessages[mergeMethod]}
+                  title={this.mergeMethodMessages[mergeMethod]}
                   hideChevron
                   underlayColor={colors.greyLight}
                   titleStyle={styles.mergeActionTitle}
@@ -203,12 +194,20 @@ class PullMerge extends Component {
                   size={24}
                   name="pencil"
                   type="octicon"
-                  onPress={() => this.changeMergeMethod(mergeMethodMessages)}
+                  onPress={this.showActionSheet}
                 />
               </View>
             </View>
           </SectionList>
         </ScrollView>
+
+        <ActionSheet
+          ref={o => this.ActionSheet = o}
+          title="Change Merge Type"
+          options={[...this.mergeMethodMessages, 'Cancel']}
+          cancelButtonIndex={this.mergeMethodMessages.length}
+          onPress={this.handlePress}
+        />
       </ViewContainer>
     );
   }
