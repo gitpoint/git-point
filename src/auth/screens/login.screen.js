@@ -6,6 +6,7 @@ import {
   View,
   StyleSheet,
   Image,
+  ImageBackground,
   Platform,
 } from 'react-native';
 import { Button } from 'react-native-elements';
@@ -26,9 +27,13 @@ const mapStateToProps = state => ({
 });
 
 const styles = StyleSheet.create({
-  image: {
+  imageContainer: {
     justifyContent: 'center',
     alignItems: 'center',
+    height: window.height,
+    width: window.width,
+  },
+  imageBackground: {
     height: window.height,
     width: window.width,
   },
@@ -139,8 +144,9 @@ class Login extends Component {
         {!isAuthenticated &&
           this.state.asyncStorageChecked &&
           <View>
-            <Image
-              style={styles.image}
+            <ImageBackground
+              style={styles.imageContainer}
+              imageStyle={styles.imageBackground}
               source={require('../../assets/login-background.png')}
             >
               <View style={styles.logoContainer}>
@@ -149,7 +155,7 @@ class Login extends Component {
                   source={require('../../assets/logo.png')}
                 />
               </View>
-            </Image>
+            </ImageBackground>
 
             <Button
               raised
