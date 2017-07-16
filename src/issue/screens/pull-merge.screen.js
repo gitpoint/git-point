@@ -107,14 +107,19 @@ class PullMerge extends Component {
   };
 
   mergePullRequest = () => {
-    const { repository, issue, mergePullRequest, navigation } = this.props;
+    const {
+      repository,
+      issue,
+      mergePullRequestByDispatch,
+      navigation,
+    } = this.props;
     const { mergeMethod, commitTitle, commitMessage } = this.state;
     const mergeMethodTypes = ['merge', 'squash'];
 
     if (commitTitle === '') {
       Alert.alert('You need to have a commit title!', null, [{ text: 'OK' }]);
     } else {
-      mergePullRequest(
+      mergePullRequestByDispatch(
         repository.full_name,
         issue.number,
         commitTitle,

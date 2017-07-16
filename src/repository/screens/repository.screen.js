@@ -103,11 +103,15 @@ class Repository extends Component {
     const showFork = repository.owner.login !== username;
 
     if (index === 0) {
-      changeStarStatusRepo(repository.owner.login, repository.name, starred);
+      changeStarStatusRepoByDispatch(
+        repository.owner.login,
+        repository.name,
+        starred
+      );
     }
 
     if (index === 1 && showFork) {
-      forkRepo(repository.owner.login, repository.name).then(json => {
+      forkRepoByDispatch(repository.owner.login, repository.name).then(json => {
         navigation.navigate('Repository', { repository: json });
       });
     }
@@ -134,7 +138,7 @@ class Repository extends Component {
       return !issue.hasOwnProperty('pull_request');
     });
 
-    let repositoryActions = [starred ? '★ Unstar' : '★ Star'];
+    const repositoryActions = [starred ? '★ Unstar' : '★ Star'];
     const showFork =
       repository && repository.owner && repository.owner.login !== username;
 

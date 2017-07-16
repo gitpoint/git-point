@@ -23,8 +23,9 @@ export const SearchBar = ({
     onClose={onCancelButtonPress}
     onBackPress={onCancelButtonPress}
     onSubmitEditing={event => {
-      typeof onSearchButtonPress === 'function' &&
+      if (typeof onSearchButtonPress === 'function') {
         onSearchButtonPress(event.nativeEvent.text);
+      }
     }}
     height={50}
     autoCorrect={false}
@@ -39,4 +40,10 @@ SearchBar.propTypes = {
   onFocus: PropTypes.func.isRequired,
   onCancelButtonPress: PropTypes.func.isRequired,
   onSearchButtonPress: PropTypes.func.isRequired,
+};
+
+SearchBar.defaultProps = {
+  textColor: undefined,
+  textFieldBackgroundColor: undefined,
+  showsCancelButton: false,
 };

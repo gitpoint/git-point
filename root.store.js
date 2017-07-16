@@ -1,9 +1,9 @@
 import { compose, createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'remote-redux-devtools';
 import { autoRehydrate } from 'redux-persist';
-import { rootReducer } from './root.reducer';
 import createLogger from 'redux-logger';
 import reduxThunk from 'redux-thunk';
+import { rootReducer } from './root.reducer';
 
 const getMiddleware = () => {
   const middlewares = [reduxThunk];

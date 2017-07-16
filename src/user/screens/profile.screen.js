@@ -71,10 +71,10 @@ class Profile extends Component {
   };
 
   handlePress = index => {
-    const { user, isFollowing, changeFollowStatus } = this.props;
+    const { user, isFollowing, changeFollowStatusByDispatch } = this.props;
 
     if (index === 0) {
-      changeFollowStatus(user.login, isFollowing);
+      changeFollowStatusByDispatch(user.login, isFollowing);
     }
   };
 

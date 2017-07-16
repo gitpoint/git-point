@@ -188,8 +188,8 @@ class IssueList extends Component {
                 onFocus={() => this.setState({ searchFocus: true })}
                 onCancelButtonPress={() =>
                   this.setState({ searchStart: false, query: '' })}
-                onSearchButtonPress={query => {
-                  this.search(query);
+                onSearchButtonPress={text => {
+                  this.search(text);
                 }}
                 hideBackground
               />

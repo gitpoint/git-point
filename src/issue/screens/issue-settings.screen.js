@@ -128,6 +128,21 @@ class IssueSettings extends Component {
     }
   };
 
+  editIssue = (editParams, stateChangeParams) => {
+    const { issue, repository } = this.props;
+    const repoName = repository.name;
+    const owner = repository.owner.login;
+    const updateStateParams = stateChangeParams || editParams;
+
+    return this.props.editIssue(
+      owner,
+      repoName,
+      issue.number,
+      editParams,
+      updateStateParams
+    );
+  };
+
   render() {
     const { issue, isMerged, authUser, navigation } = this.props;
     const issueType = issue.pull_request ? 'Pull Request' : 'Issue';
@@ -280,23 +295,6 @@ class IssueSettings extends Component {
       </ViewContainer>
     );
   }
-
-  editIssue = (editParams, stateChangeParams) => {
-    const { issue, repository } = this.props;
-    const repoName = repository.name;
-    const owner = repository.owner.login;
-    const updateStateParams = stateChangeParams
-      ? stateChangeParams
-      : editParams;
-
-    return this.props.editIssue(
-      owner,
-      repoName,
-      issue.number,
-      editParams,
-      updateStateParams
-    );
-  };
 }
 
 export const IssueSettingsScreen = connect(mapStateToProps, mapDispatchToProps)(

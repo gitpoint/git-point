@@ -183,7 +183,7 @@ class PullList extends Component {
       isPendingSearchOpenPulls,
       isPendingSearchClosedPulls,
     } = this.props;
-    const { query, searchType, searchStart } = this.state;
+    const { query, searchType, searchStart, searchFocus } = this.state;
 
     return (
       <ViewContainer>
@@ -197,8 +197,8 @@ class PullList extends Component {
                 onFocus={() => this.setState({ searchFocus: true })}
                 onCancelButtonPress={() =>
                   this.setState({ searchStart: false, query: '' })}
-                onSearchButtonPress={query => {
-                  this.search(query);
+                onSearchButtonPress={text => {
+                  this.search(text);
                 }}
                 hideBackground
               />

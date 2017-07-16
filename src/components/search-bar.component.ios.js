@@ -12,6 +12,13 @@ export class SearchBar extends Component {
     onSearchButtonPress: PropTypes.func.isRequired,
   };
 
+  static defaultProps = {
+    textColor: '',
+    textFieldBackgroundColor: '',
+    showsCancelButton: false,
+    placeholder: '',
+  };
+
   render() {
     const {
       textColor,
@@ -25,22 +32,27 @@ export class SearchBar extends Component {
 
     return (
       <RNSearchBar
-        ref="searchBar"
-        hideBackground={true}
+        ref={ref => {
+          this.searchBar = ref;
+        }}
         textColor={textColor}
         textFieldBackgroundColor={textFieldBackgroundColor}
         showsCancelButton={showsCancelButton}
         placeholder={placeholder}
         onFocus={onFocus}
         onCancelButtonPress={() => {
-          typeof onCancelButtonPress === 'function' && onCancelButtonPress();
-          this.refs.searchBar.unFocus();
+          if (typeof onCancelButtonPress === 'function') {
+            onCancelButtonPress();
+          }
+          this.searchBar.unFocus();
         }}
-        onSearchButtonPress={query => {
-          typeof onSearchButtonPress === 'function' &&
-            onSearchButtonPress(query);
-          this.refs.searchBar.unFocus();
+        onSearchButtonPress={text => {
+          if (typeof onSearchButtonPress === 'function') {
+            onSearchButtonPress(text);
+          }
+          this.searchBar.unFocus();
         }}
+        hideBackground
       />
     );
   }
