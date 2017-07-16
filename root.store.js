@@ -8,7 +8,9 @@ const getMiddleware = () => {
   const middlewares = [reduxThunk];
 
   if (__DEV__) {
-    middlewares.push(createLogger());
+    if (process.env.LOGGER_ENABLED) {
+      middlewares.push(createLogger());
+    }
   }
 
   return applyMiddleware(...middlewares);
