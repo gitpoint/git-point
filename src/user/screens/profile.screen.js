@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, ActivityIndicator, Dimensions, View } from 'react-native';
+import {
+  StyleSheet,
+  ActivityIndicator,
+  Dimensions,
+  View,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import { ListItem } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
 import Communications from 'react-native-communications';
+import codePush from 'react-native-code-push';
 
 import {
   ViewContainer,
@@ -39,7 +47,26 @@ const styles = StyleSheet.create({
     color: colors.greyDark,
     fontFamily: 'AvenirNext-Medium',
   },
+  update: {
+    flex: 1,
+    alignItems: 'center',
+    marginVertical: 40,
+  },
+  updateText: {
+    color: colors.grey,
+    fontFamily: 'AvenirNext-Medium',
+  },
+  updateTextSub: {
+    fontSize: 11,
+  },
 });
+
+const updateText = {
+  check: 'Check for update',
+  checking: 'Checking for update...',
+  updated: 'App is up to date',
+  available: 'Update is available!',
+};
 
 class Profile extends Component {
   props: {
@@ -52,6 +79,10 @@ class Profile extends Component {
     isPendingOrgs: boolean,
     isPendingCheckFollowing: boolean,
     navigation: Object,
+  };
+
+  state = {
+    updateText: updateText.check,
   };
 
   componentDidMount() {
@@ -76,6 +107,23 @@ class Profile extends Component {
     if (index === 0) {
       changeFollowStatusByDispatch(user.login, isFollowing);
     }
+  };
+
+  checkForUpdate = () => {
+    this.setState({ updateText: updateText.checking });
+
+    codePush
+      .sync({
+        updateDialog: true,
+        installMode: codePush.InstallMode.IMMEDIATE,
+      })
+      .then(update => {
+        if (!update) {
+          this.setState({ updateText: updateText.updated });
+        } else {
+          this.setState({ updateText: updateText.available });
+        }
+      });
   };
 
   render() {
@@ -191,6 +239,15 @@ class Profile extends Component {
                   />
                 )}
               </SectionList>
+
+              <View style={styles.update}>
+                <Text style={styles.updateText}>GitPoint v1.1</Text>
+                <TouchableOpacity onPress={this.checkForUpdate}>
+                  <Text style={[styles.updateText, styles.updateTextSub]}>
+                    {this.state.updateText}
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>}
         </ParallaxScroll>
 
