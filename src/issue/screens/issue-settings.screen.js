@@ -82,7 +82,7 @@ class IssueSettings extends Component {
     }
   };
 
-  handleIssueActionPress = (index) => {
+  handleIssueActionPress = index => {
     const { issue, navigation } = this.props;
     const newState = issue.state === 'open' ? 'close' : 'open';
 
@@ -93,7 +93,7 @@ class IssueSettings extends Component {
     }
   };
 
-  handleLockIssueActionPress = (index) => {
+  handleLockIssueActionPress = index => {
     const { issue, repository } = this.props;
     const repoName = repository.name;
     const owner = repository.owner.login;
@@ -103,31 +103,44 @@ class IssueSettings extends Component {
         owner,
         repoName,
         issue.number,
-        issue.locked,
+        issue.locked
       );
     }
   };
 
-  handleAddLabelActionPress = (index) => {
+  handleAddLabelActionPress = index => {
     const { issue, labels } = this.props;
     const labelChoices = [...labels.map(label => label.name)];
 
     if (
       index !== labelChoices.length &&
-      !issue.labels.some(
-        label => label.name === labelChoices[index]
-      )
+      !issue.labels.some(label => label.name === labelChoices[index])
     ) {
       this.editIssue(
         {
           labels: [
             ...issue.labels.map(label => label.name),
-            labelChoices[index]
-          ]
+            labelChoices[index],
+          ],
         },
         { labels: [...issue.labels, labels[index]] }
       );
     }
+  };
+
+  editIssue = (editParams, stateChangeParams) => {
+    const { issue, repository } = this.props;
+    const repoName = repository.name;
+    const owner = repository.owner.login;
+    const updateStateParams = stateChangeParams || editParams;
+
+    return this.props.editIssue(
+      owner,
+      repoName,
+      issue.number,
+      editParams,
+      updateStateParams
+    );
   };
 
   render() {
@@ -249,21 +262,31 @@ class IssueSettings extends Component {
         </ScrollView>
 
         <ActionSheet
-          ref={o => this.IssueActionSheet = o}
-          title={`Are you sure you want to ${issue.state === 'open' ? 'close' : 'reopen'} this?`}
+          ref={o => {
+            this.IssueActionSheet = o;
+          }}
+          title={`Are you sure you want to ${issue.state === 'open'
+            ? 'close'
+            : 'reopen'} this?`}
           options={['Yes', 'Cancel']}
           cancelButtonIndex={1}
           onPress={this.handleIssueActionPress}
         />
         <ActionSheet
-          ref={o => this.LockIssueActionSheet = o}
-          title={`Are you sure you want to ${issue.locked ? 'unlock' : 'lock'} this conversation?`}
+          ref={o => {
+            this.LockIssueActionSheet = o;
+          }}
+          title={`Are you sure you want to ${issue.locked
+            ? 'unlock'
+            : 'lock'} this conversation?`}
           options={['Yes', 'Cancel']}
           cancelButtonIndex={1}
           onPress={this.handleLockIssueActionPress}
         />
         <ActionSheet
-          ref={o => this.AddLabelActionSheet = o}
+          ref={o => {
+            this.AddLabelActionSheet = o;
+          }}
           title={'Apply a label to this issue'}
           options={[...this.props.labels.map(label => label.name), 'Cancel']}
           cancelButtonIndex={this.props.labels.length}
@@ -272,23 +295,6 @@ class IssueSettings extends Component {
       </ViewContainer>
     );
   }
-
-  editIssue = (editParams, stateChangeParams) => {
-    const { issue, repository } = this.props;
-    const repoName = repository.name;
-    const owner = repository.owner.login;
-    const updateStateParams = stateChangeParams
-      ? stateChangeParams
-      : editParams;
-
-    return this.props.editIssue(
-      owner,
-      repoName,
-      issue.number,
-      editParams,
-      updateStateParams
-    );
-  };
 }
 
 export const IssueSettingsScreen = connect(mapStateToProps, mapDispatchToProps)(

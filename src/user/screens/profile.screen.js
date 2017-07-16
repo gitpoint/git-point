@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  StyleSheet,
-  ActivityIndicator,
-  Dimensions,
-  View,
-} from 'react-native';
+import { StyleSheet, ActivityIndicator, Dimensions, View } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
 import Communications from 'react-native-communications';
@@ -73,15 +68,15 @@ class Profile extends Component {
 
   showMenuActionSheet = () => {
     this.ActionSheet.show();
-  }
+  };
 
-  handlePress = (index) => {
-    const { user, isFollowing, changeFollowStatus } = this.props;
+  handlePress = index => {
+    const { user, isFollowing, changeFollowStatusByDispatch } = this.props;
 
     if (index === 0) {
-      changeFollowStatus(user.login, isFollowing);
+      changeFollowStatusByDispatch(user.login, isFollowing);
     }
-  }
+  };
 
   render() {
     const {
@@ -131,7 +126,6 @@ class Profile extends Component {
           {!isPending &&
             initialUser.login === user.login &&
             <View>
-            
               {user.bio &&
                 user.bio !== '' &&
                 <SectionList title="BIO">
@@ -201,7 +195,9 @@ class Profile extends Component {
         </ParallaxScroll>
 
         <ActionSheet
-          ref={o => this.ActionSheet = o}
+          ref={o => {
+            this.ActionSheet = o;
+          }}
           title="User Actions"
           options={[...userActions, 'Cancel']}
           cancelButtonIndex={1}

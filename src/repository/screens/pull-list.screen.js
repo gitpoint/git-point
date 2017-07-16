@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FlatList, View, StyleSheet, Dimensions, Text } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
-import { ViewContainer, IssueListItem, LoadingContainer, SearchBar } from 'components';
+import {
+  ViewContainer,
+  IssueListItem,
+  LoadingContainer,
+  SearchBar,
+} from 'components';
 
 import { colors, normalize } from 'config';
 import {
@@ -178,7 +183,7 @@ class PullList extends Component {
       isPendingSearchOpenPulls,
       isPendingSearchClosedPulls,
     } = this.props;
-    const { query, searchType, searchStart } = this.state;
+    const { query, searchType, searchStart, searchFocus } = this.state;
 
     return (
       <ViewContainer>
@@ -190,9 +195,10 @@ class PullList extends Component {
                 textFieldBackgroundColor={colors.greyLight}
                 showsCancelButton={searchFocus}
                 onFocus={() => this.setState({ searchFocus: true })}
-                onCancelButtonPress={() => this.setState({ searchStart: false, query: '' })}
-                onSearchButtonPress={query => {
-                  this.search(query);
+                onCancelButtonPress={() =>
+                  this.setState({ searchStart: false, query: '' })}
+                onSearchButtonPress={text => {
+                  this.search(text);
                 }}
                 hideBackground
               />

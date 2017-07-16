@@ -1,10 +1,9 @@
-
 import { compose, createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools } from "remote-redux-devtools";
+import { composeWithDevTools } from 'remote-redux-devtools'; // eslint-disable-line import/no-extraneous-dependencies
 import { autoRehydrate } from 'redux-persist';
-import { rootReducer } from "./root.reducer";
 import createLogger from 'redux-logger';
 import reduxThunk from 'redux-thunk';
+import { rootReducer } from './root.reducer';
 
 const getMiddleware = () => {
   const middlewares = [reduxThunk];
@@ -32,7 +31,6 @@ const getEnhancers = () => {
 
   return enhancers;
 };
-
 
 export const configureStore = createStore(
   rootReducer,

@@ -181,9 +181,10 @@ class Search extends Component {
                 textFieldBackgroundColor={colors.greyLight}
                 showsCancelButton={this.state.searchFocus}
                 onFocus={() => this.setState({ searchFocus: true })}
-                onCancelButtonPress={() => this.setState({ searchStart: false, query: '' })}
-                onSearchButtonPress={query => {
-                  this.search(query);
+                onCancelButtonPress={() =>
+                  this.setState({ searchStart: false, query: '' })}
+                onSearchButtonPress={text => {
+                  this.search(text);
                 }}
                 hideBackground
               />
