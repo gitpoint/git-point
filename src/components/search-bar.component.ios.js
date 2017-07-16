@@ -1,59 +1,52 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
 import RNSearchBar from 'react-native-search-bar';
 
-export class SearchBar extends Component {
-  static propTypes = {
-    textColor: PropTypes.string,
-    textFieldBackgroundColor: PropTypes.string,
-    showsCancelButton: PropTypes.bool,
-    placeholder: PropTypes.string,
-    onFocus: PropTypes.func.isRequired,
-    onCancelButtonPress: PropTypes.func.isRequired,
-    onSearchButtonPress: PropTypes.func.isRequired,
-  };
+type Props = {
+  textColor?: string,
+  textFieldBackgroundColor?: string,
+  showsCancelButton?: boolean,
+  placeholder?: string,
+  onFocus: Function,
+  onCancelButtonPress: Function,
+  onSearchButtonPress: Function,
+};
 
-  static defaultProps = {
-    textColor: '',
-    textFieldBackgroundColor: '',
-    showsCancelButton: false,
-    placeholder: '',
-  };
+export const SearchBar = ({
+  textColor,
+  textFieldBackgroundColor,
+  showsCancelButton,
+  placeholder,
+  onFocus,
+  onCancelButtonPress,
+  onSearchButtonPress,
+}: Props) =>
+  <RNSearchBar
+    ref={ref => {
+      this.searchBar = ref;
+    }}
+    textColor={textColor}
+    textFieldBackgroundColor={textFieldBackgroundColor}
+    showsCancelButton={showsCancelButton}
+    placeholder={placeholder}
+    onFocus={onFocus}
+    onCancelButtonPress={() => {
+      if (typeof onCancelButtonPress === 'function') {
+        onCancelButtonPress();
+      }
+      this.searchBar.unFocus();
+    }}
+    onSearchButtonPress={text => {
+      if (typeof onSearchButtonPress === 'function') {
+        onSearchButtonPress(text);
+      }
+      this.searchBar.unFocus();
+    }}
+    hideBackground
+  />;
 
-  render() {
-    const {
-      textColor,
-      textFieldBackgroundColor,
-      showsCancelButton,
-      placeholder,
-      onFocus,
-      onCancelButtonPress,
-      onSearchButtonPress,
-    } = this.props;
-
-    return (
-      <RNSearchBar
-        ref={ref => {
-          this.searchBar = ref;
-        }}
-        textColor={textColor}
-        textFieldBackgroundColor={textFieldBackgroundColor}
-        showsCancelButton={showsCancelButton}
-        placeholder={placeholder}
-        onFocus={onFocus}
-        onCancelButtonPress={() => {
-          if (typeof onCancelButtonPress === 'function') {
-            onCancelButtonPress();
-          }
-          this.searchBar.unFocus();
-        }}
-        onSearchButtonPress={text => {
-          if (typeof onSearchButtonPress === 'function') {
-            onSearchButtonPress(text);
-          }
-          this.searchBar.unFocus();
-        }}
-        hideBackground
-      />
-    );
-  }
-}
+SearchBar.defaultProps = {
+  textColor: '',
+  textFieldBackgroundColor: '',
+  showsCancelButton: false,
+  placeholder: '',
+};

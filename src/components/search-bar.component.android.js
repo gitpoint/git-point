@@ -1,5 +1,15 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import MDSearchBar from 'react-native-material-design-searchbar';
+
+type Props = {
+  textColor?: string,
+  textFieldBackgroundColor?: string,
+  showsCancelButton?: boolean,
+  placeholder?: string,
+  onFocus: Function,
+  onCancelButtonPress: Function,
+  onSearchButtonPress: Function,
+};
 
 export const SearchBar = ({
   textColor,
@@ -9,7 +19,7 @@ export const SearchBar = ({
   onFocus,
   onCancelButtonPress,
   onSearchButtonPress,
-}) =>
+}: Props) =>
   <MDSearchBar
     textStyle={textColor ? { color: textColor } : null}
     inputStyle={
@@ -32,18 +42,9 @@ export const SearchBar = ({
     returnKeyType="search"
   />;
 
-SearchBar.propTypes = {
-  textColor: PropTypes.string,
-  textFieldBackgroundColor: PropTypes.string,
-  showsCancelButton: PropTypes.boolean,
-  placeholder: PropTypes.string.isRequired,
-  onFocus: PropTypes.func.isRequired,
-  onCancelButtonPress: PropTypes.func.isRequired,
-  onSearchButtonPress: PropTypes.func.isRequired,
-};
-
 SearchBar.defaultProps = {
   textColor: undefined,
   textFieldBackgroundColor: undefined,
   showsCancelButton: false,
+  placeholder: '',
 };
