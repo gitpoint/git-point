@@ -34,7 +34,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new ReactNativeConfigPackage(),
-            new CodePush(null, getApplicationContext(), BuildConfig.DEBUG),
+            new CodePush(BuildConfig.CODEPUSH_ANDROID_DEPLOYMENT_KEY, MainApplication.this, BuildConfig.DEBUG),
             new RNDeviceInfo(),
             new VectorIconsPackage()
       );
