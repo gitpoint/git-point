@@ -112,25 +112,22 @@ class Profile extends Component {
 
   checkForUpdate = () => {
     if (__DEV__) {
-      return this.setState({ updateText: updateText.notApplicable });
+      this.setState({ updateText: updateText.notApplicable });
+    } else {
+      this.setState({ updateText: updateText.checking });
+      codePush
+        .sync({
+          updateDialog: true,
+          installMode: codePush.InstallMode.IMMEDIATE,
+        })
+        .then(update => {
+          if (!update) {
+            this.setState({ updateText: updateText.updated });
+          } else {
+            this.setState({ updateText: updateText.available });
+          }
+        });
     }
-
-    this.setState({ updateText: updateText.checking });
-
-    codePush
-      .sync({
-        updateDialog: true,
-        installMode: codePush.InstallMode.IMMEDIATE,
-      })
-      .then(update => {
-        if (!update) {
-          this.setState({ updateText: updateText.updated });
-        } else {
-          this.setState({ updateText: updateText.available });
-        }
-      });
-
-    return true;
   };
 
   render() {
