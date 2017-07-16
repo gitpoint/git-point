@@ -56,6 +56,8 @@
     "redux-logger": "^2.7.4",
     "redux-persist": "^4.3.1",
     "redux-persist-transform-encrypt": "^1.0.2",
+    "remote-redux-devtools": "^0.5.12",
+    "remote-redux-devtools-on-debugger": "^0.7.1",
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
@@ -76,8 +78,6 @@
     "eslint-plugin-react-native": "^2.3.2",
     "flow-bin": "^0.47.0",
     "jest": "18.1.0",
-    "remote-redux-devtools": "^0.5.12",
-    "remote-redux-devtools-on-debugger": "^0.7.1",
     "lint-staged": "^3.2.6",
     "pre-commit": "^1.2.2",
     "prettier": "^1.3.1",
