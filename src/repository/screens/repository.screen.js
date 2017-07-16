@@ -17,7 +17,7 @@ import {
   LoadingMembersList,
   LoadingModal,
 } from 'components';
-import { colors } from 'config';
+import { colors, fonts } from 'config';
 import {
   getRepositoryInfo,
   getContributors,
@@ -52,7 +52,7 @@ const mapDispatchToProps = dispatch => ({
 const styles = StyleSheet.create({
   listTitle: {
     color: colors.black,
-    fontFamily: 'AvenirNext-Medium',
+    ...fonts.fontPrimary,
   },
 });
 

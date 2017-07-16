@@ -9,7 +9,7 @@ import {
   Image,
 } from 'react-native';
 
-import { colors } from 'config';
+import { colors, fonts } from 'config';
 
 type Props = {
   title: string,
@@ -35,12 +35,12 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     color: colors.black,
-    fontFamily: 'AvenirNext-Bold',
+    ...fonts.fontPrimaryBold,
     marginBottom: 10,
   },
   sectionTitleSmall: {
     color: colors.primarydark,
-    fontFamily: 'AvenirNext-DemiBold',
+    ...fonts.fontPrimarySemiBold,
     marginBottom: 10,
   },
 });

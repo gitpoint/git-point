@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Animated } from 'react-native';
 
-import { colors } from 'config';
+import { colors, fonts } from 'config';
 import { loadingAnimation } from 'utils';
 
 const styles = StyleSheet.create({
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     color: colors.black,
-    fontFamily: 'AvenirNext-Bold',
+    ...fonts.fontPrimaryBold,
     marginBottom: 10,
   },
 });

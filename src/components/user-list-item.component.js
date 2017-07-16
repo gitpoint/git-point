@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-import { colors, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 
 type Props = {
   user: Object,
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.black,
-    fontFamily: 'AvenirNext-Medium',
+    ...fonts.fontPrimary,
     fontSize: normalize(14),
     marginLeft: 10,
   },
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     color: colors.greyDark,
     fontSize: normalize(10),
     marginTop: 1,
-    fontWeight: '600',
+    ...fonts.fontPrimarySemiBold,
     marginLeft: 10,
   },
   iconContainer: {

@@ -6,7 +6,7 @@ import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import moment from 'moment';
 
-import { colors, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 
 const styles = StyleSheet.create({
   container: {
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   linkDescription: {
-    fontFamily: 'AvenirNext-DemiBold',
+    ...fonts.fontPrimarySemiBold,
     color: colors.primaryDark,
   },
   date: {
@@ -53,23 +53,23 @@ const styles = StyleSheet.create({
   },
   commentText: {
     color: colors.primaryDark,
-    fontFamily: 'AvenirNext-Regular',
+    ...fonts.fontPrimaryLight,
   },
   commentTextNone: {
     color: colors.primaryDark,
-    fontFamily: 'AvenirNext-Regular',
+    ...fonts.fontPrimaryLight,
     fontStyle: 'italic',
   },
 });
 
 const textStyle = {
   color: colors.primaryDark,
-  fontFamily: 'AvenirNext-Regular',
+  ...fonts.fontPrimaryLight,
 };
 
 const linkStyle = {
   color: colors.primaryDark,
-  fontFamily: 'AvenirNext-DemiBold',
+  ...fonts.fontPrimarySemiBold,
 };
 
 const commentStyles = StyleSheet.create({
@@ -122,7 +122,7 @@ export class CommentListItem extends Component {
             <Text
               style={{
                 color: colors.greyBlue,
-                fontFamily: 'AvenirNext-Regular',
+                ...fonts.fontPrimaryLight,
               }}
             >
               {defaultRenderer(node.children, parent)}
@@ -141,7 +141,7 @@ export class CommentListItem extends Component {
           <Text
             key={index}
             style={{
-              fontFamily: 'Menlo',
+              ...fonts.fontCode,
               backgroundColor: colors.greyMidLight,
               fontSize: normalize(11),
               margin: node.parent.name === 'pre' ? 12 : 3,
@@ -167,7 +167,7 @@ export class CommentListItem extends Component {
             <Text
               style={{
                 color: colors.primaryDark,
-                fontFamily: 'AvenirNext-DemiBold',
+                ...fonts.fontPrimarySemiBold,
                 fontSize:
                   node.name === 'h1'
                     ? normalize(24)
@@ -184,8 +184,7 @@ export class CommentListItem extends Component {
           <Text
             key={index}
             style={{
-              fontFamily: 'AvenirNext-DemiBold',
-              fontWeight: '600',
+              ...fonts.fontPrimarySemiBold,
               color: colors.primaryDark,
             }}
             onPress={() => onLinkPress(node)}

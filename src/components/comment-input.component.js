@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-import { colors, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 
 const styles = StyleSheet.create({
   container: {
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     marginRight: 5,
     color: colors.black,
-    fontFamily: 'AvenirNext-Regular',
+    ...fonts.fontPrimaryLight,
   },
   postButtonContainer: {
     flex: 0.15,
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   postButton: {
     fontSize: normalize(12),
     letterSpacing: 1,
-    fontFamily: 'AvenirNext-DemiBold',
+    ...fonts.fontPrimarySemiBold,
   },
   postButtonDisabled: {
     color: colors.grey,

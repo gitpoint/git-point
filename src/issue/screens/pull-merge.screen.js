@@ -5,7 +5,7 @@ import { ListItem, Icon } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
 
 import { ViewContainer, SectionList } from 'components';
-import { colors, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 import { mergePullRequest } from '../issue.action';
 
 const mapStateToProps = state => ({
@@ -36,18 +36,18 @@ const mapDispatchToProps = dispatch => ({
 const styles = StyleSheet.create({
   listItemTitle: {
     color: colors.black,
-    fontFamily: 'AvenirNext-Medium',
+    ...fonts.fontPrimary,
   },
   textInput: {
     fontSize: normalize(12),
     marginHorizontal: 15,
     flex: 1,
     color: colors.black,
-    fontFamily: 'AvenirNext-Regular',
+    ...fonts.fontPrimaryLight,
   },
   mergeActionTitle: {
     color: colors.green,
-    fontFamily: 'AvenirNext-Medium',
+    ...fonts.fontPrimary,
   },
   mergeListItemContainer: {
     flexDirection: 'row',

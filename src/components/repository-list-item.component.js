@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { ListItem, Icon } from 'react-native-elements';
 
 import { emojifyText } from 'utils';
-import { colors, languageColors, normalize } from 'config';
+import { colors, languageColors, fonts, normalize } from 'config';
 
 type Props = {
   repository: Object,
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.primarydark,
-    fontFamily: 'AvenirNext-DemiBold',
+    ...fonts.fontPrimarySemiBold,
   },
   private: {
     borderColor: 'rgba(27, 31, 35, 0.15)',
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   },
   description: {
     color: colors.primaryDark,
-    fontFamily: 'AvenirNext-Regular',
+    ...fonts.fontPrimaryLight,
   },
   extraInfo: {
     flexDirection: 'row',
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     paddingLeft: 3,
     marginRight: 15,
     fontSize: normalize(10),
-    fontFamily: 'AvenirNext-Medium',
+    ...fonts.fontPrimary,
   },
   repositoryContainer: {
     justifyContent: 'center',
