@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/gitpoint/git-point.svg?branch=master)](https://travis-ci.org/gitpoint/git-point)
 [![All Contributors](https://img.shields.io/badge/all_contributors-15-orange.svg?style=flat-square)](#contributors)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/git-point)
 
 <p align="center">
   <a href="https://gitpoint.co/">
@@ -46,6 +47,8 @@ View repository and user information, control your notifications and even manage
 ## Feedback/Contributing
 
 Feel free to send me feedback on [twitter](https://twitter.com/hdjirdeh) or [file an issue](https://github.com/housseindjirdeh/git-point/issues/new). Feature requests are always welcome. If you wish to contribute, please take a quick look at the [guidelines](./CONTRIBUTING.md)!
+
+Also, if there's anything you'd like to chat about, please feel free to join our [gitter chat](https://gitter.im/git-point)!
 
 ## Build process
 
