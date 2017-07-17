@@ -2,11 +2,26 @@
 /* eslint-disable no-nested-ternary */
 
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  Platform,
+} from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import moment from 'moment';
 
 import { colors, fonts, normalize } from 'config';
+
+const lightFont = {
+  ...fonts.fontPrimaryLight,
+};
+
+const regularFont = {
+  ...fonts.fontPrimary,
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -20,8 +35,13 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     alignItems: 'center',
   },
-  avatar: {
+  avatarContainer: {
     backgroundColor: colors.greyLight,
+    borderRadius: 17,
+    width: 34,
+    height: 34,
+  },
+  avatar: {
     width: 34,
     height: 34,
     borderRadius: 17,
@@ -52,20 +72,34 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   commentText: {
+    fontSize: Platform.OS === 'ios' ? normalize(11) : normalize(12),
     color: colors.primaryDark,
-    ...fonts.fontPrimaryLight,
   },
   commentTextNone: {
     color: colors.primaryDark,
-    ...fonts.fontPrimaryLight,
     fontStyle: 'italic',
+  },
+  commentLight: {
+    ...lightFont,
+  },
+  commentRegular: {
+    ...regularFont,
   },
 });
 
-const textStyle = {
+const textStyleLight = {
+  fontSize: Platform.OS === 'ios' ? normalize(11) : normalize(12),
   color: colors.primaryDark,
-  ...fonts.fontPrimaryLight,
+  ...lightFont,
 };
+
+const textStyleRegular = {
+  fontSize: Platform.OS === 'ios' ? normalize(11) : normalize(12),
+  color: colors.primaryDark,
+  ...regularFont,
+};
+
+const textStyle = Platform.OS === 'ios' ? textStyleLight : textStyleRegular;
 
 const linkStyle = {
   color: colors.primaryDark,
@@ -94,17 +128,17 @@ export class CommentListItem extends Component {
     const { comment, navigation } = this.props;
     const commentBodyAdjusted = () =>
       comment.body_html
-        .replace(new RegExp(/<img[^>]*>/, 'g'), 'Image')
-        .replace(new RegExp(/<ul>[\n]*?<li>/, 'g'), '<ul><li>')
-        .replace(new RegExp(/<\/li>[\n]*?<\/ul>/, 'g'), '</li></ul>')
-        .replace(new RegExp(/<ol>[\n]*?<li>/, 'g'), '<ol><li>')
-        .replace(new RegExp(/<\/li>[\n]*?<\/ol>/, 'g'), '</li></ol>')
-        .replace(new RegExp(/<li>[\n]*?<p>/, 'g'), '<li><span>')
-        .replace(new RegExp(/<\/h1>[\n]*?<p>/, 'g'), '</h1><span>')
-        .replace(new RegExp(/<\/h2>[\n]*?<p>/, 'g'), '</h2><span>')
-        .replace(new RegExp(/<\/h3>[\n]*?<p>/, 'g'), '</h3><span>')
-        .replace(new RegExp(/<p>*>/, 'g'), '<span>')
-        .replace(new RegExp(/<\/p>*>/, 'g'), '</span>');
+        .replace(new RegExp(/<img[^>]*>/g), 'Image')
+        .replace(new RegExp(/<ul>[\n]*?<li>/g), '<ul><li>')
+        .replace(new RegExp(/<\/li>[\n]*?<\/ul>/g), '</li></ul>')
+        .replace(new RegExp(/<ol>[\n]*?<li>/g), '<ol><li>')
+        .replace(new RegExp(/<\/li>[\n]*?<\/ol>/g), '</li></ol>')
+        .replace(new RegExp(/<li>[\n]*?<p>/g), '<li><span>')
+        .replace(new RegExp(/<\/h1>[\n]*?<p>/g), '</h1><span>')
+        .replace(new RegExp(/<\/h2>[\n]*?<p>/g), '</h2><span>')
+        .replace(new RegExp(/<\/h3>[\n]*?<p>/g), '</h3><span>')
+        .replace(new RegExp(/<p>*>/g), '<span>')
+        .replace(new RegExp(/<\/p>*>/g), '</span>');
 
     const myDomElement = (node, index, siblings, parent, defaultRenderer) => {
       const onLinkPress = this.props.onLinkPress;
@@ -206,6 +240,7 @@ export class CommentListItem extends Component {
         <View style={styles.header}>
           {comment.user &&
             <TouchableOpacity
+              style={styles.avatarContainer}
               onPress={() =>
                 navigation.navigate('Profile', {
                   user: comment.user,
@@ -253,14 +288,30 @@ export class CommentListItem extends Component {
             {comment.body &&
               comment.body !== '' &&
               !comment.body_html &&
-              <Text style={styles.commentText}>
+              <Text
+                style={[
+                  styles.commentText,
+                  Platform.OS === 'ios'
+                    ? styles.commentLight
+                    : styles.commentRegular,
+                ]}
+              >
                 {comment.body}
               </Text>}
           </View>}
 
         {!commentPresent &&
           <View style={styles.commentContainer}>
-            <Text style={styles.commentTextNone}>No description provided.</Text>
+            <Text
+              style={[
+                styles.commentTextNone,
+                Platform.OS === 'ios'
+                  ? styles.commentLight
+                  : styles.commentRegular,
+              ]}
+            >
+              No description provided.
+            </Text>
           </View>}
       </View>
     );

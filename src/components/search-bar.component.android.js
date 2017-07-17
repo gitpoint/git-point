@@ -1,4 +1,5 @@
 import React from 'react';
+import { StyleSheet } from 'react-native';
 import MDSearchBar from 'react-native-material-design-searchbar';
 
 type Props = {
@@ -11,6 +12,14 @@ type Props = {
   onSearchButtonPress: Function,
 };
 
+const styles = StyleSheet.create({
+  textInput: {
+    borderWidth: 0,
+    borderRadius: 5,
+    marginHorizontal: 5,
+  },
+});
+
 export const SearchBar = ({
   textColor,
   textFieldBackgroundColor,
@@ -22,11 +31,12 @@ export const SearchBar = ({
 }: Props) =>
   <MDSearchBar
     textStyle={textColor ? { color: textColor } : null}
-    inputStyle={
+    inputStyle={[
+      styles.textInput,
       textFieldBackgroundColor
         ? { backgroundColor: textFieldBackgroundColor }
-        : null
-    }
+        : null,
+    ]}
     alwaysShowBackButton={showsCancelButton}
     placeholder={placeholder}
     onFocus={onFocus}
@@ -37,7 +47,7 @@ export const SearchBar = ({
         onSearchButtonPress(event.nativeEvent.text);
       }
     }}
-    height={50}
+    height={40}
     autoCorrect={false}
     returnKeyType="search"
   />;

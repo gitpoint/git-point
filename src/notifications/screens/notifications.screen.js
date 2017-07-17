@@ -9,6 +9,7 @@ import {
   Text,
   TouchableOpacity,
   Image,
+  Platform,
 } from 'react-native';
 import { ButtonGroup, Card, Icon } from 'react-native-elements';
 
@@ -51,7 +52,7 @@ const mapDispatchToProps = dispatch => ({
 const styles = StyleSheet.create({
   buttonGroupWrapper: {
     backgroundColor: colors.greyLight,
-    paddingTop: 28,
+    paddingTop: Platform.OS === 'ios' ? 28 : 15,
   },
   buttonGroupContainer: {
     height: 30,
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
     height: 26,
   },
   repositoryTitle: {
-    color: colors.primarydark,
+    color: colors.primaryDark,
     ...fonts.fontPrimarySemiBold,
     marginLeft: 10,
     flex: 1,

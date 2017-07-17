@@ -95,6 +95,7 @@ export class CommentInput extends Component {
 
           {userCanPost &&
             <TextInput
+              underlineColorAndroid={'transparent'}
               placeholder={
                 issueLocked && userHasPushPermission
                   ? 'Locked, but you can still comment...'
