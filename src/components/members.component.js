@@ -6,26 +6,55 @@ import {
   Text,
   FlatList,
   TouchableHighlight,
-  Image
+  Image,
 } from 'react-native';
 
-import { colors } from 'config';
+import { colors, fonts } from 'config';
 
 type Props = {
   title: string,
   members: Array,
   containerStyle: Object,
   smallTitle: string,
-  navigation: Object
+  navigation: Object,
 };
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 15,
+    padding: 15,
+  },
+  avatarContainer: {
+    backgroundColor: colors.greyLight,
+    borderRadius: 15,
+    width: 30,
+    height: 30,
+    marginRight: 5,
+  },
+  avatar: {
+    borderRadius: 15,
+    height: 30,
+    width: 30,
+  },
+  sectionTitle: {
+    color: colors.black,
+    ...fonts.fontPrimaryBold,
+    marginBottom: 10,
+  },
+  sectionTitleSmall: {
+    color: colors.primaryDark,
+    ...fonts.fontPrimarySemiBold,
+    marginBottom: 10,
+  },
+});
 
 export const MembersList = ({
   title,
   members,
   containerStyle,
   smallTitle,
-  navigation
-}: Props) => (
+  navigation,
+}: Props) =>
   <View style={[styles.container, containerStyle && containerStyle]}>
     <Text style={smallTitle ? styles.sectionTitleSmall : styles.sectionTitle}>
       {title}
@@ -34,53 +63,23 @@ export const MembersList = ({
     <FlatList
       data={members}
       showsHorizontalScrollIndicator={false}
-      renderItem={({ item }) => (
+      renderItem={({ item }) =>
         <TouchableHighlight
           onPress={() =>
             navigation.navigate('Profile', {
-              user: item
+              user: item,
             })}
           underlayColor="transparent"
           style={styles.avatarContainer}
         >
-          <View style={styles.avatarContainer}>
-            <Image
-              style={styles.avatar}
-              source={{
-                uri: item.avatar_url
-              }}
-            />
-          </View>
-        </TouchableHighlight>
-      )}
+          <Image
+            style={styles.avatar}
+            source={{
+              uri: item.avatar_url,
+            }}
+          />
+        </TouchableHighlight>}
       keyExtractor={item => item.id}
-      horizontal={true}
+      horizontal
     />
-  </View>
-);
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 15,
-    padding: 15
-  },
-  avatarContainer: {
-    marginRight: 5
-  },
-  avatar: {
-    backgroundColor: colors.greyLight,
-    borderRadius: 15,
-    height: 30,
-    width: 30
-  },
-  sectionTitle: {
-    color: colors.black,
-    fontFamily: 'AvenirNext-Bold',
-    marginBottom: 10
-  },
-  sectionTitleSmall: {
-    color: colors.primarydark,
-    fontFamily: 'AvenirNext-DemiBold',
-    marginBottom: 10
-  }
-});
+  </View>;

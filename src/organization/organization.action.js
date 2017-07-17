@@ -1,12 +1,7 @@
-import {
-  GET_ORG,
-  GET_ORG_REPOS,
-  GET_ORG_MEMBERS
-} from "./organization.type";
-
 import { fetchOrg, fetchOrgMembers, fetchUrl } from 'api';
+import { GET_ORG, GET_ORG_REPOS, GET_ORG_MEMBERS } from './organization.type';
 
-export const getOrg = (orgName) => {
+export const getOrg = orgName => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 
@@ -23,12 +18,12 @@ export const getOrg = (orgName) => {
         dispatch({
           type: GET_ORG.ERROR,
           payload: error,
-        })
-      })
+        });
+      });
   };
 };
 
-export const getOrgRepos = (url) => {
+export const getOrgRepos = url => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 
@@ -45,12 +40,12 @@ export const getOrgRepos = (url) => {
         dispatch({
           type: GET_ORG_REPOS.ERROR,
           payload: error,
-        })
-      })
+        });
+      });
   };
 };
 
-export const getOrgMembers = (orgName) => {
+export const getOrgMembers = orgName => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 
@@ -67,7 +62,7 @@ export const getOrgMembers = (orgName) => {
         dispatch({
           type: GET_ORG_MEMBERS.ERROR,
           payload: error,
-        })
-      })
+        });
+      });
   };
 };

@@ -71,7 +71,8 @@
       "avatar_url": "https://avatars0.githubusercontent.com/u/464978?v=3",
       "profile": "http://co.linkedin.com/in/alejandronanez/",
       "contributions": [
-        "code"
+        "code",
+        "review"
       ]
     },
     {
@@ -79,6 +80,69 @@
       "name": "Patrick Wang",
       "avatar_url": "https://avatars3.githubusercontent.com/u/3055294?v=3",
       "profile": "https://patw.me",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "mikekavouras",
+      "name": "Mike Kavouras",
+      "avatar_url": "https://avatars5.githubusercontent.com/u/627794?v=4",
+      "profile": "https://github.com/mikekavouras",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "peterlazar1993",
+      "name": "Peter Lazar",
+      "avatar_url": "https://avatars4.githubusercontent.com/u/4848554?v=4",
+      "profile": "https://github.com/peterlazar1993",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "junedomingo",
+      "name": "June Domingo",
+      "avatar_url": "https://avatars6.githubusercontent.com/u/5106887?v=4",
+      "profile": "https://github.com/junedomingo",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Antoine38660",
+      "name": "Antoine",
+      "avatar_url": "https://avatars7.githubusercontent.com/u/9287184?v=4",
+      "profile": "http://www.jaaccelere.com",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "wsdjeg",
+      "name": "Wang Shidong",
+      "avatar_url": "https://avatars6.githubusercontent.com/u/13142418?v=4",
+      "profile": "https://wsdjeg.github.io",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "swapnilmj",
+      "name": "Swapnil Joshi",
+      "avatar_url": "https://avatars4.githubusercontent.com/u/2190589?v=4",
+      "profile": "http://swapnilmj.users.sourceforge.net/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "RolfKoenders",
+      "name": "Rolf Koenders",
+      "avatar_url": "https://avatars5.githubusercontent.com/u/408959?v=4",
+      "profile": "https://github.com/RolfKoenders",
       "contributions": [
         "code"
       ]

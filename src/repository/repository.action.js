@@ -1,49 +1,29 @@
 import {
-  GET_REPOSITORY,
-  GET_REPOSITORY_CONTRIBUTORS,
-  GET_REPOSITORY_CONTENTS,
-  GET_REPOSITORY_FILE,
-  GET_REPOSITORY_ISSUES,
-  GET_REPO_STARRED_STATUS,
-  CHANGE_STAR_STATUS,
-  GET_REPOSITORY_README,
-  GET_REPOSITORY_LABELS,
-  SEARCH_OPEN_ISSUES,
-  SEARCH_CLOSED_ISSUES,
-  SEARCH_OPEN_PULLS,
-  SEARCH_CLOSED_PULLS
-} from "./repository.type";
-
-import {
   fetchUrl,
   fetchUrlNormal,
   fetchUrlFile,
   fetchCommentHTML,
   fetchReadMe,
   fetchSearch,
-  fetchChangeStarStatusRepo
-} from "api";
-
-export const getRepositoryInfo = url => {
-  return (dispatch, getState) => {
-    return dispatch(getRepository(url)).then(() => {
-      const repo = getState().repository.repository;
-      const contributorsUrl = getState().repository.repository.contributors_url;
-      const issuesUrl = getState().repository.repository.issues_url.replace(
-        "{/number}",
-        "?state=all&per_page=100"
-      );
-
-      dispatch(getContributors(contributorsUrl));
-      dispatch(getIssues(issuesUrl));
-      dispatch(
-        checkRepoStarred(
-          `https://api.github.com/user/starred/${repo.owner.login}/${repo.name}`
-        )
-      );
-    });
-  };
-};
+  fetchChangeStarStatusRepo,
+  fetchForkRepo,
+} from 'api';
+import {
+  GET_REPOSITORY,
+  GET_REPOSITORY_CONTRIBUTORS,
+  GET_REPOSITORY_CONTENTS,
+  GET_REPOSITORY_FILE,
+  GET_REPOSITORY_ISSUES,
+  GET_REPO_STARRED_STATUS,
+  FORK_REPO_STATUS,
+  CHANGE_STAR_STATUS,
+  GET_REPOSITORY_README,
+  GET_REPOSITORY_LABELS,
+  SEARCH_OPEN_ISSUES,
+  SEARCH_CLOSED_ISSUES,
+  SEARCH_OPEN_PULLS,
+  SEARCH_CLOSED_PULLS,
+} from './repository.type';
 
 export const getRepository = url => {
   return (dispatch, getState) => {
@@ -55,13 +35,13 @@ export const getRepository = url => {
       .then(data => {
         dispatch({
           type: GET_REPOSITORY.SUCCESS,
-          payload: data
+          payload: data,
         });
       })
       .catch(error => {
         dispatch({
           type: GET_REPOSITORY.ERROR,
-          payload: error
+          payload: error,
         });
       });
   };
@@ -77,13 +57,13 @@ export const getContributors = url => {
       .then(data => {
         dispatch({
           type: GET_REPOSITORY_CONTRIBUTORS.SUCCESS,
-          payload: data
+          payload: data,
         });
       })
       .catch(error => {
         dispatch({
           type: GET_REPOSITORY_CONTRIBUTORS.ERROR,
-          payload: error
+          payload: error,
         });
       });
   };
@@ -100,13 +80,13 @@ export const getContents = (url, level) => {
         dispatch({
           type: GET_REPOSITORY_CONTENTS.SUCCESS,
           results: data,
-          level: level
+          level,
         });
       })
       .catch(error => {
         dispatch({
           type: GET_REPOSITORY_CONTENTS.ERROR,
-          payload: error
+          payload: error,
         });
       });
   };
@@ -122,13 +102,13 @@ export const getRepositoryFile = url => {
       .then(data => {
         dispatch({
           type: GET_REPOSITORY_FILE.SUCCESS,
-          payload: data
+          payload: data,
         });
       })
       .catch(error => {
         dispatch({
           type: GET_REPOSITORY_FILE.ERROR,
-          payload: error
+          payload: error,
         });
       });
   };
@@ -144,13 +124,13 @@ export const getIssues = url => {
       .then(data => {
         dispatch({
           type: GET_REPOSITORY_ISSUES.SUCCESS,
-          payload: data
+          payload: data,
         });
       })
       .catch(error => {
         dispatch({
           type: GET_REPOSITORY_ISSUES.ERROR,
-          payload: error
+          payload: error,
         });
       });
   };
@@ -166,15 +146,36 @@ export const checkRepoStarred = url => {
       .then(data => {
         dispatch({
           type: GET_REPO_STARRED_STATUS.SUCCESS,
-          payload: data.status === 404 ? false : true
+          payload: !(data.status === 404),
         });
       })
       .catch(error => {
         dispatch({
           type: GET_REPO_STARRED_STATUS.ERROR,
-          payload: error
+          payload: error,
         });
       });
+  };
+};
+
+export const getRepositoryInfo = url => {
+  return (dispatch, getState) => {
+    return dispatch(getRepository(url)).then(() => {
+      const repo = getState().repository.repository;
+      const contributorsUrl = getState().repository.repository.contributors_url;
+      const issuesUrl = getState().repository.repository.issues_url.replace(
+        '{/number}',
+        '?state=all&per_page=100'
+      );
+
+      dispatch(getContributors(contributorsUrl));
+      dispatch(getIssues(issuesUrl));
+      dispatch(
+        checkRepoStarred(
+          `https://api.github.com/user/starred/${repo.owner.login}/${repo.name}`
+        )
+      );
+    });
   };
 };
 
@@ -188,13 +189,40 @@ export const changeStarStatusRepo = (owner, repo, starred) => {
       .then(() => {
         dispatch({
           type: CHANGE_STAR_STATUS.SUCCESS,
-          payload: !starred
+          payload: !starred,
         });
       })
       .catch(error => {
         dispatch({
           type: CHANGE_STAR_STATUS.ERROR,
-          payload: error
+          payload: error,
+        });
+      });
+  };
+};
+
+export const forkRepo = (owner, repo) => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: FORK_REPO_STATUS.PENDING });
+
+    return fetchForkRepo(owner, repo, accessToken)
+      .then(data => {
+        return data.json();
+      })
+      .then(json => {
+        dispatch({
+          type: FORK_REPO_STATUS.SUCCESS,
+          payload: true,
+        });
+
+        return json;
+      })
+      .catch(error => {
+        dispatch({
+          type: FORK_REPO_STATUS.ERROR,
+          payload: error,
         });
       });
   };
@@ -210,13 +238,13 @@ export const getReadMe = (user, repository) => {
       .then(data => {
         dispatch({
           type: GET_REPOSITORY_README.SUCCESS,
-          payload: data
+          payload: data,
         });
       })
       .catch(error => {
         dispatch({
           type: GET_REPOSITORY_README.ERROR,
-          payload: error
+          payload: error,
         });
       });
   };
@@ -232,13 +260,13 @@ export const getLabels = url => {
       .then(data => {
         dispatch({
           type: GET_REPOSITORY_LABELS.SUCCESS,
-          payload: data
+          payload: data,
         });
       })
       .catch(error => {
         dispatch({
           type: GET_REPOSITORY_LABELS.ERROR,
-          payload: error
+          payload: error,
         });
       });
   };
@@ -251,7 +279,7 @@ export const searchOpenRepoIssues = (query, repoFullName) => {
     dispatch({ type: SEARCH_OPEN_ISSUES.PENDING });
 
     return fetchSearch(
-      "issues",
+      'issues',
       query,
       accessToken,
       `+repo:${repoFullName}+type:issue+state:open&sort=created`
@@ -259,13 +287,13 @@ export const searchOpenRepoIssues = (query, repoFullName) => {
       .then(data => {
         dispatch({
           type: SEARCH_OPEN_ISSUES.SUCCESS,
-          payload: data.items
+          payload: data.items,
         });
       })
       .catch(error => {
         dispatch({
           type: SEARCH_OPEN_ISSUES.ERROR,
-          payload: error
+          payload: error,
         });
       });
   };
@@ -278,7 +306,7 @@ export const searchClosedRepoIssues = (query, repoFullName) => {
     dispatch({ type: SEARCH_CLOSED_ISSUES.PENDING });
 
     return fetchSearch(
-      "issues",
+      'issues',
       query,
       accessToken,
       `+repo:${repoFullName}+type:issue+state:closed&sort=created`
@@ -286,13 +314,13 @@ export const searchClosedRepoIssues = (query, repoFullName) => {
       .then(data => {
         dispatch({
           type: SEARCH_CLOSED_ISSUES.SUCCESS,
-          payload: data.items
+          payload: data.items,
         });
       })
       .catch(error => {
         dispatch({
           type: SEARCH_CLOSED_ISSUES.ERROR,
-          payload: error
+          payload: error,
         });
       });
   };
@@ -305,7 +333,7 @@ export const searchOpenRepoPulls = (query, repoFullName) => {
     dispatch({ type: SEARCH_OPEN_PULLS.PENDING });
 
     return fetchSearch(
-      "issues",
+      'issues',
       query,
       accessToken,
       `+repo:${repoFullName}+type:pr+state:open&sort=created`
@@ -313,13 +341,13 @@ export const searchOpenRepoPulls = (query, repoFullName) => {
       .then(data => {
         dispatch({
           type: SEARCH_OPEN_PULLS.SUCCESS,
-          payload: data.items
+          payload: data.items,
         });
       })
       .catch(error => {
         dispatch({
           type: SEARCH_OPEN_PULLS.ERROR,
-          payload: error
+          payload: error,
         });
       });
   };
@@ -332,7 +360,7 @@ export const searchClosedRepoPulls = (query, repoFullName) => {
     dispatch({ type: SEARCH_CLOSED_PULLS.PENDING });
 
     return fetchSearch(
-      "issues",
+      'issues',
       query,
       accessToken,
       `+repo:${repoFullName}+type:pr+state:closed&sort=created`
@@ -340,13 +368,13 @@ export const searchClosedRepoPulls = (query, repoFullName) => {
       .then(data => {
         dispatch({
           type: SEARCH_CLOSED_PULLS.SUCCESS,
-          payload: data.items
+          payload: data.items,
         });
       })
       .catch(error => {
         dispatch({
           type: SEARCH_CLOSED_PULLS.ERROR,
-          payload: error
+          payload: error,
         });
       });
   };

@@ -1,48 +1,99 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, FlatList, Dimensions } from 'react-native';
+import { connect } from 'react-redux';
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  Dimensions,
+  Platform,
+} from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
-import SearchBar from 'react-native-search-bar';
 
 import {
   ViewContainer,
   RepositoryListItem,
   UserListItem,
-  LoadingContainer
+  LoadingContainer,
+  SearchBar,
 } from 'components';
-
-import { colors, normalize } from 'config';
-
-import { connect } from 'react-redux';
-import { searchRepos, searchUsers } from '../';
+import { colors, fonts, normalize } from 'config';
+import { searchRepos, searchUsers } from '../index';
 
 const mapStateToProps = state => ({
   users: state.search.users,
   repos: state.search.repos,
   isPendingSearchUsers: state.search.isPendingSearchUsers,
-  isPendingSearchRepos: state.search.isPendingSearchRepos
+  isPendingSearchRepos: state.search.isPendingSearchRepos,
 });
 
 const mapDispatchToProps = dispatch => ({
-  searchRepos: query => dispatch(searchRepos(query)),
-  searchUsers: query => dispatch(searchUsers(query))
+  searchReposByDispatch: query => dispatch(searchRepos(query)),
+  searchUsersByDispatch: query => dispatch(searchUsers(query)),
+});
+
+const styles = StyleSheet.create({
+  searchBarWrapper: {
+    flexDirection: 'row',
+    marginTop: Platform.OS === 'ios' ? 20 : 10,
+  },
+  searchContainer: {
+    width: Dimensions.get('window').width,
+    backgroundColor: colors.white,
+    flex: 1,
+  },
+  list: {
+    marginTop: 0,
+  },
+  buttonGroupContainer: {
+    height: 30,
+  },
+  buttonGroupText: {
+    ...fonts.fontPrimaryBold,
+  },
+  buttonGroupTextSelected: {
+    color: colors.black,
+  },
+  loadingIndicatorContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  searchTitle: {
+    fontSize: normalize(18),
+    textAlign: 'center',
+    ...fonts.fontPrimary,
+  },
+  searchCancelButton: {
+    color: colors.black,
+  },
+  listContainer: {
+    borderTopColor: colors.greyLight,
+    borderTopWidth: 1,
+    marginBottom: 105,
+  },
 });
 
 class Search extends Component {
-  state: {
-    query: string,
-    searchType: number,
-    searchStart: boolean,
-    searchFocus: boolean
-  };
-
   props: {
-    searchRepos: Function,
-    searchUsers: Function,
+    searchReposByDispatch: Function,
+    searchUsersByDispatch: Function,
     users: Array,
     repos: Array,
     isPendingSearchUsers: boolean,
     isPendingSearchRepos: boolean,
-    navigation: Object
+    navigation: Object,
+  };
+
+  state: {
+    query: string,
+    searchType: number,
+    searchStart: boolean,
+    searchFocus: boolean,
   };
 
   constructor() {
@@ -52,7 +103,7 @@ class Search extends Component {
       query: '',
       searchType: 0,
       searchStart: false,
-      searchFocus: false
+      searchFocus: false,
     };
 
     this.switchQueryType = this.switchQueryType.bind(this);
@@ -61,31 +112,38 @@ class Search extends Component {
   }
 
   search(query, selectedType = null) {
-    const { searchRepos, searchUsers } = this.props;
+    const { searchReposByDispatch, searchUsersByDispatch } = this.props;
 
-    const selectedSearchType = selectedType !== null
-      ? selectedType
-      : this.state.searchType;
+    const selectedSearchType =
+      selectedType !== null ? selectedType : this.state.searchType;
 
     if (query !== '') {
       this.setState({
-        query: query,
-        searchStart: true
+        searchStart: true,
+        query,
       });
 
-      selectedSearchType === 0 ? searchRepos(query) : searchUsers(query);
+      if (selectedSearchType === 0) {
+        searchReposByDispatch(query);
+      } else {
+        searchUsersByDispatch(query);
+      }
     }
   }
 
   switchQueryType(selectedType) {
     if (this.state.searchType !== selectedType) {
       this.setState({
-        searchType: selectedType
+        searchType: selectedType,
       });
 
       this.search(this.state.query, selectedType);
     }
   }
+
+  keyExtractor = item => {
+    return item.id;
+  };
 
   renderItem = ({ item }) => {
     if (this.state.searchType === 0) {
@@ -95,9 +153,9 @@ class Search extends Component {
           navigation={this.props.navigation}
         />
       );
-    } else {
-      return <UserListItem user={item} navigation={this.props.navigation} />;
     }
+
+    return <UserListItem user={item} navigation={this.props.navigation} />;
   };
 
   render() {
@@ -105,7 +163,7 @@ class Search extends Component {
       users,
       repos,
       isPendingSearchUsers,
-      isPendingSearchRepos
+      isPendingSearchRepos,
     } = this.props;
     const { query, searchType, searchStart } = this.state;
     const noReposFound =
@@ -126,20 +184,16 @@ class Search extends Component {
           <View style={styles.searchBarWrapper}>
             <View style={styles.searchContainer}>
               <SearchBar
-                ref="searchBar"
-                hideBackground={true}
                 textColor={colors.primaryDark}
                 textFieldBackgroundColor={colors.greyLight}
                 showsCancelButton={this.state.searchFocus}
                 onFocus={() => this.setState({ searchFocus: true })}
-                onCancelButtonPress={() => {
-                  this.setState({ searchStart: false, query: '' });
-                  this.refs.searchBar.unFocus();
+                onCancelButtonPress={() =>
+                  this.setState({ searchStart: false, query: '' })}
+                onSearchButtonPress={text => {
+                  this.search(text);
                 }}
-                onSearchButtonPress={query => {
-                  this.search(query);
-                  this.refs.searchBar.unFocus();
-                }}
+                hideBackground
               />
             </View>
           </View>
@@ -193,9 +247,7 @@ class Search extends Component {
           repos.length === 0 &&
           searchType === 0 &&
           <View style={styles.textContainer}>
-            <Text style={styles.searchTitle}>
-              No repositories found :(
-            </Text>
+            <Text style={styles.searchTitle}>No repositories found :(</Text>
           </View>}
 
         {searchStart &&
@@ -203,61 +255,12 @@ class Search extends Component {
           users.length === 0 &&
           searchType === 1 &&
           <View style={styles.textContainer}>
-            <Text style={styles.searchTitle}>
-              No users found :(
-            </Text>
+            <Text style={styles.searchTitle}>No users found :(</Text>
           </View>}
       </ViewContainer>
     );
   }
-
-  keyExtractor = item => {
-    return item.id;
-  };
 }
-
-const styles = StyleSheet.create({
-  searchBarWrapper: {
-    flexDirection: 'row',
-    marginTop: 20
-  },
-  searchContainer: {
-    width: Dimensions.get('window').width,
-    backgroundColor: colors.white,
-    flex: 1
-  },
-  list: {
-    marginTop: 0
-  },
-  buttonGroupContainer: {
-    height: 30
-  },
-  buttonGroupText: {
-    fontFamily: 'AvenirNext-Bold'
-  },
-  buttonGroupTextSelected: {
-    color: colors.black
-  },
-  loadingIndicatorContainer: {
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  textContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  searchTitle: {
-    fontSize: normalize(18),
-    textAlign: 'center',
-    fontFamily: 'AvenirNext-Medium'
-  },
-  listContainer: {
-    borderTopColor: colors.greyLight,
-    borderTopWidth: 1,
-    marginBottom: 105
-  }
-});
 
 export const SearchScreen = connect(mapStateToProps, mapDispatchToProps)(
   Search

@@ -1,25 +1,18 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  ActivityIndicator,
-  ActionSheetIOS,
-  Dimensions,
-  View
-} from 'react-native';
+import { connect } from 'react-redux';
+import { StyleSheet, ActivityIndicator, Dimensions, View } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import ActionSheet from 'react-native-actionsheet';
+import Communications from 'react-native-communications';
 
 import {
   ViewContainer,
   UserProfile,
   SectionList,
   ParallaxScroll,
-  UserListItem
+  UserListItem,
 } from 'components';
-
-import { colors } from 'config';
-import Communications from 'react-native-communications';
-
-import { connect } from 'react-redux';
+import { colors, fonts } from 'config';
 import { getUserInfo, changeFollowStatus } from '../user.action';
 
 const mapStateToProps = state => ({
@@ -28,53 +21,62 @@ const mapStateToProps = state => ({
   isFollowing: state.user.isFollowing,
   isPendingUser: state.user.isPendingUser,
   isPendingOrgs: state.user.isPendingOrgs,
-  isPendingCheckFollowing: state.user.isPendingCheckFollowing
+  isPendingCheckFollowing: state.user.isPendingCheckFollowing,
 });
 
 const mapDispatchToProps = dispatch => ({
-  getUserInfo: user => dispatch(getUserInfo(user)),
-  changeFollowStatus: (user, isFollowing) =>
-    dispatch(changeFollowStatus(user, isFollowing))
+  getUserInfoByDispatch: user => dispatch(getUserInfo(user)),
+  changeFollowStatusByDispatch: (user, isFollowing) =>
+    dispatch(changeFollowStatus(user, isFollowing)),
+});
+
+const styles = StyleSheet.create({
+  listTitle: {
+    color: colors.black,
+    ...fonts.fontPrimary,
+  },
+  listSubTitle: {
+    color: colors.greyDark,
+    ...fonts.fontPrimary,
+  },
 });
 
 class Profile extends Component {
   props: {
-    getUserInfo: Function,
-    changeFollowStatus: Function,
+    getUserInfoByDispatch: Function,
+    changeFollowStatusByDispatch: Function,
     user: Object,
     orgs: Array,
     isFollowing: boolean,
     isPendingUser: boolean,
     isPendingOrgs: boolean,
     isPendingCheckFollowing: boolean,
-    navigation: Object
+    navigation: Object,
   };
 
   componentDidMount() {
-    this.props.getUserInfo(this.props.navigation.state.params.user.login);
-  }
-
-  getUserBlog(url) {
-    const prefix = 'http';
-    return url.substr(0, prefix.length) === prefix ? url : `http://${url}`;
-  }
-
-  showMenuActionSheet() {
-    const { user, isFollowing, changeFollowStatus } = this.props;
-    const userActions = [isFollowing ? 'Unfollow' : 'Follow'];
-    ActionSheetIOS.showActionSheetWithOptions(
-      {
-        title: 'User Actions',
-        options: [...userActions, 'Cancel'],
-        cancelButtonIndex: 1
-      },
-      buttonIndex => {
-        if (buttonIndex === 0) {
-          changeFollowStatus(user.login, isFollowing);
-        }
-      }
+    this.props.getUserInfoByDispatch(
+      this.props.navigation.state.params.user.login
     );
   }
+
+  getUserBlog = url => {
+    const prefix = 'http';
+
+    return url.substr(0, prefix.length) === prefix ? url : `http://${url}`;
+  };
+
+  showMenuActionSheet = () => {
+    this.ActionSheet.show();
+  };
+
+  handlePress = index => {
+    const { user, isFollowing, changeFollowStatusByDispatch } = this.props;
+
+    if (index === 0) {
+      changeFollowStatusByDispatch(user.login, isFollowing);
+    }
+  };
 
   render() {
     const {
@@ -84,16 +86,17 @@ class Profile extends Component {
       isPendingUser,
       isPendingOrgs,
       isPendingCheckFollowing,
-      navigation
+      navigation,
     } = this.props;
 
     const initialUser = navigation.state.params.user;
     const isPending = isPendingUser || isPendingOrgs;
+    const userActions = [isFollowing ? 'Unfollow' : 'Follow'];
 
     return (
       <ViewContainer>
         <ParallaxScroll
-          renderContent={() => (
+          renderContent={() =>
             <UserProfile
               type="user"
               initialUser={initialUser}
@@ -102,19 +105,17 @@ class Profile extends Component {
               }
               user={initialUser.login === user.login ? user : {}}
               navigation={navigation}
-            />
-          )}
+            />}
           stickyTitle={user.login}
           showMenu={
             !isPendingUser &&
-              !isPendingCheckFollowing &&
-              initialUser.login === user.login
+            !isPendingCheckFollowing &&
+            initialUser.login === user.login
           }
           menuAction={() => this.showMenuActionSheet()}
           navigateBack
           navigation={navigation}
         >
-
           {isPending &&
             <ActivityIndicator
               animating={isPending}
@@ -125,18 +126,15 @@ class Profile extends Component {
           {!isPending &&
             initialUser.login === user.login &&
             <View>
-              
-              {user.bio && user.bio !== '' &&
-                <SectionList
-                  title="BIO"
-                >
+              {user.bio &&
+                user.bio !== '' &&
+                <SectionList title="BIO">
                   <ListItem
                     subtitle={user.bio}
                     subtitleStyle={styles.listSubTitle}
                     hideChevron
                   />
-                </SectionList>
-              }
+                </SectionList>}
 
               <SectionList
                 title="EMAIL"
@@ -149,7 +147,7 @@ class Profile extends Component {
                   leftIcon={{
                     name: 'mail',
                     color: colors.grey,
-                    type: 'octicon'
+                    type: 'octicon',
                   }}
                   subtitle={user.email}
                   subtitleStyle={styles.listSubTitle}
@@ -170,7 +168,7 @@ class Profile extends Component {
                   leftIcon={{
                     name: 'link',
                     color: colors.grey,
-                    type: 'octicon'
+                    type: 'octicon',
                   }}
                   subtitle={user.blog}
                   subtitleStyle={styles.listSubTitle}
@@ -185,27 +183,30 @@ class Profile extends Component {
                 noItems={orgs.length === 0}
                 noItemsMessage={'No organizations'}
               >
-                {orgs.map((item, i) => (
-                  <UserListItem key={i} user={item} navigation={navigation} />
-                ))}
+                {orgs.map(item =>
+                  <UserListItem
+                    key={item.id}
+                    user={item}
+                    navigation={navigation}
+                  />
+                )}
               </SectionList>
             </View>}
         </ParallaxScroll>
+
+        <ActionSheet
+          ref={o => {
+            this.ActionSheet = o;
+          }}
+          title="User Actions"
+          options={[...userActions, 'Cancel']}
+          cancelButtonIndex={1}
+          onPress={this.handlePress}
+        />
       </ViewContainer>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  listTitle: {
-    color: colors.black,
-    fontFamily: 'AvenirNext-Medium'
-  },
-  listSubTitle: {
-    color: colors.greyDark,
-    fontFamily: 'AvenirNext-Medium'
-  }
-});
 
 export const ProfileScreen = connect(mapStateToProps, mapDispatchToProps)(
   Profile

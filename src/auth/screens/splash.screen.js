@@ -1,20 +1,31 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { StyleSheet, View, Image } from 'react-native';
+import { NavigationActions } from 'react-navigation';
 
 import { colors } from 'config';
 
-import { NavigationActions } from 'react-navigation';
-
-import { connect } from 'react-redux';
-
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+const styles = StyleSheet.create({
+  logoContainer: {
+    backgroundColor: colors.white,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  logo: {
+    width: 100,
+    height: 100,
+  },
 });
 
 class Splash extends Component {
   props: {
     isAuthenticated: boolean,
-    navigation: Object
+    navigation: Object,
   };
 
   componentDidMount() {
@@ -28,8 +39,9 @@ class Splash extends Component {
   _navigateTo = (routeName: string) => {
     const resetAction = NavigationActions.reset({
       index: 0,
-      actions: [NavigationActions.navigate({ routeName })]
+      actions: [NavigationActions.navigate({ routeName })],
     });
+
     this.props.navigation.dispatch(resetAction);
   };
   render() {
@@ -43,18 +55,5 @@ class Splash extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  logoContainer: {
-    backgroundColor: colors.white,
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  logo: {
-    width: 100,
-    height: 100
-  }
-});
 
 export const SplashScreen = connect(mapStateToProps)(Splash);

@@ -1,16 +1,16 @@
-import { compose, createStore, applyMiddleware } from "redux";
-import { rootReducer } from "./root.reducer";
-
-import { autoRehydrate } from "redux-persist";
-
-import createLogger from "redux-logger";
-import reduxThunk from "redux-thunk";
+import { compose, createStore, applyMiddleware } from 'redux';
+import { autoRehydrate } from 'redux-persist';
+import createLogger from 'redux-logger';
+import reduxThunk from 'redux-thunk';
+import { rootReducer } from './root.reducer';
 
 const getMiddleware = () => {
   const middlewares = [reduxThunk];
 
   if (__DEV__) {
-    middlewares.push(createLogger());
+    if (process.env.LOGGER_ENABLED) {
+      middlewares.push(createLogger());
+    }
   }
 
   return applyMiddleware(...middlewares);
@@ -18,7 +18,9 @@ const getMiddleware = () => {
 
 const getEnhancers = () => {
   const enhancers = [];
+
   enhancers.push(autoRehydrate());
+
   return enhancers;
 };
 
