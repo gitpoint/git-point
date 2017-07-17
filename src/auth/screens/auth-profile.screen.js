@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Alert } from 'react-native';
+import { StyleSheet, Alert, AsyncStorage } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Communications from 'react-native-communications';
-
 import {
   ViewContainer,
   UserProfile,
@@ -14,6 +13,8 @@ import {
 } from 'components';
 import { colors, fonts } from 'config';
 import { getUser, getOrgs } from 'auth';
+import { persistStore } from 'redux-persist';
+import { configureStore } from '../../../root.store';
 
 const mapStateToProps = state => ({
   user: state.auth.user,
@@ -38,7 +39,6 @@ const styles = StyleSheet.create({
   },
   logoutTitle: {
     color: colors.red,
-    fontWeight: 'bold',
   },
 });
 
@@ -148,9 +148,9 @@ class AuthProfile extends Component {
               )}
             </SectionList>
 
-            <SectionList title="">
+            <SectionList title="Sign Out">
               <ListItem
-                title="Log out"
+                title="Sign Out"
                 titleStyle={styles.logoutTitle}
                 leftIcon={{
                   name: 'sign-out',
@@ -158,16 +158,24 @@ class AuthProfile extends Component {
                   type: 'octicon',
                 }}
                 onPress={() => {
-                  Alert.alert('Logout', 'Are you sure you want to logout?', [
-                    {
-                      text: 'No',
-                    },
-                    {
-                      text: 'Yes',
-                      style: 'destructive',
-                      onPress: () => {},
-                    },
-                  ]);
+                  Alert.alert(
+                    'Sign Out',
+                    'Are you sure you want to sign out?',
+                    [
+                      {
+                        text: 'No',
+                      },
+                      {
+                        text: 'Yes',
+                        style: 'destructive',
+                        onPress: () => {
+                          // persistStore(configureStore).purge();
+                          // AsyncStorage.clear();
+                          navigation.navigate('Login');
+                        },
+                      },
+                    ]
+                  );
                 }}
               />
             </SectionList>
