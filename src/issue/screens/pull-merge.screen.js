@@ -139,6 +139,7 @@ class PullMerge extends Component {
         <ScrollView>
           <SectionList title="Commit Title">
             <TextInput
+              underlineColorAndroid={'transparent'}
               placeholder="Write a title for your commit here"
               blurOnSubmit
               multiline
@@ -158,6 +159,7 @@ class PullMerge extends Component {
 
           <SectionList title="Commit Message">
             <TextInput
+              underlineColorAndroid={'transparent'}
               placeholder="Write a message for your commit here"
               blurOnSubmit
               multiline

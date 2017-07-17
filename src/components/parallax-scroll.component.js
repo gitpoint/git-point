@@ -24,12 +24,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     width: window.width,
-    backgroundColor: colors.primarydark,
+    backgroundColor: colors.primaryDark,
     height: PARALLAX_HEADER_HEIGHT,
   },
   stickySection: {
     height: STICKY_HEADER_HEIGHT,
-    backgroundColor: colors.primarydark,
+    backgroundColor: colors.primaryDark,
     width: window.width,
     alignItems: 'center',
     justifyContent: 'flex-end',
@@ -61,7 +61,7 @@ export const ParallaxScroll = ({
   children,
 }: Props) =>
   <ParallaxScrollView
-    backgroundColor={colors.primarydark}
+    backgroundColor={colors.primaryDark}
     stickyHeaderHeight={STICKY_HEADER_HEIGHT}
     parallaxHeaderHeight={PARALLAX_HEADER_HEIGHT}
     backgroundSpeed={10}

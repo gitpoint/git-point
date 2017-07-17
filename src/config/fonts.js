@@ -9,11 +9,11 @@ const iosFonts = {
 };
 
 const androidFonts = {
-  fontPrimaryLight: { fontFamily: 'sans-serif-light' },
-  fontPrimary: { fontFamily: 'sans-serif' },
-  fontPrimarySemiBold: { fontFamily: 'sans-serif-medium' },
-  fontPrimaryBold: { fontFamily: 'sans-serif-medium' },
-  fontCode: { fontFamily: 'Roboto' },
+  fontPrimaryLight: { fontFamily: 'OpensSans-Light', fontWeight: '300' },
+  fontPrimary: { fontFamily: 'OpensSans-Regular' },
+  fontPrimarySemiBold: { fontFamily: 'OpensSans-SemiBold', fontWeight: '600' },
+  fontPrimaryBold: { fontFamily: 'OpensSans-Bold', fontWeight: '700' },
+  fontCode: { fontFamily: 'Menlo' },
 };
 
 export const fonts = Platform.OS === 'ios' ? iosFonts : androidFonts;

@@ -1,7 +1,7 @@
 export const colors = {
   blue: '#0366d6',
   black: '#000000',
-  primarydark: '#262626',
+  primaryDark: '#262626',
   grey: '#bbb',
   greyDarkest: '#808080',
   greyBlue: '#6a737d',

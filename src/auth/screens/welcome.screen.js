@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   welcomeMessage: {
-    color: colors.primarydark,
+    color: colors.primaryDark,
     fontSize: normalize(24),
     ...fonts.fontPrimary,
   },
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
   enterButton: {
     marginTop: 30,
-    backgroundColor: colors.primarydark,
+    backgroundColor: colors.primaryDark,
     borderRadius: 3,
     paddingVertical: 5,
     width: 100,
