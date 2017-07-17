@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Alert } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Communications from 'react-native-communications';
 
@@ -35,6 +35,10 @@ const styles = StyleSheet.create({
   listSubTitle: {
     color: colors.greyDark,
     fontFamily: 'AvenirNext-Medium',
+  },
+  logoutTitle: {
+    color: colors.red,
+    fontWeight: 'bold',
   },
 });
 
@@ -142,6 +146,30 @@ class AuthProfile extends Component {
                   navigation={navigation}
                 />
               )}
+            </SectionList>
+
+            <SectionList title="">
+              <ListItem
+                title="Log out"
+                titleStyle={styles.logoutTitle}
+                leftIcon={{
+                  name: 'sign-out',
+                  color: colors.grey,
+                  type: 'octicon',
+                }}
+                onPress={() => {
+                  Alert.alert('Logout', 'Are you sure you want to logout?', [
+                    {
+                      text: 'No',
+                    },
+                    {
+                      text: 'Yes',
+                      style: 'destructive',
+                      onPress: () => {},
+                    },
+                  ]);
+                }}
+              />
             </SectionList>
           </ParallaxScroll>}
       </ViewContainer>
