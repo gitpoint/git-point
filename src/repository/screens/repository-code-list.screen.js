@@ -4,7 +4,7 @@ import { StyleSheet, FlatList, View, Text } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
 import { ViewContainer, LoadingListItem } from 'components';
-import { colors, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 import { getContents } from '../repository.action';
 
 const mapStateToProps = state => ({
@@ -20,11 +20,11 @@ const mapDispatchToProps = dispatch => ({
 const styles = StyleSheet.create({
   title: {
     color: colors.black,
-    fontFamily: 'AvenirNext-Regular',
+    ...fonts.fontPrimaryLight,
   },
   titleBold: {
     color: colors.black,
-    fontFamily: 'AvenirNext-DemiBold',
+    ...fonts.fontPrimarySemiBold,
   },
   textContainer: {
     flex: 1,

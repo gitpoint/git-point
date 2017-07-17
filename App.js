@@ -30,6 +30,10 @@ const styles = StyleSheet.create({
   },
 });
 
+if (console) {
+  console.disableYellowBox = true; // eslint-disable-line no-console
+}
+
 class App extends Component {
   constructor() {
     super();
@@ -71,7 +75,7 @@ class App extends Component {
 
     return (
       <Provider store={configureStore}>
-        <GitPoint />
+        <GitPoint onNavigationStateChange={null} />
       </Provider>
     );
   }

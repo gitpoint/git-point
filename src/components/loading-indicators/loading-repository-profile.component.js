@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, Animated } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-import { colors, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 import { loadingAnimation } from 'utils';
 
 const styles = StyleSheet.create({
@@ -24,15 +24,14 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.white,
-    fontFamily: 'AvenirNext-Bold',
+    ...fonts.fontPrimaryBold,
     fontSize: normalize(16),
-    fontWeight: 'bold',
     marginBottom: 2,
     backgroundColor: 'transparent',
   },
   subtitle: {
     color: colors.white,
-    fontFamily: 'AvenirNext-Medium',
+    ...fonts.fontPrimary,
     fontSize: normalize(12),
     paddingLeft: 15,
     paddingRight: 15,
@@ -51,7 +50,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: colors.white,
     fontSize: normalize(10),
-    fontFamily: 'AvenirNext-Medium',
+    ...fonts.fontPrimary,
   },
   icon: {
     paddingBottom: 20,

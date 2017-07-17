@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  StyleSheet,
-  ActivityIndicator,
-  ActionSheetIOS,
-  Dimensions,
-  View,
-} from 'react-native';
+import { StyleSheet, ActivityIndicator, Dimensions, View } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import ActionSheet from 'react-native-actionsheet';
 import Communications from 'react-native-communications';
 
 import {
@@ -17,7 +12,7 @@ import {
   ParallaxScroll,
   UserListItem,
 } from 'components';
-import { colors } from 'config';
+import { colors, fonts } from 'config';
 import { getUserInfo, changeFollowStatus } from '../user.action';
 
 const mapStateToProps = state => ({
@@ -38,11 +33,11 @@ const mapDispatchToProps = dispatch => ({
 const styles = StyleSheet.create({
   listTitle: {
     color: colors.black,
-    fontFamily: 'AvenirNext-Medium',
+    ...fonts.fontPrimary,
   },
   listSubTitle: {
     color: colors.greyDark,
-    fontFamily: 'AvenirNext-Medium',
+    ...fonts.fontPrimary,
   },
 });
 
@@ -71,23 +66,17 @@ class Profile extends Component {
     return url.substr(0, prefix.length) === prefix ? url : `http://${url}`;
   };
 
-  showMenuActionSheet() {
-    const { user, isFollowing, changeFollowStatusByDispatch } = this.props;
-    const userActions = [isFollowing ? 'Unfollow' : 'Follow'];
+  showMenuActionSheet = () => {
+    this.ActionSheet.show();
+  };
 
-    ActionSheetIOS.showActionSheetWithOptions(
-      {
-        title: 'User Actions',
-        options: [...userActions, 'Cancel'],
-        cancelButtonIndex: 1,
-      },
-      buttonIndex => {
-        if (buttonIndex === 0) {
-          changeFollowStatusByDispatch(user.login, isFollowing);
-        }
-      }
-    );
-  }
+  handlePress = index => {
+    const { user, isFollowing, changeFollowStatusByDispatch } = this.props;
+
+    if (index === 0) {
+      changeFollowStatusByDispatch(user.login, isFollowing);
+    }
+  };
 
   render() {
     const {
@@ -102,6 +91,7 @@ class Profile extends Component {
 
     const initialUser = navigation.state.params.user;
     const isPending = isPendingUser || isPendingOrgs;
+    const userActions = [isFollowing ? 'Unfollow' : 'Follow'];
 
     return (
       <ViewContainer>
@@ -203,6 +193,16 @@ class Profile extends Component {
               </SectionList>
             </View>}
         </ParallaxScroll>
+
+        <ActionSheet
+          ref={o => {
+            this.ActionSheet = o;
+          }}
+          title="User Actions"
+          options={[...userActions, 'Cancel']}
+          cancelButtonIndex={1}
+          onPress={this.handlePress}
+        />
       </ViewContainer>
     );
   }

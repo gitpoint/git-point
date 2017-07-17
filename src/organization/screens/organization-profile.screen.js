@@ -12,7 +12,7 @@ import {
   SectionList,
   ParallaxScroll,
 } from 'components';
-import { colors } from 'config';
+import { colors, fonts } from 'config';
 import { getOrg, getOrgRepos, getOrgMembers } from '../index';
 
 const mapStateToProps = state => ({
@@ -33,7 +33,7 @@ const mapDispatchToProps = dispatch => ({
 const styles = StyleSheet.create({
   listTitle: {
     color: colors.black,
-    fontFamily: 'AvenirNext-Medium',
+    ...fonts.fontPrimary,
   },
 });
 

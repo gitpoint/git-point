@@ -3,7 +3,7 @@ import { View, Text, Dimensions, StyleSheet } from 'react-native';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { Icon } from 'react-native-elements';
 
-import { colors, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 
 const window = Dimensions.get('window');
 const PARALLAX_HEADER_HEIGHT = window.height / 2;
@@ -24,21 +24,20 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     width: window.width,
-    backgroundColor: colors.primarydark,
+    backgroundColor: colors.primaryDark,
     height: PARALLAX_HEADER_HEIGHT,
   },
   stickySection: {
     height: STICKY_HEADER_HEIGHT,
-    backgroundColor: colors.primarydark,
+    backgroundColor: colors.primaryDark,
     width: window.width,
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
   stickySectionText: {
     color: colors.white,
-    fontFamily: 'AvenirNext-Bold',
+    ...fonts.fontPrimaryBold,
     fontSize: normalize(16),
-    fontWeight: 'bold',
     margin: 10,
   },
   fixedSectionLeft: {
@@ -62,7 +61,7 @@ export const ParallaxScroll = ({
   children,
 }: Props) =>
   <ParallaxScrollView
-    backgroundColor={colors.primarydark}
+    backgroundColor={colors.primaryDark}
     stickyHeaderHeight={STICKY_HEADER_HEIGHT}
     parallaxHeaderHeight={PARALLAX_HEADER_HEIGHT}
     backgroundSpeed={10}

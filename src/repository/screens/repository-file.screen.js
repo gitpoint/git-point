@@ -14,7 +14,7 @@ import { getLanguage } from 'lowlight';
 import { github as GithubStyle } from 'react-syntax-highlighter/dist/styles';
 
 import { ViewContainer, LoadingContainer } from 'components';
-import { colors, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 import { getRepositoryFile } from '../repository.action';
 
 const mapStateToProps = state => ({
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: colors.primaryDark,
-    fontFamily: 'AvenirNext-DemiBold',
+    ...fonts.fontPrimarySemiBold,
     fontSize: normalize(12),
   },
   content: {
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   contentText: {
-    fontFamily: 'Menlo',
+    ...fonts.fontCode,
     fontSize: normalize(10),
   },
   contentCode: {

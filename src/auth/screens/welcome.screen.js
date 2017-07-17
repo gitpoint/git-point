@@ -5,7 +5,7 @@ import { Button } from 'react-native-elements';
 import { NavigationActions } from 'react-navigation';
 
 import { ViewContainer } from 'components';
-import { colors, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
@@ -19,19 +19,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   welcomeMessage: {
-    color: colors.primarydark,
+    color: colors.primaryDark,
     fontSize: normalize(24),
-    fontFamily: 'AvenirNext-Medium',
+    ...fonts.fontPrimary,
   },
   loadingIcon: {
     marginTop: 30,
   },
   enterButton: {
     marginTop: 30,
-    backgroundColor: colors.primarydark,
+    backgroundColor: colors.primaryDark,
     borderRadius: 3,
     paddingVertical: 5,
     width: 100,
+  },
+  buttonText: {
+    ...fonts.fontPrimaryBold,
+    fontSize: normalize(16),
   },
 });
 
@@ -69,9 +73,8 @@ class Welcome extends Component {
             <Button
               raised
               title="Enter"
-              fontSize={16}
-              fontWeight="bold"
               buttonStyle={styles.enterButton}
+              textStyle={styles.buttonText}
               color={colors.white}
               onPress={() => this._navigateTo('Main')}
             />}

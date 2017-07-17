@@ -1,16 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, FlatList, Dimensions } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  Dimensions,
+  Platform,
+} from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
-import SearchBar from 'react-native-search-bar';
 
 import {
   ViewContainer,
   RepositoryListItem,
   UserListItem,
   LoadingContainer,
+  SearchBar,
 } from 'components';
-import { colors, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 import { searchRepos, searchUsers } from '../index';
 
 const mapStateToProps = state => ({
@@ -28,7 +35,7 @@ const mapDispatchToProps = dispatch => ({
 const styles = StyleSheet.create({
   searchBarWrapper: {
     flexDirection: 'row',
-    marginTop: 20,
+    marginTop: Platform.OS === 'ios' ? 20 : 10,
   },
   searchContainer: {
     width: Dimensions.get('window').width,
@@ -42,7 +49,7 @@ const styles = StyleSheet.create({
     height: 30,
   },
   buttonGroupText: {
-    fontFamily: 'AvenirNext-Bold',
+    ...fonts.fontPrimaryBold,
   },
   buttonGroupTextSelected: {
     color: colors.black,
@@ -59,7 +66,10 @@ const styles = StyleSheet.create({
   searchTitle: {
     fontSize: normalize(18),
     textAlign: 'center',
-    fontFamily: 'AvenirNext-Medium',
+    ...fonts.fontPrimary,
+  },
+  searchCancelButton: {
+    color: colors.black,
   },
   listContainer: {
     borderTopColor: colors.greyLight,
@@ -174,20 +184,14 @@ class Search extends Component {
           <View style={styles.searchBarWrapper}>
             <View style={styles.searchContainer}>
               <SearchBar
-                ref={ref => {
-                  this.searchBar = ref;
-                }}
                 textColor={colors.primaryDark}
                 textFieldBackgroundColor={colors.greyLight}
                 showsCancelButton={this.state.searchFocus}
                 onFocus={() => this.setState({ searchFocus: true })}
-                onCancelButtonPress={() => {
-                  this.setState({ searchStart: false, query: '' });
-                  this.searchBar.unFocus();
-                }}
+                onCancelButtonPress={() =>
+                  this.setState({ searchStart: false, query: '' })}
                 onSearchButtonPress={text => {
                   this.search(text);
-                  this.searchBar.unFocus();
                 }}
                 hideBackground
               />

@@ -4,7 +4,7 @@ import React from 'react';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-import { colors, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 
 type Props = {
   notification: Object,
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.black,
-    fontFamily: 'AvenirNext-Medium',
+    ...fonts.fontPrimary,
     fontSize: normalize(12),
     marginLeft: 10,
   },

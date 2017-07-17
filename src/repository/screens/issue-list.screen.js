@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FlatList, View, StyleSheet, Dimensions, Text } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
-import SearchBar from 'react-native-search-bar';
+import {
+  ViewContainer,
+  IssueListItem,
+  LoadingContainer,
+  SearchBar,
+} from 'components';
 
-import { ViewContainer, IssueListItem, LoadingContainer } from 'components';
-import { colors, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 import {
   searchOpenRepoIssues,
   searchClosedRepoIssues,
@@ -46,7 +50,7 @@ const styles = StyleSheet.create({
     height: 30,
   },
   buttonGroupText: {
-    fontFamily: 'AvenirNext-Bold',
+    ...fonts.fontPrimaryBold,
   },
   buttonGroupTextSelected: {
     color: colors.black,
@@ -61,6 +65,9 @@ const styles = StyleSheet.create({
   searchTitle: {
     fontSize: normalize(18),
     textAlign: 'center',
+  },
+  searchCancelButton: {
+    color: colors.black,
   },
 });
 
@@ -175,20 +182,14 @@ class IssueList extends Component {
           <View style={styles.searchBarWrapper}>
             <View style={styles.searchContainer}>
               <SearchBar
-                ref={ref => {
-                  this.searchBar = ref;
-                }}
                 textColor={colors.primaryDark}
                 textFieldBackgroundColor={colors.greyLight}
                 showsCancelButton={searchFocus}
                 onFocus={() => this.setState({ searchFocus: true })}
-                onCancelButtonPress={() => {
-                  this.setState({ searchStart: false, query: '' });
-                  this.searchBar.unFocus();
-                }}
+                onCancelButtonPress={() =>
+                  this.setState({ searchStart: false, query: '' })}
                 onSearchButtonPress={text => {
                   this.search(text);
-                  this.searchBar.unFocus();
                 }}
                 hideBackground
               />

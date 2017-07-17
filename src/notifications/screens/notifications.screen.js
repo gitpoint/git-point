@@ -9,6 +9,7 @@ import {
   Text,
   TouchableOpacity,
   Image,
+  Platform,
 } from 'react-native';
 import { ButtonGroup, Card, Icon } from 'react-native-elements';
 
@@ -17,7 +18,7 @@ import {
   LoadingContainer,
   NotificationListItem,
 } from 'components';
-import { colors, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 import { getIssueFromUrl } from 'issue';
 import {
   getUnreadNotifications,
@@ -51,13 +52,13 @@ const mapDispatchToProps = dispatch => ({
 const styles = StyleSheet.create({
   buttonGroupWrapper: {
     backgroundColor: colors.greyLight,
-    paddingTop: 28,
+    paddingTop: Platform.OS === 'ios' ? 28 : 15,
   },
   buttonGroupContainer: {
     height: 30,
   },
   buttonGroupText: {
-    fontFamily: 'AvenirNext-Bold',
+    ...fonts.fontPrimaryBold,
   },
   buttonGroupTextSelected: {
     color: colors.black,
@@ -79,15 +80,15 @@ const styles = StyleSheet.create({
     height: 26,
   },
   repositoryTitle: {
-    color: colors.primarydark,
-    fontFamily: 'AvenirNext-DemiBold',
+    color: colors.primaryDark,
+    ...fonts.fontPrimarySemiBold,
     marginLeft: 10,
     flex: 1,
   },
   notificationTitle: {
     color: colors.black,
     fontSize: normalize(12),
-    fontFamily: 'AvenirNext-Regular',
+    ...fonts.fontPrimaryLight,
   },
   markAsReadIconRepo: {
     flex: 0.15,
@@ -106,7 +107,7 @@ const styles = StyleSheet.create({
   noneTitle: {
     fontSize: normalize(16),
     textAlign: 'center',
-    fontFamily: 'AvenirNext-Medium',
+    ...fonts.fontPrimary,
   },
 });
 

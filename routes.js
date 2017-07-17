@@ -262,7 +262,7 @@ const MainTabNavigator = TabNavigator(
     tabBarPosition: 'bottom',
     tabBarOptions: {
       showLabel: false,
-      activeTintColor: colors.primarydark,
+      activeTintColor: colors.primaryDark,
       inactiveTintColor: colors.grey,
     },
     tabBarComponent: ({ jumpToIndex, ...props }) =>

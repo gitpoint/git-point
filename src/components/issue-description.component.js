@@ -10,7 +10,7 @@ import {
   LabelButton,
   DiffBlocks,
 } from 'components';
-import { colors, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 
 const styles = StyleSheet.create({
   headerContainer: {
@@ -24,12 +24,12 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.greyLight,
   },
   title: {
-    color: colors.primarydark,
-    fontFamily: 'AvenirNext-DemiBold',
+    color: colors.primaryDark,
+    ...fonts.fontPrimarySemiBold,
   },
   titleSmall: {
-    color: colors.primarydark,
-    fontFamily: 'AvenirNext-DemiBold',
+    color: colors.primaryDark,
+    ...fonts.fontPrimarySemiBold,
     fontSize: normalize(10),
   },
   listItemContainer: {
