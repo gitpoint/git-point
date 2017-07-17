@@ -4,7 +4,7 @@ import { ListItem } from 'react-native-elements';
 import moment from 'moment';
 
 import { IssueStateBadge } from 'components';
-import { colors } from 'config';
+import { colors, fonts } from 'config';
 
 type Props = {
   type: string,
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.primarydark,
-    fontFamily: 'AvenirNext-Medium',
+    ...fonts.fontPrimary,
   },
   badge: {
     flex: 0.15,

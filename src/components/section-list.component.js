@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import { List, ListItem, Button } from 'react-native-elements';
 
-import { colors } from 'config';
+import { colors, fonts } from 'config';
 
 type Props = {
   loading: boolean,
@@ -29,11 +29,11 @@ const styles = StyleSheet.create({
   sectionTitle: {
     color: colors.black,
     padding: 15,
-    fontFamily: 'AvenirNext-Bold',
+    ...fonts.fontPrimaryBold,
   },
   listTitle: {
     color: colors.black,
-    fontFamily: 'AvenirNext-Medium',
+    ...fonts.fontPrimary,
   },
   button: {
     backgroundColor: colors.white,

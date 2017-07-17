@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 
-import { colors, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 
 type Props = {
   issue: Object,
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: normalize(12),
-    fontFamily: 'AvenirNext-DemiBold',
+    ...fonts.fontPrimarySemiBold,
     color: colors.white,
   },
 });

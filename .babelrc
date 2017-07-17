@@ -25,6 +25,7 @@
           "utils": "utils"
         }
       }
-    ]
+    ],
+    "transform-inline-environment-variables"
   ]
 }

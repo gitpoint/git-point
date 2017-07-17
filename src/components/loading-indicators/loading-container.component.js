@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, ActivityIndicator, Text } from 'react-native';
 
-import { colors } from 'config';
+import { colors, fonts } from 'config';
 
 type Props = {
   animating: boolean,
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     height: 80,
   },
   text: {
-    fontFamily: 'AvenirNext-Medium',
+    ...fonts.fontPrimary,
   },
 });
 

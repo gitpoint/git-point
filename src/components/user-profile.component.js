@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 
-import { colors, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 
 type Props = {
   type: string,
@@ -34,14 +34,13 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.white,
-    fontFamily: 'AvenirNext-Bold',
+    ...fonts.fontPrimaryBold,
     fontSize: normalize(16),
-    fontWeight: 'bold',
     marginBottom: 2,
   },
   subtitle: {
     color: colors.white,
-    fontFamily: 'AvenirNext-Medium',
+    ...fonts.fontPrimary,
     fontSize: normalize(12),
     marginBottom: 50,
     paddingLeft: 15,
@@ -58,15 +57,14 @@ const styles = StyleSheet.create({
   unitNumber: {
     textAlign: 'center',
     color: colors.white,
-    fontFamily: 'AvenirNext-Bold',
+    ...fonts.fontPrimaryBold,
     fontSize: normalize(16),
-    fontWeight: 'bold',
   },
   unitText: {
     textAlign: 'center',
     color: colors.white,
     fontSize: normalize(10),
-    fontFamily: 'AvenirNext-Medium',
+    ...fonts.fontPrimary,
   },
   green: {
     color: colors.lightGreen,

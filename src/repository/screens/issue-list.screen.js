@@ -9,7 +9,7 @@ import {
   SearchBar,
 } from 'components';
 
-import { colors, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 import {
   searchOpenRepoIssues,
   searchClosedRepoIssues,
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     height: 30,
   },
   buttonGroupText: {
-    fontFamily: 'AvenirNext-Bold',
+    ...fonts.fontPrimaryBold,
   },
   buttonGroupTextSelected: {
     color: colors.black,

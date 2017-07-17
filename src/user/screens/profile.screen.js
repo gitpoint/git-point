@@ -20,7 +20,7 @@ import {
   ParallaxScroll,
   UserListItem,
 } from 'components';
-import { colors } from 'config';
+import { colors, fonts } from 'config';
 import { getUserInfo, changeFollowStatus } from '../user.action';
 
 const mapStateToProps = state => ({
@@ -41,11 +41,11 @@ const mapDispatchToProps = dispatch => ({
 const styles = StyleSheet.create({
   listTitle: {
     color: colors.black,
-    fontFamily: 'AvenirNext-Medium',
+    ...fonts.fontPrimary,
   },
   listSubTitle: {
     color: colors.greyDark,
-    fontFamily: 'AvenirNext-Medium',
+    ...fonts.fontPrimary,
   },
   update: {
     flex: 1,

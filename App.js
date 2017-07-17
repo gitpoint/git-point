@@ -85,7 +85,7 @@ class App extends Component {
 
     return (
       <Provider store={configureStore}>
-        <GitPoint />
+        <GitPoint onNavigationStateChange={null} />
       </Provider>
     );
   }
