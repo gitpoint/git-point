@@ -14,7 +14,7 @@ import {
 import { colors, fonts } from 'config';
 import { getUser, getOrgs } from 'auth';
 import { persistStore } from 'redux-persist';
-import { configureStore } from '../../../root.store';
+import { configureStore } from 'store';
 
 const mapStateToProps = state => ({
   user: state.auth.user,

@@ -12,6 +12,7 @@
           "./src"
         ],
         "alias": {
+          "store": "./root.store.js",
           "components": "components",
           "search": "search",
           "notifications": "notifications",
