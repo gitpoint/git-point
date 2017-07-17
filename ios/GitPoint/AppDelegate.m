@@ -20,11 +20,11 @@
 {
   NSURL *jsCodeLocation;
 
-  
+
 #ifdef DEBUG
-    jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
-#else
     jsCodeLocation = [CodePush bundleURL];
+#else
+    jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
 #endif
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
