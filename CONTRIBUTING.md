@@ -1,7 +1,11 @@
 # Contributing
 
 Thank you for your interest in contributing! Please feel free to put up a PR for any issue or feature request.
-Even if you have little to no experience with React Native, I'll be more than happy to help. :)
+Even if you have little to no experience with React Native, we'll be more than happy to help :)
+
+## Gitter
+
+Please don't hesitate to join our [gitter](https://gitter.im/git-point)! Technical points of discussion, general questions and suggestions or anything at all - we would love to chat about it.
 
 ## Issues
 
@@ -13,7 +17,7 @@ If you happen to want to put up a PR to fix a bug or add a feature, then we can'
 
 ### Working on issues
 
-Please feel free to take on _any_ issue that's currently in the issue list. To streamline priorities, we've created a [project]() to define the priority order of different issues so it would be preferred if you can tackle a high priority one. However, please feel free to take any issue whatsoever that you would enjoy working on even if it happens to be a low priority.
+Please feel free to take on _any_ issue that's currently in the issue list. To streamline priorities, we've created a [project](https://github.com/gitpoint/git-point/projects/1) to define the priority order of different issues so it would be preferred if you can tackle a high priority one. However, please feel free to take any issue whatsoever that you would enjoy working on even if it happens to be a low priority.
 
 ## Setup
 
