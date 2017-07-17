@@ -66,6 +66,9 @@ class Profile extends Component {
     return url.substr(0, prefix.length) === prefix ? url : `http://${url}`;
   };
 
+  getUserLocationLink = location =>
+    `https://www.google.com/maps/place/${location.split(' ').join('+')}`;
+
   showMenuActionSheet = () => {
     this.ActionSheet.show();
   };
@@ -174,6 +177,27 @@ class Profile extends Component {
                   subtitleStyle={styles.listSubTitle}
                   onPress={() =>
                     Communications.web(this.getUserBlog(user.blog))}
+                  underlayColor={colors.greyLight}
+                />
+              </SectionList>
+
+              <SectionList
+                title="LOCATION"
+                noItems={!user.location || user.location === ''}
+                noItemsMessage={'No location associated with account'}
+              >
+                <ListItem
+                  title="Location"
+                  titleStyle={styles.listTitle}
+                  leftIcon={{
+                    name: 'location',
+                    color: colors.grey,
+                    type: 'octicon',
+                  }}
+                  subtitle={user.location}
+                  subtitleStyle={styles.listSubTitle}
+                  onPress={() =>
+                    Communications.web(this.getUserLocationLink(user.location))}
                   underlayColor={colors.greyLight}
                 />
               </SectionList>

@@ -58,6 +58,9 @@ class OrganizationProfile extends Component {
     this.props.getOrgMembersByDispatch(organization.login);
   }
 
+  getOrgLocationLink = location =>
+    `https://www.google.com/maps/place/${location.split(' ').join('+')}`;
+
   render() {
     const {
       organization,
@@ -105,9 +108,29 @@ class OrganizationProfile extends Component {
               <ListItem
                 title="Website"
                 titleStyle={styles.listTitle}
-                leftIcon={{ name: 'link', color: colors.grey }}
+                leftIcon={{
+                  name: 'link',
+                  color: colors.grey,
+                  type: 'octicon',
+                }}
                 subtitle={organization.blog}
                 onPress={() => Communications.web(organization.blog)}
+                underlayColor={colors.greyLight}
+              />
+
+              <ListItem
+                title="Location"
+                titleStyle={styles.listTitle}
+                leftIcon={{
+                  name: 'location',
+                  color: colors.grey,
+                  type: 'octicon',
+                }}
+                subtitle={organization.location}
+                onPress={() =>
+                  Communications.web(
+                    this.getOrgLocationLink(organization.location)
+                  )}
                 underlayColor={colors.greyLight}
               />
             </SectionList>}
