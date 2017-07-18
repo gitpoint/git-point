@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Alert } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import Communications from 'react-native-communications';
+import { StyleSheet, Alert, Text, TouchableOpacity, View } from 'react-native';
+import codePush from 'react-native-code-push';
+
 import {
   ViewContainer,
   UserProfile,
@@ -10,6 +11,7 @@ import {
   LoadingContainer,
   ParallaxScroll,
   UserListItem,
+  EntityInfo,
 } from 'components';
 import { colors, fonts } from 'config';
 import { getUser, getOrgs, signOut } from 'auth';
@@ -40,7 +42,27 @@ const styles = StyleSheet.create({
     color: colors.red,
     ...fonts.fontPrimary,
   },
+  update: {
+    flex: 1,
+    alignItems: 'center',
+    marginVertical: 40,
+  },
+  updateText: {
+    color: colors.grey,
+    fontFamily: 'AvenirNext-Medium',
+  },
+  updateTextSub: {
+    fontSize: 11,
+  },
 });
+
+const updateText = {
+  check: 'Check for update',
+  checking: 'Checking for update...',
+  updated: 'App is up to date',
+  available: 'Update is available!',
+  notApplicable: 'Not applicable in debug mode',
+};
 
 class AuthProfile extends Component {
   props: {
@@ -54,15 +76,31 @@ class AuthProfile extends Component {
     navigation: Object,
   };
 
+  state = {
+    updateText: updateText.check,
+  };
+
   componentDidMount() {
     this.props.getUser();
     this.props.getOrgs();
   }
 
-  getUserBlog = url => {
-    const prefix = 'http';
-
-    return url.substr(0, prefix.length) === prefix ? url : `http://${url}`;
+  checkForUpdate = () => {
+    if (__DEV__) {
+      this.setState({ updateText: updateText.notApplicable });
+    } else {
+      this.setState({ updateText: updateText.checking });
+      codePush
+        .sync({
+          updateDialog: true,
+          installMode: codePush.InstallMode.IMMEDIATE,
+        })
+        .then(update => {
+          this.setState({
+            updateText: update ? updateText.available : updateText.updated,
+          });
+        });
+    }
   };
 
   _signOut() {
@@ -115,46 +153,7 @@ class AuthProfile extends Component {
                 />
               </SectionList>}
 
-            <SectionList
-              title="EMAIL"
-              noItems={!user.email || user.email === ''}
-              noItemsMessage={'No email associated with account'}
-            >
-              <ListItem
-                title="Email"
-                titleStyle={styles.listTitle}
-                leftIcon={{
-                  name: 'mail',
-                  color: colors.grey,
-                  type: 'octicon',
-                }}
-                subtitle={user.email}
-                subtitleStyle={styles.listSubTitle}
-                onPress={() =>
-                  Communications.email([user.email], null, null, 'Hi!', '')}
-                underlayColor={colors.greyLight}
-              />
-            </SectionList>
-
-            <SectionList
-              title="WEBSITE"
-              noItems={!user.blog || user.blog === ''}
-              noItemsMessage={'No website associated with account'}
-            >
-              <ListItem
-                title="Website"
-                titleStyle={styles.listTitle}
-                leftIcon={{
-                  name: 'link',
-                  color: colors.grey,
-                  type: 'octicon',
-                }}
-                subtitle={user.blog}
-                subtitleStyle={styles.listSubTitle}
-                onPress={() => Communications.web(this.getUserBlog(user.blog))}
-                underlayColor={colors.greyLight}
-              />
-            </SectionList>
+            <EntityInfo entity={user} />
 
             <SectionList
               title="ORGANIZATIONS"
@@ -178,6 +177,14 @@ class AuthProfile extends Component {
                 onPress={() => this._signOut()}
               />
             </SectionList>
+            <View style={styles.update}>
+              <Text style={styles.updateText}>GitPoint v1.1</Text>
+              <TouchableOpacity onPress={this.checkForUpdate}>
+                <Text style={[styles.updateText, styles.updateTextSub]}>
+                  {this.state.updateText}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </ParallaxScroll>}
       </ViewContainer>
     );

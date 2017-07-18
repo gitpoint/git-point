@@ -4,12 +4,7 @@ import { ListItem, Button } from 'react-native-elements';
 import Parse from 'parse-diff';
 import moment from 'moment';
 
-import {
-  IssueStateBadge,
-  MembersList,
-  LabelButton,
-  DiffBlocks,
-} from 'components';
+import { StateBadge, MembersList, LabelButton, DiffBlocks } from 'components';
 import { colors, fonts, normalize } from 'config';
 
 const styles = StyleSheet.create({
@@ -44,7 +39,6 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   badge: {
-    flex: 0.15,
     alignItems: 'flex-end',
     justifyContent: 'center',
   },
@@ -144,7 +138,7 @@ export class IssueDescription extends Component {
           {!issue.pull_request ||
             (issue.pull_request &&
               !isPendingCheckMerge &&
-              <IssueStateBadge
+              <StateBadge
                 style={styles.badge}
                 issue={issue}
                 isMerged={isMerged && issue.pull_request}

@@ -16,6 +16,7 @@ import {
   IssueListItem,
   LoadingMembersList,
   LoadingModal,
+  RepositorySectionTitle,
 } from 'components';
 import { colors, fonts } from 'config';
 import {
@@ -138,6 +139,12 @@ class Repository extends Component {
       return !issue.hasOwnProperty('pull_request');
     });
 
+    const openPulls = pulls.filter(pull => pull.state === 'open');
+    const closedPulls = pulls.filter(pull => pull.state === 'closed');
+
+    const openIssues = pureIssues.filter(issue => issue.state === 'open');
+    const closedIssues = pureIssues.filter(issue => issue.state === 'closed');
+
     const repositoryActions = [starred ? '★ Unstar' : '★ Star'];
     const showFork =
       repository && repository.owner && repository.owner.login !== username;
@@ -239,10 +246,14 @@ class Repository extends Component {
 
           <SectionList
             loading={isPendingIssues}
-            title="ISSUES"
-            noItems={
-              pureIssues.filter(issue => issue.state === 'open').length === 0
+            title={
+              <RepositorySectionTitle
+                text="ISSUES"
+                openCount={openIssues.length}
+                closedCount={closedIssues.length}
+              />
             }
+            noItems={openIssues.length === 0}
             noItemsMessage={
               pureIssues.length === 0 ? 'No issues' : 'No open issues'
             }
@@ -254,8 +265,7 @@ class Repository extends Component {
                 issues: pureIssues,
               })}
           >
-            {pureIssues
-              .filter(issue => issue.state === 'open')
+            {openIssues
               .slice(0, 3)
               .map(item =>
                 <IssueListItem
@@ -269,8 +279,14 @@ class Repository extends Component {
 
           <SectionList
             loading={isPendingIssues}
-            title="PULL REQUESTS"
-            noItems={pulls.filter(issue => issue.state === 'open').length === 0}
+            title={
+              <RepositorySectionTitle
+                text="PULL REQUESTS"
+                openCount={openPulls.length}
+                closedCount={closedPulls.length}
+              />
+            }
+            noItems={openPulls.length === 0}
             noItemsMessage={
               pulls.length === 0 ? 'No pull requests' : 'No open pull requests'
             }
@@ -282,8 +298,7 @@ class Repository extends Component {
                 issues: pulls,
               })}
           >
-            {pulls
-              .filter(issue => issue.state === 'open')
+            {openPulls
               .slice(0, 3)
               .map(item =>
                 <IssueListItem
