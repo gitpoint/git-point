@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, FlatList, Dimensions } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  Dimensions,
+  Platform,
+} from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
 
 import {
@@ -28,7 +35,7 @@ const mapDispatchToProps = dispatch => ({
 const styles = StyleSheet.create({
   searchBarWrapper: {
     flexDirection: 'row',
-    marginTop: 20,
+    marginTop: Platform.OS === 'ios' ? 20 : 10,
   },
   searchContainer: {
     width: Dimensions.get('window').width,

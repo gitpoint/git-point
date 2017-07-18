@@ -5,6 +5,7 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   Linking,
+  Platform,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 
@@ -56,7 +57,7 @@ class Issue extends Component {
         headerRight: (
           <Icon
             name="gear"
-            color={colors.primarydark}
+            color={colors.primaryDark}
             type="octicon"
             containerStyle={{ marginRight: 5 }}
             underlayColor={colors.transparent}
@@ -225,7 +226,7 @@ class Issue extends Component {
           <KeyboardAvoidingView
             style={{ flex: 1 }}
             behavior={'padding'}
-            keyboardVerticalOffset={65}
+            keyboardVerticalOffset={Platform.select({ ios: 65, android: -200 })}
           >
             <FlatList
               ref={ref => {

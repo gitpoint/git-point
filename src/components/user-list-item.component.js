@@ -37,8 +37,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  avatar: {
+  avatarContainer: {
     backgroundColor: colors.greyLight,
+    borderRadius: 17,
+    width: 34,
+    height: 34,
+  },
+  avatar: {
     borderRadius: 17,
     width: 34,
     height: 34,
@@ -104,6 +109,7 @@ export const UserListItem = ({
             })}
         >
           <ImageContainerComponent
+            style={styles.avatarContainer}
             onPress={() =>
               navigation.navigate('Profile', {
                 user,

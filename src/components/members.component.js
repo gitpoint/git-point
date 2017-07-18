@@ -25,10 +25,13 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   avatarContainer: {
+    backgroundColor: colors.greyLight,
+    borderRadius: 15,
+    width: 30,
+    height: 30,
     marginRight: 5,
   },
   avatar: {
-    backgroundColor: colors.greyLight,
     borderRadius: 15,
     height: 30,
     width: 30,
@@ -39,7 +42,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   sectionTitleSmall: {
-    color: colors.primarydark,
+    color: colors.primaryDark,
     ...fonts.fontPrimarySemiBold,
     marginBottom: 10,
   },
@@ -69,14 +72,12 @@ export const MembersList = ({
           underlayColor="transparent"
           style={styles.avatarContainer}
         >
-          <View style={styles.avatarContainer}>
-            <Image
-              style={styles.avatar}
-              source={{
-                uri: item.avatar_url,
-              }}
-            />
-          </View>
+          <Image
+            style={styles.avatar}
+            source={{
+              uri: item.avatar_url,
+            }}
+          />
         </TouchableHighlight>}
       keyExtractor={item => item.id}
       horizontal

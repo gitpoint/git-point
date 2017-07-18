@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: colors.white,
-    borderColor: colors.primarydark,
+    borderColor: colors.primaryDark,
     borderWidth: 1,
     borderRadius: 3,
     paddingVertical: 5,
@@ -96,9 +96,9 @@ export const SectionList = ({
           !loading &&
           <Button
             title={buttonTitle}
-            fontFamily="AvenirNext-DemiBold"
+            textStyle={fonts.fontPrimarySemiBold}
             fontSize={13}
-            color={showButton ? colors.primarydark : colors.white}
+            color={showButton ? colors.primaryDark : colors.white}
             buttonStyle={styles.button}
             onPress={buttonAction}
           />}

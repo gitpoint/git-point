@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   title: {
-    color: colors.primarydark,
+    color: colors.primaryDark,
     ...fonts.fontPrimarySemiBold,
   },
   private: {

@@ -24,11 +24,11 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.greyLight,
   },
   title: {
-    color: colors.primarydark,
+    color: colors.primaryDark,
     ...fonts.fontPrimarySemiBold,
   },
   titleSmall: {
-    color: colors.primarydark,
+    color: colors.primaryDark,
     ...fonts.fontPrimarySemiBold,
     fontSize: normalize(10),
   },

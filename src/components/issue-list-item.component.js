@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
   },
   title: {
-    color: colors.primarydark,
+    color: colors.primaryDark,
     ...fonts.fontPrimary,
   },
   badge: {

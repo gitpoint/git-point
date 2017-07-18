@@ -135,7 +135,7 @@ export const getRepositories = user => {
       .then(data => {
         dispatch({
           type: GET_REPOSITORIES.SUCCESS,
-          payload: data,
+          payload: data.filter(repo => repo.permissions.admin),
         });
       })
       .catch(error => {

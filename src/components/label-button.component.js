@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Button } from 'react-native-elements';
 
-import { colors } from 'config';
+import { colors, fonts } from 'config';
 
 type Props = {
   label: Object,
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
 export const LabelButton = ({ label, largeWithTag }: Props) =>
   <Button
     title={label.name}
-    fontFamily="AvenirNext-DemiBold"
+    textStyle={fonts.fontPrimarySemiBold}
     fontSize={largeWithTag ? 13 : 12}
     color={getFontColorByBackground(label.color)}
     buttonStyle={
