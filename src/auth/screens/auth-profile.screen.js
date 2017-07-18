@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Alert, AsyncStorage } from 'react-native';
+import { StyleSheet, Alert } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Communications from 'react-native-communications';
 import {
@@ -12,9 +12,7 @@ import {
   UserListItem,
 } from 'components';
 import { colors, fonts } from 'config';
-import { getUser, getOrgs } from 'auth';
-import { persistStore } from 'redux-persist';
-import { configureStore } from 'store';
+import { getUser, getOrgs, signOut } from 'auth';
 
 const mapStateToProps = state => ({
   user: state.auth.user,
@@ -26,6 +24,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getUser: () => dispatch(getUser()),
   getOrgs: () => dispatch(getOrgs()),
+  signOut: () => dispatch(signOut()),
 });
 
 const styles = StyleSheet.create({
@@ -39,6 +38,7 @@ const styles = StyleSheet.create({
   },
   logoutTitle: {
     color: colors.red,
+    ...fonts.fontPrimary,
   },
 });
 
@@ -46,6 +46,7 @@ class AuthProfile extends Component {
   props: {
     getUser: Function,
     getOrgs: Function,
+    signOut: Function,
     user: Object,
     orgs: Array,
     isPendingUser: boolean,
@@ -63,6 +64,27 @@ class AuthProfile extends Component {
 
     return url.substr(0, prefix.length) === prefix ? url : `http://${url}`;
   };
+
+  signOut() {
+    Alert.alert('Sign Out', 'Are you sure you want to sign out?', [
+      {
+        text: 'No',
+      },
+      {
+        text: 'Yes',
+        style: 'destructive',
+        onPress: () => {
+          this._clearStoreAndSignOut();
+        },
+      },
+    ]);
+  }
+
+  _clearStoreAndSignOut() {
+    this.props.signOut(() => {
+      this.props.navigation.navigate('Login');
+    });
+  }
 
   render() {
     const { user, orgs, isPendingUser, isPendingOrgs, navigation } = this.props;
@@ -152,31 +174,8 @@ class AuthProfile extends Component {
               <ListItem
                 title="Sign Out"
                 titleStyle={styles.logoutTitle}
-                leftIcon={{
-                  name: 'sign-out',
-                  color: colors.grey,
-                  type: 'octicon',
-                }}
-                onPress={() => {
-                  Alert.alert(
-                    'Sign Out',
-                    'Are you sure you want to sign out?',
-                    [
-                      {
-                        text: 'No',
-                      },
-                      {
-                        text: 'Yes',
-                        style: 'destructive',
-                        onPress: () => {
-                          // persistStore(configureStore).purge();
-                          // AsyncStorage.clear();
-                          navigation.navigate('Login');
-                        },
-                      },
-                    ]
-                  );
-                }}
+                hideChevron
+                onPress={() => this.signOut()}
               />
             </SectionList>
           </ParallaxScroll>}
