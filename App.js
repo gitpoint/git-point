@@ -59,12 +59,12 @@ class App extends Component {
   }
 
   componentDidMount() {
-    if (!__DEV__) {
-      codePush.sync({
-        updateDialog: false,
-        installMode: codePush.InstallMode.IMMEDIATE,
-      });
-    }
+    // if (!__DEV__) {
+    codePush.sync({
+      updateDialog: false,
+      installMode: codePush.InstallMode.IMMEDIATE,
+    });
+    // }
   }
 
   componentWillUpdate() {
