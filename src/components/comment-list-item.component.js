@@ -229,7 +229,7 @@ export class CommentListItem extends Component {
       } else if (node.name === 'li' && parent.name === 'ol') {
         return (
           <Text key={index} style={textStyle}>
-            {`${Math.ceil((index + 1) / 2)}.`}{' '}
+            {`${Math.ceil((index + 1) / 2)}. `}
             {defaultRenderer(node.children, parent)}
           </Text>
         );
