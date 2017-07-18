@@ -6,8 +6,8 @@ import { colors, fonts } from 'config';
 
 type Props = {
   text: string,
-  open: number,
-  closed: number,
+  openCount: number,
+  closedCount: number,
 };
 
 const styles = StyleSheet.create({
@@ -23,14 +23,18 @@ const styles = StyleSheet.create({
   },
 });
 
-export const RepositorySectionTitle = ({ text, open, closed }: Props) => {
+export const RepositorySectionTitle = ({
+  text,
+  openCount,
+  closedCount,
+}: Props) => {
   return (
     <View style={styles.title}>
       <Text style={styles.titleText}>
         {text}
       </Text>
-      <StateBadge type="open" text={open} style={styles.badge} />
-      <StateBadge type="closed" text={closed} style={styles.badge} />
+      <StateBadge type="open" text={openCount} style={styles.badge} />
+      <StateBadge type="closed" text={closedCount} style={styles.badge} />
     </View>
   );
 };

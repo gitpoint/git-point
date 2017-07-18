@@ -249,8 +249,8 @@ class Repository extends Component {
             title={
               <RepositorySectionTitle
                 text="ISSUES"
-                open={openIssues.length}
-                closed={closedIssues.length}
+                openCount={openIssues.length}
+                closedCount={closedIssues.length}
               />
             }
             noItems={openIssues.length === 0}
@@ -282,8 +282,8 @@ class Repository extends Component {
             title={
               <RepositorySectionTitle
                 text="PULL REQUESTS"
-                open={openPulls.length}
-                closed={closedPulls.length}
+                openCount={openPulls.length}
+                closedCount={closedPulls.length}
               />
             }
             noItems={openPulls.length === 0}
