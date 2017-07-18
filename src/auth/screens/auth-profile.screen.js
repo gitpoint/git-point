@@ -86,23 +86,23 @@ class AuthProfile extends Component {
   };
 
   checkForUpdate = () => {
-    // if (__DEV__) {
-    //   this.setState({ updateText: updateText.notApplicable });
-    // } else {
-    this.setState({ updateText: updateText.checking });
-    codePush
-      .sync({
-        updateDialog: true,
-        installMode: codePush.InstallMode.IMMEDIATE,
-      })
-      .then(update => {
-        if (!update) {
-          this.setState({ updateText: updateText.updated });
-        } else {
-          this.setState({ updateText: updateText.available });
-        }
-      });
-    // }
+    if (__DEV__) {
+      this.setState({ updateText: updateText.notApplicable });
+    } else {
+      this.setState({ updateText: updateText.checking });
+      codePush
+        .sync({
+          updateDialog: true,
+          installMode: codePush.InstallMode.IMMEDIATE,
+        })
+        .then(update => {
+          if (!update) {
+            this.setState({ updateText: updateText.updated });
+          } else {
+            this.setState({ updateText: updateText.available });
+          }
+        });
+    }
   };
 
   render() {
