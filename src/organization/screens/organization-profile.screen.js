@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import Communications from 'react-native-communications';
 
 import {
   ViewContainer,
@@ -11,6 +10,7 @@ import {
   MembersList,
   SectionList,
   ParallaxScroll,
+  EntityInfo,
 } from 'components';
 import { colors, fonts } from 'config';
 import { getOrg, getOrgRepos, getOrgMembers } from '../index';
@@ -95,22 +95,17 @@ class OrganizationProfile extends Component {
               navigation={navigation}
             />}
 
-          {!!(
-            !isPendingOrg &&
-            organization.blog &&
-            organization.blog !== null &&
-            organization.blog !== ''
-          ) &&
-            <SectionList title="LINKS">
+          {!!organization.description &&
+            organization.description !== '' &&
+            <SectionList title="DESCRIPTION">
               <ListItem
-                title="Website"
-                titleStyle={styles.listTitle}
-                leftIcon={{ name: 'link', color: colors.grey }}
-                subtitle={organization.blog}
-                onPress={() => Communications.web(organization.blog)}
-                underlayColor={colors.greyLight}
+                subtitle={organization.description}
+                subtitleStyle={styles.listSubTitle}
+                hideChevron
               />
             </SectionList>}
+
+          {!isPendingOrg && <EntityInfo entity={organization} />}
         </ParallaxScroll>
       </ViewContainer>
     );
