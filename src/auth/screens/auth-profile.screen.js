@@ -24,7 +24,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getUser: () => dispatch(getUser()),
   getOrgs: () => dispatch(getOrgs()),
-  signOut: () => dispatch(signOut()),
+  signOut: callback => dispatch(signOut(callback)),
 });
 
 const styles = StyleSheet.create({
@@ -65,7 +65,7 @@ class AuthProfile extends Component {
     return url.substr(0, prefix.length) === prefix ? url : `http://${url}`;
   };
 
-  signOut() {
+  _signOut() {
     Alert.alert('Sign Out', 'Are you sure you want to sign out?', [
       {
         text: 'No',
@@ -175,7 +175,7 @@ class AuthProfile extends Component {
                 title="Sign Out"
                 titleStyle={styles.logoutTitle}
                 hideChevron
-                onPress={() => this.signOut()}
+                onPress={() => this._signOut()}
               />
             </SectionList>
           </ParallaxScroll>}
