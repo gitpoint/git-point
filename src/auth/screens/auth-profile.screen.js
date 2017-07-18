@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import codePush from 'react-native-code-push';
 
 import {
   ViewContainer,
@@ -36,7 +37,27 @@ const styles = StyleSheet.create({
     color: colors.greyDark,
     ...fonts.fontPrimary,
   },
+  update: {
+    flex: 1,
+    alignItems: 'center',
+    marginVertical: 40,
+  },
+  updateText: {
+    color: colors.grey,
+    fontFamily: 'AvenirNext-Medium',
+  },
+  updateTextSub: {
+    fontSize: 11,
+  },
 });
+
+const updateText = {
+  check: 'Check for update',
+  checking: 'Checking for update...',
+  updated: 'App is up to date',
+  available: 'Update is available!',
+  notApplicable: 'Not applicable in debug mode',
+};
 
 class AuthProfile extends Component {
   props: {
@@ -49,10 +70,32 @@ class AuthProfile extends Component {
     navigation: Object,
   };
 
+  state = {
+    updateText: updateText.check,
+  };
+
   componentDidMount() {
     this.props.getUser();
     this.props.getOrgs();
   }
+
+  checkForUpdate = () => {
+    if (__DEV__) {
+      this.setState({ updateText: updateText.notApplicable });
+    } else {
+      this.setState({ updateText: updateText.checking });
+      codePush
+        .sync({
+          updateDialog: true,
+          installMode: codePush.InstallMode.IMMEDIATE,
+        })
+        .then(update => {
+          this.setState({
+            updateText: update ? updateText.available : updateText.updated,
+          });
+        });
+    }
+  };
 
   render() {
     const { user, orgs, isPendingUser, isPendingOrgs, navigation } = this.props;
@@ -98,6 +141,15 @@ class AuthProfile extends Component {
                 />
               )}
             </SectionList>
+
+            <View style={styles.update}>
+              <Text style={styles.updateText}>GitPoint v1.1</Text>
+              <TouchableOpacity onPress={this.checkForUpdate}>
+                <Text style={[styles.updateText, styles.updateTextSub]}>
+                  {this.state.updateText}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </ParallaxScroll>}
       </ViewContainer>
     );

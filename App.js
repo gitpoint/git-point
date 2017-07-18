@@ -12,6 +12,7 @@ import { persistStore } from 'redux-persist';
 import createEncryptor from 'redux-persist-transform-encrypt';
 import DeviceInfo from 'react-native-device-info';
 import md5 from 'md5';
+import codePush from 'react-native-code-push';
 
 import { colors } from 'config';
 import { GitPoint } from './routes';
@@ -55,6 +56,15 @@ class App extends Component {
         this.setState({ rehydrated: true });
       }
     );
+  }
+
+  componentDidMount() {
+    if (!__DEV__) {
+      codePush.sync({
+        updateDialog: false,
+        installMode: codePush.InstallMode.IMMEDIATE,
+      });
+    }
   }
 
   componentWillUpdate() {
