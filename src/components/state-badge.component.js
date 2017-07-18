@@ -4,6 +4,8 @@ import { Text, View, StyleSheet } from 'react-native';
 import { colors, fonts, normalize } from 'config';
 
 type Props = {
+  issue: Object,
+  isMerged: boolean,
   text: string,
   type: string,
   style: Object,
@@ -32,19 +34,33 @@ const styles = StyleSheet.create({
   },
 });
 
-export const StateBadge = ({ text, type, style }: Props) => {
+export const StateBadge = ({ issue, isMerged, text, type, style }: Props) => {
+  let issueState = type;
+  let issueText = text;
+
+  if (isMerged) {
+    issueState = 'merged';
+    issueText = 'Merged';
+  } else if (issue && issue.state === 'open') {
+    issueState = 'open';
+    issueText = 'Open';
+  } else if (issue && issue.state === 'closed') {
+    issueState = 'closed';
+    issueText = 'Closed';
+  }
+
   return (
     <View
       style={[
         styles.badge,
         style,
-        type === 'merged' && styles.mergedIssue,
-        type === 'open' && styles.openIssue,
-        type === 'closed' && styles.closedIssue,
+        issueState === 'merged' && styles.mergedIssue,
+        issueState === 'open' && styles.openIssue,
+        issueState === 'closed' && styles.closedIssue,
       ]}
     >
       <Text style={styles.text}>
-        {text}
+        {issueText}
       </Text>
     </View>
   );

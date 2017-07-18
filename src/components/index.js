@@ -6,7 +6,6 @@ export * from './comment-list-item.component';
 export * from './diff-blocks.component';
 export * from './issue-description.component';
 export * from './issue-list-item.component';
-export * from './issue-state-badge.component';
 export * from './label-button.component';
 export * from './label-list-item.component';
 export * from './members.component';
