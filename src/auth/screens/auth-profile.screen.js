@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import Communications from 'react-native-communications';
 
 import {
   ViewContainer,
@@ -11,6 +10,7 @@ import {
   LoadingContainer,
   ParallaxScroll,
   UserListItem,
+  EntityInfo,
 } from 'components';
 import { colors, fonts } from 'config';
 import { getUser, getOrgs } from 'auth';
@@ -54,12 +54,6 @@ class AuthProfile extends Component {
     this.props.getOrgs();
   }
 
-  getUserBlog = url => {
-    const prefix = 'http';
-
-    return url.substr(0, prefix.length) === prefix ? url : `http://${url}`;
-  };
-
   render() {
     const { user, orgs, isPendingUser, isPendingOrgs, navigation } = this.props;
     const loading = isPendingUser || isPendingOrgs;
@@ -89,46 +83,7 @@ class AuthProfile extends Component {
                 />
               </SectionList>}
 
-            <SectionList
-              title="EMAIL"
-              noItems={!user.email || user.email === ''}
-              noItemsMessage={'No email associated with account'}
-            >
-              <ListItem
-                title="Email"
-                titleStyle={styles.listTitle}
-                leftIcon={{
-                  name: 'mail',
-                  color: colors.grey,
-                  type: 'octicon',
-                }}
-                subtitle={user.email}
-                subtitleStyle={styles.listSubTitle}
-                onPress={() =>
-                  Communications.email([user.email], null, null, 'Hi!', '')}
-                underlayColor={colors.greyLight}
-              />
-            </SectionList>
-
-            <SectionList
-              title="WEBSITE"
-              noItems={!user.blog || user.blog === ''}
-              noItemsMessage={'No website associated with account'}
-            >
-              <ListItem
-                title="Website"
-                titleStyle={styles.listTitle}
-                leftIcon={{
-                  name: 'link',
-                  color: colors.grey,
-                  type: 'octicon',
-                }}
-                subtitle={user.blog}
-                subtitleStyle={styles.listSubTitle}
-                onPress={() => Communications.web(this.getUserBlog(user.blog))}
-                underlayColor={colors.greyLight}
-              />
-            </SectionList>
+            <EntityInfo entity={user} />
 
             <SectionList
               title="ORGANIZATIONS"
