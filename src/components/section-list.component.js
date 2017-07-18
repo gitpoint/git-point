@@ -6,7 +6,7 @@ import { colors, fonts } from 'config';
 
 type Props = {
   loading: boolean,
-  title: string,
+  title: React.Element,
   children?: React.Element<*>,
   showButton: boolean,
   buttonTitle: string,
@@ -85,12 +85,26 @@ export const SectionList = ({
     listDisplay = children;
   }
 
+  let sectionTitle = '';
+
+  if (typeof title === 'string') {
+    sectionTitle = (
+      <Text style={styles.sectionTitle}>
+        {title}
+      </Text>
+    );
+  } else {
+    sectionTitle = (
+      <View style={styles.sectionTitle}>
+        {title}
+      </View>
+    );
+  }
+
   return (
     <View style={styles.section}>
       <View style={styles.topHeader}>
-        <Text style={styles.sectionTitle}>
-          {title.toUpperCase()}
-        </Text>
+        {sectionTitle}
 
         {showButton &&
           !loading &&
