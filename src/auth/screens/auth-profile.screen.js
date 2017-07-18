@@ -90,11 +90,9 @@ class AuthProfile extends Component {
           installMode: codePush.InstallMode.IMMEDIATE,
         })
         .then(update => {
-          if (!update) {
-            this.setState({ updateText: updateText.updated });
-          } else {
-            this.setState({ updateText: updateText.available });
-          }
+          this.setState({
+            updateText: update ? updateText.available : updateText.updated,
+          });
         });
     }
   };
