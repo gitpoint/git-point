@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Linking,
+} from 'react-native';
 import { ListItem } from 'react-native-elements';
 import codePush from 'react-native-code-push';
 
@@ -48,6 +54,16 @@ const styles = StyleSheet.create({
   },
   updateTextSub: {
     fontSize: 11,
+  },
+  note: {
+    fontSize: 14,
+    color: colors.grey,
+    ...fonts.fontPrimary,
+    textAlign: 'center',
+    padding: 10,
+  },
+  noteLink: {
+    ...fonts.fontPrimaryBold,
   },
 });
 
@@ -140,6 +156,17 @@ class AuthProfile extends Component {
                   navigation={navigation}
                 />
               )}
+              <Text style={styles.note}>
+                Can&apos;t see all your organizations? You may have to
+                <Text
+                  style={styles.noteLink}
+                  onPress={() =>
+                    Linking.openURL('https://github.com/settings/applications')}
+                >
+                  {' '}request approval{' '}
+                </Text>
+                <Text>for them.</Text>
+              </Text>
             </SectionList>
 
             <View style={styles.update}>
