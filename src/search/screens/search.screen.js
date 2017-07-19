@@ -35,18 +35,30 @@ const mapDispatchToProps = dispatch => ({
 const styles = StyleSheet.create({
   searchBarWrapper: {
     flexDirection: 'row',
-    marginTop: Platform.OS === 'ios' ? 20 : 10,
+    marginTop: Platform.OS === 'ios' ? 20 : 5,
   },
   searchContainer: {
     width: Dimensions.get('window').width,
     backgroundColor: colors.white,
     flex: 1,
+    height: 55,
+    justifyContent: 'center',
   },
   list: {
     marginTop: 0,
   },
   buttonGroupContainer: {
     height: 30,
+    ...Platform.select({
+      ios: {
+        marginTop: 0,
+        marginBottom: 10,
+      },
+      android: {
+        marginTop: 5,
+        marginBottom: 12,
+      },
+    }),
   },
   buttonGroupText: {
     ...fonts.fontPrimaryBold,
