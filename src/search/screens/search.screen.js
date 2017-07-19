@@ -227,7 +227,14 @@ class Search extends Component {
         {searchStart &&
           !noUsersFound &&
           !noReposFound &&
-          <View style={styles.listContainer}>
+          <View
+            style={[
+              styles.listContainer,
+              (isPendingSearchUsers || isPendingSearchRepos) && {
+                borderTopWidth: 0,
+              },
+            ]}
+          >
             <FlatList
               data={searchType === 0 ? repos : users}
               keyExtractor={this.keyExtractor}
