@@ -52,10 +52,24 @@ const mapDispatchToProps = dispatch => ({
 const styles = StyleSheet.create({
   buttonGroupWrapper: {
     backgroundColor: colors.greyLight,
-    paddingTop: Platform.OS === 'ios' ? 28 : 15,
+    ...Platform.select({
+      ios: {
+        paddingTop: 30,
+      },
+      android: {
+        paddingTop: 8,
+        height: 55,
+      },
+    }),
   },
   buttonGroupContainer: {
     height: 30,
+    ...Platform.select({
+      ios: {
+        marginTop: 5,
+        marginBottom: 10,
+      },
+    }),
   },
   buttonGroupText: {
     ...fonts.fontPrimaryBold,
