@@ -76,6 +76,9 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     marginBottom: 105,
   },
+  noBorderTopWidth: {
+    borderTopWidth: 0,
+  },
 });
 
 class Search extends Component {
@@ -230,9 +233,8 @@ class Search extends Component {
           <View
             style={[
               styles.listContainer,
-              (isPendingSearchUsers || isPendingSearchRepos) && {
-                borderTopWidth: 0,
-              },
+              (isPendingSearchUsers || isPendingSearchRepos) &&
+                styles.noBorderTopWidth,
             ]}
           >
             <FlatList
