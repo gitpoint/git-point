@@ -81,9 +81,9 @@ const styles = StyleSheet.create({
   },
   languageInfo: {
     flexDirection: 'row',
+    marginTop: 35,
   },
   languageInfoTitle: {
-    // flex: 1,
     color: colors.white,
     paddingLeft: 3,
     fontSize: normalize(10),
@@ -93,6 +93,19 @@ const styles = StyleSheet.create({
 
 export const RepositoryProfile = ({ repository, starred, navigation }: Props) =>
   <View style={styles.container}>
+    {repository.language !== null &&
+      <View style={styles.languageInfo}>
+        <Icon
+          name="fiber-manual-record"
+          size={15}
+          color={languageColors[repository.language]}
+        />
+
+        <Text style={[styles.languageInfoTitle]}>
+          {repository.language}
+        </Text>
+      </View>}
+
     <View style={styles.profile}>
       <Icon
         containerStyle={[
@@ -153,17 +166,4 @@ export const RepositoryProfile = ({ repository, starred, navigation }: Props) =>
         <Text style={styles.unitText}>Forks</Text>
       </View>
     </View>
-
-    {repository.language !== null &&
-      <View style={styles.languageInfo}>
-        <Icon
-          name="fiber-manual-record"
-          size={15}
-          color={languageColors[repository.language]}
-        />
-
-        <Text style={[styles.languageInfoTitle]}>
-          {repository.language}
-        </Text>
-      </View>}
   </View>;
