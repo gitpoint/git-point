@@ -4,10 +4,12 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
   Linking,
+  Platform,
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import { NavigationActions } from 'react-navigation';
+import SafariView from 'react-native-safari-view';
 import codePush from 'react-native-code-push';
 
 import {
@@ -19,8 +21,8 @@ import {
   UserListItem,
   EntityInfo,
 } from 'components';
-import { colors, fonts } from 'config';
-import { getUser, getOrgs } from 'auth';
+import { colors, fonts, normalize } from 'config';
+import { getUser, getOrgs, signOut } from 'auth';
 
 const mapStateToProps = state => ({
   user: state.auth.user,
@@ -30,8 +32,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getUser: () => dispatch(getUser()),
-  getOrgs: () => dispatch(getOrgs()),
+  getUserByDispatch: () => dispatch(getUser()),
+  getOrgsByDispatch: () => dispatch(getOrgs()),
+  signOutByDispatch: () => dispatch(signOut()),
 });
 
 const styles = StyleSheet.create({
@@ -49,21 +52,25 @@ const styles = StyleSheet.create({
     marginVertical: 40,
   },
   updateText: {
-    color: colors.grey,
-    fontFamily: 'AvenirNext-Medium',
+    color: colors.greyDark,
+    ...fonts.fontPrimary,
   },
   updateTextSub: {
-    fontSize: 11,
+    fontSize: normalize(11),
   },
   note: {
-    fontSize: 14,
-    color: colors.grey,
-    ...fonts.fontPrimary,
+    fontSize: normalize(11),
+    color: colors.primaryDark,
+    ...fonts.fontPrimaryLight,
     textAlign: 'center',
     padding: 10,
   },
   noteLink: {
-    ...fonts.fontPrimaryBold,
+    ...fonts.fontPrimarySemiBold,
+  },
+  logoutTitle: {
+    color: colors.red,
+    ...fonts.fontPrimary,
   },
 });
 
@@ -77,8 +84,9 @@ const updateText = {
 
 class AuthProfile extends Component {
   props: {
-    getUser: Function,
-    getOrgs: Function,
+    getUserByDispatch: Function,
+    getOrgsByDispatch: Function,
+    signOutByDispatch: Function,
     user: Object,
     orgs: Array,
     isPendingUser: boolean,
@@ -91,8 +99,8 @@ class AuthProfile extends Component {
   };
 
   componentDidMount() {
-    this.props.getUser();
-    this.props.getOrgs();
+    this.props.getUserByDispatch();
+    this.props.getOrgsByDispatch();
   }
 
   checkForUpdate = () => {
@@ -110,6 +118,34 @@ class AuthProfile extends Component {
             updateText: update ? updateText.available : updateText.updated,
           });
         });
+    }
+  };
+
+  signOut() {
+    const { signOutByDispatch, navigation } = this.props;
+
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      key: null,
+      actions: [NavigationActions.navigate({ routeName: 'Login' })],
+    });
+
+    signOutByDispatch().then(() => {
+      const url = 'https://github.com/logout';
+
+      navigation.dispatch(resetAction);
+      this.openLink(url);
+    });
+  }
+
+  openLink = url => {
+    if (Platform.OS === 'ios') {
+      SafariView.show({
+        url,
+        fromBottom: true,
+      });
+    } else {
+      Linking.openURL(url);
     }
   };
 
@@ -157,26 +193,35 @@ class AuthProfile extends Component {
                 />
               )}
               <Text style={styles.note}>
-                Can&apos;t see all your organizations? You may have to
+                Can&apos;t see all your organizations?{'\n'}
                 <Text
                   style={styles.noteLink}
                   onPress={() =>
-                    Linking.openURL('https://github.com/settings/applications')}
+                    this.openLink('https://github.com/settings/applications')}
                 >
-                  {' '}request approval{' '}
+                  You may have to request approval for them.
                 </Text>
-                <Text>for them.</Text>
               </Text>
             </SectionList>
 
-            <View style={styles.update}>
+            <SectionList>
+              <ListItem
+                title="Sign Out"
+                titleStyle={styles.logoutTitle}
+                hideChevron
+                onPress={() => this.signOut()}
+              />
+            </SectionList>
+
+            <TouchableOpacity
+              style={styles.update}
+              onPress={this.checkForUpdate}
+            >
               <Text style={styles.updateText}>GitPoint v1.1</Text>
-              <TouchableOpacity onPress={this.checkForUpdate}>
-                <Text style={[styles.updateText, styles.updateTextSub]}>
-                  {this.state.updateText}
-                </Text>
-              </TouchableOpacity>
-            </View>
+              <Text style={[styles.updateText, styles.updateTextSub]}>
+                {this.state.updateText}
+              </Text>
+            </TouchableOpacity>
           </ParallaxScroll>}
       </ViewContainer>
     );
