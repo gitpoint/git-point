@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, ScrollView, RefreshControl } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Linking,
+  ScrollView, 
+  RefreshControl,
+} from 'react-native';
 import { ListItem } from 'react-native-elements';
-import Communications from 'react-native-communications';
-
+import codePush from 'react-native-code-push';
 import {
   ViewContainer,
   UserProfile,
@@ -11,6 +19,7 @@ import {
   LoadingContainer,
   ParallaxScroll,
   UserListItem,
+  EntityInfo,
 } from 'components';
 import { colors, fonts } from 'config';
 import { getUser, getOrgs } from 'auth';
@@ -36,7 +45,37 @@ const styles = StyleSheet.create({
     color: colors.greyDark,
     ...fonts.fontPrimary,
   },
+  update: {
+    flex: 1,
+    alignItems: 'center',
+    marginVertical: 40,
+  },
+  updateText: {
+    color: colors.grey,
+    fontFamily: 'AvenirNext-Medium',
+  },
+  updateTextSub: {
+    fontSize: 11,
+  },
+  note: {
+    fontSize: 14,
+    color: colors.grey,
+    ...fonts.fontPrimary,
+    textAlign: 'center',
+    padding: 10,
+  },
+  noteLink: {
+    ...fonts.fontPrimaryBold,
+  },
 });
+
+const updateText = {
+  check: 'Check for update',
+  checking: 'Checking for update...',
+  updated: 'App is up to date',
+  available: 'Update is available!',
+  notApplicable: 'Not applicable in debug mode',
+};
 
 class AuthProfile extends Component {
   props: {
@@ -49,15 +88,31 @@ class AuthProfile extends Component {
     navigation: Object,
   };
 
+  state = {
+    updateText: updateText.check,
+  };
+
   componentDidMount() {
     this.props.getUser();
     this.props.getOrgs();
   }
 
-  getUserBlog = url => {
-    const prefix = 'http';
-
-    return url.substr(0, prefix.length) === prefix ? url : `http://${url}`;
+  checkForUpdate = () => {
+    if (__DEV__) {
+      this.setState({ updateText: updateText.notApplicable });
+    } else {
+      this.setState({ updateText: updateText.checking });
+      codePush
+        .sync({
+          updateDialog: true,
+          installMode: codePush.InstallMode.IMMEDIATE,
+        })
+        .then(update => {
+          this.setState({
+            updateText: update ? updateText.available : updateText.updated,
+          });
+        });
+    }
   };
 
   refreshProfile = () => {
@@ -123,41 +178,42 @@ class AuthProfile extends Component {
                 />
               </SectionList>
 
-              <SectionList
-                title="WEBSITE"
-                noItems={!user.blog || user.blog === ''}
-                noItemsMessage={'No website associated with account'}
-              >
-                <ListItem
-                  title="Website"
-                  titleStyle={styles.listTitle}
-                  leftIcon={{
-                    name: 'link',
-                    color: colors.grey,
-                    type: 'octicon',
-                  }}
-                  subtitle={user.blog}
-                  subtitleStyle={styles.listSubTitle}
-                  onPress={() =>
-                    Communications.web(this.getUserBlog(user.blog))}
-                  underlayColor={colors.greyLight}
-                />
-              </SectionList>
+            <EntityInfo entity={user} />
 
-              <SectionList
-                title="ORGANIZATIONS"
-                noItems={orgs.length === 0}
-                noItemsMessage={'No organizations'}
-              >
-                {orgs.map(item =>
-                  <UserListItem
-                    key={item.id}
-                    user={item}
-                    navigation={navigation}
-                  />
-                )}
-              </SectionList>
-            </ParallaxScroll>}
+            <SectionList
+              title="ORGANIZATIONS"
+              noItems={orgs.length === 0}
+              noItemsMessage={'No organizations'}
+            >
+              {orgs.map(item =>
+                <UserListItem
+                  key={item.id}
+                  user={item}
+                  navigation={navigation}
+                />
+              )}
+              <Text style={styles.note}>
+                Can&apos;t see all your organizations? You may have to
+                <Text
+                  style={styles.noteLink}
+                  onPress={() =>
+                    Linking.openURL('https://github.com/settings/applications')}
+                >
+                  {' '}request approval{' '}
+                </Text>
+                <Text>for them.</Text>
+              </Text>
+            </SectionList>
+
+            <View style={styles.update}>
+              <Text style={styles.updateText}>GitPoint v1.1</Text>
+              <TouchableOpacity onPress={this.checkForUpdate}>
+                <Text style={[styles.updateText, styles.updateTextSub]}>
+                  {this.state.updateText}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </ParallaxScroll>}
         </ScrollView>
       </ViewContainer>
     );

@@ -3,7 +3,7 @@ import { StyleSheet, TouchableHighlight, View } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import moment from 'moment';
 
-import { IssueStateBadge } from 'components';
+import { StateBadge } from 'components';
 import { colors, fonts } from 'config';
 
 type Props = {
@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
     ...fonts.fontPrimary,
   },
   badge: {
-    flex: 0.15,
     alignItems: 'flex-end',
     justifyContent: 'center',
   },
@@ -64,6 +63,6 @@ export const IssueListItem = ({ type, issue, navigation }: Props) =>
         hideChevron
         titleStyle={styles.title}
       />
-      <IssueStateBadge style={styles.badge} issue={issue} />
+      <StateBadge style={styles.badge} issue={issue} />
     </View>
   </TouchableHighlight>;

@@ -135,7 +135,7 @@ export const getRepositories = user => {
       .then(data => {
         dispatch({
           type: GET_REPOSITORIES.SUCCESS,
-          payload: data,
+          payload: data.filter(repo => repo.permissions.admin),
         });
       })
       .catch(error => {
@@ -201,7 +201,7 @@ export const searchUserRepos = (query, user) => {
       'repositories',
       query,
       accessToken,
-      `+user:${user.login}`
+      `+user:${user.login}+fork:true`
     )
       .then(data => {
         dispatch({

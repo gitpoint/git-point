@@ -16,6 +16,7 @@ import {
   IssueListItem,
   LoadingMembersList,
   LoadingModal,
+  RepositorySectionTitle,
 } from 'components';
 import { colors, fonts } from 'config';
 import {
@@ -145,6 +146,12 @@ class Repository extends Component {
       // eslint-disable-next-line no-prototype-builtins
       return !issue.hasOwnProperty('pull_request');
     });
+
+    const openPulls = pulls.filter(pull => pull.state === 'open');
+    const closedPulls = pulls.filter(pull => pull.state === 'closed');
+
+    const openIssues = pureIssues.filter(issue => issue.state === 'open');
+    const closedIssues = pureIssues.filter(issue => issue.state === 'closed');
 
     const repositoryActions = [starred ? '★ Unstar' : '★ Star'];
     const showFork =
@@ -286,39 +293,72 @@ class Repository extends Component {
                   />
                 )}
             </SectionList>
+          <SectionList
+            loading={isPendingIssues}
+            title={
+              <RepositorySectionTitle
+                text="ISSUES"
+                openCount={openIssues.length}
+                closedCount={closedIssues.length}
+              />
+            }
+            noItems={openIssues.length === 0}
+            noItemsMessage={
+              pureIssues.length === 0 ? 'No issues' : 'No open issues'
+            }
+            showButton={pureIssues.length > 0}
+            buttonTitle="View All"
+            buttonAction={() =>
+              navigation.navigate('IssueList', {
+                type: 'issue',
+                issues: pureIssues,
+              })}
+          >
+            {openIssues
+              .slice(0, 3)
+              .map(item =>
+                <IssueListItem
+                  key={item.id}
+                  type="issue"
+                  issue={item}
+                  navigation={navigation}
+                />
+              )}
+          </SectionList>
 
-            <SectionList
-              loading={isPendingIssues}
-              title="PULL REQUESTS"
-              noItems={
-                pulls.filter(issue => issue.state === 'open').length === 0
-              }
-              noItemsMessage={
-                pulls.length === 0
-                  ? 'No pull requests'
-                  : 'No open pull requests'
-              }
-              showButton={pulls.length > 0}
-              buttonTitle="View All"
-              buttonAction={() =>
-                navigation.navigate('PullList', {
-                  type: 'pull',
-                  issues: pulls,
-                })}
-            >
-              {pulls
-                .filter(issue => issue.state === 'open')
-                .slice(0, 3)
-                .map(item =>
-                  <IssueListItem
-                    key={item.id}
-                    type="pull"
-                    issue={item}
-                    navigation={navigation}
-                  />
-                )}
-            </SectionList>
-          </ParallaxScroll>
+          <SectionList
+            loading={isPendingIssues}
+            title={
+              <RepositorySectionTitle
+                text="PULL REQUESTS"
+                openCount={openPulls.length}
+                closedCount={closedPulls.length}
+              />
+            }
+            noItems={openPulls.length === 0}
+            noItemsMessage={
+              pulls.length === 0 ? 'No pull requests' : 'No open pull requests'
+            }
+            showButton={pulls.length > 0}
+            buttonTitle="View All"
+            buttonAction={() =>
+              navigation.navigate('PullList', {
+                type: 'pull',
+                issues: pulls,
+              })}
+          >
+            {openPulls
+              .slice(0, 3)
+              .map(item =>
+                <IssueListItem
+                  key={item.id}
+                  type="pull"
+                  issue={item}
+                  navigation={navigation}
+                />
+              )}
+          </SectionList>
+        </ParallaxScroll>
 
           <ActionSheet
             ref={o => {

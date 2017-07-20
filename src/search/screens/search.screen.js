@@ -35,18 +35,30 @@ const mapDispatchToProps = dispatch => ({
 const styles = StyleSheet.create({
   searchBarWrapper: {
     flexDirection: 'row',
-    marginTop: Platform.OS === 'ios' ? 20 : 10,
+    marginTop: Platform.OS === 'ios' ? 20 : 5,
   },
   searchContainer: {
     width: Dimensions.get('window').width,
     backgroundColor: colors.white,
     flex: 1,
+    height: 55,
+    justifyContent: 'center',
   },
   list: {
     marginTop: 0,
   },
   buttonGroupContainer: {
     height: 30,
+    ...Platform.select({
+      ios: {
+        marginTop: 0,
+        marginBottom: 10,
+      },
+      android: {
+        marginTop: 5,
+        marginBottom: 12,
+      },
+    }),
   },
   buttonGroupText: {
     ...fonts.fontPrimaryBold,
@@ -75,6 +87,9 @@ const styles = StyleSheet.create({
     borderTopColor: colors.greyLight,
     borderTopWidth: 1,
     marginBottom: 105,
+  },
+  noBorderTopWidth: {
+    borderTopWidth: 0,
   },
 });
 
@@ -178,6 +193,9 @@ class Search extends Component {
       users.length === 0 &&
       searchType === 1;
 
+    const isPending = isPendingSearchUsers || isPendingSearchRepos;
+    const noResults = !noUsersFound && !noReposFound;
+
     return (
       <ViewContainer>
         <View>
@@ -225,9 +243,10 @@ class Search extends Component {
           />}
 
         {searchStart &&
-          !noUsersFound &&
-          !noReposFound &&
-          <View style={styles.listContainer}>
+          noResults &&
+          <View
+            style={[styles.listContainer, isPending && styles.noBorderTopWidth]}
+          >
             <FlatList
               data={searchType === 0 ? repos : users}
               keyExtractor={this.keyExtractor}

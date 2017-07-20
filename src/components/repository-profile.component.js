@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Platform } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 import { emojifyText } from 'utils';
-import { colors, fonts, normalize } from 'config';
+import { colors, languageColors, fonts, normalize } from 'config';
 
 type Props = {
   repository: Object,
@@ -79,10 +79,33 @@ const styles = StyleSheet.create({
   icon: {
     paddingBottom: 20,
   },
+  languageInfo: {
+    flexDirection: 'row',
+    marginTop: 35,
+  },
+  languageInfoTitle: {
+    color: colors.white,
+    paddingLeft: 3,
+    fontSize: normalize(10),
+    ...fonts.fontPrimary,
+  },
 });
 
 export const RepositoryProfile = ({ repository, starred, navigation }: Props) =>
   <View style={styles.container}>
+    {repository.language !== null &&
+      <View style={styles.languageInfo}>
+        <Icon
+          name="fiber-manual-record"
+          size={15}
+          color={languageColors[repository.language]}
+        />
+
+        <Text style={[styles.languageInfoTitle]}>
+          {repository.language}
+        </Text>
+      </View>}
+
     <View style={styles.profile}>
       <Icon
         containerStyle={[
