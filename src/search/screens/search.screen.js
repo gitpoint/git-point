@@ -88,6 +88,9 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     marginBottom: 105,
   },
+  noBorderTopWidth: {
+    borderTopWidth: 0,
+  },
 });
 
 class Search extends Component {
@@ -190,6 +193,9 @@ class Search extends Component {
       users.length === 0 &&
       searchType === 1;
 
+    const isPending = isPendingSearchUsers || isPendingSearchRepos;
+    const noResults = !noUsersFound && !noReposFound;
+
     return (
       <ViewContainer>
         <View>
@@ -237,9 +243,10 @@ class Search extends Component {
           />}
 
         {searchStart &&
-          !noUsersFound &&
-          !noReposFound &&
-          <View style={styles.listContainer}>
+          noResults &&
+          <View
+            style={[styles.listContainer, isPending && styles.noBorderTopWidth]}
+          >
             <FlatList
               data={searchType === 0 ? repos : users}
               keyExtractor={this.keyExtractor}
