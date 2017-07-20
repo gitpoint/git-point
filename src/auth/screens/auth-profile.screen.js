@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
   Linking,
-  ScrollView, 
+  ScrollView,
   RefreshControl,
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
@@ -156,63 +156,44 @@ class AuthProfile extends Component {
                   />
                 </SectionList>}
 
+              <EntityInfo entity={user} />
+
               <SectionList
-                title="EMAIL"
-                noItems={!user.email || user.email === ''}
-                noItemsMessage={'No email associated with account'}
+                title="ORGANIZATIONS"
+                noItems={orgs.length === 0}
+                noItemsMessage={'No organizations'}
               >
-                <ListItem
-                  title="Email"
-                  titleStyle={styles.listTitle}
-                  leftIcon={{
-                    name: 'mail',
-                    color: colors.grey,
-                    type: 'octicon',
-                  }}
-                  subtitle={user.email}
-                  subtitleStyle={styles.listSubTitle}
-                  onPress={() =>
-                    Communications.email([user.email], null, null, 'Hi!', '')}
-                  underlayColor={colors.greyLight}
-                />
+                {orgs.map(item =>
+                  <UserListItem
+                    key={item.id}
+                    user={item}
+                    navigation={navigation}
+                  />
+                )}
+                <Text style={styles.note}>
+                  Can&apos;t see all your organizations? You may have to
+                  <Text
+                    style={styles.noteLink}
+                    onPress={() =>
+                      Linking.openURL(
+                        'https://github.com/settings/applications'
+                      )}
+                  >
+                    {' '}request approval{' '}
+                  </Text>
+                  <Text>for them.</Text>
+                </Text>
               </SectionList>
 
-            <EntityInfo entity={user} />
-
-            <SectionList
-              title="ORGANIZATIONS"
-              noItems={orgs.length === 0}
-              noItemsMessage={'No organizations'}
-            >
-              {orgs.map(item =>
-                <UserListItem
-                  key={item.id}
-                  user={item}
-                  navigation={navigation}
-                />
-              )}
-              <Text style={styles.note}>
-                Can&apos;t see all your organizations? You may have to
-                <Text
-                  style={styles.noteLink}
-                  onPress={() =>
-                    Linking.openURL('https://github.com/settings/applications')}
-                >
-                  {' '}request approval{' '}
-                </Text>
-                <Text>for them.</Text>
-              </Text>
-            </SectionList>
-
-            <View style={styles.update}>
-              <Text style={styles.updateText}>GitPoint v1.1</Text>
-              <TouchableOpacity onPress={this.checkForUpdate}>
-                <Text style={[styles.updateText, styles.updateTextSub]}>
-                  {this.state.updateText}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </ParallaxScroll>}
+              <View style={styles.update}>
+                <Text style={styles.updateText}>GitPoint v1.1</Text>
+                <TouchableOpacity onPress={this.checkForUpdate}>
+                  <Text style={[styles.updateText, styles.updateTextSub]}>
+                    {this.state.updateText}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </ParallaxScroll>}
         </ScrollView>
       </ViewContainer>
     );
