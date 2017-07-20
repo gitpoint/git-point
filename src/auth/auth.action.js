@@ -35,16 +35,22 @@ export const auth = (code, state) => {
   };
 };
 
-export const signOut = callback => {
+export const signOut = () => {
   return dispatch => {
     dispatch({ type: LOGOUT.PENDING });
 
-    AsyncStorage.clear(() => {
-      dispatch({
-        type: LOGOUT.SUCCESS,
+    return AsyncStorage.clear()
+      .then(() => {
+        dispatch({
+          type: LOGOUT.SUCCESS,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: LOGOUT.ERROR,
+          payload: error,
+        });
       });
-      callback();
-    });
   };
 };
 
