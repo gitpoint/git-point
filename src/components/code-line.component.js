@@ -130,6 +130,7 @@ export class CodeLine extends Component {
                 CodeTag={Text}
                 codeTagProps={{ style: styles.codeLine }}
                 customStyle={customStyle}
+                fontFamily={fonts.fontCode.fontFamily}
               >
                 {change.content}
               </SyntaxHighlighter>}
