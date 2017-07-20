@@ -32,7 +32,7 @@ Please feel free to take on _any_ issue that's currently in the issue list. To s
     - `yarn start:ios` to start the packager and run the app in the iOS simulator (`yarn start:ios:logger` will boot the application with [redux-logger](https://github.com/evgenyrodionov/redux-logger))
     - `yarn start:android` to start the packager and run the app in the the Android device/emulator (`yarn start:android:logger` will boot the application with [redux-logger](https://github.com/evgenyrodionov/redux-logger))
 9. Work your magic! Run the app on an [actual device](http://facebook.github.io/react-native/releases/0.46/docs/running-on-device.html#running-on-device) as well to test your feature/fix.
-10. Add yourself to the [contributor's list](https://github.com/housseindjirdeh/git-point#contributors) by doing `yarn contributors:add`
+10. Add yourself to the [contributor's list](https://github.com/gitpoint/git-point#contributors) by doing `yarn contributors:add`
 11. Commit your changes and reference the issue you're addressing (for example: `git commit -am 'Commit message. Closes #5'`)
 12. Push your branch to your fork
 13. Create a pull request from your branch on your fork to `master` on this repo
