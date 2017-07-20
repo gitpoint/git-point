@@ -7,6 +7,7 @@ import {
   ScrollView,
   StyleSheet,
 } from 'react-native';
+import FuzzySearch from 'fuzzy-search';
 
 import { fonts, normalize } from 'config';
 
@@ -72,10 +73,20 @@ export class MentionArea extends Component {
     const { text, trigger } = this.props;
 
     this.props.updateText(
-      `${text.slice(0, text.lastIndexOf(trigger))} @${user} `
+      `${text.slice(0, text.lastIndexOf(trigger) - 1)} @${user} ```
     );
 
-    if (close) this.closeSuggestionsPanel();
+    if (close) {
+      this.stopTracking();
+    }
+  }
+
+  getSearchedUsers() {
+    const { users, text, trigger } = this.props;
+
+    const base = new FuzzySearch(users, [], { sort: true });
+
+    return base.search(text.slice(text.lastIndexOf(trigger) + 1, text.length));
   }
 
   startTracking() {
@@ -103,6 +114,23 @@ export class MentionArea extends Component {
     }).start();
   }
 
+  updateHeight(num) {
+    const newValue = num * 50;
+
+    if (newValue < this.props.height) {
+      Animated.timing(this.state.height, {
+        duration: 100,
+        toValue: newValue,
+      }).start();
+    } else {
+      Animated.spring(this.state.height, {
+        duration: 100,
+        toValue: this.props.height,
+        friction: 4,
+      }).start();
+    }
+  }
+
   renderSuggestionsRow(users) {
     return users.map(user =>
       <TouchableHighlight
@@ -121,12 +149,19 @@ export class MentionArea extends Component {
   }
 
   render() {
+    let searched = [];
+
+    if (this.state.tracking) {
+      searched = this.getSearchedUsers();
+      this.updateHeight(searched.length);
+    }
+
     return (
       <Animated.View
         style={[{ ...this.props.style }, { height: this.state.height }]}
       >
         <ScrollView keyboardShouldPersistTaps="always">
-          {this.renderSuggestionsRow(this.props.users)}
+          {this.state.tracking && this.renderSuggestionsRow(searched)}
         </ScrollView>
       </Animated.View>
     );

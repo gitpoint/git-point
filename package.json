@@ -38,6 +38,8 @@
     "lint-pass"
   ],
   "dependencies": {
+    "fuzzy-search": "^1.4.0",
+    "lodash.uniqby": "^4.7.0",
     "lowlight": "^1.5.0",
     "md5": "^2.2.1",
     "moment": "^2.17.1",
@@ -66,8 +68,7 @@
     "redux-logger": "^2.7.4",
     "redux-persist": "^4.3.1",
     "redux-persist-transform-encrypt": "^1.0.2",
-    "redux-thunk": "^2.2.0",
-    "lodash.uniqby": "^4.7.0"
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "all-contributors-cli": "^4.3.0",
