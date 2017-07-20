@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, ScrollView, RefreshControl } from 'react-native';
 import {
   StyleSheet,
   Text,
