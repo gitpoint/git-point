@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
   Text,
   View,
-  TouchableHighlight,
+  TouchableOpacity,
   Animated,
   ScrollView,
   StyleSheet,
@@ -24,7 +24,11 @@ const styles = StyleSheet.create({
   },
   displayNameText: {
     fontSize: normalize(12),
-    ...fonts.fontPrimaryBold,
+    ...fonts.fontPrimary,
+  },
+  realNameText: {
+    fontSize: normalize(12),
+    ...fonts.fontPrimarySemiBold,
   },
 });
 
@@ -73,7 +77,7 @@ export class MentionArea extends Component {
     const { text, trigger } = this.props;
 
     this.props.updateText(
-      `${text.slice(0, text.lastIndexOf(trigger) - 1)} @${user} ```
+      `${text.slice(0, text.lastIndexOf(trigger) - 1)} @${user} `
     );
 
     if (close) {
@@ -103,7 +107,7 @@ export class MentionArea extends Component {
     Animated.spring(this.state.height, {
       duration: 100,
       toValue: this.props.height,
-      friction: 4,
+      friction: 10,
     }).start();
   }
 
@@ -133,7 +137,7 @@ export class MentionArea extends Component {
 
   renderSuggestionsRow(users) {
     return users.map(user =>
-      <TouchableHighlight
+      <TouchableOpacity
         key={user}
         onPress={() => this.onSuggestionTap(user, true)}
       >
@@ -144,7 +148,7 @@ export class MentionArea extends Component {
             </Text>
           </View>
         </View>
-      </TouchableHighlight>
+      </TouchableOpacity>
     );
   }
 
