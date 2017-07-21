@@ -115,7 +115,7 @@ class AuthProfile extends Component {
     }
   };
 
-  signOut() {
+  signOutUser() {
     const { signOutByDispatch, navigation } = this.props;
 
     const resetAction = NavigationActions.reset({
@@ -128,7 +128,7 @@ class AuthProfile extends Component {
       const url = 'https://github.com/logout';
 
       navigation.dispatch(resetAction);
-      this.openLink(url);
+      openURLInView(url);
     });
   }
 
@@ -192,7 +192,7 @@ class AuthProfile extends Component {
                 title="Sign Out"
                 titleStyle={styles.logoutTitle}
                 hideChevron
-                onPress={() => this.signOut()}
+                onPress={() => this.signOutUser()}
               />
             </SectionList>
 
