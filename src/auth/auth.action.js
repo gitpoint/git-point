@@ -1,3 +1,4 @@
+import { AsyncStorage } from 'react-native';
 import uniqby from 'lodash.uniqby';
 import {
   fetchAccessToken,
@@ -6,7 +7,13 @@ import {
   fetchUserOrgs,
   fetchUserEvents,
 } from 'api';
-import { LOGIN, GET_AUTH_USER, GET_AUTH_ORGS, GET_EVENTS } from './auth.type';
+import {
+  LOGIN,
+  LOGOUT,
+  GET_AUTH_USER,
+  GET_AUTH_ORGS,
+  GET_EVENTS,
+} from './auth.type';
 
 export const auth = (code, state) => {
   return dispatch => {
@@ -25,6 +32,19 @@ export const auth = (code, state) => {
           payload: error,
         });
       });
+  };
+};
+
+export const signOut = callback => {
+  return dispatch => {
+    dispatch({ type: LOGOUT.PENDING });
+
+    AsyncStorage.clear(() => {
+      dispatch({
+        type: LOGOUT.SUCCESS,
+      });
+      callback();
+    });
   };
 };
 

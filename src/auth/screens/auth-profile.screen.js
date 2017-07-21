@@ -8,6 +8,7 @@ import {
   Linking,
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import { StyleSheet, Alert, Text, TouchableOpacity, View } from 'react-native';
 import codePush from 'react-native-code-push';
 
 import {
@@ -20,7 +21,7 @@ import {
   EntityInfo,
 } from 'components';
 import { colors, fonts } from 'config';
-import { getUser, getOrgs } from 'auth';
+import { getUser, getOrgs, signOut } from 'auth';
 
 const mapStateToProps = state => ({
   user: state.auth.user,
@@ -32,6 +33,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getUser: () => dispatch(getUser()),
   getOrgs: () => dispatch(getOrgs()),
+  signOut: callback => dispatch(signOut(callback)),
 });
 
 const styles = StyleSheet.create({
@@ -41,6 +43,10 @@ const styles = StyleSheet.create({
   },
   listSubTitle: {
     color: colors.greyDark,
+    ...fonts.fontPrimary,
+  },
+  logoutTitle: {
+    color: colors.red,
     ...fonts.fontPrimary,
   },
   update: {
@@ -79,6 +85,7 @@ class AuthProfile extends Component {
   props: {
     getUser: Function,
     getOrgs: Function,
+    signOut: Function,
     user: Object,
     orgs: Array,
     isPendingUser: boolean,
@@ -112,6 +119,27 @@ class AuthProfile extends Component {
         });
     }
   };
+
+  _signOut() {
+    Alert.alert('Sign Out', 'Are you sure you want to sign out?', [
+      {
+        text: 'No',
+      },
+      {
+        text: 'Yes',
+        style: 'destructive',
+        onPress: () => {
+          this._clearStoreAndSignOut();
+        },
+      },
+    ]);
+  }
+
+  _clearStoreAndSignOut() {
+    this.props.signOut(() => {
+      this.props.navigation.navigate('Login');
+    });
+  }
 
   render() {
     const { user, orgs, isPendingUser, isPendingOrgs, navigation } = this.props;
@@ -169,6 +197,14 @@ class AuthProfile extends Component {
               </Text>
             </SectionList>
 
+            <SectionList title="Sign Out">
+              <ListItem
+                title="Sign Out"
+                titleStyle={styles.logoutTitle}
+                hideChevron
+                onPress={() => this._signOut()}
+              />
+            </SectionList>
             <View style={styles.update}>
               <Text style={styles.updateText}>GitPoint v1.1</Text>
               <TouchableOpacity onPress={this.checkForUpdate}>

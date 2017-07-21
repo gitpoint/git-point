@@ -1,4 +1,10 @@
-import { LOGIN, GET_AUTH_USER, GET_AUTH_ORGS, GET_EVENTS } from './auth.type';
+import {
+  LOGIN,
+  LOGOUT,
+  GET_AUTH_USER,
+  GET_AUTH_ORGS,
+  GET_EVENTS,
+} from './auth.type';
 
 const initialState = {
   isLoggingIn: false,
@@ -34,6 +40,13 @@ export const authReducer = (state = initialState, action = {}) => {
         isLoggingIn: false,
         isAuthenticated: false,
         error: action.payload,
+      };
+    case LOGOUT.SUCCESS:
+      return {
+        ...state,
+        isLoggingIn: false,
+        isAuthenticated: false,
+        accessToken: null,
       };
     case GET_AUTH_USER.PENDING:
       return {
