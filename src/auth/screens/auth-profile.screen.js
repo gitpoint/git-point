@@ -1,15 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  Linking,
-  Platform,
-} from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { NavigationActions } from 'react-navigation';
-import SafariView from 'react-native-safari-view';
 import codePush from 'react-native-code-push';
 
 import {
@@ -23,6 +16,7 @@ import {
 } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { getUser, getOrgs, signOut } from 'auth';
+import { openURLInView } from 'utils';
 
 const mapStateToProps = state => ({
   user: state.auth.user,
@@ -44,10 +38,6 @@ const styles = StyleSheet.create({
   },
   listSubTitle: {
     color: colors.greyDark,
-    ...fonts.fontPrimary,
-  },
-  logoutTitle: {
-    color: colors.red,
     ...fonts.fontPrimary,
   },
   update: {
@@ -142,17 +132,6 @@ class AuthProfile extends Component {
     });
   }
 
-  openLink = url => {
-    if (Platform.OS === 'ios') {
-      SafariView.show({
-        url,
-        fromBottom: true,
-      });
-    } else {
-      Linking.openURL(url);
-    }
-  };
-
   render() {
     const { user, orgs, isPendingUser, isPendingOrgs, navigation } = this.props;
     const loading = isPendingUser || isPendingOrgs;
@@ -201,7 +180,7 @@ class AuthProfile extends Component {
                 <Text
                   style={styles.noteLink}
                   onPress={() =>
-                    this.openLink('https://github.com/settings/applications')}
+                    openURLInView('https://github.com/settings/applications')}
                 >
                   You may have to request approval for them.
                 </Text>
