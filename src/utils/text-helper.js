@@ -7,5 +7,5 @@ export const emojifyText = text => {
 };
 
 export const numbersText = count => {
-  return count > 999 ? (count / 1000).toFixed(1) + thousandUnit : count;
+  return count >= 1000 ? (count / 1000).toFixed(1) + thousandUnit : count;
 };
