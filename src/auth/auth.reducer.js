@@ -8,6 +8,7 @@ import {
 
 const initialState = {
   isLoggingIn: false,
+  isSigningOut: false,
   isAuthenticated: false,
   accessToken: null,
   user: {},
@@ -41,12 +42,20 @@ export const authReducer = (state = initialState, action = {}) => {
         isAuthenticated: false,
         error: action.payload,
       };
-    case LOGOUT.SUCCESS:
+    case LOGOUT.PENDING:
       return {
         ...state,
-        isLoggingIn: false,
-        isAuthenticated: false,
-        accessToken: null,
+        isSigningOut: true,
+      };
+    case LOGOUT.SUCCESS:
+      return {
+        ...initialState,
+      };
+    case LOGOUT.FAILURE:
+      return {
+        ...state,
+        isSigningOut: false,
+        error: action.payload,
       };
     case GET_AUTH_USER.PENDING:
       return {
