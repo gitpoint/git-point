@@ -68,7 +68,7 @@ export class MentionArea extends Component {
       this.startTracking();
     }
 
-    if (this.state.tracking && text[text.length - 1] === ' ') {
+    if (this.state.tracking && (text[text.length - 1] === ' ' || text === '')) {
       this.stopTracking();
     }
   }
@@ -76,9 +76,13 @@ export class MentionArea extends Component {
   onSuggestionTap(user, close) {
     const { text, trigger } = this.props;
 
-    this.props.updateText(
-      `${text.slice(0, text.lastIndexOf(trigger) - 1)} @${user} `
-    );
+    if (text.slice(0, text.lastIndexOf(trigger)) === '') {
+      this.props.updateText(`@${user} `);
+    } else {
+      this.props.updateText(
+        `${text.slice(0, text.lastIndexOf(trigger) - 1)} @${user} `
+      );
+    }
 
     if (close) {
       this.stopTracking();
