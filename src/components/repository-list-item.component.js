@@ -80,7 +80,9 @@ const renderTitle = repository =>
       />
 
       <Text style={[styles.extraInfoSubject, { paddingTop: 2 }]}>
-        {repository.stargazers_count}
+        {repository.stargazers_count > 999
+          ? (repository.stargazers_count / 1000).toFixed(1) + 'k'
+          : repository.stargazers_count}
       </Text>
 
       {repository.language !== null &&
