@@ -40,8 +40,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getIssueCommentsByDispatch: issueCommentsURL =>
-    dispatch(getIssueComments(issueCommentsURL)),
+  getIssueCommentsByDispatch: url => dispatch(getIssueComments(url)),
   postIssueCommentByDispatch: (body, owner, repoName, issueNum) =>
     dispatch(postIssueComment(body, owner, repoName, issueNum)),
   getPullRequestDetailsByDispatch: url => dispatch(getPullRequestDetails(url)),
