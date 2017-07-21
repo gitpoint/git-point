@@ -52,24 +52,10 @@ const mapDispatchToProps = dispatch => ({
 const styles = StyleSheet.create({
   buttonGroupWrapper: {
     backgroundColor: colors.greyLight,
-    ...Platform.select({
-      ios: {
-        paddingTop: 30,
-      },
-      android: {
-        paddingTop: 8,
-        height: 55,
-      },
-    }),
+    paddingTop: Platform.OS === 'ios' ? 28 : 15,
   },
   buttonGroupContainer: {
     height: 30,
-    ...Platform.select({
-      ios: {
-        marginTop: 5,
-        marginBottom: 10,
-      },
-    }),
   },
   buttonGroupText: {
     ...fonts.fontPrimaryBold,
@@ -130,8 +116,6 @@ class Notifications extends Component {
     getUnreadNotificationsByDispatch: Function,
     getParticipatingNotificationsByDispatch: Function,
     getAllNotificationsByDispatch: Function,
-    getIssueFromUrlByDispatch: Function,
-    issue: Object,
     markAsReadByDispatch: Function,
     markRepoAsReadByDispatch: Function,
     unread: Array,
@@ -198,19 +182,11 @@ class Notifications extends Component {
   };
 
   navigateToThread(notification) {
-    const {
-      markAsReadByDispatch,
-      getIssueFromUrlByDispatch,
-      navigation,
-    } = this.props;
+    const { markAsReadByDispatch, navigation } = this.props;
 
     markAsReadByDispatch(notification.id);
-    getIssueFromUrlByDispatch(
-      notification.subject.url.replace('pulls', 'issues')
-    ).then(() => {
-      navigation.navigate('Issue', {
-        issue: this.props.issue,
-      });
+    navigation.navigate('Issue', {
+      issueURL: notification.subject.url.replace('pulls', 'issues'),
     });
   }
 
