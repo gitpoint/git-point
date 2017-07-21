@@ -233,7 +233,6 @@ class Issue extends Component {
           <LoadingContainer
             animating={isPendingComments || isPendingIssue}
             center
-            text={'Retrieving issue'}
           />}
 
         {!isPendingComments &&
