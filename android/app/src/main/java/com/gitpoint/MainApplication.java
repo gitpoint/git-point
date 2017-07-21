@@ -3,6 +3,7 @@ package com.gitpoint;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.reactnative.photoview.PhotoViewPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.microsoft.codepush.react.CodePush;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
@@ -33,6 +34,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new PhotoViewPackage(),
             new ReactNativeConfigPackage(),
             new CodePush(BuildConfig.CODEPUSH_ANDROID_DEPLOYMENT_KEY, MainApplication.this, BuildConfig.DEBUG),
             new RNDeviceInfo(),
