@@ -92,8 +92,7 @@ class AuthProfile extends Component {
   };
 
   componentDidMount() {
-    this.props.getUser();
-    this.props.getOrgs();
+    this.refreshProfile();
   }
 
   checkForUpdate = () => {

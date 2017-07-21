@@ -81,11 +81,7 @@ class Repository extends Component {
   };
 
   componentDidMount() {
-    const { navigation } = this.props;
-    const repo = navigation.state.params.repository;
-    const repoUrl = navigation.state.params.repositoryUrl;
-
-    this.props.getRepositoryInfoByDispatch(repo ? repo.url : repoUrl);
+    this.refreshRepo();
   }
 
   showMenuActionSheet = () => {
@@ -293,72 +289,74 @@ class Repository extends Component {
                   />
                 )}
             </SectionList>
-          <SectionList
-            loading={isPendingIssues}
-            title={
-              <RepositorySectionTitle
-                text="ISSUES"
-                openCount={openIssues.length}
-                closedCount={closedIssues.length}
-              />
-            }
-            noItems={openIssues.length === 0}
-            noItemsMessage={
-              pureIssues.length === 0 ? 'No issues' : 'No open issues'
-            }
-            showButton={pureIssues.length > 0}
-            buttonTitle="View All"
-            buttonAction={() =>
-              navigation.navigate('IssueList', {
-                type: 'issue',
-                issues: pureIssues,
-              })}
-          >
-            {openIssues
-              .slice(0, 3)
-              .map(item =>
-                <IssueListItem
-                  key={item.id}
-                  type="issue"
-                  issue={item}
-                  navigation={navigation}
+            <SectionList
+              loading={isPendingIssues}
+              title={
+                <RepositorySectionTitle
+                  text="ISSUES"
+                  openCount={openIssues.length}
+                  closedCount={closedIssues.length}
                 />
-              )}
-          </SectionList>
+              }
+              noItems={openIssues.length === 0}
+              noItemsMessage={
+                pureIssues.length === 0 ? 'No issues' : 'No open issues'
+              }
+              showButton={pureIssues.length > 0}
+              buttonTitle="View All"
+              buttonAction={() =>
+                navigation.navigate('IssueList', {
+                  type: 'issue',
+                  issues: pureIssues,
+                })}
+            >
+              {openIssues
+                .slice(0, 3)
+                .map(item =>
+                  <IssueListItem
+                    key={item.id}
+                    type="issue"
+                    issue={item}
+                    navigation={navigation}
+                  />
+                )}
+            </SectionList>
 
-          <SectionList
-            loading={isPendingIssues}
-            title={
-              <RepositorySectionTitle
-                text="PULL REQUESTS"
-                openCount={openPulls.length}
-                closedCount={closedPulls.length}
-              />
-            }
-            noItems={openPulls.length === 0}
-            noItemsMessage={
-              pulls.length === 0 ? 'No pull requests' : 'No open pull requests'
-            }
-            showButton={pulls.length > 0}
-            buttonTitle="View All"
-            buttonAction={() =>
-              navigation.navigate('PullList', {
-                type: 'pull',
-                issues: pulls,
-              })}
-          >
-            {openPulls
-              .slice(0, 3)
-              .map(item =>
-                <IssueListItem
-                  key={item.id}
-                  type="pull"
-                  issue={item}
-                  navigation={navigation}
+            <SectionList
+              loading={isPendingIssues}
+              title={
+                <RepositorySectionTitle
+                  text="PULL REQUESTS"
+                  openCount={openPulls.length}
+                  closedCount={closedPulls.length}
                 />
-              )}
-          </SectionList>
-        </ParallaxScroll>
+              }
+              noItems={openPulls.length === 0}
+              noItemsMessage={
+                pulls.length === 0
+                  ? 'No pull requests'
+                  : 'No open pull requests'
+              }
+              showButton={pulls.length > 0}
+              buttonTitle="View All"
+              buttonAction={() =>
+                navigation.navigate('PullList', {
+                  type: 'pull',
+                  issues: pulls,
+                })}
+            >
+              {openPulls
+                .slice(0, 3)
+                .map(item =>
+                  <IssueListItem
+                    key={item.id}
+                    type="pull"
+                    issue={item}
+                    navigation={navigation}
+                  />
+                )}
+            </SectionList>
+          </ParallaxScroll>
 
           <ActionSheet
             ref={o => {
