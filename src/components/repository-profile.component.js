@@ -36,8 +36,8 @@ const styles = StyleSheet.create({
     color: colors.white,
     ...fonts.fontPrimary,
     fontSize: normalize(12),
-    paddingLeft: 15,
-    paddingRight: 15,
+    paddingLeft: 30,
+    paddingRight: 30,
     backgroundColor: 'transparent',
   },
   subtitleDescriptionNoFork: {
@@ -123,6 +123,8 @@ export const RepositoryProfile = ({ repository, starred, navigation }: Props) =>
       </Text>
 
       <Text
+        /* @see https://github.com/gitpoint/git-point/issues/114 */
+        numberOfLines={5}
         style={[
           styles.subtitle,
           repository.fork
