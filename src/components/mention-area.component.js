@@ -59,7 +59,6 @@ export class MentionArea extends Component {
   componentDidUpdate() {
     const { text, trigger } = this.props;
 
-    // Make sure the trigger character is preceded by a space
     if (
       !this.state.tracking &&
       text[text.length - 1] === trigger &&
