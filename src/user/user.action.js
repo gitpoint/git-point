@@ -201,7 +201,7 @@ export const searchUserRepos = (query, user) => {
       'repositories',
       query,
       accessToken,
-      `+user:${user.login}`
+      `+user:${user.login}+fork:true`
     )
       .then(data => {
         dispatch({

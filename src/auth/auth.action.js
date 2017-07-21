@@ -1,8 +1,10 @@
 import { AsyncStorage } from 'react-native';
+import uniqby from 'lodash.uniqby';
 import {
   fetchAccessToken,
   fetchAuthUser,
   fetchAuthUserOrgs,
+  fetchUserOrgs,
   fetchUserEvents,
 } from 'api';
 import {
@@ -71,14 +73,22 @@ export const getUser = () => {
 export const getOrgs = () => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
+    const login = getState().auth.user.login;
 
     dispatch({ type: GET_AUTH_ORGS.PENDING });
 
-    fetchAuthUserOrgs(accessToken)
+    Promise.all([
+      fetchAuthUserOrgs(accessToken),
+      fetchUserOrgs(login, accessToken),
+    ])
       .then(data => {
+        const orgs = data[0].concat(data[1]);
+
         dispatch({
           type: GET_AUTH_ORGS.SUCCESS,
-          payload: data,
+          payload: uniqby(orgs, 'id').sort(
+            (org1, org2) => org1.login > org2.login
+          ),
         });
       })
       .catch(error => {
