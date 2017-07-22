@@ -171,6 +171,7 @@ class Repository extends Component {
                 starred={
                   isPendingRepository || isPendingCheckStarred ? false : starred
                 }
+                loading={isPendingRepository}
                 navigation={navigation}
               />
             );
@@ -249,6 +250,7 @@ class Repository extends Component {
             title={
               <RepositorySectionTitle
                 text="ISSUES"
+                loading={isPendingIssues}
                 openCount={openIssues.length}
                 closedCount={closedIssues.length}
               />
@@ -282,6 +284,7 @@ class Repository extends Component {
             title={
               <RepositorySectionTitle
                 text="PULL REQUESTS"
+                loading={isPendingIssues}
                 openCount={openPulls.length}
                 closedCount={closedPulls.length}
               />
