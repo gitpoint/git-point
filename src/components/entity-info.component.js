@@ -4,7 +4,7 @@ import { ListItem } from 'react-native-elements';
 import Communications from 'react-native-communications';
 
 import { SectionList } from 'components';
-import { colors, fonts, normalize } from 'config';
+import { colors, fonts } from 'config';
 
 type Props = {
   entity: Object,
@@ -26,10 +26,13 @@ const styles = StyleSheet.create({
   closedIssue: {
     backgroundColor: colors.red,
   },
-  text: {
-    fontSize: normalize(12),
-    ...fonts.fontPrimarySemiBold,
-    color: colors.white,
+  listTitle: {
+    color: colors.black,
+    ...fonts.fontPrimary,
+  },
+  listSubTitle: {
+    color: colors.greyDark,
+    ...fonts.fontPrimary,
   },
 });
 
@@ -53,6 +56,7 @@ export const EntityInfo = ({ entity }: Props) => {
             type: 'octicon',
           }}
           subtitle={entity.location}
+          subtitleStyle={styles.listSubTitle}
           onPress={() => Communications.web(getLocationLink(entity.location))}
           underlayColor={colors.greyLight}
         />}
@@ -68,6 +72,7 @@ export const EntityInfo = ({ entity }: Props) => {
             type: 'octicon',
           }}
           subtitle={entity.email}
+          subtitleStyle={styles.listSubTitle}
           onPress={() =>
             Communications.email([entity.email], null, null, 'Hi!', '')}
           underlayColor={colors.greyLight}
@@ -84,6 +89,7 @@ export const EntityInfo = ({ entity }: Props) => {
             type: 'octicon',
           }}
           subtitle={entity.blog}
+          subtitleStyle={styles.listSubTitle}
           onPress={() => Communications.web(getBlogLink(entity.blog))}
           underlayColor={colors.greyLight}
         />}

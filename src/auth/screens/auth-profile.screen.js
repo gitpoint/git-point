@@ -8,8 +8,10 @@ import {
   Linking,
   ScrollView,
   RefreshControl,
+  TouchableOpacity,
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import { NavigationActions } from 'react-navigation';
 import codePush from 'react-native-code-push';
 import {
   ViewContainer,
@@ -20,8 +22,9 @@ import {
   UserListItem,
   EntityInfo,
 } from 'components';
-import { colors, fonts } from 'config';
-import { getUser, getOrgs } from 'auth';
+import { colors, fonts, normalize } from 'config';
+import { getUser, getOrgs, signOut } from 'auth';
+import { openURLInView } from 'utils';
 
 const mapStateToProps = state => ({
   user: state.auth.user,
@@ -31,8 +34,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getUser: () => dispatch(getUser()),
-  getOrgs: () => dispatch(getOrgs()),
+  getUserByDispatch: () => dispatch(getUser()),
+  getOrgsByDispatch: () => dispatch(getOrgs()),
+  signOutByDispatch: () => dispatch(signOut()),
 });
 
 const styles = StyleSheet.create({
@@ -50,21 +54,25 @@ const styles = StyleSheet.create({
     marginVertical: 40,
   },
   updateText: {
-    color: colors.grey,
-    fontFamily: 'AvenirNext-Medium',
+    color: colors.greyDark,
+    ...fonts.fontPrimary,
   },
   updateTextSub: {
-    fontSize: 11,
+    fontSize: normalize(11),
   },
   note: {
-    fontSize: 14,
-    color: colors.grey,
-    ...fonts.fontPrimary,
+    fontSize: normalize(11),
+    color: colors.primaryDark,
+    ...fonts.fontPrimaryLight,
     textAlign: 'center',
     padding: 10,
   },
   noteLink: {
-    ...fonts.fontPrimaryBold,
+    ...fonts.fontPrimarySemiBold,
+  },
+  logoutTitle: {
+    color: colors.red,
+    ...fonts.fontPrimary,
   },
 });
 
@@ -78,8 +86,9 @@ const updateText = {
 
 class AuthProfile extends Component {
   props: {
-    getUser: Function,
-    getOrgs: Function,
+    getUserByDispatch: Function,
+    getOrgsByDispatch: Function,
+    signOutByDispatch: Function,
     user: Object,
     orgs: Array,
     isPendingUser: boolean,
@@ -113,10 +122,28 @@ class AuthProfile extends Component {
     }
   };
 
+
   refreshProfile = () => {
     this.props.getUser();
     this.props.getOrgs();
   };
+
+  signOutUser() {
+    const { signOutByDispatch, navigation } = this.props;
+
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      key: null,
+      actions: [NavigationActions.navigate({ routeName: 'Login' })],
+    });
+
+    signOutByDispatch().then(() => {
+      const url = 'https://github.com/logout';
+
+      navigation.dispatch(resetAction);
+      openURLInView(url);
+    });
+  }
 
   render() {
     const { user, orgs, isPendingUser, isPendingOrgs, navigation } = this.props;
@@ -142,57 +169,39 @@ class AuthProfile extends Component {
                   initialUser={user}
                   user={user}
                   navigation={navigation}
-                />}
-              stickyTitle={user.login}
-            >
-              {user.bio &&
-                user.bio !== '' &&
-                <SectionList title="BIO">
-                  <ListItem
-                    subtitle={user.bio}
-                    subtitleStyle={styles.listSubTitle}
-                    hideChevron
-                  />
-                </SectionList>}
-
-              <EntityInfo entity={user} />
-
-              <SectionList
-                title="ORGANIZATIONS"
-                noItems={orgs.length === 0}
-                noItemsMessage={'No organizations'}
-              >
-                {orgs.map(item =>
-                  <UserListItem
-                    key={item.id}
-                    user={item}
-                    navigation={navigation}
-                  />
-                )}
-                <Text style={styles.note}>
-                  Can&apos;t see all your organizations? You may have to
-                  <Text
-                    style={styles.noteLink}
-                    onPress={() =>
-                      Linking.openURL(
-                        'https://github.com/settings/applications'
-                      )}
-                  >
-                    {' '}request approval{' '}
-                  </Text>
-                  <Text>for them.</Text>
+                />
+              )}
+              <Text style={styles.note}>
+                Can&apos;t see all your organizations?{'\n'}
+                <Text
+                  style={styles.noteLink}
+                  onPress={() =>
+                    openURLInView('https://github.com/settings/applications')}
+                >
+                  You may have to request approval for them.
                 </Text>
-              </SectionList>
+              </Text>
+            </SectionList>
 
-              <View style={styles.update}>
-                <Text style={styles.updateText}>GitPoint v1.1</Text>
-                <TouchableOpacity onPress={this.checkForUpdate}>
-                  <Text style={[styles.updateText, styles.updateTextSub]}>
-                    {this.state.updateText}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </ParallaxScroll>}
+            <SectionList>
+              <ListItem
+                title="Sign Out"
+                titleStyle={styles.logoutTitle}
+                hideChevron
+                onPress={() => this.signOutUser()}
+              />
+            </SectionList>
+
+            <TouchableOpacity
+              style={styles.update}
+              onPress={this.checkForUpdate}
+            >
+              <Text style={styles.updateText}>GitPoint v1.1</Text>
+              <Text style={[styles.updateText, styles.updateTextSub]}>
+                {this.state.updateText}
+              </Text>
+            </TouchableOpacity>
+          </ParallaxScroll>}
         </ScrollView>
       </ViewContainer>
     );
