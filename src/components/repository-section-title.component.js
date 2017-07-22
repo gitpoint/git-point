@@ -8,6 +8,7 @@ type Props = {
   text: string,
   openCount: number,
   closedCount: number,
+  loading: boolean,
 };
 
 const styles = StyleSheet.create({
@@ -18,6 +19,9 @@ const styles = StyleSheet.create({
     color: colors.black,
     ...fonts.fontPrimaryBold,
   },
+  badgeContainer: {
+    flexDirection: 'row',
+  },
   badge: {
     marginLeft: 10,
   },
@@ -25,6 +29,7 @@ const styles = StyleSheet.create({
 
 export const RepositorySectionTitle = ({
   text,
+  loading,
   openCount,
   closedCount,
 }: Props) => {
@@ -33,8 +38,11 @@ export const RepositorySectionTitle = ({
       <Text style={styles.titleText}>
         {text}
       </Text>
-      <StateBadge type="open" text={openCount} style={styles.badge} />
-      <StateBadge type="closed" text={closedCount} style={styles.badge} />
+      {!loading &&
+        <View style={styles.badgeContainer}>
+          <StateBadge type="open" text={openCount} style={styles.badge} />
+          <StateBadge type="closed" text={closedCount} style={styles.badge} />
+        </View>}
     </View>
   );
 };

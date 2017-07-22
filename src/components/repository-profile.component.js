@@ -9,6 +9,7 @@ type Props = {
   repository: Object,
   starred: boolean,
   navigation: Object,
+  loading: boolean,
 };
 
 const styles = StyleSheet.create({
@@ -90,9 +91,15 @@ const styles = StyleSheet.create({
   },
 });
 
-export const RepositoryProfile = ({ repository, starred, navigation }: Props) =>
+export const RepositoryProfile = ({
+  repository,
+  starred,
+  navigation,
+  loading,
+}: Props) =>
   <View style={styles.container}>
-    {repository.language !== null &&
+    {!loading &&
+      repository.language !== null &&
       <View style={styles.languageInfo}>
         <Icon
           name="fiber-manual-record"
