@@ -79,54 +79,60 @@ class Issue extends Component {
     getRepositoryByDispatch: Function,
     postIssueCommentByDispatch: Function,
     getIssueFromUrlByDispatch: Function,
-    issue: Object,
     diff: string,
+    issue: Object,
     isMerged: boolean,
     // authUser: Object,
     repository: Object,
     comments: Array,
+    isPendingIssue: boolean,
     isPendingDiff: boolean,
     isPendingCheckMerge: boolean,
     isPendingComments: boolean,
     // isPostingComment: boolean,
-    // isPendingIssue: boolean,
     navigation: Object,
   };
 
   componentDidMount() {
     const {
+      issue,
       navigation,
       repository,
       getIssueCommentsByDispatch,
       getRepositoryByDispatch,
       getPullRequestDetailsByDispatch,
+      getIssueFromUrlByDispatch,
     } = this.props;
-    const issue = navigation.state.params.issue;
+    const issueURL = navigation.state.params.issueURL;
+    const issueCommentsURL = `${navigation.state.params.issueURL}/comments`;
 
-    getIssueCommentsByDispatch(issue);
+    Promise.all(
+      getIssueFromUrlByDispatch(issueURL),
+      getIssueCommentsByDispatch(issueCommentsURL)
+    ).then(() => {
+      if (
+        repository.full_name !==
+        issue.repository_url.replace('https://api.github.com/repos/', '')
+      ) {
+        getRepositoryByDispatch(issue.repository_url).then(() => {
+          this.setNavigationParams();
 
-    if (
-      repository.full_name !==
-      issue.repository_url.replace('https://api.github.com/repos/', '')
-    ) {
-      getRepositoryByDispatch(issue.repository_url).then(() => {
+          if (issue.pull_request) {
+            getPullRequestDetailsByDispatch(issue);
+          }
+        });
+      } else {
         this.setNavigationParams();
 
         if (issue.pull_request) {
           getPullRequestDetailsByDispatch(issue);
         }
-      });
-    } else {
-      this.setNavigationParams();
-
-      if (issue.pull_request) {
-        getPullRequestDetailsByDispatch(issue);
       }
-    }
+    });
   }
 
   onLinkPress = node => {
-    const { getIssueFromUrlByDispatch, navigation } = this.props;
+    const { navigation } = this.props;
 
     if (node.attribs.class && node.attribs.class.includes('user-mention')) {
       navigation.navigate('Profile', {
@@ -136,12 +142,11 @@ class Issue extends Component {
       node.attribs.class &&
       node.attribs.class.includes('issue-link')
     ) {
-      getIssueFromUrlByDispatch(
-        node.attribs['data-url'].replace('github.com', 'api.github.com/repos')
-      ).then(() => {
-        navigation.navigate('Issue', {
-          issue: this.props.issue,
-        });
+      navigation.navigate('Issue', {
+        issueURL: node.attribs['data-url'].replace(
+          'github.com',
+          'api.github.com/repos'
+        ),
       });
     } else {
       Linking.openURL(node.attribs.href);
@@ -214,14 +219,24 @@ class Issue extends Component {
     />;
 
   render() {
-    const { issue, comments, isPendingComments, navigation } = this.props;
+    const {
+      issue,
+      comments,
+      isPendingComments,
+      isPendingIssue,
+      navigation,
+    } = this.props;
 
     return (
       <ViewContainer>
-        {isPendingComments &&
-          <LoadingContainer animating={isPendingComments} center />}
+        {(isPendingComments || isPendingIssue) &&
+          <LoadingContainer
+            animating={isPendingComments || isPendingIssue}
+            center
+          />}
 
         {!isPendingComments &&
+          !isPendingIssue &&
           issue &&
           <KeyboardAvoidingView
             style={{ flex: 1 }}
