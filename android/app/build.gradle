@@ -135,6 +135,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-photo-view')
     compile project(':react-native-config')
     compile project(':react-native-code-push')
     compile project(':react-native-device-info')

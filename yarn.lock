@@ -4668,6 +4668,10 @@ react-native-parallax-scroll-view@^0.19.0:
   version "0.19.0"
   resolved "https://registry.yarnpkg.com/react-native-parallax-scroll-view/-/react-native-parallax-scroll-view-0.19.0.tgz#23b9af1f13249a610f4641e2582a58997df7d80a"
 
+react-native-photo-view@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-photo-view/-/react-native-photo-view-1.3.0.tgz#865974d93a9dd15e772e93fee074125b0b6909d3"
+
 react-native-safari-view@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-native-safari-view/-/react-native-safari-view-2.0.0.tgz#3aeb40693b0765df16b9beaf8654b60c7ff1d7ed"
