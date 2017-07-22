@@ -122,7 +122,6 @@ export const RepositoryProfile = ({ repository, starred, navigation }: Props) =>
       </Text>
 
       <Text
-        /* @see https://github.com/gitpoint/git-point/issues/114 */
         numberOfLines={5}
         style={[
           styles.subtitle,
