@@ -36,8 +36,7 @@ const styles = StyleSheet.create({
     color: colors.white,
     ...fonts.fontPrimary,
     fontSize: normalize(12),
-    paddingLeft: 30,
-    paddingRight: 30,
+    paddingHorizontal: 30,
     backgroundColor: 'transparent',
   },
   subtitleDescriptionNoFork: {
