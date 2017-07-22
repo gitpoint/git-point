@@ -17,6 +17,7 @@ import {
 import { colors, fonts, normalize } from 'config';
 import { getUser, getOrgs, signOut } from 'auth';
 import { openURLInView } from 'utils';
+import { version } from 'package.json';
 
 const mapStateToProps = state => ({
   user: state.auth.user,
@@ -200,7 +201,7 @@ class AuthProfile extends Component {
               style={styles.update}
               onPress={this.checkForUpdate}
             >
-              <Text style={styles.updateText}>GitPoint v1.1</Text>
+              <Text style={styles.updateText}>GitPoint v{version}</Text>
               <Text style={[styles.updateText, styles.updateTextSub]}>
                 {this.state.updateText}
               </Text>
