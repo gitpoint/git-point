@@ -81,7 +81,7 @@ class Repository extends Component {
   };
 
   componentDidMount() {
-    this.refreshRepo();
+    this.fetchRepoInfo();
   }
 
   showMenuActionSheet = () => {
@@ -114,7 +114,7 @@ class Repository extends Component {
     }
   };
 
-  refreshRepo = () => {
+  fetchRepoInfo = () => {
     const { navigation } = this.props;
     const repo = navigation.state.params.repository;
     const repoUrl = navigation.state.params.repositoryUrl;
@@ -166,7 +166,7 @@ class Repository extends Component {
           refreshControl={
             <RefreshControl
               refreshing={isPendingRepository}
-              onRefresh={this.refreshRepo}
+              onRefresh={this.fetchRepoInfo}
             />
           }
         >
