@@ -19,6 +19,9 @@ const styles = StyleSheet.create({
     color: colors.black,
     ...fonts.fontPrimaryBold,
   },
+  badgeContainer: {
+    flexDirection: 'row',
+  },
   badge: {
     marginLeft: 10,
   },
@@ -36,7 +39,7 @@ export const RepositorySectionTitle = ({
         {text}
       </Text>
       {!loading &&
-        <View style={styles.title}>
+        <View style={styles.badgeContainer}>
           <StateBadge type="open" text={openCount} style={styles.badge} />
           <StateBadge type="closed" text={closedCount} style={styles.badge} />
         </View>}
