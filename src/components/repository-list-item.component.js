@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { ListItem, Icon } from 'react-native-elements';
 
-import { emojifyText, numbersText } from 'utils';
+import { emojifyText } from 'utils';
 import { colors, languageColors, fonts, normalize } from 'config';
 
 type Props = {
@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
   },
 });
 
+const thousandUnit = 'k';
 const renderTitle = repository =>
   <View style={styles.wrapper}>
     <View style={styles.repositoryContainer}>
@@ -80,7 +81,9 @@ const renderTitle = repository =>
       />
 
       <Text style={[styles.extraInfoSubject, { paddingTop: 2 }]}>
-        {numbersText(repository.stargazers_count)}
+        {repository.stargazers_count >= 1000
+          ? (repository.stargazers_count / 1000).toFixed(1) + thousandUnit
+          : repository.stargazers_count}
       </Text>
 
       {repository.language !== null &&
