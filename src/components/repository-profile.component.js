@@ -36,8 +36,7 @@ const styles = StyleSheet.create({
     color: colors.white,
     ...fonts.fontPrimary,
     fontSize: normalize(12),
-    paddingLeft: 15,
-    paddingRight: 15,
+    paddingHorizontal: 30,
     backgroundColor: 'transparent',
   },
   subtitleDescriptionNoFork: {
@@ -123,6 +122,7 @@ export const RepositoryProfile = ({ repository, starred, navigation }: Props) =>
       </Text>
 
       <Text
+        numberOfLines={5}
         style={[
           styles.subtitle,
           repository.fork

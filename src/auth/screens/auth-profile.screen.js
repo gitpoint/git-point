@@ -22,6 +22,7 @@ import {
 import { colors, fonts, normalize } from 'config';
 import { getUser, getOrgs, signOut } from 'auth';
 import { openURLInView } from 'utils';
+import { version } from 'package.json';
 
 const mapStateToProps = state => ({
   user: state.auth.user,
@@ -176,54 +177,53 @@ class AuthProfile extends Component {
                     subtitleStyle={styles.listSubTitle}
                     hideChevron
                   />
-                </SectionList>}
+              </SectionList>}
 
-              <EntityInfo entity={user} />
+            <EntityInfo entity={user} orgs={orgs} navigation={navigation} />
 
-              <SectionList
-                title="ORGANIZATIONS"
-                noItems={orgs.length === 0}
-                noItemsMessage={'No organizations'}
-              >
-                {orgs.map(item =>
-                  <UserListItem
-                    key={item.id}
-                    user={item}
-                    navigation={navigation}
-                  />
-                )}
-                <Text style={styles.note}>
-                  Can&apos;t see all your organizations?{'\n'}
-                  <Text
-                    style={styles.noteLink}
-                    onPress={() =>
-                      openURLInView('https://github.com/settings/applications')}
-                  >
-                    You may have to request approval for them.
-                  </Text>
-                </Text>
-              </SectionList>
-
-              <SectionList>
-                <ListItem
-                  title="Sign Out"
-                  titleStyle={styles.logoutTitle}
-                  hideChevron
-                  onPress={() => this.signOutUser()}
+            <SectionList
+              title="ORGANIZATIONS"
+              noItems={orgs.length === 0}
+              noItemsMessage={'No organizations'}
+            >
+              {orgs.map(item =>
+                <UserListItem
+                  key={item.id}
+                  user={item}
+                  navigation={navigation}
                 />
-              </SectionList>
-
-              <TouchableOpacity
-                style={styles.update}
-                onPress={this.checkForUpdate}
-              >
-                <Text style={styles.updateText}>GitPoint v1.1</Text>
-                <Text style={[styles.updateText, styles.updateTextSub]}>
-                  {this.state.updateText}
+              )}
+              <Text style={styles.note}>
+                Can&apos;t see all your organizations?{'\n'}
+                <Text
+                  style={styles.noteLink}
+                  onPress={() =>
+                    openURLInView('https://github.com/settings/applications')}
+                >
+                  You may have to request approval for them.
                 </Text>
-              </TouchableOpacity>
-            </ParallaxScroll>}
-        </ScrollView>
+              </Text>
+            </SectionList>
+
+            <SectionList>
+              <ListItem
+                title="Sign Out"
+                titleStyle={styles.logoutTitle}
+                hideChevron
+                onPress={() => this.signOutUser()}
+              />
+            </SectionList>
+
+            <TouchableOpacity
+              style={styles.update}
+              onPress={this.checkForUpdate}
+            >
+              <Text style={styles.updateText}>GitPoint v{version}</Text>
+              <Text style={[styles.updateText, styles.updateTextSub]}>
+                {this.state.updateText}
+              </Text>
+            </TouchableOpacity>
+          </ParallaxScroll>}
       </ViewContainer>
     );
   }

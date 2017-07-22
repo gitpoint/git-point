@@ -22,7 +22,8 @@
           "issue": "issue",
           "api": "api",
           "config": "config",
-          "utils": "utils"
+          "utils": "utils",
+          "package.json": "./package.json"
         }
       }
     ],
