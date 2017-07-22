@@ -17,6 +17,7 @@ import { ViewContainer, LoadingContainer } from 'components';
 import { fonts, normalize } from 'config';
 import { CLIENT_ID } from 'api';
 import { auth } from 'auth';
+import { openURLInView } from 'utils';
 
 const stateRandom = Math.random().toString();
 const window = Dimensions.get('window');
@@ -119,20 +120,8 @@ class Login extends Component {
     }
   };
 
-  openURL = url => {
-    // Use SafariView on iOS
-    if (Platform.OS === 'ios') {
-      SafariView.show({
-        url,
-        fromBottom: true,
-      });
-    } else {
-      Linking.openURL(url);
-    }
-  };
-
   signIn = () =>
-    this.openURL(
+    openURLInView(
       `https://github.com/login/oauth/authorize?response_type=token&client_id=${CLIENT_ID}&redirect_uri=gitpoint://welcome&scope=user%20repo&state=${stateRandom}`
     );
 

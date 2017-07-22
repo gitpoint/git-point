@@ -30,7 +30,6 @@ export const issueReducer = (state = initialState, action = {}) => {
     case GET_ISSUE_COMMENTS.PENDING:
       return {
         ...state,
-        issue: action.payload,
         isPendingComments: true,
       };
     case GET_ISSUE_COMMENTS.SUCCESS:

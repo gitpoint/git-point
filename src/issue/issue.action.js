@@ -18,13 +18,13 @@ import {
   GET_ISSUE_FROM_URL,
 } from './issue.type';
 
-export const getIssueComments = issue => {
+export const getIssueComments = issueCommentsURL => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 
-    dispatch({ type: GET_ISSUE_COMMENTS.PENDING, payload: issue });
+    dispatch({ type: GET_ISSUE_COMMENTS.PENDING });
 
-    return fetchCommentHTML(issue.comments_url, accessToken)
+    return fetchCommentHTML(issueCommentsURL, accessToken)
       .then(data => {
         dispatch({
           type: GET_ISSUE_COMMENTS.SUCCESS,
