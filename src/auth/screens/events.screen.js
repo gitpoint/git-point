@@ -132,7 +132,7 @@ class Events extends Component {
       case 'IssuesEvent':
         return `${userEvent.payload.action} issue`;
       case 'MemberEvent':
-        return `${userEvent.payload.action} user`;
+        return `${userEvent.payload.action}`;
       case 'PublicEvent':
         return 'open sourced';
       case 'PullRequestEvent':
