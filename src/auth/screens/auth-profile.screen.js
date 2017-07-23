@@ -179,51 +179,53 @@ class AuthProfile extends Component {
                   />
               </SectionList>}
 
-            <EntityInfo entity={user} orgs={orgs} navigation={navigation} />
+              <EntityInfo entity={user} orgs={orgs} navigation={navigation} />
 
-            <SectionList
-              title="ORGANIZATIONS"
-              noItems={orgs.length === 0}
-              noItemsMessage={'No organizations'}
-            >
-              {orgs.map(item =>
-                <UserListItem
-                  key={item.id}
-                  user={item}
-                  navigation={navigation}
-                />
-              )}
-              <Text style={styles.note}>
-                Can&apos;t see all your organizations?{'\n'}
-                <Text
-                  style={styles.noteLink}
-                  onPress={() =>
-                    openURLInView('https://github.com/settings/applications')}
-                >
-                  You may have to request approval for them.
+              <SectionList
+                title="ORGANIZATIONS"
+                noItems={orgs.length === 0}
+                noItemsMessage={'No organizations'}
+              >
+                {orgs.map(item =>
+                  <UserListItem
+                    key={item.id}
+                    user={item}
+                    navigation={navigation}
+                  />
+                )}
+                <Text style={styles.note}>
+                  Can&apos;t see all your organizations?{'\n'}
+                  <Text
+                    style={styles.noteLink}
+                    onPress={() =>
+                      openURLInView('https://github.com/settings/applications')}
+                  >
+                    You may have to request approval for them.
+                  </Text>
                 </Text>
-              </Text>
-            </SectionList>
+              </SectionList>
 
-            <SectionList>
-              <ListItem
-                title="Sign Out"
-                titleStyle={styles.logoutTitle}
-                hideChevron
-                onPress={() => this.signOutUser()}
-              />
-            </SectionList>
+              <SectionList>
+                <ListItem
+                  title="Sign Out"
+                  titleStyle={styles.logoutTitle}
+                  hideChevron
+                  onPress={() => this.signOutUser()}
+                />
+              </SectionList>
 
-            <TouchableOpacity
-              style={styles.update}
-              onPress={this.checkForUpdate}
-            >
-              <Text style={styles.updateText}>GitPoint v{version}</Text>
-              <Text style={[styles.updateText, styles.updateTextSub]}>
-                {this.state.updateText}
-              </Text>
-            </TouchableOpacity>
-          </ParallaxScroll>}
+              <TouchableOpacity
+                style={styles.update}
+                onPress={this.checkForUpdate}
+              >
+                <Text style={styles.updateText}>GitPoint v{version}</Text>
+                <Text style={[styles.updateText, styles.updateTextSub]}>
+                  {this.state.updateText}
+                </Text>
+              </TouchableOpacity>
+            </ParallaxScroll>
+          }
+        </ScrollView>
       </ViewContainer>
     );
   }
