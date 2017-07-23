@@ -44,7 +44,8 @@
       "avatar_url": "https://avatars1.githubusercontent.com/u/4408379?v=3",
       "profile": "http://lex111.ru",
       "contributions": [
-        "code"
+        "code",
+        "bug"
       ]
     },
     {
@@ -81,7 +82,8 @@
       "avatar_url": "https://avatars3.githubusercontent.com/u/3055294?v=3",
       "profile": "https://patw.me",
       "contributions": [
-        "code"
+        "code",
+        "bug"
       ]
     },
     {
@@ -90,7 +92,8 @@
       "avatar_url": "https://avatars5.githubusercontent.com/u/627794?v=4",
       "profile": "https://github.com/mikekavouras",
       "contributions": [
-        "code"
+        "code",
+        "bug"
       ]
     },
     {
@@ -108,7 +111,8 @@
       "avatar_url": "https://avatars6.githubusercontent.com/u/5106887?v=4",
       "profile": "https://github.com/junedomingo",
       "contributions": [
-        "code"
+        "code",
+        "bug"
       ]
     },
     {
@@ -117,7 +121,8 @@
       "avatar_url": "https://avatars7.githubusercontent.com/u/9287184?v=4",
       "profile": "http://www.jaaccelere.com",
       "contributions": [
-        "code"
+        "code",
+        "bug"
       ]
     },
     {
@@ -144,7 +149,8 @@
       "avatar_url": "https://avatars5.githubusercontent.com/u/408959?v=4",
       "profile": "https://github.com/RolfKoenders",
       "contributions": [
-        "code"
+        "code",
+        "bug"
       ]
     },
     {
@@ -153,7 +159,10 @@
       "avatar_url": "https://avatars1.githubusercontent.com/u/10191084?v=4",
       "profile": "https://andrewda.me",
       "contributions": [
-        "code"
+        "code",
+        "question",
+        "bug",
+        "review"
       ]
     },
     {
@@ -161,6 +170,15 @@
       "name": "Anton",
       "avatar_url": "https://avatars0.githubusercontent.com/u/2076088?v=4",
       "profile": "https://medium.com/@antondomashnev",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "xuezhma",
+      "name": "Xuezheng Ma",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/14795799?v=4",
+      "profile": "https://github.com/xuezhma",
       "contributions": [
         "code"
       ]
