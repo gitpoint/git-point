@@ -21,7 +21,6 @@ import { getRepository } from 'repository';
 import {
   getIssueComments,
   postIssueComment,
-  getPullRequestDetails,
   getIssueFromUrl,
 } from '../issue.action';
 
@@ -43,7 +42,6 @@ const mapDispatchToProps = dispatch => ({
   getIssueCommentsByDispatch: url => dispatch(getIssueComments(url)),
   postIssueCommentByDispatch: (body, owner, repoName, issueNum) =>
     dispatch(postIssueComment(body, owner, repoName, issueNum)),
-  getPullRequestDetailsByDispatch: url => dispatch(getPullRequestDetails(url)),
   getIssueFromUrlByDispatch: url => dispatch(getIssueFromUrl(url)),
   getRepositoryByDispatch: url => dispatch(getRepository(url)),
 });
@@ -75,7 +73,6 @@ class Issue extends Component {
 
   props: {
     getIssueCommentsByDispatch: Function,
-    getPullRequestDetailsByDispatch: Function,
     getRepositoryByDispatch: Function,
     postIssueCommentByDispatch: Function,
     getIssueFromUrlByDispatch: Function,
@@ -90,7 +87,7 @@ class Issue extends Component {
     isPendingCheckMerge: boolean,
     isPendingComments: boolean,
     // isPostingComment: boolean,
-    navigation: Object,
+    navigation: Object
   };
 
   componentDidMount() {
@@ -100,15 +97,16 @@ class Issue extends Component {
       repository,
       getIssueCommentsByDispatch,
       getRepositoryByDispatch,
-      getPullRequestDetailsByDispatch,
       getIssueFromUrlByDispatch,
     } = this.props;
-    const issueURL = navigation.state.params.issueURL;
+
+    const issueParam = navigation.state.params.issue;
+    const issueURLParam = navigation.state.params.issueURL;
     const issueCommentsURL = `${navigation.state.params.issueURL}/comments`;
 
     Promise.all(
-      getIssueFromUrlByDispatch(issueURL),
-      getIssueCommentsByDispatch(issueCommentsURL)
+      getIssueFromUrlByDispatch(issueURLParam || issueParam.url),
+      getIssueCommentsByDispatch(issueURLParam ? issueCommentsURL : issueParam.comments_url)
     ).then(() => {
       if (
         repository.full_name !==
@@ -116,17 +114,9 @@ class Issue extends Component {
       ) {
         getRepositoryByDispatch(issue.repository_url).then(() => {
           this.setNavigationParams();
-
-          if (issue.pull_request) {
-            getPullRequestDetailsByDispatch(issue);
-          }
         });
       } else {
         this.setNavigationParams();
-
-        if (issue.pull_request) {
-          getPullRequestDetailsByDispatch(issue);
-        }
       }
     });
   }
