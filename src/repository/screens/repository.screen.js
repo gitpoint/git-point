@@ -205,7 +205,7 @@ class Repository extends Component {
               />
             </SectionList>}
 
-          {isPendingContributors && <LoadingMembersList title="CONTRIBUTORS" />}
+          {(isPendingRepository || isPendingContributors) && <LoadingMembersList title="CONTRIBUTORS" />}
 
           {!isPendingContributors &&
             <MembersList
@@ -250,7 +250,7 @@ class Repository extends Component {
             title={
               <RepositorySectionTitle
                 text="ISSUES"
-                loading={isPendingIssues}
+                loading={isPendingIssues || isPendingRepository}
                 openCount={openIssues.length}
                 closedCount={closedIssues.length}
               />
@@ -284,7 +284,7 @@ class Repository extends Component {
             title={
               <RepositorySectionTitle
                 text="PULL REQUESTS"
-                loading={isPendingIssues}
+                loading={isPendingIssues || isPendingRepository}
                 openCount={openPulls.length}
                 closedCount={closedPulls.length}
               />

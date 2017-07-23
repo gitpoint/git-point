@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
   },
   badgeContainer: {
     flexDirection: 'row',
+    marginTop: -7,
   },
   badge: {
     marginLeft: 10,
