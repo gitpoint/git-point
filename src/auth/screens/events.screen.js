@@ -205,6 +205,8 @@ class Events extends Component {
           </Text>
         ); // can only be branch or tag
       case 'ForkEvent':
+      case 'WatchEvent':
+      case 'PublicEvent':
         return (
           <Text
             style={styles.linkDescription}
@@ -243,17 +245,6 @@ class Events extends Component {
           </Text>
         );
       case 'IssueCommentEvent':
-        return (
-          <Text
-            style={styles.linkDescription}
-            onPress={() =>
-              this.props.navigation.navigate('Issue', {
-                issue: userEvent.payload.issue,
-              })}
-          >
-            {userEvent.payload.issue.title}
-          </Text>
-        );
       case 'IssuesEvent':
         return (
           <Text
@@ -278,38 +269,17 @@ class Events extends Component {
             {userEvent.payload.member.login}
           </Text>
         );
-      case 'PublicEvent':
+      case 'PullRequestEvent':
+      case 'PullRequestReviewEvent':
+      case 'PullRequestReviewCommentEvent':
         return (
           <Text
             style={styles.linkDescription}
             onPress={() =>
-              this.props.navigation.navigate('Repository', {
-                repository: {
-                  ...userEvent.repo,
-                  name: userEvent.repo.name.substring(
-                    userEvent.repo.name.indexOf('/') + 1
-                  ),
-                },
+              this.props.navigation.navigate('Issue', {
+                issue: userEvent.payload.issue,
               })}
           >
-            {userEvent.repo.name}
-          </Text>
-        );
-      case 'PullRequestEvent':
-        return (
-          <Text style={styles.linkDescription}>
-            {userEvent.payload.pull_request.title}
-          </Text>
-        );
-      case 'PullRequestReviewEvent':
-        return (
-          <Text style={styles.linkDescription}>
-            {userEvent.payload.pull_request.title}
-          </Text>
-        );
-      case 'PullRequestReviewCommentEvent':
-        return (
-          <Text style={styles.linkDescription}>
             {userEvent.payload.pull_request.title}
           </Text>
         );
@@ -341,23 +311,6 @@ class Events extends Component {
             {userEvent.repo.name}
           </Text>
         );
-      case 'WatchEvent':
-        return (
-          <Text
-            style={styles.linkDescription}
-            onPress={() =>
-              this.props.navigation.navigate('Repository', {
-                repository: {
-                  ...userEvent.repo,
-                  name: userEvent.repo.name.substring(
-                    userEvent.repo.name.indexOf('/') + 1
-                  ),
-                },
-              })}
-          >
-            {userEvent.repo.name}
-          </Text>
-        );
       default:
         return null;
     }
@@ -377,15 +330,15 @@ class Events extends Component {
 
         return null;
       }
-      case 'DeleteEvent':
-        return 'at';
       case 'ForkEvent':
+      case 'MemberEvent':
         return 'to';
+      case 'DeleteEvent':
       case 'IssueCommentEvent':
-        return 'at';
       case 'IssuesEvent':
-        return 'at';
       case 'PushEvent':
+      case 'PullRequestEvent':
+      case 'PullRequestReviewCommentEvent':
         return 'at';
       default:
         return null;
@@ -422,6 +375,12 @@ class Events extends Component {
         return null;
       }
       case 'DeleteEvent':
+      case 'IssueCommentEvent':
+      case 'IssuesEvent':
+      case 'PushEvent':
+      case 'PullRequestEvent':
+      case 'MemberEvent':
+      case 'PullRequestReviewCommentEvent':
         return (
           <Text
             style={styles.linkDescription}
@@ -450,58 +409,6 @@ class Events extends Component {
             {userEvent.payload.forkee.full_name}
           </Text>
         );
-      case 'IssueCommentEvent':
-        return (
-          <Text
-            style={styles.linkDescription}
-            onPress={() =>
-              this.props.navigation.navigate('Repository', {
-                repository: {
-                  ...userEvent.repo,
-                  name: userEvent.repo.name.substring(
-                    userEvent.repo.name.indexOf('/') + 1
-                  ),
-                },
-              })}
-          >
-            {userEvent.repo.name}
-          </Text>
-        );
-      case 'IssuesEvent':
-        return (
-          <Text
-            style={styles.linkDescription}
-            onPress={() =>
-              this.props.navigation.navigate('Repository', {
-                repository: {
-                  ...userEvent.repo,
-                  name: userEvent.repo.name.substring(
-                    userEvent.repo.name.indexOf('/') + 1
-                  ),
-                },
-              })}
-          >
-            {userEvent.repo.name}
-          </Text>
-        );
-      case 'PushEvent':
-        return (
-          <Text
-            style={styles.linkDescription}
-            onPress={() =>
-              this.props.navigation.navigate('Repository', {
-                repository: {
-                  ...userEvent.repo,
-                  name: userEvent.repo.name.substring(
-                    userEvent.repo.name.indexOf('/') + 1
-                  ),
-                },
-              })}
-          >
-            {userEvent.repo.name}
-          </Text>
-        );
-
       default:
         return null;
     }
