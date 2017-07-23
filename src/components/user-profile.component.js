@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
-
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { colors, fonts, normalize } from 'config';
+import { ImageZoom } from 'components';
 
 type Props = {
   type: string,
@@ -80,17 +80,17 @@ export const UserProfile = ({
 }: Props) =>
   <View style={styles.container}>
     <View style={styles.profile}>
-      <Image
+      <ImageZoom
+        uri={{
+          uri: initialUser.avatar_url
+            ? initialUser.avatar_url
+            : user.avatar_url,
+        }}
         style={[
           styles.avatar,
           (initialUser.type === 'User' || user.type === 'User') &&
             styles.userAvatar,
         ]}
-        source={{
-          uri: initialUser.avatar_url
-            ? initialUser.avatar_url
-            : user.avatar_url,
-        }}
       />
       <Text style={styles.title}>
         {user.name}
@@ -109,7 +109,7 @@ export const UserProfile = ({
           })}
       >
         <Text style={styles.unitNumber}>
-          {user.public_repos + (user.total_private_repos || 0) || ''}
+          {user.public_repos + (user.total_private_repos || 0)}
         </Text>
         <Text style={styles.unitText}>Repositories</Text>
       </TouchableOpacity>

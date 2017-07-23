@@ -35,6 +35,10 @@ const styles = StyleSheet.create({
     color: colors.black,
     ...fonts.fontPrimary,
   },
+  listSubTitle: {
+    color: colors.greyDark,
+    ...fonts.fontPrimary,
+  },
 });
 
 class OrganizationProfile extends Component {
@@ -105,7 +109,8 @@ class OrganizationProfile extends Component {
               />
             </SectionList>}
 
-          {!isPendingOrg && <EntityInfo entity={organization} />}
+          {!isPendingOrg &&
+            <EntityInfo entity={organization} navigation={navigation} />}
         </ParallaxScroll>
       </ViewContainer>
     );
