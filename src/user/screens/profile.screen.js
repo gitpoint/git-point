@@ -130,7 +130,7 @@ class Profile extends Component {
                   />
                 </SectionList>}
 
-              <EntityInfo entity={user} />
+              <EntityInfo entity={user} orgs={orgs} navigation={navigation} />
 
               <SectionList
                 title="ORGANIZATIONS"
