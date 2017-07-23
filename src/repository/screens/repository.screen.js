@@ -210,7 +210,7 @@ class Repository extends Component {
           {!isPendingContributors &&
             <MembersList
               title="CONTRIBUTORS"
-              members={contributors}
+              members={!isPendingRepository && contributors}
               navigation={navigation}
             />}
 
