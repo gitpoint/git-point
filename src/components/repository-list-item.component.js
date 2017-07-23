@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { ListItem, Icon } from 'react-native-elements';
 
-import { emojifyText } from 'utils';
+import { emojifyText, starNumbersText } from 'utils';
 import { colors, languageColors, fonts, normalize } from 'config';
 
 type Props = {
@@ -80,7 +80,7 @@ const renderTitle = repository =>
       />
 
       <Text style={[styles.extraInfoSubject, { paddingTop: 2 }]}>
-        {repository.stargazers_count}
+        {starNumbersText(repository.stargazers_count)}
       </Text>
 
       {repository.language !== null &&
