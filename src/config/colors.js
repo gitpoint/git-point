@@ -1,7 +1,7 @@
 export const colors = {
   blue: '#0366d6',
   black: '#000000',
-  primarydark: '#262626',
+  primaryDark: '#262626',
   grey: '#bbb',
   greyDarkest: '#808080',
   greyBlue: '#6a737d',
@@ -22,7 +22,7 @@ export const colors = {
   addCodeLineNumberGreen: '#DBFFD6',
   delCodeRed: '#ffecec',
   delCodeLineNumberRed: '#ffdddd',
-  purple: '#6f42c1'
+  purple: '#6f42c1',
 };
 
 export const languageColors = {
@@ -223,5 +223,5 @@ export const languageColors = {
   cpp: '#f34b7d',
   'AGS Script': '#B9D9FF',
   Dogescript: '#cca760',
-  nesC: '#94B0C7'
+  nesC: '#94B0C7',
 };

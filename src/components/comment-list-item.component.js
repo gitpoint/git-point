@@ -1,35 +1,144 @@
 // @flow
+/* eslint-disable no-nested-ternary */
 
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
-
-import { colors, normalize } from 'config';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  Platform,
+} from 'react-native';
+import HTMLView from 'react-native-htmlview';
 import moment from 'moment';
 
-import HTMLView from 'react-native-htmlview';
+import { colors, fonts, normalize } from 'config';
+
+const lightFont = {
+  ...fonts.fontPrimaryLight,
+};
+
+const regularFont = {
+  ...fonts.fontPrimary,
+};
+
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: 10,
+    paddingRight: 10,
+    paddingBottom: 10,
+    backgroundColor: 'transparent',
+  },
+  header: {
+    flexDirection: 'row',
+    marginLeft: 10,
+    alignItems: 'center',
+  },
+  avatarContainer: {
+    backgroundColor: colors.greyLight,
+    borderRadius: 17,
+    width: 34,
+    height: 34,
+  },
+  avatar: {
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+  },
+  titleSubtitleContainer: {
+    justifyContent: 'center',
+    flex: 1,
+    marginLeft: 10,
+  },
+  dateContainer: {
+    flex: 0.15,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+  },
+  linkDescription: {
+    ...fonts.fontPrimarySemiBold,
+    color: colors.primaryDark,
+  },
+  date: {
+    color: colors.greyDark,
+  },
+  commentContainer: {
+    paddingTop: 4,
+    paddingBottom: 22,
+    marginLeft: 54,
+    marginRight: 20,
+    borderBottomColor: colors.greyLight,
+    borderBottomWidth: 1,
+  },
+  commentText: {
+    fontSize: Platform.OS === 'ios' ? normalize(11) : normalize(12),
+    color: colors.primaryDark,
+  },
+  commentTextNone: {
+    color: colors.primaryDark,
+    fontStyle: 'italic',
+  },
+  commentLight: {
+    ...lightFont,
+  },
+  commentRegular: {
+    ...regularFont,
+  },
+});
+
+const textStyleLight = {
+  fontSize: Platform.OS === 'ios' ? normalize(11) : normalize(12),
+  color: colors.primaryDark,
+  ...lightFont,
+};
+
+const textStyleRegular = {
+  fontSize: Platform.OS === 'ios' ? normalize(11) : normalize(12),
+  color: colors.primaryDark,
+  ...regularFont,
+};
+
+const textStyle = Platform.OS === 'ios' ? textStyleLight : textStyleRegular;
+
+const linkStyle = {
+  color: colors.primaryDark,
+  ...fonts.fontPrimarySemiBold,
+};
+
+const commentStyles = StyleSheet.create({
+  span: textStyle,
+  p: textStyle,
+  h1: textStyle,
+  h2: textStyle,
+  h3: textStyle,
+  h4: textStyle,
+  li: textStyle,
+  a: linkStyle,
+});
 
 export class CommentListItem extends Component {
   props: {
     comment: Object,
     onLinkPress: Function,
-    navigation: Object
+    navigation: Object,
   };
 
   render() {
     const { comment, navigation } = this.props;
     const commentBodyAdjusted = () =>
       comment.body_html
-        .replace(new RegExp(/<img[^>]*>/, 'g'), 'Image')
-        .replace(new RegExp(/<ul>[\n]*?<li>/, 'g'), '<ul><li>')
-        .replace(new RegExp(/<\/li>[\n]*?<\/ul>/, 'g'), '</li></ul>')
-        .replace(new RegExp(/<ol>[\n]*?<li>/, 'g'), '<ol><li>')
-        .replace(new RegExp(/<\/li>[\n]*?<\/ol>/, 'g'), '</li></ol>')
-        .replace(new RegExp(/<li>[\n]*?<p>/, 'g'), '<li><span>')
-        .replace(new RegExp(/<\/h1>[\n]*?<p>/, 'g'), '</h1><span>')
-        .replace(new RegExp(/<\/h2>[\n]*?<p>/, 'g'), '</h2><span>')
-        .replace(new RegExp(/<\/h3>[\n]*?<p>/, 'g'), '</h3><span>')
-        .replace(new RegExp(/<p>*>/, 'g'), '<span>')
-        .replace(new RegExp(/<\/p>*>/, 'g'), '</span>');
+        .replace(new RegExp(/<img[^>]*>/g), 'Image')
+        .replace(new RegExp(/<ul>[\n]*?<li>/g), '<ul><li>')
+        .replace(new RegExp(/<\/li>[\n]*?<\/ul>/g), '</li></ul>')
+        .replace(new RegExp(/<ol>[\n]*?<li>/g), '<ol><li>')
+        .replace(new RegExp(/<\/li>[\n]*?<\/ol>/g), '</li></ol>')
+        .replace(new RegExp(/<li>[\n]*?<p>/g), '<li><span>')
+        .replace(new RegExp(/<\/h1>[\n]*?<p>/g), '</h1><span>')
+        .replace(new RegExp(/<\/h2>[\n]*?<p>/g), '</h2><span>')
+        .replace(new RegExp(/<\/h3>[\n]*?<p>/g), '</h3><span>')
+        .replace(new RegExp(/<p>*>/g), '<span>')
+        .replace(new RegExp(/<\/p>*>/g), '</span>');
 
     const myDomElement = (node, index, siblings, parent, defaultRenderer) => {
       const onLinkPress = this.props.onLinkPress;
@@ -41,13 +150,13 @@ export class CommentListItem extends Component {
             style={{
               paddingHorizontal: 12,
               borderLeftWidth: 3,
-              borderLeftColor: colors.greyMid
+              borderLeftColor: colors.greyMid,
             }}
           >
             <Text
               style={{
                 color: colors.greyBlue,
-                fontFamily: 'AvenirNext-Regular'
+                ...fonts.fontPrimaryLight,
               }}
             >
               {defaultRenderer(node.children, parent)}
@@ -66,17 +175,19 @@ export class CommentListItem extends Component {
           <Text
             key={index}
             style={{
-              fontFamily: 'Menlo',
+              ...fonts.fontCode,
               backgroundColor: colors.greyMidLight,
               fontSize: normalize(11),
-              margin: node.parent.name === 'pre' ? 12 : 3
+              margin: node.parent.name === 'pre' ? 12 : 3,
             }}
           >
             {defaultRenderer(node.children, parent)}
           </Text>
         );
       } else if (
-        node.name === 'h1' || node.name === 'h2' || node.name === 'h3'
+        node.name === 'h1' ||
+        node.name === 'h2' ||
+        node.name === 'h3'
       ) {
         return (
           <View
@@ -84,17 +195,18 @@ export class CommentListItem extends Component {
             style={{
               borderBottomWidth: node.name !== 'h3' ? 1 : 0,
               borderBottomColor: colors.greyMid,
-              marginBottom: 12
+              marginBottom: 12,
             }}
           >
             <Text
               style={{
                 color: colors.primaryDark,
-                fontFamily: 'AvenirNext-DemiBold',
-                fontSize: node.name === 'h1'
-                  ? normalize(24)
-                  : node.name === 'h2' ? normalize(20) : normalize(18),
-                paddingBottom: 4
+                ...fonts.fontPrimarySemiBold,
+                fontSize:
+                  node.name === 'h1'
+                    ? normalize(24)
+                    : node.name === 'h2' ? normalize(20) : normalize(18),
+                paddingBottom: 4,
               }}
             >
               {defaultRenderer(node.children, parent)}
@@ -106,12 +218,18 @@ export class CommentListItem extends Component {
           <Text
             key={index}
             style={{
-              fontFamily: 'AvenirNext-DemiBold',
-              fontWeight: '600',
-              color: colors.primaryDark
+              ...fonts.fontPrimarySemiBold,
+              color: colors.primaryDark,
             }}
             onPress={() => onLinkPress(node)}
           >
+            {defaultRenderer(node.children, parent)}
+          </Text>
+        );
+      } else if (node.name === 'li' && parent.name === 'ol') {
+        return (
+          <Text key={index} style={textStyle}>
+            {`${Math.ceil((index + 1) / 2)}. `}
             {defaultRenderer(node.children, parent)}
           </Text>
         );
@@ -129,15 +247,16 @@ export class CommentListItem extends Component {
         <View style={styles.header}>
           {comment.user &&
             <TouchableOpacity
+              style={styles.avatarContainer}
               onPress={() =>
                 navigation.navigate('Profile', {
-                  user: comment.user
+                  user: comment.user,
                 })}
             >
               <Image
                 style={styles.avatar}
                 source={{
-                  uri: comment.user.avatar_url
+                  uri: comment.user.avatar_url,
                 }}
               />
             </TouchableOpacity>}
@@ -147,11 +266,12 @@ export class CommentListItem extends Component {
               style={styles.titleSubtitleContainer}
               onPress={() =>
                 navigation.navigate('Profile', {
-                  user: comment.user
+                  user: comment.user,
                 })}
             >
               <Text style={styles.linkDescription}>
-                {comment.user.login}{'  '}
+                {comment.user.login}
+                {'  '}
               </Text>
             </TouchableOpacity>}
 
@@ -175,90 +295,32 @@ export class CommentListItem extends Component {
             {comment.body &&
               comment.body !== '' &&
               !comment.body_html &&
-              <Text style={styles.commentText}>{comment.body}</Text>}
+              <Text
+                style={[
+                  styles.commentText,
+                  Platform.OS === 'ios'
+                    ? styles.commentLight
+                    : styles.commentRegular,
+                ]}
+              >
+                {comment.body}
+              </Text>}
           </View>}
 
         {!commentPresent &&
           <View style={styles.commentContainer}>
-            <Text style={styles.commentTextNone}>No description provided.</Text>
+            <Text
+              style={[
+                styles.commentTextNone,
+                Platform.OS === 'ios'
+                  ? styles.commentLight
+                  : styles.commentRegular,
+              ]}
+            >
+              No description provided.
+            </Text>
           </View>}
-
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: 10,
-    paddingRight: 10,
-    paddingBottom: 10,
-    backgroundColor: 'transparent'
-  },
-  header: {
-    flexDirection: 'row',
-    marginLeft: 10,
-    alignItems: 'center'
-  },
-  avatar: {
-    backgroundColor: colors.greyLight,
-    width: 34,
-    height: 34,
-    borderRadius: 17
-  },
-  titleSubtitleContainer: {
-    justifyContent: 'center',
-    flex: 1,
-    marginLeft: 10
-  },
-  dateContainer: {
-    flex: 0.15,
-    alignItems: 'flex-end',
-    justifyContent: 'center'
-  },
-  linkDescription: {
-    fontFamily: 'AvenirNext-DemiBold',
-    color: colors.primaryDark
-  },
-  date: {
-    color: colors.greyDark
-  },
-  commentContainer: {
-    paddingTop: 4,
-    paddingBottom: 22,
-    marginLeft: 54,
-    marginRight: 20,
-    borderBottomColor: colors.greyLight,
-    borderBottomWidth: 1
-  },
-  commentText: {
-    color: colors.primaryDark,
-    fontFamily: 'AvenirNext-Regular'
-  },
-  commentTextNone: {
-    color: colors.primaryDark,
-    fontFamily: 'AvenirNext-Regular',
-    fontStyle: 'italic'
-  }
-});
-
-const textStyle = {
-  color: colors.primaryDark,
-  fontFamily: 'AvenirNext-Regular'
-};
-
-const linkStyle = {
-  color: colors.primaryDark,
-  fontFamily: 'AvenirNext-DemiBold'
-};
-
-const commentStyles = StyleSheet.create({
-  span: textStyle,
-  p: textStyle,
-  h1: textStyle,
-  h2: textStyle,
-  h3: textStyle,
-  h4: textStyle,
-  li: textStyle,
-  a: linkStyle
-});

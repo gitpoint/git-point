@@ -1,25 +1,58 @@
-import { LOGIN, GET_AUTH_USER, GET_AUTH_ORGS, GET_EVENTS } from './auth.type'
-import { fetchAccessToken, fetchAuthUser, fetchAuthUserOrgs, fetchUserEvents } from 'api';
+import { AsyncStorage } from 'react-native';
+import uniqby from 'lodash.uniqby';
+import {
+  fetchAccessToken,
+  fetchAuthUser,
+  fetchAuthUserOrgs,
+  fetchUserOrgs,
+  fetchUserEvents,
+} from 'api';
+import {
+  LOGIN,
+  LOGOUT,
+  GET_AUTH_USER,
+  GET_AUTH_ORGS,
+  GET_EVENTS,
+} from './auth.type';
 
 export const auth = (code, state) => {
-  return (dispatch) => {
-
+  return dispatch => {
     dispatch({ type: LOGIN.PENDING });
 
-    fetchAccessToken(code, state).then(data => {
-      dispatch({
-        type: LOGIN.SUCCESS,
-        payload: data.access_token,
-      });
-    })
-    .catch(error => {
-      dispatch({
-        type: LOGIN.ERROR,
-        payload: error,
+    fetchAccessToken(code, state)
+      .then(data => {
+        dispatch({
+          type: LOGIN.SUCCESS,
+          payload: data.access_token,
+        });
       })
-    })
-  }
-}
+      .catch(error => {
+        dispatch({
+          type: LOGIN.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+export const signOut = () => {
+  return dispatch => {
+    dispatch({ type: LOGOUT.PENDING });
+
+    return AsyncStorage.clear()
+      .then(() => {
+        dispatch({
+          type: LOGOUT.SUCCESS,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: LOGOUT.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
 
 export const getUser = () => {
   return (dispatch, getState) => {
@@ -27,49 +60,60 @@ export const getUser = () => {
 
     dispatch({ type: GET_AUTH_USER.PENDING });
 
-    fetchAuthUser(accessToken).then(data => {
-      dispatch({
-        type: GET_AUTH_USER.SUCCESS,
-        payload: data,
-      });
-    })
-    .catch(error => {
-      dispatch({
-        type: GET_AUTH_USER.ERROR,
-        payload: error,
+    fetchAuthUser(accessToken)
+      .then(data => {
+        dispatch({
+          type: GET_AUTH_USER.SUCCESS,
+          payload: data,
+        });
       })
-    })
+      .catch(error => {
+        dispatch({
+          type: GET_AUTH_USER.ERROR,
+          payload: error,
+        });
+      });
   };
 };
 
 export const getOrgs = () => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
+    const login = getState().auth.user.login;
 
     dispatch({ type: GET_AUTH_ORGS.PENDING });
 
-    fetchAuthUserOrgs(accessToken).then(data => {
-      dispatch({
-        type: GET_AUTH_ORGS.SUCCESS,
-        payload: data,
-      });
-    })
-    .catch(error => {
-      dispatch({
-        type: GET_AUTH_ORGS.ERROR,
-        payload: error,
+    Promise.all([
+      fetchAuthUserOrgs(accessToken),
+      fetchUserOrgs(login, accessToken),
+    ])
+      .then(data => {
+        const orgs = data[0].concat(data[1]);
+
+        dispatch({
+          type: GET_AUTH_ORGS.SUCCESS,
+          payload: uniqby(orgs, 'id').sort(
+            (org1, org2) => org1.login > org2.login
+          ),
+        });
       })
-    })
+      .catch(error => {
+        dispatch({
+          type: GET_AUTH_ORGS.ERROR,
+          payload: error,
+        });
+      });
   };
 };
 
-export const getUserEvents = (user) => {
+export const getUserEvents = user => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 
     dispatch({ type: GET_EVENTS.PENDING });
 
-      fetchUserEvents(user, accessToken).then(data => {
+    fetchUserEvents(user, accessToken)
+      .then(data => {
         dispatch({
           type: GET_EVENTS.SUCCESS,
           payload: data,
@@ -79,7 +123,7 @@ export const getUserEvents = (user) => {
         dispatch({
           type: GET_EVENTS.ERROR,
           payload: error,
-        })
-      })
+        });
+      });
   };
 };

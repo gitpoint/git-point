@@ -1,11 +1,11 @@
-import { SEARCH_REPOS, SEARCH_USERS } from './search.type'
 import { fetchSearch } from 'api';
+import { SEARCH_REPOS, SEARCH_USERS } from './search.type';
 
-export const searchRepos = (query) => {
+export const searchRepos = query => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 
-    dispatch({type: SEARCH_REPOS.PENDING});
+    dispatch({ type: SEARCH_REPOS.PENDING });
 
     return fetchSearch('repositories', query, accessToken)
       .then(data => {
@@ -23,11 +23,11 @@ export const searchRepos = (query) => {
   };
 };
 
-export const searchUsers = (query) => {
+export const searchUsers = query => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 
-    dispatch({type: SEARCH_USERS.PENDING});
+    dispatch({ type: SEARCH_USERS.PENDING });
 
     return fetchSearch('users', query, accessToken)
       .then(data => {

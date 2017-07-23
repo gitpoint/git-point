@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, ActionSheetIOS } from 'react-native';
+import { connect } from 'react-redux';
+import { StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import ActionSheet from 'react-native-actionsheet';
 
 import {
   ViewContainer,
@@ -13,12 +15,10 @@ import {
   UserListItem,
   IssueListItem,
   LoadingMembersList,
-  LoadingModal
+  LoadingModal,
+  RepositorySectionTitle,
 } from 'components';
-
-import { colors } from 'config';
-
-import { connect } from 'react-redux';
+import { colors, fonts } from 'config';
 import {
   getRepositoryInfo,
   getContributors,
@@ -39,35 +39,46 @@ const mapStateToProps = state => ({
   isPendingContributors: state.repository.isPendingContributors,
   isPendingIssues: state.repository.isPendingIssues,
   isPendingCheckStarred: state.repository.isPendingCheckStarred,
-  isPendingFork: state.repository.isPendingFork
+  isPendingFork: state.repository.isPendingFork,
 });
 
 const mapDispatchToProps = dispatch => ({
-  getRepositoryInfo: url => dispatch(getRepositoryInfo(url)),
-  getContributors: url => dispatch(getContributors(url)),
-  getIssues: url => dispatch(getIssues(url)),
-  changeStarStatusRepo: (owner, repo, starred) => dispatch(changeStarStatusRepo(owner, repo, starred)),
-  forkRepo: (owner, repo) => dispatch(forkRepo(owner, repo))
+  getRepositoryInfoByDispatch: url => dispatch(getRepositoryInfo(url)),
+  getContributorsByDispatch: url => dispatch(getContributors(url)),
+  getIssuesByDispatch: url => dispatch(getIssues(url)),
+  changeStarStatusRepoByDispatch: (owner, repo, starred) =>
+    dispatch(changeStarStatusRepo(owner, repo, starred)),
+  forkRepoByDispatch: (owner, repo) => dispatch(forkRepo(owner, repo)),
+});
+
+const styles = StyleSheet.create({
+  listTitle: {
+    color: colors.black,
+    ...fonts.fontPrimary,
+  },
 });
 
 class Repository extends Component {
   props: {
-    selectRepository: Function,
-    getRepositoryInfo: Function,
-    getIssues: Function,
-    changeStarStatusRepo: Function,
-    repositoryName: string,
+    // selectRepositoryByDispatch: Function,
+    getRepositoryInfoByDispatch: Function,
+    // getIssuesByDispatch: Function,
+    changeStarStatusRepoByDispatch: Function,
+    forkRepoByDispatch: Function,
+    // repositoryName: string,
     repository: Object,
     contributors: Array,
     issues: Array,
     starred: boolean,
-    forked: boolean,
+    // forked: boolean,
     isPendingRepository: boolean,
     isPendingContributors: boolean,
     isPendingIssues: boolean,
     isPendingCheckStarred: boolean,
-    isPendingCheckForked: boolean,
-    navigation: Object
+    isPendingFork: boolean,
+    // isPendingCheckForked: boolean,
+    navigation: Object,
+    username: string,
   };
 
   componentDidMount() {
@@ -75,49 +86,39 @@ class Repository extends Component {
     const repo = navigation.state.params.repository;
     const repoUrl = navigation.state.params.repositoryUrl;
 
-    this.props.getRepositoryInfo(repo ? repo.url : repoUrl);
+    this.props.getRepositoryInfoByDispatch(repo ? repo.url : repoUrl);
   }
 
-  showMenuActionSheet() {
+  showMenuActionSheet = () => {
+    this.ActionSheet.show();
+  };
+
+  handlePress = index => {
     const {
       starred,
       repository,
-      changeStarStatusRepo,
-      forkRepo,
+      changeStarStatusRepoByDispatch,
+      forkRepoByDispatch,
       navigation,
-      username
+      username,
     } = this.props;
-    let repositoryActions = [ starred ? '★ Unstar' : '★ Star'];
     const showFork = repository.owner.login !== username;
-    if (showFork) {
-      repositoryActions.push('Fork');
+
+    if (index === 0) {
+      changeStarStatusRepoByDispatch(
+        repository.owner.login,
+        repository.name,
+        starred
+      );
     }
 
-    ActionSheetIOS.showActionSheetWithOptions(
-      {
-        title: 'Repository Actions',
-        options: [...repositoryActions, 'Cancel'],
-        cancelButtonIndex: repositoryActions.length
-      },
-      buttonIndex => {
-        if (buttonIndex === 0) {
-          changeStarStatusRepo(
-            repository.owner.login,
-            repository.name,
-            starred
-          );
-        }
-        if (buttonIndex === 1 && showFork) {
-          forkRepo(
-            repository.owner.login,
-            repository.name
-          ).then(json => {
-            navigation.navigate('Repository', { repository: json })
-          });
-        }
-      }
-    );
-  }
+    if (index === 1 && showFork) {
+      forkRepoByDispatch(repository.owner.login, repository.name).then(json => {
+        navigation.navigate('Repository', { repository: json });
+      });
+    }
+  };
+
   render() {
     const {
       repository,
@@ -129,50 +130,58 @@ class Repository extends Component {
       isPendingIssues,
       isPendingCheckStarred,
       isPendingFork,
-      navigation
+      navigation,
+      username,
     } = this.props;
     const initalRepository = navigation.state.params.repository;
-    const pulls = issues.filter(issue => issue.hasOwnProperty('pull_request'));
-    const pureIssues = issues.filter(
-      issue => !issue.hasOwnProperty('pull_request')
-    );
+    const pulls = issues.filter(issue => issue.hasOwnProperty('pull_request')); // eslint-disable-line no-prototype-builtins
+    const pureIssues = issues.filter(issue => {
+      // eslint-disable-next-line no-prototype-builtins
+      return !issue.hasOwnProperty('pull_request');
+    });
 
-    const loader = isPendingFork ?
-      (<LoadingModal />) :
-      null;
+    const openPulls = pulls.filter(pull => pull.state === 'open');
+    const closedPulls = pulls.filter(pull => pull.state === 'closed');
+
+    const openIssues = pureIssues.filter(issue => issue.state === 'open');
+    const closedIssues = pureIssues.filter(issue => issue.state === 'closed');
+
+    const repositoryActions = [starred ? '★ Unstar' : '★ Star'];
+    const showFork =
+      repository && repository.owner && repository.owner.login !== username;
+
+    if (showFork) {
+      repositoryActions.push('Fork');
+    }
+
+    const loader = isPendingFork ? <LoadingModal /> : null;
 
     return (
       <ViewContainer>
-
         {loader}
 
         <ParallaxScroll
           renderContent={() => {
             if (isPendingRepository && !initalRepository) {
               return <LoadingRepositoryProfile />;
-            } else {
-              return (
-                <RepositoryProfile
-                  repository={
-                    isPendingRepository ? initalRepository : repository
-                  }
-                  starred={
-                    isPendingRepository || isPendingCheckStarred
-                      ? false
-                      : starred
-                  }
-                  navigation={navigation}
-                />
-              );
             }
+
+            return (
+              <RepositoryProfile
+                repository={isPendingRepository ? initalRepository : repository}
+                starred={
+                  isPendingRepository || isPendingCheckStarred ? false : starred
+                }
+                navigation={navigation}
+              />
+            );
           }}
           stickyTitle={repository.name}
           showMenu={!isPendingRepository && !isPendingCheckStarred}
           menuAction={() => this.showMenuActionSheet()}
-          navigateBack
           navigation={navigation}
+          navigateBack
         >
-
           {initalRepository &&
             !initalRepository.owner &&
             isPendingRepository &&
@@ -211,12 +220,12 @@ class Repository extends Component {
               leftIcon={{
                 name: 'book',
                 color: colors.grey,
-                type: 'octicon'
+                type: 'octicon',
               }}
               titleStyle={styles.listTitle}
               onPress={() =>
                 navigation.navigate('ReadMe', {
-                  repository: repository
+                  repository,
                 })}
               underlayColor={colors.greyLight}
             />
@@ -226,11 +235,11 @@ class Repository extends Component {
               leftIcon={{
                 name: 'code',
                 color: colors.grey,
-                type: 'octicon'
+                type: 'octicon',
               }}
               onPress={() =>
                 navigation.navigate('RepositoryCodeList', {
-                  topLevel: true
+                  topLevel: true,
                 })}
               underlayColor={colors.greyLight}
             />
@@ -238,10 +247,14 @@ class Repository extends Component {
 
           <SectionList
             loading={isPendingIssues}
-            title="ISSUES"
-            noItems={
-              pureIssues.filter(issue => issue.state === 'open').length === 0
+            title={
+              <RepositorySectionTitle
+                text="ISSUES"
+                openCount={openIssues.length}
+                closedCount={closedIssues.length}
+              />
             }
+            noItems={openIssues.length === 0}
             noItemsMessage={
               pureIssues.length === 0 ? 'No issues' : 'No open issues'
             }
@@ -250,26 +263,31 @@ class Repository extends Component {
             buttonAction={() =>
               navigation.navigate('IssueList', {
                 type: 'issue',
-                issues: pureIssues
+                issues: pureIssues,
               })}
           >
-            {pureIssues
-              .filter(issue => issue.state === 'open')
+            {openIssues
               .slice(0, 3)
-              .map((item, i) => (
+              .map(item =>
                 <IssueListItem
-                  key={i}
+                  key={item.id}
                   type="issue"
                   issue={item}
                   navigation={navigation}
                 />
-              ))}
+              )}
           </SectionList>
 
           <SectionList
             loading={isPendingIssues}
-            title="PULL REQUESTS"
-            noItems={pulls.filter(issue => issue.state === 'open').length === 0}
+            title={
+              <RepositorySectionTitle
+                text="PULL REQUESTS"
+                openCount={openPulls.length}
+                closedCount={closedPulls.length}
+              />
+            }
+            noItems={openPulls.length === 0}
             noItemsMessage={
               pulls.length === 0 ? 'No pull requests' : 'No open pull requests'
             }
@@ -278,32 +296,36 @@ class Repository extends Component {
             buttonAction={() =>
               navigation.navigate('PullList', {
                 type: 'pull',
-                issues: pulls
+                issues: pulls,
               })}
           >
-            {pulls
-              .filter(issue => issue.state === 'open')
+            {openPulls
               .slice(0, 3)
-              .map((item, i) => (
+              .map(item =>
                 <IssueListItem
-                  key={i}
+                  key={item.id}
                   type="pull"
                   issue={item}
                   navigation={navigation}
                 />
-              ))}
+              )}
           </SectionList>
         </ParallaxScroll>
+
+        <ActionSheet
+          ref={o => {
+            this.ActionSheet = o;
+          }}
+          title="Repository Actions"
+          options={[...repositoryActions, 'Cancel']}
+          cancelButtonIndex={repositoryActions.length}
+          onPress={this.handlePress}
+        />
       </ViewContainer>
     );
   }
 }
-const styles = StyleSheet.create({
-  listTitle: {
-    color: colors.black,
-    fontFamily: 'AvenirNext-Medium'
-  }
-});
+
 export const RepositoryScreen = connect(mapStateToProps, mapDispatchToProps)(
   Repository
 );

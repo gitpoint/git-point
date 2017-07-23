@@ -1,11 +1,11 @@
-import { combineReducers } from "redux";
-import { authReducer } from "auth";
-import { userReducer } from "user";
-import { repositoryReducer } from "repository";
-import { organizationReducer } from "organization";
-import { issueReducer } from "issue";
-import { searchReducer } from "search";
-import { notificationsReducer } from "notifications";
+import { combineReducers } from 'redux';
+import { authReducer } from 'auth';
+import { userReducer } from 'user';
+import { repositoryReducer } from 'repository';
+import { organizationReducer } from 'organization';
+import { issueReducer } from 'issue';
+import { searchReducer } from 'search';
+import { notificationsReducer } from 'notifications';
 
 export const rootReducer = combineReducers({
   auth: authReducer,
@@ -14,5 +14,5 @@ export const rootReducer = combineReducers({
   organization: organizationReducer,
   issue: issueReducer,
   search: searchReducer,
-  notifications: notificationsReducer
+  notifications: notificationsReducer,
 });

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import { NavigationActions } from 'react-navigation';
+import codePush from 'react-native-code-push';
 
 import {
   ViewContainer,
@@ -8,46 +11,125 @@ import {
   SectionList,
   LoadingContainer,
   ParallaxScroll,
-  UserListItem
+  UserListItem,
+  EntityInfo,
 } from 'components';
-
-import { colors } from 'config';
-import Communications from 'react-native-communications';
-
-import { connect } from 'react-redux';
-import { getUser, getOrgs } from 'auth';
+import { colors, fonts, normalize } from 'config';
+import { getUser, getOrgs, signOut } from 'auth';
+import { openURLInView } from 'utils';
 
 const mapStateToProps = state => ({
   user: state.auth.user,
   orgs: state.auth.orgs,
   isPendingUser: state.auth.isPendingUser,
-  isPendingOrgs: state.auth.isPendingOrgs
+  isPendingOrgs: state.auth.isPendingOrgs,
 });
 
 const mapDispatchToProps = dispatch => ({
-  getUser: () => dispatch(getUser()),
-  getOrgs: () => dispatch(getOrgs())
+  getUserByDispatch: () => dispatch(getUser()),
+  getOrgsByDispatch: () => dispatch(getOrgs()),
+  signOutByDispatch: () => dispatch(signOut()),
 });
+
+const styles = StyleSheet.create({
+  listTitle: {
+    color: colors.black,
+    ...fonts.fontPrimary,
+  },
+  listSubTitle: {
+    color: colors.greyDark,
+    ...fonts.fontPrimary,
+  },
+  update: {
+    flex: 1,
+    alignItems: 'center',
+    marginVertical: 40,
+  },
+  updateText: {
+    color: colors.greyDark,
+    ...fonts.fontPrimary,
+  },
+  updateTextSub: {
+    fontSize: normalize(11),
+  },
+  note: {
+    fontSize: normalize(11),
+    color: colors.primaryDark,
+    ...fonts.fontPrimaryLight,
+    textAlign: 'center',
+    padding: 10,
+  },
+  noteLink: {
+    ...fonts.fontPrimarySemiBold,
+  },
+  logoutTitle: {
+    color: colors.red,
+    ...fonts.fontPrimary,
+  },
+});
+
+const updateText = {
+  check: 'Check for update',
+  checking: 'Checking for update...',
+  updated: 'App is up to date',
+  available: 'Update is available!',
+  notApplicable: 'Not applicable in debug mode',
+};
 
 class AuthProfile extends Component {
   props: {
-    getUser: Function,
-    getOrgs: Function,
+    getUserByDispatch: Function,
+    getOrgsByDispatch: Function,
+    signOutByDispatch: Function,
     user: Object,
     orgs: Array,
     isPendingUser: boolean,
     isPendingOrgs: boolean,
-    navigation: Object
+    navigation: Object,
+  };
+
+  state = {
+    updateText: updateText.check,
   };
 
   componentDidMount() {
-    this.props.getUser();
-    this.props.getOrgs();
+    this.props.getUserByDispatch();
+    this.props.getOrgsByDispatch();
   }
 
-  getUserBlog(url) {
-    const prefix = 'http';
-    return url.substr(0, prefix.length) === prefix ? url : `http://${url}`;
+  checkForUpdate = () => {
+    if (__DEV__) {
+      this.setState({ updateText: updateText.notApplicable });
+    } else {
+      this.setState({ updateText: updateText.checking });
+      codePush
+        .sync({
+          updateDialog: true,
+          installMode: codePush.InstallMode.IMMEDIATE,
+        })
+        .then(update => {
+          this.setState({
+            updateText: update ? updateText.available : updateText.updated,
+          });
+        });
+    }
+  };
+
+  signOutUser() {
+    const { signOutByDispatch, navigation } = this.props;
+
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      key: null,
+      actions: [NavigationActions.navigate({ routeName: 'Login' })],
+    });
+
+    signOutByDispatch().then(() => {
+      const url = 'https://github.com/logout';
+
+      navigation.dispatch(resetAction);
+      openURLInView(url);
+    });
   }
 
   render() {
@@ -60,95 +142,74 @@ class AuthProfile extends Component {
 
         {!loading &&
           <ParallaxScroll
-            renderContent={() => (
+            renderContent={() =>
               <UserProfile
                 type="user"
                 initialUser={user}
                 user={user}
                 navigation={navigation}
-              />
-            )}
+              />}
             stickyTitle={user.login}
           >
-
-            {user.bio && user.bio !== '' &&
-              <SectionList
-                title="BIO"
-              >
+            {user.bio &&
+              user.bio !== '' &&
+              <SectionList title="BIO">
                 <ListItem
                   subtitle={user.bio}
                   subtitleStyle={styles.listSubTitle}
                   hideChevron
                 />
-              </SectionList>
-            }
+              </SectionList>}
 
-            <SectionList
-              title="EMAIL"
-              noItems={!user.email || user.email === ''}
-              noItemsMessage={'No email associated with account'}
-            >
-              <ListItem
-                title="Email"
-                titleStyle={styles.listTitle}
-                leftIcon={{
-                  name: 'mail',
-                  color: colors.grey,
-                  type: 'octicon'
-                }}
-                subtitle={user.email}
-                subtitleStyle={styles.listSubTitle}
-                onPress={() =>
-                  Communications.email([user.email], null, null, 'Hi!', '')}
-                underlayColor={colors.greyLight}
-              />
-            </SectionList>
-
-            <SectionList
-              title="WEBSITE"
-              noItems={!user.blog || user.blog === ''}
-              noItemsMessage={'No website associated with account'}
-            >
-              <ListItem
-                title="Website"
-                titleStyle={styles.listTitle}
-                leftIcon={{
-                  name: 'link',
-                  color: colors.grey,
-                  type: 'octicon'
-                }}
-                subtitle={user.blog}
-                subtitleStyle={styles.listSubTitle}
-                onPress={() => Communications.web(this.getUserBlog(user.blog))}
-                underlayColor={colors.greyLight}
-              />
-            </SectionList>
+            <EntityInfo entity={user} />
 
             <SectionList
               title="ORGANIZATIONS"
               noItems={orgs.length === 0}
               noItemsMessage={'No organizations'}
             >
-              {orgs.map((item, i) => (
-                <UserListItem key={i} user={item} navigation={navigation} />
-              ))}
+              {orgs.map(item =>
+                <UserListItem
+                  key={item.id}
+                  user={item}
+                  navigation={navigation}
+                />
+              )}
+              <Text style={styles.note}>
+                Can&apos;t see all your organizations?{'\n'}
+                <Text
+                  style={styles.noteLink}
+                  onPress={() =>
+                    openURLInView('https://github.com/settings/applications')}
+                >
+                  You may have to request approval for them.
+                </Text>
+              </Text>
             </SectionList>
+
+            <SectionList>
+              <ListItem
+                title="Sign Out"
+                titleStyle={styles.logoutTitle}
+                hideChevron
+                onPress={() => this.signOutUser()}
+              />
+            </SectionList>
+
+            <TouchableOpacity
+              style={styles.update}
+              onPress={this.checkForUpdate}
+            >
+              <Text style={styles.updateText}>GitPoint v1.1</Text>
+              <Text style={[styles.updateText, styles.updateTextSub]}>
+                {this.state.updateText}
+              </Text>
+            </TouchableOpacity>
           </ParallaxScroll>}
       </ViewContainer>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  listTitle: {
-    color: colors.black,
-    fontFamily: 'AvenirNext-Medium'
-  },
-  listSubTitle: {
-    color: colors.greyDark,
-    fontFamily: 'AvenirNext-Medium'
-  }
-});
 
 export const AuthProfileScreen = connect(mapStateToProps, mapDispatchToProps)(
   AuthProfile

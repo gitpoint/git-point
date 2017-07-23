@@ -11,15 +11,13 @@ const styles = StyleSheet.create({
     bottom: 0,
     backgroundColor: 'rgba(0, 0, 0, 0.8)',
     justifyContent: 'center',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 
-export const LoadingModal = () => (
+export const LoadingModal = () =>
   <Modal transparent>
     <View style={styles.container}>
       <ActivityIndicator />
     </View>
-  </Modal>
-)
-
+  </Modal>;
