@@ -181,15 +181,7 @@ class Events extends Component {
           return (
             <Text
               style={styles.linkDescription}
-              onPress={() =>
-                this.props.navigation.navigate('Repository', {
-                  repository: {
-                    ...userEvent.repo,
-                    name: userEvent.repo.name.substring(
-                      userEvent.repo.name.indexOf('/') + 1
-                    ),
-                  },
-                })}
+              onPress={() => this.navigateToRepository(userEvent)}
             >
               {userEvent.repo.name}
             </Text>
@@ -210,15 +202,7 @@ class Events extends Component {
         return (
           <Text
             style={styles.linkDescription}
-            onPress={() =>
-              this.props.navigation.navigate('Repository', {
-                repository: {
-                  ...userEvent.repo,
-                  name: userEvent.repo.name.substring(
-                    userEvent.repo.name.indexOf('/') + 1
-                  ),
-                },
-              })}
+            onPress={() => this.navigateToRepository(userEvent)}
           >
             {userEvent.repo.name}
           </Text>
@@ -229,15 +213,7 @@ class Events extends Component {
             the{' '}
             <Text
               style={styles.linkDescription}
-              onPress={() =>
-                this.props.navigation.navigate('Repository', {
-                  repository: {
-                    ...userEvent.repo,
-                    name: userEvent.repo.name.substring(
-                      userEvent.repo.name.indexOf('/') + 1
-                    ),
-                  },
-                })}
+              onPress={() => this.navigateToRepository(userEvent)}
             >
               {userEvent.repo.name}
             </Text>{' '}
@@ -248,11 +224,8 @@ class Events extends Component {
       case 'IssuesEvent':
         return (
           <Text
+            onPress={() => this.navigateToIssue(userEvent)}
             style={styles.linkDescription}
-            onPress={() =>
-              this.props.navigation.navigate('Issue', {
-                issue: userEvent.payload.issue,
-              })}
           >
             {userEvent.payload.issue.title}
           </Text>
@@ -261,10 +234,7 @@ class Events extends Component {
         return (
           <Text
             style={styles.linkDescription}
-            onPress={() =>
-              this.props.navigation.navigate('Profile', {
-                user: userEvent.payload.member,
-              })}
+            onPress={() => this.navigateToProfile(userEvent)}
           >
             {userEvent.payload.member.login}
           </Text>
@@ -273,13 +243,7 @@ class Events extends Component {
       case 'PullRequestReviewEvent':
       case 'PullRequestReviewCommentEvent':
         return (
-          <Text
-            style={styles.linkDescription}
-            onPress={() =>
-              this.props.navigation.navigate('Issue', {
-                issue: userEvent.payload.issue,
-              })}
-          >
+          <Text style={styles.linkDescription}>
             {userEvent.payload.pull_request.title}
           </Text>
         );
@@ -297,14 +261,7 @@ class Events extends Component {
             style={styles.linkDescription}
             onPress={() => {
               if (userEvent.action !== 'deleted') {
-                this.props.navigation.navigate('Repository', {
-                  repository: {
-                    ...userEvent.repo,
-                    name: userEvent.repo.name.substring(
-                      userEvent.repo.name.indexOf('/') + 1
-                    ),
-                  },
-                });
+                this.navigateToRepository(userEvent);
               }
             }}
           >
@@ -357,15 +314,7 @@ class Events extends Component {
           return (
             <Text
               style={styles.linkDescription}
-              onPress={() =>
-                this.props.navigation.navigate('Repository', {
-                  repository: {
-                    ...userEvent.repo,
-                    name: userEvent.repo.name.substring(
-                      userEvent.repo.name.indexOf('/') + 1
-                    ),
-                  },
-                })}
+              onPress={() => this.navigateToRepository(userEvent)}
             >
               {userEvent.repo.name}
             </Text>
@@ -384,15 +333,7 @@ class Events extends Component {
         return (
           <Text
             style={styles.linkDescription}
-            onPress={() =>
-              this.props.navigation.navigate('Repository', {
-                repository: {
-                  ...userEvent.repo,
-                  name: userEvent.repo.name.substring(
-                    userEvent.repo.name.indexOf('/') + 1
-                  ),
-                },
-              })}
+            onPress={() => this.navigateToRepository(userEvent)}
           >
             {userEvent.repo.name}
           </Text>
@@ -401,10 +342,7 @@ class Events extends Component {
         return (
           <Text
             style={styles.linkDescription}
-            onPress={() =>
-              this.props.navigation.navigate('Repository', {
-                repository: userEvent.payload.forkee,
-              })}
+            onPress={() => this.navigateToRepository(userEvent, true)}
           >
             {userEvent.payload.forkee.full_name}
           </Text>
@@ -461,6 +399,29 @@ class Events extends Component {
     }
   };
 
+  navigateToRepository = (userEvent, isForkEvent) => {
+    this.props.navigation.navigate('Repository', {
+      repository: {
+        ...userEvent.repo,
+        name: !isForkEvent ? userEvent.repo.name.substring(
+          userEvent.repo.name.indexOf('/') + 1
+        ) : {},
+      },
+    });
+  }
+
+  navigateToIssue = userEvent => {
+    this.props.navigation.navigate('Issue', {
+      issue: userEvent.payload.issue,
+    });
+  }
+
+  navigateToProfile = userEvent => {
+    this.props.navigation.navigate('Profile', {
+      user: userEvent.payload.member,
+    });
+  }
+
   keyExtractor = item => {
     return item.id;
   };
@@ -470,10 +431,7 @@ class Events extends Component {
       <Text style={styles.descriptionContainer}>
         <Text
           style={styles.linkDescription}
-          onPress={() =>
-            this.props.navigation.navigate('Profile', {
-              user: userEvent.actor,
-            })}
+          onPress={() => this.navigateToProfile(userEvent)}
         >
           {userEvent.actor.login}{' '}
         </Text>
