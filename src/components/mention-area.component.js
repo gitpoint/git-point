@@ -134,7 +134,7 @@ export class MentionArea extends Component {
       Animated.spring(this.state.height, {
         duration: 100,
         toValue: this.props.height,
-        friction: 4,
+        friction: 10,
       }).start();
     }
   }
