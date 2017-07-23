@@ -205,12 +205,12 @@ class Repository extends Component {
               />
             </SectionList>}
 
-          {isPendingContributors && <LoadingMembersList title="CONTRIBUTORS" />}
+          {(isPendingRepository || isPendingContributors) && <LoadingMembersList title="CONTRIBUTORS" />}
 
           {!isPendingContributors &&
             <MembersList
               title="CONTRIBUTORS"
-              members={!isPendingRepository && contributors}
+              members={contributors}
               navigation={navigation}
             />}
 
