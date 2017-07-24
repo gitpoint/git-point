@@ -123,19 +123,21 @@ export const changeFollowStatus = (user, isFollowing) => {
 export const getRepositories = user => {
   return (dispatch, getState) => {
     const { accessToken, user: authUser } = getState().auth;
+    const isAuthUser = user.login === authUser.login;
 
     dispatch({ type: GET_REPOSITORIES.PENDING });
 
-    const url =
-      user.login === authUser.login
-        ? `${apiRoot}/user`
-        : USER_ENDPOINT(user.login);
+    const url = isAuthUser ? `${apiRoot}/user` : USER_ENDPOINT(user.login);
 
     fetchUrl(`${url}/repos?per_page=50`, accessToken)
       .then(data => {
+        const payload = isAuthUser
+          ? data.filter(repo => repo.permissions.admin)
+          : data;
+
         dispatch({
           type: GET_REPOSITORIES.SUCCESS,
-          payload: data.filter(repo => repo.permissions.admin),
+          payload,
         });
       })
       .catch(error => {
