@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import FuzzySearch from 'fuzzy-search';
 
-import { fonts, normalize } from 'config';
+import { animations, fonts, normalize } from 'config';
 
 const styles = StyleSheet.create({
   suggestionsRowContainer: {
@@ -108,15 +108,15 @@ export class MentionArea extends Component {
 
   openSuggestionsPanel() {
     Animated.spring(this.state.height, {
-      duration: 100,
+      duration: animations.duration,
       toValue: this.props.height,
-      friction: 10,
+      friction: animations.friction,
     }).start();
   }
 
   closeSuggestionsPanel() {
     Animated.timing(this.state.height, {
-      duration: 100,
+      duration: animations.duration,
       toValue: 0,
     }).start();
   }
@@ -126,14 +126,14 @@ export class MentionArea extends Component {
 
     if (newValue < this.props.height) {
       Animated.timing(this.state.height, {
-        duration: 100,
+        duration: animations.speed,
         toValue: newValue,
       }).start();
     } else {
       Animated.spring(this.state.height, {
-        duration: 100,
+        duration: animations.duration,
         toValue: this.props.height,
-        friction: 4,
+        friction: animations.friction,
       }).start();
     }
   }
