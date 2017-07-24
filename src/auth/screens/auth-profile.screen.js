@@ -10,6 +10,7 @@ import {
 import { ListItem } from 'react-native-elements';
 import { NavigationActions } from 'react-navigation';
 import codePush from 'react-native-code-push';
+
 import {
   ViewContainer,
   UserProfile,
