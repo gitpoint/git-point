@@ -17,17 +17,17 @@ import {
   CommentInput,
 } from 'components';
 import { colors } from 'config';
-import { getRepository } from 'repository';
+import { getRepository, getContributors } from 'repository';
 import {
   getIssueComments,
   postIssueComment,
-  getPullRequestDetails,
   getIssueFromUrl,
 } from '../issue.action';
 
 const mapStateToProps = state => ({
   authUser: state.auth.user,
   repository: state.repository.repository,
+  contributors: state.repository.contributors,
   issue: state.issue.issue,
   diff: state.issue.diff,
   isMerged: state.issue.isMerged,
@@ -36,16 +36,16 @@ const mapStateToProps = state => ({
   isPendingCheckMerge: state.issue.isPendingCheckMerge,
   isPendingComments: state.issue.isPendingComments,
   isPostingComment: state.issue.isPostingComment,
-  isPendingIssue: state.issue.isPendingIssue,
+  isPendingContributors: state.repository.isPendingContributors,
 });
 
 const mapDispatchToProps = dispatch => ({
   getIssueCommentsByDispatch: url => dispatch(getIssueComments(url)),
   postIssueCommentByDispatch: (body, owner, repoName, issueNum) =>
     dispatch(postIssueComment(body, owner, repoName, issueNum)),
-  getPullRequestDetailsByDispatch: url => dispatch(getPullRequestDetails(url)),
   getIssueFromUrlByDispatch: url => dispatch(getIssueFromUrl(url)),
   getRepositoryByDispatch: url => dispatch(getRepository(url)),
+  getContributorsByDispatch: url => dispatch(getContributors(url)),
 });
 
 class Issue extends Component {
@@ -75,8 +75,8 @@ class Issue extends Component {
 
   props: {
     getIssueCommentsByDispatch: Function,
-    getPullRequestDetailsByDispatch: Function,
     getRepositoryByDispatch: Function,
+    getContributorsByDispatch: Function,
     postIssueCommentByDispatch: Function,
     getIssueFromUrlByDispatch: Function,
     diff: string,
@@ -84,13 +84,15 @@ class Issue extends Component {
     isMerged: boolean,
     // authUser: Object,
     repository: Object,
+    contributors: Array,
     comments: Array,
     isPendingIssue: boolean,
     isPendingDiff: boolean,
     isPendingCheckMerge: boolean,
     isPendingComments: boolean,
+    isPendingContributors: boolean,
     // isPostingComment: boolean,
-    navigation: Object,
+    navigation: Object
   };
 
   componentDidMount() {
@@ -100,33 +102,32 @@ class Issue extends Component {
       repository,
       getIssueCommentsByDispatch,
       getRepositoryByDispatch,
-      getPullRequestDetailsByDispatch,
+      getContributorsByDispatch,
       getIssueFromUrlByDispatch,
     } = this.props;
-    const issueURL = navigation.state.params.issueURL;
+
+    const issueParam = navigation.state.params.issue;
+    const issueURLParam = navigation.state.params.issueURL;
     const issueCommentsURL = `${navigation.state.params.issueURL}/comments`;
 
     Promise.all(
-      getIssueFromUrlByDispatch(issueURL),
-      getIssueCommentsByDispatch(issueCommentsURL)
+      getIssueFromUrlByDispatch(issueURLParam || issueParam.url),
+      getIssueCommentsByDispatch(issueURLParam ? issueCommentsURL : issueParam.comments_url)
     ).then(() => {
       if (
         repository.full_name !==
         issue.repository_url.replace('https://api.github.com/repos/', '')
       ) {
-        getRepositoryByDispatch(issue.repository_url).then(() => {
+        Promise.all([
+          getRepositoryByDispatch(issue.repository_url),
+          getContributorsByDispatch(
+            this.getContributorsLink(issue.repository_url)
+          ),
+        ]).then(() => {
           this.setNavigationParams();
-
-          if (issue.pull_request) {
-            getPullRequestDetailsByDispatch(issue);
-          }
         });
       } else {
         this.setNavigationParams();
-
-        if (issue.pull_request) {
-          getPullRequestDetailsByDispatch(issue);
-        }
       }
     });
   }
@@ -160,6 +161,8 @@ class Issue extends Component {
       repositoryUrl: url,
     });
   };
+
+  getContributorsLink = repository => `${repository}/contributors`;
 
   setNavigationParams = () => {
     const { navigation, repository } = this.props;
@@ -222,10 +225,23 @@ class Issue extends Component {
     const {
       issue,
       comments,
+      contributors,
       isPendingComments,
+      isPendingContributors,
       isPendingIssue,
       navigation,
     } = this.props;
+
+    const fullComments = !isPendingComments ? [issue, ...comments] : [];
+    const participantNames = !isPendingComments
+      ? fullComments.map(item => item && item.user && item.user.login)
+      : [];
+    const contributorNames = !isPendingContributors
+      ? contributors.map(item => item && item.login)
+      : [];
+    const fullUsers = [
+      ...new Set([...participantNames, ...contributorNames]),
+    ].filter(item => !!item);
 
     return (
       <ViewContainer>
@@ -250,12 +266,13 @@ class Issue extends Component {
               contentContainerStyle={{ flexGrow: 1 }}
               ListHeaderComponent={this.renderHeader}
               removeClippedSubviews={false}
-              data={[issue, ...comments]}
+              data={fullComments}
               keyExtractor={this.keyExtractor}
               renderItem={this.renderItem}
             />
 
             <CommentInput
+              users={fullUsers}
               userHasPushPermission={
                 navigation.state.params.userHasPushPermission
               }

@@ -2490,6 +2490,10 @@ function-bind@^1.0.2, function-bind@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.0.tgz#16176714c801798e4e8f2cf7f7529467bb4a5771"
 
+fuzzy-search@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/fuzzy-search/-/fuzzy-search-1.4.0.tgz#563ea255ee5f1677e7e98d8e370e3320c1d950b4"
+
 gauge@~1.2.5:
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/gauge/-/gauge-1.2.7.tgz#e9cec5483d3d4ee0ef44b60a7d99e4935e136d93"
