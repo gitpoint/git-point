@@ -110,64 +110,64 @@ class Profile extends Component {
           }
         >
 
-        <ParallaxScroll
-          renderContent={() =>
-            <UserProfile
-              type="user"
-              initialUser={initialUser}
-              isFollowing={
-                isPendingUser || isPendingCheckFollowing ? false : isFollowing
-              }
-              user={initialUser.login === user.login ? user : {}}
-              navigation={navigation}
-            />}
-          stickyTitle={user.login}
-          showMenu={
-            !isPendingUser &&
-            !isPendingCheckFollowing &&
-            initialUser.login === user.login
-          }
-          menuAction={() => this.showMenuActionSheet()}
-          navigateBack
-          navigation={navigation}
-        >
-          {isPending &&
-            <ActivityIndicator
-              animating={isPending}
-              style={{ height: Dimensions.get('window').height / 3 }}
-              size="large"
-            />}
+          <ParallaxScroll
+            renderContent={() =>
+              <UserProfile
+                type="user"
+                initialUser={initialUser}
+                isFollowing={
+                  isPendingUser || isPendingCheckFollowing ? false : isFollowing
+                }
+                user={initialUser.login === user.login ? user : {}}
+                navigation={navigation}
+              />}
+            stickyTitle={user.login}
+            showMenu={
+              !isPendingUser &&
+              !isPendingCheckFollowing &&
+              initialUser.login === user.login
+            }
+            menuAction={() => this.showMenuActionSheet()}
+            navigateBack
+            navigation={navigation}
+          >
+            {isPending &&
+              <ActivityIndicator
+                animating={isPending}
+                style={{ height: Dimensions.get('window').height / 3 }}
+                size="large"
+              />}
 
-          {!isPending &&
-            initialUser.login === user.login &&
-            <View>
-              {!!user.bio &&
-                user.bio !== '' &&
-                <SectionList title="BIO">
-                  <ListItem
-                    subtitle={user.bio}
-                    subtitleStyle={styles.listSubTitle}
-                    hideChevron
-                  />
-                </SectionList>}
+            {!isPending &&
+              initialUser.login === user.login &&
+              <View>
+                {!!user.bio &&
+                  user.bio !== '' &&
+                  <SectionList title="BIO">
+                    <ListItem
+                      subtitle={user.bio}
+                      subtitleStyle={styles.listSubTitle}
+                      hideChevron
+                    />
+                  </SectionList>}
 
-              <EntityInfo entity={user} orgs={orgs} navigation={navigation} />
+                <EntityInfo entity={user} orgs={orgs} navigation={navigation} />
 
-              <SectionList
-                title="ORGANIZATIONS"
-                noItems={orgs.length === 0}
-                noItemsMessage={'No organizations'}
-              >
-                {orgs.map(item =>
-                  <UserListItem
-                    key={item.id}
-                    user={item}
-                    navigation={navigation}
-                  />
-                )}
-              </SectionList>
-            </View>}
-        </ParallaxScroll>
+                <SectionList
+                  title="ORGANIZATIONS"
+                  noItems={orgs.length === 0}
+                  noItemsMessage={'No organizations'}
+                >
+                  {orgs.map(item =>
+                    <UserListItem
+                      key={item.id}
+                      user={item}
+                      navigation={navigation}
+                    />
+                  )}
+                </SectionList>
+              </View>}
+          </ParallaxScroll>
         </ScrollView>
         <ActionSheet
           ref={o => {
