@@ -160,7 +160,6 @@ class Repository extends Component {
 
     const loader = isPendingFork ? <LoadingModal /> : null;
 
-
     return (
       <ViewContainer>
         {loader}
