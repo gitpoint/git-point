@@ -1,2 +1,4 @@
-export const speed = 100;
-export const friction = 10;
+export const animations = {
+  duration: 100,
+  friction: 10,
+};
