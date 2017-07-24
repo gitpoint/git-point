@@ -10,20 +10,17 @@
 </p>
 
 <p align="center">
-  <a href="
-https://travis-ci.org/gitpoint/git-point"><img src="https://img.shields.io/travis/gitpoint/git-point.svg?style=flat-square" alt="Build Status"></a>
-  <a href="#contributors"><img src="https://img.shields.io/badge/all_contributors-18-orange.svg?style=flat-square" alt="All Contributors"></a>
-  <a href="http://makeapullrequest.com"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" alt="PRs Welcome"></a>
-  <a href="https://gitter.im/git-point"><img src="https://img.shields.io/badge/chat-on_gitter-008080.svg?style=flat-square" alt="Gitter chat"></a>
-</p>
-
-<p align="center">
   <a href="https://itunes.apple.com/us/app/gitpoint/id1251245162?mt=8">
     <img alt="Download on the App Store" title="App Store" src="http://i.imgur.com/0n2zqHD.png" width="130">
   </a>
 </p>
 
 ## Introduction
+
+[![Build Status](https://img.shields.io/travis/gitpoint/git-point.svg?style=flat-square)](https://travis-ci.org/gitpoint/git-point)
+[![All Contributors](https://img.shields.io/badge/all_contributors-19-orange.svg?style=flat-square)](#contributors)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![Gitter chat](https://img.shields.io/badge/chat-on_gitter-008080.svg?style=flat-square)](https://gitter.im/git-point)
 
 View repository and user information, control your notifications and even manage your issues and pull requests. GitPoint is the most feature-rich unofficial GitHub iOS client that is 100% free.
 
