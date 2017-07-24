@@ -115,9 +115,10 @@ class Repository extends Component {
   };
 
   fetchRepoInfo = () => {
-    const { navigation } = this.props;
-    const repo = navigation.state.params.repository;
-    const repoUrl = navigation.state.params.repositoryUrl;
+    const {
+      repository: repo, 
+      repositoryUrl: repoUrl
+    } = this.props.navigation.state.params;
 
     this.props.getRepositoryInfoByDispatch(repo ? repo.url : repoUrl);
   };
@@ -169,7 +170,7 @@ class Repository extends Component {
               onRefresh={this.fetchRepoInfo}
             />
           }
-        >
+        
           <ParallaxScroll
             renderContent={() => {
               if (isPendingRepository && !initalRepository) {
@@ -178,14 +179,11 @@ class Repository extends Component {
 
               return (
                 <RepositoryProfile
-                  repository={
-                    isPendingRepository ? initalRepository : repository
-                  }
+                  repository={isPendingRepository ? initalRepository : repository}
                   starred={
-                    isPendingRepository || isPendingCheckStarred
-                      ? false
-                      : starred
+                    isPendingRepository || isPendingCheckStarred ? false : starred
                   }
+                  loading={isPendingRepository}
                   navigation={navigation}
                 />
               );
@@ -219,8 +217,7 @@ class Repository extends Component {
                 />
               </SectionList>}
 
-            {isPendingContributors &&
-              <LoadingMembersList title="CONTRIBUTORS" />}
+            {(isPendingRepository || isPendingContributors) && <LoadingMembersList title="CONTRIBUTORS" />}
 
             {!isPendingContributors &&
               <MembersList
@@ -262,38 +259,10 @@ class Repository extends Component {
 
             <SectionList
               loading={isPendingIssues}
-              title="ISSUES"
-              noItems={
-                pureIssues.filter(issue => issue.state === 'open').length === 0
-              }
-              noItemsMessage={
-                pureIssues.length === 0 ? 'No issues' : 'No open issues'
-              }
-              showButton={pureIssues.length > 0}
-              buttonTitle="View All"
-              buttonAction={() =>
-                navigation.navigate('IssueList', {
-                  type: 'issue',
-                  issues: pureIssues,
-                })}
-            >
-              {pureIssues
-                .filter(issue => issue.state === 'open')
-                .slice(0, 3)
-                .map(item =>
-                  <IssueListItem
-                    key={item.id}
-                    type="issue"
-                    issue={item}
-                    navigation={navigation}
-                  />
-                )}
-            </SectionList>
-            <SectionList
-              loading={isPendingIssues}
               title={
                 <RepositorySectionTitle
                   text="ISSUES"
+                  loading={isPendingIssues || isPendingRepository}
                   openCount={openIssues.length}
                   closedCount={closedIssues.length}
                 />
@@ -327,15 +296,14 @@ class Repository extends Component {
               title={
                 <RepositorySectionTitle
                   text="PULL REQUESTS"
+                  loading={isPendingIssues || isPendingRepository}
                   openCount={openPulls.length}
                   closedCount={closedPulls.length}
                 />
               }
               noItems={openPulls.length === 0}
               noItemsMessage={
-                pulls.length === 0
-                  ? 'No pull requests'
-                  : 'No open pull requests'
+                pulls.length === 0 ? 'No pull requests' : 'No open pull requests'
               }
               showButton={pulls.length > 0}
               buttonTitle="View All"
@@ -357,17 +325,18 @@ class Repository extends Component {
                 )}
             </SectionList>
           </ParallaxScroll>
-
-          <ActionSheet
-            ref={o => {
-              this.ActionSheet = o;
-            }}
-            title="Repository Actions"
-            options={[...repositoryActions, 'Cancel']}
-            cancelButtonIndex={repositoryActions.length}
-            onPress={this.handlePress}
-          />
+    
         </ScrollView>
+        <ActionSheet
+          ref={o => {
+            this.ActionSheet = o;
+          }}
+          title="Repository Actions"
+          options={[...repositoryActions, 'Cancel']}
+          cancelButtonIndex={repositoryActions.length}
+          onPress={this.handlePress}
+        />
+        
       </ViewContainer>
     );
   }

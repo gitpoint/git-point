@@ -2,13 +2,14 @@ import React from 'react';
 import { StyleSheet, Text, View, Platform } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-import { emojifyText } from 'utils';
+import { emojifyText, starNumbersText } from 'utils';
 import { colors, languageColors, fonts, normalize } from 'config';
 
 type Props = {
   repository: Object,
   starred: boolean,
   navigation: Object,
+  loading: boolean,
 };
 
 const styles = StyleSheet.create({
@@ -90,9 +91,15 @@ const styles = StyleSheet.create({
   },
 });
 
-export const RepositoryProfile = ({ repository, starred, navigation }: Props) =>
+export const RepositoryProfile = ({
+  repository,
+  starred,
+  navigation,
+  loading,
+}: Props) =>
   <View style={styles.container}>
-    {repository.language !== null &&
+    {!loading &&
+      repository.language !== null &&
       <View style={styles.languageInfo}>
         <Icon
           name="fiber-manual-record"
@@ -154,7 +161,7 @@ export const RepositoryProfile = ({ repository, starred, navigation }: Props) =>
     <View style={styles.details}>
       <View style={styles.unit}>
         <Text style={[styles.unitNumber, starred && styles.green]}>
-          {repository.stargazers_count}
+          {starNumbersText(repository.stargazers_count)}
         </Text>
         <Text style={styles.unitText}>Stars</Text>
       </View>
