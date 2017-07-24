@@ -176,7 +176,7 @@ class RepositoryFile extends Component {
                     CodeTag={Text}
                     codeTagProps={{ style: styles.contentCode }}
                     style={GithubStyle}
-                    fontFamily={styles.contentText.fontFamily}
+                    fontFamily={fonts.fontCode.fontFamily}
                     fontSize={styles.contentText.fontSize}
                   >
                     {fileContent}

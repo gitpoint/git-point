@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   },
   codeLine: {
     ...fonts.fontCode,
-    fontSize: normalize(10),
+    fontSize: normalize(11),
     paddingHorizontal: 10,
     paddingVertical: 3,
   },
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   },
   codeLineNumber: {
     ...fonts.fontCode,
-    fontSize: normalize(10),
+    fontSize: normalize(11),
     flex: 1,
     alignItems: 'center',
     color: colors.grey,
@@ -130,6 +130,8 @@ export class CodeLine extends Component {
                 CodeTag={Text}
                 codeTagProps={{ style: styles.codeLine }}
                 customStyle={customStyle}
+                fontFamily={fonts.fontCode.fontFamily}
+                fontSize={styles.codeLine.fontSize}
               >
                 {change.content}
               </SyntaxHighlighter>}
