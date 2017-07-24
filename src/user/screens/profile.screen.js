@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, ActivityIndicator, Dimensions, View } from 'react-native';
+import {
+  StyleSheet,
+  ActivityIndicator,
+  Dimensions,
+  View,
+  ScrollView,
+  RefreshControl,
+ } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
 
@@ -55,6 +62,10 @@ class Profile extends Component {
   };
 
   componentDidMount() {
+    this.getUserInfo();
+  }
+
+  getUserInfo = () => {
     this.props.getUserInfoByDispatch(
       this.props.navigation.state.params.user.login
     );
@@ -89,6 +100,16 @@ class Profile extends Component {
 
     return (
       <ViewContainer>
+
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={isPending}
+              onRefresh={this.getUserInfo}
+            />
+          }
+        >
+
         <ParallaxScroll
           renderContent={() =>
             <UserProfile
@@ -147,7 +168,7 @@ class Profile extends Component {
               </SectionList>
             </View>}
         </ParallaxScroll>
-
+        </ScrollView>
         <ActionSheet
           ref={o => {
             this.ActionSheet = o;

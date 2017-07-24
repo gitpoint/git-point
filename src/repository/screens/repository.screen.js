@@ -193,7 +193,7 @@ class Repository extends Component {
             }}
             stickyTitle={repository.name}
             showMenu={!isPendingRepository && !isPendingCheckStarred}
-            menuAction={() => this.showMenuActionSheet()}
+            menuAction={this.showMenuActionSheet}
             navigation={navigation}
             navigateBack
           >
