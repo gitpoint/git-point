@@ -116,8 +116,8 @@ class Repository extends Component {
 
   fetchRepoInfo = () => {
     const {
-      repository: repo, 
-      repositoryUrl: repoUrl
+      repository: repo,
+      repositoryUrl: repoUrl,
     } = this.props.navigation.state.params;
 
     this.props.getRepositoryInfoByDispatch(repo ? repo.url : repoUrl);
@@ -160,9 +160,11 @@ class Repository extends Component {
 
     const loader = isPendingFork ? <LoadingModal /> : null;
 
+
     return (
       <ViewContainer>
         {loader}
+
         <ScrollView
           refreshControl={
             <RefreshControl
@@ -170,7 +172,8 @@ class Repository extends Component {
               onRefresh={this.fetchRepoInfo}
             />
           }
-        
+        >
+
           <ParallaxScroll
             renderContent={() => {
               if (isPendingRepository && !initalRepository) {
@@ -325,8 +328,9 @@ class Repository extends Component {
                 )}
             </SectionList>
           </ParallaxScroll>
-    
+
         </ScrollView>
+
         <ActionSheet
           ref={o => {
             this.ActionSheet = o;
@@ -336,7 +340,6 @@ class Repository extends Component {
           cancelButtonIndex={repositoryActions.length}
           onPress={this.handlePress}
         />
-        
       </ViewContainer>
     );
   }
