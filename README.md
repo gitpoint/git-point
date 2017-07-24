@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  GitHub for iOS. <a href="https://github.com/gitpoint/git-point/issues/2#issuecomment-316261018">Android comming soon </a> <br>
+  GitHub for iOS. <a href="https://github.com/gitpoint/git-point/issues/2#issuecomment-316261018">Android coming soon. </a> <br>
 </p>
 
 <p align="center">
