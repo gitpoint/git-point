@@ -9,6 +9,7 @@ type Props = {
   repository: Object,
   starred: boolean,
   navigation: Object,
+  loading: boolean,
 };
 
 const styles = StyleSheet.create({
@@ -36,8 +37,7 @@ const styles = StyleSheet.create({
     color: colors.white,
     ...fonts.fontPrimary,
     fontSize: normalize(12),
-    paddingLeft: 15,
-    paddingRight: 15,
+    paddingHorizontal: 30,
     backgroundColor: 'transparent',
   },
   subtitleDescriptionNoFork: {
@@ -91,9 +91,15 @@ const styles = StyleSheet.create({
   },
 });
 
-export const RepositoryProfile = ({ repository, starred, navigation }: Props) =>
+export const RepositoryProfile = ({
+  repository,
+  starred,
+  navigation,
+  loading,
+}: Props) =>
   <View style={styles.container}>
-    {repository.language !== null &&
+    {!loading &&
+      repository.language !== null &&
       <View style={styles.languageInfo}>
         <Icon
           name="fiber-manual-record"
@@ -123,6 +129,7 @@ export const RepositoryProfile = ({ repository, starred, navigation }: Props) =>
       </Text>
 
       <Text
+        numberOfLines={5}
         style={[
           styles.subtitle,
           repository.fork

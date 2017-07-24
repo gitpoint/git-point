@@ -8,6 +8,8 @@ import { colors, fonts } from 'config';
 
 type Props = {
   entity: Object,
+  orgs: Array,
+  navigation: Object,
 };
 
 const styles = StyleSheet.create({
@@ -42,9 +44,49 @@ const getBlogLink = url =>
 const getLocationLink = location =>
   `https://www.google.com/maps/place/${location.split(' ').join('+')}`;
 
-export const EntityInfo = ({ entity }: Props) => {
+const getCompanyFormatted = company => {
+  const companyFormatted = company.replace(/ /g, '');
+
+  return company.charAt(0) === '@'
+    ? companyFormatted.substring(1)
+    : companyFormatted;
+};
+
+const companyInOrgs = (company, orgs) =>
+  orgs.some(org => org.login === getCompanyFormatted(company));
+
+const navigateToCompany = (company, orgs, navigation) => {
+  if (companyInOrgs(company, orgs)) {
+    navigation.navigate('Organization', {
+      organization: orgs.find(
+        org => org.login === getCompanyFormatted(company)
+      ),
+    });
+  }
+};
+
+export const EntityInfo = ({ entity, orgs, navigation }: Props) => {
   return (
     <SectionList title="INFO">
+      {!!entity.company &&
+        entity.company !== '' &&
+        <ListItem
+          title="Company"
+          titleStyle={styles.listTitle}
+          leftIcon={{
+            name: 'organization',
+            color: colors.grey,
+            type: 'octicon',
+          }}
+          subtitle={entity.company}
+          subtitleStyle={styles.listSubTitle}
+          onPress={() => navigateToCompany(entity.company, orgs, navigation)}
+          underlayColor={
+            companyInOrgs(entity.company, orgs) ? colors.greyLight : null
+          }
+          hideChevron={!companyInOrgs(entity.company, orgs)}
+        />}
+
       {!!entity.location &&
         entity.location !== '' &&
         <ListItem

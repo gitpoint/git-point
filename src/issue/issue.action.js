@@ -18,6 +18,59 @@ import {
   GET_ISSUE_FROM_URL,
 } from './issue.type';
 
+const getDiff = url => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: GET_ISSUE_DIFF.PENDING });
+
+    return fetchDiff(url, accessToken)
+      .then(data => {
+        dispatch({
+          type: GET_ISSUE_DIFF.SUCCESS,
+          payload: data,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: GET_ISSUE_DIFF.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+const getMergeStatus = (repo, issueNum) => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: GET_ISSUE_MERGE_STATUS.PENDING });
+
+    return fetchMergeStatus(repo, issueNum, accessToken)
+      .then(data => {
+        dispatch({
+          type: GET_ISSUE_MERGE_STATUS.SUCCESS,
+          payload: data.status === 204,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: GET_ISSUE_MERGE_STATUS.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+const getPullRequestDetails = issue => {
+  return (dispatch, getState) => {
+    const repoFullName = getState().repository.repository.full_name;
+
+    dispatch(getDiff(issue.pull_request.diff_url));
+    dispatch(getMergeStatus(repoFullName, issue.number));
+  };
+};
+
 export const getIssueComments = issueCommentsURL => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
@@ -136,11 +189,15 @@ export const getIssueFromUrl = url => {
     dispatch({ type: GET_ISSUE_FROM_URL.PENDING });
 
     return fetchCommentHTML(url, accessToken)
-      .then(data => {
+      .then(issue => {
         dispatch({
           type: GET_ISSUE_FROM_URL.SUCCESS,
-          payload: data,
+          payload: issue,
         });
+
+        if (issue.pull_request) {
+          dispatch(getPullRequestDetails(issue));
+        }
       })
       .catch(error => {
         dispatch({
@@ -148,59 +205,6 @@ export const getIssueFromUrl = url => {
           payload: error,
         });
       });
-  };
-};
-
-const getDiff = url => {
-  return (dispatch, getState) => {
-    const accessToken = getState().auth.accessToken;
-
-    dispatch({ type: GET_ISSUE_DIFF.PENDING });
-
-    return fetchDiff(url, accessToken)
-      .then(data => {
-        dispatch({
-          type: GET_ISSUE_DIFF.SUCCESS,
-          payload: data,
-        });
-      })
-      .catch(error => {
-        dispatch({
-          type: GET_ISSUE_DIFF.ERROR,
-          payload: error,
-        });
-      });
-  };
-};
-
-const getMergeStatus = (repo, issueNum) => {
-  return (dispatch, getState) => {
-    const accessToken = getState().auth.accessToken;
-
-    dispatch({ type: GET_ISSUE_MERGE_STATUS.PENDING });
-
-    return fetchMergeStatus(repo, issueNum, accessToken)
-      .then(data => {
-        dispatch({
-          type: GET_ISSUE_MERGE_STATUS.SUCCESS,
-          payload: data.status === 204,
-        });
-      })
-      .catch(error => {
-        dispatch({
-          type: GET_ISSUE_MERGE_STATUS.ERROR,
-          payload: error,
-        });
-      });
-  };
-};
-
-export const getPullRequestDetails = issue => {
-  return (dispatch, getState) => {
-    const repoFullName = getState().repository.repository.full_name;
-
-    dispatch(getDiff(issue.pull_request.diff_url));
-    dispatch(getMergeStatus(repoFullName, issue.number));
   };
 };
 

@@ -132,7 +132,7 @@ class Events extends Component {
       case 'IssuesEvent':
         return `${userEvent.payload.action} issue`;
       case 'MemberEvent':
-        return `${userEvent.payload.action} user`;
+        return `${userEvent.payload.action}`;
       case 'PublicEvent':
         return 'open sourced';
       case 'PullRequestEvent':
@@ -387,6 +387,8 @@ class Events extends Component {
         return 'at';
       case 'PushEvent':
         return 'at';
+      case 'MemberEvent':
+        return 'to';
       default:
         return null;
     }
@@ -485,6 +487,24 @@ class Events extends Component {
           </Text>
         );
       case 'PushEvent':
+        return (
+          <Text
+            style={styles.linkDescription}
+            onPress={() =>
+              this.props.navigation.navigate('Repository', {
+                repository: {
+                  ...userEvent.repo,
+                  name: userEvent.repo.name.substring(
+                    userEvent.repo.name.indexOf('/') + 1
+                  ),
+                },
+              })}
+          >
+            {userEvent.repo.name}
+          </Text>
+        );
+
+      case 'MemberEvent':
         return (
           <Text
             style={styles.linkDescription}

@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { FlatList, View, StyleSheet, Dimensions, Text } from 'react-native';
+import {
+  FlatList,
+  View,
+  StyleSheet,
+  Dimensions,
+  Text,
+  Platform,
+} from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
 import {
   ViewContainer,
@@ -37,6 +44,7 @@ const styles = StyleSheet.create({
   },
   searchBarWrapper: {
     flexDirection: 'row',
+    marginTop: 5,
   },
   searchContainer: {
     width: Dimensions.get('window').width,
@@ -48,6 +56,16 @@ const styles = StyleSheet.create({
   },
   buttonGroupContainer: {
     height: 30,
+    ...Platform.select({
+      ios: {
+        marginTop: 5,
+        marginBottom: 10,
+      },
+      android: {
+        marginTop: 5,
+        marginBottom: 12,
+      },
+    }),
   },
   buttonGroupText: {
     ...fonts.fontPrimaryBold,
