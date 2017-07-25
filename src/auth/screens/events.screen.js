@@ -402,6 +402,17 @@ class Events extends Component {
     }
   };
 
+  formatPullRequestObject = issue => ({
+    ...issue,
+    url: issue.issue_url,
+    pull_request: {
+      diff_url: issue.diff_url,
+      html_url: issue.html_url,
+      patch_url: issue.patch_url,
+      url: issue.url,
+    },
+  });
+
   navigateToRepository = (userEvent, isForkEvent) => {
     this.props.navigation.navigate('Repository', {
       repository: !isForkEvent
@@ -417,7 +428,7 @@ class Events extends Component {
 
   navigateToIssue = userEvent => {
     this.props.navigation.navigate('Issue', {
-      issue: userEvent.payload.issue || userEvent.payload.pull_request,
+      issue: userEvent.payload.issue || this.formatPullRequestObject(userEvent.payload.pull_request),
     });
   }
 
