@@ -418,9 +418,9 @@ class Events extends Component {
     });
   }
 
-  navigateToProfile = userEvent => {
+  navigateToProfile = (userEvent, isActor) => {
     this.props.navigation.navigate('Profile', {
-      user: userEvent.payload.member,
+      user: !isActor ? userEvent.payload.member : userEvent.actor,
     });
   }
 
@@ -433,7 +433,7 @@ class Events extends Component {
       <Text style={styles.descriptionContainer}>
         <Text
           style={styles.linkDescription}
-          onPress={() => this.navigateToProfile(userEvent)}
+          onPress={() => this.navigateToProfile(userEvent, true)}
         >
           {userEvent.actor.login}{' '}
         </Text>
