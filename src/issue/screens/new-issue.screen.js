@@ -75,7 +75,6 @@ class NewIssue extends Component {
               underlineColorAndroid={'transparent'}
               placeholder="Write a title for your issue here"
               blurOnSubmit
-              multiline
               onContentSizeChange={event =>
                 this.setState({
                   issueTitleHeight: event.nativeEvent.contentSize.height,
