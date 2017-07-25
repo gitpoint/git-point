@@ -205,7 +205,8 @@ class Repository extends Component {
               />
             </SectionList>}
 
-          {(isPendingRepository || isPendingContributors) && <LoadingMembersList title="CONTRIBUTORS" />}
+          {(isPendingRepository || isPendingContributors) &&
+            <LoadingMembersList title="CONTRIBUTORS" />}
 
           {!isPendingContributors &&
             <MembersList
@@ -259,13 +260,18 @@ class Repository extends Component {
             noItemsMessage={
               pureIssues.length === 0 ? 'No issues' : 'No open issues'
             }
-            showButton={pureIssues.length > 0}
-            buttonTitle="View All"
-            buttonAction={() =>
-              navigation.navigate('IssueList', {
-                type: 'issue',
-                issues: pureIssues,
-              })}
+            showButton
+            buttonTitle={pureIssues.length > 0 ? 'View All' : 'New issue'}
+            buttonAction={() => {
+              if (pureIssues.length > 0) {
+                navigation.navigate('IssueList', {
+                  type: 'issue',
+                  issues: pureIssues,
+                });
+              } else {
+                navigation.navigate('NewIssue');
+              }
+            }}
           >
             {openIssues
               .slice(0, 3)
