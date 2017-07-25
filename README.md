@@ -1,3 +1,4 @@
+<h1 align="center"> GitPoint </h1> <br>
 <p align="center">
   <a href="https://gitpoint.co/">
     <img alt="GitPoint" title="GitPoint" src="http://i.imgur.com/VShxJHs.png" width="450">
@@ -5,7 +6,8 @@
 </p>
 
 <p align="center">
-  GitHub for iOS. Built with React Native.  </p>
+  GitHub for iOS. <a href="https://github.com/gitpoint/git-point/issues/2#issuecomment-316261018">Android coming soon. </a> <br>
+</p>
 
 <p align="center">
   <a href="https://itunes.apple.com/us/app/gitpoint/id1251245162?mt=8">
@@ -13,7 +15,7 @@
   </a>
 </p>
 
-# GitPoint
+## Introduction
 
 [![Build Status](https://img.shields.io/travis/gitpoint/git-point.svg?style=flat-square)](https://travis-ci.org/gitpoint/git-point)
 [![All Contributors](https://img.shields.io/badge/all_contributors-19-orange.svg?style=flat-square)](#contributors)
@@ -39,10 +41,6 @@ View repository and user information, control your notifications and even manage
 <p align="center">
   <img src = "http://i.imgur.com/P4YoYYu.png">
 </p>
-
-## Android Version
-
-[Coming Soon](https://github.com/gitpoint/git-point/issues/2)
 
 ## Feedback/Contributing
 
