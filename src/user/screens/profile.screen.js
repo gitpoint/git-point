@@ -12,6 +12,7 @@ import {
   UserListItem,
   EntityInfo,
 } from 'components';
+import { emojifyText } from 'utils';
 import { colors, fonts } from 'config';
 import { getUserInfo, changeFollowStatus } from '../user.action';
 
@@ -124,7 +125,7 @@ class Profile extends Component {
                 user.bio !== '' &&
                 <SectionList title="BIO">
                   <ListItem
-                    subtitle={user.bio}
+                    subtitle={emojifyText(user.bio)}
                     subtitleStyle={styles.listSubTitle}
                     hideChevron
                   />
