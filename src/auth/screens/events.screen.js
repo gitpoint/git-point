@@ -224,8 +224,8 @@ class Events extends Component {
       case 'IssuesEvent':
         return (
           <Text
-            onPress={() => this.navigateToIssue(userEvent)}
             style={styles.linkDescription}
+            onPress={() => this.navigateToIssue(userEvent)}
           >
             {userEvent.payload.issue.title}
           </Text>
@@ -243,7 +243,10 @@ class Events extends Component {
       case 'PullRequestReviewEvent':
       case 'PullRequestReviewCommentEvent':
         return (
-          <Text style={styles.linkDescription}>
+          <Text
+            style={styles.linkDescription}
+            onPress={() => this.navigateToIssue(userEvent)}
+          >
             {userEvent.payload.pull_request.title}
           </Text>
         );
@@ -414,7 +417,7 @@ class Events extends Component {
 
   navigateToIssue = userEvent => {
     this.props.navigation.navigate('Issue', {
-      issue: userEvent.payload.issue,
+      issue: userEvent.payload.issue || userEvent.payload.pull_request,
     });
   }
 
