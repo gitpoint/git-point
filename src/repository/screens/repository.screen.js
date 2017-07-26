@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Share } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
 
@@ -99,11 +99,15 @@ class Repository extends Component {
       changeStarStatusRepoByDispatch,
       forkRepoByDispatch,
       navigation,
-      username,
     } = this.props;
-    const showFork = repository.owner.login !== username;
 
     if (index === 0) {
+      // Share
+      this.shareRepository(repository);
+    }
+
+    if (index === 1) {
+      // Star
       changeStarStatusRepoByDispatch(
         repository.owner.login,
         repository.name,
@@ -111,11 +115,28 @@ class Repository extends Component {
       );
     }
 
-    if (index === 1 && showFork) {
+    if (index === 2) {
+      // Fork
       forkRepoByDispatch(repository.owner.login, repository.name).then(json => {
         navigation.navigate('Repository', { repository: json });
       });
     }
+  };
+
+  shareRepository = repository => {
+    const title = `Share ${repository.name}`;
+
+    Share.share(
+      {
+        title,
+        message: `Check out ${repository.name} on Github. ${repository.html_url}`,
+        url: undefined,
+      },
+      {
+        dialogTitle: title,
+        excludedActivityTypes: [],
+      }
+    );
   };
 
   render() {
@@ -145,7 +166,7 @@ class Repository extends Component {
     const openIssues = pureIssues.filter(issue => issue.state === 'open');
     const closedIssues = pureIssues.filter(issue => issue.state === 'closed');
 
-    const repositoryActions = [starred ? '★ Unstar' : '★ Star'];
+    const repositoryActions = ['Share', starred ? 'Unstar' : 'Star'];
     const showFork =
       repository && repository.owner && repository.owner.login !== username;
 
@@ -205,7 +226,8 @@ class Repository extends Component {
               />
             </SectionList>}
 
-          {(isPendingRepository || isPendingContributors) && <LoadingMembersList title="CONTRIBUTORS" />}
+          {(isPendingRepository || isPendingContributors) &&
+            <LoadingMembersList title="CONTRIBUTORS" />}
 
           {!isPendingContributors &&
             <MembersList
