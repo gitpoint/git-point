@@ -5,16 +5,17 @@ import {
   Linking,
   View,
   StyleSheet,
-  Image,
-  ImageBackground,
+  Text,
   Platform,
+  Image,
 } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, Icon } from 'react-native-elements';
 import SafariView from 'react-native-safari-view';
+import Swiper from 'react-native-swiper';
 import queryString from 'query-string';
 
 import { ViewContainer, LoadingContainer } from 'components';
-import { fonts, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 import { CLIENT_ID } from 'api';
 import { auth } from 'auth';
 import { openURLInView } from 'utils';
@@ -39,12 +40,10 @@ const styles = StyleSheet.create({
     width: window.width,
   },
   button: {
-    backgroundColor: 'rgba(105,105,105,0.8)',
+    backgroundColor: colors.primaryDark,
     borderRadius: 5,
     paddingVertical: 15,
-    width: window.width - 30,
-    position: 'absolute',
-    bottom: Platform.OS === 'ios' ? 20 : 35,
+    paddingHorizontal: 30,
     shadowColor: 'transparent',
   },
   logoContainer: {
@@ -53,12 +52,45 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   logo: {
-    width: 100,
-    height: 100,
+    width: 50,
+    height: 50,
   },
   buttonText: {
     ...fonts.fontPrimaryBold,
-    fontSize: normalize(16),
+    fontSize: normalize(12),
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  miniSection: {
+    flex: 1.5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  contentSection: {
+    flex: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  slide: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: normalize(20),
+    color: colors.primaryDark,
+    ...fonts.fontPrimarySemiBold,
+    marginVertical: 15,
+  },
+  message: {
+    fontSize: normalize(14),
+    textAlign: 'center',
+    color: colors.primaryDark,
+    ...fonts.fontPrimaryLight,
+    paddingHorizontal: 50,
   },
 });
 
@@ -132,27 +164,53 @@ class Login extends Component {
       <ViewContainer barColor="light">
         {!isAuthenticated &&
           this.state.asyncStorageChecked &&
-          <View>
-            <ImageBackground
-              style={styles.imageContainer}
-              imageStyle={styles.imageBackground}
-              source={require('../../assets/login-background.png')}
-            >
-              <View style={styles.logoContainer}>
-                <Image
-                  style={styles.logo}
-                  source={require('../../assets/logo.png')}
-                />
-              </View>
-            </ImageBackground>
+          <View style={styles.container}>
+            <View style={styles.miniSection}>
+              <Image
+                style={styles.logo}
+                source={require('../../assets/logo-black.png')}
+              />
+            </View>
 
-            <Button
-              raised
-              title="Sign In"
-              buttonStyle={styles.button}
-              textStyle={styles.buttonText}
-              onPress={() => this.signIn()}
-            />
+            <View style={styles.contentSection}>
+              <Swiper>
+                <View style={styles.slide}>
+                  <Text style={styles.title}>Welcome to GitPoint</Text>
+                  <Text style={styles.message}>
+                    The most feature-rich GitHub{' '}
+                    {Platform.OS === 'android' ? 'Android' : 'iOS'} client that
+                    is 100% free.
+                  </Text>
+                </View>
+                <View style={styles.slide}>
+                  <Icon
+                    color={colors.blue}
+                    size={82}
+                    name="bell"
+                    type="octicon"
+                  />
+                  <Text style={styles.title}>Welcome to GitPoint</Text>
+                  <Text style={styles.message}>
+                    The most feature-rich GitHub{' '}
+                    {Platform.OS === 'android' ? 'Android' : 'iOS'} client that
+                    is 100% free
+                  </Text>
+                </View>
+                <View style={styles.slide}>
+                  <Text style={styles.text}>And simple</Text>
+                </View>
+              </Swiper>
+            </View>
+
+            <View style={styles.miniSection}>
+              <Button
+                raised
+                title="SIGN IN"
+                buttonStyle={styles.button}
+                textStyle={styles.buttonText}
+                onPress={() => this.signIn()}
+              />
+            </View>
           </View>}
 
         {isAuthenticated && <LoadingContainer animating={isLoggingIn} center />}
@@ -162,3 +220,28 @@ class Login extends Component {
 }
 
 export const LoginScreen = connect(mapStateToProps, mapDispatchToProps)(Login);
+
+// {!isAuthenticated &&
+//           this.state.asyncStorageChecked &&
+//           <View>
+//             <ImageBackground
+//               style={styles.imageContainer}
+//               imageStyle={styles.imageBackground}
+//               source={require('../../assets/login-background.png')}
+//             >
+//               <View style={styles.logoContainer}>
+//                 <Image
+//                   style={styles.logo}
+//                   source={require('../../assets/logo.png')}
+//                 />
+//               </View>
+//             </ImageBackground>
+
+//             <Button
+//               raised
+//               title="Sign In"
+//               buttonStyle={styles.button}
+//               textStyle={styles.buttonText}
+//               onPress={() => this.signIn()}
+//             />
+//           </View>}
