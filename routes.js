@@ -17,6 +17,7 @@ import {
   WelcomeScreen,
   AuthProfileScreen,
   EventsScreen,
+  PrivacyPolicyScreen,
 } from 'auth';
 
 // User
@@ -143,6 +144,12 @@ const sharedRoutes = {
     screen: ReadMeScreen,
     navigationOptions: {
       title: 'README.md',
+    },
+  },
+  PrivacyPolicy: {
+    screen: PrivacyPolicyScreen,
+    navigationOptions: {
+      title: 'Privacy Policy',
     },
   },
 };
