@@ -12,6 +12,7 @@ import {
   ParallaxScroll,
   EntityInfo,
 } from 'components';
+import { emojifyText } from 'utils';
 import { colors, fonts } from 'config';
 import { getOrg, getOrgRepos, getOrgMembers } from '../index';
 
@@ -103,7 +104,7 @@ class OrganizationProfile extends Component {
             organization.description !== '' &&
             <SectionList title="DESCRIPTION">
               <ListItem
-                subtitle={organization.description}
+                subtitle={emojifyText(organization.description)}
                 subtitleStyle={styles.listSubTitle}
                 hideChevron
               />

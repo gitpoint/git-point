@@ -9,10 +9,10 @@ const iosFonts = {
 };
 
 const androidFonts = {
-  fontPrimaryLight: { fontFamily: 'OpensSans-Light', fontWeight: '300' },
-  fontPrimary: { fontFamily: 'OpensSans-Regular' },
-  fontPrimarySemiBold: { fontFamily: 'OpensSans-SemiBold', fontWeight: '600' },
-  fontPrimaryBold: { fontFamily: 'OpensSans-Bold', fontWeight: '700' },
+  fontPrimaryLight: { fontFamily: 'OpenSans-Light', fontWeight: '300' },
+  fontPrimary: { fontFamily: 'OpenSans-Regular' },
+  fontPrimarySemiBold: { fontFamily: 'OpenSans-SemiBold', fontWeight: '600' },
+  fontPrimaryBold: { fontFamily: 'OpenSans-Bold', fontWeight: '700' },
   fontCode: { fontFamily: 'Menlo' },
 };
 

@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 
+import { MentionArea } from 'components';
 import { colors, fonts, normalize } from 'config';
 
 const styles = StyleSheet.create({
@@ -53,6 +54,7 @@ const styles = StyleSheet.create({
 
 export class CommentInput extends Component {
   props: {
+    users: Array,
     userHasPushPermission: boolean,
     issueLocked: boolean,
     onSubmitEditing: Function,
@@ -78,7 +80,7 @@ export class CommentInput extends Component {
   };
 
   render() {
-    const { userHasPushPermission, issueLocked } = this.props;
+    const { userHasPushPermission, issueLocked, users } = this.props;
 
     let userCanPost = null;
 
@@ -90,6 +92,13 @@ export class CommentInput extends Component {
 
     return (
       <View style={styles.container}>
+        <MentionArea
+          trigger="@"
+          text={this.state.text}
+          updateText={text => this.setState({ text })}
+          height={200}
+          users={users}
+        />
         <View style={styles.wrapper}>
           <Icon name="send" color={colors.grey} />
 

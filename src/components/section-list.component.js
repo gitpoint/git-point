@@ -95,7 +95,7 @@ export const SectionList = ({
     );
   } else {
     sectionTitle = (
-      <View style={styles.sectionTitle}>
+      <View style={{ padding: 15 }}>
         {title}
       </View>
     );

@@ -1690,7 +1690,7 @@ dateformat@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/dateformat/-/dateformat-2.0.0.tgz#2743e3abb5c3fc2462e527dca445e04e9f4dee17"
 
-debug@2, debug@2.6.8, debug@^2.1.1, debug@^2.2.0, debug@^2.6.3, debug@^2.6.8:
+debug@2, debug@2.6.8, debug@^2.6.3, debug@^2.6.8:
   version "2.6.8"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.8.tgz#e731531ca2ede27d188222427da17821d68ff4fc"
   dependencies:
@@ -2495,6 +2495,10 @@ ftp@~0.3.10:
 function-bind@^1.0.2, function-bind@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.0.tgz#16176714c801798e4e8f2cf7f7529467bb4a5771"
+
+fuzzy-search@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/fuzzy-search/-/fuzzy-search-1.4.0.tgz#563ea255ee5f1677e7e98d8e370e3320c1d950b4"
 
 gauge@~1.2.5:
   version "1.2.7"
@@ -4674,9 +4678,9 @@ react-native-elements@^0.9.3:
     react-native-side-menu "^0.20.1"
     react-native-tab-navigator "^0.3.3"
 
-react-native-htmlview@^0.11.1:
-  version "0.11.1"
-  resolved "https://registry.yarnpkg.com/react-native-htmlview/-/react-native-htmlview-0.11.1.tgz#cc8cf18b7076a476e39974ed95270d4850725226"
+react-native-htmlview@^0.12.0:
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/react-native-htmlview/-/react-native-htmlview-0.12.0.tgz#9b19a7dccd38586c0aebf975e6083184685013a6"
   dependencies:
     entities "^1.1.1"
     htmlparser2-without-node-native "^3.9.0"
