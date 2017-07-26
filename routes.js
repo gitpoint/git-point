@@ -116,11 +116,15 @@ const sharedRoutes = {
   },
   Issue: {
     screen: IssueScreen,
-    navigationOptions: ({ navigation }) => ({
-      title: `#${navigation.state.params.issue
-        ? navigation.state.params.issue.number
-        : 'Issue'}`,
-    }),
+    navigationOptions: ({ navigation }) => {
+      const issueNumberRegex = /issues\/([0-9]+)$/;
+      const { issue, issueURL, isPR } = navigation.state.params;
+      const number = issue ? issue.number : issueURL.match(issueNumberRegex)[1];
+
+      return {
+        title: isPR ? `Pull Request #${number}` : `Issue #${number}`,
+      };
+    },
   },
   IssueSettings: {
     screen: IssueSettingsScreen,

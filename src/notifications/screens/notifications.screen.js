@@ -187,6 +187,7 @@ class Notifications extends Component {
     markAsReadByDispatch(notification.id);
     navigation.navigate('Issue', {
       issueURL: notification.subject.url.replace('pulls', 'issues'),
+      isPR: notification.subject.type === 'PullRequest',
     });
   }
 
