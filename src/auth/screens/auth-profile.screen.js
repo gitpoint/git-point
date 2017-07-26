@@ -190,6 +190,12 @@ class AuthProfile extends Component {
 
             <SectionList>
               <ListItem
+                title="Privacy Policy"
+                titleStyle={styles.listTitle}
+                onPress={() => navigation.navigate('PrivacyPolicy')}
+              />
+
+              <ListItem
                 title="Sign Out"
                 titleStyle={styles.logoutTitle}
                 hideChevron
@@ -201,7 +207,9 @@ class AuthProfile extends Component {
               style={styles.update}
               onPress={this.checkForUpdate}
             >
-              <Text style={styles.updateText}>GitPoint v{version}</Text>
+              <Text style={styles.updateText}>
+                GitPoint v{version}
+              </Text>
               <Text style={[styles.updateText, styles.updateTextSub]}>
                 {this.state.updateText}
               </Text>
