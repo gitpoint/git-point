@@ -32,10 +32,19 @@ const styles = StyleSheet.create({
     ...fonts.fontPrimaryLight,
     marginBottom: 15,
   },
+  link: {
+    ...fonts.fontPrimarySemiBold,
+  },
 });
 
 export class PrivacyPolicyScreen extends Component {
+  props: {
+    navigation: Object,
+  };
+
   render() {
+    const { navigation } = this.props;
+
     return (
       <ViewContainer>
         <ScrollView>
@@ -103,6 +112,30 @@ export class PrivacyPolicyScreen extends Component {
                 With each contribution to the app, code review is always
                 performed to prevent anybody from including malicious code of
                 any kind.
+              </Text>
+            </View>
+
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>CONTACT</Text>
+
+              <Text style={styles.text}>
+                Thank you for reading our Privacy Policy. We hope you enjoy
+                using GitPoint as much as we enjoyed building it.
+              </Text>
+
+              <Text style={styles.text}>
+                If you have any questions about this Privacy Policy or GitPoint
+                in general, please file an issue in the{' '}
+                <Text
+                  style={styles.link}
+                  onPress={() =>
+                    navigation.navigate('Repository', {
+                      repositoryUrl:
+                        'https://api.github.com/repos/gitpoint/git-point',
+                    })}
+                >
+                  GitPoint repository.
+                </Text>
               </Text>
             </View>
           </View>
