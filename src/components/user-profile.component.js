@@ -109,7 +109,7 @@ export const UserProfile = ({
           })}
       >
         <Text style={styles.unitNumber}>
-          {!isNaN(user.public_repos)
+          {!isNaN(parseInt(user.public_repos, 10))
             ? user.public_repos + (user.total_private_repos || 0)
             : ' '}
         </Text>
@@ -126,7 +126,7 @@ export const UserProfile = ({
             })}
         >
           <Text style={[styles.unitNumber, isFollowing && styles.green]}>
-            {user.followers || ' '}
+            {!isNaN(parseInt(user.followers, 10)) ? user.followers : ' '}
           </Text>
           <Text style={styles.unitText}>Followers</Text>
         </TouchableOpacity>}
@@ -141,7 +141,7 @@ export const UserProfile = ({
             })}
         >
           <Text style={styles.unitNumber}>
-            {user.following || ' '}
+            {!isNaN(parseInt(user.following, 10)) ? user.following : ' '}
           </Text>
           <Text style={styles.unitText}>Following</Text>
         </TouchableOpacity>}

@@ -161,14 +161,18 @@ export const RepositoryProfile = ({
     <View style={styles.details}>
       <View style={styles.unit}>
         <Text style={[styles.unitNumber, starred && styles.green]}>
-          {abbreviateNumber(repository.stargazers_count) || ' '}
+          {!isNaN(parseInt(repository.stargazers_count, 10))
+            ? abbreviateNumber(repository.stargazers_count)
+            : ' '}
         </Text>
         <Text style={styles.unitText}>Stars</Text>
       </View>
 
       <View style={styles.unit}>
         <Text style={styles.unitNumber}>
-          {abbreviateNumber(repository.forks) || ' '}
+          {!isNaN(parseInt(repository.forks, 10))
+            ? abbreviateNumber(repository.forks)
+            : ' '}
         </Text>
         <Text style={styles.unitText}>Forks</Text>
       </View>
