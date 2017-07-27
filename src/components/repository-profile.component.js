@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Platform } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-import { emojifyText, starNumbersText } from 'utils';
+import { emojifyText, abbreviateNumber } from 'utils';
 import { colors, languageColors, fonts, normalize } from 'config';
 
 type Props = {
@@ -161,14 +161,14 @@ export const RepositoryProfile = ({
     <View style={styles.details}>
       <View style={styles.unit}>
         <Text style={[styles.unitNumber, starred && styles.green]}>
-          {starNumbersText(repository.stargazers_count) || ' '}
+          {abbreviateNumber(repository.stargazers_count) || ' '}
         </Text>
         <Text style={styles.unitText}>Stars</Text>
       </View>
 
       <View style={styles.unit}>
         <Text style={styles.unitNumber}>
-          {repository.forks || ' '}
+          {abbreviateNumber(repository.forks) || ' '}
         </Text>
         <Text style={styles.unitText}>Forks</Text>
       </View>
