@@ -3,10 +3,7 @@ import { connect } from 'react-redux';
 import { ScrollView, StyleSheet, TextInput, View, Alert } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
-import {
-  ViewContainer,
-  SectionList,
-} from 'components';
+import { ViewContainer, SectionList } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { submitNewIssue } from '../issue.action';
 
@@ -32,20 +29,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  submitNewIssueByDispatch: (
-    owner,
-    repoName,
-    issueTitle,
-    issueComment
-  ) =>
-    dispatch(
-      submitNewIssue(
-        owner,
-        repoName,
-        issueTitle,
-        issueComment
-      )
-    ),
+  submitNewIssueByDispatch: (owner, repoName, issueTitle, issueComment) =>
+    dispatch(submitNewIssue(owner, repoName, issueTitle, issueComment)),
 });
 
 class NewIssue extends Component {
@@ -72,11 +57,7 @@ class NewIssue extends Component {
   }
 
   submitNewIssue = () => {
-    const {
-      submitNewIssueByDispatch,
-      repository,
-      navigation,
-    } = this.props;
+    const { submitNewIssueByDispatch, repository, navigation } = this.props;
     const { issueTitle, issueComment } = this.state;
     const repoName = repository.name;
     const owner = repository.owner.login;
@@ -122,7 +103,7 @@ class NewIssue extends Component {
             />
           </SectionList>
 
-          <SectionList title="Issue comment">
+          <SectionList title="Issue Comment">
             <TextInput
               underlineColorAndroid={'transparent'}
               placeholder="Write a comment for your issue here"
@@ -142,7 +123,7 @@ class NewIssue extends Component {
             />
           </SectionList>
 
-          <SectionList title="Create new issue">
+          <SectionList>
             <View style={styles.listItemContainer}>
               <ListItem
                 title="Submit"

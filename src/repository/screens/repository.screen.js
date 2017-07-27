@@ -261,7 +261,7 @@ class Repository extends Component {
               pureIssues.length === 0 ? 'No issues' : 'No open issues'
             }
             showButton
-            buttonTitle={pureIssues.length > 0 ? 'View All' : 'New issue'}
+            buttonTitle={pureIssues.length > 0 ? 'View All' : 'New Issue'}
             buttonAction={() => {
               if (pureIssues.length > 0) {
                 navigation.navigate('IssueList', {

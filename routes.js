@@ -140,7 +140,7 @@ const sharedRoutes = {
   NewIssue: {
     screen: NewIssueScreen,
     navigationOptions: {
-      title: 'New issue',
+      title: 'New Issue',
     },
   },
   PullDiff: {
