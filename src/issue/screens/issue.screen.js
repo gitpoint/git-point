@@ -17,7 +17,7 @@ import {
   CommentInput,
 } from 'components';
 import { colors } from 'config';
-import { getRepository } from 'repository';
+import { getRepository, getContributors } from 'repository';
 import {
   getIssueComments,
   postIssueComment,
@@ -27,6 +27,7 @@ import {
 const mapStateToProps = state => ({
   authUser: state.auth.user,
   repository: state.repository.repository,
+  contributors: state.repository.contributors,
   issue: state.issue.issue,
   diff: state.issue.diff,
   isMerged: state.issue.isMerged,
@@ -35,7 +36,7 @@ const mapStateToProps = state => ({
   isPendingCheckMerge: state.issue.isPendingCheckMerge,
   isPendingComments: state.issue.isPendingComments,
   isPostingComment: state.issue.isPostingComment,
-  isPendingIssue: state.issue.isPendingIssue,
+  isPendingContributors: state.repository.isPendingContributors,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -44,6 +45,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(postIssueComment(body, owner, repoName, issueNum)),
   getIssueFromUrlByDispatch: url => dispatch(getIssueFromUrl(url)),
   getRepositoryByDispatch: url => dispatch(getRepository(url)),
+  getContributorsByDispatch: url => dispatch(getContributors(url)),
 });
 
 class Issue extends Component {
@@ -74,6 +76,7 @@ class Issue extends Component {
   props: {
     getIssueCommentsByDispatch: Function,
     getRepositoryByDispatch: Function,
+    getContributorsByDispatch: Function,
     postIssueCommentByDispatch: Function,
     getIssueFromUrlByDispatch: Function,
     diff: string,
@@ -81,11 +84,13 @@ class Issue extends Component {
     isMerged: boolean,
     // authUser: Object,
     repository: Object,
+    contributors: Array,
     comments: Array,
     isPendingIssue: boolean,
     isPendingDiff: boolean,
     isPendingCheckMerge: boolean,
     isPendingComments: boolean,
+    isPendingContributors: boolean,
     // isPostingComment: boolean,
     navigation: Object,
   };
@@ -157,6 +162,8 @@ class Issue extends Component {
     });
   };
 
+  getContributorsLink = repository => `${repository}/contributors`;
+
   setNavigationParams = () => {
     const { navigation, repository } = this.props;
 
@@ -218,12 +225,24 @@ class Issue extends Component {
     const {
       issue,
       comments,
+      contributors,
       isPendingComments,
+      isPendingContributors,
       isPendingIssue,
       navigation,
     } = this.props;
 
     const isLoadingData = isPendingComments || isPendingIssue;
+    const fullComments = !isPendingComments ? [issue, ...comments] : [];
+    const participantNames = !isPendingComments
+      ? fullComments.map(item => item && item.user && item.user.login)
+      : [];
+    const contributorNames = !isPendingContributors
+      ? contributors.map(item => item && item.login)
+      : [];
+    const fullUsers = [
+      ...new Set([...participantNames, ...contributorNames]),
+    ].filter(item => !!item);
 
     return (
       <ViewContainer>
@@ -250,12 +269,13 @@ class Issue extends Component {
               contentContainerStyle={{ flexGrow: 1 }}
               ListHeaderComponent={this.renderHeader}
               removeClippedSubviews={false}
-              data={[issue, ...comments]}
+              data={fullComments}
               keyExtractor={this.keyExtractor}
               renderItem={this.renderItem}
             />
 
             <CommentInput
+              users={fullUsers}
               userHasPushPermission={
                 navigation.state.params.userHasPushPermission
               }

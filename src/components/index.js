@@ -10,6 +10,7 @@ export * from './issue-list-item.component';
 export * from './label-button.component';
 export * from './label-list-item.component';
 export * from './members.component';
+export * from './mention-area.component';
 export * from './notification-list-item.component';
 export * from './parallax-scroll.component';
 export * from './repository-list-item.component';

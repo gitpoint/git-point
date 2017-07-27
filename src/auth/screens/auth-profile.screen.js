@@ -21,7 +21,7 @@ import {
 } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { getUser, getOrgs, signOut } from 'auth';
-import { openURLInView } from 'utils';
+import { emojifyText, openURLInView } from 'utils';
 import { version } from 'package.json';
 
 const mapStateToProps = state => ({
@@ -171,7 +171,7 @@ class AuthProfile extends Component {
               user.bio !== '' &&
               <SectionList title="BIO">
                 <ListItem
-                  subtitle={user.bio}
+                  subtitle={emojifyText(user.bio)}
                   subtitleStyle={styles.listSubTitle}
                   hideChevron
                 />
@@ -204,6 +204,12 @@ class AuthProfile extends Component {
             </SectionList>
 
             <SectionList>
+              <ListItem
+                title="Privacy Policy"
+                titleStyle={styles.listTitle}
+                onPress={() => navigation.navigate('PrivacyPolicy')}
+              />
+
               <ListItem
                 title="Sign Out"
                 titleStyle={styles.logoutTitle}

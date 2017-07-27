@@ -224,8 +224,8 @@ class Events extends Component {
       case 'IssuesEvent':
         return (
           <Text
-            onPress={() => this.navigateToIssue(userEvent)}
             style={styles.linkDescription}
+            onPress={() => this.navigateToIssue(userEvent)}
           >
             {userEvent.payload.issue.title}
           </Text>
@@ -243,7 +243,10 @@ class Events extends Component {
       case 'PullRequestReviewEvent':
       case 'PullRequestReviewCommentEvent':
         return (
-          <Text style={styles.linkDescription}>
+          <Text
+            style={styles.linkDescription}
+            onPress={() => this.navigateToIssue(userEvent)}
+          >
             {userEvent.payload.pull_request.title}
           </Text>
         );
@@ -399,6 +402,17 @@ class Events extends Component {
     }
   };
 
+  formatPullRequestObject = issue => ({
+    ...issue,
+    url: issue.issue_url,
+    pull_request: {
+      diff_url: issue.diff_url,
+      html_url: issue.html_url,
+      patch_url: issue.patch_url,
+      url: issue.url,
+    },
+  });
+
   navigateToRepository = (userEvent, isForkEvent) => {
     this.props.navigation.navigate('Repository', {
       repository: !isForkEvent
@@ -414,13 +428,13 @@ class Events extends Component {
 
   navigateToIssue = userEvent => {
     this.props.navigation.navigate('Issue', {
-      issue: userEvent.payload.issue,
+      issue: userEvent.payload.issue || this.formatPullRequestObject(userEvent.payload.pull_request),
     });
   }
 
-  navigateToProfile = userEvent => {
+  navigateToProfile = (userEvent, isActor) => {
     this.props.navigation.navigate('Profile', {
-      user: userEvent.payload.member,
+      user: !isActor ? userEvent.payload.member : userEvent.actor,
     });
   }
 
@@ -433,7 +447,7 @@ class Events extends Component {
       <Text style={styles.descriptionContainer}>
         <Text
           style={styles.linkDescription}
-          onPress={() => this.navigateToProfile(userEvent)}
+          onPress={() => this.navigateToProfile(userEvent, true)}
         >
           {userEvent.actor.login}{' '}
         </Text>
