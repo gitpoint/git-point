@@ -17,7 +17,7 @@ import {
   CommentInput,
 } from 'components';
 import { colors } from 'config';
-import { getRepository, getContributors } from 'repository';
+import { getRepository } from 'repository';
 import {
   getIssueComments,
   postIssueComment,
@@ -45,7 +45,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(postIssueComment(body, owner, repoName, issueNum)),
   getIssueFromUrlByDispatch: url => dispatch(getIssueFromUrl(url)),
   getRepositoryByDispatch: url => dispatch(getRepository(url)),
-  getContributorsByDispatch: url => dispatch(getContributors(url)),
 });
 
 class Issue extends Component {
@@ -76,7 +75,6 @@ class Issue extends Component {
   props: {
     getIssueCommentsByDispatch: Function,
     getRepositoryByDispatch: Function,
-    getContributorsByDispatch: Function,
     postIssueCommentByDispatch: Function,
     getIssueFromUrlByDispatch: Function,
     diff: string,
