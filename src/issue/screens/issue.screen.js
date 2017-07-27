@@ -87,38 +87,11 @@ class Issue extends Component {
     isPendingCheckMerge: boolean,
     isPendingComments: boolean,
     // isPostingComment: boolean,
-    navigation: Object
+    navigation: Object,
   };
 
   componentDidMount() {
-    const {
-      issue,
-      navigation,
-      repository,
-      getIssueCommentsByDispatch,
-      getRepositoryByDispatch,
-      getIssueFromUrlByDispatch,
-    } = this.props;
-
-    const issueParam = navigation.state.params.issue;
-    const issueURLParam = navigation.state.params.issueURL;
-    const issueCommentsURL = `${navigation.state.params.issueURL}/comments`;
-
-    Promise.all(
-      getIssueFromUrlByDispatch(issueURLParam || issueParam.url),
-      getIssueCommentsByDispatch(issueURLParam ? issueCommentsURL : issueParam.comments_url)
-    ).then(() => {
-      if (
-        repository.full_name !==
-        issue.repository_url.replace('https://api.github.com/repos/', '')
-      ) {
-        getRepositoryByDispatch(issue.repository_url).then(() => {
-          this.setNavigationParams();
-        });
-      } else {
-        this.setNavigationParams();
-      }
-    });
+    this.getIssueInformation();
   }
 
   onLinkPress = node => {
@@ -148,6 +121,39 @@ class Issue extends Component {
 
     navigation.navigate('Repository', {
       repositoryUrl: url,
+    });
+  };
+
+  getIssueInformation = () => {
+    const {
+      issue,
+      navigation,
+      repository,
+      getIssueCommentsByDispatch,
+      getRepositoryByDispatch,
+      getIssueFromUrlByDispatch,
+    } = this.props;
+
+    const issueParam = navigation.state.params.issue;
+    const issueURLParam = navigation.state.params.issueURL;
+    const issueCommentsURL = `${navigation.state.params.issueURL}/comments`;
+
+    Promise.all(
+      getIssueFromUrlByDispatch(issueURLParam || issueParam.url),
+      getIssueCommentsByDispatch(
+        issueURLParam ? issueCommentsURL : issueParam.comments_url
+      )
+    ).then(() => {
+      if (
+        repository.full_name !==
+        issue.repository_url.replace('https://api.github.com/repos/', '')
+      ) {
+        getRepositoryByDispatch(issue.repository_url).then(() => {
+          this.setNavigationParams();
+        });
+      } else {
+        this.setNavigationParams();
+      }
     });
   };
 
@@ -217,9 +223,11 @@ class Issue extends Component {
       navigation,
     } = this.props;
 
+    const isLoadingData = isPendingComments || isPendingIssue;
+
     return (
       <ViewContainer>
-        {(isPendingComments || isPendingIssue) &&
+        {isLoadingData &&
           <LoadingContainer
             animating={isPendingComments || isPendingIssue}
             center
@@ -237,6 +245,8 @@ class Issue extends Component {
               ref={ref => {
                 this.commentsList = ref;
               }}
+              onRefresh={this.getIssueInformation}
+              refreshing={isLoadingData}
               contentContainerStyle={{ flexGrow: 1 }}
               ListHeaderComponent={this.renderHeader}
               removeClippedSubviews={false}
