@@ -89,7 +89,7 @@ class Profile extends Component {
     const userActions = [isFollowing ? 'Unfollow' : 'Follow'];
 
     return (
-      <ViewContainer>
+      <ViewContainer barColor="light">
         <ParallaxScroll
           renderContent={() =>
             <UserProfile

@@ -156,7 +156,7 @@ class Repository extends Component {
     const loader = isPendingFork ? <LoadingModal /> : null;
 
     return (
-      <ViewContainer>
+      <ViewContainer barColor="light">
         {loader}
 
         <ParallaxScroll
@@ -205,7 +205,8 @@ class Repository extends Component {
               />
             </SectionList>}
 
-          {(isPendingRepository || isPendingContributors) && <LoadingMembersList title="CONTRIBUTORS" />}
+          {(isPendingRepository || isPendingContributors) &&
+            <LoadingMembersList title="CONTRIBUTORS" />}
 
           {!isPendingContributors &&
             <MembersList

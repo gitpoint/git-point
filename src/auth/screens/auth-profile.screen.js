@@ -138,7 +138,7 @@ class AuthProfile extends Component {
     const loading = isPendingUser || isPendingOrgs;
 
     return (
-      <ViewContainer>
+      <ViewContainer barColor="light">
         {loading && <LoadingContainer animating={loading} center />}
 
         {!loading &&
