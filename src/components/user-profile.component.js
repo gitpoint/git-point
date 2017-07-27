@@ -93,10 +93,10 @@ export const UserProfile = ({
         ]}
       />
       <Text style={styles.title}>
-        {user.name}
+        {user.name || ' '}
       </Text>
       <Text style={styles.subtitle}>
-        {initialUser.login}
+        {initialUser.login || ' '}
       </Text>
     </View>
     <View style={styles.details}>
@@ -109,7 +109,9 @@ export const UserProfile = ({
           })}
       >
         <Text style={styles.unitNumber}>
-          {user.public_repos + (user.total_private_repos || 0)}
+          {!isNaN(user.public_repos)
+            ? user.public_repos + (user.total_private_repos || 0)
+            : ' '}
         </Text>
         <Text style={styles.unitText}>Repositories</Text>
       </TouchableOpacity>
@@ -124,7 +126,7 @@ export const UserProfile = ({
             })}
         >
           <Text style={[styles.unitNumber, isFollowing && styles.green]}>
-            {user.followers}
+            {user.followers || ' '}
           </Text>
           <Text style={styles.unitText}>Followers</Text>
         </TouchableOpacity>}
@@ -139,7 +141,7 @@ export const UserProfile = ({
             })}
         >
           <Text style={styles.unitNumber}>
-            {user.following}
+            {user.following || ' '}
           </Text>
           <Text style={styles.unitText}>Following</Text>
         </TouchableOpacity>}
