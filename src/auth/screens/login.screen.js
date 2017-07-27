@@ -1,14 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  Dimensions,
-  Linking,
-  View,
-  StyleSheet,
-  Text,
-  Platform,
-  Image,
-} from 'react-native';
+import { Linking, View, StyleSheet, Text, Platform, Image } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import SafariView from 'react-native-safari-view';
 import Swiper from 'react-native-swiper';
@@ -21,7 +13,6 @@ import { auth } from 'auth';
 import { openURLInView } from 'utils';
 
 const stateRandom = Math.random().toString();
-const window = Dimensions.get('window');
 
 const mapStateToProps = state => ({
   isLoggingIn: state.auth.isLoggingIn,
@@ -29,40 +20,27 @@ const mapStateToProps = state => ({
 });
 
 const styles = StyleSheet.create({
-  imageContainer: {
+  container: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    height: window.height,
-    width: window.width,
-  },
-  imageBackground: {
-    height: window.height,
-    width: window.width,
   },
   button: {
-    backgroundColor: colors.primaryDark,
+    backgroundColor: colors.transparent,
     borderRadius: 5,
-    paddingVertical: 15,
+    borderWidth: 2,
+    borderColor: colors.white,
+    paddingVertical: 10,
     paddingHorizontal: 30,
     shadowColor: 'transparent',
-  },
-  logoContainer: {
-    alignItems: 'center',
-    flexGrow: 1,
-    justifyContent: 'center',
-  },
-  logo: {
-    width: 50,
-    height: 50,
   },
   buttonText: {
     ...fonts.fontPrimaryBold,
     fontSize: normalize(12),
   },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+  logo: {
+    width: 90,
+    height: 90,
   },
   miniSection: {
     flex: 1.5,
@@ -78,19 +56,36 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 50,
+  },
+  slide1: {
+    backgroundColor: colors.lightBlue,
+  },
+  slide2: {
+    backgroundColor: colors.lightPurple,
+  },
+  slide3: {
+    backgroundColor: colors.orange,
+  },
+  slide4: {
+    backgroundColor: colors.darkGreen,
   },
   title: {
     fontSize: normalize(20),
-    color: colors.primaryDark,
+    textAlign: 'center',
+    color: colors.white,
     ...fonts.fontPrimarySemiBold,
-    marginVertical: 15,
+    marginTop: 45,
+    marginBottom: 15,
   },
   message: {
     fontSize: normalize(14),
     textAlign: 'center',
-    color: colors.primaryDark,
+    color: colors.white,
     ...fonts.fontPrimaryLight,
-    paddingHorizontal: 50,
+  },
+  iconMargin: {
+    marginLeft: 20,
   },
 });
 
@@ -168,36 +163,66 @@ class Login extends Component {
             <View style={styles.miniSection}>
               <Image
                 style={styles.logo}
-                source={require('../../assets/logo-black.png')}
+                source={require('../../assets/logo.png')}
               />
             </View>
 
             <View style={styles.contentSection}>
-              <Swiper>
-                <View style={styles.slide}>
-                  <Text style={styles.title}>Welcome to GitPoint</Text>
-                  <Text style={styles.message}>
-                    The most feature-rich GitHub{' '}
-                    {Platform.OS === 'android' ? 'Android' : 'iOS'} client that
-                    is 100% free.
-                  </Text>
-                </View>
-                <View style={styles.slide}>
-                  <Icon
-                    color={colors.blue}
-                    size={82}
-                    name="bell"
-                    type="octicon"
+              <Swiper activeDotColor={colors.white}>
+                <View style={[styles.slide, styles.slide1]}>
+                  <Image
+                    style={styles.logo}
+                    source={require('../../assets/logo.png')}
                   />
                   <Text style={styles.title}>Welcome to GitPoint</Text>
                   <Text style={styles.message}>
-                    The most feature-rich GitHub{' '}
-                    {Platform.OS === 'android' ? 'Android' : 'iOS'} client that
-                    is 100% free
+                    The most feature-rich GitHub client that is 100% free
                   </Text>
                 </View>
-                <View style={styles.slide}>
-                  <Text style={styles.text}>And simple</Text>
+
+                <View style={[styles.slide, styles.slide2]}>
+                  <Icon
+                    style={styles.icon}
+                    color={colors.white}
+                    size={85}
+                    name="bell"
+                    type="octicon"
+                  />
+                  <Text style={styles.title}>Control notifications</Text>
+                  <Text style={styles.message}>
+                    View and control all of your unread and participating
+                    notifications
+                  </Text>
+                </View>
+
+                <View style={[styles.slide, styles.slide3]}>
+                  <Icon
+                    containerStyle={styles.iconMargin}
+                    style={styles.icon}
+                    color={colors.white}
+                    size={85}
+                    name="repo"
+                    type="octicon"
+                  />
+                  <Text style={styles.title}>Repositories and Users</Text>
+                  <Text style={styles.message}>
+                    Easily obtain repository, user and organization information
+                  </Text>
+                </View>
+
+                <View style={[styles.slide, styles.slide4]}>
+                  <Icon
+                    containerStyle={styles.iconMargin}
+                    style={styles.icon}
+                    color={colors.white}
+                    size={85}
+                    name="git-pull-request"
+                    type="octicon"
+                  />
+                  <Text style={styles.title}>Issues and Pull Requests</Text>
+                  <Text style={styles.message}>
+                    Communicate on conversations, merge pull requests and more
+                  </Text>
                 </View>
               </Swiper>
             </View>
@@ -220,28 +245,3 @@ class Login extends Component {
 }
 
 export const LoginScreen = connect(mapStateToProps, mapDispatchToProps)(Login);
-
-// {!isAuthenticated &&
-//           this.state.asyncStorageChecked &&
-//           <View>
-//             <ImageBackground
-//               style={styles.imageContainer}
-//               imageStyle={styles.imageBackground}
-//               source={require('../../assets/login-background.png')}
-//             >
-//               <View style={styles.logoContainer}>
-//                 <Image
-//                   style={styles.logo}
-//                   source={require('../../assets/logo.png')}
-//                 />
-//               </View>
-//             </ImageBackground>
-
-//             <Button
-//               raised
-//               title="Sign In"
-//               buttonStyle={styles.button}
-//               textStyle={styles.buttonText}
-//               onPress={() => this.signIn()}
-//             />
-//           </View>}
