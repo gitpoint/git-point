@@ -28,6 +28,7 @@ const mapStateToProps = state => ({
   orgs: state.auth.orgs,
   isPendingUser: state.auth.isPendingUser,
   isPendingOrgs: state.auth.isPendingOrgs,
+  hasInitialUser: state.auth.hasInitialUser,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -90,6 +91,7 @@ class AuthProfile extends Component {
     orgs: Array,
     isPendingUser: boolean,
     isPendingOrgs: boolean,
+    hasInitialUser: boolean,
     navigation: Object,
   };
 
@@ -142,7 +144,14 @@ class AuthProfile extends Component {
   }
 
   render() {
-    const { user, orgs, isPendingUser, isPendingOrgs, navigation } = this.props;
+    const {
+      user,
+      orgs,
+      isPendingUser,
+      isPendingOrgs,
+      navigation,
+      hasInitialUser,
+    } = this.props;
 
     const loading = isPendingUser || isPendingOrgs;
 
@@ -152,8 +161,8 @@ class AuthProfile extends Component {
           renderContent={() =>
             <UserProfile
               type="user"
-              initialUser={isPendingUser ? {} : user}
-              user={isPendingUser ? {} : user}
+              initialUser={hasInitialUser ? user : {}}
+              user={hasInitialUser ? user : {}}
               navigation={navigation}
             />}
           refreshControl={
@@ -164,7 +173,7 @@ class AuthProfile extends Component {
           }
           stickyTitle={user.login}
         >
-          {!isPendingUser &&
+          {hasInitialUser &&
             user.bio &&
             user.bio !== '' &&
             <SectionList title="BIO">
