@@ -99,27 +99,22 @@ class Repository extends Component {
       changeStarStatusRepoByDispatch,
       forkRepoByDispatch,
       navigation,
+      username,
     } = this.props;
+    const showFork = repository.owner.login !== username;
 
     if (index === 0) {
-      // Share
-      this.shareRepository(repository);
-    }
-
-    if (index === 1) {
-      // Star
       changeStarStatusRepoByDispatch(
         repository.owner.login,
         repository.name,
         starred
       );
-    }
-
-    if (index === 2) {
-      // Fork
+    } else if (index === 1 && showFork) {
       forkRepoByDispatch(repository.owner.login, repository.name).then(json => {
         navigation.navigate('Repository', { repository: json });
       });
+    } else if (index === 2 || (index === 1 && !showFork)) {
+      this.shareRepository(repository);
     }
   };
 
@@ -166,13 +161,15 @@ class Repository extends Component {
     const openIssues = pureIssues.filter(issue => issue.state === 'open');
     const closedIssues = pureIssues.filter(issue => issue.state === 'closed');
 
-    const repositoryActions = ['Share', starred ? 'Unstar' : 'Star'];
+    const repositoryActions = [starred ? 'Unstar' : 'Star'];
     const showFork =
       repository && repository.owner && repository.owner.login !== username;
 
     if (showFork) {
       repositoryActions.push('Fork');
     }
+
+    repositoryActions.push('Share');
 
     const loader = isPendingFork ? <LoadingModal /> : null;
 
