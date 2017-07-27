@@ -192,6 +192,16 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "darecki",
+      "name": "Darek Cieśla",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/3084606?v=4",
+      "profile": "https://github.com/darecki",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ]
 }
