@@ -331,6 +331,5 @@ export const fetchSubmitNewIssue = (
     accessTokenParametersPOST(accessToken, {
       title: issueTitle,
       body: issueComment,
-    }).then(response => response.json())
-  );
+    })).then(response => response.json());
 };

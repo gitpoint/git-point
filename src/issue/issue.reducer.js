@@ -15,7 +15,6 @@ const initialState = {
   comments: [],
   diff: '',
   isMerged: false,
-  isSubmitted: false,
   isPendingComments: false,
   isPostingComment: false,
   isEditingIssue: false,
@@ -176,7 +175,7 @@ export const issueReducer = (state = initialState, action = {}) => {
     case SUBMIT_NEW_ISSUE.SUCCESS:
       return {
         ...state,
-        isSubmitted: action.payload,
+        issue: action.payload,
         isPendingSubmitting: false,
       };
     case SUBMIT_NEW_ISSUE.ERROR:

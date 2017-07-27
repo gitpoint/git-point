@@ -1,26 +1,29 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ScrollView, StyleSheet, TextInput } from 'react-native';
+import { ScrollView, StyleSheet, TextInput, View, Alert } from 'react-native';
+import { ListItem } from 'react-native-elements';
 
 import {
   ViewContainer,
   SectionList,
 } from 'components';
-import { colors, fonts } from 'config';
+import { colors, fonts, normalize } from 'config';
 import { submitNewIssue } from '../issue.action';
 
 const styles = StyleSheet.create({
-  listItemTitle: {
+  textInput: {
+    fontSize: normalize(12),
+    marginHorizontal: 15,
+    flex: 1,
     color: colors.black,
-    ...fonts.fontPrimary,
+    ...fonts.fontPrimaryLight,
   },
-  closeActionTitle: {
-    color: colors.red,
-    ...fonts.fontPrimary,
-  },
-  openActionTitle: {
+  submitTitle: {
     color: colors.green,
     ...fonts.fontPrimary,
+  },
+  listItemContainer: {
+    flex: 1,
   },
 });
 
@@ -30,13 +33,15 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   submitNewIssueByDispatch: (
-    repoFullName,
+    owner,
+    repoName,
     issueTitle,
     issueComment
   ) =>
     dispatch(
       submitNewIssue(
-        repoFullName,
+        owner,
+        repoName,
         issueTitle,
         issueComment
       )
@@ -45,7 +50,9 @@ const mapDispatchToProps = dispatch => ({
 
 class NewIssue extends Component {
   props: {
+    submitNewIssueByDispatch: Function,
     repository: Object,
+    navigation: Object,
   };
 
   state: {
@@ -63,6 +70,32 @@ class NewIssue extends Component {
       issueCommentHeight: 0,
     };
   }
+
+  submitNewIssue = () => {
+    const {
+      submitNewIssueByDispatch,
+      repository,
+      navigation,
+    } = this.props;
+    const { issueTitle, issueComment } = this.state;
+    const repoName = repository.name;
+    const owner = repository.owner.login;
+
+    if (issueTitle === '') {
+      Alert.alert('You need to have an issue title!', null, [{ text: 'OK' }]);
+    } else {
+      submitNewIssueByDispatch(
+        owner,
+        repoName,
+        issueTitle,
+        issueComment
+      ).then(issue => {
+        navigation.navigate('Issue', {
+          issue,
+        });
+      });
+    }
+  };
 
   render() {
     const { issueTitle, issueComment } = this.state;
@@ -107,6 +140,18 @@ class NewIssue extends Component {
               ]}
               value={issueComment}
             />
+          </SectionList>
+
+          <SectionList title="Create new issue">
+            <View style={styles.listItemContainer}>
+              <ListItem
+                title="Submit"
+                hideChevron
+                underlayColor={colors.greyLight}
+                titleStyle={styles.submitTitle}
+                onPress={() => this.submitNewIssue()}
+              />
+            </View>
           </SectionList>
         </ScrollView>
       </ViewContainer>

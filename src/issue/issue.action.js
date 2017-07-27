@@ -263,11 +263,13 @@ export const submitNewIssue = (
       issueComment,
       accessToken
     )
-      .then(data => {
+      .then(issue => {
         dispatch({
           type: SUBMIT_NEW_ISSUE.SUCCESS,
-          payload: data.ok,
+          payload: issue,
         });
+
+        return issue;
       })
       .catch(error => {
         dispatch({
