@@ -161,15 +161,13 @@ class Repository extends Component {
     const openIssues = pureIssues.filter(issue => issue.state === 'open');
     const closedIssues = pureIssues.filter(issue => issue.state === 'closed');
 
-    const repositoryActions = [starred ? 'Unstar' : 'Star'];
     const showFork =
       repository && repository.owner && repository.owner.login !== username;
-
-    if (showFork) {
-      repositoryActions.push('Fork');
-    }
-
-    repositoryActions.push('Share');
+    const repositoryActions = [
+      starred ? 'Unstar' : 'Star',
+      showFork && 'Fork',
+      'Share',
+    ];
 
     const loader = isPendingFork ? <LoadingModal /> : null;
 
