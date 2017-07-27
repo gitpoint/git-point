@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, ScrollView, RefreshControl } from 'react-native';
+import { StyleSheet, RefreshControl } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
 
@@ -164,171 +164,167 @@ class Repository extends Component {
       <ViewContainer>
         {loader}
 
-        <ScrollView
+        <ParallaxScroll
+          renderContent={() => {
+            if (isPendingRepository && !initalRepository) {
+              return <LoadingRepositoryProfile />;
+            }
+
+            return (
+              <RepositoryProfile
+                repository={isPendingRepository ? initalRepository : repository}
+                starred={
+                  isPendingRepository || isPendingCheckStarred ? false : starred
+                }
+                loading={isPendingRepository}
+                navigation={navigation}
+              />
+            );
+          }}
           refreshControl={
             <RefreshControl
               refreshing={isPendingRepository}
               onRefresh={this.fetchRepoInfo}
             />
           }
+          stickyTitle={repository.name}
+          showMenu={!isPendingRepository && !isPendingCheckStarred}
+          menuAction={this.showMenuActionSheet}
+          navigation={navigation}
+          navigateBack
         >
+          {initalRepository &&
+            !initalRepository.owner &&
+            isPendingRepository &&
+            <SectionList title="OWNER">
+              <LoadingUserListItem />
+            </SectionList>}
 
-          <ParallaxScroll
-            renderContent={() => {
-              if (isPendingRepository && !initalRepository) {
-                return <LoadingRepositoryProfile />;
-              }
+          {!(initalRepository && initalRepository.owner) &&
+            (repository && repository.owner) &&
+            !isPendingRepository &&
+            <SectionList title="OWNER">
+              <UserListItem user={repository.owner} navigation={navigation} />
+            </SectionList>}
 
-              return (
-                <RepositoryProfile
-                  repository={isPendingRepository ? initalRepository : repository}
-                  starred={
-                    isPendingRepository || isPendingCheckStarred ? false : starred
-                  }
-                  loading={isPendingRepository}
-                  navigation={navigation}
-                />
-              );
-            }}
-            stickyTitle={repository.name}
-            showMenu={!isPendingRepository && !isPendingCheckStarred}
-            menuAction={this.showMenuActionSheet}
-            navigation={navigation}
-            navigateBack
-          >
-            {initalRepository &&
-              !initalRepository.owner &&
-              isPendingRepository &&
-              <SectionList title="OWNER">
-                <LoadingUserListItem />
-              </SectionList>}
-
-            {!(initalRepository && initalRepository.owner) &&
-              (repository && repository.owner) &&
-              !isPendingRepository &&
-              <SectionList title="OWNER">
-                <UserListItem user={repository.owner} navigation={navigation} />
-              </SectionList>}
-
-            {initalRepository &&
-              initalRepository.owner &&
-              <SectionList title="OWNER">
-                <UserListItem
-                  user={initalRepository.owner}
-                  navigation={navigation}
-                />
-              </SectionList>}
-
-            {(isPendingRepository || isPendingContributors) && <LoadingMembersList title="CONTRIBUTORS" />}
-
-            {!isPendingContributors &&
-              <MembersList
-                title="CONTRIBUTORS"
-                members={contributors}
+          {initalRepository &&
+            initalRepository.owner &&
+            <SectionList title="OWNER">
+              <UserListItem
+                user={initalRepository.owner}
                 navigation={navigation}
-              />}
-
-            <SectionList title="SOURCE">
-              <ListItem
-                title="README"
-                leftIcon={{
-                  name: 'book',
-                  color: colors.grey,
-                  type: 'octicon',
-                }}
-                titleStyle={styles.listTitle}
-                onPress={() =>
-                  navigation.navigate('ReadMe', {
-                    repository,
-                  })}
-                underlayColor={colors.greyLight}
               />
-              <ListItem
-                title="View Code"
-                titleStyle={styles.listTitle}
-                leftIcon={{
-                  name: 'code',
-                  color: colors.grey,
-                  type: 'octicon',
-                }}
-                onPress={() =>
-                  navigation.navigate('RepositoryCodeList', {
-                    topLevel: true,
-                  })}
-                underlayColor={colors.greyLight}
+            </SectionList>}
+
+          {(isPendingRepository || isPendingContributors) &&
+            <LoadingMembersList title="CONTRIBUTORS" />}
+
+          {!isPendingContributors &&
+            <MembersList
+              title="CONTRIBUTORS"
+              members={contributors}
+              navigation={navigation}
+            />}
+
+          <SectionList title="SOURCE">
+            <ListItem
+              title="README"
+              leftIcon={{
+                name: 'book',
+                color: colors.grey,
+                type: 'octicon',
+              }}
+              titleStyle={styles.listTitle}
+              onPress={() =>
+                navigation.navigate('ReadMe', {
+                  repository,
+                })}
+              underlayColor={colors.greyLight}
+            />
+            <ListItem
+              title="View Code"
+              titleStyle={styles.listTitle}
+              leftIcon={{
+                name: 'code',
+                color: colors.grey,
+                type: 'octicon',
+              }}
+              onPress={() =>
+                navigation.navigate('RepositoryCodeList', {
+                  topLevel: true,
+                })}
+              underlayColor={colors.greyLight}
+            />
+          </SectionList>
+
+          <SectionList
+            loading={isPendingIssues}
+            title={
+              <RepositorySectionTitle
+                text="ISSUES"
+                loading={isPendingIssues || isPendingRepository}
+                openCount={openIssues.length}
+                closedCount={closedIssues.length}
               />
-            </SectionList>
-
-            <SectionList
-              loading={isPendingIssues}
-              title={
-                <RepositorySectionTitle
-                  text="ISSUES"
-                  loading={isPendingIssues || isPendingRepository}
-                  openCount={openIssues.length}
-                  closedCount={closedIssues.length}
+            }
+            noItems={openIssues.length === 0}
+            noItemsMessage={
+              pureIssues.length === 0 ? 'No issues' : 'No open issues'
+            }
+            showButton={pureIssues.length > 0}
+            buttonTitle="View All"
+            buttonAction={() =>
+              navigation.navigate('IssueList', {
+                type: 'issue',
+                issues: pureIssues,
+              })}
+          >
+            {openIssues
+              .slice(0, 3)
+              .map(item =>
+                <IssueListItem
+                  key={item.id}
+                  type="issue"
+                  issue={item}
+                  navigation={navigation}
                 />
-              }
-              noItems={openIssues.length === 0}
-              noItemsMessage={
-                pureIssues.length === 0 ? 'No issues' : 'No open issues'
-              }
-              showButton={pureIssues.length > 0}
-              buttonTitle="View All"
-              buttonAction={() =>
-                navigation.navigate('IssueList', {
-                  type: 'issue',
-                  issues: pureIssues,
-                })}
-            >
-              {openIssues
-                .slice(0, 3)
-                .map(item =>
-                  <IssueListItem
-                    key={item.id}
-                    type="issue"
-                    issue={item}
-                    navigation={navigation}
-                  />
-                )}
-            </SectionList>
+              )}
+          </SectionList>
 
-            <SectionList
-              loading={isPendingIssues}
-              title={
-                <RepositorySectionTitle
-                  text="PULL REQUESTS"
-                  loading={isPendingIssues || isPendingRepository}
-                  openCount={openPulls.length}
-                  closedCount={closedPulls.length}
+          <SectionList
+            loading={isPendingIssues}
+            title={
+              <RepositorySectionTitle
+                text="PULL REQUESTS"
+                loading={isPendingIssues || isPendingRepository}
+                openCount={openPulls.length}
+                closedCount={closedPulls.length}
+              />
+            }
+            noItems={openPulls.length === 0}
+            noItemsMessage={
+              pulls.length === 0 ? 'No pull requests' : 'No open pull requests'
+            }
+            showButton={pulls.length > 0}
+            buttonTitle="View All"
+            buttonAction={() =>
+              navigation.navigate('PullList', {
+                type: 'pull',
+                issues: pulls,
+              })}
+          >
+            {openPulls
+              .slice(0, 3)
+              .map(item =>
+                <IssueListItem
+                  key={item.id}
+                  type="pull"
+                  issue={item}
+                  navigation={navigation}
                 />
-              }
-              noItems={openPulls.length === 0}
-              noItemsMessage={
-                pulls.length === 0 ? 'No pull requests' : 'No open pull requests'
-              }
-              showButton={pulls.length > 0}
-              buttonTitle="View All"
-              buttonAction={() =>
-                navigation.navigate('PullList', {
-                  type: 'pull',
-                  issues: pulls,
-                })}
-            >
-              {openPulls
-                .slice(0, 3)
-                .map(item =>
-                  <IssueListItem
-                    key={item.id}
-                    type="pull"
-                    issue={item}
-                    navigation={navigation}
-                  />
-                )}
-            </SectionList>
-          </ParallaxScroll>
-
-        </ScrollView>
+              )}
+          </SectionList>
+        </ParallaxScroll>
 
         <ActionSheet
           ref={o => {

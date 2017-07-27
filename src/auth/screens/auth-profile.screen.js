@@ -4,7 +4,6 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  ScrollView,
   RefreshControl,
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
@@ -149,84 +148,82 @@ class AuthProfile extends Component {
 
     return (
       <ViewContainer>
-        <ScrollView
-          refreshControl={
-            <RefreshControl
-              refreshing={loading}
-              onRefresh={this.refreshProfile}
-            />
-          }
-        >
-          {loading && <LoadingContainer animating={loading} center />}
+        {loading && <LoadingContainer animating={loading} center />}
 
-          {!loading &&
-            <ParallaxScroll
-              renderContent={() =>
-                <UserProfile
-                  type="user"
-                  initialUser={user}
-                  user={user}
-                  navigation={navigation}
-                />}
-              stickyTitle={user.login}
-            >
-              {user.bio &&
-                user.bio !== '' &&
-                <SectionList title="BIO">
-                  <ListItem
-                    subtitle={user.bio}
-                    subtitleStyle={styles.listSubTitle}
-                    hideChevron
-                  />
+        {!loading &&
+          <ParallaxScroll
+            renderContent={() =>
+              <UserProfile
+                type="user"
+                initialUser={user}
+                user={user}
+                navigation={navigation}
+              />}
+            refreshControl={
+              <RefreshControl
+                refreshing={loading}
+                onRefresh={this.refreshProfile}
+              />
+            }
+            stickyTitle={user.login}
+          >
+            {user.bio &&
+              user.bio !== '' &&
+              <SectionList title="BIO">
+                <ListItem
+                  subtitle={user.bio}
+                  subtitleStyle={styles.listSubTitle}
+                  hideChevron
+                />
               </SectionList>}
 
-              <EntityInfo entity={user} orgs={orgs} navigation={navigation} />
+            <EntityInfo entity={user} orgs={orgs} navigation={navigation} />
 
-              <SectionList
-                title="ORGANIZATIONS"
-                noItems={orgs.length === 0}
-                noItemsMessage={'No organizations'}
-              >
-                {orgs.map(item =>
-                  <UserListItem
-                    key={item.id}
-                    user={item}
-                    navigation={navigation}
-                  />
-                )}
-                <Text style={styles.note}>
-                  Can&apos;t see all your organizations?{'\n'}
-                  <Text
-                    style={styles.noteLink}
-                    onPress={() =>
-                      openURLInView('https://github.com/settings/applications')}
-                  >
-                    You may have to request approval for them.
-                  </Text>
-                </Text>
-              </SectionList>
-
-              <SectionList>
-                <ListItem
-                  title="Sign Out"
-                  titleStyle={styles.logoutTitle}
-                  hideChevron
-                  onPress={() => this.signOutUser()}
+            <SectionList
+              title="ORGANIZATIONS"
+              noItems={orgs.length === 0}
+              noItemsMessage={'No organizations'}
+            >
+              {orgs.map(item =>
+                <UserListItem
+                  key={item.id}
+                  user={item}
+                  navigation={navigation}
                 />
-              </SectionList>
-
-              <TouchableOpacity
-                style={styles.update}
-                onPress={this.checkForUpdate}
-              >
-                <Text style={styles.updateText}>GitPoint v{version}</Text>
-                <Text style={[styles.updateText, styles.updateTextSub]}>
-                  {this.state.updateText}
+              )}
+              <Text style={styles.note}>
+                Can&apos;t see all your organizations?{'\n'}
+                <Text
+                  style={styles.noteLink}
+                  onPress={() =>
+                    openURLInView('https://github.com/settings/applications')}
+                >
+                  You may have to request approval for them.
                 </Text>
-              </TouchableOpacity>
-            </ParallaxScroll>
-          }
-        </ScrollView>
+              </Text>
+            </SectionList>
+
+            <SectionList>
+              <ListItem
+                title="Sign Out"
+                titleStyle={styles.logoutTitle}
+                hideChevron
+                onPress={() => this.signOutUser()}
+              />
+            </SectionList>
+
+            <TouchableOpacity
+              style={styles.update}
+              onPress={this.checkForUpdate}
+            >
+              <Text style={styles.updateText}>
+                GitPoint v{version}
+              </Text>
+              <Text style={[styles.updateText, styles.updateTextSub]}>
+                {this.state.updateText}
+              </Text>
+            </TouchableOpacity>
+          </ParallaxScroll>}
       </ViewContainer>
     );
   }
