@@ -98,19 +98,19 @@ export const RepositoryProfile = ({
   loading,
 }: Props) =>
   <View style={styles.container}>
-    {!loading &&
-      repository.language !== null &&
-      <View style={styles.languageInfo}>
+    <View style={styles.languageInfo}>
+      {!loading &&
+        repository.language !== null &&
         <Icon
           name="fiber-manual-record"
           size={15}
           color={languageColors[repository.language]}
-        />
+        />}
 
-        <Text style={[styles.languageInfoTitle]}>
-          {repository.language}
-        </Text>
-      </View>}
+      <Text style={[styles.languageInfoTitle]}>
+        {repository.language || ' '}
+      </Text>
+    </View>
 
     <View style={styles.profile}>
       <Icon
@@ -125,7 +125,7 @@ export const RepositoryProfile = ({
       />
 
       <Text style={styles.title}>
-        {repository.name}
+        {repository.name || ' '}
       </Text>
 
       <Text
@@ -137,7 +137,7 @@ export const RepositoryProfile = ({
             : styles.subtitleDescriptionNoFork,
         ]}
       >
-        {emojifyText(repository.description)}
+        {emojifyText(repository.description) || ' '}
       </Text>
 
       {repository.fork &&
@@ -161,14 +161,14 @@ export const RepositoryProfile = ({
     <View style={styles.details}>
       <View style={styles.unit}>
         <Text style={[styles.unitNumber, starred && styles.green]}>
-          {starNumbersText(repository.stargazers_count)}
+          {starNumbersText(repository.stargazers_count) || ' '}
         </Text>
         <Text style={styles.unitText}>Stars</Text>
       </View>
 
       <View style={styles.unit}>
         <Text style={styles.unitNumber}>
-          {repository.forks}
+          {repository.forks || ' '}
         </Text>
         <Text style={styles.unitText}>Forks</Text>
       </View>
