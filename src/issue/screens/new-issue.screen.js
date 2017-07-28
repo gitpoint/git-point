@@ -22,6 +22,11 @@ const styles = StyleSheet.create({
   listItemContainer: {
     flex: 1,
   },
+  titleSmall: {
+    color: colors.primaryDark,
+    ...fonts.fontPrimarySemiBold,
+    fontSize: normalize(10),
+  },
 });
 
 const mapStateToProps = state => ({
@@ -79,11 +84,24 @@ class NewIssue extends Component {
   };
 
   render() {
+    const { repository } = this.props;
     const { issueTitle, issueComment } = this.state;
 
     return (
       <ViewContainer>
         <ScrollView>
+          {repository.full_name &&
+            <ListItem
+              title={repository.full_name}
+              titleStyle={styles.titleSmall}
+              leftIcon={{
+                name: 'repo',
+                size: 17,
+                color: colors.grey,
+                type: 'octicon',
+              }}
+              hideChevron
+            />}
           <SectionList title="Issue Title">
             <TextInput
               underlineColorAndroid={'transparent'}
