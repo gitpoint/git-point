@@ -230,7 +230,7 @@ class Issue extends Component {
       navigation,
     } = this.props;
 
-    const isLoadingData = isPendingComments || isPendingIssue;
+    const isLoadingData = isPendingComments || isPendingIssue || false;
     const fullComments = !isPendingComments ? [issue, ...comments] : [];
     const participantNames = !isPendingComments
       ? fullComments.map(item => item && item.user && item.user.login)
@@ -262,8 +262,8 @@ class Issue extends Component {
               ref={ref => {
                 this.commentsList = ref;
               }}
-              onRefresh={this.getIssueInformation}
               refreshing={isLoadingData}
+              onRefresh={this.getIssueInformation}
               contentContainerStyle={{ flexGrow: 1 }}
               ListHeaderComponent={this.renderHeader}
               removeClippedSubviews={false}
