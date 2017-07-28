@@ -230,7 +230,7 @@ class Issue extends Component {
       navigation,
     } = this.props;
 
-    const isLoadingData = isPendingComments || isPendingIssue || false;
+    const isLoadingData = !!(isPendingComments || isPendingIssue);
     const fullComments = !isPendingComments ? [issue, ...comments] : [];
     const participantNames = !isPendingComments
       ? fullComments.map(item => item && item.user && item.user.login)
