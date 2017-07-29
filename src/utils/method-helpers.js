@@ -17,6 +17,7 @@ export const openURLInView = url => {
 export const resetNavigationTo = (routeName: string, navigation: {}) => {
   const resetAction = NavigationActions.reset({
     index: 0,
+    key: null,
     actions: [NavigationActions.navigate({ routeName })],
   });
 
@@ -26,4 +27,4 @@ export const resetNavigationTo = (routeName: string, navigation: {}) => {
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 export const delay = (delayed, ms) =>
-  Promise.all([delayed, sleep(ms)]).then(([meals]) => meals);
+  Promise.all([delayed, sleep(ms)]).then(([data]) => data);

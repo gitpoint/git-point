@@ -121,8 +121,8 @@ class AuthProfile extends Component {
     signOutByDispatch().then(() => {
       const url = 'https://github.com/logout';
 
-      resetNavigationTo('Login', navigation);
       openURLInView(url);
+      resetNavigationTo('Login', navigation);
     });
   }
 
