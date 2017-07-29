@@ -283,7 +283,7 @@ export class CommentListItem extends Component {
                 value={commentBodyAdjusted()}
                 stylesheet={commentStyles}
                 renderNode={myDomElement}
-                lineBreak={false}
+                addLineBreaks={false}
               />}
 
             {comment.body &&

@@ -424,19 +424,22 @@ class Events extends Component {
           }
         : userEvent.payload.forkee,
     });
-  }
+  };
 
   navigateToIssue = userEvent => {
     this.props.navigation.navigate('Issue', {
-      issue: userEvent.payload.issue || this.formatPullRequestObject(userEvent.payload.pull_request),
+      issue:
+        userEvent.payload.issue ||
+        this.formatPullRequestObject(userEvent.payload.pull_request),
+      isPR: !!userEvent.payload.pull_request,
     });
-  }
+  };
 
   navigateToProfile = (userEvent, isActor) => {
     this.props.navigation.navigate('Profile', {
       user: !isActor ? userEvent.payload.member : userEvent.actor,
     });
-  }
+  };
 
   keyExtractor = item => {
     return item.id;

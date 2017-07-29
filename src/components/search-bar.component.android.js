@@ -31,12 +31,12 @@ export const SearchBar = ({
 }: Props) =>
   <MDSearchBar
     textStyle={textColor ? { color: textColor } : null}
-    inputStyle={[
-      styles.textInput,
-      textFieldBackgroundColor
+    inputStyle={{
+      ...StyleSheet.flatten(styles.textInput),
+      ...(textFieldBackgroundColor
         ? { backgroundColor: textFieldBackgroundColor }
-        : null,
-    ]}
+        : {}),
+    }}
     alwaysShowBackButton={showsCancelButton}
     placeholder={placeholder}
     onFocus={onFocus}
