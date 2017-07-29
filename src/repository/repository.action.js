@@ -23,7 +23,7 @@ import {
   SEARCH_CLOSED_ISSUES,
   SEARCH_OPEN_PULLS,
   SEARCH_CLOSED_PULLS,
-  SUBSCRIBED_REPO_STATUS,
+  GET_REPOSITORY_SUBSCRIBED_STATUS,
 } from './repository.type';
 
 export const getRepository = url => {
@@ -159,14 +159,17 @@ export const checkRepoStarred = url => {
   };
 };
 
-// Check repo subscribed status
-// export const checkRepoSubscribed = url => {
-//   return (dispatch, getState) => {
-//     const accessToken = getState().auth.accessToken;
+export const checkRepoSubscribed = url => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
 
-//     dispatch({ type: GET})
-//   }
-// }
+    dispatch({ type: GET_REPOSITORY_SUBSCRIBED_STATUS.PENDING });
+
+    fetchUrlNormal(url, accessToken)
+      .then(() => dispatch({ type: GET_REPOSITORY_SUBSCRIBED_STATUS.SUCCESS }))
+      .catch(() => dispatch({ type: GET_REPOSITORY_SUBSCRIBED_STATUS.ERROR }));
+  };
+};
 
 export const getRepositoryInfo = url => {
   return (dispatch, getState) => {
@@ -183,6 +186,12 @@ export const getRepositoryInfo = url => {
       dispatch(
         checkRepoStarred(
           `https://api.github.com/user/starred/${repo.owner.login}/${repo.name}`
+        )
+      );
+      dispatch(
+        checkRepoSubscribed(
+          `https://api.github.com/repos/${repo.owner
+            .login}/${repo.name}/subscription`
         )
       );
     });
@@ -219,19 +228,19 @@ export const watchRepo = (owner, repo) => (dispatch, getState) => {
   // we should pass true for sub and false for unsub
 
   dispatch({
-    type: SUBSCRIBED_REPO_STATUS.PENDING,
+    type: GET_REPOSITORY_SUBSCRIBED_STATUS.PENDING,
   });
 
   return watchRepo(isSubscribed, owner, repo, accessToken)
     .then(data => data.json())
     .then(() => {
       dispatch({
-        type: SUBSCRIBED_REPO_STATUS.SUCCESS,
+        type: GET_REPOSITORY_SUBSCRIBED_STATUS.SUCCESS,
       });
     })
     .catch(() => {
       dispatch({
-        type: SUBSCRIBED_REPO_STATUS.ERROR,
+        type: GET_REPOSITORY_SUBSCRIBED_STATUS.ERROR,
       });
     });
 };

@@ -79,6 +79,8 @@ class Repository extends Component {
     // isPendingCheckForked: boolean,
     navigation: Object,
     username: string,
+    // is subscribed?
+    subscribed: boolean,
   };
 
   componentDidMount() {
@@ -148,7 +150,9 @@ class Repository extends Component {
       isPendingFork,
       navigation,
       username,
+      subscribed,
     } = this.props;
+
     const initalRepository = navigation.state.params.repository;
     const pulls = issues.filter(issue => issue.hasOwnProperty('pull_request')); // eslint-disable-line no-prototype-builtins
     const pureIssues = issues.filter(issue => {
@@ -165,6 +169,7 @@ class Repository extends Component {
     const showFork =
       repository && repository.owner && repository.owner.login !== username;
     const repositoryActions = [
+      subscribed ? 'Unwatch' : 'Watch',
       starred ? 'Unstar' : 'Star',
       showFork && 'Fork',
       'Share',
