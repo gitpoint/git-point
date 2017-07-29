@@ -77,7 +77,7 @@ export const getIssueComments = issueCommentsURL => {
 
     dispatch({ type: GET_ISSUE_COMMENTS.PENDING });
 
-    return fetchCommentHTML(issueCommentsURL, accessToken)
+    return fetchCommentHTML(`${issueCommentsURL}?per_page=100`, accessToken)
       .then(data => {
         dispatch({
           type: GET_ISSUE_COMMENTS.SUCCESS,
