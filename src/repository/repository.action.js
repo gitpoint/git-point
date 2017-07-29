@@ -159,6 +159,15 @@ export const checkRepoStarred = url => {
   };
 };
 
+// Check repo subscribed status
+// export const checkRepoSubscribed = url => {
+//   return (dispatch, getState) => {
+//     const accessToken = getState().auth.accessToken;
+
+//     dispatch({ type: GET})
+//   }
+// }
+
 export const getRepositoryInfo = url => {
   return (dispatch, getState) => {
     return dispatch(getRepository(url)).then(() => {
