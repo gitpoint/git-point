@@ -1,6 +1,6 @@
 import { AsyncStorage } from 'react-native';
 import uniqby from 'lodash.uniqby';
-import { resetNavigationTo } from 'utils';
+import { delay, resetNavigationTo } from 'utils';
 
 import {
   fetchAccessToken,
@@ -21,7 +21,7 @@ export const auth = (code, state, navigation) => {
   return dispatch => {
     dispatch({ type: LOGIN.PENDING });
 
-    fetchAccessToken(code, state)
+    delay(fetchAccessToken(code, state), 2000)
       .then(data => {
         dispatch({
           type: LOGIN.SUCCESS,

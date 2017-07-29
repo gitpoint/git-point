@@ -22,3 +22,8 @@ export const resetNavigationTo = (routeName: string, navigation: {}) => {
 
   navigation.dispatch(resetAction);
 };
+
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+export const delay = (delayed, ms) =>
+  Promise.all([delayed, sleep(ms)]).then(([meals]) => meals);
