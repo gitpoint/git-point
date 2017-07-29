@@ -177,17 +177,19 @@ export const repositoryReducer = (state = initialState, action = {}) => {
     case GET_REPOSITORY_SUBSCRIBED_STATUS.PENDING:
       return {
         ...state,
+        subscribed: false,
         isPendingSubscribe: true,
       };
     case GET_REPOSITORY_SUBSCRIBED_STATUS.SUCCESS:
       return {
         ...state,
-        subscribed: true,
+        subscribed: action.payload,
         isPendingSubscribe: false,
       };
     case GET_REPOSITORY_SUBSCRIBED_STATUS.ERROR:
       return {
         ...state,
+        subscribed: action.payload,
         isPendingCheckSubscribed: false,
         isPendingSubscribe: false,
       };

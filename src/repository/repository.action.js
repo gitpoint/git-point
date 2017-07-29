@@ -7,6 +7,8 @@ import {
   fetchSearch,
   fetchChangeStarStatusRepo,
   fetchForkRepo,
+  watchRepo,
+  unWatchRepo,
 } from 'api';
 import {
   GET_REPOSITORY,
@@ -166,9 +168,41 @@ export const checkRepoSubscribed = url => {
     dispatch({ type: GET_REPOSITORY_SUBSCRIBED_STATUS.PENDING });
 
     fetchUrlNormal(url, accessToken)
-      .then(() => dispatch({ type: GET_REPOSITORY_SUBSCRIBED_STATUS.SUCCESS }))
-      .catch(() => dispatch({ type: GET_REPOSITORY_SUBSCRIBED_STATUS.ERROR }));
+      .then(data =>
+        dispatch({
+          type: GET_REPOSITORY_SUBSCRIBED_STATUS.SUCCESS,
+          payload: !(data.status === 404),
+        })
+      )
+      .catch(error =>
+        dispatch({
+          type: GET_REPOSITORY_SUBSCRIBED_STATUS.ERROR,
+          error,
+        })
+      );
   };
+};
+
+export const unSubscribeToRepo = (owner, repo) => (dispatch, getState) => {
+  const accessToken = getState().auth.accessToken;
+
+  dispatch({
+    type: GET_REPOSITORY_SUBSCRIBED_STATUS.PENDING,
+  });
+
+  return unWatchRepo(owner, repo, accessToken)
+    .then(data => data.json())
+    .then(() => {
+      dispatch({
+        type: GET_REPOSITORY_SUBSCRIBED_STATUS.SUCCESS,
+        payload: false,
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: GET_REPOSITORY_SUBSCRIBED_STATUS.ERROR,
+      });
+    });
 };
 
 export const getRepositoryInfo = url => {
@@ -220,22 +254,20 @@ export const changeStarStatusRepo = (owner, repo, starred) => {
   };
 };
 
-export const watchRepo = (owner, repo) => (dispatch, getState) => {
+export const subscribeToRepo = (owner, repo) => (dispatch, getState) => {
   const accessToken = getState().auth.accessToken;
-  const isSubscribed = getState().auth.repository.subscribed;
-  // get current subscribed status from store and then 'flip it'
-  // https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
-  // we should pass true for sub and false for unsub
+  const isSubscribed = getState().repository.subscribed;
 
   dispatch({
     type: GET_REPOSITORY_SUBSCRIBED_STATUS.PENDING,
   });
 
-  return watchRepo(isSubscribed, owner, repo, accessToken)
+  return watchRepo(!isSubscribed, owner, repo, accessToken)
     .then(data => data.json())
-    .then(() => {
+    .then(result => {
       dispatch({
         type: GET_REPOSITORY_SUBSCRIBED_STATUS.SUCCESS,
+        payload: result.subscribed,
       });
     })
     .catch(() => {

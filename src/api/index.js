@@ -280,9 +280,15 @@ export const watchRepo = (isSubscribed, owner, repo, accessToken) => {
   return fetch(
     ENDPOINT,
     accessTokenParametersPUT(accessToken, {
-      subscribed: !isSubscribed,
+      subscribed: isSubscribed,
     })
   );
+};
+
+export const unWatchRepo = (owner, repo, accessToken) => {
+  const ENDPOINT = `https://api.github.com/repos/${owner}/${repo}/subscription`;
+
+  return fetch(ENDPOINT, accessTokenParametersDELETE(accessToken));
 };
 
 export const fetchChangeFollowStatus = (user, isFollowing, accessToken) => {
@@ -342,5 +348,6 @@ export const fetchSubmitNewIssue = (
     accessTokenParametersPOST(accessToken, {
       title: issueTitle,
       body: issueComment,
-    })).then(response => response.json());
+    })
+  ).then(response => response.json());
 };
