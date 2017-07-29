@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, View, Image } from 'react-native';
-import { NavigationActions } from 'react-navigation';
 
 import { colors } from 'config';
+import { resetNavigationTo } from 'utils';
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
@@ -29,21 +29,15 @@ class Splash extends Component {
   };
 
   componentDidMount() {
-    if (this.props.isAuthenticated) {
-      this._navigateTo('Main');
+    const { isAuthenticated, navigation } = this.props;
+
+    if (isAuthenticated) {
+      resetNavigationTo('Main', navigation);
     } else {
-      this._navigateTo('Login');
+      resetNavigationTo('Login', navigation);
     }
   }
 
-  _navigateTo = (routeName: string) => {
-    const resetAction = NavigationActions.reset({
-      index: 0,
-      actions: [NavigationActions.navigate({ routeName })],
-    });
-
-    this.props.navigation.dispatch(resetAction);
-  };
   render() {
     return (
       <View style={styles.logoContainer}>

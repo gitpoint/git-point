@@ -1,5 +1,6 @@
 import { Platform, Linking } from 'react-native';
 import SafariView from 'react-native-safari-view';
+import { NavigationActions } from 'react-navigation';
 
 export const openURLInView = url => {
   // Use SafariView on iOS
@@ -11,4 +12,13 @@ export const openURLInView = url => {
   } else {
     Linking.openURL(url);
   }
+};
+
+export const resetNavigationTo = (routeName: string, navigation: {}) => {
+  const resetAction = NavigationActions.reset({
+    index: 0,
+    actions: [NavigationActions.navigate({ routeName })],
+  });
+
+  navigation.dispatch(resetAction);
 };
