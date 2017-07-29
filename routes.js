@@ -49,7 +49,12 @@ import {
 } from 'repository';
 
 // Issue
-import { IssueScreen, IssueSettingsScreen, PullMergeScreen } from 'issue';
+import {
+  IssueScreen,
+  IssueSettingsScreen,
+  NewIssueScreen,
+  PullMergeScreen,
+} from 'issue';
 
 const sharedRoutes = {
   RepositoryList: {
@@ -130,6 +135,12 @@ const sharedRoutes = {
     screen: IssueSettingsScreen,
     navigationOptions: {
       title: 'Settings',
+    },
+  },
+  NewIssue: {
+    screen: NewIssueScreen,
+    navigationOptions: {
+      title: 'New Issue',
     },
   },
   PullDiff: {

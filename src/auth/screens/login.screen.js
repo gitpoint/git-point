@@ -1,26 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  Dimensions,
-  Linking,
-  View,
-  StyleSheet,
-  Image,
-  ImageBackground,
-  Platform,
-} from 'react-native';
-import { Button } from 'react-native-elements';
+import { Linking, View, StyleSheet, Text, Platform, Image } from 'react-native';
+import { Button, Icon } from 'react-native-elements';
 import SafariView from 'react-native-safari-view';
+import Swiper from 'react-native-swiper';
 import queryString from 'query-string';
 
 import { ViewContainer, LoadingContainer } from 'components';
-import { fonts, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 import { CLIENT_ID } from 'api';
 import { auth } from 'auth';
 import { openURLInView } from 'utils';
 
 const stateRandom = Math.random().toString();
-const window = Dimensions.get('window');
 
 const mapStateToProps = state => ({
   isLoggingIn: state.auth.isLoggingIn,
@@ -28,37 +20,72 @@ const mapStateToProps = state => ({
 });
 
 const styles = StyleSheet.create({
-  imageContainer: {
+  container: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    height: window.height,
-    width: window.width,
-  },
-  imageBackground: {
-    height: window.height,
-    width: window.width,
   },
   button: {
-    backgroundColor: 'rgba(105,105,105,0.8)',
+    backgroundColor: colors.transparent,
     borderRadius: 5,
-    paddingVertical: 15,
-    width: window.width - 30,
-    position: 'absolute',
-    bottom: Platform.OS === 'ios' ? 20 : 35,
+    borderWidth: 2,
+    borderColor: colors.white,
+    paddingVertical: 10,
+    paddingHorizontal: 30,
     shadowColor: 'transparent',
-  },
-  logoContainer: {
-    alignItems: 'center',
-    flexGrow: 1,
-    justifyContent: 'center',
-  },
-  logo: {
-    width: 100,
-    height: 100,
   },
   buttonText: {
     ...fonts.fontPrimaryBold,
-    fontSize: normalize(16),
+    fontSize: normalize(12),
+  },
+  logo: {
+    width: 90,
+    height: 90,
+  },
+  miniSection: {
+    flex: 1.5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  contentSection: {
+    flex: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  slide: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 50,
+  },
+  slide1: {
+    backgroundColor: colors.lightBlue,
+  },
+  slide2: {
+    backgroundColor: colors.lightPurple,
+  },
+  slide3: {
+    backgroundColor: colors.orange,
+  },
+  slide4: {
+    backgroundColor: colors.darkGreen,
+  },
+  title: {
+    fontSize: normalize(20),
+    textAlign: 'center',
+    color: colors.white,
+    ...fonts.fontPrimarySemiBold,
+    marginTop: 45,
+    marginBottom: 15,
+  },
+  message: {
+    fontSize: normalize(14),
+    textAlign: 'center',
+    color: colors.white,
+    ...fonts.fontPrimaryLight,
+  },
+  iconMargin: {
+    marginLeft: 20,
   },
 });
 
@@ -132,27 +159,83 @@ class Login extends Component {
       <ViewContainer barColor="light">
         {!isAuthenticated &&
           this.state.asyncStorageChecked &&
-          <View>
-            <ImageBackground
-              style={styles.imageContainer}
-              imageStyle={styles.imageBackground}
-              source={require('../../assets/login-background.png')}
-            >
-              <View style={styles.logoContainer}>
-                <Image
-                  style={styles.logo}
-                  source={require('../../assets/logo.png')}
-                />
-              </View>
-            </ImageBackground>
+          <View style={styles.container}>
+            <View style={styles.miniSection}>
+              <Image
+                style={styles.logo}
+                source={require('../../assets/logo.png')}
+              />
+            </View>
 
-            <Button
-              raised
-              title="Sign In"
-              buttonStyle={styles.button}
-              textStyle={styles.buttonText}
-              onPress={() => this.signIn()}
-            />
+            <View style={styles.contentSection}>
+              <Swiper activeDotColor={colors.white}>
+                <View style={[styles.slide, styles.slide1]}>
+                  <Image
+                    style={styles.logo}
+                    source={require('../../assets/logo.png')}
+                  />
+                  <Text style={styles.title}>Welcome to GitPoint</Text>
+                  <Text style={styles.message}>
+                    The most feature-rich GitHub client that is 100% free
+                  </Text>
+                </View>
+
+                <View style={[styles.slide, styles.slide2]}>
+                  <Icon
+                    style={styles.icon}
+                    color={colors.white}
+                    size={85}
+                    name="bell"
+                    type="octicon"
+                  />
+                  <Text style={styles.title}>Control notifications</Text>
+                  <Text style={styles.message}>
+                    View and control all of your unread and participating
+                    notifications
+                  </Text>
+                </View>
+
+                <View style={[styles.slide, styles.slide3]}>
+                  <Icon
+                    containerStyle={styles.iconMargin}
+                    style={styles.icon}
+                    color={colors.white}
+                    size={85}
+                    name="repo"
+                    type="octicon"
+                  />
+                  <Text style={styles.title}>Repositories and Users</Text>
+                  <Text style={styles.message}>
+                    Easily obtain repository, user and organization information
+                  </Text>
+                </View>
+
+                <View style={[styles.slide, styles.slide4]}>
+                  <Icon
+                    containerStyle={styles.iconMargin}
+                    style={styles.icon}
+                    color={colors.white}
+                    size={85}
+                    name="git-pull-request"
+                    type="octicon"
+                  />
+                  <Text style={styles.title}>Issues and Pull Requests</Text>
+                  <Text style={styles.message}>
+                    Communicate on conversations, merge pull requests and more
+                  </Text>
+                </View>
+              </Swiper>
+            </View>
+
+            <View style={styles.miniSection}>
+              <Button
+                raised
+                title="SIGN IN"
+                buttonStyle={styles.button}
+                textStyle={styles.buttonText}
+                onPress={() => this.signIn()}
+              />
+            </View>
           </View>}
 
         {isAuthenticated && <LoadingContainer animating={isLoggingIn} center />}

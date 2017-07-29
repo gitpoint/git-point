@@ -8,7 +8,7 @@ import {
   Text,
   Platform,
 } from 'react-native';
-import { ButtonGroup } from 'react-native-elements';
+import { ButtonGroup, Icon } from 'react-native-elements';
 import {
   ViewContainer,
   IssueListItem,
@@ -90,6 +90,23 @@ const styles = StyleSheet.create({
 });
 
 class IssueList extends Component {
+  static navigationOptions = ({ navigation }) => {
+    const { navigate } = navigation;
+
+    return {
+      headerRight: (
+        <Icon
+          name="plus"
+          color={colors.primaryDark}
+          type="octicon"
+          containerStyle={{ marginRight: 5 }}
+          underlayColor={colors.transparent}
+          onPress={() => navigate('NewIssue')}
+        />
+      ),
+    };
+  };
+
   props: {
     repository: Object,
     searchedOpenIssues: Array,

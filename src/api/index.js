@@ -316,3 +316,20 @@ export const fetchMergePullRequest = (
     })
   );
 };
+
+export const fetchSubmitNewIssue = (
+  owner,
+  repo,
+  issueTitle,
+  issueComment,
+  accessToken
+) => {
+  const ENDPOINT = `https://api.github.com/repos/${owner}/${repo}/issues`;
+
+  return fetch(
+    ENDPOINT,
+    accessTokenParametersPOST(accessToken, {
+      title: issueTitle,
+      body: issueComment,
+    })).then(response => response.json());
+};

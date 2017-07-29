@@ -6,6 +6,7 @@ import {
   fetchEditIssue,
   fetchChangeIssueLockStatus,
   fetchMergePullRequest,
+  fetchSubmitNewIssue,
 } from 'api';
 import {
   GET_ISSUE_COMMENTS,
@@ -16,6 +17,7 @@ import {
   GET_ISSUE_MERGE_STATUS,
   MERGE_PULL_REQUEST,
   GET_ISSUE_FROM_URL,
+  SUBMIT_NEW_ISSUE,
 } from './issue.type';
 
 const getDiff = url => {
@@ -237,6 +239,41 @@ export const mergePullRequest = (
       .catch(error => {
         dispatch({
           type: MERGE_PULL_REQUEST.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+export const submitNewIssue = (
+  owner,
+  repo,
+  issueTitle,
+  issueComment
+) => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: SUBMIT_NEW_ISSUE.PENDING });
+
+    return fetchSubmitNewIssue(
+      owner,
+      repo,
+      issueTitle,
+      issueComment,
+      accessToken
+    )
+      .then(issue => {
+        dispatch({
+          type: SUBMIT_NEW_ISSUE.SUCCESS,
+          payload: issue,
+        });
+
+        return issue;
+      })
+      .catch(error => {
+        dispatch({
+          type: SUBMIT_NEW_ISSUE.ERROR,
           payload: error,
         });
       });
