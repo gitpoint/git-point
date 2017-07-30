@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import { NavigationActions } from 'react-navigation';
 import codePush from 'react-native-code-push';
 
 import {
@@ -16,7 +15,7 @@ import {
 } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { getUser, getOrgs, signOut } from 'auth';
-import { emojifyText, openURLInView } from 'utils';
+import { emojifyText, openURLInView, resetNavigationTo } from 'utils';
 import { version } from 'package.json';
 
 const mapStateToProps = state => ({
@@ -119,17 +118,11 @@ class AuthProfile extends Component {
   signOutUser() {
     const { signOutByDispatch, navigation } = this.props;
 
-    const resetAction = NavigationActions.reset({
-      index: 0,
-      key: null,
-      actions: [NavigationActions.navigate({ routeName: 'Login' })],
-    });
-
     signOutByDispatch().then(() => {
       const url = 'https://github.com/logout';
 
-      navigation.dispatch(resetAction);
       openURLInView(url);
+      resetNavigationTo('Login', navigation);
     });
   }
 
