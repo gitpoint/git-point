@@ -18,6 +18,7 @@ import {
   AuthProfileScreen,
   EventsScreen,
   PrivacyPolicyScreen,
+  UserOptionsScreen,
 } from 'auth';
 
 // User
@@ -165,6 +166,12 @@ const sharedRoutes = {
     screen: PrivacyPolicyScreen,
     navigationOptions: {
       title: 'Privacy Policy',
+    },
+  },
+  UserOptions: {
+    screen: UserOptionsScreen,
+    navigationOptions: {
+      title: 'Options',
     },
   },
 };

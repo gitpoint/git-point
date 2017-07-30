@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import codePush from 'react-native-code-push';
+import I18n from 'locale';
 
 import {
   ViewContainer,
@@ -15,12 +16,13 @@ import {
 } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { getUser, getOrgs, signOut } from 'auth';
-import { emojifyText, openURLInView, resetNavigationTo } from 'utils';
+import { emojifyText, openURLInView } from 'utils';
 import { version } from 'package.json';
 
 const mapStateToProps = state => ({
   user: state.auth.user,
   orgs: state.auth.orgs,
+  language: state.auth.language,
   isPendingUser: state.auth.isPendingUser,
   isPendingOrgs: state.auth.isPendingOrgs,
 });
@@ -62,10 +64,6 @@ const styles = StyleSheet.create({
   noteLink: {
     ...fonts.fontPrimarySemiBold,
   },
-  logoutTitle: {
-    color: colors.red,
-    ...fonts.fontPrimary,
-  },
 });
 
 const updateText = {
@@ -80,9 +78,9 @@ class AuthProfile extends Component {
   props: {
     getUserByDispatch: Function,
     getOrgsByDispatch: Function,
-    signOutByDispatch: Function,
     user: Object,
     orgs: Array,
+    language: string,
     isPendingUser: boolean,
     isPendingOrgs: boolean,
     navigation: Object,
@@ -115,19 +113,15 @@ class AuthProfile extends Component {
     }
   };
 
-  signOutUser() {
-    const { signOutByDispatch, navigation } = this.props;
-
-    signOutByDispatch().then(() => {
-      const url = 'https://github.com/logout';
-
-      openURLInView(url);
-      resetNavigationTo('Login', navigation);
-    });
-  }
-
   render() {
-    const { user, orgs, isPendingUser, isPendingOrgs, navigation } = this.props;
+    const {
+      user,
+      orgs,
+      isPendingUser,
+      isPendingOrgs,
+      language,
+      navigation,
+    } = this.props;
     const loading = isPendingUser || isPendingOrgs;
 
     return (
@@ -144,6 +138,9 @@ class AuthProfile extends Component {
                 navigation={navigation}
               />}
             stickyTitle={user.login}
+            showMenu
+            menuIcon="gear"
+            menuAction={() => navigation.navigate('UserOptions')}
           >
             {user.bio &&
               user.bio !== '' &&
@@ -158,7 +155,7 @@ class AuthProfile extends Component {
             <EntityInfo entity={user} orgs={orgs} navigation={navigation} />
 
             <SectionList
-              title="ORGANIZATIONS"
+              title={I18n.t('greeting', { locale: language })}
               noItems={orgs.length === 0}
               noItemsMessage={'No organizations'}
             >
@@ -179,21 +176,6 @@ class AuthProfile extends Component {
                   You may have to request approval for them.
                 </Text>
               </Text>
-            </SectionList>
-
-            <SectionList>
-              <ListItem
-                title="Privacy Policy"
-                titleStyle={styles.listTitle}
-                onPress={() => navigation.navigate('PrivacyPolicy')}
-              />
-
-              <ListItem
-                title="Sign Out"
-                titleStyle={styles.logoutTitle}
-                hideChevron
-                onPress={() => this.signOutUser()}
-              />
             </SectionList>
 
             <TouchableOpacity

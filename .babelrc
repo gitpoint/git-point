@@ -23,6 +23,7 @@
           "api": "api",
           "config": "config",
           "utils": "utils",
+          "locale": "locale",
           "package.json": "./package.json"
         }
       }

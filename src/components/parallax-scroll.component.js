@@ -15,6 +15,7 @@ type Props = {
   navigateBack?: boolean,
   showMenu?: boolean,
   menuAction?: Function,
+  menuIcon?: string,
   navigation: Object,
   children?: React.Element<*>,
 };
@@ -56,6 +57,7 @@ export const ParallaxScroll = ({
   stickyTitle,
   navigateBack,
   showMenu,
+  menuIcon,
   menuAction,
   navigation,
   children,
@@ -94,7 +96,7 @@ export const ParallaxScroll = ({
           <View style={styles.fixedSectionRight}>
             <Icon
               style={styles.headerIcon}
-              name="ellipsis-h"
+              name={menuIcon}
               type="font-awesome"
               onPress={menuAction}
               color={colors.white}
@@ -109,6 +111,7 @@ export const ParallaxScroll = ({
 ParallaxScroll.defaultProps = {
   navigateBack: false,
   showMenu: false,
+  menuIcon: 'ellipsis-h',
   menuAction: undefined,
   children: null,
 };
