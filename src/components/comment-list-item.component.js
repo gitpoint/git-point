@@ -13,6 +13,7 @@ import {
 import HTMLView from 'react-native-htmlview';
 import moment from 'moment';
 
+import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
 
 const lightFont = {
@@ -121,11 +122,12 @@ export class CommentListItem extends Component {
   props: {
     comment: Object,
     onLinkPress: Function,
+    language: string,
     navigation: Object,
   };
 
   render() {
-    const { comment, navigation } = this.props;
+    const { comment, language, navigation } = this.props;
     const commentBodyAdjusted = () =>
       comment.body_html
         .replace(new RegExp(/<img[^>]*>/g), 'Image')
@@ -311,7 +313,7 @@ export class CommentListItem extends Component {
                   : styles.commentRegular,
               ]}
             >
-              No description provided.
+              {translate('issue.main.noDescription', language)}
             </Text>
           </View>}
       </View>

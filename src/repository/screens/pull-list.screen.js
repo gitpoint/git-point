@@ -16,6 +16,7 @@ import {
   SearchBar,
 } from 'components';
 
+import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
 import {
   searchOpenRepoPulls,
@@ -23,6 +24,7 @@ import {
 } from '../repository.action';
 
 const mapStateToProps = state => ({
+  language: state.auth.language,
   repository: state.repository.repository,
   searchedOpenPulls: state.repository.searchedOpenPulls,
   searchedClosedPulls: state.repository.searchedClosedPulls,
@@ -96,6 +98,7 @@ const styles = StyleSheet.create({
 
 class PullList extends Component {
   props: {
+    language: string,
     repository: Object,
     searchedOpenPulls: Array,
     searchedClosedPulls: Array,
@@ -196,6 +199,7 @@ class PullList extends Component {
 
   render() {
     const {
+      language,
       searchedOpenPulls,
       searchedClosedPulls,
       isPendingSearchOpenPulls,
@@ -226,7 +230,10 @@ class PullList extends Component {
           <ButtonGroup
             onPress={this.switchQueryType}
             selectedIndex={searchType}
-            buttons={['Open', 'Closed']}
+            buttons={[
+              translate('repository.pullList.openButton', language),
+              translate('repository.pullList.closedButton', language),
+            ]}
             textStyle={styles.buttonGroupText}
             selectedTextStyle={styles.buttonGroupTextSelected}
             containerStyle={styles.buttonGroupContainer}
@@ -237,7 +244,9 @@ class PullList extends Component {
           searchType === 0 &&
           <LoadingContainer
             animating={isPendingSearchOpenPulls && searchType === 0}
-            text={`Searching for ${query}`}
+            text={translate('repository.pullList.searchingMessage', language, {
+              query,
+            })}
             style={styles.marginSpacing}
           />}
 
@@ -245,7 +254,9 @@ class PullList extends Component {
           searchType === 1 &&
           <LoadingContainer
             animating={isPendingSearchClosedPulls && searchType === 1}
-            text={`Searching for ${query}`}
+            text={translate('repository.pullList.searchingMessage', language, {
+              query,
+            })}
             style={styles.marginSpacing}
           />}
 
@@ -265,7 +276,9 @@ class PullList extends Component {
           searchedOpenPulls.length === 0 &&
           searchType === 0 &&
           <View style={styles.marginSpacing}>
-            <Text style={styles.searchTitle}>No open pull requests found!</Text>
+            <Text style={styles.searchTitle}>
+              {translate('repository.pullList.noOpenIssues', language)}
+            </Text>
           </View>}
 
         {searchStart &&
@@ -274,7 +287,7 @@ class PullList extends Component {
           searchType === 1 &&
           <View style={styles.marginSpacing}>
             <Text style={styles.searchTitle}>
-              No closed pull requests found!
+              {translate('repository.pullList.noOpenIssues', language)}
             </Text>
           </View>}
       </ViewContainer>

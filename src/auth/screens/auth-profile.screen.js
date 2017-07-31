@@ -19,12 +19,13 @@ import {
 } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { getUser, getOrgs, signOut } from 'auth';
-import { emojifyText, openURLInView, resetNavigationTo } from 'utils';
+import { emojifyText, openURLInView, translate } from 'utils';
 import { version } from 'package.json';
 
 const mapStateToProps = state => ({
   user: state.auth.user,
   orgs: state.auth.orgs,
+  language: state.auth.language,
   isPendingUser: state.auth.isPendingUser,
   isPendingOrgs: state.auth.isPendingOrgs,
   hasInitialUser: state.auth.hasInitialUser,
@@ -67,36 +68,36 @@ const styles = StyleSheet.create({
   noteLink: {
     ...fonts.fontPrimarySemiBold,
   },
-  logoutTitle: {
-    color: colors.red,
-    ...fonts.fontPrimary,
-  },
 });
 
-const updateText = {
-  check: 'Check for update',
-  checking: 'Checking for update...',
-  updated: 'App is up to date',
-  available: 'Update is available!',
-  notApplicable: 'Not applicable in debug mode',
-};
+const updateText = lang => ({
+  check: translate('auth.profile.codePushCheck', lang),
+  checking: translate('auth.profile.codePushChecking', lang),
+  updated: translate('auth.profile.codePushUpdated', lang),
+  available: translate('auth.profile.codePushAvailable', lang),
+  notApplicable: translate('auth.profile.codePushNotApplicable', lang),
+});
 
 class AuthProfile extends Component {
   props: {
     getUserByDispatch: Function,
     getOrgsByDispatch: Function,
-    signOutByDispatch: Function,
     user: Object,
     orgs: Array,
+    language: string,
     isPendingUser: boolean,
     isPendingOrgs: boolean,
     hasInitialUser: boolean,
     navigation: Object,
   };
 
-  state = {
-    updateText: updateText.check,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      updateText: updateText(props.language).check,
+    };
+  }
 
   componentDidMount() {
     this.refreshProfile();
@@ -125,23 +126,13 @@ class AuthProfile extends Component {
     this.props.getOrgsByDispatch();
   };
 
-  signOutUser() {
-    const { signOutByDispatch, navigation } = this.props;
-
-    signOutByDispatch().then(() => {
-      const url = 'https://github.com/logout';
-
-      openURLInView(url);
-      resetNavigationTo('Login', navigation);
-    });
-  }
-
   render() {
     const {
       user,
       orgs,
       isPendingUser,
       isPendingOrgs,
+      language,
       navigation,
       hasInitialUser,
     } = this.props;
@@ -156,6 +147,7 @@ class AuthProfile extends Component {
               type="user"
               initialUser={hasInitialUser ? user : {}}
               user={hasInitialUser ? user : {}}
+              language={language}
               navigation={navigation}
             />}
           refreshControl={
@@ -165,11 +157,17 @@ class AuthProfile extends Component {
             />
           }
           stickyTitle={user.login}
+          showMenu
+          menuIcon="gear"
+          menuAction={() =>
+            navigation.navigate('UserOptions', {
+              title: translate('auth.userOptions.title', language),
+            })}
         >
           {hasInitialUser &&
             user.bio &&
             user.bio !== '' &&
-            <SectionList title="BIO">
+            <SectionList title={translate('common.bio', language)}>
               <ListItem
                 subtitle={emojifyText(user.bio)}
                 subtitleStyle={styles.listSubTitle}
@@ -182,43 +180,31 @@ class AuthProfile extends Component {
 
           {!isPendingOrgs &&
             <SectionList
-              title="ORGANIZATIONS"
+              title={translate('common.orgs', language)}
               noItems={orgs.length === 0}
-              noItemsMessage={'No organizations'}
+              noItemsMessage={translate('common.noOrgsMessage', language)}
             >
               {orgs.map(item =>
                 <UserListItem
                   key={item.id}
                   user={item}
                   navigation={navigation}
-                />
+                />,
               )}
               <Text style={styles.note}>
-                Can&apos;t see all your organizations?{'\n'}
+                {translate('auth.profile.orgsRequestApprovalTop', language)}
+                {'\n'}
                 <Text
                   style={styles.noteLink}
                   onPress={() =>
                     openURLInView('https://github.com/settings/applications')}
                 >
-                  You may have to request approval for them.
+                  {translate(
+                    'auth.profile.orgsRequestApprovalBottom',
+                    language,
+                  )}
                 </Text>
               </Text>
-            </SectionList>}
-
-          {!loading &&
-            <SectionList>
-              <ListItem
-                title="Privacy Policy"
-                titleStyle={styles.listTitle}
-                onPress={() => navigation.navigate('PrivacyPolicy')}
-              />
-
-              <ListItem
-                title="Sign Out"
-                titleStyle={styles.logoutTitle}
-                hideChevron
-                onPress={() => this.signOutUser()}
-              />
             </SectionList>}
 
           <TouchableOpacity style={styles.update} onPress={this.checkForUpdate}>
@@ -229,12 +215,12 @@ class AuthProfile extends Component {
               {this.state.updateText}
             </Text>
           </TouchableOpacity>
-        </ParallaxScroll>
+        </ParallaxScroll>}
       </ViewContainer>
     );
   }
 }
 
 export const AuthProfileScreen = connect(mapStateToProps, mapDispatchToProps)(
-  AuthProfile
+  AuthProfile,
 );

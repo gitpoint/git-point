@@ -1,9 +1,11 @@
+import I18n from 'react-native-i18n';
 import {
   LOGIN,
   LOGOUT,
   GET_AUTH_USER,
   GET_AUTH_ORGS,
   GET_EVENTS,
+  CHANGE_LANGUAGE,
 } from './auth.type';
 
 const initialState = {
@@ -15,6 +17,7 @@ const initialState = {
   hasInitialUser: false,
   orgs: [],
   events: [],
+  language: I18n.locale.substr(0, 2),
   isPendingUser: false,
   isPendingOrgs: false,
   isPendingEvents: false,
@@ -110,6 +113,11 @@ export const authReducer = (state = initialState, action = {}) => {
         ...state,
         error: action.payload,
         isPendingEvents: false,
+      };
+    case CHANGE_LANGUAGE.SUCCESS:
+      return {
+        ...state,
+        language: action.payload,
       };
     default:
       return state;

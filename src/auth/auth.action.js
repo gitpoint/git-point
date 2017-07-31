@@ -1,4 +1,6 @@
 import { AsyncStorage } from 'react-native';
+import I18n from 'react-native-i18n';
+
 import uniqby from 'lodash.uniqby';
 import { delay, resetNavigationTo } from 'utils';
 
@@ -15,6 +17,7 @@ import {
   GET_AUTH_USER,
   GET_AUTH_ORGS,
   GET_EVENTS,
+  CHANGE_LANGUAGE,
 } from './auth.type';
 
 export const auth = (code, state, navigation) => {
@@ -129,5 +132,12 @@ export const getUserEvents = user => {
           payload: error,
         });
       });
+  };
+};
+
+export const changeLanguage = lang => {
+  return dispatch => {
+    dispatch({ type: CHANGE_LANGUAGE.SUCCESS, payload: lang });
+    I18n.locale = lang;
   };
 };

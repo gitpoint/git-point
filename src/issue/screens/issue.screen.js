@@ -16,6 +16,7 @@ import {
   CommentListItem,
   CommentInput,
 } from 'components';
+import { translate } from 'utils';
 import { colors } from 'config';
 import { getRepository } from 'repository';
 import {
@@ -25,6 +26,7 @@ import {
 } from '../issue.action';
 
 const mapStateToProps = state => ({
+  language: state.auth.language,
   authUser: state.auth.user,
   repository: state.repository.repository,
   contributors: state.repository.contributors,
@@ -62,6 +64,7 @@ class Issue extends Component {
             underlayColor={colors.transparent}
             onPress={() =>
               navigate('IssueSettings', {
+                title: translate('issue.settings.title', state.params.language),
                 issue: state.params.issue,
               })}
           />
@@ -90,6 +93,7 @@ class Issue extends Component {
     isPendingComments: boolean,
     isPendingContributors: boolean,
     // isPostingComment: boolean,
+    language: string,
     navigation: Object,
   };
 
@@ -111,7 +115,7 @@ class Issue extends Component {
       navigation.navigate('Issue', {
         issueURL: node.attribs['data-url'].replace(
           'github.com',
-          'api.github.com/repos'
+          'api.github.com/repos',
         ),
       });
     } else {
@@ -134,6 +138,7 @@ class Issue extends Component {
       repository,
       getIssueCommentsByDispatch,
       getRepositoryByDispatch,
+      getContributorsByDispatch,
       getIssueFromUrlByDispatch,
     } = this.props;
 
@@ -144,14 +149,20 @@ class Issue extends Component {
     Promise.all(
       getIssueFromUrlByDispatch(issueURLParam || issueParam.url),
       getIssueCommentsByDispatch(
-        issueURLParam ? issueCommentsURL : issueParam.comments_url
-      )
+        issueURLParam ? issueCommentsURL : issueParam.comments_url,
+      ),
     ).then(() => {
       if (
+        issueParam &&
         repository.full_name !==
-        issue.repository_url.replace('https://api.github.com/repos/', '')
+          issueParam.repository_url.replace('https://api.github.com/repos/', '')
       ) {
-        getRepositoryByDispatch(issue.repository_url).then(() => {
+        Promise.all([
+          getRepositoryByDispatch(issue.repository_url),
+          getContributorsByDispatch(
+            this.getContributorsLink(issue.repository_url),
+          ),
+        ]).then(() => {
           this.setNavigationParams();
         });
       } else {
@@ -163,9 +174,10 @@ class Issue extends Component {
   getContributorsLink = repository => `${repository}/contributors`;
 
   setNavigationParams = () => {
-    const { navigation, repository } = this.props;
+    const { navigation, language, repository } = this.props;
 
     navigation.setParams({
+      language,
       userHasPushPermission:
         repository.permissions.admin || repository.permissions.push,
     });
@@ -194,6 +206,7 @@ class Issue extends Component {
       isMerged,
       isPendingDiff,
       isPendingCheckMerge,
+      language,
       navigation,
     } = this.props;
 
@@ -207,17 +220,24 @@ class Issue extends Component {
         onRepositoryPress={url => this.onRepositoryPress(url)}
         onLinkPress={node => this.onLinkPress(node)}
         userHasPushPermission={navigation.state.params.userHasPushPermission}
+        language={language}
         navigation={navigation}
       />
     );
   };
 
-  renderItem = ({ item }) =>
-    <CommentListItem
-      comment={item}
-      onLinkPress={node => this.onLinkPress(node)}
-      navigation={this.props.navigation}
-    />;
+  renderItem = ({ item }) => {
+    const { language } = this.props;
+
+    return (
+      <CommentListItem
+        comment={item}
+        onLinkPress={node => this.onLinkPress(node)}
+        language={language}
+        navigation={this.props.navigation}
+      />
+    );
+  };
 
   render() {
     const {
@@ -227,6 +247,7 @@ class Issue extends Component {
       isPendingComments,
       isPendingContributors,
       isPendingIssue,
+      language,
       navigation,
     } = this.props;
 
@@ -278,6 +299,7 @@ class Issue extends Component {
                 navigation.state.params.userHasPushPermission
               }
               issueLocked={issue.locked}
+              language={language}
               onSubmitEditing={this.postComment}
             />
           </KeyboardAvoidingView>}

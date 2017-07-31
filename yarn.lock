@@ -2841,6 +2841,10 @@ https-proxy-agent@1, https-proxy-agent@^1.0.0:
     debug "2"
     extend "3"
 
+"i18n-js@github:fnando/i18n-js#v3.0.0":
+  version "0.0.0"
+  resolved "https://codeload.github.com/fnando/i18n-js/tar.gz/b8fb918c827a2d3bbe187372e47bbe1a7a6c4c19"
+
 i@0.3.x:
   version "0.3.5"
   resolved "https://registry.yarnpkg.com/i/-/i-0.3.5.tgz#1d2b854158ec8169113c6cb7f6b6801e99e211d5"
@@ -4753,6 +4757,12 @@ react-native-htmlview@^0.12.0:
   dependencies:
     entities "^1.1.1"
     htmlparser2-without-node-native "^3.9.0"
+
+react-native-i18n@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-i18n/-/react-native-i18n-2.0.2.tgz#4793f7b86bd86ad8c8f95792ba51a3464f95bc1b"
+  dependencies:
+    i18n-js "github:fnando/i18n-js#v3.0.0"
 
 react-native-material-design-searchbar@^1.1.4:
   version "1.1.7"
