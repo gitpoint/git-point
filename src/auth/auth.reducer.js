@@ -16,7 +16,7 @@ const initialState = {
   user: {},
   orgs: [],
   events: [],
-  language: I18n.currentLocale(),
+  language: I18n.locale.substr(0, 2),
   isPendingUser: false,
   isPendingOrgs: false,
   isPendingEvents: false,

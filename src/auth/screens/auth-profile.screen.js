@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import codePush from 'react-native-code-push';
-import I18n from 'locale';
 
 import {
   ViewContainer,
@@ -16,7 +15,7 @@ import {
 } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { getUser, getOrgs, signOut } from 'auth';
-import { emojifyText, openURLInView } from 'utils';
+import { emojifyText, openURLInView, translate } from 'utils';
 import { version } from 'package.json';
 
 const mapStateToProps = state => ({
@@ -66,13 +65,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const updateText = {
-  check: 'Check for update',
-  checking: 'Checking for update...',
-  updated: 'App is up to date',
-  available: 'Update is available!',
-  notApplicable: 'Not applicable in debug mode',
-};
+const updateText = lang => ({
+  check: translate('auth.profile.codePushCheck', lang),
+  checking: translate('auth.profile.codePushChecking', lang),
+  updated: translate('auth.profile.codePushUpdated', lang),
+  available: translate('auth.profile.codePushAvailable', lang),
+  notApplicable: translate('auth.profile.codePushNotApplicable', lang),
+});
 
 class AuthProfile extends Component {
   props: {
@@ -86,9 +85,13 @@ class AuthProfile extends Component {
     navigation: Object,
   };
 
-  state = {
-    updateText: updateText.check,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      updateText: updateText(props.language).check,
+    };
+  }
 
   componentDidMount() {
     this.props.getUserByDispatch();
@@ -135,16 +138,20 @@ class AuthProfile extends Component {
                 type="user"
                 initialUser={user}
                 user={user}
+                language={language}
                 navigation={navigation}
               />}
             stickyTitle={user.login}
             showMenu
             menuIcon="gear"
-            menuAction={() => navigation.navigate('UserOptions')}
+            menuAction={() =>
+              navigation.navigate('UserOptions', {
+                title: translate('auth.userOptions.title', language),
+              })}
           >
             {user.bio &&
               user.bio !== '' &&
-              <SectionList title="BIO">
+              <SectionList title={translate('common.bio', language)}>
                 <ListItem
                   subtitle={emojifyText(user.bio)}
                   subtitleStyle={styles.listSubTitle}
@@ -152,12 +159,17 @@ class AuthProfile extends Component {
                 />
               </SectionList>}
 
-            <EntityInfo entity={user} orgs={orgs} navigation={navigation} />
+            <EntityInfo
+              entity={user}
+              orgs={orgs}
+              language={language}
+              navigation={navigation}
+            />
 
             <SectionList
-              title={I18n.t('greeting', { locale: language })}
+              title={translate('common.orgs', language)}
               noItems={orgs.length === 0}
-              noItemsMessage={'No organizations'}
+              noItemsMessage={translate('common.noOrgsMessage', language)}
             >
               {orgs.map(item =>
                 <UserListItem
@@ -167,13 +179,17 @@ class AuthProfile extends Component {
                 />
               )}
               <Text style={styles.note}>
-                Can&apos;t see all your organizations?{'\n'}
+                {translate('auth.profile.orgsRequestApprovalTop', language)}
+                {'\n'}
                 <Text
                   style={styles.noteLink}
                   onPress={() =>
                     openURLInView('https://github.com/settings/applications')}
                 >
-                  You may have to request approval for them.
+                  {translate(
+                    'auth.profile.orgsRequestApprovalBottom',
+                    language
+                  )}
                 </Text>
               </Text>
             </SectionList>

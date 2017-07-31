@@ -11,6 +11,7 @@ import {
 import { Icon } from 'react-native-elements';
 
 import { MentionArea } from 'components';
+import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
 
 const styles = StyleSheet.create({
@@ -57,6 +58,7 @@ export class CommentInput extends Component {
     users: Array,
     userHasPushPermission: boolean,
     issueLocked: boolean,
+    language: string,
     onSubmitEditing: Function,
   };
 
@@ -80,7 +82,7 @@ export class CommentInput extends Component {
   };
 
   render() {
-    const { userHasPushPermission, issueLocked, users } = this.props;
+    const { userHasPushPermission, issueLocked, language, users } = this.props;
 
     let userCanPost = null;
 
@@ -107,8 +109,8 @@ export class CommentInput extends Component {
               underlineColorAndroid={'transparent'}
               placeholder={
                 issueLocked && userHasPushPermission
-                  ? 'Locked, but you can still comment...'
-                  : 'Add a comment...'
+                  ? translate('issue.main.lockedCommentInput', language)
+                  : translate('issue.main.commentInput', language)
               }
               multiline
               blurOnSubmit
@@ -127,7 +129,7 @@ export class CommentInput extends Component {
 
           {!userCanPost &&
             <Text style={[styles.textInput, { color: colors.grey }]}>
-              Issue is locked
+              {translate('issue.main.lockedIssue', language)}
             </Text>}
 
           {!this.props.issueLocked &&

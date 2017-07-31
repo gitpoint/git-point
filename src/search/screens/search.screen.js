@@ -18,11 +18,13 @@ import {
   SearchBar,
 } from 'components';
 import { colors, fonts, normalize } from 'config';
+import { translate } from 'utils';
 import { searchRepos, searchUsers } from '../index';
 
 const mapStateToProps = state => ({
   users: state.search.users,
   repos: state.search.repos,
+  language: state.auth.language,
   isPendingSearchUsers: state.search.isPendingSearchUsers,
   isPendingSearchRepos: state.search.isPendingSearchRepos,
 });
@@ -99,6 +101,7 @@ class Search extends Component {
     searchUsersByDispatch: Function,
     users: Array,
     repos: Array,
+    language: string,
     isPendingSearchUsers: boolean,
     isPendingSearchRepos: boolean,
     navigation: Object,
@@ -177,6 +180,7 @@ class Search extends Component {
     const {
       users,
       repos,
+      language,
       isPendingSearchUsers,
       isPendingSearchRepos,
     } = this.props;
@@ -219,7 +223,10 @@ class Search extends Component {
           <ButtonGroup
             onPress={this.switchQueryType}
             selectedIndex={this.state.searchType}
-            buttons={['Repositories', 'Users']}
+            buttons={[
+              translate('search.main.repositoryButton', language),
+              translate('search.main.userButton', language),
+            ]}
             textStyle={styles.buttonGroupText}
             selectedTextStyle={styles.buttonGroupTextSelected}
             containerStyle={styles.buttonGroupContainer}
@@ -230,7 +237,9 @@ class Search extends Component {
           searchType === 0 &&
           <LoadingContainer
             animating={isPendingSearchRepos && searchType === 0}
-            text={`Searching for ${query}`}
+            text={translate('search.main.searchingMessage', language, {
+              query,
+            })}
             style={styles.marginSpacing}
           />}
 
@@ -238,7 +247,9 @@ class Search extends Component {
           searchType === 1 &&
           <LoadingContainer
             animating={isPendingSearchUsers && searchType === 1}
-            text={`Searching for ${query}`}
+            text={translate('search.main.searchingMessage', language, {
+              query,
+            })}
             style={styles.marginSpacing}
           />}
 
@@ -257,7 +268,9 @@ class Search extends Component {
         {!searchStart &&
           <View style={styles.textContainer}>
             <Text style={styles.searchTitle}>
-              {`Search for any ${searchType === 0 ? 'repository' : 'user'}`}
+              {translate('search.main.searchMessage', language, {
+                type: searchType === 0 ? 'repository' : 'user',
+              })}
             </Text>
           </View>}
 

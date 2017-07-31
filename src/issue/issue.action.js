@@ -245,12 +245,7 @@ export const mergePullRequest = (
   };
 };
 
-export const submitNewIssue = (
-  owner,
-  repo,
-  issueTitle,
-  issueComment
-) => {
+export const submitNewIssue = (owner, repo, issueTitle, issueComment) => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 

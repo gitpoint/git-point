@@ -5,7 +5,7 @@ import { ListItem } from 'react-native-elements';
 
 import { ViewContainer, SectionList } from 'components';
 import { colors, fonts } from 'config';
-import { openURLInView, resetNavigationTo } from 'utils';
+import { openURLInView, resetNavigationTo, translate } from 'utils';
 import { signOut, changeLanguage } from 'auth';
 
 const mapStateToProps = state => ({
@@ -57,35 +57,31 @@ class UserOptions extends Component {
     return (
       <ViewContainer>
         <ScrollView>
-          <SectionList title="LANGUAGE">
+          <SectionList title={translate('auth.userOptions.language', language)}>
             <ListItem
-              title="English"
+              title={translate('auth.userOptions.english', language)}
               titleStyle={styles.listTitle}
               hideChevron={language !== 'en'}
               rightIcon={{ name: 'check' }}
               onPress={() => changeLanguageByDispatch('en')}
               underlayColor={colors.greyLight}
             />
-            <ListItem
-              title="French"
-              titleStyle={styles.listTitle}
-              hideChevron={language !== 'fr'}
-              rightIcon={{ name: 'check' }}
-              onPress={() => changeLanguageByDispatch('fr')}
-              underlayColor={colors.greyLight}
-            />
           </SectionList>
 
           <SectionList>
             <ListItem
-              title="Privacy Policy"
+              title={translate('auth.userOptions.privacyPolicy', language)}
               titleStyle={styles.listTitle}
-              onPress={() => navigation.navigate('PrivacyPolicy')}
+              onPress={() =>
+                navigation.navigate('PrivacyPolicy', {
+                  title: translate('auth.privacyPolicy.title', language),
+                  language,
+                })}
               underlayColor={colors.greyLight}
             />
 
             <ListItem
-              title="Sign Out"
+              title={translate('auth.userOptions.signOut', language)}
               titleStyle={styles.logoutTitle}
               hideChevron
               onPress={() => this.signOutUser()}

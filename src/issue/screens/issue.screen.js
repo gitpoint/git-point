@@ -16,6 +16,7 @@ import {
   CommentListItem,
   CommentInput,
 } from 'components';
+import { translate } from 'utils';
 import { colors } from 'config';
 import { getRepository, getContributors } from 'repository';
 import {
@@ -25,6 +26,7 @@ import {
 } from '../issue.action';
 
 const mapStateToProps = state => ({
+  language: state.auth.language,
   authUser: state.auth.user,
   repository: state.repository.repository,
   contributors: state.repository.contributors,
@@ -63,6 +65,7 @@ class Issue extends Component {
             underlayColor={colors.transparent}
             onPress={() =>
               navigate('IssueSettings', {
+                title: translate('issue.settings.title', state.params.language),
                 issue: state.params.issue,
               })}
           />
@@ -92,7 +95,8 @@ class Issue extends Component {
     isPendingComments: boolean,
     isPendingContributors: boolean,
     // isPostingComment: boolean,
-    navigation: Object
+    language: string,
+    navigation: Object,
   };
 
   componentDidMount() {
@@ -112,11 +116,14 @@ class Issue extends Component {
 
     Promise.all(
       getIssueFromUrlByDispatch(issueURLParam || issueParam.url),
-      getIssueCommentsByDispatch(issueURLParam ? issueCommentsURL : issueParam.comments_url)
+      getIssueCommentsByDispatch(
+        issueURLParam ? issueCommentsURL : issueParam.comments_url
+      )
     ).then(() => {
       if (
+        issueParam &&
         repository.full_name !==
-        issue.repository_url.replace('https://api.github.com/repos/', '')
+          issueParam.repository_url.replace('https://api.github.com/repos/', '')
       ) {
         Promise.all([
           getRepositoryByDispatch(issue.repository_url),
@@ -165,9 +172,10 @@ class Issue extends Component {
   getContributorsLink = repository => `${repository}/contributors`;
 
   setNavigationParams = () => {
-    const { navigation, repository } = this.props;
+    const { navigation, language, repository } = this.props;
 
     navigation.setParams({
+      language,
       userHasPushPermission:
         repository.permissions.admin || repository.permissions.push,
     });
@@ -196,6 +204,7 @@ class Issue extends Component {
       isMerged,
       isPendingDiff,
       isPendingCheckMerge,
+      language,
       navigation,
     } = this.props;
 
@@ -209,17 +218,24 @@ class Issue extends Component {
         onRepositoryPress={url => this.onRepositoryPress(url)}
         onLinkPress={node => this.onLinkPress(node)}
         userHasPushPermission={navigation.state.params.userHasPushPermission}
+        language={language}
         navigation={navigation}
       />
     );
   };
 
-  renderItem = ({ item }) =>
-    <CommentListItem
-      comment={item}
-      onLinkPress={node => this.onLinkPress(node)}
-      navigation={this.props.navigation}
-    />;
+  renderItem = ({ item }) => {
+    const { language } = this.props;
+
+    return (
+      <CommentListItem
+        comment={item}
+        onLinkPress={node => this.onLinkPress(node)}
+        language={language}
+        navigation={this.props.navigation}
+      />
+    );
+  };
 
   render() {
     const {
@@ -229,6 +245,7 @@ class Issue extends Component {
       isPendingComments,
       isPendingContributors,
       isPendingIssue,
+      language,
       navigation,
     } = this.props;
 
@@ -277,6 +294,7 @@ class Issue extends Component {
                 navigation.state.params.userHasPushPermission
               }
               issueLocked={issue.locked}
+              language={language}
               onSubmitEditing={this.postComment}
             />
           </KeyboardAvoidingView>}
