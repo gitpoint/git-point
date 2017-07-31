@@ -116,7 +116,7 @@ class Repository extends Component {
       changeStarStatusRepoByDispatch(
         repository.owner.login,
         repository.name,
-        starred,
+        starred
       );
     } else if (index === 1 && showFork) {
       forkRepoByDispatch(repository.owner.login, repository.name).then(json => {
@@ -160,7 +160,7 @@ class Repository extends Component {
       {
         dialogTitle: title,
         excludedActivityTypes: [],
-      },
+      }
     );
   };
 
@@ -194,9 +194,6 @@ class Repository extends Component {
     const openIssues = pureIssues.filter(issue => issue.state === 'open');
     const closedIssues = pureIssues.filter(issue => issue.state === 'closed');
 
-    const showFork =
-      repository && repository.owner && repository.owner.login !== username;
-
     const repositoryActions = [
       starred
         ? translate('repository.main.unstarAction', language)
@@ -211,7 +208,7 @@ class Repository extends Component {
       repositoryActions.splice(
         1,
         0,
-        translate('repository.main.forkAction', language),
+        translate('repository.main.forkAction', language)
       );
     }
 
@@ -369,7 +366,7 @@ class Repository extends Component {
                   type="issue"
                   issue={item}
                   navigation={navigation}
-                />,
+                />
               )}
           </SectionList>
 
@@ -389,7 +386,7 @@ class Repository extends Component {
                 ? translate('repository.main.noPullRequestsMessage', language)
                 : translate(
                     'repository.main.noOpenPullRequestsMessage',
-                    language,
+                    language
                   )
             }
             showButton={pulls.length > 0}
@@ -409,7 +406,7 @@ class Repository extends Component {
                   type="pull"
                   issue={item}
                   navigation={navigation}
-                />,
+                />
               )}
           </SectionList>
         </ParallaxScroll>
@@ -429,5 +426,5 @@ class Repository extends Component {
 }
 
 export const RepositoryScreen = connect(mapStateToProps, mapDispatchToProps)(
-  Repository,
+  Repository
 );

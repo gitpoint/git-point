@@ -78,6 +78,7 @@ class Issue extends Component {
   props: {
     getIssueCommentsByDispatch: Function,
     getRepositoryByDispatch: Function,
+    getContributorsByDispatch: Function,
     postIssueCommentByDispatch: Function,
     getIssueFromUrlByDispatch: Function,
     diff: string,
@@ -115,7 +116,7 @@ class Issue extends Component {
       navigation.navigate('Issue', {
         issueURL: node.attribs['data-url'].replace(
           'github.com',
-          'api.github.com/repos',
+          'api.github.com/repos'
         ),
       });
     } else {
@@ -149,8 +150,8 @@ class Issue extends Component {
     Promise.all(
       getIssueFromUrlByDispatch(issueURLParam || issueParam.url),
       getIssueCommentsByDispatch(
-        issueURLParam ? issueCommentsURL : issueParam.comments_url,
-      ),
+        issueURLParam ? issueCommentsURL : issueParam.comments_url
+      )
     ).then(() => {
       if (
         issueParam &&
@@ -160,7 +161,7 @@ class Issue extends Component {
         Promise.all([
           getRepositoryByDispatch(issue.repository_url),
           getContributorsByDispatch(
-            this.getContributorsLink(issue.repository_url),
+            this.getContributorsLink(issue.repository_url)
           ),
         ]).then(() => {
           this.setNavigationParams();
