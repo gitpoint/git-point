@@ -287,9 +287,7 @@ class IssueSettings extends Component {
           ref={o => {
             this.IssueActionSheet = o;
           }}
-          title={translate('issue.settings.issueActionPrompt', language, {
-            action: issue.state === 'open' ? 'close' : 'reopen',
-          })}
+          title={translate('issue.settings.areYouSurePrompt', language)}
           options={[
             translate('common.yes', language),
             translate('common.cancel', language),
@@ -301,9 +299,7 @@ class IssueSettings extends Component {
           ref={o => {
             this.LockIssueActionSheet = o;
           }}
-          title={translate('issue.settings.lockIssuePrompt', language, {
-            action: issue.locked ? 'unlock' : 'lock',
-          })}
+          title={translate('issue.settings.areYouSurePrompt', language)}
           options={[
             translate('common.yes', language),
             translate('common.cancel', language),

@@ -87,11 +87,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     flex: 1,
   },
-  notificationTitle: {
-    color: colors.black,
-    fontSize: normalize(12),
-    ...fonts.fontPrimaryLight,
-  },
   markAsReadIconRepo: {
     flex: 0.15,
     justifyContent: 'center',
@@ -105,6 +100,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    paddingHorizontal: 10,
   },
   noneTitle: {
     fontSize: normalize(16),
@@ -337,7 +333,7 @@ class Notifications extends Component {
           <View style={styles.buttonGroupWrapper}>
             <ButtonGroup
               onPress={this.switchType}
-              selectedIndex={this.state.type}
+              selectedIndex={type}
               buttons={[
                 translate('notifications.main.unreadButton', language),
                 translate('notifications.main.participatingButton', language),
@@ -353,16 +349,7 @@ class Notifications extends Component {
             this.notifications().length === 0 &&
             <LoadingContainer
               animating={this.isLoading() && this.notifications().length === 0}
-              text={translate(
-                'notifications.main.retrievingMessage',
-                language,
-                {
-                  notificationType:
-                    type === 0
-                      ? 'unread'
-                      : type === 1 ? 'participating' : 'all',
-                }
-              )}
+              text={translate('notifications.main.retrievingMessage', language)}
               style={styles.marginSpacing}
             />}
 
@@ -370,10 +357,7 @@ class Notifications extends Component {
             this.notifications().length === 0 &&
             <View style={styles.textContainer}>
               <Text style={styles.noneTitle}>
-                {translate('notifications.main.noneMessage', language, {
-                  notificationType:
-                    type === 0 ? ' unread' : type === 1 ? ' participating' : '',
-                })}
+                {translate('notifications.main.noneMessage', language)}
               </Text>
             </View>}
 

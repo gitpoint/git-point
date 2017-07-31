@@ -4,8 +4,10 @@ import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 
 import { ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
+import { translate } from 'utils';
 
 const mapStateToProps = state => ({
+  language: state.auth.language,
   isLoggingIn: state.auth.isLoggingIn,
 });
 
@@ -27,16 +29,19 @@ const styles = StyleSheet.create({
 
 class Welcome extends Component {
   props: {
+    language: string,
     isLoggingIn: boolean,
   };
 
   render() {
-    const { isLoggingIn } = this.props;
+    const { language, isLoggingIn } = this.props;
 
     return (
       <ViewContainer>
         <View style={styles.container}>
-          <Text style={styles.welcomeMessage}>Welcome to GitPoint</Text>
+          <Text style={styles.welcomeMessage}>
+            {translate('auth.welcome.welcomeTitle', language)}
+          </Text>
           <ActivityIndicator
             animating={isLoggingIn}
             style={styles.loadingIcon}

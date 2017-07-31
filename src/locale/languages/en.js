@@ -1,5 +1,22 @@
 export const en = {
   auth: {
+    login: {
+      welcomeTitle: 'Welcome to GitPoint',
+      welcomeMessage: 'The most feature-rich GitHub client that is 100% free',
+      notificationsTitle: 'Control notifications',
+      notificationsMessage:
+        'View and control all of your unread and participating notifications',
+      reposTitle: 'Repositories and Users',
+      reposMessage:
+        'Easily obtain repository, user and organization information',
+      issuesTitle: 'Issues and Pull Requests',
+      issuesMessage:
+        'Communicate on conversations, merge pull requests and more',
+      signInButton: 'SIGN IN',
+    },
+    welcome: {
+      welcomeTitle: 'Welcome to GitPoint',
+    },
     events: {
       commitCommentEvent: 'commented on commit',
       createEvent: 'created {{payload}}',
@@ -67,11 +84,14 @@ export const en = {
   },
   notifications: {
     main: {
+      unread: 'unread',
+      participating: 'participating',
+      all: 'all',
       unreadButton: 'Unread',
       participatingButton: 'Participating',
       allButton: 'All',
-      retrievingMessage: 'Retrieving {{notificationType}} notifications',
-      noneMessage: "You don't have any{{notificationType}} notifications",
+      retrievingMessage: 'Retrieving notifications',
+      noneMessage: "You don't have any notifications of this type",
     },
   },
   search: {
@@ -163,8 +183,7 @@ export const en = {
       lockIssue: 'Lock {{issueType}}',
       closeIssue: 'Close {{issueType}}',
       reopenIssue: 'Reopen {{issueType}}',
-      issueActionPrompt: 'Are you sure you want to {{action}} this?',
-      lockIssuePrompt: 'Are you sure you want to {{action}} this conversation?',
+      areYouSurePrompt: 'Are you sure?',
       applyLabelTitle: 'Apply a label to this issue',
     },
     main: {

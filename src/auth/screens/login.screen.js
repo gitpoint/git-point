@@ -10,11 +10,12 @@ import { ViewContainer, LoadingContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { CLIENT_ID } from 'api';
 import { auth } from 'auth';
-import { openURLInView } from 'utils';
+import { openURLInView, translate } from 'utils';
 
 const stateRandom = Math.random().toString();
 
 const mapStateToProps = state => ({
+  language: state.auth.language,
   isLoggingIn: state.auth.isLoggingIn,
   isAuthenticated: state.auth.isAuthenticated,
 });
@@ -98,6 +99,7 @@ class Login extends Component {
   props: {
     isAuthenticated: boolean,
     isLoggingIn: boolean,
+    language: string,
     authByDispatch: Function,
     navigation: Object,
   };
@@ -155,7 +157,7 @@ class Login extends Component {
     );
 
   render() {
-    const { isLoggingIn, isAuthenticated } = this.props;
+    const { language, isLoggingIn, isAuthenticated } = this.props;
 
     return (
       <ViewContainer barColor="light">
@@ -176,9 +178,11 @@ class Login extends Component {
                     style={styles.logo}
                     source={require('../../assets/logo.png')}
                   />
-                  <Text style={styles.title}>Welcome to GitPoint</Text>
+                  <Text style={styles.title}>
+                    {translate('auth.login.welcomeTitle', language)}
+                  </Text>
                   <Text style={styles.message}>
-                    The most feature-rich GitHub client that is 100% free
+                    {translate('auth.login.welcomeMessage', language)}
                   </Text>
                 </View>
 
@@ -190,10 +194,11 @@ class Login extends Component {
                     name="bell"
                     type="octicon"
                   />
-                  <Text style={styles.title}>Control notifications</Text>
+                  <Text style={styles.title}>
+                    {translate('auth.login.notificationsTitle', language)}
+                  </Text>
                   <Text style={styles.message}>
-                    View and control all of your unread and participating
-                    notifications
+                    {translate('auth.login.notificationsMessage', language)}
                   </Text>
                 </View>
 
@@ -206,9 +211,11 @@ class Login extends Component {
                     name="repo"
                     type="octicon"
                   />
-                  <Text style={styles.title}>Repositories and Users</Text>
+                  <Text style={styles.title}>
+                    {translate('auth.login.reposTitle', language)}
+                  </Text>
                   <Text style={styles.message}>
-                    Easily obtain repository, user and organization information
+                    {translate('auth.login.reposMessage', language)}
                   </Text>
                 </View>
 
@@ -221,9 +228,11 @@ class Login extends Component {
                     name="git-pull-request"
                     type="octicon"
                   />
-                  <Text style={styles.title}>Issues and Pull Requests</Text>
+                  <Text style={styles.title}>
+                    {translate('auth.login.issuesTitle', language)}
+                  </Text>
                   <Text style={styles.message}>
-                    Communicate on conversations, merge pull requests and more
+                    {translate('auth.login.issuesMessage', language)}
                   </Text>
                 </View>
               </Swiper>
@@ -232,7 +241,7 @@ class Login extends Component {
             <View style={styles.miniSection}>
               <Button
                 raised
-                title="SIGN IN"
+                title={translate('auth.login.signInButton', language)}
                 buttonStyle={styles.button}
                 textStyle={styles.buttonText}
                 onPress={() => this.signIn()}
