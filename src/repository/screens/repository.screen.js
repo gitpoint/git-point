@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Share } from 'react-native';
+import { StyleSheet, RefreshControl, Share } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
 
@@ -81,11 +81,7 @@ class Repository extends Component {
   };
 
   componentDidMount() {
-    const { navigation } = this.props;
-    const repo = navigation.state.params.repository;
-    const repoUrl = navigation.state.params.repositoryUrl;
-
-    this.props.getRepositoryInfoByDispatch(repo ? repo.url : repoUrl);
+    this.fetchRepoInfo();
   }
 
   showMenuActionSheet = () => {
@@ -116,6 +112,15 @@ class Repository extends Component {
     } else if (index === 2 || (index === 1 && !showFork)) {
       this.shareRepository(repository);
     }
+  };
+
+  fetchRepoInfo = () => {
+    const {
+      repository: repo,
+      repositoryUrl: repoUrl,
+    } = this.props.navigation.state.params;
+
+    this.props.getRepositoryInfoByDispatch(repo ? repo.url : repoUrl);
   };
 
   shareRepository = repository => {
@@ -192,9 +197,15 @@ class Repository extends Component {
               />
             );
           }}
+          refreshControl={
+            <RefreshControl
+              refreshing={isPendingRepository}
+              onRefresh={this.fetchRepoInfo}
+            />
+          }
           stickyTitle={repository.name}
           showMenu={!isPendingRepository && !isPendingCheckStarred}
-          menuAction={() => this.showMenuActionSheet()}
+          menuAction={this.showMenuActionSheet}
           navigation={navigation}
           navigateBack
         >

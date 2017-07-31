@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, ActivityIndicator, Dimensions, View } from 'react-native';
+import {
+  StyleSheet,
+  ActivityIndicator,
+  Dimensions,
+  View,
+  RefreshControl,
+} from 'react-native';
 import { ListItem } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
 
@@ -56,10 +62,14 @@ class Profile extends Component {
   };
 
   componentDidMount() {
+    this.getUserInfo();
+  }
+
+  getUserInfo = () => {
     this.props.getUserInfoByDispatch(
       this.props.navigation.state.params.user.login
     );
-  }
+  };
 
   showMenuActionSheet = () => {
     this.ActionSheet.show();
@@ -101,6 +111,12 @@ class Profile extends Component {
               user={initialUser.login === user.login ? user : {}}
               navigation={navigation}
             />}
+          refreshControl={
+            <RefreshControl
+              refreshing={isPending}
+              onRefresh={this.getUserInfo}
+            />
+          }
           stickyTitle={user.login}
           showMenu={
             !isPendingUser &&

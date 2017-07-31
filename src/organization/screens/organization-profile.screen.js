@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, RefreshControl } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
 import {
@@ -57,11 +57,15 @@ class OrganizationProfile extends Component {
   };
 
   componentDidMount() {
+    this.getOrgData();
+  }
+
+  getOrgData = () => {
     const organization = this.props.navigation.state.params.organization;
 
     this.props.getOrgByDispatch(organization.login);
     this.props.getOrgMembersByDispatch(organization.login);
-  }
+  };
 
   render() {
     const {
@@ -72,6 +76,8 @@ class OrganizationProfile extends Component {
       navigation,
     } = this.props;
     const initialOrganization = this.props.navigation.state.params.organization;
+
+    const isLoadingData = isPendingOrg || isPendingMembers;
 
     return (
       <ViewContainer>
@@ -87,6 +93,12 @@ class OrganizationProfile extends Component {
               }
               navigation={navigation}
             />}
+          refreshControl={
+            <RefreshControl
+              onRefresh={this.getOrgData}
+              refreshing={isLoadingData}
+            />
+          }
           stickyTitle={organization.name}
           navigateBack
           navigation={navigation}

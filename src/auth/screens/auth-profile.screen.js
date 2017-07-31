@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  RefreshControl,
+} from 'react-native';
 import { ListItem } from 'react-native-elements';
 import codePush from 'react-native-code-push';
 
@@ -8,7 +13,6 @@ import {
   ViewContainer,
   UserProfile,
   SectionList,
-  LoadingContainer,
   ParallaxScroll,
   UserListItem,
   EntityInfo,
@@ -23,6 +27,7 @@ const mapStateToProps = state => ({
   orgs: state.auth.orgs,
   isPendingUser: state.auth.isPendingUser,
   isPendingOrgs: state.auth.isPendingOrgs,
+  hasInitialUser: state.auth.hasInitialUser,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -85,6 +90,7 @@ class AuthProfile extends Component {
     orgs: Array,
     isPendingUser: boolean,
     isPendingOrgs: boolean,
+    hasInitialUser: boolean,
     navigation: Object,
   };
 
@@ -93,8 +99,7 @@ class AuthProfile extends Component {
   };
 
   componentDidMount() {
-    this.props.getUserByDispatch();
-    this.props.getOrgsByDispatch();
+    this.refreshProfile();
   }
 
   checkForUpdate = () => {
@@ -115,6 +120,11 @@ class AuthProfile extends Component {
     }
   };
 
+  refreshProfile = () => {
+    this.props.getUserByDispatch();
+    this.props.getOrgsByDispatch();
+  };
+
   signOutUser() {
     const { signOutByDispatch, navigation } = this.props;
 
@@ -127,36 +137,50 @@ class AuthProfile extends Component {
   }
 
   render() {
-    const { user, orgs, isPendingUser, isPendingOrgs, navigation } = this.props;
+    const {
+      user,
+      orgs,
+      isPendingUser,
+      isPendingOrgs,
+      navigation,
+      hasInitialUser,
+    } = this.props;
+
     const loading = isPendingUser || isPendingOrgs;
 
     return (
       <ViewContainer>
-        {loading && <LoadingContainer animating={loading} center />}
+        <ParallaxScroll
+          renderContent={() =>
+            <UserProfile
+              type="user"
+              initialUser={hasInitialUser ? user : {}}
+              user={hasInitialUser ? user : {}}
+              navigation={navigation}
+            />}
+          refreshControl={
+            <RefreshControl
+              refreshing={loading}
+              onRefresh={this.refreshProfile}
+            />
+          }
+          stickyTitle={user.login}
+        >
+          {hasInitialUser &&
+            user.bio &&
+            user.bio !== '' &&
+            <SectionList title="BIO">
+              <ListItem
+                subtitle={emojifyText(user.bio)}
+                subtitleStyle={styles.listSubTitle}
+                hideChevron
+              />
+            </SectionList>}
 
-        {!loading &&
-          <ParallaxScroll
-            renderContent={() =>
-              <UserProfile
-                type="user"
-                initialUser={user}
-                user={user}
-                navigation={navigation}
-              />}
-            stickyTitle={user.login}
-          >
-            {user.bio &&
-              user.bio !== '' &&
-              <SectionList title="BIO">
-                <ListItem
-                  subtitle={emojifyText(user.bio)}
-                  subtitleStyle={styles.listSubTitle}
-                  hideChevron
-                />
-              </SectionList>}
+          {!loading &&
+            <EntityInfo entity={user} orgs={orgs} navigation={navigation} />}
 
-            <EntityInfo entity={user} orgs={orgs} navigation={navigation} />
-
+          {!isPendingOrgs &&
             <SectionList
               title="ORGANIZATIONS"
               noItems={orgs.length === 0}
@@ -179,8 +203,9 @@ class AuthProfile extends Component {
                   You may have to request approval for them.
                 </Text>
               </Text>
-            </SectionList>
+            </SectionList>}
 
+          {!loading &&
             <SectionList>
               <ListItem
                 title="Privacy Policy"
@@ -194,20 +219,17 @@ class AuthProfile extends Component {
                 hideChevron
                 onPress={() => this.signOutUser()}
               />
-            </SectionList>
+            </SectionList>}
 
-            <TouchableOpacity
-              style={styles.update}
-              onPress={this.checkForUpdate}
-            >
-              <Text style={styles.updateText}>
-                GitPoint v{version}
-              </Text>
-              <Text style={[styles.updateText, styles.updateTextSub]}>
-                {this.state.updateText}
-              </Text>
-            </TouchableOpacity>
-          </ParallaxScroll>}
+          <TouchableOpacity style={styles.update} onPress={this.checkForUpdate}>
+            <Text style={styles.updateText}>
+              GitPoint v{version}
+            </Text>
+            <Text style={[styles.updateText, styles.updateTextSub]}>
+              {this.state.updateText}
+            </Text>
+          </TouchableOpacity>
+        </ParallaxScroll>
       </ViewContainer>
     );
   }
