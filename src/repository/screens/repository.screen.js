@@ -25,6 +25,8 @@ import {
   getIssues,
   changeStarStatusRepo,
   forkRepo,
+  subscribeToRepo,
+  unSubscribeToRepo,
 } from '../repository.action';
 
 const mapStateToProps = state => ({
@@ -34,6 +36,7 @@ const mapStateToProps = state => ({
   issues: state.repository.issues,
   starred: state.repository.starred,
   forked: state.repository.forked,
+  subscribed: state.repository.subscribed,
   isPendingRepository: state.repository.isPendingRepository,
   isPendingContributors: state.repository.isPendingContributors,
   isPendingIssues: state.repository.isPendingIssues,
@@ -48,6 +51,8 @@ const mapDispatchToProps = dispatch => ({
   changeStarStatusRepoByDispatch: (owner, repo, starred) =>
     dispatch(changeStarStatusRepo(owner, repo, starred)),
   forkRepoByDispatch: (owner, repo) => dispatch(forkRepo(owner, repo)),
+  subscribeToRepo: (owner, repo) => dispatch(subscribeToRepo(owner, repo)),
+  unSubscribeToRepo: (owner, repo) => dispatch(unSubscribeToRepo(owner, repo)),
 });
 
 const styles = StyleSheet.create({
@@ -78,6 +83,10 @@ class Repository extends Component {
     // isPendingCheckForked: boolean,
     navigation: Object,
     username: string,
+    // is subscribed
+    subscribed: boolean,
+    subscribeToRepo: Function,
+    unSubscribeToRepo: Function,
   };
 
   componentDidMount() {
@@ -91,12 +100,14 @@ class Repository extends Component {
   handlePress = index => {
     const {
       starred,
+      subscribed,
       repository,
       changeStarStatusRepoByDispatch,
       forkRepoByDispatch,
       navigation,
       username,
     } = this.props;
+
     const showFork = repository.owner.login !== username;
 
     if (index === 0) {
@@ -111,6 +122,12 @@ class Repository extends Component {
       });
     } else if (index === 2 || (index === 1 && !showFork)) {
       this.shareRepository(repository);
+    } else if (index === 3) {
+      const subscribeMethod = !subscribed
+        ? this.props.subscribeToRepo
+        : this.props.unSubscribeToRepo;
+
+      subscribeMethod(repository.owner.login, repository.name);
     }
   };
 
@@ -152,7 +169,9 @@ class Repository extends Component {
       isPendingFork,
       navigation,
       username,
+      subscribed,
     } = this.props;
+
     const initalRepository = navigation.state.params.repository;
     const pulls = issues.filter(issue => issue.hasOwnProperty('pull_request')); // eslint-disable-line no-prototype-builtins
     const pureIssues = issues.filter(issue => {
@@ -168,10 +187,12 @@ class Repository extends Component {
 
     const showFork =
       repository && repository.owner && repository.owner.login !== username;
+
     const repositoryActions = [
       starred ? 'Unstar' : 'Star',
       showFork && 'Fork',
       'Share',
+      subscribed ? 'Unwatch' : 'Watch',
     ];
 
     const loader = isPendingFork ? <LoadingModal /> : null;
