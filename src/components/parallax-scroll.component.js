@@ -18,6 +18,7 @@ type Props = {
   menuIcon?: string,
   navigation: Object,
   children?: React.Element<*>,
+  refreshControl?: React.Element<*>,
 };
 
 const styles = StyleSheet.create({
@@ -61,6 +62,7 @@ export const ParallaxScroll = ({
   menuAction,
   navigation,
   children,
+  refreshControl,
 }: Props) =>
   <ParallaxScrollView
     backgroundColor={colors.primaryDark}
@@ -104,6 +106,7 @@ export const ParallaxScroll = ({
             />
           </View>}
       </View>}
+    refreshControl={refreshControl}
   >
     {children}
   </ParallaxScrollView>;
@@ -114,4 +117,5 @@ ParallaxScroll.defaultProps = {
   menuIcon: 'ellipsis-h',
   menuAction: undefined,
   children: null,
+  refreshControl: null,
 };

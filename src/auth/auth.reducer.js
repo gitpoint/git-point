@@ -14,6 +14,7 @@ const initialState = {
   isAuthenticated: false,
   accessToken: null,
   user: {},
+  hasInitialUser: false,
   orgs: [],
   events: [],
   language: I18n.locale.substr(0, 2),
@@ -53,6 +54,7 @@ export const authReducer = (state = initialState, action = {}) => {
     case LOGOUT.SUCCESS:
       return {
         ...initialState,
+        hasInitialUser: false,
       };
     case LOGOUT.FAILURE:
       return {
@@ -70,6 +72,7 @@ export const authReducer = (state = initialState, action = {}) => {
         ...state,
         user: action.payload,
         isPendingUser: false,
+        hasInitialUser: true,
       };
     case GET_AUTH_USER.ERROR:
       return {

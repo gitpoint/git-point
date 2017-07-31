@@ -127,6 +127,8 @@ export const en = {
       starAction: '★ Star',
       unstarAction: '★ Unstar',
       shareAction: '✉ Share',
+      unwatchAction: '👁 Unwatch',
+      watchAction: '👁 Watch',
       ownerTitle: 'OWNER',
       contributorsTitle: 'CONTRIBUTORS',
       sourceTitle: 'SOURCE',

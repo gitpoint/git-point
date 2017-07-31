@@ -18,7 +18,7 @@ import {
 } from 'components';
 import { translate } from 'utils';
 import { colors } from 'config';
-import { getRepository, getContributors } from 'repository';
+import { getRepository } from 'repository';
 import {
   getIssueComments,
   postIssueComment,
@@ -47,7 +47,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(postIssueComment(body, owner, repoName, issueNum)),
   getIssueFromUrlByDispatch: url => dispatch(getIssueFromUrl(url)),
   getRepositoryByDispatch: url => dispatch(getRepository(url)),
-  getContributorsByDispatch: url => dispatch(getContributors(url)),
 });
 
 class Issue extends Component {
@@ -79,7 +78,6 @@ class Issue extends Component {
   props: {
     getIssueCommentsByDispatch: Function,
     getRepositoryByDispatch: Function,
-    getContributorsByDispatch: Function,
     postIssueCommentByDispatch: Function,
     getIssueFromUrlByDispatch: Function,
     diff: string,
@@ -100,6 +98,40 @@ class Issue extends Component {
   };
 
   componentDidMount() {
+    this.getIssueInformation();
+  }
+
+  onLinkPress = node => {
+    const { navigation } = this.props;
+
+    if (node.attribs.class && node.attribs.class.includes('user-mention')) {
+      navigation.navigate('Profile', {
+        user: { login: node.children[0].data.substring(1) },
+      });
+    } else if (
+      node.attribs.class &&
+      node.attribs.class.includes('issue-link')
+    ) {
+      navigation.navigate('Issue', {
+        issueURL: node.attribs['data-url'].replace(
+          'github.com',
+          'api.github.com/repos',
+        ),
+      });
+    } else {
+      Linking.openURL(node.attribs.href);
+    }
+  };
+
+  onRepositoryPress = url => {
+    const { navigation } = this.props;
+
+    navigation.navigate('Repository', {
+      repositoryUrl: url,
+    });
+  };
+
+  getIssueInformation = () => {
     const {
       issue,
       navigation,
@@ -117,8 +149,8 @@ class Issue extends Component {
     Promise.all(
       getIssueFromUrlByDispatch(issueURLParam || issueParam.url),
       getIssueCommentsByDispatch(
-        issueURLParam ? issueCommentsURL : issueParam.comments_url
-      )
+        issueURLParam ? issueCommentsURL : issueParam.comments_url,
+      ),
     ).then(() => {
       if (
         issueParam &&
@@ -128,7 +160,7 @@ class Issue extends Component {
         Promise.all([
           getRepositoryByDispatch(issue.repository_url),
           getContributorsByDispatch(
-            this.getContributorsLink(issue.repository_url)
+            this.getContributorsLink(issue.repository_url),
           ),
         ]).then(() => {
           this.setNavigationParams();
@@ -136,36 +168,6 @@ class Issue extends Component {
       } else {
         this.setNavigationParams();
       }
-    });
-  }
-
-  onLinkPress = node => {
-    const { navigation } = this.props;
-
-    if (node.attribs.class && node.attribs.class.includes('user-mention')) {
-      navigation.navigate('Profile', {
-        user: { login: node.children[0].data.substring(1) },
-      });
-    } else if (
-      node.attribs.class &&
-      node.attribs.class.includes('issue-link')
-    ) {
-      navigation.navigate('Issue', {
-        issueURL: node.attribs['data-url'].replace(
-          'github.com',
-          'api.github.com/repos'
-        ),
-      });
-    } else {
-      Linking.openURL(node.attribs.href);
-    }
-  };
-
-  onRepositoryPress = url => {
-    const { navigation } = this.props;
-
-    navigation.navigate('Repository', {
-      repositoryUrl: url,
     });
   };
 
@@ -249,6 +251,7 @@ class Issue extends Component {
       navigation,
     } = this.props;
 
+    const isLoadingData = !!(isPendingComments || isPendingIssue);
     const fullComments = !isPendingComments ? [issue, ...comments] : [];
     const participantNames = !isPendingComments
       ? fullComments.map(item => item && item.user && item.user.login)
@@ -262,7 +265,7 @@ class Issue extends Component {
 
     return (
       <ViewContainer>
-        {(isPendingComments || isPendingIssue) &&
+        {isLoadingData &&
           <LoadingContainer
             animating={isPendingComments || isPendingIssue}
             center
@@ -280,6 +283,8 @@ class Issue extends Component {
               ref={ref => {
                 this.commentsList = ref;
               }}
+              refreshing={isLoadingData}
+              onRefresh={this.getIssueInformation}
               contentContainerStyle={{ flexGrow: 1 }}
               ListHeaderComponent={this.renderHeader}
               removeClippedSubviews={false}

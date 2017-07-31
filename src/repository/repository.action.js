@@ -7,6 +7,8 @@ import {
   fetchSearch,
   fetchChangeStarStatusRepo,
   fetchForkRepo,
+  watchRepo,
+  unWatchRepo,
 } from 'api';
 import {
   GET_REPOSITORY,
@@ -23,6 +25,7 @@ import {
   SEARCH_CLOSED_ISSUES,
   SEARCH_OPEN_PULLS,
   SEARCH_CLOSED_PULLS,
+  GET_REPOSITORY_SUBSCRIBED_STATUS,
 } from './repository.type';
 
 export const getRepository = url => {
@@ -158,6 +161,50 @@ export const checkRepoStarred = url => {
   };
 };
 
+export const checkRepoSubscribed = url => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: GET_REPOSITORY_SUBSCRIBED_STATUS.PENDING });
+
+    fetchUrlNormal(url, accessToken)
+      .then(data =>
+        dispatch({
+          type: GET_REPOSITORY_SUBSCRIBED_STATUS.SUCCESS,
+          payload: !(data.status === 404),
+        })
+      )
+      .catch(error =>
+        dispatch({
+          type: GET_REPOSITORY_SUBSCRIBED_STATUS.ERROR,
+          error,
+        })
+      );
+  };
+};
+
+export const unSubscribeToRepo = (owner, repo) => (dispatch, getState) => {
+  const accessToken = getState().auth.accessToken;
+
+  dispatch({
+    type: GET_REPOSITORY_SUBSCRIBED_STATUS.PENDING,
+  });
+
+  return unWatchRepo(owner, repo, accessToken)
+    .then(data => data.json())
+    .then(() => {
+      dispatch({
+        type: GET_REPOSITORY_SUBSCRIBED_STATUS.SUCCESS,
+        payload: false,
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: GET_REPOSITORY_SUBSCRIBED_STATUS.ERROR,
+      });
+    });
+};
+
 export const getRepositoryInfo = url => {
   return (dispatch, getState) => {
     return dispatch(getRepository(url)).then(() => {
@@ -173,6 +220,12 @@ export const getRepositoryInfo = url => {
       dispatch(
         checkRepoStarred(
           `https://api.github.com/user/starred/${repo.owner.login}/${repo.name}`
+        )
+      );
+      dispatch(
+        checkRepoSubscribed(
+          `https://api.github.com/repos/${repo.owner
+            .login}/${repo.name}/subscription`
         )
       );
     });
@@ -199,6 +252,29 @@ export const changeStarStatusRepo = (owner, repo, starred) => {
         });
       });
   };
+};
+
+export const subscribeToRepo = (owner, repo) => (dispatch, getState) => {
+  const accessToken = getState().auth.accessToken;
+  const isSubscribed = getState().repository.subscribed;
+
+  dispatch({
+    type: GET_REPOSITORY_SUBSCRIBED_STATUS.PENDING,
+  });
+
+  return watchRepo(!isSubscribed, owner, repo, accessToken)
+    .then(data => data.json())
+    .then(result => {
+      dispatch({
+        type: GET_REPOSITORY_SUBSCRIBED_STATUS.SUCCESS,
+        payload: result.subscribed,
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: GET_REPOSITORY_SUBSCRIBED_STATUS.ERROR,
+      });
+    });
 };
 
 export const forkRepo = (owner, repo) => {

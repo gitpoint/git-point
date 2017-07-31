@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  RefreshControl,
+} from 'react-native';
 import { ListItem } from 'react-native-elements';
 import codePush from 'react-native-code-push';
 
@@ -8,7 +13,6 @@ import {
   ViewContainer,
   UserProfile,
   SectionList,
-  LoadingContainer,
   ParallaxScroll,
   UserListItem,
   EntityInfo,
@@ -24,6 +28,7 @@ const mapStateToProps = state => ({
   language: state.auth.language,
   isPendingUser: state.auth.isPendingUser,
   isPendingOrgs: state.auth.isPendingOrgs,
+  hasInitialUser: state.auth.hasInitialUser,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -82,6 +87,7 @@ class AuthProfile extends Component {
     language: string,
     isPendingUser: boolean,
     isPendingOrgs: boolean,
+    hasInitialUser: boolean,
     navigation: Object,
   };
 
@@ -94,8 +100,7 @@ class AuthProfile extends Component {
   }
 
   componentDidMount() {
-    this.props.getUserByDispatch();
-    this.props.getOrgsByDispatch();
+    this.refreshProfile();
   }
 
   checkForUpdate = () => {
@@ -116,6 +121,11 @@ class AuthProfile extends Component {
     }
   };
 
+  refreshProfile = () => {
+    this.props.getUserByDispatch();
+    this.props.getOrgsByDispatch();
+  };
+
   render() {
     const {
       user,
@@ -124,48 +134,51 @@ class AuthProfile extends Component {
       isPendingOrgs,
       language,
       navigation,
+      hasInitialUser,
     } = this.props;
+
     const loading = isPendingUser || isPendingOrgs;
 
     return (
       <ViewContainer>
-        {loading && <LoadingContainer animating={loading} center />}
-
-        {!loading &&
-          <ParallaxScroll
-            renderContent={() =>
-              <UserProfile
-                type="user"
-                initialUser={user}
-                user={user}
-                language={language}
-                navigation={navigation}
-              />}
-            stickyTitle={user.login}
-            showMenu
-            menuIcon="gear"
-            menuAction={() =>
-              navigation.navigate('UserOptions', {
-                title: translate('auth.userOptions.title', language),
-              })}
-          >
-            {user.bio &&
-              user.bio !== '' &&
-              <SectionList title={translate('common.bio', language)}>
-                <ListItem
-                  subtitle={emojifyText(user.bio)}
-                  subtitleStyle={styles.listSubTitle}
-                  hideChevron
-                />
-              </SectionList>}
-
-            <EntityInfo
-              entity={user}
-              orgs={orgs}
+        <ParallaxScroll
+          renderContent={() =>
+            <UserProfile
+              type="user"
+              initialUser={hasInitialUser ? user : {}}
+              user={hasInitialUser ? user : {}}
               language={language}
               navigation={navigation}
+            />}
+          refreshControl={
+            <RefreshControl
+              refreshing={loading}
+              onRefresh={this.refreshProfile}
             />
+          }
+          stickyTitle={user.login}
+          showMenu
+          menuIcon="gear"
+          menuAction={() =>
+            navigation.navigate('UserOptions', {
+              title: translate('auth.userOptions.title', language),
+            })}
+        >
+          {hasInitialUser &&
+            user.bio &&
+            user.bio !== '' &&
+            <SectionList title={translate('common.bio', language)}>
+              <ListItem
+                subtitle={emojifyText(user.bio)}
+                subtitleStyle={styles.listSubTitle}
+                hideChevron
+              />
+            </SectionList>}
 
+          {!loading &&
+            <EntityInfo entity={user} orgs={orgs} navigation={navigation} />}
+
+          {!isPendingOrgs &&
             <SectionList
               title={translate('common.orgs', language)}
               noItems={orgs.length === 0}
@@ -176,7 +189,7 @@ class AuthProfile extends Component {
                   key={item.id}
                   user={item}
                   navigation={navigation}
-                />
+                />,
               )}
               <Text style={styles.note}>
                 {translate('auth.profile.orgsRequestApprovalTop', language)}
@@ -188,29 +201,26 @@ class AuthProfile extends Component {
                 >
                   {translate(
                     'auth.profile.orgsRequestApprovalBottom',
-                    language
+                    language,
                   )}
                 </Text>
               </Text>
-            </SectionList>
+            </SectionList>}
 
-            <TouchableOpacity
-              style={styles.update}
-              onPress={this.checkForUpdate}
-            >
-              <Text style={styles.updateText}>
-                GitPoint v{version}
-              </Text>
-              <Text style={[styles.updateText, styles.updateTextSub]}>
-                {this.state.updateText}
-              </Text>
-            </TouchableOpacity>
-          </ParallaxScroll>}
+          <TouchableOpacity style={styles.update} onPress={this.checkForUpdate}>
+            <Text style={styles.updateText}>
+              GitPoint v{version}
+            </Text>
+            <Text style={[styles.updateText, styles.updateTextSub]}>
+              {this.state.updateText}
+            </Text>
+          </TouchableOpacity>
+        </ParallaxScroll>}
       </ViewContainer>
     );
   }
 }
 
 export const AuthProfileScreen = connect(mapStateToProps, mapDispatchToProps)(
-  AuthProfile
+  AuthProfile,
 );
