@@ -90,14 +90,15 @@ const styles = StyleSheet.create({
 });
 
 const mapDispatchToProps = dispatch => ({
-  auth: (code, state) => dispatch(auth(code, state)),
+  authByDispatch: (code, state, navigation) =>
+    dispatch(auth(code, state, navigation)),
 });
 
 class Login extends Component {
   props: {
     isAuthenticated: boolean,
     isLoggingIn: boolean,
-    auth: Function,
+    authByDispatch: Function,
     navigation: Object,
   };
 
@@ -135,11 +136,12 @@ class Login extends Component {
   handleOpenURL = ({ url }) => {
     const [, queryStringFromUrl] = url.match(/\?(.*)/);
     const { state, code } = queryString.parse(queryStringFromUrl);
+    const { authByDispatch, navigation } = this.props;
 
     if (stateRandom === state) {
       this.setState({ code });
 
-      this.props.auth(code, state);
+      authByDispatch(code, state, navigation);
     }
 
     if (Platform.OS === 'ios') {

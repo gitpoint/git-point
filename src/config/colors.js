@@ -1,5 +1,5 @@
 export const colors = {
-  lightBlue: '#4fb0eb',
+  lightBlue: '#3498db',
   blue: '#0366d6',
   black: '#000000',
   primaryDark: '#262626',
@@ -13,9 +13,9 @@ export const colors = {
   greyVeryLight: '#fbfbfb',
   lightGreen: '#00FF00',
   green: '#2cbe4e',
-  darkGreen: '#62b793',
+  darkGreen: '#27ae60',
   red: '#ee0701',
-  darkRed: '#cb2431',
+  darkRed: '#e74c3c',
   white: '#ffffff',
   transparent: 'transparent',
   codeChunkBlue: '#f8f8ff',
@@ -25,8 +25,8 @@ export const colors = {
   delCodeRed: '#ffecec',
   delCodeLineNumberRed: '#ffdddd',
   lightPurple: '#bf54eb',
-  purple: '#6f42c1',
-  orange: '#f9535f',
+  purple: '#8e44ad',
+  orange: '#e67e22',
 };
 
 export const languageColors = {

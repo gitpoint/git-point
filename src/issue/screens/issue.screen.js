@@ -17,7 +17,7 @@ import {
   CommentInput,
 } from 'components';
 import { colors } from 'config';
-import { getRepository, getContributors } from 'repository';
+import { getRepository } from 'repository';
 import {
   getIssueComments,
   postIssueComment,
@@ -45,7 +45,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(postIssueComment(body, owner, repoName, issueNum)),
   getIssueFromUrlByDispatch: url => dispatch(getIssueFromUrl(url)),
   getRepositoryByDispatch: url => dispatch(getRepository(url)),
-  getContributorsByDispatch: url => dispatch(getContributors(url)),
 });
 
 class Issue extends Component {
@@ -76,7 +75,6 @@ class Issue extends Component {
   props: {
     getIssueCommentsByDispatch: Function,
     getRepositoryByDispatch: Function,
-    getContributorsByDispatch: Function,
     postIssueCommentByDispatch: Function,
     getIssueFromUrlByDispatch: Function,
     diff: string,
@@ -92,44 +90,11 @@ class Issue extends Component {
     isPendingComments: boolean,
     isPendingContributors: boolean,
     // isPostingComment: boolean,
-    navigation: Object
+    navigation: Object,
   };
 
   componentDidMount() {
-    const {
-      issue,
-      navigation,
-      repository,
-      getIssueCommentsByDispatch,
-      getRepositoryByDispatch,
-      getContributorsByDispatch,
-      getIssueFromUrlByDispatch,
-    } = this.props;
-
-    const issueParam = navigation.state.params.issue;
-    const issueURLParam = navigation.state.params.issueURL;
-    const issueCommentsURL = `${navigation.state.params.issueURL}/comments`;
-
-    Promise.all(
-      getIssueFromUrlByDispatch(issueURLParam || issueParam.url),
-      getIssueCommentsByDispatch(issueURLParam ? issueCommentsURL : issueParam.comments_url)
-    ).then(() => {
-      if (
-        repository.full_name !==
-        issue.repository_url.replace('https://api.github.com/repos/', '')
-      ) {
-        Promise.all([
-          getRepositoryByDispatch(issue.repository_url),
-          getContributorsByDispatch(
-            this.getContributorsLink(issue.repository_url)
-          ),
-        ]).then(() => {
-          this.setNavigationParams();
-        });
-      } else {
-        this.setNavigationParams();
-      }
-    });
+    this.getIssueInformation();
   }
 
   onLinkPress = node => {
@@ -159,6 +124,39 @@ class Issue extends Component {
 
     navigation.navigate('Repository', {
       repositoryUrl: url,
+    });
+  };
+
+  getIssueInformation = () => {
+    const {
+      issue,
+      navigation,
+      repository,
+      getIssueCommentsByDispatch,
+      getRepositoryByDispatch,
+      getIssueFromUrlByDispatch,
+    } = this.props;
+
+    const issueParam = navigation.state.params.issue;
+    const issueURLParam = navigation.state.params.issueURL;
+    const issueCommentsURL = `${navigation.state.params.issueURL}/comments`;
+
+    Promise.all(
+      getIssueFromUrlByDispatch(issueURLParam || issueParam.url),
+      getIssueCommentsByDispatch(
+        issueURLParam ? issueCommentsURL : issueParam.comments_url
+      )
+    ).then(() => {
+      if (
+        repository.full_name !==
+        issue.repository_url.replace('https://api.github.com/repos/', '')
+      ) {
+        getRepositoryByDispatch(issue.repository_url).then(() => {
+          this.setNavigationParams();
+        });
+      } else {
+        this.setNavigationParams();
+      }
     });
   };
 
@@ -232,6 +230,7 @@ class Issue extends Component {
       navigation,
     } = this.props;
 
+    const isLoadingData = !!(isPendingComments || isPendingIssue);
     const fullComments = !isPendingComments ? [issue, ...comments] : [];
     const participantNames = !isPendingComments
       ? fullComments.map(item => item && item.user && item.user.login)
@@ -245,7 +244,7 @@ class Issue extends Component {
 
     return (
       <ViewContainer>
-        {(isPendingComments || isPendingIssue) &&
+        {isLoadingData &&
           <LoadingContainer
             animating={isPendingComments || isPendingIssue}
             center
@@ -263,6 +262,8 @@ class Issue extends Component {
               ref={ref => {
                 this.commentsList = ref;
               }}
+              refreshing={isLoadingData}
+              onRefresh={this.getIssueInformation}
               contentContainerStyle={{ flexGrow: 1 }}
               ListHeaderComponent={this.renderHeader}
               removeClippedSubviews={false}
