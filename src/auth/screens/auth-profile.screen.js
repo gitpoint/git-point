@@ -189,7 +189,7 @@ class AuthProfile extends Component {
                   key={item.id}
                   user={item}
                   navigation={navigation}
-                />,
+                />
               )}
               <Text style={styles.note}>
                 {translate('auth.profile.orgsRequestApprovalTop', language)}
@@ -201,7 +201,7 @@ class AuthProfile extends Component {
                 >
                   {translate(
                     'auth.profile.orgsRequestApprovalBottom',
-                    language,
+                    language
                   )}
                 </Text>
               </Text>
@@ -215,12 +215,12 @@ class AuthProfile extends Component {
               {this.state.updateText}
             </Text>
           </TouchableOpacity>
-        </ParallaxScroll>}
+        </ParallaxScroll>
       </ViewContainer>
     );
   }
 }
 
 export const AuthProfileScreen = connect(mapStateToProps, mapDispatchToProps)(
-  AuthProfile,
+  AuthProfile
 );
