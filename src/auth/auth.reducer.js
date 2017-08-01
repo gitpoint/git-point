@@ -6,6 +6,7 @@ import {
   GET_AUTH_ORGS,
   GET_EVENTS,
   CHANGE_LANGUAGE,
+  CHANGE_TAB_BAR_VISIBILITY,
 } from './auth.type';
 
 const initialState = {
@@ -22,6 +23,7 @@ const initialState = {
   isPendingOrgs: false,
   isPendingEvents: false,
   error: '',
+  isTabBarVisible: true,
 };
 
 export const authReducer = (state = initialState, action = {}) => {
@@ -118,6 +120,11 @@ export const authReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         language: action.payload,
+      };
+    case CHANGE_TAB_BAR_VISIBILITY:
+      return {
+        ...state,
+        isTabBarVisible: action.isTabBarVisible,
       };
     default:
       return state;

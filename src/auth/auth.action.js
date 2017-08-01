@@ -18,6 +18,7 @@ import {
   GET_AUTH_ORGS,
   GET_EVENTS,
   CHANGE_LANGUAGE,
+  CHANGE_TAB_BAR_VISIBILITY,
 } from './auth.type';
 
 export const auth = (code, state, navigation) => {
@@ -139,5 +140,11 @@ export const changeLanguage = lang => {
   return dispatch => {
     dispatch({ type: CHANGE_LANGUAGE.SUCCESS, payload: lang });
     I18n.locale = lang;
+  };
+};
+
+export const changeTabBarVisibility = isTabBarVisible => {
+  return dispatch => {
+    dispatch({ type: CHANGE_TAB_BAR_VISIBILITY, isTabBarVisible });
   };
 };
