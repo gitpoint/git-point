@@ -18,6 +18,8 @@ export const en = {
       welcomeTitle: 'Welcome to GitPoint',
     },
     events: {
+      welcomeMessage:
+        "Welcome! This is your news feed - it'll help you keep up with recent activity on repositories you watch and people you follow.",
       commitCommentEvent: 'commented on commit',
       createEvent: 'created {{payload}}',
       deleteEvent: 'deleted {{payload}}',

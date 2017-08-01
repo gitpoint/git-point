@@ -63,14 +63,31 @@ class Profile extends Component {
     navigation: Object,
   };
 
-  componentDidMount() {
-    this.getUserInfo();
+  state: {
+    refreshing: boolean,
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      refreshing: false,
+    };
   }
 
-  getUserInfo = () => {
+  componentDidMount() {
     this.props.getUserInfoByDispatch(
       this.props.navigation.state.params.user.login
     );
+  }
+
+  getUserInfo = () => {
+    this.setState({ refreshing: true });
+
+    this.props
+      .getUserInfoByDispatch(this.props.navigation.state.params.user.login)
+      .then(() => {
+        this.setState({ refreshing: false });
+      });
   };
 
   showMenuActionSheet = () => {
@@ -96,7 +113,7 @@ class Profile extends Component {
       isPendingCheckFollowing,
       navigation,
     } = this.props;
-
+    const { refreshing } = this.state;
     const initialUser = navigation.state.params.user;
     const isPending = isPendingUser || isPendingOrgs;
     const userActions = [
@@ -121,7 +138,7 @@ class Profile extends Component {
             />}
           refreshControl={
             <RefreshControl
-              refreshing={isPending}
+              refreshing={refreshing}
               onRefresh={this.getUserInfo}
             />
           }

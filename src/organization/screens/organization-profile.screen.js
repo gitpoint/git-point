@@ -56,15 +56,34 @@ class OrganizationProfile extends Component {
     navigation: Object,
   };
 
+  state: {
+    refreshing: boolean,
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      refreshing: false,
+    };
+  }
+
   componentDidMount() {
-    this.getOrgData();
+    const organization = this.props.navigation.state.params.organization;
+
+    this.props.getOrgByDispatch(organization.login);
+    this.props.getOrgMembersByDispatch(organization.login);
   }
 
   getOrgData = () => {
     const organization = this.props.navigation.state.params.organization;
 
-    this.props.getOrgByDispatch(organization.login);
-    this.props.getOrgMembersByDispatch(organization.login);
+    this.setState({ refreshing: true });
+    Promise.all(
+      this.props.getOrgByDispatch(organization.login),
+      this.props.getOrgMembersByDispatch(organization.login)
+    ).then(() => {
+      this.setState({ refreshing: false });
+    });
   };
 
   render() {
@@ -75,9 +94,8 @@ class OrganizationProfile extends Component {
       isPendingMembers,
       navigation,
     } = this.props;
+    const { refreshing } = this.state;
     const initialOrganization = this.props.navigation.state.params.organization;
-
-    const isLoadingData = isPendingOrg || isPendingMembers;
 
     return (
       <ViewContainer>
@@ -96,7 +114,7 @@ class OrganizationProfile extends Component {
           refreshControl={
             <RefreshControl
               onRefresh={this.getOrgData}
-              refreshing={isLoadingData}
+              refreshing={refreshing}
             />
           }
           stickyTitle={organization.name}

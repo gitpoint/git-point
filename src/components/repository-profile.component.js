@@ -81,7 +81,8 @@ const styles = StyleSheet.create({
   },
   languageInfo: {
     flexDirection: 'row',
-    marginTop: 35,
+    top: 35,
+    position: 'absolute',
   },
   languageInfoTitle: {
     color: colors.white,
@@ -129,7 +130,7 @@ export const RepositoryProfile = ({
       </Text>
 
       <Text
-        numberOfLines={5}
+        numberOfLines={repository.fork ? 1 : 3}
         style={[
           styles.subtitle,
           repository.fork

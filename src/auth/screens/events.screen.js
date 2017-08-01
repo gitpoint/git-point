@@ -501,7 +501,7 @@ class Events extends Component {
   }
 
   render() {
-    const { isPendingEvents, userEvents, navigation } = this.props;
+    const { isPendingEvents, userEvents, language, navigation } = this.props;
     const linebreaksPattern = /(\r\n|\n|\r)/gm;
     let content;
 
@@ -514,8 +514,7 @@ class Events extends Component {
       content = (
         <View style={styles.textContainer}>
           <Text style={styles.noneTitle}>
-            Welcome! This is your news feed - it&apos;ll help you keep up with
-            recent activity on repositories you watch and people you follow.
+            {translate('auth.events.welcomeMessage', language)}
           </Text>
         </View>
       );

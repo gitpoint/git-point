@@ -5,6 +5,9 @@ import {
   Text,
   TouchableOpacity,
   RefreshControl,
+  View,
+  ActivityIndicator,
+  Dimensions,
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import codePush from 'react-native-code-push';
@@ -137,7 +140,7 @@ class AuthProfile extends Component {
       hasInitialUser,
     } = this.props;
 
-    const loading = isPendingUser || isPendingOrgs;
+    const isPending = isPendingUser || isPendingOrgs;
 
     return (
       <ViewContainer>
@@ -152,7 +155,7 @@ class AuthProfile extends Component {
             />}
           refreshControl={
             <RefreshControl
-              refreshing={loading}
+              refreshing={isPending}
               onRefresh={this.refreshProfile}
             />
           }
@@ -164,6 +167,13 @@ class AuthProfile extends Component {
               title: translate('auth.userOptions.title', language),
             })}
         >
+          {isPending &&
+            <ActivityIndicator
+              animating={isPending}
+              style={{ height: Dimensions.get('window').height / 3 }}
+              size="large"
+            />}
+
           {hasInitialUser &&
             user.bio &&
             user.bio !== '' &&
@@ -175,46 +185,51 @@ class AuthProfile extends Component {
               />
             </SectionList>}
 
-          {!loading &&
+          {!isPending &&
             <EntityInfo entity={user} orgs={orgs} navigation={navigation} />}
 
-          {!isPendingOrgs &&
-            <SectionList
-              title={translate('common.orgs', language)}
-              noItems={orgs.length === 0}
-              noItemsMessage={translate('common.noOrgsMessage', language)}
-            >
-              {orgs.map(item =>
-                <UserListItem
-                  key={item.id}
-                  user={item}
-                  navigation={navigation}
-                />
-              )}
-              <Text style={styles.note}>
-                {translate('auth.profile.orgsRequestApprovalTop', language)}
-                {'\n'}
-                <Text
-                  style={styles.noteLink}
-                  onPress={() =>
-                    openURLInView('https://github.com/settings/applications')}
-                >
-                  {translate(
-                    'auth.profile.orgsRequestApprovalBottom',
-                    language
-                  )}
+          {!isPending &&
+            <View>
+              <SectionList
+                title={translate('common.orgs', language)}
+                noItems={orgs.length === 0}
+                noItemsMessage={translate('common.noOrgsMessage', language)}
+              >
+                {orgs.map(item =>
+                  <UserListItem
+                    key={item.id}
+                    user={item}
+                    navigation={navigation}
+                  />
+                )}
+                <Text style={styles.note}>
+                  {translate('auth.profile.orgsRequestApprovalTop', language)}
+                  {'\n'}
+                  <Text
+                    style={styles.noteLink}
+                    onPress={() =>
+                      openURLInView('https://github.com/settings/applications')}
+                  >
+                    {translate(
+                      'auth.profile.orgsRequestApprovalBottom',
+                      language
+                    )}
+                  </Text>
                 </Text>
-              </Text>
-            </SectionList>}
+              </SectionList>
 
-          <TouchableOpacity style={styles.update} onPress={this.checkForUpdate}>
-            <Text style={styles.updateText}>
-              GitPoint v{version}
-            </Text>
-            <Text style={[styles.updateText, styles.updateTextSub]}>
-              {this.state.updateText}
-            </Text>
-          </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.update}
+                onPress={this.checkForUpdate}
+              >
+                <Text style={styles.updateText}>
+                  GitPoint v{version}
+                </Text>
+                <Text style={[styles.updateText, styles.updateTextSub]}>
+                  {this.state.updateText}
+                </Text>
+              </TouchableOpacity>
+            </View>}
         </ParallaxScroll>
       </ViewContainer>
     );
