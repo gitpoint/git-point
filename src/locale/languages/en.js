@@ -123,7 +123,7 @@ export const en = {
   repository: {
     main: {
       shareRepositoryTitle: 'Share {{repoName}}',
-      shareRepositoryMessage: 'Check out {{repoName}} on Github. {{repoUrl}}',
+      shareRepositoryMessage: 'Check out {{repoName}} on GitHub. {{repoUrl}}',
       repoActions: 'Repository Actions',
       forkAction: '⑂ Fork',
       starAction: '★ Star',
