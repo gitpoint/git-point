@@ -12,8 +12,8 @@
     "link": "react-native link",
     "ios": "react-native run-ios",
     "android": "react-native run-android",
-    "lint-staged": "lint-staged",
-    "lint-pass": "echo '\\033[42mCOMMIT SUCCEEDED\\033[0m 🎉 🎉 🎉\n'",
+    "commitmsg": "echo $(cat $GIT_PARAMS) | commitlint",
+    "precommit": "lint-staged",
     "eslint": "eslint .",
     "test": "jest",
     "flow-start": "flow start",
@@ -37,10 +37,6 @@
       "eslint --cache --max-warnings 0"
     ]
   },
-  "pre-commit": [
-    "lint-staged",
-    "lint-pass"
-  ],
   "dependencies": {
     "fuzzy-search": "^1.4.0",
     "lodash.uniqby": "^4.7.0",
@@ -78,6 +74,7 @@
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^3.1.0",
     "all-contributors-cli": "^4.3.0",
     "babel-eslint": "^7.1.1",
     "babel-jest": "18.0.0",
@@ -96,9 +93,9 @@
     "eslint-plugin-react": "^7.1.0",
     "eslint-plugin-react-native": "^2.3.2",
     "flow-bin": "^0.47.0",
+    "husky": "^0.14.3",
     "jest": "18.1.0",
     "lint-staged": "^3.2.6",
-    "pre-commit": "^1.2.2",
     "prettier": "^1.3.1",
     "react-native-cli": "^2.0.1",
     "react-test-renderer": "16.0.0-alpha.6"
