@@ -102,6 +102,8 @@ export const en = {
       userButton: 'Users',
       searchingMessage: 'Searching for {{query}}',
       searchMessage: 'Searching for any {{type}}',
+      repository: 'repository',
+      user: 'user',
     },
   },
   user: {
