@@ -29,8 +29,8 @@ export const en = {
       issueRemovedEvent: 'removed their comment on {{payload}}',
       issuesEvent: '{{payload}} issue',
       publicEvent: 'open sourced',
-      PullRequestEvent: '{{payload}} pull request',
-      PullRequestReviewEvent: '{{payload}} pull request review',
+      pullRequestEvent: '{{payload}} pull request',
+      pullRequestReviewEvent: '{{payload}} pull request review',
       pullRequestReviewCommentEvent: 'commented on pull request',
       pullRequestReviewEditedEvent: 'edited their comment on pull request',
       pullRequestReviewDeletedEvent: 'removed their comment on pull request',
@@ -66,7 +66,7 @@ export const en = {
         "We do not do anything with your GitHub information. After authenticating, the user's OAuth token is persisted directly on their device storage. It is not possible for us to retrieve that information. We never view a user's access token nor store it whatsoever.",
       userData2:
         "This means that in no way, shape or form do we ever view, use or share a user's GitHub data. If private data ever becomes visible at any point we will not record or view it. If it happens to be accidentally recorded, we will delete it immediately using secure erase methods. Again, we've set up authentication specifically so that this never happens.",
-      analyticsInfoTitle: 'Analytics Information',
+      analyticsInfoTitle: 'ANALYTICS INFORMATION',
       analyticsInfo1:
         'We currently use Google Analytics and iTunes App Analytics to help us measure traffic and usage trends for the GitPoint. These tools collect information sent by your device including device and platform version, region and referrer. This information cannot reasonably be used to identify any particular individual user and no personal information is extracted.',
       analyticsInfo2:
