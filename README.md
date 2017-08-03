@@ -6,12 +6,16 @@
 </p>
 
 <p align="center">
-  GitHub for iOS. <a href="https://github.com/gitpoint/git-point/issues/2#issuecomment-316261018">Android coming soon. </a> <br>
+  GitHub in your pocket. Built with React Native.
 </p>
 
 <p align="center">
   <a href="https://itunes.apple.com/us/app/gitpoint/id1251245162?mt=8">
-    <img alt="Download on the App Store" title="App Store" src="http://i.imgur.com/0n2zqHD.png" width="130">
+    <img alt="Download on the App Store" title="App Store" src="http://i.imgur.com/0n2zqHD.png" width="140">
+  </a>
+  
+  <a href="https://play.google.com/intl/en_us/badges/">
+    <img alt="Download on the App Store" title="Play Store" src="http://i.imgur.com/mtGRPuM.png" width="140">
   </a>
 </p>
 
@@ -22,24 +26,34 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![Gitter chat](https://img.shields.io/badge/chat-on_gitter-008080.svg?style=flat-square)](https://gitter.im/git-point)
 
-View repository and user information, control your notifications and even manage your issues and pull requests. GitPoint is the most feature-rich unofficial GitHub iOS client that is 100% free.
+View repository and user information, control your notifications and even manage your issues and pull requests. Built with React Native, GitPoint is the most feature-rich unofficial GitHub client that is 100% free. 
+
+**Available for both iOS and Android.**
 
 <p align="center">
-  <img src = "http://i.imgur.com/KhBsmXH.png" width=250>
+  <img src = "http://i.imgur.com/HowF6aM.png" width=350>
 </p>
 
 ## Features
+
+A few of the things you can do with GitPoint:
 
 * View user activity feed
 * Communicate on your issue and pull request conversations
 * Close or lock issues
 * Apply labels and assignees
 * Review and merge pull requests
+* Create new issues
+* Star, watch and fork repositories
 * Control your unread and participating notifications
 * Easily search for any user or repository
 
 <p align="center">
-  <img src = "http://i.imgur.com/P4YoYYu.png">
+  <img src = "http://i.imgur.com/IkSnFRL.png" width=700>
+</p>
+
+<p align="center">
+  <img src = "http://i.imgur.com/0iorG20.png" width=700>
 </p>
 
 ## Feedback/Contributing
@@ -50,7 +64,7 @@ Also, if there's anything you'd like to chat about, please feel free to join our
 
 ## Build process
 
-- Follow the [React Native Guide](https://facebook.github.io/react-native/docs/getting-started.html) for getting started building a project with native code. A Mac is required.
+- Follow the [React Native Guide](https://facebook.github.io/react-native/docs/getting-started.html) for getting started building a project with native code. **A Mac is required if you wish to develop for iOS.**
 - Clone or download the repo
 - `yarn` to install dependencies
 - `yarn run link` to link react-native dependencies
