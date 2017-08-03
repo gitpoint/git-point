@@ -26,7 +26,9 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![Gitter chat](https://img.shields.io/badge/chat-on_gitter-008080.svg?style=flat-square)](https://gitter.im/git-point)
 
-View repository and user information, control your notifications and even manage your issues and pull requests. Built with React Native, GitPoint is the most feature-rich unofficial GitHub client that is 100% free. **Available for both iOS and Android.**
+View repository and user information, control your notifications and even manage your issues and pull requests. Built with React Native, GitPoint is the most feature-rich unofficial GitHub client that is 100% free. 
+
+**Available for both iOS and Android.**
 
 <p align="center">
   <img src = "http://i.imgur.com/HowF6aM.png" width=350>
