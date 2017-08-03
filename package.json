@@ -12,7 +12,7 @@
     "link": "react-native link",
     "ios": "react-native run-ios",
     "android": "react-native run-android",
-    "commitmsg": "echo $(cat $GIT_PARAMS) | commitlint",
+    "commitmsg": "cat $GIT_PARAMS | commitlint",
     "precommit": "lint-staged",
     "eslint": "eslint .",
     "test": "jest",
