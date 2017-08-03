@@ -4223,6 +4223,10 @@ min-document@^2.19.0:
   dependencies:
     dom-walk "^0.1.0"
 
+minicat@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/minicat/-/minicat-1.0.0.tgz#ce4578f1a25a16a6f69f561d6ebb6dd855e7d61c"
+
 "minimatch@2 || 3", minimatch@^3.0.0, minimatch@^3.0.2, minimatch@^3.0.3, minimatch@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
