@@ -14,8 +14,8 @@
     <img alt="Download on the App Store" title="App Store" src="http://i.imgur.com/0n2zqHD.png" width="140">
   </a>
   
-  <a href="https://play.google.com/intl/en_us/badges/">
-    <img alt="Download on the App Store" title="Play Store" src="http://i.imgur.com/mtGRPuM.png" width="140">
+  <a href="https://play.google.com/store/apps/details?id=com.gitpoint">
+    <img alt="Get it on Google Play" title="Google Play" src="http://i.imgur.com/mtGRPuM.png" width="140">
   </a>
 </p>
 
