@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {
   StyleSheet,
   View,
@@ -14,6 +13,7 @@ import { colors, fonts } from 'config';
 type Props = {
   title: string,
   members: Array,
+  noMembersMessage: string,
   containerStyle: Object,
   smallTitle: string,
   navigation: Object,
@@ -46,11 +46,16 @@ const styles = StyleSheet.create({
     ...fonts.fontPrimarySemiBold,
     marginBottom: 10,
   },
+  noMembersStyle: {
+    color: colors.black,
+    ...fonts.fontPrimary,
+  },
 });
 
 export const MembersList = ({
   title,
   members,
+  noMembersMessage,
   containerStyle,
   smallTitle,
   navigation,
@@ -59,6 +64,12 @@ export const MembersList = ({
     <Text style={smallTitle ? styles.sectionTitleSmall : styles.sectionTitle}>
       {title}
     </Text>
+
+    {noMembersMessage &&
+      !members.length &&
+      <Text style={styles.noMembersStyle}>
+        {noMembersMessage}
+      </Text>}
 
     <FlatList
       data={members}
