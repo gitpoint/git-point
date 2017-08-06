@@ -8,6 +8,7 @@ export const GET_REPOSITORY_CONTENTS = createActionSet(
   'GET_REPOSITORY_CONTENTS'
 );
 export const GET_COMMIT = createActionSet('GET_COMMIT');
+export const GET_COMMIT_DIFF = createActionSet('GET_COMMIT_DIFF');
 export const GET_REPOSITORY_FILE = createActionSet('GET_REPOSITORY_FILE');
 export const GET_REPOSITORY_ISSUES = createActionSet('GET_REPOSITORY_ISSUES');
 export const GET_REPO_README_STATUS = createActionSet(

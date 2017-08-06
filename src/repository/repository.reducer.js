@@ -11,6 +11,7 @@ import {
   GET_REPOSITORY_README,
   GET_REPOSITORY_LABELS,
   GET_COMMIT,
+  GET_COMMIT_DIFF,
   SEARCH_OPEN_ISSUES,
   SEARCH_CLOSED_ISSUES,
   SEARCH_OPEN_PULLS,
@@ -26,6 +27,7 @@ const initialState = {
   fileContent: '',
   issues: [],
   commit: {},
+  diff: {},
   readMe: '',
   hasReadMe: false,
   starred: false,
@@ -39,6 +41,7 @@ const initialState = {
   isPendingContributors: false,
   isPendingContents: false,
   isPendingCommit: false,
+  isPendingCommitDiff: false,
   isPendingFile: false,
   isPendingIssues: false,
   isPendingCheckReadMe: false,
@@ -362,6 +365,23 @@ export const repositoryReducer = (state = initialState, action = {}) => {
         ...state,
         error: action.payload,
         isPendingCommit: false,
+      };
+    case GET_COMMIT_DIFF.PENDING:
+      return {
+        ...state,
+        isPendingCommitDiff: true,
+      };
+    case GET_COMMIT_DIFF.SUCCESS:
+      return {
+        ...state,
+        diff: action.payload,
+        isPendingCommitDiff: false,
+      };
+    case GET_COMMIT_DIFF.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isPendingCommitDiff: false,
       };
     default:
       return state;

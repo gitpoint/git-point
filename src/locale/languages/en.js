@@ -204,6 +204,13 @@ export const en = {
       title: 'Commits',
       noCommit: 'No commit found!',
     },
+    commit: {
+      numFilesChanged: '{{numFilesChanged}} files',
+      new: 'NEW',
+      deleted: 'DELETED',
+      fileRenamed: 'File renamed without any changes',
+      byConnector: 'By {{contributor}}',
+    },
     issueList: {
       title: 'Issues',
       openButton: 'Open',

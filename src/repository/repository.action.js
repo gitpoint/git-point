@@ -4,6 +4,7 @@ import {
   fetchUrlNormal,
   fetchUrlHead,
   fetchUrlFile,
+  fetchDiff,
   fetchCommentHTML,
   fetchReadMe,
   fetchSearch,
@@ -21,6 +22,7 @@ import {
   GET_REPO_README_STATUS,
   GET_REPO_STARRED_STATUS,
   GET_COMMIT,
+  GET_COMMIT_DIFF,
   FORK_REPO_STATUS,
   CHANGE_STAR_STATUS,
   GET_REPOSITORY_README,
@@ -184,6 +186,43 @@ export const getCommitFromUrl = url => {
           payload: error,
         });
       });
+  };
+};
+
+export const getCommitDiffFromUrl = url => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: GET_COMMIT_DIFF.PENDING });
+
+    fetchDiff(url, accessToken)
+      .then(data => {
+        dispatch({
+          type: GET_COMMIT_DIFF.SUCCESS,
+          payload: data,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: GET_COMMIT_DIFF.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+export const getCommitDetails = commit => {
+  // eslint-disable-next-line no-unused-vars
+  return (dispatch, getState) => {
+    dispatch(getCommitFromUrl(commit.url));
+    dispatch(
+      getCommitDiffFromUrl(
+        commit.url
+          .replace('https://api.github.com/repos/', 'https://github.com/')
+          .replace('/commits/', '/commit/')
+          .concat('.diff')
+      )
+    );
   };
 };
 

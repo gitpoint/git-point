@@ -3,20 +3,27 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, ScrollView, Text, FlatList, StyleSheet } from 'react-native';
 import { Card } from 'react-native-elements';
+import {
+  ViewContainer,
+  DiffBlocks,
+  CodeLine,
+  LoadingContainer,
+} from 'components';
 import Parse from 'parse-diff';
-import { ViewContainer, DiffBlocks, CodeLine } from 'components';
 import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
-import { getCommitFromUrl } from '../repository.action';
+import { getCommitDetails } from '../repository.action';
 
 const mapStateToProps = state => ({
   language: state.auth.language,
   commit: state.repository.commit,
+  diff: state.repository.diff,
   isPendingCommit: state.repository.isPendingCommit,
+  isPendingDiff: state.repository.isPendingDiff,
 });
 
 const mapDispatchToProps = dispatch => ({
-  getCommitFromUrlByDispatch: url => dispatch(getCommitFromUrl(url)),
+  getCommitDetailsByDispatch: url => dispatch(getCommitDetails(url)),
 });
 
 const styles = StyleSheet.create({
@@ -64,9 +71,13 @@ const styles = StyleSheet.create({
     ...fonts.fontPrimarySemiBold,
     color: colors.red,
   },
-  header: {
-    paddingTop: 25,
+  headerContainer: {
+    paddingTop: 15,
     paddingHorizontal: 25,
+  },
+  header: {
+    flex: 1,
+    paddingTop: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -84,8 +95,11 @@ class Commit extends Component {
   props: {
     navigation: Object,
     commit: Object,
+    diff: string,
     isPendingCommit: boolean,
-    getCommitFromUrlByDispatch: Function,
+    isPendingDiff: boolean,
+    getCommitDetailsByDispatch: Function,
+    language: string,
   };
 
   componentDidMount() {
@@ -93,11 +107,10 @@ class Commit extends Component {
   }
 
   getCommit = () => {
-    const { navigation, getCommitFromUrlByDispatch } = this.props;
+    const { navigation, getCommitDetailsByDispatch } = this.props;
+    const commit = navigation.state.params.commit;
 
-    const commitUrl = navigation.state.params.commit.url;
-
-    getCommitFromUrlByDispatch(commitUrl);
+    getCommitDetailsByDispatch(commit);
   };
 
   keyExtractor = (item, index) => {
@@ -105,38 +118,33 @@ class Commit extends Component {
   };
 
   renderHeader = () => {
-    const { navigation, commit, isPendingCommit } = this.props;
-    const { language, diff } = navigation.state.params;
-
-    const filesChanged = Parse(diff);
-
-    let lineAdditions = 0;
-    let lineDeletions = 0;
-
-    filesChanged.forEach(file => {
-      lineAdditions += file.additions;
-      lineDeletions += file.deletions;
-    });
+    const { commit, language } = this.props;
 
     return (
-      <View style={styles.header}>
-        {!isPendingCommit &&
-          <View>
-            <Text>
-              {commit.commit.message}
-            </Text>
-          </View>}
-        <View>
+      <View style={styles.headerContainer}>
+        <View style={styles.header}>
+          <Text>
+            {commit.commit.message}
+          </Text>
+        </View>
+        <View style={styles.header}>
+          <Text>
+            {translate('repository.commit.byConnector', language, {
+              contributor: commit.committer.login,
+            })}
+          </Text>
+        </View>
+        <View style={styles.header}>
           <Text style={[styles.headerItem, styles.headerText]}>
-            {translate('repository.pullDiff.numFilesChanged', language, {
-              numFilesChanged: filesChanged.length,
+            {translate('repository.commit.numFilesChanged', language, {
+              numFilesChanged: commit.files.length,
             })}
           </Text>
 
           <DiffBlocks
             style={styles.headerItem}
-            additions={lineAdditions}
-            deletions={lineDeletions}
+            additions={commit.stats.additions}
+            deletions={commit.stats.deletions}
             showNumbers
           />
         </View>
@@ -145,8 +153,7 @@ class Commit extends Component {
   };
 
   renderItem = ({ item }) => {
-    const { navigation } = this.props;
-    const { language } = navigation.state.params;
+    const { language } = this.props;
     const filename = item.deleted ? item.from : item.to;
     const chunks = item.chunks.map((chunk, index) => {
       return (
@@ -196,7 +203,7 @@ class Commit extends Component {
           {item.new &&
             <Text style={styles.fileTitle}>
               <Text style={styles.newIndicator}>
-                {translate('repository.pullDiff.new', language)}
+                {translate('repository.commit.new', language)}
                 {'\n'}
               </Text>
               <Text style={[styles.fileTitle, styles.codeStyle]}>
@@ -207,7 +214,7 @@ class Commit extends Component {
           {item.deleted &&
             <Text style={styles.fileTitle}>
               <Text style={styles.deletedIndicator}>
-                {translate('repository.pullDiff.deleted', language)}
+                {translate('repository.commit.deleted', language)}
                 {'\n'}
               </Text>
               <Text style={[styles.fileTitle, styles.codeStyle]}>
@@ -229,28 +236,31 @@ class Commit extends Component {
           !item.deleted &&
           item.from !== item.to &&
           <Text style={styles.noChangesMessage}>
-            {translate('repository.pullDiff.fileRenamed', language)}
+            {translate('repository.commit.fileRenamed', language)}
           </Text>}
       </Card>
     );
   };
 
   render() {
-    const { navigation } = this.props;
-    const filesChanged = navigation.state.params
-      ? Parse(navigation.state.params.diff)
-      : [];
+    const { diff, isPendingCommit, isPendingDiff } = this.props;
+    const filesChanged = isPendingDiff ? [] : Parse(diff);
 
     return (
       <ViewContainer>
-        <FlatList
-          ListHeaderComponent={this.renderHeader}
-          removeClippedSubviews={false}
-          data={filesChanged}
-          keyExtractor={this.keyExtractor}
-          renderItem={this.renderItem}
-          disableVirtualization
-        />
+        {(isPendingCommit || isPendingDiff) &&
+          <LoadingContainer animating={isPendingCommit} center />}
+
+        {!isPendingCommit &&
+          !isPendingDiff &&
+          <FlatList
+            ListHeaderComponent={this.renderHeader}
+            removeClippedSubviews={false}
+            data={filesChanged}
+            keyExtractor={this.keyExtractor}
+            renderItem={this.renderItem}
+            disableVirtualization
+          />}
       </ViewContainer>
     );
   }
