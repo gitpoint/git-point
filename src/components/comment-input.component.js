@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Text,
   TextInput,
+  Platform,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 
@@ -59,7 +60,7 @@ export class CommentInput extends Component {
     userHasPushPermission: boolean,
     issueLocked: boolean,
     language: string,
-    onSubmitEditing: Function,
+    onSubmit: Function,
   };
 
   state: {
@@ -76,8 +77,14 @@ export class CommentInput extends Component {
     };
   }
 
-  handleSubmit = (body: string): void => {
-    this.props.onSubmitEditing(body);
+  handleSubmitEditing = (body: string): void => {
+    if (Platform.OS === 'android') {
+      this.setState({ text: `${body}\n` });
+    }
+  };
+
+  handleSubmit = (): void => {
+    this.props.onSubmit(this.state.text);
     this.setState({ text: '' });
   };
 
@@ -113,12 +120,12 @@ export class CommentInput extends Component {
                   : translate('issue.main.commentInput', language)
               }
               multiline
-              blurOnSubmit
+              blurOnSubmit={false}
               onChangeText={text => this.setState({ text })}
               onContentSizeChange={event =>
                 this.setState({ height: event.nativeEvent.contentSize.height })}
               onSubmitEditing={event =>
-                this.handleSubmit(event.nativeEvent.text)}
+                this.handleSubmitEditing(event.nativeEvent.text)}
               placeholderTextColor={colors.grey}
               style={[
                 styles.textInput,

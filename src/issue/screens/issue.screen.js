@@ -301,7 +301,7 @@ class Issue extends Component {
               }
               issueLocked={issue.locked}
               language={language}
-              onSubmitEditing={this.postComment}
+              onSubmit={this.postComment}
             />
           </KeyboardAvoidingView>}
       </ViewContainer>
