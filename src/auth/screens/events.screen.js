@@ -282,7 +282,10 @@ class Events extends Component {
         );
       case 'PushEvent':
         return (
-          <Text style={styles.linkDescription}>
+          <Text
+            style={styles.linkDescription}
+            onPress={() => this.navigateToCommitList(userEvent)}
+          >
             {userEvent.payload.ref.replace('refs/heads/', '')}
           </Text>
         );
@@ -457,6 +460,20 @@ class Events extends Component {
           }
         : userEvent.payload.forkee,
     });
+  };
+
+  navigateToCommitList = userEvent => {
+    if (userEvent.payload.commits > 2) {
+      this.props.navigation.navigate('CommitList', {
+        commits: userEvent.payload.commits,
+        title: translate('repository.commitList.title', this.props.language),
+      });
+    } else {
+      this.props.navigation.navigate('Commit', {
+        commit: userEvent.payload.commits[0],
+        title: userEvent.payload.commits[0].sha.substring(0, 7),
+      });
+    }
   };
 
   navigateToIssue = userEvent => {

@@ -200,6 +200,10 @@ export const en = {
     codeList: {
       title: 'Code',
     },
+    commitList: {
+      title: 'Commits',
+      noCommit: 'No commit found!',
+    },
     issueList: {
       title: 'Issues',
       openButton: 'Open',

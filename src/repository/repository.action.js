@@ -20,6 +20,7 @@ import {
   GET_REPOSITORY_ISSUES,
   GET_REPO_README_STATUS,
   GET_REPO_STARRED_STATUS,
+  GET_COMMIT,
   FORK_REPO_STATUS,
   CHANGE_STAR_STATUS,
   GET_REPOSITORY_README,
@@ -158,6 +159,28 @@ export const checkReadMe = url => {
       .catch(error => {
         dispatch({
           type: GET_REPO_README_STATUS.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+export const getCommitFromUrl = url => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: GET_COMMIT.PENDING });
+
+    fetchUrl(url, accessToken)
+      .then(data => {
+        dispatch({
+          type: GET_COMMIT.SUCCESS,
+          payload: data,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: GET_COMMIT.ERROR,
           payload: error,
         });
       });
