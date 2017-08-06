@@ -2,6 +2,7 @@
 /* eslint-disable no-nested-ternary */
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   StyleSheet,
   View,
@@ -118,16 +119,21 @@ const commentStyles = StyleSheet.create({
   a: linkStyle,
 });
 
-export class CommentListItem extends Component {
+const mapStateToProps = state => ({
+  authUser: state.auth.user,
+});
+
+class CommentListItemComponent extends Component {
   props: {
     comment: Object,
     onLinkPress: Function,
     language: string,
     navigation: Object,
+    authUser: Object,
   };
 
   render() {
-    const { comment, language, navigation } = this.props;
+    const { comment, language, navigation, authUser } = this.props;
     const commentBodyAdjusted = () =>
       comment.body_html
         .replace(new RegExp(/<img[^>]*>/g), 'Image')
@@ -244,9 +250,14 @@ export class CommentListItem extends Component {
             <TouchableOpacity
               style={styles.avatarContainer}
               onPress={() =>
-                navigation.navigate('Profile', {
-                  user: comment.user,
-                })}
+                navigation.navigate(
+                  authUser.login === comment.user.login
+                    ? 'AuthProfile'
+                    : 'Profile',
+                  {
+                    user: comment.user,
+                  }
+                )}
             >
               <Image
                 style={styles.avatar}
@@ -260,9 +271,14 @@ export class CommentListItem extends Component {
             <TouchableOpacity
               style={styles.titleSubtitleContainer}
               onPress={() =>
-                navigation.navigate('Profile', {
-                  user: comment.user,
-                })}
+                navigation.navigate(
+                  authUser.login === comment.user.login
+                    ? 'AuthProfile'
+                    : 'Profile',
+                  {
+                    user: comment.user,
+                  }
+                )}
             >
               <Text style={styles.linkDescription}>
                 {comment.user.login}
@@ -320,3 +336,7 @@ export class CommentListItem extends Component {
     );
   }
 }
+
+export const CommentListItem = connect(mapStateToProps)(
+  CommentListItemComponent
+);
