@@ -7,6 +7,7 @@ import {
   TouchableHighlight,
   Image,
 } from 'react-native';
+import { List, ListItem } from 'react-native-elements';
 
 import { colors, fonts } from 'config';
 
@@ -21,8 +22,7 @@ type Props = {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 15,
-    padding: 15,
+    marginTop: 30,
   },
   avatarContainer: {
     backgroundColor: colors.greyLight,
@@ -36,19 +36,23 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
   },
+  list: {
+    marginTop: 0,
+  },
   sectionTitle: {
     color: colors.black,
     ...fonts.fontPrimaryBold,
     marginBottom: 10,
+    paddingLeft: 15,
   },
   sectionTitleSmall: {
     color: colors.primaryDark,
     ...fonts.fontPrimarySemiBold,
     marginBottom: 10,
+    paddingLeft: 15,
   },
-  noMembersStyle: {
-    color: colors.black,
-    ...fonts.fontPrimary,
+  flatList: {
+    paddingLeft: 15,
   },
 });
 
@@ -67,11 +71,16 @@ export const MembersList = ({
 
     {noMembersMessage &&
       !members.length &&
-      <Text style={styles.noMembersStyle}>
-        {noMembersMessage}
-      </Text>}
+      <List containerStyle={styles.list}>
+        <ListItem
+          title={noMembersMessage}
+          titleStyle={styles.listTitle}
+          hideChevron
+        />
+      </List>}
 
     <FlatList
+      style={styles.flatList}
       data={members}
       showsHorizontalScrollIndicator={false}
       renderItem={({ item }) =>
