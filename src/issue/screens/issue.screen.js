@@ -84,7 +84,7 @@ class Issue extends Component {
     diff: string,
     issue: Object,
     isMerged: boolean,
-    // authUser: Object,
+    authUser: Object,
     repository: Object,
     contributors: Array,
     comments: Array,
@@ -103,12 +103,17 @@ class Issue extends Component {
   }
 
   onLinkPress = node => {
-    const { navigation } = this.props;
+    const { navigation, authUser } = this.props;
 
     if (node.attribs.class && node.attribs.class.includes('user-mention')) {
-      navigation.navigate('Profile', {
-        user: { login: node.children[0].data.substring(1) },
-      });
+      const login = node.children[0].data.substring(1);
+
+      navigation.navigate(
+        authUser.login === login ? 'AuthProfile' : 'Profile',
+        {
+          user: { login },
+        }
+      );
     } else if (
       node.attribs.class &&
       node.attribs.class.includes('issue-link')
