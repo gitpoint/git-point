@@ -86,6 +86,7 @@ export const repositoryReducer = (state = initialState, action = {}) => {
         ...state,
         error: action.payload,
         isPendingContributors: false,
+        contributors: [],
       };
     case GET_REPOSITORY_CONTENTS.PENDING:
       return {
