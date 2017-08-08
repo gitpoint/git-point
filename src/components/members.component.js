@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
   StyleSheet,
   View,
@@ -11,6 +12,10 @@ import { List, ListItem } from 'react-native-elements';
 
 import { colors, fonts } from 'config';
 
+const mapStateToProps = state => ({
+  authUser: state.auth.user,
+});
+
 type Props = {
   title: string,
   members: Array,
@@ -18,6 +23,7 @@ type Props = {
   containerStyle: Object,
   smallTitle: string,
   navigation: Object,
+  authUser: Object,
 };
 
 const styles = StyleSheet.create({
@@ -56,13 +62,14 @@ const styles = StyleSheet.create({
   },
 });
 
-export const MembersList = ({
+const MembersListComponent = ({
   title,
   members,
   noMembersMessage,
   containerStyle,
   smallTitle,
   navigation,
+  authUser,
 }: Props) =>
   <View style={[styles.container, containerStyle && containerStyle]}>
     <Text style={smallTitle ? styles.sectionTitleSmall : styles.sectionTitle}>
@@ -85,10 +92,14 @@ export const MembersList = ({
       showsHorizontalScrollIndicator={false}
       renderItem={({ item }) =>
         <TouchableHighlight
-          onPress={() =>
-            navigation.navigate('Profile', {
-              user: item,
-            })}
+          onPress={() => {
+            navigation.navigate(
+              authUser.login === item.login ? 'AuthProfile' : 'Profile',
+              {
+                user: item,
+              }
+            );
+          }}
           underlayColor="transparent"
           style={styles.avatarContainer}
         >
@@ -103,3 +114,5 @@ export const MembersList = ({
       horizontal
     />
   </View>;
+
+export const MembersList = connect(mapStateToProps)(MembersListComponent);
