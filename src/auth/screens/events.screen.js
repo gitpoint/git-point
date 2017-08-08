@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
     fontSize: normalize(11),
     marginTop: 1,
     ...fonts.fontPrimarySemiBold,
+    marginLeft: 39,
   },
   textContainer: {
     flex: 1,
