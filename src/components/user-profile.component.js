@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { colors, fonts, normalize } from 'config';
+import { translate } from 'utils';
 import { ImageZoom } from 'components';
 
 type Props = {
@@ -8,6 +9,7 @@ type Props = {
   initialUser: Object,
   user: Object,
   isFollowing: boolean,
+  language: string,
   navigation: Object,
 };
 
@@ -76,6 +78,7 @@ export const UserProfile = ({
   initialUser,
   user,
   isFollowing,
+  language,
   navigation,
 }: Props) =>
   <View style={styles.container}>
@@ -104,6 +107,7 @@ export const UserProfile = ({
         style={styles.unit}
         onPress={() =>
           navigation.navigate('RepositoryList', {
+            title: translate('user.repositoryList.title', language),
             user,
             repoCount: user.public_repos > 15 ? 15 : user.public_repos,
           })}
@@ -113,7 +117,9 @@ export const UserProfile = ({
             ? user.public_repos + (user.total_private_repos || 0)
             : ' '}
         </Text>
-        <Text style={styles.unitText}>Repositories</Text>
+        <Text style={styles.unitText}>
+          {translate('common.repositories', language)}
+        </Text>
       </TouchableOpacity>
 
       {type !== 'org' &&
@@ -121,6 +127,7 @@ export const UserProfile = ({
           style={styles.unit}
           onPress={() =>
             navigation.navigate('FollowerList', {
+              title: translate('user.followerList.title', language),
               user,
               followerCount: user.followers > 15 ? 15 : user.followers,
             })}
@@ -128,7 +135,9 @@ export const UserProfile = ({
           <Text style={[styles.unitNumber, isFollowing && styles.green]}>
             {!isNaN(parseInt(user.followers, 10)) ? user.followers : ' '}
           </Text>
-          <Text style={styles.unitText}>Followers</Text>
+          <Text style={styles.unitText}>
+            {translate('common.followers', language)}
+          </Text>
         </TouchableOpacity>}
 
       {type !== 'org' &&
@@ -136,6 +145,7 @@ export const UserProfile = ({
           style={styles.unit}
           onPress={() =>
             navigation.navigate('FollowingList', {
+              title: translate('user.followingList.title', language),
               user,
               followingCount: user.following > 15 ? 15 : user.following,
             })}
@@ -143,7 +153,9 @@ export const UserProfile = ({
           <Text style={styles.unitNumber}>
             {!isNaN(parseInt(user.following, 10)) ? user.following : ' '}
           </Text>
-          <Text style={styles.unitText}>Following</Text>
+          <Text style={styles.unitText}>
+            {translate('common.following', language)}
+          </Text>
         </TouchableOpacity>}
     </View>
   </View>;

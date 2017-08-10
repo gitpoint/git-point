@@ -7,6 +7,7 @@ import {
   GET_ISSUE_MERGE_STATUS,
   MERGE_PULL_REQUEST,
   GET_ISSUE_FROM_URL,
+  SUBMIT_NEW_ISSUE,
 } from './issue.type';
 
 const initialState = {
@@ -22,6 +23,7 @@ const initialState = {
   isPendingCheckMerge: false,
   isPendingMerging: false,
   isPendingIssue: false,
+  isPendingSubmitting: false,
   error: '',
 };
 
@@ -164,6 +166,23 @@ export const issueReducer = (state = initialState, action = {}) => {
         ...state,
         error: action.payload,
         isPendingIssue: false,
+      };
+    case SUBMIT_NEW_ISSUE.PENDING:
+      return {
+        ...state,
+        isPendingSubmitting: true,
+      };
+    case SUBMIT_NEW_ISSUE.SUCCESS:
+      return {
+        ...state,
+        issue: action.payload,
+        isPendingSubmitting: false,
+      };
+    case SUBMIT_NEW_ISSUE.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isPendingSubmitting: false,
       };
     default:
       return state;

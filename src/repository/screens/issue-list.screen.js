@@ -8,7 +8,7 @@ import {
   Text,
   Platform,
 } from 'react-native';
-import { ButtonGroup } from 'react-native-elements';
+import { ButtonGroup, Icon } from 'react-native-elements';
 import {
   ViewContainer,
   IssueListItem,
@@ -16,6 +16,7 @@ import {
   SearchBar,
 } from 'components';
 
+import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
 import {
   searchOpenRepoIssues,
@@ -23,6 +24,7 @@ import {
 } from '../repository.action';
 
 const mapStateToProps = state => ({
+  language: state.auth.language,
   repository: state.repository.repository,
   searchedOpenIssues: state.repository.searchedOpenIssues,
   searchedClosedIssues: state.repository.searchedClosedIssues,
@@ -90,7 +92,28 @@ const styles = StyleSheet.create({
 });
 
 class IssueList extends Component {
+  static navigationOptions = ({ navigation }) => {
+    const { state, navigate } = navigation;
+
+    return {
+      headerRight: (
+        <Icon
+          name="plus"
+          color={colors.primaryDark}
+          type="octicon"
+          containerStyle={{ marginRight: 5 }}
+          underlayColor={colors.transparent}
+          onPress={() =>
+            navigate('NewIssue', {
+              title: translate('issue.newIssue.title', state.params.language),
+            })}
+        />
+      ),
+    };
+  };
+
   props: {
+    language: string,
     repository: Object,
     searchedOpenIssues: Array,
     searchedClosedIssues: Array,
@@ -117,6 +140,14 @@ class IssueList extends Component {
       searchStart: false,
       searchFocus: false,
     };
+  }
+
+  componentDidMount() {
+    const { language, navigation } = this.props;
+
+    navigation.setParams({
+      language,
+    });
   }
 
   getList = () => {
@@ -187,6 +218,7 @@ class IssueList extends Component {
 
   render() {
     const {
+      language,
       searchedOpenIssues,
       searchedClosedIssues,
       isPendingSearchOpenIssues,
@@ -217,7 +249,10 @@ class IssueList extends Component {
           <ButtonGroup
             onPress={this.switchQueryType}
             selectedIndex={searchType}
-            buttons={['Open', 'Closed']}
+            buttons={[
+              translate('repository.issueList.openButton', language),
+              translate('repository.issueList.closedButton', language),
+            ]}
             textStyle={styles.buttonGroupText}
             selectedTextStyle={styles.buttonGroupTextSelected}
             containerStyle={styles.buttonGroupContainer}
@@ -228,7 +263,9 @@ class IssueList extends Component {
           searchType === 0 &&
           <LoadingContainer
             animating={isPendingSearchOpenIssues && searchType === 0}
-            text={`Searching for ${query}`}
+            text={translate('repository.issueList.searchingMessage', language, {
+              query,
+            })}
             style={styles.marginSpacing}
           />}
 
@@ -236,7 +273,9 @@ class IssueList extends Component {
           searchType === 1 &&
           <LoadingContainer
             animating={isPendingSearchClosedIssues && searchType === 1}
-            text={`Searching for ${query}`}
+            text={translate('repository.issueList.searchingMessage', language, {
+              query,
+            })}
             style={styles.marginSpacing}
           />}
 
@@ -256,7 +295,9 @@ class IssueList extends Component {
           searchedOpenIssues.length === 0 &&
           searchType === 0 &&
           <View style={styles.marginSpacing}>
-            <Text style={styles.searchTitle}>No open issues found!</Text>
+            <Text style={styles.searchTitle}>
+              {translate('repository.issueList.noOpenIssues', language)}
+            </Text>
           </View>}
 
         {searchStart &&
@@ -264,7 +305,9 @@ class IssueList extends Component {
           searchedClosedIssues.length === 0 &&
           searchType === 1 &&
           <View style={styles.marginSpacing}>
-            <Text style={styles.searchTitle}>No closed issues found!</Text>
+            <Text style={styles.searchTitle}>
+              {translate('repository.issueList.noClosedIssues', language)}
+            </Text>
           </View>}
       </ViewContainer>
     );

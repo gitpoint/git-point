@@ -7,7 +7,7 @@ export const getOrg = orgName => {
 
     dispatch({ type: GET_ORG.PENDING });
 
-    fetchOrg(orgName, accessToken)
+    return fetchOrg(orgName, accessToken)
       .then(data => {
         dispatch({
           type: GET_ORG.SUCCESS,
@@ -51,7 +51,7 @@ export const getOrgMembers = orgName => {
 
     dispatch({ type: GET_ORG_MEMBERS.PENDING });
 
-    fetchOrgMembers(orgName, accessToken)
+    return fetchOrgMembers(orgName, accessToken)
       .then(data => {
         dispatch({
           type: GET_ORG_MEMBERS.SUCCESS,

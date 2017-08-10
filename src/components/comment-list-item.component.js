@@ -2,6 +2,7 @@
 /* eslint-disable no-nested-ternary */
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   StyleSheet,
   View,
@@ -13,6 +14,7 @@ import {
 import HTMLView from 'react-native-htmlview';
 import moment from 'moment';
 
+import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
 
 const lightFont = {
@@ -117,15 +119,21 @@ const commentStyles = StyleSheet.create({
   a: linkStyle,
 });
 
-export class CommentListItem extends Component {
+const mapStateToProps = state => ({
+  authUser: state.auth.user,
+});
+
+class CommentListItemComponent extends Component {
   props: {
     comment: Object,
     onLinkPress: Function,
+    language: string,
     navigation: Object,
+    authUser: Object,
   };
 
   render() {
-    const { comment, navigation } = this.props;
+    const { comment, language, navigation, authUser } = this.props;
     const commentBodyAdjusted = () =>
       comment.body_html
         .replace(new RegExp(/<img[^>]*>/g), 'Image')
@@ -242,9 +250,14 @@ export class CommentListItem extends Component {
             <TouchableOpacity
               style={styles.avatarContainer}
               onPress={() =>
-                navigation.navigate('Profile', {
-                  user: comment.user,
-                })}
+                navigation.navigate(
+                  authUser.login === comment.user.login
+                    ? 'AuthProfile'
+                    : 'Profile',
+                  {
+                    user: comment.user,
+                  }
+                )}
             >
               <Image
                 style={styles.avatar}
@@ -258,9 +271,14 @@ export class CommentListItem extends Component {
             <TouchableOpacity
               style={styles.titleSubtitleContainer}
               onPress={() =>
-                navigation.navigate('Profile', {
-                  user: comment.user,
-                })}
+                navigation.navigate(
+                  authUser.login === comment.user.login
+                    ? 'AuthProfile'
+                    : 'Profile',
+                  {
+                    user: comment.user,
+                  }
+                )}
             >
               <Text style={styles.linkDescription}>
                 {comment.user.login}
@@ -283,7 +301,7 @@ export class CommentListItem extends Component {
                 value={commentBodyAdjusted()}
                 stylesheet={commentStyles}
                 renderNode={myDomElement}
-                lineBreak={false}
+                addLineBreaks={false}
               />}
 
             {comment.body &&
@@ -311,10 +329,14 @@ export class CommentListItem extends Component {
                   : styles.commentRegular,
               ]}
             >
-              No description provided.
+              {translate('issue.main.noDescription', language)}
             </Text>
           </View>}
       </View>
     );
   }
 }
+
+export const CommentListItem = connect(mapStateToProps)(
+  CommentListItemComponent
+);

@@ -274,6 +274,23 @@ export const fetchForkRepo = (owner, repo, accessToken) => {
   return fetch(ENDPOINT, accessTokenParametersPOST(accessToken));
 };
 
+export const watchRepo = (isSubscribed, owner, repo, accessToken) => {
+  const ENDPOINT = `https://api.github.com/repos/${owner}/${repo}/subscription`;
+
+  return fetch(
+    ENDPOINT,
+    accessTokenParametersPUT(accessToken, {
+      subscribed: isSubscribed,
+    })
+  );
+};
+
+export const unWatchRepo = (owner, repo, accessToken) => {
+  const ENDPOINT = `https://api.github.com/repos/${owner}/${repo}/subscription`;
+
+  return fetch(ENDPOINT, accessTokenParametersDELETE(accessToken));
+};
+
 export const fetchChangeFollowStatus = (user, isFollowing, accessToken) => {
   const ENDPOINT = `https://api.github.com/user/following/${user}`;
 
@@ -315,4 +332,22 @@ export const fetchMergePullRequest = (
       merge_method: mergeMethod,
     })
   );
+};
+
+export const fetchSubmitNewIssue = (
+  owner,
+  repo,
+  issueTitle,
+  issueComment,
+  accessToken
+) => {
+  const ENDPOINT = `https://api.github.com/repos/${owner}/${repo}/issues`;
+
+  return fetch(
+    ENDPOINT,
+    accessTokenParametersPOST(accessToken, {
+      title: issueTitle,
+      body: issueComment,
+    })
+  ).then(response => response.json());
 };

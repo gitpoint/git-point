@@ -5,10 +5,12 @@ import Communications from 'react-native-communications';
 
 import { SectionList } from 'components';
 import { colors, fonts } from 'config';
+import { translate } from 'utils';
 
 type Props = {
   entity: Object,
   orgs: Array,
+  language: string,
   navigation: Object,
 };
 
@@ -65,13 +67,19 @@ const navigateToCompany = (company, orgs, navigation) => {
   }
 };
 
-export const EntityInfo = ({ entity, orgs, navigation }: Props) => {
+export const EntityInfo = ({ entity, orgs, language, navigation }: Props) => {
+  const checksKeys = ['company', 'location', 'email', 'blog'];
+
+  if (!checksKeys.filter(key => !!entity[key]).length) {
+    return null;
+  }
+
   return (
-    <SectionList title="INFO">
+    <SectionList title={translate('common.info', language)}>
       {!!entity.company &&
         entity.company !== '' &&
         <ListItem
-          title="Company"
+          title={translate('common.company', language)}
           titleStyle={styles.listTitle}
           leftIcon={{
             name: 'organization',
@@ -90,7 +98,7 @@ export const EntityInfo = ({ entity, orgs, navigation }: Props) => {
       {!!entity.location &&
         entity.location !== '' &&
         <ListItem
-          title="Location"
+          title={translate('common.location', language)}
           titleStyle={styles.listTitle}
           leftIcon={{
             name: 'location',
@@ -106,7 +114,7 @@ export const EntityInfo = ({ entity, orgs, navigation }: Props) => {
       {!!entity.email &&
         entity.email !== '' &&
         <ListItem
-          title="Email"
+          title={translate('common.email', language)}
           titleStyle={styles.listTitle}
           leftIcon={{
             name: 'mail',
@@ -123,7 +131,7 @@ export const EntityInfo = ({ entity, orgs, navigation }: Props) => {
       {!!entity.blog &&
         entity.blog !== '' &&
         <ListItem
-          title="Website"
+          title={translate('common.website', language)}
           titleStyle={styles.listTitle}
           leftIcon={{
             name: 'link',

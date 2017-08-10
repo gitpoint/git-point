@@ -10,11 +10,13 @@ import {
   UserListItem,
   LabelListItem,
 } from 'components';
+import { translate } from 'utils';
 import { colors, fonts } from 'config';
 import { getLabels } from 'repository';
 import { editIssue, changeIssueLockStatus } from '../issue.action';
 
 const mapStateToProps = state => ({
+  language: state.auth.language,
   authUser: state.auth.user,
   repository: state.repository.repository,
   labels: state.repository.labels,
@@ -52,6 +54,7 @@ class IssueSettings extends Component {
     editIssue: Function,
     changeIssueLockStatus: Function,
     getLabels: Function,
+    language: string,
     authUser: Object,
     repository: Object,
     labels: Array,
@@ -144,23 +147,25 @@ class IssueSettings extends Component {
   };
 
   render() {
-    const { issue, isMerged, authUser, navigation } = this.props;
-    const issueType = issue.pull_request ? 'Pull Request' : 'Issue';
+    const { issue, isMerged, language, authUser, navigation } = this.props;
+    const issueType = issue.pull_request
+      ? translate('issue.settings.pullRequestType', language)
+      : translate('issue.settings.issueType', language);
 
     return (
       <ViewContainer>
         <ScrollView>
           <SectionList
             showButton
-            buttonTitle="Apply Label"
+            buttonTitle={translate('issue.settings.applyLabelButton', language)}
             buttonAction={this.showAddLabelActionSheet}
             style={{
               borderBottomWidth: 1,
               borderBottomColor: colors.grey,
             }}
             noItems={issue.labels.length === 0}
-            noItemsMessage="None yet"
-            title="LABELS"
+            noItemsMessage={translate('issue.settings.noneMessage', language)}
+            title={translate('issue.settings.labelsTitle', language)}
           >
             {issue.labels.map(item =>
               <LabelListItem
@@ -193,7 +198,10 @@ class IssueSettings extends Component {
                 assignee => assignee.login === authUser.login
               )
             }
-            buttonTitle="Assign Yourself"
+            buttonTitle={translate(
+              'issue.settings.assignYourselfButton',
+              language
+            )}
             buttonAction={() =>
               this.editIssue(
                 {
@@ -205,8 +213,8 @@ class IssueSettings extends Component {
                 { assignees: [...issue.assignees, authUser] }
               )}
             noItems={issue.assignees.length === 0}
-            noItemsMessage="None yet"
-            title="ASSIGNEES"
+            noItemsMessage={translate('issue.settings.noneMessage', language)}
+            title={translate('issue.settings.assigneesTitle', language)}
           >
             {issue.assignees.map(item =>
               <UserListItem
@@ -233,9 +241,19 @@ class IssueSettings extends Component {
             )}
           </SectionList>
 
-          <SectionList title="Actions">
+          <SectionList
+            title={translate('issue.settings.actionsTitle', language)}
+          >
             <ListItem
-              title={issue.locked ? `Unlock ${issueType}` : `Lock ${issueType}`}
+              title={
+                issue.locked
+                  ? translate('issue.settings.unlockIssue', language, {
+                      issueType,
+                    })
+                  : translate('issue.settings.lockIssue', language, {
+                      issueType,
+                    })
+              }
               hideChevron
               underlayColor={colors.greyLight}
               titleStyle={styles.listItemTitle}
@@ -246,8 +264,12 @@ class IssueSettings extends Component {
               <ListItem
                 title={
                   issue.state === 'open'
-                    ? `Close ${issueType}`
-                    : `Reopen ${issueType}`
+                    ? translate('issue.settings.closeIssue', language, {
+                        issueType,
+                      })
+                    : translate('issue.settings.reopenIssue', language, {
+                        issueType,
+                      })
                 }
                 hideChevron
                 underlayColor={colors.greyLight}
@@ -265,10 +287,11 @@ class IssueSettings extends Component {
           ref={o => {
             this.IssueActionSheet = o;
           }}
-          title={`Are you sure you want to ${issue.state === 'open'
-            ? 'close'
-            : 'reopen'} this?`}
-          options={['Yes', 'Cancel']}
+          title={translate('issue.settings.areYouSurePrompt', language)}
+          options={[
+            translate('common.yes', language),
+            translate('common.cancel', language),
+          ]}
           cancelButtonIndex={1}
           onPress={this.handleIssueActionPress}
         />
@@ -276,10 +299,11 @@ class IssueSettings extends Component {
           ref={o => {
             this.LockIssueActionSheet = o;
           }}
-          title={`Are you sure you want to ${issue.locked
-            ? 'unlock'
-            : 'lock'} this conversation?`}
-          options={['Yes', 'Cancel']}
+          title={translate('issue.settings.areYouSurePrompt', language)}
+          options={[
+            translate('common.yes', language),
+            translate('common.cancel', language),
+          ]}
           cancelButtonIndex={1}
           onPress={this.handleLockIssueActionPress}
         />
@@ -287,8 +311,11 @@ class IssueSettings extends Component {
           ref={o => {
             this.AddLabelActionSheet = o;
           }}
-          title={'Apply a label to this issue'}
-          options={[...this.props.labels.map(label => label.name), 'Cancel']}
+          title={translate('issue.settings.applyLabelTitle', language)}
+          options={[
+            ...this.props.labels.map(label => label.name),
+            translate('common.cancel', language),
+          ]}
           cancelButtonIndex={this.props.labels.length}
           onPress={this.handleAddLabelActionPress}
         />

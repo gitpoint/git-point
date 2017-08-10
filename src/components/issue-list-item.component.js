@@ -46,6 +46,7 @@ export const IssueListItem = ({ type, issue, navigation }: Props) =>
     onPress={() =>
       navigation.navigate('Issue', {
         issue,
+        isPR: !!issue.pull_request,
       })}
     underlayColor={colors.greyLight}
   >

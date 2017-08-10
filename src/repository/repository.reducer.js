@@ -13,6 +13,7 @@ import {
   SEARCH_CLOSED_ISSUES,
   SEARCH_OPEN_PULLS,
   SEARCH_CLOSED_PULLS,
+  GET_REPOSITORY_SUBSCRIBED_STATUS,
 } from './repository.type';
 
 const initialState = {
@@ -45,6 +46,7 @@ const initialState = {
   isPendingSearchOpenPulls: false,
   isPendingSearchClosedPulls: false,
   isPendingFork: false,
+  isPendingSubscribe: false,
   error: '',
 };
 
@@ -84,6 +86,7 @@ export const repositoryReducer = (state = initialState, action = {}) => {
         ...state,
         error: action.payload,
         isPendingContributors: false,
+        contributors: [],
       };
     case GET_REPOSITORY_CONTENTS.PENDING:
       return {
@@ -171,6 +174,25 @@ export const repositoryReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         isPendingFork: false,
+      };
+    case GET_REPOSITORY_SUBSCRIBED_STATUS.PENDING:
+      return {
+        ...state,
+        subscribed: false,
+        isPendingSubscribe: true,
+      };
+    case GET_REPOSITORY_SUBSCRIBED_STATUS.SUCCESS:
+      return {
+        ...state,
+        subscribed: action.payload,
+        isPendingSubscribe: false,
+      };
+    case GET_REPOSITORY_SUBSCRIBED_STATUS.ERROR:
+      return {
+        ...state,
+        subscribed: action.payload,
+        isPendingCheckSubscribed: false,
+        isPendingSubscribe: false,
       };
     case CHANGE_STAR_STATUS.PENDING:
       return {

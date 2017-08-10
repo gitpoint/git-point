@@ -9,7 +9,7 @@ const iosFonts = {
 };
 
 const androidFonts = {
-  fontPrimaryLight: { fontFamily: 'OpenSans-Light', fontWeight: '300' },
+  fontPrimaryLight: { fontFamily: 'OpenSans-Regular' },
   fontPrimary: { fontFamily: 'OpenSans-Regular' },
   fontPrimarySemiBold: { fontFamily: 'OpenSans-SemiBold', fontWeight: '600' },
   fontPrimaryBold: { fontFamily: 'OpenSans-Bold', fontWeight: '700' },

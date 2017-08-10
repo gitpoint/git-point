@@ -18,13 +18,14 @@ import {
   UserListItem,
   EntityInfo,
 } from 'components';
-import { emojifyText } from 'utils';
+import { emojifyText, translate } from 'utils';
 import { colors, fonts } from 'config';
 import { getUserInfo, changeFollowStatus } from '../user.action';
 
 const mapStateToProps = state => ({
   user: state.user.user,
   orgs: state.user.orgs,
+  language: state.auth.language,
   isFollowing: state.user.isFollowing,
   isPendingUser: state.user.isPendingUser,
   isPendingOrgs: state.user.isPendingOrgs,
@@ -54,12 +55,24 @@ class Profile extends Component {
     changeFollowStatusByDispatch: Function,
     user: Object,
     orgs: Array,
+    language: string,
     isFollowing: boolean,
     isPendingUser: boolean,
     isPendingOrgs: boolean,
     isPendingCheckFollowing: boolean,
     navigation: Object,
   };
+
+  state: {
+    refreshing: boolean,
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      refreshing: false,
+    };
+  }
 
   componentDidMount() {
     this.getUserInfo();
@@ -69,6 +82,16 @@ class Profile extends Component {
     this.props.getUserInfoByDispatch(
       this.props.navigation.state.params.user.login
     );
+  };
+
+  getUserInfo = () => {
+    this.setState({ refreshing: true });
+
+    this.props
+      .getUserInfoByDispatch(this.props.navigation.state.params.user.login)
+      .then(() => {
+        this.setState({ refreshing: false });
+      });
   };
 
   showMenuActionSheet = () => {
@@ -87,16 +110,21 @@ class Profile extends Component {
     const {
       user,
       orgs,
+      language,
       isFollowing,
       isPendingUser,
       isPendingOrgs,
       isPendingCheckFollowing,
       navigation,
     } = this.props;
-
+    const { refreshing } = this.state;
     const initialUser = navigation.state.params.user;
     const isPending = isPendingUser || isPendingOrgs;
-    const userActions = [isFollowing ? 'Unfollow' : 'Follow'];
+    const userActions = [
+      isFollowing
+        ? translate('user.profile.unfollow', language)
+        : translate('user.profile.follow', language),
+    ];
 
     return (
       <ViewContainer>
@@ -109,11 +137,12 @@ class Profile extends Component {
                 isPendingUser || isPendingCheckFollowing ? false : isFollowing
               }
               user={initialUser.login === user.login ? user : {}}
+              language={language}
               navigation={navigation}
             />}
           refreshControl={
             <RefreshControl
-              refreshing={isPending}
+              refreshing={refreshing}
               onRefresh={this.getUserInfo}
             />
           }
@@ -139,7 +168,7 @@ class Profile extends Component {
             <View>
               {!!user.bio &&
                 user.bio !== '' &&
-                <SectionList title="BIO">
+                <SectionList title={translate('common.bio', language)}>
                   <ListItem
                     subtitle={emojifyText(user.bio)}
                     subtitleStyle={styles.listSubTitle}
@@ -150,9 +179,9 @@ class Profile extends Component {
               <EntityInfo entity={user} orgs={orgs} navigation={navigation} />
 
               <SectionList
-                title="ORGANIZATIONS"
+                title={translate('common.orgs', language)}
                 noItems={orgs.length === 0}
-                noItemsMessage={'No organizations'}
+                noItemsMessage={translate('common.noOrgsMessage', language)}
               >
                 {orgs.map(item =>
                   <UserListItem
@@ -169,8 +198,8 @@ class Profile extends Component {
           ref={o => {
             this.ActionSheet = o;
           }}
-          title="User Actions"
-          options={[...userActions, 'Cancel']}
+          title={translate('user.profile.userActions', language)}
+          options={[...userActions, translate('common.cancel', language)]}
           cancelButtonIndex={1}
           onPress={this.handlePress}
         />

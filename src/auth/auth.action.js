@@ -1,5 +1,9 @@
 import { AsyncStorage } from 'react-native';
+import I18n from 'react-native-i18n';
+
 import uniqby from 'lodash.uniqby';
+import { delay, resetNavigationTo } from 'utils';
+
 import {
   fetchAccessToken,
   fetchAuthUser,
@@ -13,18 +17,21 @@ import {
   GET_AUTH_USER,
   GET_AUTH_ORGS,
   GET_EVENTS,
+  CHANGE_LANGUAGE,
 } from './auth.type';
 
-export const auth = (code, state) => {
+export const auth = (code, state, navigation) => {
   return dispatch => {
     dispatch({ type: LOGIN.PENDING });
 
-    fetchAccessToken(code, state)
+    delay(fetchAccessToken(code, state), 2000)
       .then(data => {
         dispatch({
           type: LOGIN.SUCCESS,
           payload: data.access_token,
         });
+
+        resetNavigationTo('Main', navigation);
       })
       .catch(error => {
         dispatch({
@@ -92,7 +99,7 @@ export const getOrgs = () => {
 
         dispatch({
           type: GET_AUTH_ORGS.SUCCESS,
-          payload: uniqby(orgs, 'id').sort(
+          payload: uniqby(orgs, 'login').sort(
             (org1, org2) => org1.login > org2.login
           ),
         });
@@ -125,5 +132,12 @@ export const getUserEvents = user => {
           payload: error,
         });
       });
+  };
+};
+
+export const changeLanguage = lang => {
+  return dispatch => {
+    dispatch({ type: CHANGE_LANGUAGE.SUCCESS, payload: lang });
+    I18n.locale = lang;
   };
 };

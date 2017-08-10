@@ -19,6 +19,7 @@ import {
   NotificationListItem,
 } from 'components';
 import { colors, fonts, normalize } from 'config';
+import { translate } from 'utils';
 import { getIssueFromUrl } from 'issue';
 import {
   getUnreadNotifications,
@@ -33,6 +34,7 @@ const mapStateToProps = state => ({
   participating: state.notifications.participating,
   all: state.notifications.all,
   issue: state.issue.issue,
+  language: state.auth.language,
   isPendingUnread: state.notifications.isPendingUnread,
   isPendingParticipating: state.notifications.isPendingParticipating,
   isPendingAll: state.notifications.isPendingAll,
@@ -85,11 +87,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     flex: 1,
   },
-  notificationTitle: {
-    color: colors.black,
-    fontSize: normalize(12),
-    ...fonts.fontPrimaryLight,
-  },
   markAsReadIconRepo: {
     flex: 0.15,
     justifyContent: 'center',
@@ -103,6 +100,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    paddingHorizontal: 10,
   },
   noneTitle: {
     fontSize: normalize(16),
@@ -121,6 +119,7 @@ class Notifications extends Component {
     unread: Array,
     participating: Array,
     all: Array,
+    language: string,
     isPendingUnread: boolean,
     isPendingParticipating: boolean,
     isPendingAll: boolean,
@@ -314,6 +313,8 @@ class Notifications extends Component {
 
   render() {
     const { type } = this.state;
+    const { language } = this.props;
+
     const repositories = [
       ...new Set(
         this.notifications().map(
@@ -332,8 +333,12 @@ class Notifications extends Component {
           <View style={styles.buttonGroupWrapper}>
             <ButtonGroup
               onPress={this.switchType}
-              selectedIndex={this.state.type}
-              buttons={['Unread', 'Participating', 'All']}
+              selectedIndex={type}
+              buttons={[
+                translate('notifications.main.unreadButton', language),
+                translate('notifications.main.participatingButton', language),
+                translate('notifications.main.allButton', language),
+              ]}
               textStyle={styles.buttonGroupText}
               selectedTextStyle={styles.buttonGroupTextSelected}
               containerStyle={styles.buttonGroupContainer}
@@ -344,9 +349,7 @@ class Notifications extends Component {
             this.notifications().length === 0 &&
             <LoadingContainer
               animating={this.isLoading() && this.notifications().length === 0}
-              text={`Retrieving ${type === 0
-                ? 'unread'
-                : type === 1 ? 'pending' : 'all'} notifications`}
+              text={translate('notifications.main.retrievingMessage', language)}
               style={styles.marginSpacing}
             />}
 
@@ -354,9 +357,7 @@ class Notifications extends Component {
             this.notifications().length === 0 &&
             <View style={styles.textContainer}>
               <Text style={styles.noneTitle}>
-                {`You don't have any${type === 0
-                  ? ' unread'
-                  : type === 1 ? ' pending' : ''} notifications!`}
+                {translate('notifications.main.noneMessage', language)}
               </Text>
             </View>}
 
