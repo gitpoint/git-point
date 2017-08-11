@@ -53,6 +53,7 @@ export const en = {
       title: 'Options',
       language: 'Language',
       english: 'English',
+      french: 'French',
       privacyPolicy: 'Privacy Policy',
       signOut: 'Sign Out',
     },

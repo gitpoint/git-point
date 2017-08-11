@@ -66,6 +66,14 @@ class UserOptions extends Component {
               onPress={() => changeLanguageByDispatch('en')}
               underlayColor={colors.greyLight}
             />
+            <ListItem
+              title={translate('auth.userOptions.french', language)}
+              titleStyle={styles.listTitle}
+              hideChevron={language !== 'fr'}
+              rightIcon={{ name: 'check' }}
+              onPress={() => changeLanguageByDispatch('fr')}
+              underlayColor={colors.greyLight}
+            />
           </SectionList>
 
           <SectionList>
