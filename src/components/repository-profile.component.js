@@ -10,6 +10,7 @@ type Props = {
   starred: boolean,
   navigation: Object,
   loading: boolean,
+  subscribed: boolean,
 };
 
 const styles = StyleSheet.create({
@@ -97,6 +98,7 @@ export const RepositoryProfile = ({
   starred,
   navigation,
   loading,
+  subscribed,
 }: Props) =>
   <View style={styles.container}>
     <View style={styles.languageInfo}>
@@ -139,6 +141,10 @@ export const RepositoryProfile = ({
         ]}
       >
         {emojifyText(repository.description) || ' '}
+      </Text>
+
+      <Text style={styles.languageInfoTitle}>
+        {subscribed ? '(watching)' : undefined}
       </Text>
 
       {repository.fork &&
