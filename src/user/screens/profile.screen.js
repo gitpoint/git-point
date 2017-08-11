@@ -75,14 +75,10 @@ class Profile extends Component {
   }
 
   componentDidMount() {
-    this.getUserInfo();
-  }
-
-  getUserInfo = () => {
     this.props.getUserInfoByDispatch(
       this.props.navigation.state.params.user.login
     );
-  };
+  }
 
   getUserInfo = () => {
     this.setState({ refreshing: true });

@@ -68,15 +68,11 @@ class OrganizationProfile extends Component {
   }
 
   componentDidMount() {
-    this.getOrgData();
-  }
-
-  getOrgData = () => {
     const organization = this.props.navigation.state.params.organization;
 
     this.props.getOrgByDispatch(organization.login);
     this.props.getOrgMembersByDispatch(organization.login);
-  };
+  }
 
   getOrgData = () => {
     const organization = this.props.navigation.state.params.organization;
@@ -100,8 +96,6 @@ class OrganizationProfile extends Component {
     } = this.props;
     const { refreshing } = this.state;
     const initialOrganization = this.props.navigation.state.params.organization;
-
-    const isLoadingData = isPendingOrg || isPendingMembers;
 
     return (
       <ViewContainer>

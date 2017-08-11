@@ -78,6 +78,7 @@ class Issue extends Component {
   props: {
     getIssueCommentsByDispatch: Function,
     getRepositoryByDispatch: Function,
+    getContributorsByDispatch: Function,
     postIssueCommentByDispatch: Function,
     getIssueFromUrlByDispatch: Function,
     diff: string,
@@ -168,39 +169,6 @@ class Issue extends Component {
             this.getContributorsLink(issue.repository_url)
           ),
         ]).then(() => {
-          this.setNavigationParams();
-        });
-      } else {
-        this.setNavigationParams();
-      }
-    });
-  };
-
-  getIssueInformation = () => {
-    const {
-      issue,
-      navigation,
-      repository,
-      getIssueCommentsByDispatch,
-      getRepositoryByDispatch,
-      getIssueFromUrlByDispatch,
-    } = this.props;
-
-    const issueParam = navigation.state.params.issue;
-    const issueURLParam = navigation.state.params.issueURL;
-    const issueCommentsURL = `${navigation.state.params.issueURL}/comments`;
-
-    Promise.all(
-      getIssueFromUrlByDispatch(issueURLParam || issueParam.url),
-      getIssueCommentsByDispatch(
-        issueURLParam ? issueCommentsURL : issueParam.comments_url
-      )
-    ).then(() => {
-      if (
-        repository.full_name !==
-        issue.repository_url.replace('https://api.github.com/repos/', '')
-      ) {
-        getRepositoryByDispatch(issue.repository_url).then(() => {
           this.setNavigationParams();
         });
       } else {
