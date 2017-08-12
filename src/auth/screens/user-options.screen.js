@@ -72,6 +72,7 @@ class UserOptions extends Component {
                 />
               }
               keyExtractor={(item, index) => index}
+              extraData={this.props.language}
             />
           </SectionList>
 
