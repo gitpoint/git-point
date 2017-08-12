@@ -27,6 +27,10 @@ export const en = {
       issueEditedEvent: '{{action}} their comment on {{type}}',
       issueRemovedEvent: '{{action}} their comment on {{type}}',
       issuesEvent: '{{action}} issue',
+      publicEvent: {
+        action: 'made',
+        connector: 'public',
+      },
       pullRequestEvent: '{{action}} pull request',
       pullRequestReviewEvent: '{{action}} pull request review',
       pullRequestReviewCommentEvent: '{{action}} on pull request',
@@ -68,7 +72,6 @@ export const en = {
         starred: 'starred',
         pushedTo: 'pushed to',
         forked: 'forked',
-        madePublic: 'made public',
         commented: 'commented',
         removed: 'removed',
       },

@@ -147,7 +147,7 @@ class Events extends Component {
       case 'MemberEvent':
         return translate(`auth.events.actions.${action}`, language);
       case 'PublicEvent':
-        return translate('auth.events.actions.madePublic', language);
+        return translate('auth.events.publicEvent.action', language);
       case 'PullRequestEvent':
         return translate('auth.events.pullRequestEvent', language, {
           action: translate(`auth.events.actions.${action}`, language),
@@ -338,6 +338,8 @@ class Events extends Component {
       case 'PullRequestEvent':
       case 'PullRequestReviewCommentEvent':
         return translate('auth.events.atConnector', language);
+      case 'PublicEvent':
+        return translate('auth.events.publicEvent.connector', language);
       default:
         return null;
     }
