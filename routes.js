@@ -82,6 +82,12 @@ const sharedRoutes = {
       header: null,
     },
   },
+  AuthProfile: {
+    screen: AuthProfileScreen,
+    navigationOptions: {
+      header: null,
+    },
+  },
   Organization: {
     screen: OrganizationProfileScreen,
     navigationOptions: {
