@@ -28,7 +28,7 @@ export const en = {
       issueEditedEvent: 'edited their comment on {{payload}}',
       issueRemovedEvent: 'removed their comment on {{payload}}',
       issuesEvent: '{{payload}} issue',
-      publicEvent: 'open sourced',
+      publicEvent: 'made public',
       pullRequestEvent: '{{payload}} pull request',
       pullRequestReviewEvent: '{{payload}} pull request review',
       pullRequestReviewCommentEvent: 'commented on pull request',
