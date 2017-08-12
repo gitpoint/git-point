@@ -214,6 +214,7 @@ class IssueList extends Component {
       type={this.props.navigation.state.params.type}
       issue={item}
       navigation={this.props.navigation}
+      language={this.props.language}
     />;
 
   render() {

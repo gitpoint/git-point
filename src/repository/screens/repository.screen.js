@@ -380,6 +380,7 @@ class Repository extends Component {
                   type="issue"
                   issue={item}
                   navigation={navigation}
+                  language={language}
                 />,
               )}
           </SectionList>
@@ -413,6 +414,7 @@ class Repository extends Component {
                   type="pull"
                   issue={item}
                   navigation={navigation}
+                  language={language}
                 />,
               )}
           </SectionList>

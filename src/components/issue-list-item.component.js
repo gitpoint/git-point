@@ -10,6 +10,7 @@ type Props = {
   type: string,
   issue: Object,
   navigation: Object,
+  language: string,
 };
 
 const styles = StyleSheet.create({
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const IssueListItem = ({ type, issue, navigation }: Props) =>
+export const IssueListItem = ({ type, issue, navigation, language }: Props) =>
   <TouchableHighlight
     style={issue.state === 'closed' && styles.closedIssue}
     onPress={() =>
@@ -64,6 +65,6 @@ export const IssueListItem = ({ type, issue, navigation }: Props) =>
         hideChevron
         titleStyle={styles.title}
       />
-      <StateBadge style={styles.badge} issue={issue} />
+      <StateBadge style={styles.badge} issue={issue} language={language} />
     </View>
   </TouchableHighlight>;

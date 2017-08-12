@@ -145,6 +145,7 @@ export class IssueDescription extends Component {
                 style={styles.badge}
                 issue={issue}
                 isMerged={isMerged && issue.pull_request}
+                language={language}
               />)}
         </View>
 

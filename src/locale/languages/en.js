@@ -208,6 +208,11 @@ export const en = {
       lockedCommentInput: 'Locked, but you can still comment...',
       commentInput: 'Add a comment...',
       lockedIssue: 'Issue is locked',
+      states: {
+        open: 'Open',
+        closed: 'Closed',
+        merged: 'Merged',
+      },
     },
     newIssue: {
       title: 'New Issue',
