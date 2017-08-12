@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { ScrollView, StyleSheet, TextInput, View, Alert } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
-import { ViewContainer, SectionList } from 'components';
+import { ViewContainer, SectionList, LoadingModal } from 'components';
 import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
 import { submitNewIssue } from '../issue.action';
@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
   language: state.auth.language,
   repository: state.repository.repository,
+  isPendingSubmitting: state.issue.isPendingSubmitting,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -46,6 +47,7 @@ class NewIssue extends Component {
     language: string,
     repository: Object,
     navigation: Object,
+    isPendingSubmitting: boolean,
   };
 
   state: {
@@ -97,11 +99,12 @@ class NewIssue extends Component {
   };
 
   render() {
-    const { language, repository } = this.props;
+    const { language, repository, isPendingSubmitting } = this.props;
     const { issueTitle, issueComment } = this.state;
 
     return (
       <ViewContainer>
+        {isPendingSubmitting && <LoadingModal />}
         <ScrollView>
           {repository.full_name &&
             <ListItem
