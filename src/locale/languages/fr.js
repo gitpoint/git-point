@@ -26,7 +26,7 @@ export const fr = {
       deleteEvent: 'a supprimé {{payload}}',
       forkEvent: 'a forké',
       issueCommentEvent: 'a commenté sur {{payload}}',
-      issueEditedEvent: 'a edité son commentaire sur {{payload}}',
+      issueEditedEvent: 'a édité son commentaire sur {{payload}}',
       issueRemovedEvent: 'a supprimé son commentaire sur {{payload}}',
       issuesEvent: '{{payload}} issue',
       publicEvent: 'a rendu open source',
@@ -46,7 +46,7 @@ export const fr = {
     profile: {
       orgsRequestApprovalTop: 'Vous ne voyez pas toutes vos organisations ?',
       orgsRequestApprovalBottom:
-        'Vous devez peut être demander un accréditation pour celles-ci.',
+        'Vous devez peut être demander une accréditation pour celles-ci.',
       codePushCheck: 'Vérifiez les mises à jour',
       codePushChecking: 'Recherche de mises à jour...',
       codePushUpdated: "L'application est à jour",
@@ -68,7 +68,7 @@ export const fr = {
         "Nous sommes ravis que vous ayez décidé d'utiliser GitPoint. Cette politique de confidentialité est là pour vous informer de ce que nous faisons - et ne faisons pas - de vos données utilisateur.",
       userDataTitle: 'DONNÉES UTILISATEUR',
       userData1:
-        "Nous ne faisons rien de vos informations GitHub. Après authentification, le jeton OAuth de l'utilisateur est enregistré directement sur le stockage de l'appareil. Il nous est impossible de récupérer cette information. Nous ne lisons jamais le jeton d'accès utilisateur, ni le stockons d'une quelconque manières.",
+        "Nous ne faisons rien de vos informations GitHub. Après authentification, le jeton OAuth de l'utilisateur est enregistré directement sur le stockage de l'appareil. Il nous est impossible de récupérer cette information. Nous ne lisons jamais le jeton d'accès utilisateur, ni le stockons d'une quelconque manière.",
       userData2:
         "Cela signifique que jamais, nous ne lisons, utilisons, ou partageons d'une quelconque manière les données GitHub de l'utilisateur. Si des données privées venaient à un moment donné à être visibles, nous ne les enregistrerons et regarderons pas. Si jamais cela venait à se faire par accident, nous les supprimerons immédiatement en utilisant une méthode de suppression sécurisée. Encore une fois, nous avons mis en place l'authentification de manière à ce que cela n'arrive jamais.",
       analyticsInfoTitle: 'INFORMATIONS ANALYTIQUES',
@@ -148,8 +148,8 @@ export const fr = {
       viewAllButton: 'Voir tous',
       newIssueButton: 'Nouveau ticket',
       pullRequestTitle: 'PULL REQUESTS',
-      noPullRequestsMessage: 'Aucun pull requests',
-      noOpenPullRequestsMessage: 'Aucun pull requests ouvert',
+      noPullRequestsMessage: 'Aucune pull requests',
+      noOpenPullRequestsMessage: 'Aucune pull requests ouverte',
     },
     codeList: {
       title: 'Code',
@@ -193,16 +193,16 @@ export const fr = {
       lockIssue: 'Verrouiller {{issueType}}',
       closeIssue: 'Fermer {{issueType}}',
       reopenIssue: 'Réouvrir {{issueType}}',
-      areYouSurePrompt: 'Etes-vous certain ?',
+      areYouSurePrompt: 'Êtes-vous certain ?',
       applyLabelTitle: 'Appliquer un libellé à ce ticket',
     },
     main: {
       assignees: 'Assignés',
       mergeButton: 'Fusionner le pull request',
       noDescription: 'Aucune description fournie.',
-      lockedCommentInput: 'Vérouillé, mais vous pouvez encore commenter..',
-      commentInput: 'Ajouter un commentaire..',
-      lockedIssue: 'Ce ticket est vérouillé',
+      lockedCommentInput: 'Verouiller, mais vous pouvez encore commenter...',
+      commentInput: 'Ajouter un commentaire...',
+      lockedIssue: 'Ce ticket est verouillé',
     },
     newIssue: {
       title: 'Nouveau ticket',
@@ -213,7 +213,7 @@ export const fr = {
       writeAComment: 'Ecrivez un commentaire pour votre ticket ici',
     },
     pullMerge: {
-      title: 'Fusionner le pull request',
+      title: 'Fusionner la pull request',
       createMergeCommit: 'Créer un commit de fusion',
       squashAndMerge: 'Squasher et fusionner',
       merge: 'fusionner',
