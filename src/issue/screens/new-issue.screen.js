@@ -90,6 +90,7 @@ class NewIssue extends Component {
       ).then(issue => {
         navigation.navigate('Issue', {
           issue,
+          headerLeft: false,
         });
       });
     }

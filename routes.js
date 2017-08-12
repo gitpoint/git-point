@@ -138,6 +138,7 @@ const sharedRoutes = {
 
       return {
         title: `${langTitle} #${number}`,
+        headerLeft: navigation.state.params.headerLeft,
       };
     },
   },
