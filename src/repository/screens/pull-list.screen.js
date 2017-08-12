@@ -277,7 +277,7 @@ class PullList extends Component {
           searchType === 0 &&
           <View style={styles.marginSpacing}>
             <Text style={styles.searchTitle}>
-              {translate('repository.pullList.noOpenIssues', language)}
+              {translate('repository.pullList.noOpenPulls', language)}
             </Text>
           </View>}
 
@@ -287,7 +287,7 @@ class PullList extends Component {
           searchType === 1 &&
           <View style={styles.marginSpacing}>
             <Text style={styles.searchTitle}>
-              {translate('repository.pullList.noOpenIssues', language)}
+              {translate('repository.pullList.noOpenPulls', language)}
             </Text>
           </View>}
       </ViewContainer>

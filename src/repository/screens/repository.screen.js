@@ -218,10 +218,10 @@ class Repository extends Component {
       starred
         ? translate('repository.main.unstarAction', language)
         : translate('repository.main.starAction', language),
-      translate('repository.main.shareAction', language),
       subscribed
         ? translate('repository.main.unwatchAction', language)
         : translate('repository.main.watchAction', language),
+      translate('repository.main.shareAction', language),
     ];
 
     if (showFork) {
