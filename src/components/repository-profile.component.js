@@ -143,10 +143,6 @@ export const RepositoryProfile = ({
         {emojifyText(repository.description) || ' '}
       </Text>
 
-      <Text style={styles.languageInfoTitle}>
-        {subscribed ? '(watching)' : undefined}
-      </Text>
-
       {repository.fork &&
         <Text style={[styles.subtitle, styles.subtitleFork]}>
           {repository.parent &&
@@ -173,6 +169,15 @@ export const RepositoryProfile = ({
             : ' '}
         </Text>
         <Text style={styles.unitText}>Stars</Text>
+      </View>
+
+      <View style={styles.unit}>
+        <Text style={[styles.unitNumber, subscribed && styles.green]}>
+          {!isNaN(parseInt(repository.watchers_count, 10))
+            ? abbreviateNumber(repository.watchers_count)
+            : ' '}
+        </Text>
+        <Text style={styles.unitText}>Watchers</Text>
       </View>
 
       <View style={styles.unit}>
