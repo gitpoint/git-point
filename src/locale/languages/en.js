@@ -214,6 +214,10 @@ export const en = {
         closed: 'Closed',
         merged: 'Merged',
       },
+      screenTitles: {
+        issue: 'Issue',
+        pullRequest: 'Pull Request',
+      },
     },
     newIssue: {
       title: 'New Issue',
