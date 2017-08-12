@@ -149,7 +149,7 @@ class Events extends Component {
       case 'MemberEvent':
         return `${userEvent.payload.action}`;
       case 'PublicEvent':
-        return translate('auth.events.issuesEvent', language);
+        return translate('auth.events.publicEvent', language);
       case 'PullRequestEvent':
         return translate('auth.events.pullRequestEvent', language, {
           payload: userEvent.payload.action,
