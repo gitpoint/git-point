@@ -55,6 +55,7 @@ class OrganizationProfile extends Component {
     // isPendingRepos: boolean,
     isPendingMembers: boolean,
     navigation: Object,
+    language: string,
   };
 
   state: {
@@ -123,7 +124,10 @@ class OrganizationProfile extends Component {
           navigateBack
           navigation={navigation}
         >
-          {isPendingMembers && <LoadingMembersList title={translate('organization.main.membersTitle', language)} />}
+          {isPendingMembers &&
+            <LoadingMembersList
+              title={translate('organization.main.membersTitle', language)}
+            />}
 
           {!isPendingMembers &&
             <MembersList
@@ -134,7 +138,9 @@ class OrganizationProfile extends Component {
 
           {!!organization.description &&
             organization.description !== '' &&
-            <SectionList title={translate('organization.main.descriptionTitle', language)}>
+            <SectionList
+              title={translate('organization.main.descriptionTitle', language)}
+            >
               <ListItem
                 subtitle={emojifyText(organization.description)}
                 subtitleStyle={styles.listSubTitle}

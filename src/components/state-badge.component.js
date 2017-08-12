@@ -36,11 +36,16 @@ const styles = StyleSheet.create({
   },
 });
 
-export const StateBadge = ({ issue, isMerged, text, type, style, language }: Props) => {
+export const StateBadge = ({
+  issue,
+  isMerged,
+  text,
+  type,
+  style,
+  language,
+}: Props) => {
   let issueState = type;
   let issueText = text;
-
-  console.log(language);
 
   if (isMerged) {
     issueState = 'merged';

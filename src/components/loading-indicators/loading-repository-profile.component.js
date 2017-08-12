@@ -59,8 +59,6 @@ const styles = StyleSheet.create({
 
 export class LoadingRepositoryProfile extends Component {
   props: {
-    repository: Object,
-    navigation: Object,
     language: string,
   };
 
@@ -97,11 +95,15 @@ export class LoadingRepositoryProfile extends Component {
 
           <View style={styles.details}>
             <View style={styles.unit}>
-              <Text style={styles.unitText}>{translate('repository.main.starsTitle', language)}</Text>
+              <Text style={styles.unitText}>
+                {translate('repository.main.starsTitle', language)}
+              </Text>
             </View>
 
             <View style={styles.unit}>
-              <Text style={styles.unitText}>{translate('repository.main.forksTitle', language)}</Text>
+              <Text style={styles.unitText}>
+                {translate('repository.main.forksTitle', language)}
+              </Text>
             </View>
           </View>
         </View>
