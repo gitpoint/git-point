@@ -146,6 +146,9 @@ export const en = {
       pullRequestTitle: 'PULL REQUESTS',
       noPullRequestsMessage: 'No pull requests',
       noOpenPullRequestsMessage: 'No open pull requests',
+      starsTitle: 'Stars',
+      forksTitle: 'Forks',
+      forkedFromMessage: 'forked from',
     },
     codeList: {
       title: 'Code',

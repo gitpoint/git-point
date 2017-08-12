@@ -5,7 +5,7 @@ import { StyleSheet, Text, View, Animated } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 import { colors, fonts, normalize } from 'config';
-import { loadingAnimation } from 'utils';
+import { loadingAnimation, translate } from 'utils';
 
 const styles = StyleSheet.create({
   container: {
@@ -61,6 +61,7 @@ export class LoadingRepositoryProfile extends Component {
   props: {
     repository: Object,
     navigation: Object,
+    language: string,
   };
 
   state: {
@@ -79,6 +80,8 @@ export class LoadingRepositoryProfile extends Component {
   }
 
   render() {
+    const { language } = this.props;
+
     return (
       <View style={styles.container}>
         <View>
@@ -94,11 +97,11 @@ export class LoadingRepositoryProfile extends Component {
 
           <View style={styles.details}>
             <View style={styles.unit}>
-              <Text style={styles.unitText}>Stars</Text>
+              <Text style={styles.unitText}>{translate('repository.main.starsTitle', language)}</Text>
             </View>
 
             <View style={styles.unit}>
-              <Text style={styles.unitText}>Forks</Text>
+              <Text style={styles.unitText}>{translate('repository.main.forksTitle', language)}</Text>
             </View>
           </View>
         </View>
