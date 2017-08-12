@@ -174,6 +174,12 @@ export const en = {
       fileRenamed: 'File renamed without any changes',
     },
   },
+  organization: {
+    main: {
+      membersTitle: 'MEMBERS',
+      descriptionTitle: 'DESCRIPTION',
+    },
+  },
   issue: {
     settings: {
       title: 'Settings',
