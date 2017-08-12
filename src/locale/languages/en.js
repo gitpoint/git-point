@@ -135,6 +135,7 @@ export const en = {
       watchAction: '👁 Watch',
       ownerTitle: 'OWNER',
       contributorsTitle: 'CONTRIBUTORS',
+      noContributorsMessage: 'No contributors found',
       sourceTitle: 'SOURCE',
       readMe: 'README',
       viewSource: 'View Code',

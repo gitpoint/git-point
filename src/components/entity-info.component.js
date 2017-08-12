@@ -68,6 +68,12 @@ const navigateToCompany = (company, orgs, navigation) => {
 };
 
 export const EntityInfo = ({ entity, orgs, language, navigation }: Props) => {
+  const checksKeys = ['company', 'location', 'email', 'blog'];
+
+  if (!checksKeys.filter(key => !!entity[key]).length) {
+    return null;
+  }
+
   return (
     <SectionList title={translate('common.info', language)}>
       {!!entity.company &&
@@ -118,7 +124,7 @@ export const EntityInfo = ({ entity, orgs, language, navigation }: Props) => {
           subtitle={entity.email}
           subtitleStyle={styles.listSubTitle}
           onPress={() =>
-            Communications.email([entity.email], null, null, 'Hi!', '')}
+            Communications.email([entity.email], null, null, null, null)}
           underlayColor={colors.greyLight}
         />}
 

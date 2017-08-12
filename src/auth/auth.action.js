@@ -99,7 +99,7 @@ export const getOrgs = () => {
 
         dispatch({
           type: GET_AUTH_ORGS.SUCCESS,
-          payload: uniqby(orgs, 'id').sort(
+          payload: uniqby(orgs, 'login').sort(
             (org1, org2) => org1.login > org2.login
           ),
         });
