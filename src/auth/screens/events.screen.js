@@ -1,30 +1,20 @@
 /* eslint react/prop-types: 0 */
-
+/* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, FlatList, View } from 'react-native';
-import moment from 'moment';
+import moment from 'moment/min/moment-with-locales.min';
+import I18n from 'react-native-i18n';
 
 import { LoadingUserListItem, UserListItem, ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { emojifyText, translate } from 'utils';
 import { getUserEvents } from '../auth.action';
 
-moment.updateLocale('en', {
-  relativeTime: {
-    past: '%s',
-    s: '%ds',
-    m: '%dm',
-    mm: '%dm',
-    h: '%dh',
-    hh: '%dh',
-    d: '%dd',
-    dd: '%dd',
-    M: '%dmo',
-    MM: '%dmo',
-    y: '%dy',
-    yy: '%dy',
-  },
+const language = I18n.locale.substr(0, 2);
+
+moment.updateLocale(language, {
+  relativeTime: translate('common.relativeTime', language),
 });
 
 const mapStateToProps = state => ({
