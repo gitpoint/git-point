@@ -162,8 +162,8 @@ export const en = {
       openButton: 'Open',
       closedButton: 'Closed',
       searchingMessage: 'Searching for {{query}}',
-      noOpenIssues: 'No open pull requests found!',
-      noClosedIssues: 'No closed pull requests found!',
+      noOpenPulls: 'No open pull requests found!',
+      noClosedPulls: 'No closed pull requests found!',
     },
     pullDiff: {
       title: 'Diff',
