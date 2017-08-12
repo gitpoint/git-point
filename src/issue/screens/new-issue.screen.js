@@ -141,7 +141,6 @@ class NewIssue extends Component {
             <TextInput
               underlineColorAndroid={'transparent'}
               placeholder={translate('issue.newIssue.writeAComment', language)}
-              blurOnSubmit
               multiline
               onChangeText={text => this.setState({ issueComment: text })}
               onContentSizeChange={event =>
