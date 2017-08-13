@@ -1,4 +1,4 @@
-import I18n from 'react-native-i18n';
+import { getLanguage } from 'locale';
 import {
   LOGIN,
   LOGOUT,
@@ -17,7 +17,7 @@ const initialState = {
   hasInitialUser: false,
   orgs: [],
   events: [],
-  language: I18n.locale.substr(0, 2),
+  language: getLanguage(),
   isPendingUser: false,
   isPendingOrgs: false,
   isPendingEvents: false,

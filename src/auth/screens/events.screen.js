@@ -4,18 +4,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, FlatList, View } from 'react-native';
 import moment from 'moment/min/moment-with-locales.min';
-import I18n from 'react-native-i18n';
 
 import { LoadingUserListItem, UserListItem, ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { emojifyText, translate } from 'utils';
 import { getUserEvents } from '../auth.action';
-
-const language = I18n.locale.substr(0, 2);
-
-moment.updateLocale(language, {
-  relativeTime: translate('common.relativeTime', language),
-});
 
 const mapStateToProps = state => ({
   user: state.auth.user,
