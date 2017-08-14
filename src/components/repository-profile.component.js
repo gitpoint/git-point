@@ -147,7 +147,9 @@ export const RepositoryProfile = ({
         <Text style={[styles.subtitle, styles.subtitleFork]}>
           {repository.parent &&
             <Text>
-              <Text>{translate('repository.main.forkedFromMessage', language)}</Text>
+              <Text>
+                {translate('repository.main.forkedFromMessage', language)}
+              </Text>
               <Text
                 style={{ ...fonts.fontPrimaryBold }}
                 onPress={() =>
@@ -168,7 +170,9 @@ export const RepositoryProfile = ({
             ? abbreviateNumber(repository.stargazers_count)
             : ' '}
         </Text>
-        <Text style={styles.unitText}>{translate('repository.main.starsTitle', language)}</Text>
+        <Text style={styles.unitText}>
+          {translate('repository.main.starsTitle', language)}
+        </Text>
       </View>
 
       <View style={styles.unit}>
@@ -177,7 +181,9 @@ export const RepositoryProfile = ({
             ? abbreviateNumber(repository.forks)
             : ' '}
         </Text>
-        <Text style={styles.unitText}>{translate('repository.main.forksTitle', language)}</Text>
+        <Text style={styles.unitText}>
+          {translate('repository.main.forksTitle', language)}
+        </Text>
       </View>
     </View>
   </View>;
