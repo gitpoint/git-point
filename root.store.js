@@ -1,7 +1,9 @@
 import { compose, createStore, applyMiddleware } from 'redux';
 import { autoRehydrate } from 'redux-persist';
+import Reactotron from 'reactotron-react-native'; // eslint-disable-line import/no-extraneous-dependencies
 import createLogger from 'redux-logger';
 import reduxThunk from 'redux-thunk';
+import 'config/reactotron';
 import { rootReducer } from './root.reducer';
 
 const getMiddleware = () => {
@@ -24,7 +26,18 @@ const getEnhancers = () => {
   return enhancers;
 };
 
-export const configureStore = createStore(
-  rootReducer,
-  compose(getMiddleware(), ...getEnhancers())
-);
+let store;
+
+if (__DEV__ && process.env.TRON_ENABLED) {
+  store = Reactotron.createStore(
+    rootReducer,
+    compose(getMiddleware(), ...getEnhancers())
+  );
+} else {
+  store = createStore(
+    rootReducer,
+    compose(getMiddleware(), ...getEnhancers())
+  );
+}
+
+export const configureStore = store;
