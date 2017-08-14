@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, ActivityIndicator } from 'react-native';
 import { ListItem, Button } from 'react-native-elements';
 import Parse from 'parse-diff';
-import moment from 'moment';
+import moment from 'moment/min/moment-with-locales.min';
 
 import { StateBadge, MembersList, LabelButton, DiffBlocks } from 'components';
 import { translate } from 'utils';
@@ -145,6 +145,7 @@ export class IssueDescription extends Component {
                 style={styles.badge}
                 issue={issue}
                 isMerged={isMerged && issue.pull_request}
+                language={language}
               />)}
         </View>
 

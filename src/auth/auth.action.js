@@ -1,8 +1,8 @@
 import { AsyncStorage } from 'react-native';
-import I18n from 'react-native-i18n';
 
 import uniqby from 'lodash.uniqby';
-import { delay, resetNavigationTo } from 'utils';
+import { delay, resetNavigationTo, configureLocale } from 'utils';
+import { saveLanguage } from 'locale';
 
 import {
   fetchAccessToken,
@@ -99,7 +99,7 @@ export const getOrgs = () => {
 
         dispatch({
           type: GET_AUTH_ORGS.SUCCESS,
-          payload: uniqby(orgs, 'id').sort(
+          payload: uniqby(orgs, 'login').sort(
             (org1, org2) => org1.login > org2.login
           ),
         });
@@ -138,6 +138,8 @@ export const getUserEvents = user => {
 export const changeLanguage = lang => {
   return dispatch => {
     dispatch({ type: CHANGE_LANGUAGE.SUCCESS, payload: lang });
-    I18n.locale = lang;
+
+    saveLanguage(lang);
+    configureLocale(lang);
   };
 };
