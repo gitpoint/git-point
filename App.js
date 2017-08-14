@@ -15,6 +15,8 @@ import md5 from 'md5';
 import codePush from 'react-native-code-push';
 
 import { colors } from 'config';
+import { configureLocale } from 'utils';
+import { determineLanguage } from 'locale';
 import { GitPoint } from './routes';
 import { configureStore } from './root.store';
 
@@ -36,6 +38,12 @@ if (console) {
 }
 
 class App extends Component {
+  static async initLocale() {
+    const language = await determineLanguage();
+
+    configureLocale(language);
+  }
+
   constructor() {
     super();
 
@@ -56,6 +64,8 @@ class App extends Component {
         this.setState({ rehydrated: true });
       }
     );
+
+    this.constructor.initLocale();
   }
 
   componentDidMount() {
