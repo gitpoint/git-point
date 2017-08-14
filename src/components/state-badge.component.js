@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 
 import { colors, fonts, normalize } from 'config';
+import { translate } from 'utils';
 
 type Props = {
   issue: Object,
@@ -9,6 +10,7 @@ type Props = {
   text: string,
   type: string,
   style: Object,
+  language: string,
 };
 
 const styles = StyleSheet.create({
@@ -34,19 +36,26 @@ const styles = StyleSheet.create({
   },
 });
 
-export const StateBadge = ({ issue, isMerged, text, type, style }: Props) => {
+export const StateBadge = ({
+  issue,
+  isMerged,
+  text,
+  type,
+  style,
+  language,
+}: Props) => {
   let issueState = type;
   let issueText = text;
 
   if (isMerged) {
     issueState = 'merged';
-    issueText = 'Merged';
+    issueText = translate('issue.main.states.merged', language);
   } else if (issue && issue.state === 'open') {
     issueState = 'open';
-    issueText = 'Open';
+    issueText = translate('issue.main.states.open', language);
   } else if (issue && issue.state === 'closed') {
     issueState = 'closed';
-    issueText = 'Closed';
+    issueText = translate('issue.main.states.closed', language);
   }
 
   return (

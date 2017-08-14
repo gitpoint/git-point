@@ -1,6 +1,8 @@
 import { Platform, Linking } from 'react-native';
 import SafariView from 'react-native-safari-view';
 import { NavigationActions } from 'react-navigation';
+import moment from 'moment/min/moment-with-locales.min';
+
 import I18n from 'locale';
 
 export const openURLInView = url => {
@@ -32,3 +34,10 @@ export const delay = (delayed, ms) =>
 
 export const translate = (key, lang, interpolation = null) =>
   I18n.t(key, { locale: lang, ...interpolation });
+
+export const configureLocale = language => {
+  I18n.locale = language;
+  moment.updateLocale(language, {
+    relativeTime: translate('common.relativeTime', language),
+  });
+};

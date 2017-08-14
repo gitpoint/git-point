@@ -5,10 +5,13 @@
   "scripts": {
     "start": "react-native start",
     "start:logger": "LOGGER_ENABLED=true react-native start --reset-cache",
+    "start:tron": "TRON_ENABLED=true react-native start --reset-cache",
     "start:android": "concurrently -r 'react-native start' 'react-native run-android'",
     "start:android:logger": "LOGGER_ENABLED=true concurrently -r 'react-native start --reset-cache' 'react-native run-android'",
+    "start:android:tron": "TRON_ENABLED=true concurrently -r 'react-native start --reset-cache' 'react-native run-android'",
     "start:ios": "concurrently -r 'react-native start' 'react-native run-ios'",
     "start:ios:logger": "LOGGER_ENABLED=true concurrently -r 'react-native start --reset-cache' 'react-native run-ios'",
+    "start:ios:tron": "TRON_ENABLED=true concurrently -r 'react-native start --reset-cache' 'react-native run-ios'",
     "link": "react-native link",
     "ios": "react-native run-ios",
     "android": "react-native run-android",
@@ -99,7 +102,9 @@
     "minicat": "^1.0.0",
     "prettier": "^1.3.1",
     "react-native-cli": "^2.0.1",
-    "react-test-renderer": "16.0.0-alpha.6"
+    "react-test-renderer": "16.0.0-alpha.6",
+    "reactotron-react-native": "^1.12.2",
+    "reactotron-redux": "^1.12.2"
   },
   "jest": {
     "preset": "react-native"
