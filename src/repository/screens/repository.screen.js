@@ -131,7 +131,7 @@ class Repository extends Component {
       changeStarStatusRepoByDispatch(
         repository.owner.login,
         repository.name,
-        starred,
+        starred
       );
     } else if (index === 1 && showFork) {
       forkRepoByDispatch(repository.owner.login, repository.name).then(json => {
@@ -180,7 +180,7 @@ class Repository extends Component {
       {
         dialogTitle: title,
         excludedActivityTypes: [],
-      },
+      }
     );
   };
 
@@ -218,17 +218,17 @@ class Repository extends Component {
       starred
         ? translate('repository.main.unstarAction', language)
         : translate('repository.main.starAction', language),
-      translate('repository.main.shareAction', language),
       subscribed
         ? translate('repository.main.unwatchAction', language)
         : translate('repository.main.watchAction', language),
+      translate('repository.main.shareAction', language),
     ];
 
     if (showFork) {
       repositoryActions.splice(
         1,
         0,
-        translate('repository.main.forkAction', language),
+        translate('repository.main.forkAction', language)
       );
     }
 
@@ -241,7 +241,7 @@ class Repository extends Component {
         <ParallaxScroll
           renderContent={() => {
             if (isPendingRepository && !initalRepository) {
-              return <LoadingRepositoryProfile />;
+              return <LoadingRepositoryProfile language={language} />;
             }
 
             return (
@@ -252,6 +252,7 @@ class Repository extends Component {
                 }
                 loading={isPendingRepository}
                 navigation={navigation}
+                language={language}
               />
             );
           }}
@@ -305,6 +306,10 @@ class Repository extends Component {
             <MembersList
               title={translate('repository.main.contributorsTitle', language)}
               members={contributors}
+              noMembersMessage={translate(
+                'repository.main.noContributorsMessage',
+                language
+              )}
               navigation={navigation}
             />}
 
@@ -379,7 +384,8 @@ class Repository extends Component {
                   type="issue"
                   issue={item}
                   navigation={navigation}
-                />,
+                  language={language}
+                />
               )}
           </SectionList>
 
@@ -392,11 +398,11 @@ class Repository extends Component {
                 ? translate('repository.main.noPullRequestsMessage', language)
                 : translate(
                     'repository.main.noOpenPullRequestsMessage',
-                    language,
+                    language
                   )
             }
             showButton={pulls.length > 0}
-            buttonTitle="View All"
+            buttonTitle={translate('repository.main.viewAllButton', language)}
             buttonAction={() =>
               navigation.navigate('PullList', {
                 title: translate('repository.pullList.title', language),
@@ -412,7 +418,8 @@ class Repository extends Component {
                   type="pull"
                   issue={item}
                   navigation={navigation}
-                />,
+                  language={language}
+                />
               )}
           </SectionList>
         </ParallaxScroll>
@@ -432,5 +439,5 @@ class Repository extends Component {
 }
 
 export const RepositoryScreen = connect(mapStateToProps, mapDispatchToProps)(
-  Repository,
+  Repository
 );
