@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, TouchableHighlight, View } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import moment from 'moment';
+import moment from 'moment/min/moment-with-locales.min';
 
 import { StateBadge } from 'components';
 import { colors, fonts } from 'config';
@@ -10,6 +10,7 @@ type Props = {
   type: string,
   issue: Object,
   navigation: Object,
+  language: string,
 };
 
 const styles = StyleSheet.create({
@@ -40,13 +41,14 @@ const styles = StyleSheet.create({
   },
 });
 
-export const IssueListItem = ({ type, issue, navigation }: Props) =>
+export const IssueListItem = ({ type, issue, navigation, language }: Props) =>
   <TouchableHighlight
     style={issue.state === 'closed' && styles.closedIssue}
     onPress={() =>
       navigation.navigate('Issue', {
         issue,
         isPR: !!issue.pull_request,
+        language: this.props.language,
       })}
     underlayColor={colors.greyLight}
   >
@@ -64,6 +66,6 @@ export const IssueListItem = ({ type, issue, navigation }: Props) =>
         hideChevron
         titleStyle={styles.title}
       />
-      <StateBadge style={styles.badge} issue={issue} />
+      <StateBadge style={styles.badge} issue={issue} language={language} />
     </View>
   </TouchableHighlight>;
