@@ -137,7 +137,7 @@ class Repository extends Component {
       forkRepoByDispatch(repository.owner.login, repository.name).then(json => {
         navigation.navigate('Repository', { repository: json });
       });
-    } else if (index === 2) {
+    } else if ((index === 2 && showFork) || (index === 1 && !showFork)) {
       const subscribeMethod = !subscribed
         ? this.props.subscribeToRepo
         : this.props.unSubscribeToRepo;
