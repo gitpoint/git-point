@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Platform } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-import { emojifyText, abbreviateNumber } from 'utils';
+import { emojifyText, abbreviateNumber, translate } from 'utils';
 import { colors, languageColors, fonts, normalize } from 'config';
 
 type Props = {
@@ -11,6 +11,7 @@ type Props = {
   navigation: Object,
   loading: boolean,
   subscribed: boolean,
+  language: string,
 };
 
 const styles = StyleSheet.create({
@@ -99,6 +100,7 @@ export const RepositoryProfile = ({
   navigation,
   loading,
   subscribed,
+  language,
 }: Props) =>
   <View style={styles.container}>
     <View style={styles.languageInfo}>
@@ -147,7 +149,7 @@ export const RepositoryProfile = ({
         <Text style={[styles.subtitle, styles.subtitleFork]}>
           {repository.parent &&
             <Text>
-              <Text>forked from</Text>
+              <Text>{translate('repository.main.forkedFromMessage', language)}</Text>
               <Text
                 style={{ ...fonts.fontPrimaryBold }}
                 onPress={() =>
@@ -168,7 +170,7 @@ export const RepositoryProfile = ({
             ? abbreviateNumber(repository.stargazers_count)
             : ' '}
         </Text>
-        <Text style={styles.unitText}>Stars</Text>
+        <Text style={styles.unitText}>{translate('repository.main.starsTitle', language)}</Text>
       </View>
 
       <View style={styles.unit}>
@@ -186,7 +188,7 @@ export const RepositoryProfile = ({
             ? abbreviateNumber(repository.forks)
             : ' '}
         </Text>
-        <Text style={styles.unitText}>Forks</Text>
+        <Text style={styles.unitText}>{translate('repository.main.forksTitle', language)}</Text>
       </View>
     </View>
   </View>;

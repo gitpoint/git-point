@@ -12,7 +12,7 @@ import {
   ParallaxScroll,
   EntityInfo,
 } from 'components';
-import { emojifyText } from 'utils';
+import { emojifyText, translate } from 'utils';
 import { colors, fonts } from 'config';
 import { getOrg, getOrgRepos, getOrgMembers } from '../index';
 
@@ -23,6 +23,7 @@ const mapStateToProps = state => ({
   isPendingOrg: state.organization.isPendingOrg,
   isPendingRepos: state.organization.isPendingRepos,
   isPendingMembers: state.organization.isPendingMembers,
+  language: state.auth.language,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -54,6 +55,7 @@ class OrganizationProfile extends Component {
     // isPendingRepos: boolean,
     isPendingMembers: boolean,
     navigation: Object,
+    language: string,
   };
 
   state: {
@@ -93,6 +95,7 @@ class OrganizationProfile extends Component {
       isPendingOrg,
       isPendingMembers,
       navigation,
+      language,
     } = this.props;
     const { refreshing } = this.state;
     const initialOrganization = this.props.navigation.state.params.organization;
@@ -121,18 +124,23 @@ class OrganizationProfile extends Component {
           navigateBack
           navigation={navigation}
         >
-          {isPendingMembers && <LoadingMembersList title="MEMBERS" />}
+          {isPendingMembers &&
+            <LoadingMembersList
+              title={translate('organization.main.membersTitle', language)}
+            />}
 
           {!isPendingMembers &&
             <MembersList
-              title="MEMBERS"
+              title={translate('organization.main.membersTitle', language)}
               members={members}
               navigation={navigation}
             />}
 
           {!!organization.description &&
             organization.description !== '' &&
-            <SectionList title="DESCRIPTION">
+            <SectionList
+              title={translate('organization.main.descriptionTitle', language)}
+            >
               <ListItem
                 subtitle={emojifyText(organization.description)}
                 subtitleStyle={styles.listSubTitle}

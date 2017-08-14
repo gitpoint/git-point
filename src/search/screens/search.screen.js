@@ -269,7 +269,10 @@ class Search extends Component {
           <View style={styles.textContainer}>
             <Text style={styles.searchTitle}>
               {translate('search.main.searchMessage', language, {
-                type: searchType === 0 ? 'repository' : 'user',
+                type:
+                  searchType === 0
+                    ? translate('search.main.repository', language)
+                    : translate('search.main.user', language),
               })}
             </Text>
           </View>}

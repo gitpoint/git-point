@@ -124,7 +124,7 @@ export const EntityInfo = ({ entity, orgs, language, navigation }: Props) => {
           subtitle={entity.email}
           subtitleStyle={styles.listSubTitle}
           onPress={() =>
-            Communications.email([entity.email], null, null, 'Hi!', '')}
+            Communications.email([entity.email], null, null, null, null)}
           underlayColor={colors.greyLight}
         />}
 

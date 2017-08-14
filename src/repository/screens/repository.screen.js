@@ -140,13 +140,13 @@ class Repository extends Component {
         navigation.navigate('Repository', { repository: json });
       });
     } else if ((index === 2 && showFork) || (index === 1 && !showFork)) {
-      this.shareRepository(repository);
-    } else if (index === 3) {
       const subscribeMethod = !subscribed
         ? this.props.subscribeToRepo
         : this.props.unSubscribeToRepo;
 
       subscribeMethod(repository.owner.login, repository.name);
+    } else if ((index === 3 && showFork) || (index === 2 && !showFork)) {
+      this.shareRepository(repository);
     }
   };
 
@@ -221,10 +221,10 @@ class Repository extends Component {
       starred
         ? translate('repository.main.unstarAction', language)
         : translate('repository.main.starAction', language),
-      translate('repository.main.shareAction', language),
       subscribed
         ? translate('repository.main.unwatchAction', language)
         : translate('repository.main.watchAction', language),
+      translate('repository.main.shareAction', language),
     ];
 
     if (showFork) {
@@ -244,7 +244,7 @@ class Repository extends Component {
         <ParallaxScroll
           renderContent={() => {
             if (isPendingRepository && !initalRepository) {
-              return <LoadingRepositoryProfile />;
+              return <LoadingRepositoryProfile language={language} />;
             }
 
             return (
@@ -256,6 +256,7 @@ class Repository extends Component {
                 loading={isPendingRepository}
                 navigation={navigation}
                 subscribed={isPendingSubscribe ? false : subscribed}
+                language={language}
               />
             );
           }}
@@ -387,6 +388,7 @@ class Repository extends Component {
                   type="issue"
                   issue={item}
                   navigation={navigation}
+                  language={language}
                 />
               )}
           </SectionList>
@@ -404,7 +406,7 @@ class Repository extends Component {
                   )
             }
             showButton={pulls.length > 0}
-            buttonTitle="View All"
+            buttonTitle={translate('repository.main.viewAllButton', language)}
             buttonAction={() =>
               navigation.navigate('PullList', {
                 title: translate('repository.pullList.title', language),
@@ -420,6 +422,7 @@ class Repository extends Component {
                   type="pull"
                   issue={item}
                   navigation={navigation}
+                  language={language}
                 />
               )}
           </SectionList>
