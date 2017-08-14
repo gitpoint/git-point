@@ -1,3 +1,4 @@
+/* sync(c5b90da) */
 export const fr = {
   auth: {
     login: {
@@ -27,13 +28,13 @@ export const fr = {
       issueCommentEvent: '{{action}} sur {{type}}',
       issueEditedEvent: '{{action}} son commentaire sur {{type}}',
       issueRemovedEvent: '{{action}} son commentaire sur {{type}}',
-      issuesEvent: '{{action}} issue /!\\',
+      issuesEvent: '{{action}} ticket',
       publicEvent: {
         action: 'a rendu',
         connector: 'public',
       },
-      pullRequestEvent: '{{action}} pull request /!\\',
-      pullRequestReviewEvent: '{{action}} pull request review /!\\',
+      pullRequestEvent: '{{action}} pull request',
+      pullRequestReviewEvent: '{{action}} une revue de pull request',
       pullRequestReviewCommentEvent: '{{action}} sur la pull request',
       pullRequestReviewEditedEvent:
         '{{action}} son commentaire sur la pull request',
@@ -61,22 +62,22 @@ export const fr = {
         labeled: "a ajouté l'étiquette",
         unlabeled: "a supprimé l'étiquette",
         opened: 'a ouvert',
-        milestoned: 'milestoned /!\\',
-        demilestoned: 'demilestoned /!\\',
+        milestoned: 'milestoned',
+        demilestoned: 'demilestoned',
         closed: 'a fermé',
         reopened: 'a réouvert',
         review_requested: 'a demandé une revue',
         review_request_removed: 'a supprimé la demande de revue',
-        submitted: 'submitted',
-        dismissed: 'dismissed',
+        submitted: 'a validé',
+        dismissed: 'a annulé',
         published: 'a publié',
-        publicized: 'publicized',
-        privatized: 'privatized',
+        publicized: 'a rendu public',
+        privatized: 'a rendu privé',
         starred: 'a mis en favori',
-        pushedTo: 'pushed to',
+        pushedTo: 'a poussé dans',
         forked: 'a forké',
-        commented: 'commented',
-        removed: 'removed',
+        commented: 'a commenté',
+        removed: 'a enlevé',
       },
     },
     profile: {
@@ -221,7 +222,7 @@ export const fr = {
   },
   organization: {
     main: {
-      membersTitle: 'MEMBERS',
+      membersTitle: 'MEMBRES',
       descriptionTitle: 'DESCRIPTION',
     },
   },
