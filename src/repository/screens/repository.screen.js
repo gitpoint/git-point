@@ -137,14 +137,14 @@ class Repository extends Component {
       forkRepoByDispatch(repository.owner.login, repository.name).then(json => {
         navigation.navigate('Repository', { repository: json });
       });
-    } else if ((index === 2 && showFork) || (index === 1 && !showFork)) {
-      this.shareRepository(repository);
-    } else if (index === 3) {
+    } else if (index === 2) {
       const subscribeMethod = !subscribed
         ? this.props.subscribeToRepo
         : this.props.unSubscribeToRepo;
 
       subscribeMethod(repository.owner.login, repository.name);
+    } else if ((index === 3 && showFork) || (index === 2 && !showFork)) {
+      this.shareRepository(repository);
     }
   };
 
