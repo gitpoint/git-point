@@ -48,7 +48,7 @@ export const IssueListItem = ({ type, issue, navigation, language }: Props) =>
       navigation.navigate('Issue', {
         issue,
         isPR: !!issue.pull_request,
-        language: this.props.language,
+        language,
       })}
     underlayColor={colors.greyLight}
   >
