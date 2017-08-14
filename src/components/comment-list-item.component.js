@@ -12,7 +12,7 @@ import {
   Platform,
 } from 'react-native';
 import HTMLView from 'react-native-htmlview';
-import moment from 'moment';
+import moment from 'moment/min/moment-with-locales.min';
 
 import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';

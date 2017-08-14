@@ -106,11 +106,21 @@ class AuthProfile extends Component {
     this.refreshProfile();
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.language !== this.props.language) {
+      this.setState({
+        updateText: updateText(nextProps.language).check,
+      });
+    }
+  }
+
   checkForUpdate = () => {
     if (__DEV__) {
-      this.setState({ updateText: updateText.notApplicable });
+      this.setState({
+        updateText: updateText(this.props.language).notApplicable,
+      });
     } else {
-      this.setState({ updateText: updateText.checking });
+      this.setState({ updateText: updateText(this.props.language).checking });
       codePush
         .sync({
           updateDialog: true,
@@ -118,7 +128,9 @@ class AuthProfile extends Component {
         })
         .then(update => {
           this.setState({
-            updateText: update ? updateText.available : updateText.updated,
+            updateText: update
+              ? updateText(this.props.language).available
+              : updateText(this.props.language).updated,
           });
         });
     }
