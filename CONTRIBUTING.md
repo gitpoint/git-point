@@ -34,6 +34,7 @@ Please feel free to take on _any_ issue that's currently in the issue list. To s
 9. Work your magic! Run the app on an [actual device](http://facebook.github.io/react-native/releases/0.46/docs/running-on-device.html#running-on-device) as well to test your feature/fix.
 10. Add yourself to the [contributor's list](https://github.com/gitpoint/git-point#contributors) by doing `yarn contributors:add`
 11. Commit your changes with a message following the [Angular commit conventions](https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#-git-commit-guidelines)
+    - [Commitizen](https://github.com/commitizen/cz-cli) works with the repo. Once you installed the CLI (`npm install -g commitizen`), you'll be able to create formatted commit messages with `git cz` by filling the differents prompted fields.
 12. Push your branch to your fork
 13. Create a pull request from your branch on your fork to `master` on this repo
 14. Have your branch get merged in! :star2:
