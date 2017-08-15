@@ -146,7 +146,7 @@ export class CommentInput extends Component {
                     : styles.postButtonEnabled,
                 ]}
               >
-                Post
+                {translate('issue.main.commentButton', language)}
               </Text>
             </TouchableOpacity>}
 
