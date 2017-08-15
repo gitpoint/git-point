@@ -236,6 +236,9 @@ class Repository extends Component {
     }
 
     const loader = isPendingFork ? <LoadingModal /> : null;
+    const isSubscribed = isPendingSubscribe ? false : subscribed;
+    const isStarred =
+      isPendingRepository || isPendingCheckStarred ? false : starred;
 
     return (
       <ViewContainer>
@@ -250,12 +253,10 @@ class Repository extends Component {
             return (
               <RepositoryProfile
                 repository={isPendingRepository ? initalRepository : repository}
-                starred={
-                  isPendingRepository || isPendingCheckStarred ? false : starred
-                }
+                starred={isStarred}
                 loading={isPendingRepository}
                 navigation={navigation}
-                subscribed={isPendingSubscribe ? false : subscribed}
+                subscribed={isSubscribed}
                 language={language}
               />
             );
