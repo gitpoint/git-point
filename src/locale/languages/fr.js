@@ -93,8 +93,6 @@ export const fr = {
     userOptions: {
       title: 'Options',
       language: 'Langue',
-      english: 'Anglais',
-      french: 'Français',
       privacyPolicy: 'Politique de confidentialité',
       signOut: 'Déconnexion',
     },
