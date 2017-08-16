@@ -86,6 +86,7 @@
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react-native": "1.9.1",
     "concurrently": "^3.5.0",
+    "cz-conventional-changelog": "^2.0.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.2",
     "eslint-config-airbnb-base": "~11.2.0",
@@ -113,5 +114,10 @@
     "assets": [
       "./src/assets/fonts"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
