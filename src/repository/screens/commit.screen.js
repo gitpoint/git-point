@@ -23,7 +23,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getCommitDetailsByDispatch: url => dispatch(getCommitDetails(url)),
+  getCommitDetailsByDispatch: commit => dispatch(getCommitDetails(commit)),
 });
 
 const styles = StyleSheet.create({
@@ -103,15 +103,11 @@ class Commit extends Component {
   };
 
   componentDidMount() {
-    this.getCommit();
-  }
-
-  getCommit = () => {
     const { navigation, getCommitDetailsByDispatch } = this.props;
     const commit = navigation.state.params.commit;
 
     getCommitDetailsByDispatch(commit);
-  };
+  }
 
   keyExtractor = (item, index) => {
     return index;

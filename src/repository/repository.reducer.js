@@ -29,7 +29,7 @@ const initialState = {
   issues: [],
   commits: [],
   commit: {},
-  diff: {},
+  diff: '',
   readMe: '',
   hasReadMe: false,
   starred: false,
@@ -44,7 +44,7 @@ const initialState = {
   isPendingContents: false,
   isPendingCommits: false,
   isPendingCommit: false,
-  isPendingCommitDiff: false,
+  isPendingDiff: false,
   isPendingFile: false,
   isPendingIssues: false,
   isPendingCheckReadMe: false,
@@ -389,19 +389,19 @@ export const repositoryReducer = (state = initialState, action = {}) => {
     case GET_COMMIT_DIFF.PENDING:
       return {
         ...state,
-        isPendingCommitDiff: true,
+        isPendingDiff: true,
       };
     case GET_COMMIT_DIFF.SUCCESS:
       return {
         ...state,
         diff: action.payload,
-        isPendingCommitDiff: false,
+        isPendingDiff: false,
       };
     case GET_COMMIT_DIFF.ERROR:
       return {
         ...state,
         error: action.payload,
-        isPendingCommitDiff: false,
+        isPendingDiff: false,
       };
     default:
       return state;

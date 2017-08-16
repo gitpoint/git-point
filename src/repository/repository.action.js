@@ -237,10 +237,12 @@ export const getCommitDiffFromUrl = url => {
 export const getCommitDetails = commit => {
   // eslint-disable-next-line no-unused-vars
   return (dispatch, getState) => {
-    dispatch(getCommitFromUrl(commit.url));
+    const url = commit.url || commit.commit.url;
+
+    dispatch(getCommitFromUrl(url));
     dispatch(
       getCommitDiffFromUrl(
-        commit.url
+        url
           .replace('https://api.github.com/repos/', 'https://github.com/')
           .replace('/commits/', '/commit/')
           .concat('.diff')
