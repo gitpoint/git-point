@@ -10,6 +10,7 @@ type Props = {
   starred: boolean,
   navigation: Object,
   loading: boolean,
+  subscribed: boolean,
   language: string,
 };
 
@@ -98,6 +99,7 @@ export const RepositoryProfile = ({
   starred,
   navigation,
   loading,
+  subscribed,
   language,
 }: Props) =>
   <View style={styles.container}>
@@ -173,6 +175,15 @@ export const RepositoryProfile = ({
         <Text style={styles.unitText}>
           {translate('repository.main.starsTitle', language)}
         </Text>
+      </View>
+
+      <View style={styles.unit}>
+        <Text style={[styles.unitNumber, subscribed && styles.green]}>
+          {!isNaN(parseInt(repository.watchers_count, 10))
+            ? abbreviateNumber(repository.watchers_count)
+            : ' '}
+        </Text>
+        <Text style={styles.unitText}>Watchers</Text>
       </View>
 
       <View style={styles.unit}>
