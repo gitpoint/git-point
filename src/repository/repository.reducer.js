@@ -5,6 +5,7 @@ import {
   GET_REPOSITORY_FILE,
   GET_REPOSITORY_ISSUES,
   GET_REPO_README_STATUS,
+  GET_REPOSITORY_COMMITS,
   GET_REPO_STARRED_STATUS,
   FORK_REPO_STATUS,
   CHANGE_STAR_STATUS,
@@ -26,6 +27,7 @@ const initialState = {
   contents: {},
   fileContent: '',
   issues: [],
+  commits: [],
   commit: {},
   diff: {},
   readMe: '',
@@ -40,6 +42,7 @@ const initialState = {
   isPendingRepository: false,
   isPendingContributors: false,
   isPendingContents: false,
+  isPendingCommits: false,
   isPendingCommit: false,
   isPendingCommitDiff: false,
   isPendingFile: false,
@@ -167,6 +170,23 @@ export const repositoryReducer = (state = initialState, action = {}) => {
         ...state,
         error: action.payload,
         isPendingCheckReadMe: false,
+      };
+    case GET_REPOSITORY_COMMITS.PENDING:
+      return {
+        ...state,
+        isPendingCommits: true,
+      };
+    case GET_REPOSITORY_COMMITS.SUCCESS:
+      return {
+        ...state,
+        commits: action.payload,
+        isPendingCommits: false,
+      };
+    case GET_REPOSITORY_COMMITS.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isPendingCommits: false,
       };
     case GET_REPO_STARRED_STATUS.PENDING:
       return {

@@ -18,10 +18,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: colors.greyLight,
   },
-  closedIssue: {
-    backgroundColor: colors.greyVeryLight,
-    opacity: 0.6,
-  },
   listItemContainer: {
     flex: 1,
     borderBottomWidth: 0,
@@ -29,10 +25,6 @@ const styles = StyleSheet.create({
   title: {
     color: colors.primaryDark,
     ...fonts.fontPrimary,
-  },
-  badge: {
-    alignItems: 'flex-end',
-    justifyContent: 'center',
   },
 });
 
@@ -47,9 +39,11 @@ export const CommitListItem = ({ commit, navigation }: Props) =>
     <View style={styles.container}>
       <ListItem
         containerStyle={styles.listItemContainer}
-        title={commit.message}
+        title={commit.commit.message.split('\n')[0]}
         titleNumberOfLines={1}
-        subtitle={commit.sha.substring(0, 7) + ' - ' + commit.author.name || ''} // eslint-disable-line prefer-template
+        subtitle={
+          `${commit.sha.substring(0, 7)} - ${commit.commit.author.name}` || ''
+        }
         leftIcon={{
           name: 'git-commit',
           size: 36,

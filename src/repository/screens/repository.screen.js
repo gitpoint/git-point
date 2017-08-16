@@ -21,6 +21,12 @@ import { translate } from 'utils';
 import { colors, fonts } from 'config';
 import {
   getRepositoryInfo,
+<<<<<<< HEAD
+=======
+  getContributors,
+  getIssues,
+  getCommits,
+>>>>>>> feat(commit): show commits in repository screen
   changeStarStatusRepo,
   forkRepo,
   subscribeToRepo,
@@ -33,6 +39,7 @@ const mapStateToProps = state => ({
   repository: state.repository.repository,
   contributors: state.repository.contributors,
   issues: state.repository.issues,
+  commits: state.repository.commits,
   starred: state.repository.starred,
   forked: state.repository.forked,
   subscribed: state.repository.subscribed,
@@ -48,6 +55,12 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getRepositoryInfoByDispatch: url => dispatch(getRepositoryInfo(url)),
+<<<<<<< HEAD
+=======
+  getContributorsByDispatch: url => dispatch(getContributors(url)),
+  getIssuesByDispatch: url => dispatch(getIssues(url)),
+  getCommitsByDispatch: url => dispatch(getCommits(url)),
+>>>>>>> feat(commit): show commits in repository screen
   changeStarStatusRepoByDispatch: (owner, repo, starred) =>
     dispatch(changeStarStatusRepo(owner, repo, starred)),
   forkRepoByDispatch: (owner, repo) => dispatch(forkRepo(owner, repo)),
@@ -65,6 +78,11 @@ const styles = StyleSheet.create({
 class Repository extends Component {
   props: {
     getRepositoryInfoByDispatch: Function,
+<<<<<<< HEAD
+=======
+    // getIssuesByDispatch: Function,
+    // getCommitsByDispatch: Function,
+>>>>>>> feat(commit): show commits in repository screen
     changeStarStatusRepoByDispatch: Function,
     forkRepoByDispatch: Function,
     // repositoryName: string,
@@ -72,6 +90,7 @@ class Repository extends Component {
     contributors: Array,
     hasReadMe: boolean,
     issues: Array,
+    commits: Array,
     starred: boolean,
     // forked: boolean,
     isPendingRepository: boolean,
@@ -190,6 +209,7 @@ class Repository extends Component {
       contributors,
       hasReadMe,
       issues,
+      commits,
       starred,
       language,
       isPendingRepository,
@@ -342,7 +362,30 @@ class Repository extends Component {
                   repository,
                 })}
               underlayColor={colors.greyLight}
+<<<<<<< HEAD
             />}
+=======
+            />
+            {commits.length > 0 &&
+              <ListItem
+                title={translate('repository.main.viewCommit', language)}
+                titleStyle={styles.listTitle}
+                leftIcon={{
+                  name: 'git-commit',
+                  color: colors.grey,
+                  type: 'octicon',
+                }}
+                onPress={() =>
+                  this.props.navigation.navigate('CommitList', {
+                    commits,
+                    title: translate(
+                      'repository.commitList.title',
+                      this.props.language
+                    ),
+                  })}
+                underlayColor={colors.greyLight}
+              />}
+>>>>>>> feat(commit): show commits in repository screen
             <ListItem
               title={translate('repository.main.viewSource', language)}
               titleStyle={styles.listTitle}

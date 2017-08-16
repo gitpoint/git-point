@@ -181,6 +181,7 @@ export const en = {
       noContributorsMessage: 'No contributors found',
       sourceTitle: 'SOURCE',
       readMe: 'README',
+      viewCommit: 'View Commits',
       viewSource: 'View Code',
       issuesTitle: 'ISSUES',
       noIssuesMessage: 'No issues',

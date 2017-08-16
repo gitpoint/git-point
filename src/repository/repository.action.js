@@ -20,6 +20,7 @@ import {
   GET_REPOSITORY_FILE,
   GET_REPOSITORY_ISSUES,
   GET_REPO_README_STATUS,
+  GET_REPOSITORY_COMMITS,
   GET_REPO_STARRED_STATUS,
   GET_COMMIT,
   GET_COMMIT_DIFF,
@@ -167,6 +168,28 @@ export const checkReadMe = url => {
   };
 };
 
+export const getCommits = url => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: GET_REPOSITORY_COMMITS.PENDING });
+
+    fetchUrl(url, accessToken)
+      .then(data => {
+        dispatch({
+          type: GET_REPOSITORY_COMMITS.SUCCESS,
+          payload: data,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: GET_REPOSITORY_COMMITS.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
 export const getCommitFromUrl = url => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
@@ -301,9 +324,14 @@ export const getRepositoryInfo = url => {
         '{/number}',
         '?state=all&per_page=100'
       );
+      const commitsUrl = getState().repository.repository.commits_url.replace(
+        '{/sha}',
+        '?state=all&per_page=100'
+      );
 
       dispatch(getContributors(contributorsUrl));
       dispatch(getIssues(issuesUrl));
+      dispatch(getCommits(commitsUrl));
       dispatch(
         checkReadMe(
           `${apiRoot}/repos/${repo.owner.login}/${repo.name}/readme?ref=master`
