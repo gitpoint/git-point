@@ -165,7 +165,7 @@ export const RepositoryProfile = ({
 
     <View style={styles.details}>
       <View style={styles.unit}>
-        <Text style={[styles.unitNumber, starred && styles.green]}>
+        <Text style={styles.unitNumber}>
           {!isNaN(parseInt(repository.stargazers_count, 10))
             ? abbreviateNumber(repository.stargazers_count)
             : ' '}
@@ -173,6 +173,10 @@ export const RepositoryProfile = ({
         <Text style={styles.unitText}>
           {translate('repository.main.starsTitle', language)}
         </Text>
+        {starred &&
+          <Text style={[styles.unitText, starred && styles.green]}>
+            {translate('repository.main.starred', language)}
+          </Text>}
       </View>
 
       <View style={styles.unit}>
