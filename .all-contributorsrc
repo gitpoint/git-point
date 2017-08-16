@@ -117,9 +117,9 @@
     },
     {
       "login": "Antoine38660",
-      "name": "Antoine",
+      "name": "Antoine Boisadam",
       "avatar_url": "https://avatars7.githubusercontent.com/u/9287184?v=4",
-      "profile": "http://www.jaaccelere.com",
+      "profile": "https://github.com/Antoine38660",
       "contributions": [
         "code",
         "bug"
@@ -228,6 +228,15 @@
       "profile": "https://www.linkedin.com/in/wlisrausr",
       "contributions": [
         "code"
+      ]
+    },
+    {
+      "login": "CameronSamuels",
+      "name": "Cameron Samuels",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/25394678?v=4",
+      "profile": "http://cameronsamuels.com",
+      "contributions": [
+        "doc"
       ]
     }
   ]
