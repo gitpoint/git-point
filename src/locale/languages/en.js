@@ -186,6 +186,8 @@ export const en = {
       starsTitle: 'Stars',
       forksTitle: 'Forks',
       forkedFromMessage: 'forked from',
+      following: 'Following',
+      starred: 'Starred',
     },
     codeList: {
       title: 'Code',
