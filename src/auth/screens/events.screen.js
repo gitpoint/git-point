@@ -155,7 +155,7 @@ class Events extends Component {
             'auth.events.pullRequestReviewCommentEvent',
             language,
             {
-              action: translate(`auth.events.actions.${action}`, language),
+              action: translate('auth.events.actions.commented', language),
             }
           );
         } else if (action === 'edited') {
