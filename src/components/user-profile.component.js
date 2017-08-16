@@ -68,6 +68,24 @@ const styles = StyleSheet.create({
     fontSize: normalize(10),
     ...fonts.fontPrimary,
   },
+  unitStatus: {
+    textAlign: 'center',
+    color: colors.paleGreen,
+    fontSize: normalize(8),
+    ...fonts.fontPrimary,
+  },
+  badge: {
+    paddingTop: 3,
+    paddingBottom: 3,
+    marginLeft: 10,
+    marginRight: 10,
+    borderWidth: 0.5,
+    borderRadius: 20,
+    borderColor: colors.paleGreen,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
   green: {
     color: colors.lightGreen,
   },
@@ -139,9 +157,11 @@ export const UserProfile = ({
             {translate('common.followers', language)}
           </Text>
           {isFollowing &&
-            <Text style={[styles.unitText, isFollowing && styles.green]}>
-              {translate('common.following', language)}
-            </Text>}
+            <View style={styles.badge}>
+              <Text style={styles.unitStatus}>
+                {translate('common.following', language)}
+              </Text>
+            </View>}
         </TouchableOpacity>}
 
       {type !== 'org' &&

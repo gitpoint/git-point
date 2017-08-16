@@ -75,6 +75,12 @@ const styles = StyleSheet.create({
     fontSize: normalize(10),
     ...fonts.fontPrimary,
   },
+  unitStatus: {
+    textAlign: 'center',
+    color: colors.paleGreen,
+    fontSize: normalize(8),
+    ...fonts.fontPrimary,
+  },
   green: {
     color: colors.lightGreen,
   },
@@ -91,6 +97,18 @@ const styles = StyleSheet.create({
     paddingLeft: 3,
     fontSize: normalize(10),
     ...fonts.fontPrimary,
+  },
+  badge: {
+    paddingTop: 3,
+    paddingBottom: 3,
+    marginLeft: 10,
+    marginRight: 10,
+    borderWidth: 0.5,
+    borderRadius: 20,
+    borderColor: colors.paleGreen,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
   },
 });
 
@@ -176,18 +194,26 @@ export const RepositoryProfile = ({
           {translate('repository.main.starsTitle', language)}
         </Text>
         {starred &&
-          <Text style={[styles.unitText, starred && styles.green]}>
-            {translate('repository.main.starred', language)}
-          </Text>}
+          <View style={styles.badge}>
+            <Text style={styles.unitStatus}>
+              {translate('repository.main.starred', language)}
+            </Text>
+          </View>}
       </View>
 
       <View style={styles.unit}>
-        <Text style={[styles.unitNumber, subscribed && styles.green]}>
+        <Text style={styles.unitNumber}>
           {!isNaN(parseInt(repository.watchers_count, 10))
             ? abbreviateNumber(repository.watchers_count)
             : ' '}
         </Text>
         <Text style={styles.unitText}>Watchers</Text>
+        {subscribed &&
+          <View style={styles.badge}>
+            <Text style={styles.unitStatus}>
+              {translate('repository.main.watched', language)}
+            </Text>
+          </View>}
       </View>
 
       <View style={styles.unit}>
