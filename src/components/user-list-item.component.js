@@ -100,14 +100,14 @@ class UserListItemComponent extends Component {
     const ImageContainerComponent = onlyImageNavigate ? TouchableOpacity : View;
     const IconComponent = iconAction ? TouchableOpacity : View;
 
-    const CorrectScreen =
+    const userScreen =
       authUser.login === user.login ? 'AuthProfile' : 'Profile';
 
     return (
       <ContainerComponent
         onPress={() =>
           navigation.navigate(
-            user.type === 'User' ? CorrectScreen : 'Organization',
+            user.type === 'User' ? userScreen : 'Organization',
             user.type === 'User' ? { user } : { organization: user }
           )}
         underlayColor={colors.greyLight}
@@ -117,14 +117,14 @@ class UserListItemComponent extends Component {
           <UserComponent
             style={styles.userInfo}
             onPress={() =>
-              navigation.navigate(CorrectScreen ? 'AuthProfile' : 'Profile', {
+              navigation.navigate(userScreen, {
                 user,
               })}
           >
             <ImageContainerComponent
               style={styles.avatarContainer}
               onPress={() =>
-                navigation.navigate(CorrectScreen ? 'AuthProfile' : 'Profile', {
+                navigation.navigate(userScreen, {
                   user,
                 })}
             >
