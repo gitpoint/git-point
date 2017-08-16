@@ -157,6 +157,9 @@ export const en = {
     followingList: {
       title: 'Following',
     },
+    followYou: {
+      title: 'Follows you',
+    },
   },
   repository: {
     main: {
@@ -187,7 +190,7 @@ export const en = {
       forksTitle: 'Forks',
       forkedFromMessage: 'forked from',
       starred: 'Starred',
-      watched: 'Watched',
+      watching: 'Watching',
     },
     codeList: {
       title: 'Code',

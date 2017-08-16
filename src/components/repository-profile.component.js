@@ -212,7 +212,7 @@ export const RepositoryProfile = ({
         {subscribed &&
           <View style={styles.badge}>
             <Text style={styles.unitStatus}>
-              {translate('repository.main.watched', language)}
+              {translate('repository.main.watching', language)}
             </Text>
           </View>}
       </View>

@@ -184,7 +184,9 @@ export const UserProfile = ({
           </Text>
           {isFollower &&
             <View style={styles.badge}>
-              <Text style={styles.unitStatus}>Follows you</Text>
+              <Text style={styles.unitStatus}>
+                {translate('user.followYou.title')}
+              </Text>
             </View>}
         </TouchableOpacity>}
     </View>
