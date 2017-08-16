@@ -352,47 +352,48 @@ class Repository extends Component {
             />
           </SectionList>
 
-          <SectionList
-            loading={isPendingIssues}
-            title={translate('repository.main.issuesTitle', language)}
-            noItems={openIssues.length === 0}
-            noItemsMessage={
-              pureIssues.length === 0
-                ? translate('repository.main.noIssuesMessage', language)
-                : translate('repository.main.noOpenIssuesMessage', language)
-            }
-            showButton
-            buttonTitle={
-              pureIssues.length > 0
-                ? translate('repository.main.viewAllButton', language)
-                : translate('repository.main.newIssueButton', language)
-            }
-            buttonAction={() => {
-              if (pureIssues.length > 0) {
-                navigation.navigate('IssueList', {
-                  title: translate('repository.issueList.title', language),
-                  type: 'issue',
-                  issues: pureIssues,
-                });
-              } else {
-                navigation.navigate('NewIssue', {
-                  title: translate('issue.newIssue.title', language),
-                });
+          {!repository.fork &&
+            <SectionList
+              loading={isPendingIssues}
+              title={translate('repository.main.issuesTitle', language)}
+              noItems={openIssues.length === 0}
+              noItemsMessage={
+                pureIssues.length === 0
+                  ? translate('repository.main.noIssuesMessage', language)
+                  : translate('repository.main.noOpenIssuesMessage', language)
               }
-            }}
-          >
-            {openIssues
-              .slice(0, 3)
-              .map(item =>
-                <IssueListItem
-                  key={item.id}
-                  type="issue"
-                  issue={item}
-                  navigation={navigation}
-                  language={language}
-                />
-              )}
-          </SectionList>
+              showButton
+              buttonTitle={
+                pureIssues.length > 0
+                  ? translate('repository.main.viewAllButton', language)
+                  : translate('repository.main.newIssueButton', language)
+              }
+              buttonAction={() => {
+                if (pureIssues.length > 0) {
+                  navigation.navigate('IssueList', {
+                    title: translate('repository.issueList.title', language),
+                    type: 'issue',
+                    issues: pureIssues,
+                  });
+                } else {
+                  navigation.navigate('NewIssue', {
+                    title: translate('issue.newIssue.title', language),
+                  });
+                }
+              }}
+            >
+              {openIssues
+                .slice(0, 3)
+                .map(item =>
+                  <IssueListItem
+                    key={item.id}
+                    type="issue"
+                    issue={item}
+                    navigation={navigation}
+                    language={language}
+                  />
+                )}
+            </SectionList>}
 
           <SectionList
             loading={isPendingIssues}
