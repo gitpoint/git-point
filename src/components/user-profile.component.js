@@ -132,12 +132,16 @@ export const UserProfile = ({
               followerCount: user.followers > 15 ? 15 : user.followers,
             })}
         >
-          <Text style={[styles.unitNumber, isFollowing && styles.green]}>
+          <Text style={styles.unitNumber}>
             {!isNaN(parseInt(user.followers, 10)) ? user.followers : ' '}
           </Text>
           <Text style={styles.unitText}>
             {translate('common.followers', language)}
           </Text>
+          {isFollowing &&
+            <Text style={[styles.unitText, isFollowing && styles.green]}>
+              {translate('common.following', language)}
+            </Text>}
         </TouchableOpacity>}
 
       {type !== 'org' &&
