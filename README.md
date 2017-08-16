@@ -75,6 +75,15 @@ Please take a look at the [contributing guidelines](./CONTRIBUTING.md) for a det
 
 **Development Keys**: The `CLIENT_ID` and `CLIENT_SECRET` in `api/index.js` are for development purposes and do not represent the actual application keys. Feel free to use them or use a new set of keys by creating an [OAuth application](https://github.com/settings/applications/new) of your own
 
+## Translations
+
+Translations are welcome! Just follow simple the step-by-step instruction:
+1. In the `locales` directory you just need to add a new file for a new language. You can just copy the `en.js` file (to _es.js_ for example) and swap out all the English text for Spanish.
+2. You need to export that newly added file as well [here](https://github.com/gitpoint/git-point/blob/master/src/locale/languages/index.js).
+3. Then you just adding the new lang object [here](https://github.com/gitpoint/git-point/blob/023c7f4ae52694f75a1bc9748b072f6f66687b0a/src/locale/index.js#L7).
+4. And last, in order for the language to be displayed in the options screen, you need to add a [two-letter code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements) in lowercase (_es_) and the native language name (_España_) to the [language-settings.js](https://github.com/gitpoint/git-point/blob/master/src/auth/screens/language-settings.js) file.
+5. Start the translation and send PR! :smile:
+
 ## Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
