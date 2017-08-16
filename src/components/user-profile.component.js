@@ -9,6 +9,7 @@ type Props = {
   initialUser: Object,
   user: Object,
   isFollowing: boolean,
+  isFollower: boolean,
   language: string,
   navigation: Object,
 };
@@ -96,6 +97,7 @@ export const UserProfile = ({
   initialUser,
   user,
   isFollowing,
+  isFollower,
   language,
   navigation,
 }: Props) =>
@@ -180,6 +182,10 @@ export const UserProfile = ({
           <Text style={styles.unitText}>
             {translate('common.following', language)}
           </Text>
+          {isFollower &&
+            <View style={styles.badge}>
+              <Text style={styles.unitStatus}>Follows you</Text>
+            </View>}
         </TouchableOpacity>}
     </View>
   </View>;

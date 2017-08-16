@@ -23,7 +23,9 @@ import { colors, fonts } from 'config';
 import { getUserInfo, changeFollowStatus } from '../user.action';
 
 const mapStateToProps = state => ({
+  auth: state.auth.user,
   user: state.user.user,
+  followers: state.user.followers,
   orgs: state.user.orgs,
   language: state.auth.language,
   isFollowing: state.user.isFollowing,
@@ -53,7 +55,9 @@ class Profile extends Component {
   props: {
     getUserInfoByDispatch: Function,
     changeFollowStatusByDispatch: Function,
+    auth: Object,
     user: Object,
+    followers: Array,
     orgs: Array,
     language: string,
     isFollowing: boolean,
@@ -102,6 +106,12 @@ class Profile extends Component {
     }
   };
 
+  isFollower = () => {
+    const { auth, followers } = this.props;
+
+    return followers.filter(follower => follower.login === auth).legth > 0;
+  };
+
   render() {
     const {
       user,
@@ -132,6 +142,7 @@ class Profile extends Component {
               isFollowing={
                 isPendingUser || isPendingCheckFollowing ? false : isFollowing
               }
+              isFollower={this.isFollower}
               user={initialUser.login === user.login ? user : {}}
               language={language}
               navigation={navigation}

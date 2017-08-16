@@ -85,6 +85,28 @@ export const checkFollowStatus = url => {
   };
 };
 
+export const getFollowers = user => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: GET_FOLLOWERS.PENDING });
+
+    fetchUrl(`${USER_ENDPOINT(user.login)}/followers?per_page=100`, accessToken)
+      .then(data => {
+        dispatch({
+          type: GET_FOLLOWERS.SUCCESS,
+          payload: data,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: GET_FOLLOWERS.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
 export const getUserInfo = user => {
   return dispatch => {
     return dispatch(getUser(user)).then(() => {
@@ -92,6 +114,7 @@ export const getUserInfo = user => {
       dispatch(
         checkFollowStatus(`https://api.github.com/user/following/${user}`)
       );
+      dispatch(getFollowers(user));
     });
   };
 };
@@ -143,28 +166,6 @@ export const getRepositories = user => {
       .catch(error => {
         dispatch({
           type: GET_REPOSITORIES.ERROR,
-          payload: error,
-        });
-      });
-  };
-};
-
-export const getFollowers = user => {
-  return (dispatch, getState) => {
-    const accessToken = getState().auth.accessToken;
-
-    dispatch({ type: GET_FOLLOWERS.PENDING });
-
-    fetchUrl(`${USER_ENDPOINT(user.login)}/followers?per_page=100`, accessToken)
-      .then(data => {
-        dispatch({
-          type: GET_FOLLOWERS.SUCCESS,
-          payload: data,
-        });
-      })
-      .catch(error => {
-        dispatch({
-          type: GET_FOLLOWERS.ERROR,
           payload: error,
         });
       });
