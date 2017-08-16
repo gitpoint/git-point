@@ -117,22 +117,16 @@ class UserListItemComponent extends Component {
           <UserComponent
             style={styles.userInfo}
             onPress={() =>
-              navigation.navigate(
-                authUser.login === user.login ? 'AuthProfile' : 'Profile',
-                {
-                  user,
-                }
-              )}
+              navigation.navigate(CorrectScreen ? 'AuthProfile' : 'Profile', {
+                user,
+              })}
           >
             <ImageContainerComponent
               style={styles.avatarContainer}
               onPress={() =>
-                navigation.navigate(
-                  authUser.login === user.login ? 'AuthProfile' : 'Profile',
-                  {
-                    user,
-                  }
-                )}
+                navigation.navigate(CorrectScreen ? 'AuthProfile' : 'Profile', {
+                  user,
+                })}
             >
               <Image
                 style={styles.avatar}
