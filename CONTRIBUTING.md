@@ -41,6 +41,16 @@ Please feel free to take on _any_ issue that's currently in the issue list. To s
 
 If you experience a problem at any point, please don't hesitate to file an issue or send me a message!
 
+## Translations
+
+Translation contributions are always welcome! Please don't hesitate to open an issue to suggest including a new language and/or submitting a PR to include it. Here's how to add a new language:
+
+1. In the `locales` directory we just need to add a new file for a new language. We can just copy the `en.js` file (to _es.js_ for Spanish for example) and swap out all the English text for that specific language.
+2. We'll need to then export that newly added file as well [here](https://github.com/gitpoint/git-point/blob/master/src/locale/languages/index.js).
+3. Next, we'll need to add the new lang object [here](https://github.com/gitpoint/git-point/blob/023c7f4ae52694f75a1bc9748b072f6f66687b0a/src/locale/index.js#L7).
+4. And lastly, in order for the language to be displayed in the options screen, we'll need to add a [two-letter code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements) in lowercase (for example: _es_ for Spanish) and the native language name (for example: _España_ for Spanish) to the [language-settings.js](https://github.com/gitpoint/git-point/blob/master/src/auth/screens/language-settings.js) file.
+5. Test out selecting your new translation and if it all looks good, submit that PR in! :smile:
+
 ## Troubleshooting
 
 If you happen to see an error like below when you try to run the application:
