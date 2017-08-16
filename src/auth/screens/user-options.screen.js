@@ -87,14 +87,6 @@ class UserOptions extends Component {
               keyExtractor={(item, index) => index}
               extraData={this.props.language}
             />
-            <ListItem
-              title={translate('auth.userOptions.french', language)}
-              titleStyle={styles.listTitle}
-              hideChevron={language !== 'fr'}
-              rightIcon={{ name: 'check' }}
-              onPress={() => changeLanguageByDispatch('fr')}
-              underlayColor={colors.greyLight}
-            />
           </SectionList>
 
           <SectionList>

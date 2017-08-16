@@ -25,7 +25,7 @@ export const fr = {
       commitCommentEvent: 'a commenté le commit',
       createEvent: 'a créé {{object}}',
       deleteEvent: 'a supprimé {{object}}',
-      issueCommentEvent: '{{action}} sur {{type}}',
+      issueCommentEvent: '{{action}} {{type}}',
       issueEditedEvent: '{{action}} son commentaire sur {{type}}',
       issueRemovedEvent: '{{action}} son commentaire sur {{type}}',
       issuesEvent: '{{action}} ticket',
@@ -35,22 +35,22 @@ export const fr = {
       },
       pullRequestEvent: '{{action}} pull request',
       pullRequestReviewEvent: '{{action}} une revue de pull request',
-      pullRequestReviewCommentEvent: '{{action}} sur la pull request',
+      pullRequestReviewCommentEvent: '{{action}} la pull request',
       pullRequestReviewEditedEvent:
         '{{action}} son commentaire sur la pull request',
       pullRequestReviewDeletedEvent:
         '{{action}} son commentaire sur la pull request',
       releaseEvent: '{{action}} release /!\\',
       atConnector: 'dans',
-      toConnector: 'vers',
+      toConnector: 'dans',
       types: {
         pullRequest: 'pull request',
-        issue: 'ticket',
+        issue: 'le ticket',
       },
       objects: {
-        repository: 'dépôt',
-        branch: 'branche',
-        tag: 'tag',
+        repository: 'le dépôt',
+        branch: 'la branche',
+        tag: 'le tag',
       },
       actions: {
         added: 'a ajouté',
