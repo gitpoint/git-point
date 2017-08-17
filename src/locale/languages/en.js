@@ -88,7 +88,6 @@ export const en = {
     userOptions: {
       title: 'Options',
       language: 'Language',
-      english: 'English',
       privacyPolicy: 'Privacy Policy',
       signOut: 'Sign Out',
     },
