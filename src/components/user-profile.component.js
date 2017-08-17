@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   },
   unitStatus: {
     textAlign: 'center',
-    color: colors.paleGreen,
+    color: colors.lighterBoldGreen,
     fontSize: normalize(8),
     ...fonts.fontPrimary,
   },
@@ -83,8 +83,7 @@ const styles = StyleSheet.create({
     marginRight: 35,
     borderWidth: 0.5,
     borderRadius: 5,
-    borderColor: colors.paleGreen,
-    alignItems: 'center',
+    borderColor: colors.lighterBoldGreen,
     justifyContent: 'center',
   },
   green: {
@@ -159,11 +158,9 @@ export const UserProfile = ({
             {translate('common.followers', language)}
           </Text>
           {isFollowing &&
-            <View style={styles.badge}>
-              <Text style={styles.unitStatus}>
-                {translate('common.following', language)}
-              </Text>
-            </View>}
+            <Text style={[styles.unitStatus, styles.badge]}>
+              {translate('common.following', language)}
+            </Text>}
         </TouchableOpacity>}
 
       {type !== 'org' &&
@@ -183,11 +180,9 @@ export const UserProfile = ({
             {translate('common.following', language)}
           </Text>
           {isFollower &&
-            <View style={styles.badge}>
-              <Text style={styles.unitStatus}>
-                {translate('user.followYou.title')}
-              </Text>
-            </View>}
+            <Text style={[styles.unitStatus, styles.badge]}>
+              {translate('user.followYou.title')}
+            </Text>}
         </TouchableOpacity>}
     </View>
   </View>;

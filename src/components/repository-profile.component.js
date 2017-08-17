@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   },
   unitStatus: {
     textAlign: 'center',
-    color: colors.paleGreen,
+    color: colors.lighterBoldGreen,
     fontSize: normalize(8),
     ...fonts.fontPrimary,
   },
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     marginRight: 27,
     borderWidth: 0.5,
     borderRadius: 5,
-    borderColor: colors.paleGreen,
+    borderColor: colors.lighterBoldGreen,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
@@ -195,11 +195,9 @@ export const RepositoryProfile = ({
           {translate('repository.main.starsTitle', language)}
         </Text>
         {starred &&
-          <View style={styles.badge}>
-            <Text style={styles.unitStatus}>
-              {translate('repository.main.starred', language)}
-            </Text>
-          </View>}
+          <Text style={[styles.unitStatus, styles.badge]}>
+            {translate('repository.main.starred', language)}
+          </Text>}
       </View>
 
       <View style={styles.unit}>
@@ -210,11 +208,9 @@ export const RepositoryProfile = ({
         </Text>
         <Text style={styles.unitText}>Watchers</Text>
         {subscribed &&
-          <View style={styles.badge}>
-            <Text style={styles.unitStatus}>
-              {translate('repository.main.watching', language)}
-            </Text>
-          </View>}
+          <Text style={[styles.unitStatus, styles.badge]}>
+            {translate('repository.main.watching', language)}
+          </Text>}
       </View>
 
       <View style={styles.unit}>
