@@ -86,8 +86,8 @@ export const UserProfile = ({
       <ImageZoom
         uri={{
           uri: initialUser.avatar_url
-            ? `${initialUser.avatar_url}&cache=${initialUser.updated_at}`
-            : `${user.avatar_url}&cache=${user.updated_at}`,
+            ? `${initialUser.avatar_url}&lastModified=${initialUser.updated_at}`
+            : `${user.avatar_url}&lastModified=${user.updated_at}`,
         }}
         style={[
           styles.avatar,
