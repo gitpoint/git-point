@@ -9,6 +9,6 @@ export default [
   },
   {
     code: 'nl',
-    name: 'Dutch',
+    name: 'Nederlands',
   },
 ];
