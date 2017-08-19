@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { StyleSheet, RefreshControl } from 'react-native';
 import { ListItem } from 'react-native-elements';
@@ -42,6 +43,14 @@ const selectors = createStructuredSelector({
   isPendingMembers: getOrganizationIsPendingMembers,
   language: getAuthLanguage,
 });
+
+const actionCreators = {
+  getOrg,
+  getOrgRepos,
+  getOrgMembers,
+};
+
+const actions = dispatch => bindActionCreators(actionCreators, dispatch);
 
 const mapDispatchToProps = dispatch => ({
   getOrgByDispatch: orgName => dispatch(getOrg(orgName)),
@@ -175,5 +184,5 @@ class OrganizationProfile extends Component {
 
 export const OrganizationProfileScreen = connect(
   selectors,
-  mapDispatchToProps
+  actions
 )(OrganizationProfile);

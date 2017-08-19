@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { getAuth as getAuthFromStore } from '../../root.reducer';
+export const getAuthFromStore = state => state.auth;
 
 export const getAuthLanguage = createSelector(
   getAuthFromStore,

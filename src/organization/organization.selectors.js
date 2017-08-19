@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
-import { getOrganization as getOrganizationFromStore } from '../../root.reducer';
+
+const getOrganizationFromStore = state => state.organization;
 
 export const getOrganization = createSelector(
   getOrganizationFromStore,
@@ -11,7 +12,7 @@ export const getOrganizationRepositories = createSelector(
   organization => organization.repositories || []
 );
 
-export const getOrganizationMemebers = createSelector(
+export const getOrganizationMembers = createSelector(
   getOrganizationFromStore,
   organization => organization.repositories || []
 );
