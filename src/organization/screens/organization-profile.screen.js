@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, RefreshControl } from 'react-native';
 import { ListItem } from 'react-native-elements';
-
+import { createStructuredSelector } from 'reselect';
+import {
+  getAuthLanguage,
+} from 'auth';
 import {
   ViewContainer,
   UserProfile,
@@ -12,18 +15,32 @@ import {
   ParallaxScroll,
   EntityInfo,
 } from 'components';
-import { emojifyText, translate } from 'utils';
+import {
+  emojifyText,
+  translate,
+} from 'utils';
 import { colors, fonts } from 'config';
-import { getOrg, getOrgRepos, getOrgMembers } from '../index';
+import {
+  getOrg,
+  getOrgRepos,
+  getOrgMembers,
+  // Selectors
+  getOrganization,
+  getOrganizationRepositories,
+  getOrganizationMembers,
+  getOrganizationIsPendingOrg,
+  getOrganizationIsPendingRepos,
+  getOrganizationIsPendingMembers,
+} from '../index';
 
-const mapStateToProps = state => ({
-  organization: state.organization.organization,
-  repositories: state.organization.repositories,
-  members: state.organization.members,
-  isPendingOrg: state.organization.isPendingOrg,
-  isPendingRepos: state.organization.isPendingRepos,
-  isPendingMembers: state.organization.isPendingMembers,
-  language: state.auth.language,
+const selectors = createStructuredSelector({
+  organization: getOrganization,
+  repositories: getOrganizationRepositories,
+  members: getOrganizationMembers,
+  isPendingOrg: getOrganizationIsPendingOrg,
+  isPendingRepos: getOrganizationIsPendingRepos,
+  isPendingMembers: getOrganizationIsPendingMembers,
+  language: getAuthLanguage,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -157,6 +174,6 @@ class OrganizationProfile extends Component {
 }
 
 export const OrganizationProfileScreen = connect(
-  mapStateToProps,
+  selectors,
   mapDispatchToProps
 )(OrganizationProfile);

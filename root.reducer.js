@@ -19,3 +19,4 @@ export const rootReducer = combineReducers({
 
 // Used to get organization information in selectors
 export const getOrganization = state => state.organization;
+export const getAuth = state => state.auth;
