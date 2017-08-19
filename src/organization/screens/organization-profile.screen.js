@@ -22,9 +22,9 @@ import {
 } from 'utils';
 import { colors, fonts } from 'config';
 import {
-  getOrg,
-  getOrgRepos,
-  getOrgMembers,
+  // actions
+  fetchOrganizations,
+  fetchOrganizationMembers,
   // Selectors
   getOrganization,
   getOrganizationRepositories,
@@ -45,18 +45,11 @@ const selectors = createStructuredSelector({
 });
 
 const actionCreators = {
-  getOrg,
-  getOrgRepos,
-  getOrgMembers,
+  fetchOrganizations,
+  fetchOrganizationMembers,
 };
 
 const actions = dispatch => bindActionCreators(actionCreators, dispatch);
-
-const mapDispatchToProps = dispatch => ({
-  getOrgByDispatch: orgName => dispatch(getOrg(orgName)),
-  getOrgReposByDispatch: url => dispatch(getOrgRepos(url)),
-  getOrgMembersByDispatch: orgName => dispatch(getOrgMembers(orgName)),
-});
 
 const styles = StyleSheet.create({
   listTitle: {
@@ -71,9 +64,9 @@ const styles = StyleSheet.create({
 
 class OrganizationProfile extends Component {
   props: {
-    getOrgByDispatch: Function,
+    fetchOrganizations: Function,
     // getOrgReposByDispatch: Function,
-    getOrgMembersByDispatch: Function,
+    fetchOrganizationMembers: Function,
     organization: Object,
     // repositories: Array,
     members: Array,
@@ -98,8 +91,8 @@ class OrganizationProfile extends Component {
   componentDidMount() {
     const organization = this.props.navigation.state.params.organization;
 
-    this.props.getOrgByDispatch(organization.login);
-    this.props.getOrgMembersByDispatch(organization.login);
+    this.props.fetchOrganizations(organization.login);
+    this.props.fetchOrganizationMembers(organization.login);
   }
 
   getOrgData = () => {
@@ -107,8 +100,8 @@ class OrganizationProfile extends Component {
 
     this.setState({ refreshing: true });
     Promise.all(
-      this.props.getOrgByDispatch(organization.login),
-      this.props.getOrgMembersByDispatch(organization.login)
+      this.props.fetchOrganizations(organization.login),
+      this.props.fetchOrganizationMembers(organization.login)
     ).then(() => {
       this.setState({ refreshing: false });
     });

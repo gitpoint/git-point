@@ -70,11 +70,11 @@ export const fetchOrganizationMembers = orgName => (dispatch, getState) => {
 
   return fetchOrgMembers(orgName, accessToken)
     .then(data => {
-      dispatch(getOrgMembersLoading(true));
+      dispatch(getOrgMembersLoading(false));
       dispatch(getOrgMembers(data));
     })
     .catch(error => {
-      dispatch(getOrgMembersLoading(true));
+      dispatch(getOrgMembersLoading(false));
       dispatch(getOrgMembersError(error));
     });
 };

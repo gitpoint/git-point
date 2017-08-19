@@ -14,7 +14,7 @@ export const getOrganizationRepositories = createSelector(
 
 export const getOrganizationMembers = createSelector(
   getOrganizationFromStore,
-  organization => organization.repositories || []
+  organization => organization.members || []
 );
 
 export const getOrganizationIsPendingOrg = createSelector(
