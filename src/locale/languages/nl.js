@@ -72,7 +72,7 @@ export const nl = {
         pushedTo: 'pushed to',
         forked: 'forked',
         commented: 'heeft een opmerking gemaakt',
-        removed: 'removed',
+        removed: 'verwijderd',
       },
     },
     profile: {
@@ -155,11 +155,14 @@ export const nl = {
     followingList: {
       title: 'Volgen',
     },
+    followYou: {
+      title: 'Volgt jou',
+    },
   },
   repository: {
     main: {
       shareRepositoryTitle: 'Delen {{repoName}}',
-      shareRepositoryMessage: 'Check out {{repoName}} on GitHub. {{repoUrl}}',
+      shareRepositoryMessage: 'Bekijk {{repoName}} op GitHub. {{repoUrl}}',
       repoActions: 'Repository Acties',
       forkAction: 'Fork',
       starAction: 'Star',
