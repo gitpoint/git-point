@@ -161,6 +161,9 @@ export const fr = {
     followingList: {
       title: 'Following',
     },
+    followYou: {
+      title: 'Vous suit',
+    },
   },
   repository: {
     main: {
