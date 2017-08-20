@@ -7,4 +7,8 @@ export default [
     code: 'fr',
     name: 'Français',
   },
+  {
+    code: 'nl',
+    name: 'Nederlands',
+  },
 ];
