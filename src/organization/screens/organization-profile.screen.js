@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { StyleSheet, RefreshControl } from 'react-native';
 import { ListItem } from 'react-native-elements';
-
+import { createStructuredSelector } from 'reselect';
+import {
+  getAuthLanguage,
+} from 'auth';
 import {
   ViewContainer,
   UserProfile,
@@ -12,25 +16,40 @@ import {
   ParallaxScroll,
   EntityInfo,
 } from 'components';
-import { emojifyText, translate } from 'utils';
+import {
+  emojifyText,
+  translate,
+} from 'utils';
 import { colors, fonts } from 'config';
-import { getOrg, getOrgRepos, getOrgMembers } from '../index';
+import {
+  // actions
+  fetchOrganizations,
+  fetchOrganizationMembers,
+  // Selectors
+  getOrganization,
+  getOrganizationRepositories,
+  getOrganizationMembers,
+  getOrganizationIsPendingOrg,
+  getOrganizationIsPendingRepos,
+  getOrganizationIsPendingMembers,
+} from '../index';
 
-const mapStateToProps = state => ({
-  organization: state.organization.organization,
-  repositories: state.organization.repositories,
-  members: state.organization.members,
-  isPendingOrg: state.organization.isPendingOrg,
-  isPendingRepos: state.organization.isPendingRepos,
-  isPendingMembers: state.organization.isPendingMembers,
-  language: state.auth.language,
+const selectors = createStructuredSelector({
+  organization: getOrganization,
+  repositories: getOrganizationRepositories,
+  members: getOrganizationMembers,
+  isPendingOrg: getOrganizationIsPendingOrg,
+  isPendingRepos: getOrganizationIsPendingRepos,
+  isPendingMembers: getOrganizationIsPendingMembers,
+  language: getAuthLanguage,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getOrgByDispatch: orgName => dispatch(getOrg(orgName)),
-  getOrgReposByDispatch: url => dispatch(getOrgRepos(url)),
-  getOrgMembersByDispatch: orgName => dispatch(getOrgMembers(orgName)),
-});
+const actionCreators = {
+  fetchOrganizations,
+  fetchOrganizationMembers,
+};
+
+const actions = dispatch => bindActionCreators(actionCreators, dispatch);
 
 const styles = StyleSheet.create({
   listTitle: {
@@ -45,9 +64,9 @@ const styles = StyleSheet.create({
 
 class OrganizationProfile extends Component {
   props: {
-    getOrgByDispatch: Function,
+    fetchOrganizations: Function,
     // getOrgReposByDispatch: Function,
-    getOrgMembersByDispatch: Function,
+    fetchOrganizationMembers: Function,
     organization: Object,
     // repositories: Array,
     members: Array,
@@ -72,8 +91,8 @@ class OrganizationProfile extends Component {
   componentDidMount() {
     const organization = this.props.navigation.state.params.organization;
 
-    this.props.getOrgByDispatch(organization.login);
-    this.props.getOrgMembersByDispatch(organization.login);
+    this.props.fetchOrganizations(organization.login);
+    this.props.fetchOrganizationMembers(organization.login);
   }
 
   getOrgData = () => {
@@ -81,8 +100,8 @@ class OrganizationProfile extends Component {
 
     this.setState({ refreshing: true });
     Promise.all(
-      this.props.getOrgByDispatch(organization.login),
-      this.props.getOrgMembersByDispatch(organization.login)
+      this.props.fetchOrganizations(organization.login),
+      this.props.fetchOrganizationMembers(organization.login)
     ).then(() => {
       this.setState({ refreshing: false });
     });
@@ -157,6 +176,6 @@ class OrganizationProfile extends Component {
 }
 
 export const OrganizationProfileScreen = connect(
-  mapStateToProps,
-  mapDispatchToProps
+  selectors,
+  actions
 )(OrganizationProfile);
