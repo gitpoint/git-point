@@ -8,6 +8,7 @@ type Props = {
   type: string,
   initialUser: Object,
   user: Object,
+  starCount: string,
   isFollowing: boolean,
   isFollower: boolean,
   language: string,
@@ -95,6 +96,7 @@ export const UserProfile = ({
   type,
   initialUser,
   user,
+  starCount,
   isFollowing,
   isFollower,
   language,
@@ -138,6 +140,15 @@ export const UserProfile = ({
         </Text>
         <Text style={styles.unitText}>
           {translate('common.repositories', language)}
+        </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.unit}>
+        <Text style={styles.unitNumber}>
+          {starCount}
+        </Text>
+        <Text style={styles.unitText}>
+          {translate('common.star', language)}
         </Text>
       </TouchableOpacity>
 
