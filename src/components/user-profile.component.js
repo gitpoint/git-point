@@ -80,8 +80,8 @@ const styles = StyleSheet.create({
     paddingTop: 3,
     paddingBottom: 3,
     marginTop: 5,
-    marginLeft: 20,
-    marginRight: 20,
+    marginLeft: 17,
+    marginRight: 17,
     borderWidth: 0.5,
     borderRadius: 5,
     borderColor: colors.lighterBoldGreen,
@@ -148,7 +148,7 @@ export const UserProfile = ({
           {starCount}
         </Text>
         <Text style={styles.unitText}>
-          {translate('common.star', language)}
+          {translate('common.stars', language)}
         </Text>
       </TouchableOpacity>
 
