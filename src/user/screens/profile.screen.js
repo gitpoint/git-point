@@ -20,13 +20,14 @@ import {
 } from 'components';
 import { emojifyText, translate } from 'utils';
 import { colors, fonts } from 'config';
-import { getUserInfo, changeFollowStatus } from '../user.action';
+import { getUserInfo, changeFollowStatus, getStarCount } from '../user.action';
 
 const mapStateToProps = state => ({
   auth: state.auth.user,
   user: state.user.user,
   followers: state.user.followers,
   orgs: state.user.orgs,
+  starCount: state.user.starCount,
   language: state.auth.language,
   isFollowing: state.user.isFollowing,
   isPendingUser: state.user.isPendingUser,
@@ -36,6 +37,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getUserInfoByDispatch: user => dispatch(getUserInfo(user)),
+  getUserStarCountByDispatch: user => dispatch(getStarCount(user)),
   changeFollowStatusByDispatch: (user, isFollowing) =>
     dispatch(changeFollowStatus(user, isFollowing)),
 });
@@ -55,10 +57,12 @@ class Profile extends Component {
   props: {
     getUserInfoByDispatch: Function,
     changeFollowStatusByDispatch: Function,
+    getUserStarCountByDispatch: Function,
     auth: Object,
     user: Object,
     followers: Array,
     orgs: Array,
+    starCount: string,
     language: string,
     isFollowing: boolean,
     isPendingUser: boolean,
@@ -82,10 +86,18 @@ class Profile extends Component {
     this.props.getUserInfoByDispatch(
       this.props.navigation.state.params.user.login
     );
+
+    this.props.getUserStarCountByDispatch(
+      this.props.navigation.state.params.user.login
+    );
   }
 
   getUserInfo = () => {
     this.setState({ refreshing: true });
+
+    this.props.getUserStarCountByDispatch(
+      this.props.navigation.state.params.user.login
+    );
 
     this.props
       .getUserInfoByDispatch(this.props.navigation.state.params.user.login)
@@ -116,6 +128,7 @@ class Profile extends Component {
     const {
       user,
       orgs,
+      starCount,
       language,
       isFollowing,
       isPendingUser,
@@ -139,6 +152,7 @@ class Profile extends Component {
             <UserProfile
               type="user"
               initialUser={initialUser}
+              starCount={starCount}
               isFollowing={
                 isPendingUser || isPendingCheckFollowing ? false : isFollowing
               }
