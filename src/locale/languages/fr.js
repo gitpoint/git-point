@@ -288,6 +288,7 @@ export const fr = {
   },
   common: {
     bio: 'BIO',
+    star: 'étoiles',
     orgs: 'ORGANISATIONS',
     noOrgsMessage: 'Aucune organisation',
     info: 'INFO',

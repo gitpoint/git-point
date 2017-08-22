@@ -288,6 +288,7 @@ export const en = {
   },
   common: {
     bio: 'BIO',
+    star: 'Stars',
     orgs: 'ORGANIZATIONS',
     noOrgsMessage: 'No organizations',
     info: 'INFO',
