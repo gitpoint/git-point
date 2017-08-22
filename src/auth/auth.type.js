@@ -6,3 +6,4 @@ export const GET_AUTH_USER = createActionSet('GET_AUTH_USER');
 export const GET_AUTH_ORGS = createActionSet('GET_AUTH_ORGS');
 export const GET_EVENTS = createActionSet('GET_EVENTS');
 export const CHANGE_LANGUAGE = createActionSet('CHANGE_LANGUAGE');
+export const GET_AUTH_STAR_COUNT = createActionSet('GET_AUTH_STAR_COUNT');
