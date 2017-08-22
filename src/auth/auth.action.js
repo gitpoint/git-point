@@ -101,7 +101,7 @@ export const getStarCount = () => {
       .catch(error => {
         dispatch({
           type: GET_AUTH_STAR_COUNT.ERROR,
-          payload: data,
+          payload: error,
         });
       });
   };
