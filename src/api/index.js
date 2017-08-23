@@ -310,47 +310,33 @@ export async function fetchForkRepo(owner, repo, accessToken) {
   return response;
 }
 
-export const requestStarCount = owner => {
+export async function fetchStarCount(owner) {
   const ENDPOINT = `https://api.github.com/users/${owner}/starred?per_page=1`;
+  const response = await fetch(ENDPOINT);
 
-  const requestPromise = new Promise((resolve, reject) => {
-    const req = new XMLHttpRequest();
+  let linkHeader = response.headers.get('Link');
+  let output = '';
 
-    req.open('GET', ENDPOINT);
-    req.onerror = () => reject(req.statusText);
+  if (linkHeader == null) {
+    output = response.json().then(data => {
+      return data.length;
+    });
+  } else {
+    linkHeader = linkHeader.match(/page=(\d)+/g).pop();
+    output = linkHeader.split('=').pop();
+  }
 
-    req.onreadystatechange = () => {
-      if (req.readyState === XMLHttpRequest.DONE && req.status === 200) {
-        let linkHeader = req.getResponseHeader('Link');
-        let output = '';
+  // Add 'k' if star more than 1000
 
-        if (linkHeader == null) {
-          const responseBody = JSON.parse(req.response);
+  if (output > 1000) {
+    const outDecimal = (output / 1000).toString();
+    const dotIndex = outDecimal.indexOf('.');
 
-          output = responseBody.length;
-        } else {
-          linkHeader = linkHeader.match(/page=(\d)+/g).pop();
-          output = linkHeader.split('=').pop();
-        }
+    output = `${outDecimal.substring(0, dotIndex + 3)}k`;
+  }
 
-        // Add 'k' if star more than 1000
-
-        if (output > 1000) {
-          const outDecimal = (output / 1000).toString();
-          const dotIndex = outDecimal.indexOf('.');
-
-          output = `${outDecimal.substring(0, dotIndex + 3)}k`;
-        }
-
-        resolve(output);
-      }
-    };
-
-    req.send();
-  });
-
-  return requestPromise;
-};
+  return output;
+}
 
 export async function watchRepo(isSubscribed, owner, repo, accessToken) {
   const ENDPOINT = `https://api.github.com/repos/${owner}/${repo}/subscription`;
