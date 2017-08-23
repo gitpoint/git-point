@@ -13,7 +13,6 @@ import {
 const initialState = {
   user: {},
   orgs: [],
-  starCount: '',
   isFollowing: false,
   repositories: [],
   followers: [],

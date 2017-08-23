@@ -15,7 +15,6 @@ const initialState = {
   isAuthenticated: false,
   accessToken: null,
   user: {},
-  starCount: ' ',
   hasInitialUser: false,
   orgs: [],
   events: [],
