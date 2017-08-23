@@ -7,7 +7,7 @@ import {
   fetchSearch,
   fetchChangeFollowStatus,
   root as apiRoot,
-  requestStarCount,
+  fetchStarCount,
 } from 'api';
 import {
   GET_USER,
@@ -125,7 +125,7 @@ export const getStarCount = user => {
   return dispatch => {
     dispatch({ type: GET_STAR_COUNT.PENDING });
 
-    requestStarCount(user)
+    fetchStarCount(user)
       .then(data => {
         dispatch({
           type: GET_STAR_COUNT.SUCCESS,

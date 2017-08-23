@@ -10,7 +10,7 @@ import {
   fetchAuthUserOrgs,
   fetchUserOrgs,
   fetchUserEvents,
-  requestStarCount,
+  fetchStarCount,
 } from 'api';
 import {
   LOGIN,
@@ -91,7 +91,7 @@ export const getStarCount = () => {
 
     dispatch({ type: GET_AUTH_STAR_COUNT.PENDING });
 
-    requestStarCount(user)
+    fetchStarCount(user)
       .then(data => {
         dispatch({
           type: GET_AUTH_STAR_COUNT.SUCCESS,
