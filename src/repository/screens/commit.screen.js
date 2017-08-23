@@ -115,18 +115,20 @@ class Commit extends Component {
 
   renderHeader = () => {
     const { commit, language } = this.props;
+    const message = commit.commit ? commit.commit.message : 'Loading...';
+    const committer = commit.author ? commit.author.login : '';
 
     return (
       <View style={styles.headerContainer}>
         <View style={styles.header}>
           <Text>
-            {commit.commit.message}
+            {message}
           </Text>
         </View>
         <View style={styles.header}>
           <Text>
             {translate('repository.commit.byConnector', language, {
-              contributor: commit.committer.login,
+              contributor: committer,
             })}
           </Text>
         </View>
@@ -240,7 +242,7 @@ class Commit extends Component {
 
   render() {
     const { diff, isPendingCommit, isPendingDiff } = this.props;
-    const filesChanged = isPendingDiff ? [] : Parse(diff);
+    const filesChanged = isPendingDiff || diff === {} ? [] : Parse(diff);
 
     return (
       <ViewContainer>
