@@ -33,8 +33,10 @@ export const nl = {
       pullRequestEvent: '{{action}} pull request',
       pullRequestReviewEvent: '{{action}} pull request review',
       pullRequestReviewCommentEvent: '{{action}} op pull request',
-      pullRequestReviewEditedEvent: 'heeft een opmerking {{action}} op pull request',
-      pullRequestReviewDeletedEvent: 'heeft een opmerking {{action}} op pull request',
+      pullRequestReviewEditedEvent:
+        'heeft een opmerking {{action}} op pull request',
+      pullRequestReviewDeletedEvent:
+        'heeft een opmerking {{action}} op pull request',
       releaseEvent: '{{action}} release',
       atConnector: 'op',
       toConnector: 'bij',
@@ -282,6 +284,7 @@ export const nl = {
   },
   common: {
     bio: 'BIO',
+    stars: 'Sterren',
     orgs: 'ORGANISATIES',
     noOrgsMessage: 'Geen organizations',
     info: 'INFO',

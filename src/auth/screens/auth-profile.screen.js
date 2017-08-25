@@ -21,7 +21,7 @@ import {
   EntityInfo,
 } from 'components';
 import { colors, fonts, normalize } from 'config';
-import { getUser, getOrgs, signOut } from 'auth';
+import { getUser, getOrgs, signOut, getStarCount } from 'auth';
 import { emojifyText, openURLInView, translate } from 'utils';
 import { version } from 'package.json';
 
@@ -29,6 +29,7 @@ const mapStateToProps = state => ({
   user: state.auth.user,
   orgs: state.auth.orgs,
   language: state.auth.language,
+  starCount: state.auth.starCount,
   isPendingUser: state.auth.isPendingUser,
   isPendingOrgs: state.auth.isPendingOrgs,
   hasInitialUser: state.auth.hasInitialUser,
@@ -37,6 +38,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getUserByDispatch: () => dispatch(getUser()),
   getOrgsByDispatch: () => dispatch(getOrgs()),
+  getStarCountByDispatch: () => dispatch(getStarCount()),
   signOutByDispatch: () => dispatch(signOut()),
 });
 
@@ -85,9 +87,11 @@ class AuthProfile extends Component {
   props: {
     getUserByDispatch: Function,
     getOrgsByDispatch: Function,
+    getStarCountByDispatch: Function,
     user: Object,
     orgs: Array,
     language: string,
+    starCount: string,
     isPendingUser: boolean,
     isPendingOrgs: boolean,
     hasInitialUser: boolean,
@@ -139,6 +143,7 @@ class AuthProfile extends Component {
   refreshProfile = () => {
     this.props.getUserByDispatch();
     this.props.getOrgsByDispatch();
+    this.props.getStarCountByDispatch();
   };
 
   render() {
@@ -148,6 +153,7 @@ class AuthProfile extends Component {
       isPendingUser,
       isPendingOrgs,
       language,
+      starCount,
       navigation,
       hasInitialUser,
     } = this.props;
@@ -162,6 +168,7 @@ class AuthProfile extends Component {
               type="user"
               initialUser={hasInitialUser ? user : {}}
               user={hasInitialUser ? user : {}}
+              starCount={starCount}
               language={language}
               navigation={navigation}
             />}

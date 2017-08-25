@@ -310,6 +310,34 @@ export async function fetchForkRepo(owner, repo, accessToken) {
   return response;
 }
 
+export async function fetchStarCount(owner) {
+  const ENDPOINT = `https://api.github.com/users/${owner}/starred?per_page=1`;
+  const response = await fetch(ENDPOINT);
+
+  let linkHeader = response.headers.get('Link');
+  let output = '';
+
+  if (linkHeader == null) {
+    output = response.json().then(data => {
+      return data.length;
+    });
+  } else {
+    linkHeader = linkHeader.match(/page=(\d)+/g).pop();
+    output = linkHeader.split('=').pop();
+  }
+
+  // Add 'k' if star more than 1000
+
+  if (output > 1000) {
+    const outDecimal = (output / 1000).toString();
+    const dotIndex = outDecimal.indexOf('.');
+
+    output = `${outDecimal.substring(0, dotIndex + 3)}k`;
+  }
+
+  return output;
+}
+
 export async function watchRepo(isSubscribed, owner, repo, accessToken) {
   const ENDPOINT = `https://api.github.com/repos/${owner}/${repo}/subscription`;
   const response = await fetch(

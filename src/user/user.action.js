@@ -7,6 +7,7 @@ import {
   fetchSearch,
   fetchChangeFollowStatus,
   root as apiRoot,
+  fetchStarCount,
 } from 'api';
 import {
   GET_USER,
@@ -17,6 +18,7 @@ import {
   GET_FOLLOWING,
   SEARCH_USER_REPOS,
   CHANGE_FOLLOW_STATUS,
+  GET_STAR_COUNT,
 } from './user.type';
 
 const getUser = user => {
@@ -116,6 +118,26 @@ export const getUserInfo = user => {
       );
       dispatch(getFollowers(user));
     });
+  };
+};
+
+export const getStarCount = user => {
+  return dispatch => {
+    dispatch({ type: GET_STAR_COUNT.PENDING });
+
+    fetchStarCount(user)
+      .then(data => {
+        dispatch({
+          type: GET_STAR_COUNT.SUCCESS,
+          payload: data,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: GET_STAR_COUNT.ERROR,
+          payload: error,
+        });
+      });
   };
 };
 

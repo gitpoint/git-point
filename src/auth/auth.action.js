@@ -10,6 +10,7 @@ import {
   fetchAuthUserOrgs,
   fetchUserOrgs,
   fetchUserEvents,
+  fetchStarCount,
 } from 'api';
 import {
   LOGIN,
@@ -18,6 +19,7 @@ import {
   GET_AUTH_ORGS,
   GET_EVENTS,
   CHANGE_LANGUAGE,
+  GET_AUTH_STAR_COUNT,
 } from './auth.type';
 
 export const auth = (code, state, navigation) => {
@@ -77,6 +79,28 @@ export const getUser = () => {
       .catch(error => {
         dispatch({
           type: GET_AUTH_USER.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+export const getStarCount = () => {
+  return (dispatch, getState) => {
+    const user = getState().auth.user.name;
+
+    dispatch({ type: GET_AUTH_STAR_COUNT.PENDING });
+
+    fetchStarCount(user)
+      .then(data => {
+        dispatch({
+          type: GET_AUTH_STAR_COUNT.SUCCESS,
+          payload: data,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: GET_AUTH_STAR_COUNT.ERROR,
           payload: error,
         });
       });
