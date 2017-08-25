@@ -284,7 +284,7 @@ export const nl = {
   },
   common: {
     bio: 'BIO',
-    stars: 'Stars',
+    stars: 'Sterren',
     orgs: 'ORGANISATIES',
     noOrgsMessage: 'Geen organizations',
     info: 'INFO',
