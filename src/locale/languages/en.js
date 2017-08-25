@@ -139,7 +139,7 @@ export const en = {
       repositoryButton: 'Repositories',
       userButton: 'Users',
       searchingMessage: 'Searching for {{query}}',
-      searchMessage: 'Searching for any {{type}}',
+      searchMessage: 'Search for any {{type}}',
       repository: 'repository',
       user: 'user',
     },
