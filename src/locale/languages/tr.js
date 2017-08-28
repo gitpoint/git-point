@@ -19,26 +19,26 @@ export const tr = {
     },
     events: {
       welcomeMessage:
-        "Hoşgeldiniz! Bu, haber kaynağınızdır - izlediğiniz repository'lerde ve takip ettiğiniz kişilerle ilgili son etkinlikleri takip etmenize yardımcı olur.",
+        'Hoşgeldiniz! Bu, haber kaynağınızdır - izlediğiniz repository\'lerde ve takip ettiğiniz kişilerle ilgili son etkinlikleri takip etmenize yardımcı olur.',
       commitCommentEvent: 'commit\'e yorum yapıldı',
       createEvent: '{{object}} oluşturuldu',
       deleteEvent: '{{object}} silindi',
-      issueCommentEvent: '{{action}} on {{type}}',
-      issueEditedEvent: '{{action}} their comment on {{type}}',
-      issueRemovedEvent: '{{action}} their comment on {{type}}',
+      issueCommentEvent: '{{type}} {{action}}',
+      issueEditedEvent: '{{type}}\'daki yorum {{action}}',
+      issueRemovedEvent: '{{type}}\'den yorum {{action}}',
       issuesEvent: '{{action}} issue',
       publicEvent: {
         action: 'made',
         connector: 'public',
       },
-      pullRequestEvent: '{{action}} pull request',
-      pullRequestReviewEvent: '{{action}} pull request review',
-      pullRequestReviewCommentEvent: '{{action}} on pull request',
-      pullRequestReviewEditedEvent: '{{action}} their comment on pull request',
-      pullRequestReviewDeletedEvent: '{{action}} their comment on pull request',
-      releaseEvent: '{{action}} release',
-      atConnector: 'at',
-      toConnector: 'at',
+      pullRequestEvent: 'pull request {{action}}',
+      pullRequestReviewEvent: 'pull request incelemesi {{action}}',
+      pullRequestReviewCommentEvent: 'pull request\'e {{action}}',
+      pullRequestReviewEditedEvent: 'pull request\'deki yorum {{action}}',
+      pullRequestReviewDeletedEvent: 'pull request\'deki yorum {{action}}',
+      releaseEvent: 'release {{action}}',
+      atConnector: 'de',
+      toConnector: 'dan',
       types: {
         pullRequest: 'pull request',
         issue: 'issue',
@@ -77,7 +77,7 @@ export const tr = {
       },
     },
     profile: {
-      orgsRequestApprovalTop: "Tüm organizasyonlarınızı göremiyor musunuz?",
+      orgsRequestApprovalTop: 'Tüm organizasyonlarınızı göremiyor musunuz?',
       orgsRequestApprovalBottom: 'Onlar için onay istemeniz gerekebilir',
       codePushCheck: 'Güncellemeleri kontrol et',
       codePushChecking: 'Güncellemeler kontrol ediliyor...',
@@ -95,17 +95,17 @@ export const tr = {
       title: 'Privacy Policy',
       effectiveDate: 'Last updated: July 15, 2017',
       introduction:
-        "We're glad you decided to use GitPoint. This Privacy Policy is here to inform you about what we do — and do not do — with our user's data.",
+        'We\'re glad you decided to use GitPoint. This Privacy Policy is here to inform you about what we do — and do not do — with our user\'s data.',
       userDataTitle: 'USER DATA',
       userData1:
-        "We do not do anything with your GitHub information. After authenticating, the user's OAuth token is persisted directly on their device storage. It is not possible for us to retrieve that information. We never view a user's access token nor store it whatsoever.",
+        'We do not do anything with your GitHub information. After authenticating, the user\'s OAuth token is persisted directly on their device storage. It is not possible for us to retrieve that information. We never view a user\'s access token nor store it whatsoever.',
       userData2:
-        "This means that in no way, shape or form do we ever view, use or share a user's GitHub data. If private data ever becomes visible at any point we will not record or view it. If it happens to be accidentally recorded, we will delete it immediately using secure erase methods. Again, we've set up authentication specifically so that this never happens.",
+        'This means that in no way, shape or form do we ever view, use or share a user\'s GitHub data. If private data ever becomes visible at any point we will not record or view it. If it happens to be accidentally recorded, we will delete it immediately using secure erase methods. Again, we\'ve set up authentication specifically so that this never happens.',
       analyticsInfoTitle: 'ANALYTICS INFORMATION',
       analyticsInfo1:
         'We currently use Google Analytics and iTunes App Analytics to help us measure traffic and usage trends for the GitPoint. These tools collect information sent by your device including device and platform version, region and referrer. This information cannot reasonably be used to identify any particular individual user and no personal information is extracted.',
       analyticsInfo2:
-        "If we happen to include another third party platform to collect stack traces, error logs or more analytics information, we'll make sure that user data remains anonymized and encrypted.",
+        'If we happen to include another third party platform to collect stack traces, error logs or more analytics information, we\'ll make sure that user data remains anonymized and encrypted.',
       openSourceTitle: 'OPEN SOURCE',
       openSource1:
         'GitPoint is open source and the history of contributions to the platform will always be visible to the public.',
@@ -128,7 +128,7 @@ export const tr = {
       participatingButton: 'Katılımda',
       allButton: 'Tümü',
       retrievingMessage: 'Bildirim alınıyor',
-      noneMessage: "Bu türde hiçbir bildirime sahip değilsiniz",
+      noneMessage: 'Bu türde hiçbir bildirime sahip değilsiniz',
     },
   },
   search: {
@@ -148,7 +148,7 @@ export const tr = {
       follow: 'Takip et',
     },
     repositoryList: {
-      title: 'Repositor\'ler',
+      title: 'Repository\'ler',
     },
     followerList: {
       title: 'Takipçiler',
@@ -187,7 +187,7 @@ export const tr = {
       noOpenPullRequestsMessage: 'Açık pull request\'ler',
       starsTitle: 'Stars',
       forksTitle: 'Forks',
-      forkedFromMessage: 'forked from',
+      forkedFromMessage: 'buradan fork edildi:',
       starred: 'Starred',
       watching: 'İzleniyor',
     },
@@ -286,7 +286,7 @@ export const tr = {
   common: {
     bio: 'Biyografi',
     stars: 'Stars',
-    orgs: 'ORGANIZASYONLAR',
+    orgs: 'ORGANİZASYONLAR',
     noOrgsMessage: 'Organizasyon yok',
     info: 'BİLGİ',
     company: 'Şirket',
