@@ -92,31 +92,31 @@ export const tr = {
       signOut: 'Çıkış Yap',
     },
     privacyPolicy: {
-      title: 'Privacy Policy',
-      effectiveDate: 'Last updated: July 15, 2017',
+      title: 'Gizlilik Politikası',
+      effectiveDate: 'Son Güncelleme: Temmuz 15, 2017',
       introduction:
-        'We\'re glad you decided to use GitPoint. This Privacy Policy is here to inform you about what we do — and do not do — with our user\'s data.',
-      userDataTitle: 'USER DATA',
+        'GitPoint\'i kullanmaya karar verdiğiniz için mutluyuz. Bu Gizlilik Politikası, burada kullanıcılarımızın verileri ile ne yapıp ne yapmadığımızı size bildirmek için hazırlanmıştır.',
+      userDataTitle: 'KULLANICI VERİSİ',
       userData1:
-        'We do not do anything with your GitHub information. After authenticating, the user\'s OAuth token is persisted directly on their device storage. It is not possible for us to retrieve that information. We never view a user\'s access token nor store it whatsoever.',
+        'GitHub bilgilerinizle hiçbir şey yapmıyoruz. Kimlik doğrulamasından sonra, kullanıcının OAuth belirteci doğrudan kendi cihaz depolama biriminde kalır. Bu bilgileri geri almamız mümkün değildir. Bir kullanıcının erişim simgesini hiçbir zaman görüntülemiyoruz ve ne olursa olsun saklamıyoruz.',
       userData2:
-        'This means that in no way, shape or form do we ever view, use or share a user\'s GitHub data. If private data ever becomes visible at any point we will not record or view it. If it happens to be accidentally recorded, we will delete it immediately using secure erase methods. Again, we\'ve set up authentication specifically so that this never happens.',
-      analyticsInfoTitle: 'ANALYTICS INFORMATION',
+        'Bu, bir kullanıcının GitHub verilerini hiçbir şekilde görüntüleyemememiz, kullanmamamız veya paylaşmamamız anlamına gelir. Özel veriler, herhangi bir noktada görünür hale gelirse, kaydetmeyeceğiz veya görüntülemeyeceğiz. Yanlışlıkla kaydedilmişse, güvenli silme yöntemlerini kullanarak derhal silecektir. Yine, kimlik doğrulamasını özel olarak bu şekilde asla gerçekleşmeyecek şekilde kurduk.',
+      analyticsInfoTitle: 'ANALİTİK BİLGİLER',
       analyticsInfo1:
-        'We currently use Google Analytics and iTunes App Analytics to help us measure traffic and usage trends for the GitPoint. These tools collect information sent by your device including device and platform version, region and referrer. This information cannot reasonably be used to identify any particular individual user and no personal information is extracted.',
+        'Şu anda, GitPoint için trafik ve kullanım bilgilerini ölçmemize yardımcı olması için Google Analytics\'i ve iTunes App Analytics\'i kullanıyoruz. Bu araçlar, aygıt ve platform sürümü, bölge ve yönlendiren de dahil olmak üzere aygıtınız tarafından gönderilen bilgileri toplar. Bu bilgi belirli bir kullanıcıyı tanımlamak için makul bir şekilde kullanılamaz ve hiçbir kişisel bilgi çıkarılamaz.',
       analyticsInfo2:
-        'If we happen to include another third party platform to collect stack traces, error logs or more analytics information, we\'ll make sure that user data remains anonymized and encrypted.',
-      openSourceTitle: 'OPEN SOURCE',
+        'Yığın izlerini, hata günlüklerini veya daha fazla analitik bilgi toplamak için başka bir üçüncü taraf platformu eklersek, kullanıcı verilerinin anonim ve şifrelenip korunup korunmadığından emin oluruz.',
+      openSourceTitle: 'AÇIK KAYNAK',
       openSource1:
-        'GitPoint is open source and the history of contributions to the platform will always be visible to the public.',
+        'GitPoint açık kaynaktır ve platforma yapılan katkı geçmişi daima halk tarafından görülecektir.',
       openSource2:
-        'With each contribution to the app, code review is always performed to prevent anybody from including malicious code of any kind.',
-      contactTitle: 'CONTACT',
+        'Uygulamaya yapılan her katkı ile kod incelemesi, her zaman herkese, her türlü kötü niyetli kodu eklemez.',
+      contactTitle: 'İLETİŞİM',
       contact1:
-        'Thank you for reading our Privacy Policy. We hope you enjoy using GitPoint as much as we enjoyed building it.',
+        'Gizlilik Politikamızı okuduğunuz için teşekkür ederiz. Umarız gitPoint\'i keyifle kullandığımız kadar beğenirsiniz.',
       contact2:
-        'If you have any questions about this Privacy Policy or GitPoint in general, please file an issue in the',
-      contactLink: 'GitPoint repository',
+        'Genel olarak bu Gizlilik Politikası veya GitPoint ile ilgili herhangi bir sorunuz varsa lütfen;',
+      contactLink: 'GitPoint repository\'si',
     },
   },
   notifications: {
