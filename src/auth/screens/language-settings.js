@@ -12,6 +12,10 @@ export default [
     name: 'Nederlands',
   },
   {
+    code: 'tr',
+    name: 'Türkçe',
+  },
+  {
     code: 'br',
     name: 'Português do Brasil',
   },

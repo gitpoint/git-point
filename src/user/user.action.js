@@ -172,17 +172,15 @@ export const getRepositories = user => {
 
     dispatch({ type: GET_REPOSITORIES.PENDING });
 
-    const url = isAuthUser ? `${apiRoot}/user` : USER_ENDPOINT(user.login);
+    const url = isAuthUser
+      ? `${apiRoot}/user/repos?affiliation=owner&per_page=50`
+      : `${USER_ENDPOINT(user.login)}/repos?per_page=50`;
 
-    fetchUrl(`${url}/repos?per_page=50`, accessToken)
+    fetchUrl(url, accessToken)
       .then(data => {
-        const payload = isAuthUser
-          ? data.filter(repo => repo.permissions.admin)
-          : data;
-
         dispatch({
           type: GET_REPOSITORIES.SUCCESS,
-          payload,
+          payload: data,
         });
       })
       .catch(error => {
