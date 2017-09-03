@@ -11,4 +11,8 @@ export default [
     code: 'nl',
     name: 'Nederlands',
   },
+  {
+    code: 'br',
+    name: 'Português do Brasil',
+  },
 ];

@@ -206,7 +206,9 @@ export const RepositoryProfile = ({
             ? abbreviateNumber(repository.watchers_count)
             : ' '}
         </Text>
-        <Text style={styles.unitText}>Watchers</Text>
+        <Text style={styles.unitText}>
+          {translate('repository.main.watchers', language)}
+        </Text>
         {subscribed &&
           <Text style={[styles.unitStatus, styles.badge]}>
             {translate('repository.main.watching', language)}

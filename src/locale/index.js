@@ -1,10 +1,11 @@
 import { AsyncStorage } from 'react-native';
 import I18n from 'react-native-i18n';
-import { en, fr, nl } from './languages';
+import { br, en, fr, nl } from './languages';
 
 I18n.fallbacks = true;
 
 I18n.translations = {
+  br,
   en,
   fr,
   nl,
