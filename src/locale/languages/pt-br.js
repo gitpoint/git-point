@@ -1,6 +1,6 @@
 import { oneLineText } from 'utils';
 
-export const br = {
+export const ptBr = {
   auth: {
     login: {
       welcomeTitle: 'Bem-vindo ao GitPoint',

@@ -16,7 +16,7 @@ export default [
     name: 'Türkçe',
   },
   {
-    code: 'br',
+    code: 'ptBr',
     name: 'Português do Brasil',
   },
 ];
