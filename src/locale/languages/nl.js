@@ -20,8 +20,8 @@ export const nl = {
       welcomeMessage:
         'Welkom! Dit is je nieuws tijdlijn - dit helpt je up to date te blijven bij repositories en gebruikers die je volgt.',
       commitCommentEvent: 'heeft een reactie geplaatst op commit',
-      createEvent: 'aangemaakt {{object}}',
-      deleteEvent: 'verwijderd {{object}}',
+      createEvent: '{{object}} aangemaakt',
+      deleteEvent: '{{object}} verwijderd',
       issueCommentEvent: '{{action}} op {{type}}',
       issueEditedEvent: 'heeft een opmerking {{action}} op {{type}}',
       issueRemovedEvent: 'heeft een opmerking {{action}} bij {{type}}',
@@ -30,8 +30,8 @@ export const nl = {
         action: 'heeft',
         connector: 'openbaar gemaakt',
       },
-      pullRequestEvent: '{{action}} pull request',
-      pullRequestReviewEvent: '{{action}} pull request review',
+      pullRequestEvent: 'heeft pull request {{action}}',
+      pullRequestReviewEvent: 'pull request review {{action}} ',
       pullRequestReviewCommentEvent: '{{action}} op pull request',
       pullRequestReviewEditedEvent:
         'heeft een opmerking {{action}} op pull request',
