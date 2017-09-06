@@ -1,3 +1,5 @@
+import { abbreviateNumber } from 'utils';
+
 // These keys are for development purposes and do not represent the actual application keys.
 // Feel free to use them or use a new set of keys by creating an OAuth application of your own.
 // https://github.com/settings/applications/new
@@ -326,16 +328,7 @@ export async function fetchStarCount(owner) {
     output = linkHeader.split('=').pop();
   }
 
-  // Add 'k' if star more than 1000
-
-  if (output > 1000) {
-    const outDecimal = (output / 1000).toString();
-    const dotIndex = outDecimal.indexOf('.');
-
-    output = `${outDecimal.substring(0, dotIndex + 3)}k`;
-  }
-
-  return output;
+  return abbreviateNumber(output);
 }
 
 export async function watchRepo(isSubscribed, owner, repo, accessToken) {
