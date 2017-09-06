@@ -8,8 +8,8 @@ I18n.translations = {
   en,
   fr,
   nl,
-  ptBr,
   tr,
+  'pt-br': ptBr,
 };
 
 export default I18n;
