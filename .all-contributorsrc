@@ -293,6 +293,33 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "FlorianTaut",
+      "name": "Florian Taut",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/18403881?v=4",
+      "profile": "https://taut-fl.de",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "abdurrahmanekr",
+      "name": "Avare Kodcu",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/15075759?v=4",
+      "profile": "http://www.avarekodcu.com/iletisim",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "anaskhan96",
+      "name": "Anas Khan",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/23240518?v=4",
+      "profile": "http://anask.xyz",
+      "contributions": [
+        "code"
+      ]
     }
   ]
 }
