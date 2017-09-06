@@ -173,8 +173,8 @@ export const getRepositories = user => {
     dispatch({ type: GET_REPOSITORIES.PENDING });
 
     const url = isAuthUser
-      ? `${apiRoot}/user/repos?affiliation=owner&per_page=50`
-      : `${USER_ENDPOINT(user.login)}/repos?per_page=50`;
+      ? `${apiRoot}/user/repos?affiliation=owner&sort=updated&per_page=50`
+      : `${USER_ENDPOINT(user.login)}/repos?sort=updated&per_page=50`;
 
     fetchUrl(url, accessToken)
       .then(data => {
