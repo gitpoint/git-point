@@ -87,7 +87,7 @@ export const getUser = () => {
 
 export const getStarCount = () => {
   return (dispatch, getState) => {
-    const user = getState().auth.user.name;
+    const user = getState().auth.user.login;
 
     dispatch({ type: GET_AUTH_STAR_COUNT.PENDING });
 
