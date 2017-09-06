@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Linking, View, StyleSheet, Text, Platform, Image } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import SafariView from 'react-native-safari-view';
-import Swiper from 'react-native-swiper';
+import AppIntro from 'react-native-app-intro';
 import queryString from 'query-string';
 
 import { ViewContainer, LoadingContainer } from 'components';
@@ -172,7 +172,11 @@ class Login extends Component {
             </View>
 
             <View style={styles.contentSection}>
-              <Swiper activeDotColor={colors.white}>
+              <AppIntro
+                activeDotColor={colors.white}
+                showSkipButton={false}
+                showDoneButton={false}
+              >
                 <View style={[styles.slide, styles.slide1]}>
                   <Image
                     style={styles.logo}
@@ -235,7 +239,7 @@ class Login extends Component {
                     {translate('auth.login.issuesMessage', language)}
                   </Text>
                 </View>
-              </Swiper>
+              </AppIntro>
             </View>
 
             <View style={styles.miniSection}>
