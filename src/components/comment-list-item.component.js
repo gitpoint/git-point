@@ -12,6 +12,9 @@ import {
   Platform,
 } from 'react-native';
 import { MarkdownHtmlView } from 'components';
+import { Icon } from 'react-native-elements';
+import ActionSheet from 'react-native-actionsheet';
+
 import moment from 'moment/min/moment-with-locales.min';
 
 import { translate } from 'utils';
@@ -87,6 +90,11 @@ const styles = StyleSheet.create({
   commentRegular: {
     ...regularFont,
   },
+  iconContainer: {
+    paddingLeft: 10,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+  },
 });
 
 const mapStateToProps = state => ({
@@ -97,9 +105,24 @@ class CommentListItemComponent extends Component {
   props: {
     comment: Object,
     onLinkPress: Function,
+    onDeletePress: Function,
     language: string,
     navigation: Object,
     authUser: Object,
+  };
+
+  ActionSheet: ActionSheet;
+
+  handlePress = index => {
+    const { onDeletePress, comment } = this.props;
+
+    if (index === 0) {
+      onDeletePress(comment);
+    }
+  };
+
+  showMenu = () => {
+    this.ActionSheet.show();
   };
 
   render() {
@@ -108,6 +131,14 @@ class CommentListItemComponent extends Component {
     const commentPresent =
       (comment.body_html && comment.body_html !== '') ||
       (comment.body && comment.body !== '');
+
+    const commentActionSheetOptions = [
+      translate('issue.comment.deleteAction', language),
+    ];
+
+    const isActionButtonVisible =
+      authUser.login === comment.user.login &&
+      !Object.prototype.hasOwnProperty.call(comment, 'repository_url');
 
     return (
       <View style={styles.container}>
@@ -157,6 +188,17 @@ class CommentListItemComponent extends Component {
               {moment(comment.created_at).fromNow()}
             </Text>
           </View>
+
+          {isActionButtonVisible &&
+            <View style={styles.iconContainer}>
+              <Icon
+                color={colors.grey}
+                size={24}
+                name={'ellipsis-h'}
+                type={'font-awesome'}
+                onPress={this.showMenu}
+              />
+            </View>}
         </View>
 
         {!!commentPresent &&
@@ -177,6 +219,19 @@ class CommentListItemComponent extends Component {
               {translate('issue.main.noDescription', language)}
             </Text>
           </View>}
+
+        <ActionSheet
+          ref={o => {
+            this.ActionSheet = o;
+          }}
+          title={translate('issue.comment.commentActions', language)}
+          options={[
+            ...commentActionSheetOptions,
+            translate('common.cancel', language),
+          ]}
+          cancelButtonIndex={commentActionSheetOptions.length}
+          onPress={this.handlePress}
+        />
       </View>
     );
   }

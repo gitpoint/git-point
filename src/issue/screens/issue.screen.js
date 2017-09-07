@@ -24,6 +24,7 @@ import {
   getIssueComments,
   postIssueComment,
   getIssueFromUrl,
+  deleteIssueComment,
 } from '../issue.action';
 
 const mapStateToProps = state => ({
@@ -40,6 +41,7 @@ const mapStateToProps = state => ({
   isPendingComments: state.issue.isPendingComments,
   isPostingComment: state.issue.isPostingComment,
   isPendingContributors: state.repository.isPendingContributors,
+  isDeletingComment: state.issue.isDeletingComment,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -49,6 +51,8 @@ const mapDispatchToProps = dispatch => ({
   getIssueFromUrlByDispatch: url => dispatch(getIssueFromUrl(url)),
   getRepositoryByDispatch: url => dispatch(getRepository(url)),
   getContributorsByDispatch: url => dispatch(getContributors(url)),
+  deleteIssueCommentByDispatch: (issueCommentId, owner, repoName) =>
+    dispatch(deleteIssueComment(issueCommentId, owner, repoName)),
 });
 
 class Issue extends Component {
@@ -83,6 +87,7 @@ class Issue extends Component {
     getContributorsByDispatch: Function,
     postIssueCommentByDispatch: Function,
     getIssueFromUrlByDispatch: Function,
+    deleteIssueCommentByDispatch: Function,
     diff: string,
     issue: Object,
     isMerged: boolean,
@@ -94,6 +99,7 @@ class Issue extends Component {
     isPendingDiff: boolean,
     isPendingCheckMerge: boolean,
     isPendingComments: boolean,
+    isDeletingComment: boolean,
     isPendingContributors: boolean,
     // isPostingComment: boolean,
     language: string,
@@ -213,6 +219,16 @@ class Issue extends Component {
     this.commentsList.scrollToEnd();
   };
 
+  deleteComment = comment => {
+    const { repository } = this.props;
+    const { id } = comment;
+
+    const repoName = repository.name;
+    const owner = repository.owner.login;
+
+    this.props.deleteIssueCommentByDispatch(id, owner, repoName);
+  };
+
   keyExtractor = item => {
     return item.id;
   };
@@ -251,6 +267,7 @@ class Issue extends Component {
       <CommentListItem
         comment={item}
         onLinkPress={node => this.onLinkPress(node)}
+        onDeletePress={comment => this.deleteComment(comment)}
         language={language}
         navigation={this.props.navigation}
       />
@@ -265,11 +282,17 @@ class Issue extends Component {
       isPendingComments,
       isPendingContributors,
       isPendingIssue,
+      isDeletingComment,
       language,
       navigation,
     } = this.props;
 
-    const isLoadingData = !!(isPendingComments || isPendingIssue);
+    const isLoadingData = !!(
+      isPendingComments ||
+      isPendingIssue ||
+      isDeletingComment
+    );
+    const showLoadingContainer = isPendingComments || isPendingIssue;
     const fullComments = !isPendingComments ? [issue, ...comments] : [];
     const participantNames = !isPendingComments
       ? fullComments.map(item => item && item.user && item.user.login)
@@ -283,11 +306,8 @@ class Issue extends Component {
 
     return (
       <ViewContainer>
-        {isLoadingData &&
-          <LoadingContainer
-            animating={isPendingComments || isPendingIssue}
-            center
-          />}
+        {showLoadingContainer &&
+          <LoadingContainer animating={showLoadingContainer} center />}
 
         {!isPendingComments &&
           !isPendingIssue &&

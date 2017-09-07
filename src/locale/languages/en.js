@@ -248,6 +248,10 @@ export const en = {
       areYouSurePrompt: 'Are you sure?',
       applyLabelTitle: 'Apply a label to this issue',
     },
+    comment: {
+      commentActions: 'Comment Actions',
+      deleteAction: 'Delete',
+    },
     main: {
       assignees: 'Assignees',
       mergeButton: 'Merge Pull Request',
