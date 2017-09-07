@@ -121,7 +121,7 @@ class Profile extends Component {
   isFollower = () => {
     const { auth, followers } = this.props;
 
-    return followers.filter(follower => follower.login === auth).legth > 0;
+    return followers.filter(follower => follower.login === auth).length > 0;
   };
 
   render() {
@@ -156,7 +156,7 @@ class Profile extends Component {
               isFollowing={
                 isPendingUser || isPendingCheckFollowing ? false : isFollowing
               }
-              isFollower={this.isFollower}
+              isFollower={this.isFollower()}
               user={initialUser.login === user.login ? user : {}}
               language={language}
               navigation={navigation}
