@@ -152,12 +152,12 @@ class Issue extends Component {
     const issueURLParam = navigation.state.params.issueURL;
     const issueCommentsURL = `${navigation.state.params.issueURL}/comments`;
 
-    Promise.all(
+    Promise.all([
       getIssueFromUrlByDispatch(issueURLParam || issueParam.url),
       getIssueCommentsByDispatch(
         issueURLParam ? issueCommentsURL : issueParam.comments_url
-      )
-    ).then(() => {
+      ),
+    ]).then(() => {
       if (
         issueParam &&
         repository.full_name !==
