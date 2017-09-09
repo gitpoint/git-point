@@ -32,6 +32,7 @@ const mapStateToProps = state => ({
   isFollowing: state.user.isFollowing,
   isPendingUser: state.user.isPendingUser,
   isPendingOrgs: state.user.isPendingOrgs,
+  isPendingStarCount: state.user.isPendingStarCount,
   isPendingCheckFollowing: state.user.isPendingCheckFollowing,
 });
 
@@ -67,6 +68,7 @@ class Profile extends Component {
     isFollowing: boolean,
     isPendingUser: boolean,
     isPendingOrgs: boolean,
+    isPendingStarCount: boolean,
     isPendingCheckFollowing: boolean,
     navigation: Object,
   };
@@ -95,15 +97,14 @@ class Profile extends Component {
   getUserInfo = () => {
     this.setState({ refreshing: true });
 
-    this.props.getUserStarCountByDispatch(
-      this.props.navigation.state.params.user.login
-    );
+    const user = this.props.navigation.state.params.user;
 
-    this.props
-      .getUserInfoByDispatch(this.props.navigation.state.params.user.login)
-      .then(() => {
-        this.setState({ refreshing: false });
-      });
+    Promise.all([
+      this.props.getUserInfoByDispatch(user.login),
+      this.props.getUserStarCountByDispatch(user.login),
+    ]).then(() => {
+      this.setState({ refreshing: false });
+    });
   };
 
   showMenuActionSheet = () => {
@@ -133,6 +134,7 @@ class Profile extends Component {
       isFollowing,
       isPendingUser,
       isPendingOrgs,
+      isPendingStarCount,
       isPendingCheckFollowing,
       navigation,
     } = this.props;
@@ -152,7 +154,9 @@ class Profile extends Component {
             <UserProfile
               type="user"
               initialUser={initialUser}
-              starCount={starCount}
+              starCount={
+                isPendingStarCount ? '' : starCount
+              }
               isFollowing={
                 isPendingUser || isPendingCheckFollowing ? false : isFollowing
               }

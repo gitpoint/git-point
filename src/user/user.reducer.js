@@ -20,6 +20,7 @@ const initialState = {
   searchedUserRepos: [],
   isPendingUser: false,
   isPendingOrgs: false,
+  isPendingStarCount: false,
   isPendingCheckFollowing: false,
   isPendingRepositories: false,
   isPendingFollowers: false,
