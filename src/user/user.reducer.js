@@ -1,7 +1,8 @@
 import {
   GET_USER,
   GET_ORGS,
-  GET_FOLLOW_STATUS,
+  GET_IS_FOLLOWING,
+  GET_IS_FOLLOWER,
   GET_REPOSITORIES,
   GET_FOLLOWERS,
   GET_FOLLOWING,
@@ -13,7 +14,8 @@ import {
 const initialState = {
   user: {},
   orgs: [],
-  isFollowing: false,
+  isFollowing: false, // auth is following user
+  isFollower: false,  // user is a follower of auth, as well as user is following auth
   repositories: [],
   followers: [],
   following: [],
@@ -22,6 +24,7 @@ const initialState = {
   isPendingOrgs: false,
   isPendingStarCount: false,
   isPendingCheckFollowing: false,
+  isPendingCheckFollower: false,
   isPendingRepositories: false,
   isPendingFollowers: false,
   isPendingFollowing: false,
@@ -83,22 +86,39 @@ export const userReducer = (state = initialState, action = {}) => {
         error: action.payload,
         isPendingStarCount: false,
       };
-    case GET_FOLLOW_STATUS.PENDING:
+    case GET_IS_FOLLOWING.PENDING:
       return {
         ...state,
         isPendingCheckFollowing: true,
       };
-    case GET_FOLLOW_STATUS.SUCCESS:
+    case GET_IS_FOLLOWING.SUCCESS:
       return {
         ...state,
         isFollowing: action.payload,
         isPendingCheckFollowing: false,
       };
-    case GET_FOLLOW_STATUS.ERROR:
+    case GET_IS_FOLLOWING.ERROR:
       return {
         ...state,
         error: action.payload,
         isPendingCheckFollowing: false,
+      };
+    case GET_IS_FOLLOWER.PENDING:
+      return {
+        ...state,
+        isPendingCheckFollower: true,
+      };
+    case GET_IS_FOLLOWER.SUCCESS:
+      return {
+        ...state,
+        isFollower: action.payload,
+        isPendingCheckFollower: false,
+      };
+    case GET_IS_FOLLOWER.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isPendingCheckFollower: false,
       };
     case CHANGE_FOLLOW_STATUS.PENDING:
       return {

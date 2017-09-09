@@ -20,25 +20,28 @@ import {
 } from 'components';
 import { emojifyText, translate } from 'utils';
 import { colors, fonts } from 'config';
-import { getUserInfo, changeFollowStatus, getStarCount } from '../user.action';
+import { getUserInfo, getStarCount, getIsFollowing, getIsFollower, changeFollowStatus } from '../user.action';
 
 const mapStateToProps = state => ({
   auth: state.auth.user,
   user: state.user.user,
-  followers: state.user.followers,
   orgs: state.user.orgs,
   starCount: state.user.starCount,
   language: state.auth.language,
   isFollowing: state.user.isFollowing,
+  isFollower: state.user.isFollower,
   isPendingUser: state.user.isPendingUser,
   isPendingOrgs: state.user.isPendingOrgs,
   isPendingStarCount: state.user.isPendingStarCount,
   isPendingCheckFollowing: state.user.isPendingCheckFollowing,
+  isPendingCheckFollower: state.user.isPendingCheckFollower,
 });
 
 const mapDispatchToProps = dispatch => ({
   getUserInfoByDispatch: user => dispatch(getUserInfo(user)),
   getUserStarCountByDispatch: user => dispatch(getStarCount(user)),
+  getIsFollowingByDispatch: (user, auth) => dispatch(getIsFollowing(user, auth)),
+  getIsFollowerByDispatch: (user, auth) => dispatch(getIsFollower(user, auth)),
   changeFollowStatusByDispatch: (user, isFollowing) =>
     dispatch(changeFollowStatus(user, isFollowing)),
 });
@@ -57,19 +60,22 @@ const styles = StyleSheet.create({
 class Profile extends Component {
   props: {
     getUserInfoByDispatch: Function,
-    changeFollowStatusByDispatch: Function,
     getUserStarCountByDispatch: Function,
+    getIsFollowingByDispatch: Function,
+    getIsFollowerByDispatch: Function,
+    changeFollowStatusByDispatch: Function,
     auth: Object,
     user: Object,
-    followers: Array,
     orgs: Array,
     starCount: string,
     language: string,
     isFollowing: boolean,
+    isFollower: boolean,
     isPendingUser: boolean,
     isPendingOrgs: boolean,
     isPendingStarCount: boolean,
     isPendingCheckFollowing: boolean,
+    isPendingCheckFollower: boolean,
     navigation: Object,
   };
 
@@ -85,23 +91,26 @@ class Profile extends Component {
   }
 
   componentDidMount() {
-    this.props.getUserInfoByDispatch(
-      this.props.navigation.state.params.user.login
-    );
+    const user = this.props.navigation.state.params.user;
+    const auth = this.props.auth;
 
-    this.props.getUserStarCountByDispatch(
-      this.props.navigation.state.params.user.login
-    );
+    this.props.getUserInfoByDispatch(user.login);
+    this.props.getUserStarCountByDispatch(user.login);
+    this.props.getIsFollowingByDispatch(user.login, auth.login);
+    this.props.getIsFollowerByDispatch(user.login, auth.login);
   }
 
   getUserInfo = () => {
     this.setState({ refreshing: true });
 
     const user = this.props.navigation.state.params.user;
+    const auth = this.props.auth;
 
     Promise.all([
       this.props.getUserInfoByDispatch(user.login),
       this.props.getUserStarCountByDispatch(user.login),
+      this.props.getIsFollowingByDispatch(user.login, auth.login),
+      this.props.getIsFollowerByDispatch(user.login, auth.login),
     ]).then(() => {
       this.setState({ refreshing: false });
     });
@@ -119,12 +128,6 @@ class Profile extends Component {
     }
   };
 
-  isFollower = () => {
-    const { auth, followers } = this.props;
-
-    return followers.filter(follower => follower.login === auth).length > 0;
-  };
-
   render() {
     const {
       user,
@@ -132,10 +135,12 @@ class Profile extends Component {
       starCount,
       language,
       isFollowing,
+      isFollower,
       isPendingUser,
       isPendingOrgs,
       isPendingStarCount,
       isPendingCheckFollowing,
+      isPendingCheckFollower,
       navigation,
     } = this.props;
     const { refreshing } = this.state;
@@ -160,7 +165,9 @@ class Profile extends Component {
               isFollowing={
                 isPendingUser || isPendingCheckFollowing ? false : isFollowing
               }
-              isFollower={this.isFollower()}
+              isFollower={
+                isPendingUser || isPendingCheckFollower ? false : isFollower
+              }
               user={initialUser.login === user.login ? user : {}}
               language={language}
               navigation={navigation}
