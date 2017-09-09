@@ -18,7 +18,7 @@ import {
 } from 'components';
 import { translate } from 'utils';
 import { colors } from 'config';
-import { getRepository } from 'repository';
+import { getRepository, getContributors } from 'repository';
 import {
   getIssueComments,
   postIssueComment,
@@ -47,6 +47,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(postIssueComment(body, owner, repoName, issueNum)),
   getIssueFromUrlByDispatch: url => dispatch(getIssueFromUrl(url)),
   getRepositoryByDispatch: url => dispatch(getRepository(url)),
+  getContributorsByDispatch: url => dispatch(getContributors(url)),
 });
 
 class Issue extends Component {
