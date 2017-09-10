@@ -9,3 +9,5 @@ export const emojifyText = text => {
 export const abbreviateNumber = count => {
   return count >= 1000 ? (count / 1000).toFixed(1) + thousandUnit : count;
 };
+
+export const oneLineText = text => text.replace(/\s\s+/g, ' ');
