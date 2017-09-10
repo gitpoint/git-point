@@ -320,5 +320,8 @@ export const en = {
       y: '%dy',
       yy: '%dy',
     },
+    abbreviations: {
+      thousand: 'k',
+    },
   },
 };

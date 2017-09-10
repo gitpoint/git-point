@@ -313,5 +313,8 @@ export const nl = {
       y: '%dy',
       yy: '%dy',
     },
+    abbreviations: {
+      thousand: 'k',
+    },
   },
 };
