@@ -99,10 +99,10 @@ class OrganizationProfile extends Component {
     const organization = this.props.navigation.state.params.organization;
 
     this.setState({ refreshing: true });
-    Promise.all(
+    Promise.all([
       this.props.fetchOrganizations(organization.login),
-      this.props.fetchOrganizationMembers(organization.login)
-    ).then(() => {
+      this.props.fetchOrganizationMembers(organization.login),
+    ]).then(() => {
       this.setState({ refreshing: false });
     });
   };
