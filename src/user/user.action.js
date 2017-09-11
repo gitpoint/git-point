@@ -12,7 +12,8 @@ import {
 import {
   GET_USER,
   GET_ORGS,
-  GET_FOLLOW_STATUS,
+  GET_IS_FOLLOWING,
+  GET_IS_FOLLOWER,
   GET_REPOSITORIES,
   GET_FOLLOWERS,
   GET_FOLLOWING,
@@ -65,25 +66,37 @@ const getOrgs = user => {
   };
 };
 
-export const checkFollowStatus = url => {
+const checkFollowStatusHelper = (user, followedUser, actionSet) => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 
-    dispatch({ type: GET_FOLLOW_STATUS.PENDING });
+    dispatch({ type: actionSet.PENDING });
 
-    fetchUrlNormal(url, accessToken)
+    fetchUrlNormal(`${USER_ENDPOINT(user)}/following/${followedUser}`, accessToken)
       .then(data => {
         dispatch({
-          type: GET_FOLLOW_STATUS.SUCCESS,
+          type: actionSet.SUCCESS,
           payload: !(data.status === 404),
         });
       })
       .catch(error => {
         dispatch({
-          type: GET_FOLLOW_STATUS.ERROR,
+          type: actionSet.ERROR,
           payload: error,
         });
       });
+  };
+};
+
+export const getIsFollowing = (user, auth) => {
+  return dispatch => {
+    dispatch(checkFollowStatusHelper(auth, user, GET_IS_FOLLOWING));
+  };
+};
+
+export const getIsFollower = (user, auth) => {
+  return dispatch => {
+    dispatch(checkFollowStatusHelper(user, auth, GET_IS_FOLLOWER));
   };
 };
 
@@ -111,13 +124,10 @@ export const getFollowers = user => {
 
 export const getUserInfo = user => {
   return dispatch => {
-    return dispatch(getUser(user)).then(() => {
-      dispatch(getOrgs(user));
-      dispatch(
-        checkFollowStatus(`https://api.github.com/user/following/${user}`)
-      );
-      dispatch(getFollowers(user));
-    });
+    Promise.all([
+      dispatch(getUser(user)),
+      dispatch(getOrgs(user)),
+    ]);
   };
 };
 
