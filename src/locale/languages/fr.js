@@ -251,7 +251,6 @@ export const fr = {
       noDescription: 'Aucune description fournie.',
       lockedCommentInput: 'Verrouiller, mais vous pouvez encore commenter...',
       commentInput: 'Ajouter un commentaire...',
-      commentButton: 'Publier',
       lockedIssue: 'Ce ticket est verrouillé',
       states: {
         open: 'Ouvert',

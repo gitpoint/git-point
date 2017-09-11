@@ -251,7 +251,6 @@ export const tr = {
       noDescription: 'Açıklama sağlanmadı.',
       lockedCommentInput: 'Kilitli, ancak yine de yorum yapabilirsiniz...',
       commentInput: 'Yorum ekle...',
-      commentButton: 'Ekle',
       lockedIssue: 'Issue kilitli',
       states: {
         open: 'Açık',

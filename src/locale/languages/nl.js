@@ -247,7 +247,6 @@ export const nl = {
       noDescription: 'Niet voorzien van een beschrijving.',
       lockedCommentInput: 'Gesloten maar je kan nog opmerkingen maken...',
       commentInput: 'Plaats opmerking...',
-      commentButton: 'Post',
       lockedIssue: 'Issue is gesloten',
       states: {
         open: 'Open',
