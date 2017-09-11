@@ -1,5 +1,3 @@
-import { oneLineText } from 'utils';
-
 export const ptBr = {
   auth: {
     login: {
@@ -19,8 +17,8 @@ export const ptBr = {
       welcomeTitle: 'Bem-vindo ao GitPoint',
     },
     events: {
-      welcomeMessage: oneLineText(`Bem-vindo! Este é seu feed de notícias - vai ajudá-lo a manter-se
-        atualizado das atividades recentes dos repositórios que você acompanha e das pessoas que segue.`),
+      welcomeMessage:
+        'Bem-vindo! Este é seu feed de notícias - vai ajudá-lo a manter-se atualizado das atividades recentes dos repositórios que você acompanha e das pessoas que segue.',
       commitCommentEvent: 'comentou no commit',
       createEvent: 'criou {{object}}',
       deleteEvent: 'apagou {{object}}',
@@ -96,35 +94,28 @@ export const ptBr = {
     privacyPolicy: {
       title: 'Política de Privacidade',
       effectiveDate: 'Última atualização: 15 de Julho de 2017',
-      introduction: oneLineText(`Estamos felizes por você decidir usar o GitPoint. Esta Política de Privacidade
-        está aqui para informar o que fazemos - e não fazemos - com os dados de nossos usuários.`),
+      introduction:
+        'Estamos felizes por você decidir usar o GitPoint. Esta Política de Privacidade está aqui para informar o que fazemos - e não fazemos - com os dados de nossos usuários.',
       userDataTitle: 'DADOS DO USUÁRIO',
-      userData1: oneLineText(`Não fazemos nada com sua informação do GitHub. Depois de autenticado,
-        o token do usuário é armazenado no seu dispositivo. Não é possível recuperarmos essa informação.
-        Nunca vemos ou armazenamos o token do usuário, não importa o que aconteça.`),
-      userData2: oneLineText(`Isso significa que, de forma alguma, vemos, usamos ou compartilhamos os dados
-        do GitHub de um usuário. Se dados privados ficarem visíveis em algum momento, nunca iremos armazená-los
-        ou vê-los. Se os dados forem acidentalmente armazenados, iremos deletá-los imediatamente, usando métodos
-        seguros. Como dito, configuramos autenticação especificamente para que isso nunca aconteça.`),
+      userData1:
+        'Não fazemos nada com sua informação do GitHub. Depois de autenticado, o token do usuário é armazenado no seu dispositivo. Não é possível recuperarmos essa informação. Nunca vemos ou armazenamos o token do usuário, não importa o que aconteça.',
+      userData2:
+        'Isso significa que, de forma alguma, vemos, usamos ou compartilhamos os dados do GitHub de um usuário. Se dados privados ficarem visíveis em algum momento, nunca iremos armazená-los ou vê-los. Se os dados forem acidentalmente armazenados, iremos deletá-los imediatamente, usando métodos seguros. Como dito, configuramos autenticação especificamente para que isso nunca aconteça.',
       analyticsInfoTitle: 'INFORMAÇÕES ANALÍTICAS',
-      analyticsInfo1: oneLineText(`Atualmente, usamos o Google Analytics e o iTunes App Analytics
-        para nos ajudar a medir tráfego e tendências de utilização para o GitPoint. Essas ferramentas
-        coletam informações enviadas pelo seu dispositivo, incluindo versão, plataforma e região.
-        Estas informações não podem ser usadas para identificar qualquer usuário em particular e nenhuma
-        informação pessoal é extraída.`),
-      analyticsInfo2: oneLineText(`Se acontecer de incluirmos outra plataforma de terceiros para coletar
-        stack traces, logs de erro ou mais informações analíticas, nos certificaremos de que os dados
-        do usuário permaneçam anônimos e criptografados.`),
+      analyticsInfo1:
+        'Atualmente, usamos o Google Analytics e o iTunes App Analytics para nos ajudar a medir tráfego e tendências de utilização para o GitPoint. Essas ferramentas coletam informações enviadas pelo seu dispositivo, incluindo versão, plataforma e região. Estas informações não podem ser usadas para identificar qualquer usuário em particular e nenhuma informação pessoal é extraída.',
+      analyticsInfo2:
+        'Se acontecer de incluirmos outra plataforma de terceiros para coletar stack traces, logs de erro ou mais informações analíticas, nos certificaremos de que os dados do usuário permaneçam anônimos e criptografados.',
       openSourceTitle: 'CÓDIGO ABERTO',
       openSource1:
         'GitPoint tem código aberto e o histórico de contribuições à plataforma sempre será visível para o público.',
-      openSource2: oneLineText(`A cada contribuição para o aplicativo, é realizada uma revisão de código
-        para evitar que alguém adicione qualquer tipo de código malicioso.`),
+      openSource2:
+        'A cada contribuição para o aplicativo, é realizada uma revisão de código para evitar que alguém adicione qualquer tipo de código malicioso.',
       contactTitle: 'CONTATO',
-      contact1: oneLineText(`Obrigado por ler nossa Política de Privacidade.
-        Esperamos que você goste de usar o GitPoint o tanto quanto gostamos de desenvolvê-lo.`),
-      contact2: oneLineText(`Se tiver alguma dúvida sobre esta Política de Privacidade ou sobre o GitPoint
-        em geral, por favor, abra uma issue no`),
+      contact1:
+        'Obrigado por ler nossa Política de Privacidade. Esperamos que você goste de usar o GitPoint o tanto quanto gostamos de desenvolvê-lo.',
+      contact2:
+        'Se tiver alguma dúvida sobre esta Política de Privacidade ou sobre o GitPoint em geral, por favor, abra uma issue no',
       contactLink: 'repositório do GitPoint',
     },
   },
