@@ -50,7 +50,7 @@
     "parse-diff": "^0.4.0",
     "query-string": "^4.3.1",
     "react": "16.0.0-alpha.12",
-    "react-native": "0.47.1",
+    "react-native": "0.48.1",
     "react-native-actionsheet": "^2.2.0",
     "react-native-code-push": "^5.0.0-beta",
     "react-native-communications": "^2.2.1",
