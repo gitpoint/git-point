@@ -202,8 +202,8 @@ export const RepositoryProfile = ({
 
       <View style={styles.unit}>
         <Text style={styles.unitNumber}>
-          {!isNaN(parseInt(repository.watchers_count, 10))
-            ? abbreviateNumber(repository.watchers_count)
+          {!isNaN(parseInt(repository.subscribers_count, 10))
+            ? abbreviateNumber(repository.subscribers_count)
             : ' '}
         </Text>
         <Text style={styles.unitText}>
