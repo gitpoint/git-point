@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Linking, View, StyleSheet, Text, Platform, Image } from 'react-native';
+import {
+  ActivityIndicator,
+  View,
+  StyleSheet,
+  Text,
+  Image,
+  WebView,
+  Modal,
+} from 'react-native';
 import { Button, Icon } from 'react-native-elements';
-import SafariView from 'react-native-safari-view';
 import AppIntro from 'react-native-app-intro';
 import queryString from 'query-string';
 
@@ -10,7 +17,7 @@ import { ViewContainer, LoadingContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { CLIENT_ID } from 'api';
 import { auth } from 'auth';
-import { openURLInView, translate } from 'utils';
+import { translate } from 'utils';
 
 const stateRandom = Math.random().toString();
 
@@ -39,6 +46,32 @@ const styles = StyleSheet.create({
     ...fonts.fontPrimaryBold,
     fontSize: normalize(12),
   },
+  browserDismiss: {
+    flex: 1,
+  },
+  browserLoader: {
+    flex: 1,
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+    width: '100%',
+    textAlign: 'center',
+    backgroundColor: '#1f2327',
+    zIndex: 1,
+  },
+  browserLoadingLabel: {
+    fontSize: normalize(20),
+    color: colors.white,
+    ...fonts.fontPrimarySemiBold,
+    paddingBottom: 20,
+  },
+  browserSection: {
+    flex: 4,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   logo: {
     width: 90,
     height: 90,
@@ -47,6 +80,11 @@ const styles = StyleSheet.create({
     flex: 1.5,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  modalContainer: {
+    flex: 1,
+    paddingTop: 20,
+    backgroundColor: '#1f2327',
   },
   contentSection: {
     flex: 2,
@@ -109,11 +147,13 @@ class Login extends Component {
 
     this.state = {
       code: null,
+      modalVisible: false,
+      showLoader: true,
+      loaderText: translate('auth.login.connectingToGitHub', this.language),
       asyncStorageChecked: false,
     };
   }
 
-  // Set up Linking
   componentDidMount() {
     if (this.props.isAuthenticated) {
       this.props.navigation.navigate('Main');
@@ -121,40 +161,45 @@ class Login extends Component {
       // FIXME
       // eslint-disable-next-line react/no-did-mount-set-state
       this.setState({ asyncStorageChecked: true });
-
-      Linking.addEventListener('url', this.handleOpenURL);
-      Linking.getInitialURL().then(url => {
-        if (url) {
-          this.handleOpenURL({ url });
-        }
-      });
     }
   }
 
-  componentWillUnmount() {
-    Linking.removeEventListener('url', this.handleOpenURL);
-  }
+  onNavigationStateChange = navState => {
+    const url = navState.url;
 
-  handleOpenURL = ({ url }) => {
-    const [, queryStringFromUrl] = url.match(/\?(.*)/);
-    const { state, code } = queryString.parse(queryStringFromUrl);
-    const { authByDispatch, navigation } = this.props;
+    this.handleOpenURL({ url });
+  };
 
-    if (stateRandom === state) {
-      this.setState({ code });
-
-      authByDispatch(code, state, navigation);
-    }
-
-    if (Platform.OS === 'ios') {
-      SafariView.dismiss();
+  setModalVisible = visible => {
+    this.setState({ modalVisible: visible });
+    if (!visible) {
+      this.setWebViewVisible(false);
     }
   };
 
-  signIn = () =>
-    openURLInView(
-      `https://github.com/login/oauth/authorize?response_type=token&client_id=${CLIENT_ID}&redirect_uri=gitpoint://welcome&scope=user%20repo&state=${stateRandom}`
-    );
+  setWebViewVisible = visible => {
+    if (this.state.code === null) {
+      this.setState({ showLoader: !visible });
+    }
+  };
+
+  handleOpenURL = ({ url }) => {
+    if (url && url.substring(0, 11) === 'gitpoint://') {
+      const [, queryStringFromUrl] = url.match(/\?(.*)/);
+      const { state, code } = queryString.parse(queryStringFromUrl);
+      const { authByDispatch, navigation } = this.props;
+
+      if (stateRandom === state) {
+        this.setState({
+          code,
+          showLoader: true,
+          loaderText: translate('auth.login.preparingGitPoint', this.language),
+        });
+
+        authByDispatch(code, state, navigation);
+      }
+    }
+  };
 
   render() {
     const { language, isLoggingIn, isAuthenticated } = this.props;
@@ -164,6 +209,43 @@ class Login extends Component {
         {!isAuthenticated &&
           this.state.asyncStorageChecked &&
           <View style={styles.container}>
+            <Modal
+              animationType="slide"
+              transparent={false}
+              visible={this.state.modalVisible}
+              style={styles.container}
+            >
+              <View style={styles.modalContainer}>
+                <View style={styles.browserSection && { flex: 4 }}>
+                  {this.state.showLoader
+                    ? <View style={styles.browserLoader}>
+                        <Text style={styles.browserLoadingLabel}>
+                          {this.state.loaderText}
+                        </Text>
+                        <ActivityIndicator color="#ffffff" size="large" />
+                      </View>
+                    : null}
+                  <WebView
+                    style={{ flex: 1, zIndex: 0 }}
+                    source={{
+                      uri: `https://github.com/login/oauth/authorize?response_type=token&client_id=${CLIENT_ID}&redirect_uri=gitpoint://welcome&scope=user%20repo&state=${stateRandom}`,
+                    }}
+                    onLoadEnd={() => this.setWebViewVisible(true)}
+                    onNavigationStateChange={e =>
+                      this.onNavigationStateChange(e)}
+                  />
+                </View>
+                <View style={styles.miniSection}>
+                  <Button
+                    title={translate('auth.login.cancel', language)}
+                    buttonStyle={styles.button}
+                    textStyle={styles.buttonText}
+                    onPress={() =>
+                      this.setModalVisible(!this.state.modalVisible)}
+                  />
+                </View>
+              </View>
+            </Modal>
             <View style={styles.miniSection}>
               <Image
                 style={styles.logo}
@@ -248,7 +330,7 @@ class Login extends Component {
                 title={translate('auth.login.signInButton', language)}
                 buttonStyle={styles.button}
                 textStyle={styles.buttonText}
-                onPress={() => this.signIn()}
+                onPress={() => this.setModalVisible(true)}
               />
             </View>
           </View>}
