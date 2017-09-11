@@ -188,7 +188,7 @@ export async function fetchOrg(orgName, accessToken) {
     accessTokenParameters(accessToken)
   );
 
-  return response;
+  return response.json();
 }
 
 export async function fetchOrgMembers(orgName, accessToken) {
@@ -197,7 +197,7 @@ export async function fetchOrgMembers(orgName, accessToken) {
     accessTokenParameters(accessToken)
   );
 
-  return response;
+  return response.json();
 }
 
 export async function fetchPostIssueComment(
