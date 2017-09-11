@@ -5,6 +5,7 @@ import {
   View,
   StyleSheet,
   Text,
+  Linking,
   Image,
   WebView,
   Modal,
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   browserSection: {
-    flex: 4,
+    flex: 5,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -161,7 +162,18 @@ class Login extends Component {
       // FIXME
       // eslint-disable-next-line react/no-did-mount-set-state
       this.setState({ asyncStorageChecked: true });
+
+      Linking.addEventListener('url', this.handleOpenURL);
+      Linking.getInitialURL().then(url => {
+        if (url) {
+          this.handleOpenURL({ url });
+        }
+      });
     }
+  }
+
+  componentWillUnmount() {
+    Linking.removeEventListener('url', this.handleOpenURL);
   }
 
   onNavigationStateChange = navState => {
@@ -216,7 +228,7 @@ class Login extends Component {
               style={styles.container}
             >
               <View style={styles.modalContainer}>
-                <View style={styles.browserSection && { flex: 4 }}>
+                <View style={styles.browserSection && { flex: 5 }}>
                   {this.state.showLoader
                     ? <View style={styles.browserLoader}>
                         <Text style={styles.browserLoadingLabel}>
