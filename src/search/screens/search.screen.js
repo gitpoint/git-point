@@ -282,7 +282,9 @@ class Search extends Component {
           repos.length === 0 &&
           searchType === 0 &&
           <View style={styles.textContainer}>
-            <Text style={styles.searchTitle}>No repositories found :(</Text>
+            <Text style={styles.searchTitle}>
+              {translate('search.main.noRepositoriesFound', language)}
+            </Text>
           </View>}
 
         {searchStart &&
@@ -290,7 +292,9 @@ class Search extends Component {
           users.length === 0 &&
           searchType === 1 &&
           <View style={styles.textContainer}>
-            <Text style={styles.searchTitle}>No users found :(</Text>
+            <Text style={styles.searchTitle}>
+              {translate('search.main.noUsersFound', language)}
+            </Text>
           </View>}
       </ViewContainer>
     );

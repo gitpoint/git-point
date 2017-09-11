@@ -317,5 +317,8 @@ export const fr = {
       y: '%da',
       yy: '%da',
     },
+    abbreviations: {
+      thousand: 'k',
+    },
   },
 };

@@ -145,6 +145,8 @@ export const en = {
       searchMessage: 'Search for any {{type}}',
       repository: 'repository',
       user: 'user',
+      noUsersFound: 'No users found :(',
+      noRepositoriesFound: 'No repositories found :(',
     },
   },
   user: {
@@ -196,6 +198,7 @@ export const en = {
       forkedFromMessage: 'forked from',
       starred: 'Starred',
       watching: 'Watching',
+      watchers: 'Watchers',
     },
     codeList: {
       title: 'Code',
@@ -319,6 +322,9 @@ export const en = {
       MM: '%dmo',
       y: '%dy',
       yy: '%dy',
+    },
+    abbreviations: {
+      thousand: 'k',
     },
   },
 };

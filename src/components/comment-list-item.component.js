@@ -293,7 +293,7 @@ class CommentListItemComponent extends Component {
           </View>
         </View>
 
-        {commentPresent &&
+        {!!commentPresent &&
           <View style={styles.commentContainer}>
             {comment.body_html &&
               comment.body_html !== '' &&
