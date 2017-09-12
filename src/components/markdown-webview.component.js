@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { WebView, Platform } from 'react-native';
 
-export class MarkDown extends Component {
+export class MarkdownWebview extends Component {
   props: {
     html: string,
     baseUrl: string,
   };
-
-  componentDidMount() {}
 
   decorateHtml = () => {
     let markdown = this.props.html;

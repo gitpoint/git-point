@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { connect } from 'react-redux';
 
-import { MarkDown, ViewContainer, LoadingContainer } from 'components';
+import { MarkdownWebview, ViewContainer, LoadingContainer } from 'components';
 import { normalize } from 'config';
 import { getReadMe } from '../repository.action';
 
@@ -65,7 +65,7 @@ class ReadMe extends Component {
           <LoadingContainer animating={isPendingReadMe} center />}
         {!isPendingReadMe &&
           !noReadMe &&
-          <MarkDown
+          <MarkdownWebview
             html={readMe}
             baseUrl={`${this.props.navigation.state.params.repository
               .html_url}/blob/master/`}
