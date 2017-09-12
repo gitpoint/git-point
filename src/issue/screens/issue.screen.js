@@ -229,6 +229,17 @@ class Issue extends Component {
     this.props.deleteIssueCommentByDispatch(id, owner, repoName);
   };
 
+  editComment = comment => {
+    const { state, navigate } = this.props.navigation;
+    const { repository } = this.props;
+
+    navigate('EditIssueComment', {
+      title: translate('issue.comment.editCommentTitle', state.params.language),
+      comment,
+      repository,
+    });
+  };
+
   keyExtractor = item => {
     return item.id;
   };
@@ -268,6 +279,7 @@ class Issue extends Component {
         comment={item}
         onLinkPress={node => this.onLinkPress(node)}
         onDeletePress={comment => this.deleteComment(comment)}
+        onEditPress={comment => this.editComment(comment)}
         language={language}
         navigation={this.props.navigation}
       />
@@ -294,6 +306,7 @@ class Issue extends Component {
     );
     const showLoadingContainer = isPendingComments || isPendingIssue;
     const fullComments = !isPendingComments ? [issue, ...comments] : [];
+
     const participantNames = !isPendingComments
       ? fullComments.map(item => item && item.user && item.user.login)
       : [];
@@ -306,12 +319,13 @@ class Issue extends Component {
 
     return (
       <ViewContainer>
-        {showLoadingContainer &&
-          <LoadingContainer animating={showLoadingContainer} center />}
+        {showLoadingContainer && (
+          <LoadingContainer animating={showLoadingContainer} center />
+        )}
 
         {!isPendingComments &&
-          !isPendingIssue &&
-          issue &&
+        !isPendingIssue &&
+        issue && (
           <KeyboardAvoidingView
             style={{ flex: 1 }}
             behavior={'padding'}
@@ -340,7 +354,8 @@ class Issue extends Component {
               language={language}
               onSubmit={this.postComment}
             />
-          </KeyboardAvoidingView>}
+          </KeyboardAvoidingView>
+        )}
       </ViewContainer>
     );
   }

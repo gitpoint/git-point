@@ -231,6 +231,22 @@ export async function fetchDeleteIssueComment(
   return response;
 }
 
+export async function fetchEditIssueComment(
+  issueCommentId: number,
+  owner: string,
+  repoName: string,
+  editParams: any,
+  accessToken: string
+) {
+  const ENDPOINT = `${root}/repos/${owner}/${repoName}/issues/comments/${issueCommentId}`;
+  const response = await fetch(
+    ENDPOINT,
+    accessTokenParametersPATCH(editParams, accessToken)
+  );
+
+  return response;
+}
+
 export async function fetchEditIssue(
   owner,
   repoName,

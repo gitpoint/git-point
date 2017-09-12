@@ -8,6 +8,7 @@ import {
   fetchMergePullRequest,
   fetchSubmitNewIssue,
   fetchDeleteIssueComment,
+  fetchEditIssueComment,
 } from 'api';
 import {
   GET_ISSUE_COMMENTS,
@@ -20,6 +21,7 @@ import {
   GET_ISSUE_FROM_URL,
   SUBMIT_NEW_ISSUE,
   DELETE_ISSUE_COMMENT,
+  EDIT_ISSUE_COMMENT,
 } from './issue.type';
 
 const getDiff = url => {
@@ -135,6 +137,34 @@ export const deleteIssueComment = (issueCommentId, owner, repoName) => {
       .catch(error => {
         dispatch({
           type: DELETE_ISSUE_COMMENT.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+export const editIssueComment = (issueCommentId, owner, repoName, body) => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: EDIT_ISSUE_COMMENT.PENDING });
+
+    return fetchEditIssueComment(
+      issueCommentId,
+      owner,
+      repoName,
+      { body },
+      accessToken
+    )
+      .then(() => {
+        dispatch({
+          type: EDIT_ISSUE_COMMENT.SUCCESS,
+          payload: { id: issueCommentId, body },
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: EDIT_ISSUE_COMMENT.ERROR,
           payload: error,
         });
       });

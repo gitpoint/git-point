@@ -250,6 +250,8 @@ export const en = {
     },
     comment: {
       commentActions: 'Comment Actions',
+      editCommentTitle: 'Edit Comment',
+      editAction: 'Edit',
       deleteAction: 'Delete',
     },
     main: {

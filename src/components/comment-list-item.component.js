@@ -105,6 +105,7 @@ class CommentListItemComponent extends Component {
   props: {
     comment: Object,
     onLinkPress: Function,
+    onEditPress: Function,
     onDeletePress: Function,
     language: string,
     navigation: Object,
@@ -113,10 +114,12 @@ class CommentListItemComponent extends Component {
 
   ActionSheet: ActionSheet;
 
-  handlePress = index => {
-    const { onDeletePress, comment } = this.props;
+  handlePress = (index: number) => {
+    const { onDeletePress, onEditPress, comment } = this.props;
 
     if (index === 0) {
+      onEditPress(comment);
+    } else if (index === 1) {
       onDeletePress(comment);
     }
   };
@@ -133,17 +136,19 @@ class CommentListItemComponent extends Component {
       (comment.body && comment.body !== '');
 
     const commentActionSheetOptions = [
+      translate('issue.comment.editAction', language),
       translate('issue.comment.deleteAction', language),
     ];
 
     const isActionButtonVisible =
+      comment.user &&
       authUser.login === comment.user.login &&
       !Object.prototype.hasOwnProperty.call(comment, 'repository_url');
 
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          {comment.user &&
+          {comment.user && (
             <TouchableOpacity
               style={styles.avatarContainer}
               onPress={() =>
@@ -162,9 +167,10 @@ class CommentListItemComponent extends Component {
                   uri: comment.user.avatar_url,
                 }}
               />
-            </TouchableOpacity>}
+            </TouchableOpacity>
+          )}
 
-          {comment.user &&
+          {comment.user && (
             <TouchableOpacity
               style={styles.titleSubtitleContainer}
               onPress={() =>
@@ -181,7 +187,8 @@ class CommentListItemComponent extends Component {
                 {comment.user.login}
                 {'  '}
               </Text>
-            </TouchableOpacity>}
+            </TouchableOpacity>
+          )}
 
           <View style={styles.dateContainer}>
             <Text style={styles.date}>
@@ -189,7 +196,7 @@ class CommentListItemComponent extends Component {
             </Text>
           </View>
 
-          {isActionButtonVisible &&
+          {isActionButtonVisible && (
             <View style={styles.iconContainer}>
               <Icon
                 color={colors.grey}
@@ -198,7 +205,8 @@ class CommentListItemComponent extends Component {
                 type={'font-awesome'}
                 onPress={this.showMenu}
               />
-            </View>}
+            </View>
+          )}
         </View>
 
         {!!commentPresent &&
@@ -206,7 +214,7 @@ class CommentListItemComponent extends Component {
             <MarkdownHtmlView source={comment.body} onLinkPress={onLinkPress} />
           </View>}
 
-        {!commentPresent &&
+        {!commentPresent && (
           <View style={styles.commentContainer}>
             <Text
               style={[
@@ -218,7 +226,8 @@ class CommentListItemComponent extends Component {
             >
               {translate('issue.main.noDescription', language)}
             </Text>
-          </View>}
+          </View>
+        )}
 
         <ActionSheet
           ref={o => {
