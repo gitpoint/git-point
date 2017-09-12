@@ -18,5 +18,3 @@ export const abbreviateNumber = count => {
 
   return count;
 };
-
-export const oneLineText = text => text.replace(/\s\s+/g, ' ');
