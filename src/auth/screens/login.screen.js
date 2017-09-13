@@ -8,6 +8,7 @@ import {
   Linking,
   Image,
   WebView,
+  Platform,
   Modal,
 } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
@@ -68,9 +69,6 @@ const styles = StyleSheet.create({
   },
   browserSection: {
     flex: 5,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   logo: {
     width: 90,
@@ -162,17 +160,21 @@ class Login extends Component {
       // eslint-disable-next-line react/no-did-mount-set-state
       this.setState({ asyncStorageChecked: true });
 
-      Linking.addEventListener('url', this.handleOpenURL);
-      Linking.getInitialURL().then(url => {
-        if (url) {
-          this.handleOpenURL({ url });
-        }
-      });
+      if (Platform.OS === 'android') {
+        Linking.addEventListener('url', this.handleOpenURL);
+        Linking.getInitialURL().then(url => {
+          if (url) {
+            this.handleOpenURL({ url });
+          }
+        });
+      }
     }
   }
 
   componentWillUnmount() {
-    Linking.removeEventListener('url', this.handleOpenURL);
+    if (Platform.OS === 'android') {
+      Linking.removeEventListener('url', this.handleOpenURL);
+    }
   }
 
   onNavigationStateChange = navState => {
@@ -183,15 +185,6 @@ class Login extends Component {
 
   setModalVisible = visible => {
     this.setState({ modalVisible: visible });
-    if (!visible) {
-      this.setWebViewVisible(false);
-    }
-  };
-
-  setWebViewVisible = visible => {
-    if (this.state.code === null) {
-      this.setState({ showLoader: !visible });
-    }
   };
 
   handleOpenURL = ({ url }) => {
@@ -233,18 +226,15 @@ class Login extends Component {
           <View style={styles.container}>
             <Modal
               animationType="slide"
-              transparent={false}
               visible={this.state.modalVisible}
               style={styles.container}
             >
               <View style={styles.modalContainer}>
-                <View style={styles.browserSection && { flex: 5 }}>
+                <View style={styles.browserSection}>
                   <WebView
-                    style={{ flex: 1 }}
                     source={{
                       uri: `https://github.com/login/oauth/authorize?response_type=token&client_id=${CLIENT_ID}&redirect_uri=gitpoint://welcome&scope=user%20repo&state=${stateRandom}`,
                     }}
-                    onLoadEnd={() => this.setWebViewVisible(true)}
                     onNavigationStateChange={e =>
                       this.onNavigationStateChange(e)}
                     renderLoading={() => this.renderLoading()}
