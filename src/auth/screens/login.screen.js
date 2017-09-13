@@ -184,24 +184,16 @@ class Login extends Component {
     this.handleOpenURL({ url });
   };
 
-  onLoadEnd = e => {
-    const url = e.nativeEvent.url;
-
-    if (url === 'https://github.com/session') {
-      this.setState({ cancelDisabled: false });
-    }
-  };
-
-  onLoadStart = e => {
-    const url = e.nativeEvent.url;
-
-    if (url === 'https://github.com/session') {
-      this.setState({ cancelDisabled: true });
-    }
-  };
-
   setModalVisible = visible => {
     this.setState({ modalVisible: visible });
+  };
+
+  toggleCancelButton = (e, disabled) => {
+    const url = e.nativeEvent.url;
+
+    if (url === 'https://github.com/session') {
+      this.setState({ cancelDisabled: disabled });
+    }
   };
 
   handleOpenURL = ({ url }) => {
@@ -253,8 +245,8 @@ class Login extends Component {
                     source={{
                       uri: `https://github.com/login/oauth/authorize?response_type=token&client_id=${CLIENT_ID}&redirect_uri=gitpoint://welcome&scope=user%20repo&state=${stateRandom}`,
                     }}
-                    onLoadStart={e => this.onLoadStart(e)}
-                    onLoadEnd={e => this.onLoadEnd(e)}
+                    onLoadStart={e => this.toggleCancelButton(e, true)}
+                    onLoadEnd={e => this.toggleCancelButton(e, false)}
                     onNavigationStateChange={e =>
                       this.onNavigationStateChange(e)}
                     renderLoading={() => this.renderLoading()}
