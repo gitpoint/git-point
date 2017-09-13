@@ -58,8 +58,7 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     textAlign: 'center',
-    backgroundColor: '#1f2327',
-    zIndex: 1,
+    backgroundColor: colors.githubDark,
   },
   browserLoadingLabel: {
     fontSize: normalize(20),
@@ -213,6 +212,17 @@ class Login extends Component {
     }
   };
 
+  renderLoading() {
+    return (
+      <View style={styles.browserLoader}>
+        <Text style={styles.browserLoadingLabel}>
+          {this.state.loaderText}
+        </Text>
+        <ActivityIndicator color={colors.white} size="large" />
+      </View>
+    );
+  }
+
   render() {
     const { language, isLoggingIn, isAuthenticated } = this.props;
 
@@ -229,22 +239,16 @@ class Login extends Component {
             >
               <View style={styles.modalContainer}>
                 <View style={styles.browserSection && { flex: 5 }}>
-                  {this.state.showLoader
-                    ? <View style={styles.browserLoader}>
-                        <Text style={styles.browserLoadingLabel}>
-                          {this.state.loaderText}
-                        </Text>
-                        <ActivityIndicator color="#ffffff" size="large" />
-                      </View>
-                    : null}
                   <WebView
-                    style={{ flex: 1, zIndex: 0 }}
+                    style={{ flex: 1 }}
                     source={{
                       uri: `https://github.com/login/oauth/authorize?response_type=token&client_id=${CLIENT_ID}&redirect_uri=gitpoint://welcome&scope=user%20repo&state=${stateRandom}`,
                     }}
                     onLoadEnd={() => this.setWebViewVisible(true)}
                     onNavigationStateChange={e =>
                       this.onNavigationStateChange(e)}
+                    renderLoading={() => this.renderLoading()}
+                    startInLoadingState
                   />
                 </View>
                 <View style={styles.miniSection}>
