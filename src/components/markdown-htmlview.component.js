@@ -78,14 +78,41 @@ const { height, width } = Dimensions.get('window');
 export class MarkdownHtmlview extends Component {
   props: {
     source: string,
+    navigation: Object,
   };
 
   transformMarkdown = md => {
-    const rendered = marked(md);
+    let rendered = marked(md);
 
-    // console.log(rendered);
+    // Transform issues & profiles references into a special markup for HTMLView
+    rendered = rendered.replace(/(\s)#(\d+)/, (match, spacing, number) => {
+      return `${spacing}<issue src="${number}" />`;
+    });
+    rendered = rendered.replace(
+      /(\s)@([_0-9A-Za-z]+)/,
+      (match, spacing, username) => {
+        return `${spacing}<profile src="${username}" />`;
+      }
+    );
 
     return rendered;
+  };
+
+  navigateToIssue = number => {
+    const params = this.props.navigation.state.params;
+    const issueURL = params.issue
+      ? `${params.issue.repository_url}/issues/${number}`
+      : params.issueURL.replace(/\d+$/, number);
+
+    this.props.navigation.navigate('Issue', {
+      issueURL,
+    });
+  };
+
+  navigateToProfile = username => {
+    this.props.navigation.navigate('Profile', {
+      user: { login: username },
+    });
   };
 
   render() {
@@ -213,20 +240,32 @@ export class MarkdownHtmlview extends Component {
                 />
               );
 
+            case 'issue':
+              return (
+                <Text
+                  style={styles.strong}
+                  onPress={() => this.navigateToIssue(node.attribs.src)}
+                >
+                  #{node.attribs.src}
+                </Text>
+              );
+
+            case 'profile':
+              return (
+                <Text
+                  style={styles.strong}
+                  onPress={() => this.navigateToProfile(node.attribs.src)}
+                >
+                  @{node.attribs.src}
+                </Text>
+              );
+
             case 'p':
               return (
                 <View key={index} style={rendererStyles.p}>
                   {defaultRenderer(node.children, parent)}
                 </View>
               );
-
-            /* case 'li':
-              return (
-                  <Text style={{ ...rendererStyles.li, flexDirection: 'column' }}>
-                    <Text style={rendererStyles.newLine} />
-                    • {defaultRenderer(node.children, parent)}
-                  </Text>
-              ); */
 
             case 'blockquote':
               return (

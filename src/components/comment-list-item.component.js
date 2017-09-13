@@ -161,7 +161,7 @@ class CommentListItemComponent extends Component {
 
         {!!commentPresent &&
           <View style={styles.commentContainer}>
-            <MarkdownHtmlview source={comment.body} />
+            <MarkdownHtmlview source={comment.body} navigation={navigation} />
           </View>}
 
         {!commentPresent &&
