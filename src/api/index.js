@@ -260,7 +260,7 @@ export async function fetchSearch(type, query, accessToken, params = '') {
 
 export async function fetchNotifications(participating, all, accessToken) {
   const ENDPOINT = `https://api.github.com/notifications?participating=${participating}&all=${all}`;
-  const response = fetch(ENDPOINT, accessTokenParameters(accessToken));
+  const response = await fetch(ENDPOINT, accessTokenParameters(accessToken));
 
   return response.json();
 }
