@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import { ScrollView, StyleSheet, FlatList } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { NavigationActions } from 'react-navigation';
+import CookieManager from 'react-native-cookies';
 
 import { ViewContainer, SectionList } from 'components';
 import { colors, fonts } from 'config';
-import { openURLInView, resetNavigationTo, translate } from 'utils';
+import { resetNavigationTo, translate } from 'utils';
 import { signOut, changeLanguage } from 'auth';
 import languages from './language-settings';
 
@@ -59,10 +60,9 @@ class UserOptions extends Component {
     const { signOutByDispatch, navigation } = this.props;
 
     signOutByDispatch().then(() => {
-      const url = 'https://github.com/logout';
-
-      openURLInView(url);
-      resetNavigationTo('Login', navigation);
+      CookieManager.clearAll().then(() => {
+        resetNavigationTo('Login', navigation);
+      });
     });
   }
 
