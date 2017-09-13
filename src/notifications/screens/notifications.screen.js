@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { ButtonGroup, Card, Icon } from 'react-native-elements';
 
+import { root as apiRoot } from 'api';
 import {
   ViewContainer,
   LoadingContainer,
@@ -176,7 +177,7 @@ class Notifications extends Component {
     const { navigation } = this.props;
 
     navigation.navigate('Repository', {
-      repositoryUrl: `https://api.github.com/repos/${fullName}`,
+      repositoryUrl: `${apiRoot}/repos/${fullName}`,
     });
   };
 

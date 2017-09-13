@@ -252,21 +252,21 @@ export async function fetchChangeIssueLockStatus(
 }
 
 export async function fetchSearch(type, query, accessToken, params = '') {
-  const ENDPOINT = `https://api.github.com/search/${type}?q=${query}${params}`;
+  const ENDPOINT = `${root}/search/${type}?q=${query}${params}`;
   const response = await fetch(ENDPOINT, accessTokenParameters(accessToken));
 
   return response.json();
 }
 
 export async function fetchNotifications(participating, all, accessToken) {
-  const ENDPOINT = `https://api.github.com/notifications?participating=${participating}&all=${all}`;
+  const ENDPOINT = `${root}/notifications?participating=${participating}&all=${all}`;
   const response = await fetch(ENDPOINT, accessTokenParameters(accessToken));
 
   return response.json();
 }
 
 export async function fetchMarkNotificationAsRead(notificationID, accessToken) {
-  const ENDPOINT = `https://api.github.com/notifications/threads/${notificationID}`;
+  const ENDPOINT = `${root}/notifications/threads/${notificationID}`;
   const response = await fetch(
     ENDPOINT,
     accessTokenParametersPATCH(null, accessToken)
@@ -279,7 +279,7 @@ export async function fetchMarkRepoNotificationAsRead(
   repoFullName,
   accessToken
 ) {
-  const ENDPOINT = `https://api.github.com/repos/${repoFullName}/notifications`;
+  const ENDPOINT = `${root}/repos/${repoFullName}/notifications`;
   const response = await fetch(ENDPOINT, accessTokenParametersPUT(accessToken));
 
   return response;
@@ -291,7 +291,7 @@ export async function fetchChangeStarStatusRepo(
   starred,
   accessToken
 ) {
-  const ENDPOINT = `https://api.github.com/user/starred/${owner}/${repo}`;
+  const ENDPOINT = `${root}/user/starred/${owner}/${repo}`;
   const response = await fetch(
     ENDPOINT,
     starred
@@ -303,7 +303,7 @@ export async function fetchChangeStarStatusRepo(
 }
 
 export async function fetchForkRepo(owner, repo, accessToken) {
-  const ENDPOINT = `https://api.github.com/repos/${owner}/${repo}/forks`;
+  const ENDPOINT = `${root}/repos/${owner}/${repo}/forks`;
   const response = await fetch(
     ENDPOINT,
     accessTokenParametersPOST(accessToken)
@@ -313,7 +313,7 @@ export async function fetchForkRepo(owner, repo, accessToken) {
 }
 
 export async function fetchStarCount(owner) {
-  const ENDPOINT = `https://api.github.com/users/${owner}/starred?per_page=1`;
+  const ENDPOINT = `${root}/users/${owner}/starred?per_page=1`;
   const response = await fetch(ENDPOINT);
 
   let linkHeader = response.headers.get('Link');
@@ -332,7 +332,7 @@ export async function fetchStarCount(owner) {
 }
 
 export async function watchRepo(isSubscribed, owner, repo, accessToken) {
-  const ENDPOINT = `https://api.github.com/repos/${owner}/${repo}/subscription`;
+  const ENDPOINT = `${root}/repos/${owner}/${repo}/subscription`;
   const response = await fetch(
     ENDPOINT,
     accessTokenParameters(accessToken, { subscribed: isSubscribed })
@@ -342,14 +342,14 @@ export async function watchRepo(isSubscribed, owner, repo, accessToken) {
 }
 
 export async function unWatchRepo(owner, repo, accessToken) {
-  const ENDPOINT = `https://api.github.com/repos/${owner}/${repo}/subscription`;
+  const ENDPOINT = `${root}/repos/${owner}/${repo}/subscription`;
   const response = await fetch(ENDPOINT, accessTokenParameters(accessToken));
 
   return response;
 }
 
 export async function fetchChangeFollowStatus(user, isFollowing, accessToken) {
-  const ENDPOINT = `https://api.github.com/user/following/${user}`;
+  const ENDPOINT = `${root}/user/following/${user}`;
   const response = await fetch(
     ENDPOINT,
     isFollowing
@@ -367,7 +367,7 @@ export async function fetchDiff(url, accessToken) {
 }
 
 export async function fetchMergeStatus(repo, issueNum, accessToken) {
-  const ENDPOINT = `https://api.github.com/repos/${repo}/pulls/${issueNum}/merge`;
+  const ENDPOINT = `${root}/repos/${repo}/pulls/${issueNum}/merge`;
   const response = await fetch(ENDPOINT, accessTokenParameters(accessToken));
 
   return response;
@@ -381,7 +381,7 @@ export async function fetchMergePullRequest(
   mergeMethod,
   accessToken
 ) {
-  const ENDPOINT = `https://api.github.com/repos/${repo}/pulls/${issueNum}/merge`;
+  const ENDPOINT = `${root}/repos/${repo}/pulls/${issueNum}/merge`;
 
   const response = await fetch(
     ENDPOINT,
@@ -402,7 +402,7 @@ export async function fetchSubmitNewIssue(
   issueComment,
   accessToken
 ) {
-  const ENDPOINT = `https://api.github.com/repos/${owner}/${repo}/issues`;
+  const ENDPOINT = `${root}/repos/${owner}/${repo}/issues`;
   const response = await fetch(
     ENDPOINT,
     accessTokenParametersPOST(accessToken, {
