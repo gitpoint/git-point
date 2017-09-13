@@ -15,7 +15,7 @@ import { Button, Icon } from 'react-native-elements';
 import AppIntro from 'react-native-app-intro';
 import queryString from 'query-string';
 
-import { ViewContainer, LoadingContainer } from 'components';
+import { ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { CLIENT_ID } from 'api';
 import { auth } from 'auth';
@@ -146,6 +146,7 @@ class Login extends Component {
     this.state = {
       code: null,
       modalVisible: false,
+      cancelDisabled: false,
       showLoader: true,
       loaderText: translate('auth.login.connectingToGitHub', this.language),
       asyncStorageChecked: false,
@@ -181,6 +182,22 @@ class Login extends Component {
     const url = navState.url;
 
     this.handleOpenURL({ url });
+  };
+
+  onLoadEnd = e => {
+    const url = e.nativeEvent.url;
+
+    if (url === 'https://github.com/session') {
+      this.setState({ cancelDisabled: false });
+    }
+  };
+
+  onLoadStart = e => {
+    const url = e.nativeEvent.url;
+
+    if (url === 'https://github.com/session') {
+      this.setState({ cancelDisabled: true });
+    }
   };
 
   setModalVisible = visible => {
@@ -222,6 +239,7 @@ class Login extends Component {
     return (
       <ViewContainer barColor="light">
         {!isAuthenticated &&
+          !isLoggingIn &&
           this.state.asyncStorageChecked &&
           <View style={styles.container}>
             <Modal
@@ -235,6 +253,8 @@ class Login extends Component {
                     source={{
                       uri: `https://github.com/login/oauth/authorize?response_type=token&client_id=${CLIENT_ID}&redirect_uri=gitpoint://welcome&scope=user%20repo&state=${stateRandom}`,
                     }}
+                    onLoadStart={e => this.onLoadStart(e)}
+                    onLoadEnd={e => this.onLoadEnd(e)}
                     onNavigationStateChange={e =>
                       this.onNavigationStateChange(e)}
                     renderLoading={() => this.renderLoading()}
@@ -245,6 +265,7 @@ class Login extends Component {
                   <Button
                     title={translate('auth.login.cancel', language)}
                     buttonStyle={styles.button}
+                    disabled={this.state.cancelDisabled}
                     textStyle={styles.buttonText}
                     onPress={() =>
                       this.setModalVisible(!this.state.modalVisible)}
@@ -341,7 +362,17 @@ class Login extends Component {
             </View>
           </View>}
 
-        {isAuthenticated && <LoadingContainer animating={isLoggingIn} center />}
+        {isLoggingIn &&
+          <View style={styles.browserLoader}>
+            <Text style={styles.browserLoadingLabel}>
+              {this.state.loaderText}
+            </Text>
+            <ActivityIndicator
+              animating={isLoggingIn}
+              color={colors.white}
+              size="large"
+            />
+          </View>}
       </ViewContainer>
     );
   }
