@@ -159,8 +159,14 @@ export class MarkdownHtmlview extends Component {
             return <Text style={rendererStyles.newLine} />;
           }
 
-          // Convert emojis
           /* eslint-disable no-param-reassign */
+          // Convert checkboxes
+          node.data = node.data.replace(
+            /^\s*\[\s?\]/,
+            emojis.white_large_square
+          );
+          node.data = node.data.replace(/^\s*\[x\]/i, emojis.white_check_mark);
+          // Convert emojis
           node.data = node.data.replace(/:(\w+):/g, text => {
             const emoji = text.replace(/:/g, '');
 
