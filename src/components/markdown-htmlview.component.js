@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Dimensions, StyleSheet, View, Text, Platform } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import marked from 'marked';
+import { Table, Row, Rows } from 'react-native-table-component';
 
 import { ImageZoom } from 'components';
 import { colors, emojis, fonts, normalize } from 'config';
@@ -28,93 +29,49 @@ const textStyleRegular = {
 
 const textStyle = Platform.OS === 'ios' ? textStyleLight : textStyleRegular;
 
-const linkStyle = {
+const boldStyle = {
+  ...textStyle,
   ...fonts.fontPrimarySemiBold,
-  color: colors.primaryDark,
+  color: '#ff0000',
 };
+const italicStyle = { ...textStyle, ...fonts.fontPrimaryItalic };
+const underlineStyle = { textDecorationLine: 'underline' };
+const codeStyle = {
+  ...fonts.fontCode,
+  backgroundColor: colors.greyMidLight,
+  fontSize: normalize(9),
+};
+const linkStyle = { ...boldStyle, color: '#ff00ff' };
 
-const styles = StyleSheet.create({
+const styles = {
+  b: boldStyle,
+  strong: boldStyle,
+  i: italicStyle,
+  em: italicStyle,
+  u: underlineStyle,
+  pre: { ...codeStyle, padding: 5 },
+  code: codeStyle,
   span: textStyle,
-  p: {
-    ...textStyle,
-    padding: 0,
-    margin: 0,
-  },
-  strong: {
-    ...textStyle,
-    ...fonts.fontPrimaryBold,
-  },
-  em: {
-    ...textStyle,
-    ...fonts.fontPrimaryBold, // FIXME: we need an italic font
-    fontStyle: 'normal',
-  },
-  h1: textStyle,
-  h2: textStyle,
-  h3: textStyle,
-  h4: textStyle,
-  li: textStyle,
-  a: linkStyle,
-});
-
-const rendererStyles = {
-  newLine: {
-    height: 5,
-    width: 5,
-  },
-  p: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    margin: 0,
-    padding: 0,
-  },
-  li: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    flexGrow: 1,
-    margin: 0,
-    padding: 0,
-    backgroundColor: '#ffcc00',
-  },
+  p: { ...textStyle, flexWrap: 'wrap', margin: 0, padding: 0 },
   h1: {
-    text: {
-      fontSize: normalize(24),
-    },
-    wrapper: {
-      borderBottomWidth: 1,
-      marginBottom: 12,
-    },
+    ...fonts.fontPrimarySemiBold,
+    ...underlineStyle,
+    fontSize: normalize(24),
   },
   h2: {
-    text: {
-      fontSize: normalize(20),
-    },
-    wrapper: {
-      borderBottomWidth: 1,
-      marginBottom: 12,
-    },
+    ...fonts.fontPrimarySemiBold,
+    ...underlineStyle,
+    fontSize: normalize(20),
   },
-  h3: {
-    text: {
-      fontSize: normalize(18),
-    },
-  },
-  h4: {
-    text: {
-      fontSize: normalize(16),
-    },
-  },
-  h5: {
-    text: {
-      fontSize: normalize(14),
-    },
-  },
-  h6: {
-    text: {
-      fontSize: normalize(12),
-    },
-  },
+  h3: { ...fonts.fontPrimarySemiBold, fontSize: normalize(18) },
+  h4: { ...fonts.fontPrimarySemiBold, fontSize: normalize(16) },
+  h5: { ...fonts.fontPrimarySemiBold, fontSize: normalize(14) },
+  h6: { ...fonts.fontPrimarySemiBold, fontSize: normalize(12) },
+  li: textStyle,
+  a: linkStyle,
 };
+
+const stylessheet = StyleSheet.create(styles);
 
 marked.setOptions({
   renderer: new marked.Renderer(),
@@ -153,24 +110,16 @@ const navigateToProfile = (navigation, login) => {
 const headingRenderer = {
   render: (navigation, node, index, siblings, parent, defaultRenderer) => {
     return (
-      <View
-        key={index}
-        style={{
-          ...rendererStyles[node.name].wrapper,
-          borderBottomColor: colors.greyMid,
-        }}
-      >
-        <Text
-          style={{
-            ...fonts.fontPrimarySemiBold,
-            ...rendererStyles[node.name].text,
-            color: colors.primaryDark,
-            paddingBottom: 4,
-          }}
-        >
-          {defaultRenderer(node.children, parent)}
+      <Text style={{ flex: 1, flexDirection: 'column' }} key={index}>
+        <Text style={{ ...styles[node.name] }}>
+          {defaultRenderer(node.children, node)}
         </Text>
-      </View>
+        <Text
+          style={{ height: 20, width: 20, backgroundColor: colors.greyLight }}
+        >
+          --
+        </Text>
+      </Text>
     );
   },
 };
@@ -180,7 +129,7 @@ const renderers = {
   blockquote: {
     render: (navigation, node, index, siblings, parent, defaultRenderer) => {
       return (
-        <View
+        <Text
           key={index}
           style={{
             paddingHorizontal: 12,
@@ -188,46 +137,26 @@ const renderers = {
             borderLeftColor: colors.greyMid,
           }}
         >
-          <View
+          <Text
             style={{
               color: colors.greyBlue,
               ...fonts.fontPrimaryLight,
             }}
           >
             {defaultRenderer(node.children, parent)}
-          </View>
-        </View>
-      );
-    },
-  },
-  code: {
-    render: (navigation, node, index, siblings, parent, defaultRenderer) => {
-      return (
-        <Text
-          key={index}
-          style={{
-            ...fonts.fontCode,
-            backgroundColor: colors.greyMidLight,
-            fontSize: normalize(10),
-          }}
-        >
-          {defaultRenderer(node.children, parent)}
+          </Text>
         </Text>
       );
     },
   },
   h1: headingRenderer,
   h2: headingRenderer,
-  h3: headingRenderer,
-  h4: headingRenderer,
-  h5: headingRenderer,
-  h6: headingRenderer,
   hr: {
     render: (navigation, node, index, siblings, parent, defaultRenderer) => {
       return (
-        <View
+        <Text
           key={index}
-          style={{ height: 4, backgroundColor: colors.greyLight }}
+          style={{ height: 4, width, backgroundColor: colors.greyLight }}
         />
       );
     },
@@ -235,10 +164,79 @@ const renderers = {
   img: {
     render: (navigation, node, index, siblings, parent, defaultRenderer) => {
       return (
-        <ImageZoom
-          key={index}
-          style={{ width: width * 0.5, height: height * 0.3 }}
-          uri={{ uri: node.attribs.src }}
+        <View
+          style={{ width: width * 0.5, height: height * 0.3, marginTop: 10 }}
+        >
+          <ImageZoom
+            key={index}
+            style={{ width: width * 0.5, height: height * 0.3 }}
+            uri={{ uri: node.attribs.src }}
+          />
+        </View>
+      );
+    },
+  },
+  table: {
+    render: (navigation, node, index, siblings, parent, defaultRenderer) => {
+      return (
+        <Table>
+          {defaultRenderer(node.children, node)}
+        </Table>
+      );
+    },
+  },
+  thead: {
+    render: (navigation, node, index, siblings, parent, defaultRenderer) => {
+      const values = [];
+
+      node.children.forEach(row => {
+        if (row.type === 'tag' && row.name === 'tr') {
+          row.children.forEach(cell => {
+            if (
+              cell.type === 'tag' &&
+              (cell.name === 'td' || cell.name === 'th')
+            ) {
+              values.push(cell.children[0].data);
+            }
+          });
+        }
+      });
+
+      return (
+        <Row
+          data={values}
+          style={{ width: width * 0.8, height: 40, backgroundColor: '#f1f8ff' }}
+          textStyle={{ marginLeft: 5 }}
+        />
+      );
+    },
+  },
+  tbody: {
+    render: (navigation, node, index, siblings, parent, defaultRenderer) => {
+      const values = [];
+
+      node.children.forEach(row => {
+        if (row.type === 'tag' && row.name === 'tr') {
+          const sub = [];
+
+          row.children.forEach(cell => {
+            if (
+              cell.type === 'tag' &&
+              (cell.name === 'td' || cell.name === 'th')
+            ) {
+              sub.push(cell.children[0].data);
+            }
+          });
+
+          values.push(sub);
+        }
+      });
+
+      return (
+        <Rows
+          data={values}
+          style={{ width: width * 0.8, height: 40 }}
+          textStyle={{ marginLeft: 5 }}
         />
       );
     },
@@ -252,30 +250,6 @@ const renderers = {
         >
           #{node.attribs.src}
         </Text>
-      );
-    },
-  },
-  p: {
-    render: (navigation, node, index, siblings, parent, defaultRenderer) => {
-      return (
-        <View key={index} style={rendererStyles.p}>
-          {defaultRenderer(node.children, parent)}
-        </View>
-      );
-    },
-  },
-  pre: {
-    render: (navigation, node, index, siblings, parent, defaultRenderer) => {
-      return (
-        <View
-          key={index}
-          style={{
-            backgroundColor: colors.greyMidLight,
-            marginBottom: 10,
-          }}
-        >
-          {defaultRenderer(node.children, parent)}
-        </View>
       );
     },
   },
@@ -300,14 +274,16 @@ export class MarkdownHtmlview extends Component {
   };
 
   transformMarkdown = md => {
+    const issueReference = /(\s)#(\d+)/;
+    const profileReference = /(\s)@([_0-9A-Za-z]+)/;
+
     let rendered = marked(md);
 
-    // Transform issues & profiles references into a special markup for HTMLView
-    rendered = rendered.replace(/(\s)#(\d+)/, (match, spacing, number) => {
+    rendered = rendered.replace(issueReference, (match, spacing, number) => {
       return `${spacing}<issue src="${number}" />`;
     });
     rendered = rendered.replace(
-      /(\s)@([_0-9A-Za-z]+)/,
+      profileReference,
       (match, spacing, username) => {
         return `${spacing}<profile src="${username}" />`;
       }
@@ -325,7 +301,7 @@ export class MarkdownHtmlview extends Component {
         const emojiMarkup = /:(\w+):/g;
 
         if (node.data === '\n') {
-          return <Text style={rendererStyles.newLine} />;
+          return <Text style={{ height: 5, width: 5 }} />;
         }
 
         /* eslint-disable no-param-reassign */
@@ -371,9 +347,9 @@ export class MarkdownHtmlview extends Component {
     return (
       <HTMLView
         value={this.transformMarkdown(this.props.source)}
-        stylesheet={styles}
+        stylesheet={stylessheet}
         renderNode={myDomElement}
-        paragraphBreak="foo"
+        textComponentProps={{ style: { ...textStyle } }}
         addLineBreaks={false}
       />
     );
