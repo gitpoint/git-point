@@ -1,4 +1,5 @@
 import {
+  root as apiRoot,
   fetchUrl,
   fetchUrlNormal,
   fetchUrlFile,
@@ -219,13 +220,12 @@ export const getRepositoryInfo = url => {
       dispatch(getIssues(issuesUrl));
       dispatch(
         checkRepoStarred(
-          `https://api.github.com/user/starred/${repo.owner.login}/${repo.name}`
+          `${apiRoot}/user/starred/${repo.owner.login}/${repo.name}`
         )
       );
       dispatch(
         checkRepoSubscribed(
-          `https://api.github.com/repos/${repo.owner
-            .login}/${repo.name}/subscription`
+          `${apiRoot}/repos/${repo.owner.login}/${repo.name}/subscription`
         )
       );
     });
