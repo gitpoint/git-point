@@ -7,6 +7,7 @@ import moment from 'moment/min/moment-with-locales.min';
 import { StateBadge, MembersList, LabelButton, DiffBlocks } from 'components';
 import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
+import { root as apiRoot } from 'api';
 
 const styles = StyleSheet.create({
   headerContainer: {
@@ -108,10 +109,7 @@ export class IssueDescription extends Component {
       <View style={(styles.container, styles.borderBottom)}>
         {issue.repository_url &&
           <ListItem
-            title={issue.repository_url.replace(
-              'https://api.github.com/repos/',
-              ''
-            )}
+            title={issue.repository_url.replace(`${apiRoot}/repos/`, '')}
             titleStyle={styles.titleSmall}
             leftIcon={{
               name: 'repo',

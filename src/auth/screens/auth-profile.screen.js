@@ -3,14 +3,12 @@ import { connect } from 'react-redux';
 import {
   StyleSheet,
   Text,
-  TouchableOpacity,
   RefreshControl,
   View,
   ActivityIndicator,
   Dimensions,
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import codePush from 'react-native-code-push';
 
 import {
   ViewContainer,
@@ -23,7 +21,6 @@ import {
 import { colors, fonts, normalize } from 'config';
 import { getUser, getOrgs, signOut, getStarCount } from 'auth';
 import { emojifyText, openURLInView, translate } from 'utils';
-import { version } from 'package.json';
 
 const mapStateToProps = state => ({
   user: state.auth.user,
@@ -75,14 +72,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const updateText = lang => ({
-  check: translate('auth.profile.codePushCheck', lang),
-  checking: translate('auth.profile.codePushChecking', lang),
-  updated: translate('auth.profile.codePushUpdated', lang),
-  available: translate('auth.profile.codePushAvailable', lang),
-  notApplicable: translate('auth.profile.codePushNotApplicable', lang),
-});
-
 class AuthProfile extends Component {
   props: {
     getUserByDispatch: Function,
@@ -98,47 +87,9 @@ class AuthProfile extends Component {
     navigation: Object,
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      updateText: updateText(props.language).check,
-    };
-  }
-
   componentDidMount() {
     this.refreshProfile();
   }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.language !== this.props.language) {
-      this.setState({
-        updateText: updateText(nextProps.language).check,
-      });
-    }
-  }
-
-  checkForUpdate = () => {
-    if (__DEV__) {
-      this.setState({
-        updateText: updateText(this.props.language).notApplicable,
-      });
-    } else {
-      this.setState({ updateText: updateText(this.props.language).checking });
-      codePush
-        .sync({
-          updateDialog: true,
-          installMode: codePush.InstallMode.IMMEDIATE,
-        })
-        .then(update => {
-          this.setState({
-            updateText: update
-              ? updateText(this.props.language).available
-              : updateText(this.props.language).updated,
-          });
-        });
-    }
-  };
 
   refreshProfile = () => {
     this.props.getUserByDispatch();
@@ -236,18 +187,6 @@ class AuthProfile extends Component {
                   </Text>
                 </Text>
               </SectionList>
-
-              <TouchableOpacity
-                style={styles.update}
-                onPress={this.checkForUpdate}
-              >
-                <Text style={styles.updateText}>
-                  GitPoint v{version}
-                </Text>
-                <Text style={[styles.updateText, styles.updateTextSub]}>
-                  {this.state.updateText}
-                </Text>
-              </TouchableOpacity>
             </View>}
         </ParallaxScroll>
       </ViewContainer>
