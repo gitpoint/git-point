@@ -15,30 +15,30 @@ const regularFont = {
 };
 
 const textStyleLight = {
+  ...lightFont,
   fontSize: Platform.OS === 'ios' ? normalize(11) : normalize(12),
   color: colors.primaryDark,
-  ...lightFont,
 };
 
 const textStyleRegular = {
+  ...regularFont,
   fontSize: Platform.OS === 'ios' ? normalize(11) : normalize(12),
   color: colors.primaryDark,
-  ...regularFont,
 };
 
 const textStyle = Platform.OS === 'ios' ? textStyleLight : textStyleRegular;
 
 const linkStyle = {
-  color: colors.primaryDark,
   ...fonts.fontPrimarySemiBold,
+  color: colors.primaryDark,
 };
 
 const styles = StyleSheet.create({
   span: textStyle,
   p: {
+    ...textStyle,
     padding: 0,
     margin: 0,
-    ...textStyle,
   },
   strong: {
     ...textStyle,
@@ -49,7 +49,6 @@ const styles = StyleSheet.create({
     ...fonts.fontPrimaryBold, // FIXME: we need an italic font
     fontStyle: 'normal',
   },
-  // em: textStyle,
   h1: textStyle,
   h2: textStyle,
   h3: textStyle,
@@ -57,6 +56,65 @@ const styles = StyleSheet.create({
   li: textStyle,
   a: linkStyle,
 });
+
+const rendererStyles = {
+  newLine: {
+    height: 5,
+    width: 5,
+  },
+  p: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    margin: 0,
+    padding: 0,
+  },
+  li: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    flexGrow: 1,
+    margin: 0,
+    padding: 0,
+    backgroundColor: '#ffcc00',
+  },
+  h1: {
+    text: {
+      fontSize: normalize(24),
+    },
+    wrapper: {
+      borderBottomWidth: 1,
+      marginBottom: 12,
+    },
+  },
+  h2: {
+    text: {
+      fontSize: normalize(20),
+    },
+    wrapper: {
+      borderBottomWidth: 1,
+      marginBottom: 12,
+    },
+  },
+  h3: {
+    text: {
+      fontSize: normalize(18),
+    },
+  },
+  h4: {
+    text: {
+      fontSize: normalize(16),
+    },
+  },
+  h5: {
+    text: {
+      fontSize: normalize(14),
+    },
+  },
+  h6: {
+    text: {
+      fontSize: normalize(12),
+    },
+  },
+};
 
 marked.setOptions({
   renderer: new marked.Renderer(),
@@ -75,9 +133,169 @@ marked.setOptions({
 
 const { height, width } = Dimensions.get('window');
 
+const navigateToIssue = (navigation, number) => {
+  const params = navigation.state.params;
+  const issueURL = params.issue
+    ? `${params.issue.repository_url}/issues/${number}`
+    : params.issueURL.replace(/\d+$/, number);
+
+  navigation.navigate('Issue', {
+    issueURL,
+  });
+};
+
+const navigateToProfile = (navigation, login) => {
+  navigation.navigate('Profile', {
+    user: { login },
+  });
+};
+
+const headingRenderer = {
+  render: (navigation, node, index, siblings, parent, defaultRenderer) => {
+    return (
+      <View
+        key={index}
+        style={{
+          ...rendererStyles[node.name].wrapper,
+          borderBottomColor: colors.greyMid,
+        }}
+      >
+        <Text
+          style={{
+            ...fonts.fontPrimarySemiBold,
+            ...rendererStyles[node.name].text,
+            color: colors.primaryDark,
+            paddingBottom: 4,
+          }}
+        >
+          {defaultRenderer(node.children, parent)}
+        </Text>
+      </View>
+    );
+  },
+};
+
+/* eslint-disable no-unused-vars */
+const renderers = {
+  blockquote: {
+    render: (navigation, node, index, siblings, parent, defaultRenderer) => {
+      return (
+        <View
+          key={index}
+          style={{
+            paddingHorizontal: 12,
+            borderLeftWidth: 3,
+            borderLeftColor: colors.greyMid,
+          }}
+        >
+          <View
+            style={{
+              color: colors.greyBlue,
+              ...fonts.fontPrimaryLight,
+            }}
+          >
+            {defaultRenderer(node.children, parent)}
+          </View>
+        </View>
+      );
+    },
+  },
+  code: {
+    render: (navigation, node, index, siblings, parent, defaultRenderer) => {
+      return (
+        <Text
+          key={index}
+          style={{
+            ...fonts.fontCode,
+            backgroundColor: colors.greyMidLight,
+            fontSize: normalize(10),
+          }}
+        >
+          {defaultRenderer(node.children, parent)}
+        </Text>
+      );
+    },
+  },
+  h1: headingRenderer,
+  h2: headingRenderer,
+  h3: headingRenderer,
+  h4: headingRenderer,
+  h5: headingRenderer,
+  h6: headingRenderer,
+  hr: {
+    render: (navigation, node, index, siblings, parent, defaultRenderer) => {
+      return (
+        <View
+          key={index}
+          style={{ height: 4, backgroundColor: colors.greyLight }}
+        />
+      );
+    },
+  },
+  img: {
+    render: (navigation, node, index, siblings, parent, defaultRenderer) => {
+      return (
+        <ImageZoom
+          key={index}
+          style={{ width: width * 0.5, height: height * 0.3 }}
+          uri={{ uri: node.attribs.src }}
+        />
+      );
+    },
+  },
+  issue: {
+    render: (navigation, node, index, siblings, parent, defaultRenderer) => {
+      return (
+        <Text
+          style={styles.strong}
+          onPress={() => navigateToIssue(navigation, node.attribs.src)}
+        >
+          #{node.attribs.src}
+        </Text>
+      );
+    },
+  },
+  p: {
+    render: (navigation, node, index, siblings, parent, defaultRenderer) => {
+      return (
+        <View key={index} style={rendererStyles.p}>
+          {defaultRenderer(node.children, parent)}
+        </View>
+      );
+    },
+  },
+  pre: {
+    render: (navigation, node, index, siblings, parent, defaultRenderer) => {
+      return (
+        <View
+          key={index}
+          style={{
+            backgroundColor: colors.greyMidLight,
+            marginBottom: 10,
+          }}
+        >
+          {defaultRenderer(node.children, parent)}
+        </View>
+      );
+    },
+  },
+  profile: {
+    render: (navigation, node, index, siblings, parent, defaultRenderer) => {
+      return (
+        <Text
+          style={styles.strong}
+          onPress={() => navigateToProfile(navigation, node.attribs.src)}
+        >
+          @{node.attribs.src}
+        </Text>
+      );
+    },
+  },
+};
+
 export class MarkdownHtmlview extends Component {
   props: {
-    source: string,
+    source: String,
     navigation: Object,
   };
 
@@ -98,232 +316,44 @@ export class MarkdownHtmlview extends Component {
     return rendered;
   };
 
-  navigateToIssue = number => {
-    const params = this.props.navigation.state.params;
-    const issueURL = params.issue
-      ? `${params.issue.repository_url}/issues/${number}`
-      : params.issueURL.replace(/\d+$/, number);
-
-    this.props.navigation.navigate('Issue', {
-      issueURL,
-    });
-  };
-
-  navigateToProfile = username => {
-    this.props.navigation.navigate('Profile', {
-      user: { login: username },
-    });
-  };
-
   render() {
-    // console.log(this.props.source);
-    const rendererStyles = {
-      newLine: {
-        // backgroundColor: '#00FF00',
-        height: 5,
-        width: 5,
-      },
-      p: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        margin: 0,
-        padding: 0,
-      },
-      li: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        flexGrow: 1,
-        margin: 0,
-        padding: 0,
-        backgroundColor: '#ffcc00',
-      },
-      h1: {
-        text: {
-          fontSize: normalize(24),
-        },
-        wrapper: {
-          borderBottomWidth: 1,
-          marginBottom: 12,
-        },
-      },
-      h2: {
-        text: {
-          fontSize: normalize(20),
-        },
-        wrapper: {
-          borderBottomWidth: 1,
-          marginBottom: 12,
-        },
-      },
-      h3: {
-        text: {
-          fontSize: normalize(18),
-        },
-      },
-      h4: {
-        text: {
-          fontSize: normalize(16),
-        },
-      },
-      h5: {
-        text: {
-          fontSize: normalize(14),
-        },
-      },
-      h6: {
-        text: {
-          fontSize: normalize(12),
-        },
-      },
-    };
+    const navigation = this.props.navigation;
     const myDomElement = (node, index, siblings, parent, defaultRenderer) => {
-      // const onLinkPress = this.props.onLinkPress;
+      if (node.type === 'text') {
+        const checkBoxUnchecked = /^\s*\[\s?\]/;
+        const checkBoxChecked = /^\s*\[x\]/i;
+        const emojiMarkup = /:(\w+):/g;
 
-      /* eslint-disable default-case */
-      switch (node.type) {
-        case 'text':
-          if (node.data === '\n') {
-            return <Text style={rendererStyles.newLine} />;
-          }
+        if (node.data === '\n') {
+          return <Text style={rendererStyles.newLine} />;
+        }
 
-          /* eslint-disable no-param-reassign */
-          // Convert checkboxes
-          node.data = node.data.replace(
-            /^\s*\[\s?\]/,
-            emojis.white_large_square
-          );
-          node.data = node.data.replace(/^\s*\[x\]/i, emojis.white_check_mark);
-          // Convert emojis
-          node.data = node.data.replace(/:(\w+):/g, text => {
-            const emoji = text.replace(/:/g, '');
+        /* eslint-disable no-param-reassign */
+        node.data = node.data.replace(
+          checkBoxUnchecked,
+          emojis.white_large_square
+        );
+        node.data = node.data.replace(checkBoxChecked, emojis.white_check_mark);
+        node.data = node.data.replace(emojiMarkup, text => {
+          const emoji = text.replace(/:/g, '');
 
-            return emojis[emoji] ? emojis[emoji] : text;
-          });
+          return emojis[emoji] ? emojis[emoji] : text;
+        });
 
-          break;
+        return undefined;
+      } else if (renderers[node.name]) {
+        return renderers[node.name].render(
+          navigation,
+          node,
+          index,
+          siblings,
+          parent,
+          defaultRenderer
+        );
+      }
 
-        case 'tag':
-          switch (node.name) {
-            case 'h1':
-            case 'h2':
-            case 'h3':
-            case 'h4':
-            case 'h5':
-            case 'h6':
-              return (
-                <View
-                  key={index}
-                  style={{
-                    borderBottomColor: colors.greyMid,
-                    ...rendererStyles[node.name].wrapper,
-                  }}
-                >
-                  <Text
-                    style={{
-                      color: colors.primaryDark,
-                      ...fonts.fontPrimarySemiBold,
-                      ...rendererStyles[node.name].text,
-                      paddingBottom: 4,
-                    }}
-                  >
-                    {defaultRenderer(node.children, parent)}
-                  </Text>
-                </View>
-              );
-
-            case 'img':
-              return (
-                <ImageZoom
-                  key={index}
-                  style={{ width: width * 0.5, height: height * 0.3 }}
-                  uri={{ uri: node.attribs.src }}
-                />
-              );
-
-            case 'issue':
-              return (
-                <Text
-                  style={styles.strong}
-                  onPress={() => this.navigateToIssue(node.attribs.src)}
-                >
-                  #{node.attribs.src}
-                </Text>
-              );
-
-            case 'profile':
-              return (
-                <Text
-                  style={styles.strong}
-                  onPress={() => this.navigateToProfile(node.attribs.src)}
-                >
-                  @{node.attribs.src}
-                </Text>
-              );
-
-            case 'p':
-              return (
-                <View key={index} style={rendererStyles.p}>
-                  {defaultRenderer(node.children, parent)}
-                </View>
-              );
-
-            case 'blockquote':
-              return (
-                <View
-                  key={index}
-                  style={{
-                    paddingHorizontal: 12,
-                    borderLeftWidth: 3,
-                    borderLeftColor: colors.greyMid,
-                  }}
-                >
-                  <View
-                    style={{
-                      color: colors.greyBlue,
-                      ...fonts.fontPrimaryLight,
-                    }}
-                  >
-                    {defaultRenderer(node.children, parent)}
-                  </View>
-                </View>
-              );
-
-            case 'hr':
-              return (
-                <View
-                  key={index}
-                  style={{ height: 4, backgroundColor: colors.greyLight }}
-                />
-              );
-
-            case 'pre':
-              return (
-                <View
-                  key={index}
-                  style={{
-                    backgroundColor: colors.greyMidLight,
-                    marginBottom: 10,
-                  }}
-                >
-                  {defaultRenderer(node.children, parent)}
-                </View>
-              );
-
-            case 'code':
-              return (
-                <Text
-                  key={index}
-                  style={{
-                    ...fonts.fontCode,
-                    backgroundColor: colors.greyMidLight,
-                    fontSize: normalize(10),
-                  }}
-                >
-                  {defaultRenderer(node.children, parent)}
-                </Text>
-              );
-
-            /* case 'a':
+      return undefined;
+      /* case 'a':
               return (
                 <Text
                   key={index}
@@ -336,11 +366,6 @@ export class MarkdownHtmlview extends Component {
                   {defaultRenderer(node.children, parent)}
                 </Text>
               ); */
-          }
-          break;
-      }
-
-      return undefined;
     };
 
     return (
