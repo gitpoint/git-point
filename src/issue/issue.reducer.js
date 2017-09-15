@@ -20,7 +20,7 @@ const initialState = {
   isPendingComments: false,
   isPostingComment: false,
   isDeletingComment: false,
-  isEditingIssueComment: false,
+  isEditingComment: false,
   isEditingIssue: false,
   isChangingLockStatus: false,
   isPendingDiff: false,
@@ -89,7 +89,7 @@ export const issueReducer = (state = initialState, action = {}) => {
     case EDIT_ISSUE_COMMENT.PENDING:
       return {
         ...state,
-        isEditingIssueComment: true,
+        isEditingComment: true,
       };
     case EDIT_ISSUE_COMMENT.SUCCESS:
       return {
@@ -100,13 +100,13 @@ export const issueReducer = (state = initialState, action = {}) => {
               ? { ...comment, body: action.payload.body }
               : comment
         ),
-        isEditingIssueComment: false,
+        isEditingComment: false,
       };
     case EDIT_ISSUE_COMMENT.ERROR:
       return {
         ...state,
         error: action.payload,
-        isEditingIssueComment: false,
+        isEditingComment: false,
       };
     case EDIT_ISSUE.PENDING:
       return {

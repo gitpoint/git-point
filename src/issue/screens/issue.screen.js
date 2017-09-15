@@ -221,22 +221,21 @@ class Issue extends Component {
 
   deleteComment = comment => {
     const { repository } = this.props;
-    const { id } = comment;
-
     const repoName = repository.name;
     const owner = repository.owner.login;
 
-    this.props.deleteIssueCommentByDispatch(id, owner, repoName);
+    this.props.deleteIssueCommentByDispatch(comment.id, owner, repoName);
   };
 
   editComment = comment => {
     const { state, navigate } = this.props.navigation;
-    const { repository } = this.props;
+    const { repository, issue } = this.props;
 
     navigate('EditIssueComment', {
       title: translate('issue.comment.editCommentTitle', state.params.language),
       comment,
       repository,
+      issue,
     });
   };
 
@@ -304,7 +303,7 @@ class Issue extends Component {
       isPendingIssue ||
       isDeletingComment
     );
-    const showLoadingContainer = isPendingComments || isPendingIssue;
+    const isShowLoadingContainer = isPendingComments || isPendingIssue;
     const fullComments = !isPendingComments ? [issue, ...comments] : [];
 
     const participantNames = !isPendingComments
@@ -319,8 +318,8 @@ class Issue extends Component {
 
     return (
       <ViewContainer>
-        {showLoadingContainer && (
-          <LoadingContainer animating={showLoadingContainer} center />
+        {isShowLoadingContainer && (
+          <LoadingContainer animating={isShowLoadingContainer} center />
         )}
 
         {!isPendingComments &&

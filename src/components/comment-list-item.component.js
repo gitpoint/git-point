@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   commentRegular: {
     ...regularFont,
   },
-  iconContainer: {
+  actionButtonIconContainer: {
     paddingLeft: 10,
     alignItems: 'flex-end',
     justifyContent: 'center',
@@ -197,7 +197,7 @@ class CommentListItemComponent extends Component {
           </View>
 
           {isActionButtonVisible && (
-            <View style={styles.iconContainer}>
+            <View style={styles.actionButtonIconContainer}>
               <Icon
                 color={colors.grey}
                 size={24}

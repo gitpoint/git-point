@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
   language: state.auth.language,
   repository: state.repository.repository,
-  isEditingIssueComment: state.issue.isEditingIssueComment,
+  isEditingComment: state.issue.isEditingComment,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -48,7 +48,8 @@ class EditIssueComment extends Component {
     language: string,
     repository: Object,
     navigation: Object,
-    isEditingIssueComment: boolean,
+    isEditingComment: boolean,
+    issue: Object,
   };
 
   state: {
@@ -79,16 +80,17 @@ class EditIssueComment extends Component {
   };
 
   render() {
-    const { language, repository, isEditingIssueComment } = this.props;
+    const { language, repository, isEditingComment } = this.props;
     const { issueComment } = this.state;
+    const issueTitle = this.props.navigation.state.params.issue.title;
 
     return (
       <ViewContainer>
-        {isEditingIssueComment && <LoadingModal />}
+        {isEditingComment && <LoadingModal />}
         <ScrollView>
           {repository.full_name && (
             <ListItem
-              title={repository.full_name}
+              title={`${repository.full_name} - ${issueTitle}`}
               titleStyle={styles.titleSmall}
               leftIcon={{
                 name: 'repo',
