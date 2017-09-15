@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Dimensions, StyleSheet, View, Text, Platform } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import marked from 'marked';
-import { Table, Row, Rows } from 'react-native-table-component';
+import { TableWrapper, Table, Cell } from 'react-native-table-component';
 
 import { ImageZoom } from 'components';
 import { colors, emojis, fonts, normalize } from 'config';
@@ -107,164 +107,19 @@ const navigateToProfile = (navigation, login) => {
   });
 };
 
-const headingRenderer = {
-  render: (navigation, node, index, siblings, parent, defaultRenderer) => {
-    return (
-      <Text style={{ flex: 1, flexDirection: 'column' }} key={index}>
-        <Text style={{ ...styles[node.name] }}>
-          {defaultRenderer(node.children, node)}
-        </Text>
-        <Text
-          style={{ height: 20, width: 20, backgroundColor: colors.greyLight }}
-        >
-          --
-        </Text>
+const headingRenderer = (node, index, siblings, parent, defaultRenderer) => {
+  return (
+    <Text style={{ flex: 1, flexDirection: 'column' }} key={index}>
+      <Text style={{ ...styles[node.name] }}>
+        {defaultRenderer(node.children, node)}
       </Text>
-    );
-  },
-};
-
-/* eslint-disable no-unused-vars */
-const renderers = {
-  blockquote: {
-    render: (navigation, node, index, siblings, parent, defaultRenderer) => {
-      return (
-        <Text
-          key={index}
-          style={{
-            paddingHorizontal: 12,
-            borderLeftWidth: 3,
-            borderLeftColor: colors.greyMid,
-          }}
-        >
-          <Text
-            style={{
-              color: colors.greyBlue,
-              ...fonts.fontPrimaryLight,
-            }}
-          >
-            {defaultRenderer(node.children, parent)}
-          </Text>
-        </Text>
-      );
-    },
-  },
-  h1: headingRenderer,
-  h2: headingRenderer,
-  hr: {
-    render: (navigation, node, index, siblings, parent, defaultRenderer) => {
-      return (
-        <Text
-          key={index}
-          style={{ height: 4, width, backgroundColor: colors.greyLight }}
-        />
-      );
-    },
-  },
-  img: {
-    render: (navigation, node, index, siblings, parent, defaultRenderer) => {
-      return (
-        <View
-          style={{ width: width * 0.5, height: height * 0.3, marginTop: 10 }}
-        >
-          <ImageZoom
-            key={index}
-            style={{ width: width * 0.5, height: height * 0.3 }}
-            uri={{ uri: node.attribs.src }}
-          />
-        </View>
-      );
-    },
-  },
-  table: {
-    render: (navigation, node, index, siblings, parent, defaultRenderer) => {
-      return (
-        <Table>
-          {defaultRenderer(node.children, node)}
-        </Table>
-      );
-    },
-  },
-  thead: {
-    render: (navigation, node, index, siblings, parent, defaultRenderer) => {
-      const values = [];
-
-      node.children.forEach(row => {
-        if (row.type === 'tag' && row.name === 'tr') {
-          row.children.forEach(cell => {
-            if (
-              cell.type === 'tag' &&
-              (cell.name === 'td' || cell.name === 'th')
-            ) {
-              values.push(cell.children[0].data);
-            }
-          });
-        }
-      });
-
-      return (
-        <Row
-          data={values}
-          style={{ width: width * 0.8, height: 40, backgroundColor: '#f1f8ff' }}
-          textStyle={{ marginLeft: 5 }}
-        />
-      );
-    },
-  },
-  tbody: {
-    render: (navigation, node, index, siblings, parent, defaultRenderer) => {
-      const values = [];
-
-      node.children.forEach(row => {
-        if (row.type === 'tag' && row.name === 'tr') {
-          const sub = [];
-
-          row.children.forEach(cell => {
-            if (
-              cell.type === 'tag' &&
-              (cell.name === 'td' || cell.name === 'th')
-            ) {
-              sub.push(cell.children[0].data);
-            }
-          });
-
-          values.push(sub);
-        }
-      });
-
-      return (
-        <Rows
-          data={values}
-          style={{ width: width * 0.8, height: 40 }}
-          textStyle={{ marginLeft: 5 }}
-        />
-      );
-    },
-  },
-  issue: {
-    render: (navigation, node, index, siblings, parent, defaultRenderer) => {
-      return (
-        <Text
-          style={styles.strong}
-          onPress={() => navigateToIssue(navigation, node.attribs.src)}
-        >
-          #{node.attribs.src}
-        </Text>
-      );
-    },
-  },
-  profile: {
-    render: (navigation, node, index, siblings, parent, defaultRenderer) => {
-      return (
-        <Text
-          style={styles.strong}
-          onPress={() => navigateToProfile(navigation, node.attribs.src)}
-        >
-          @{node.attribs.src}
-        </Text>
-      );
-    },
-  },
+      <Text
+        style={{ height: 20, width: 20, backgroundColor: colors.greyLight }}
+      >
+        --
+      </Text>
+    </Text>
+  );
 };
 
 export class MarkdownHtmlview extends Component {
@@ -294,6 +149,146 @@ export class MarkdownHtmlview extends Component {
 
   render() {
     const navigation = this.props.navigation;
+    /* eslint-disable no-unused-vars */
+    const renderers = {
+      blockquote: (node, index, siblings, parent, defaultRenderer) => {
+        return (
+          <Text
+            key={index}
+            style={{
+              paddingHorizontal: 12,
+              borderLeftWidth: 3,
+              borderLeftColor: colors.greyMid,
+            }}
+          >
+            <Text
+              style={{
+                color: colors.greyBlue,
+                ...fonts.fontPrimaryLight,
+              }}
+            >
+              {defaultRenderer(node.children, parent)}
+            </Text>
+          </Text>
+        );
+      },
+      h1: headingRenderer,
+      h2: headingRenderer,
+      hr: (node, index, siblings, parent, defaultRenderer) => {
+        return (
+          <Text
+            key={index}
+            style={{
+              height: 2,
+              width: width * 0.8,
+              backgroundColor: colors.greyLight,
+            }}
+          />
+        );
+      },
+      img: (node, index, siblings, parent, defaultRenderer) => {
+        return (
+          <View
+            style={{ width: width * 0.5, height: height * 0.3, marginTop: 10 }}
+          >
+            <ImageZoom
+              key={index}
+              style={{ width: width * 0.5, height: height * 0.3 }}
+              uri={{ uri: node.attribs.src }}
+            />
+          </View>
+        );
+      },
+      table: (node, index, siblings, parent, defaultRenderer) => {
+        return (
+          <Table key={index} style={{ width: width * 0.8 }}>
+            {defaultRenderer(
+              node.children.filter(elem => elem.type === 'tag'),
+              node
+            )}
+          </Table>
+        );
+      },
+      tr: (node, index, siblings, parent, defaultRenderer) => {
+        return (
+          <TableWrapper
+            key={index}
+            style={{ width: width * 0.8, height: 30, flexDirection: 'row' }}
+          >
+            {defaultRenderer(
+              node.children.filter(elem => elem.type === 'tag'),
+              node
+            )}
+          </TableWrapper>
+        );
+      },
+      thead: (node, index, siblings, parent, defaultRenderer) => {
+        return defaultRenderer(
+          node.children.filter(elem => elem.type === 'tag'),
+          node
+        );
+      },
+      tbody: (node, index, siblings, parent, defaultRenderer) => {
+        return defaultRenderer(
+          node.children.filter(elem => elem.type === 'tag'),
+          node
+        );
+      },
+      td: (node, index, siblings, parent, defaultRenderer) => {
+        const attribs = node.attribs;
+        const cellAlign = {
+          'text-align:right': 'right',
+          'text-align:center': 'center',
+        };
+
+        const styleText = {
+          marginLeft: 5,
+          marginRight: 5,
+        };
+
+        if (cellAlign[attribs.style]) {
+          styleText.textAlign = cellAlign[attribs.style];
+        }
+
+        return (
+          <Cell
+            key={index}
+            data={defaultRenderer(node.children, node)}
+            textStyle={styleText}
+          />
+        );
+      },
+      th: (node, index, siblings, parent, defaultRenderer) => {
+        return (
+          <Cell
+            key={index}
+            data={node.children[0].data}
+            textStyle={{ ...fonts.fontPrimarySemiBold, textAlign: 'center' }}
+          />
+        );
+      },
+      issue: (node, index, siblings, parent, defaultRenderer) => {
+        return (
+          <Text
+            style={styles.strong}
+            onPress={() => navigateToIssue(navigation, node.attribs.src)}
+          >
+            #{node.attribs.src}
+          </Text>
+        );
+      },
+      profile: (node, index, siblings, parent, defaultRenderer) => {
+        return (
+          <Text
+            style={styles.strong}
+            onPress={() => navigateToProfile(navigation, node.attribs.src)}
+          >
+            @{node.attribs.src}
+          </Text>
+        );
+      },
+    };
+
     const myDomElement = (node, index, siblings, parent, defaultRenderer) => {
       if (node.type === 'text') {
         const checkBoxUnchecked = /^\s*\[\s?\]/;
@@ -318,8 +313,7 @@ export class MarkdownHtmlview extends Component {
 
         return undefined;
       } else if (renderers[node.name]) {
-        return renderers[node.name].render(
-          navigation,
+        return renderers[node.name](
           node,
           index,
           siblings,
