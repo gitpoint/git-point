@@ -96,14 +96,14 @@ const mapStateToProps = state => ({
 class CommentListItemComponent extends Component {
   props: {
     comment: Object,
-    // onLinkPress: Function,
+    onLinkPress: Function,
     language: string,
     navigation: Object,
     authUser: Object,
   };
 
   render() {
-    const { comment, language, navigation, authUser } = this.props;
+    const { comment, language, navigation, authUser, onLinkPress } = this.props;
 
     const commentPresent =
       (comment.body_html && comment.body_html !== '') ||
@@ -161,7 +161,7 @@ class CommentListItemComponent extends Component {
 
         {!!commentPresent &&
           <View style={styles.commentContainer}>
-            <MarkdownHtmlview source={comment.body} navigation={navigation} />
+            <MarkdownHtmlview source={comment.body} onLinkPress={onLinkPress} />
           </View>}
 
         {!commentPresent &&

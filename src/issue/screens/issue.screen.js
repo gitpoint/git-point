@@ -120,12 +120,21 @@ class Issue extends Component {
       node.attribs.class &&
       node.attribs.class.includes('issue-link')
     ) {
-      navigation.navigate('Issue', {
-        issueURL: node.attribs['data-url'].replace(
+      let issueURL;
+
+      if (node.attribs['data-id']) {
+        const params = navigation.state.params;
+
+        issueURL = params.issue
+          ? `${params.issue.repository_url}/issues/${node.attribs['data-id']}`
+          : params.issueURL.replace(/\d+$/, node.attribs['data-id']);
+      } else {
+        issueURL = node.attribs['data-url'].replace(
           'https://github.com',
           `${apiRoot}/repos`
-        ),
-      });
+        );
+      }
+      navigation.navigate('Issue', { issueURL });
     } else {
       Linking.openURL(node.attribs.href);
     }
