@@ -1,12 +1,10 @@
-import React from 'react';
-import { View, Text, Dimensions, StyleSheet } from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, Dimensions, StyleSheet, Platform } from 'react-native';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { Icon } from 'react-native-elements';
 
 import { colors, fonts, normalize } from 'config';
 
-const window = Dimensions.get('window');
-const PARALLAX_HEADER_HEIGHT = window.height / 2;
 const STICKY_HEADER_HEIGHT = 62;
 
 type Props = {
@@ -21,13 +19,16 @@ type Props = {
   refreshControl?: React.Element<*>,
 };
 
+type State = {
+  parallaxHeaderHeight: number,
+};
+
 const styles = StyleSheet.create({
   background: {
     position: 'absolute',
     top: 0,
     width: window.width,
     backgroundColor: colors.primaryDark,
-    height: PARALLAX_HEADER_HEIGHT,
   },
   stickySection: {
     height: STICKY_HEADER_HEIGHT,
@@ -53,63 +54,106 @@ const styles = StyleSheet.create({
   },
 });
 
-export const ParallaxScroll = ({
-  renderContent,
-  stickyTitle,
-  navigateBack,
-  showMenu,
-  menuIcon,
-  menuAction,
-  navigation,
-  children,
-  refreshControl,
-}: Props) =>
-  <ParallaxScrollView
-    backgroundColor={colors.primaryDark}
-    stickyHeaderHeight={STICKY_HEADER_HEIGHT}
-    parallaxHeaderHeight={PARALLAX_HEADER_HEIGHT}
-    backgroundSpeed={10}
-    renderBackground={() =>
-      <View key="background">
-        <View style={styles.background} />
-      </View>}
-    renderForeground={renderContent}
-    renderStickyHeader={() =>
-      <View key="sticky-header" style={styles.stickySection}>
-        <Text style={styles.stickySectionText}>
-          {stickyTitle}
-        </Text>
-      </View>}
-    renderFixedHeader={() =>
-      <View key="fixed-header">
-        {navigateBack &&
-          <View style={styles.fixedSectionLeft}>
-            <Icon
-              style={styles.headerIcon}
-              name="chevron-left"
-              size={42}
-              color={colors.white}
-              onPress={() => navigation.goBack()}
-              underlayColor="transparent"
-            />
-          </View>}
+export class ParallaxScroll extends Component {
+  props: Props;
 
-        {showMenu &&
-          <View style={styles.fixedSectionRight}>
-            <Icon
-              style={styles.headerIcon}
-              name={menuIcon}
-              type="font-awesome"
-              onPress={menuAction}
-              color={colors.white}
-              underlayColor="transparent"
+  state: State;
+
+  constructor() {
+    super();
+    this.state = {
+      parallaxHeaderHeight: this.getParallaxHeaderHeight(),
+    };
+  }
+
+  componentDidMount() {
+    Dimensions.addEventListener('change', this.dimensionsDidChange);
+  }
+
+  getParallaxHeaderHeight = (window = Dimensions.get('window')) => {
+    let devider = 2;
+
+    if (window.width > window.height) {
+      devider = Platform.OS === 'ios' ? 1.2 : 1.4;
+    }
+
+    return window.height / devider;
+  };
+
+  dimensionsDidChange = ({ window }) => {
+    this.setState({
+      parallaxHeaderHeight: this.getParallaxHeaderHeight(window),
+    });
+  };
+
+  render() {
+    const {
+      renderContent,
+      stickyTitle,
+      navigateBack,
+      showMenu,
+      menuIcon,
+      menuAction,
+      navigation,
+      children,
+      refreshControl,
+    } = this.props;
+
+    return (
+      <ParallaxScrollView
+        backgroundColor={colors.primaryDark}
+        stickyHeaderHeight={STICKY_HEADER_HEIGHT}
+        parallaxHeaderHeight={this.state.parallaxHeaderHeight}
+        backgroundSpeed={10}
+        renderBackground={() =>
+          <View key="background">
+            <View
+              style={[
+                styles.background,
+                { height: this.state.parallaxHeaderHeight },
+              ]}
             />
           </View>}
-      </View>}
-    refreshControl={refreshControl}
-  >
-    {children}
-  </ParallaxScrollView>;
+        renderForeground={renderContent}
+        renderStickyHeader={() =>
+          <View key="sticky-header" style={styles.stickySection}>
+            <Text style={styles.stickySectionText}>
+              {stickyTitle}
+            </Text>
+          </View>}
+        renderFixedHeader={() =>
+          <View key="fixed-header">
+            {navigateBack &&
+              <View style={styles.fixedSectionLeft}>
+                <Icon
+                  style={styles.headerIcon}
+                  name="chevron-left"
+                  size={42}
+                  color={colors.white}
+                  onPress={() => navigation.goBack()}
+                  underlayColor="transparent"
+                />
+              </View>}
+
+            {showMenu &&
+              <View style={styles.fixedSectionRight}>
+                <Icon
+                  style={styles.headerIcon}
+                  name={menuIcon}
+                  type="font-awesome"
+                  onPress={menuAction}
+                  color={colors.white}
+                  underlayColor="transparent"
+                />
+              </View>}
+          </View>}
+        refreshControl={refreshControl}
+      >
+        {children}
+      </ParallaxScrollView>
+    );
+  }
+}
 
 ParallaxScroll.defaultProps = {
   navigateBack: false,
