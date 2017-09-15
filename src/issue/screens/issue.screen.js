@@ -141,7 +141,6 @@ class Issue extends Component {
 
   getIssueInformation = () => {
     const {
-      issue,
       navigation,
       repository,
       getIssueCommentsByDispatch,
@@ -160,10 +159,11 @@ class Issue extends Component {
         issueURLParam ? issueCommentsURL : issueParam.comments_url
       ),
     ]).then(() => {
+      const issue = this.props.issue;
+
       if (
-        issueParam &&
         repository.full_name !==
-          issueParam.repository_url.replace(`${apiRoot}/repos/`, '')
+          issue.repository_url.replace(`${apiRoot}/repos/`, '')
       ) {
         Promise.all([
           getRepositoryByDispatch(issue.repository_url),
