@@ -236,6 +236,7 @@ class Login extends Component {
           <View style={styles.container}>
             <Modal
               animationType="slide"
+              onRequestClose={() => null}
               visible={this.state.modalVisible}
               style={styles.container}
             >
