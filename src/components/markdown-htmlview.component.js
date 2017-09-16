@@ -113,17 +113,15 @@ export class MarkdownHtmlView extends Component {
     const todoItem = /<li>\s*\[(x|\s)?\](.*)<\/li>/g;
     const emojiMarkup = /:(\w+):/g;
 
-    let rendered = marked(md);
-
-    rendered = rendered
-      .replace(new RegExp(/<p>*>/g), '<span>')
-      .replace(new RegExp(/<\/p>*>/g), '</span>')
-      .replace(new RegExp(/<ul>[\n]*?<li>/g), '<ul><li>')
-      .replace(new RegExp(/<\/li>[\n]*?<\/ul>/g), '</li></ul>')
-      .replace(new RegExp(/<ol>[\n]*?<li>/g), '<ol><li>')
-      .replace(new RegExp(/<\/li>[\n]*?<\/ol>/g), '</li></ol>')
-      .replace(new RegExp(/><li>/g), '>\n<li>')
-      .replace(new RegExp(/<\/li><\/ul>\n/g), '</li></ul>')
+    return marked(md)
+      .replace(/<p>*>/g, '<span>')
+      .replace(/<\/p>*>/g, '</span>')
+      .replace(/<ul>[\n]*?<li>/g, '<ul><li>')
+      .replace(/<\/li>[\n]*?<\/ul>/g, '</li></ul>')
+      .replace(/<ol>[\n]*?<li>/g, '<ol><li>')
+      .replace(/<\/li>[\n]*?<\/ol>/g, '</li></ol>')
+      .replace(/><li>/g, '>\n<li>')
+      .replace(/<\/li><\/ul>\n/g, '</li></ul>')
       .replace(issueReference, (match, spacing, number) => {
         return `${spacing}<issue class="issue-link" data-id="${number}" />`;
       })
@@ -143,8 +141,6 @@ export class MarkdownHtmlView extends Component {
       .replace(/<img([^>]+?)>/, (match, img) => {
         return `</span><img ${img}/><span>`;
       });
-
-    return rendered;
   };
 
   render() {
