@@ -31,10 +31,15 @@ export class MarkdownWebView extends Component {
       }
     }
 
+    const cssUri =
+      Platform.OS === 'ios'
+        ? 'https://machour.idk.tn/github-markdown.css'
+        : 'file:///android_asset/css/github-markdown.css';
+
     return `<html>
     <head>
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="stylesheet" href="https://machour.idk.tn/github-markdown.css" />
+      <link rel="stylesheet" href="${cssUri}" />
     </head>
     <body class="markdown-body">
       ${markdown}

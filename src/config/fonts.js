@@ -12,7 +12,7 @@ const iosFonts = {
 const androidFonts = {
   fontPrimaryLight: { fontFamily: 'OpenSans-Regular' },
   fontPrimary: { fontFamily: 'OpenSans-Regular' },
-  fontPrimaryItalic: { fontFamily: 'OpenSans-Regular' }, // FIXME
+  fontPrimaryItalic: { fontFamily: 'OpenSans-Italic' },
   fontPrimarySemiBold: { fontFamily: 'OpenSans-SemiBold', fontWeight: '600' },
   fontPrimaryBold: { fontFamily: 'OpenSans-Bold', fontWeight: '700' },
   fontCode: { fontFamily: 'Menlo' },
