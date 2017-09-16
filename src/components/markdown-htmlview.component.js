@@ -74,7 +74,7 @@ const styles = {
   a: linkStyle,
 };
 
-const stylessheet = StyleSheet.create(styles);
+const styleSheet = StyleSheet.create(styles);
 
 marked.setOptions({
   renderer: new marked.Renderer(),
@@ -101,7 +101,7 @@ const headingRenderer = (node, index, siblings, parent, defaultRenderer) => {
   );
 };
 
-export class MarkdownHtmlview extends Component {
+export class MarkdownHtmlView extends Component {
   props: {
     source: String,
     onLinkPress: Function,
@@ -326,7 +326,7 @@ export class MarkdownHtmlview extends Component {
     return (
       <HTMLView
         value={this.transformMarkdown(this.props.source)}
-        stylesheet={stylessheet}
+        stylesheet={styleSheet}
         renderNode={myDomElement}
         textComponentProps={{ style: { ...textStyle } }}
       />

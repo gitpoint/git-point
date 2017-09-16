@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { WebView, Platform } from 'react-native';
 
-export class MarkdownWebview extends Component {
+export class MarkdownWebView extends Component {
   props: {
     html: string,
     baseUrl: string,

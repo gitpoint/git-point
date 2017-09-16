@@ -11,7 +11,7 @@ import {
   Image,
   Platform,
 } from 'react-native';
-import { MarkdownHtmlview } from 'components';
+import { MarkdownHtmlView } from 'components';
 import moment from 'moment/min/moment-with-locales.min';
 
 import { translate } from 'utils';
@@ -161,7 +161,7 @@ class CommentListItemComponent extends Component {
 
         {!!commentPresent &&
           <View style={styles.commentContainer}>
-            <MarkdownHtmlview source={comment.body} onLinkPress={onLinkPress} />
+            <MarkdownHtmlView source={comment.body} onLinkPress={onLinkPress} />
           </View>}
 
         {!commentPresent &&
