@@ -22,5 +22,5 @@ export default [
   {
     code: 'ru',
     name: 'Русский',
-  }
+  },
 ];

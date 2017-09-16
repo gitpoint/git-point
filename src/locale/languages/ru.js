@@ -301,7 +301,7 @@ export const ru = {
       M: '1 мес',
       MM: '%d мес',
       y: '1 г',
-      yy: '%d г'
+      yy: '%d г',
     },
     abbreviations: {
       thousand: 'тыс.',
