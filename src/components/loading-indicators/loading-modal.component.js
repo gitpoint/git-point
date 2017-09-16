@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 });
 
 export const LoadingModal = () =>
-  <Modal transparent>
+  <Modal transparent onRequestClose={() => null}>
     <View style={styles.container}>
       <ActivityIndicator />
     </View>
