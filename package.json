@@ -12,6 +12,8 @@
     "start:ios": "concurrently -r 'react-native start' 'react-native run-ios'",
     "start:ios:logger": "LOGGER_ENABLED=true concurrently -r 'react-native start --reset-cache' 'react-native run-ios'",
     "start:ios:tron": "TRON_ENABLED=true concurrently -r 'react-native start --reset-cache' 'react-native run-ios'",
+    "clean": "rm -rf node_modules",
+    "clean:android": "cd android && ./gradlew clean && cd -",
     "link": "react-native link",
     "ios": "react-native run-ios",
     "android": "react-native run-android",
