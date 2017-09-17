@@ -236,7 +236,8 @@ class Repository extends Component {
     }
 
     const loader = isPendingFork ? <LoadingModal /> : null;
-    const isSubscribed = isPendingSubscribe ? false : subscribed;
+    const isSubscribed =
+      isPendingRepository || isPendingSubscribe ? false : subscribed;
     const isStarred =
       isPendingRepository || isPendingCheckStarred ? false : starred;
 
