@@ -121,10 +121,7 @@ class Issue extends Component {
       node.attribs.class.includes('issue-link')
     ) {
       navigation.navigate('Issue', {
-        issueURL: node.attribs['data-url'].replace(
-          'https://github.com',
-          `${apiRoot}/repos`
-        ),
+        issueURL: this.getIssueUrlFromNode(node, navigation.state.params),
       });
     } else {
       Linking.openURL(node.attribs.href);
@@ -137,6 +134,19 @@ class Issue extends Component {
     navigation.navigate('Repository', {
       repositoryUrl: url,
     });
+  };
+
+  getIssueUrlFromNode = (node, params) => {
+    if (node.attribs['data-id']) {
+      return params.issue
+        ? `${params.issue.repository_url}/issues/${node.attribs['data-id']}`
+        : params.issueURL.replace(/\d+$/, node.attribs['data-id']);
+    }
+
+    return node.attribs['data-url'].replace(
+      'https://github.com',
+      `${apiRoot}/repos`
+    );
   };
 
   getIssueInformation = () => {
