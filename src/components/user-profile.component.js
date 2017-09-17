@@ -146,7 +146,7 @@ export const UserProfile = ({
       {type !== 'org' &&
         <TouchableOpacity style={styles.unit}>
           <Text style={styles.unitNumber}>
-            {starCount}
+            {!isNaN(parseInt(starCount, 10)) ? starCount : ' '}
           </Text>
           <Text style={styles.unitText}>
             {translate('common.stars', language)}
