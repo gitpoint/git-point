@@ -152,7 +152,7 @@ export const checkReadMe = url => {
       .then(data => {
         dispatch({
           type: GET_REPO_README_STATUS.SUCCESS,
-          payload: !(data.status === 404),
+          payload: data.status !== 404,
         });
       })
       .catch(error => {
