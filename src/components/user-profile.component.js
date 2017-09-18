@@ -144,7 +144,15 @@ export const UserProfile = ({
       </TouchableOpacity>
 
       {type !== 'org' &&
-        <TouchableOpacity style={styles.unit}>
+        <TouchableOpacity
+          style={styles.unit}
+          onPress={() =>
+            navigation.navigate('StarredRepositoryList', {
+              title: 'Starred Repositories',
+              user,
+              repoCount: starCount > 15 ? 15 : starCount,
+            })}
+        >
           <Text style={styles.unitNumber}>
             {starCount}
           </Text>

@@ -144,6 +144,7 @@ class AuthProfile extends Component {
     this.props.getUserByDispatch();
     this.props.getOrgsByDispatch();
     this.props.getStarCountByDispatch();
+    console.log('REFRESH');
   };
 
   render() {

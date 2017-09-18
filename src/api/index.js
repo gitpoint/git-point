@@ -253,6 +253,7 @@ export async function fetchChangeIssueLockStatus(
 
 export async function fetchSearch(type, query, accessToken, params = '') {
   const ENDPOINT = `https://api.github.com/search/${type}?q=${query}${params}`;
+  console.log(ENDPOINT);
   const response = await fetch(ENDPOINT, accessTokenParameters(accessToken));
 
   return response.json();
@@ -321,6 +322,8 @@ export async function fetchStarCount(owner) {
 
   if (linkHeader == null) {
     output = response.json().then(data => {
+      console.log('START DATA');
+      console.log(data);
       return data.length;
     });
   } else {

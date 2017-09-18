@@ -26,6 +26,7 @@ import {
 import {
   ProfileScreen,
   RepositoryListScreen,
+  StarredRepositoryListScreen,
   FollowerListScreen,
   FollowingListScreen,
 } from 'user';
@@ -61,6 +62,12 @@ import {
 const sharedRoutes = {
   RepositoryList: {
     screen: RepositoryListScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    }),
+  },
+  StarredRepositoryList: {
+    screen: StarredRepositoryListScreen,
     navigationOptions: ({ navigation }) => ({
       title: navigation.state.params.title,
     }),

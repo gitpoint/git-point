@@ -15,6 +15,8 @@ import {
   GET_IS_FOLLOWING,
   GET_IS_FOLLOWER,
   GET_REPOSITORIES,
+  GET_STARRED_REPOSITORIES,
+  ADD_STARRED_REPOSITORIES,
   GET_FOLLOWERS,
   GET_FOLLOWING,
   SEARCH_USER_REPOS,
@@ -72,7 +74,10 @@ const checkFollowStatusHelper = (user, followedUser, actionSet) => {
 
     dispatch({ type: actionSet.PENDING });
 
-    fetchUrlNormal(`${USER_ENDPOINT(user)}/following/${followedUser}`, accessToken)
+    fetchUrlNormal(
+      `${USER_ENDPOINT(user)}/following/${followedUser}`,
+      accessToken
+    )
       .then(data => {
         dispatch({
           type: actionSet.SUCCESS,
@@ -124,10 +129,7 @@ export const getFollowers = user => {
 
 export const getUserInfo = user => {
   return dispatch => {
-    Promise.all([
-      dispatch(getUser(user)),
-      dispatch(getOrgs(user)),
-    ]);
+    Promise.all([dispatch(getUser(user)), dispatch(getOrgs(user))]);
   };
 };
 
@@ -196,6 +198,52 @@ export const getRepositories = user => {
       .catch(error => {
         dispatch({
           type: GET_REPOSITORIES.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+export const getStarredRepositories = user => {
+  return (dispatch, getState) => {
+    const { accessToken } = getState().auth;
+    const url = `${USER_ENDPOINT(user.login)}/starred`;
+
+    dispatch({ type: GET_STARRED_REPOSITORIES.PENDING });
+
+    fetchUrl(url, accessToken)
+      .then(data => {
+        dispatch({
+          type: GET_STARRED_REPOSITORIES.SUCCESS,
+          payload: data,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: GET_STARRED_REPOSITORIES.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+export const addStarredRepositories = (user, page = 1) => {
+  return (dispatch, getState) => {
+    const { accessToken } = getState().auth;
+    const url = `${USER_ENDPOINT(user.login)}/starred?page=${page}`;
+
+    dispatch({ type: ADD_STARRED_REPOSITORIES.PENDING });
+
+    fetchUrl(url, accessToken)
+      .then(data => {
+        dispatch({
+          type: ADD_STARRED_REPOSITORIES.SUCCESS,
+          payload: data,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: ADD_STARRED_REPOSITORIES.ERROR,
           payload: error,
         });
       });
