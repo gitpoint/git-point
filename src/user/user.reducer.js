@@ -4,6 +4,7 @@ import {
   GET_IS_FOLLOWING,
   GET_IS_FOLLOWER,
   GET_REPOSITORIES,
+  GET_MORE_REPOSITORIES,
   GET_FOLLOWERS,
   GET_FOLLOWING,
   SEARCH_USER_REPOS,
@@ -15,7 +16,7 @@ const initialState = {
   user: {},
   orgs: [],
   isFollowing: false, // auth is following user
-  isFollower: false,  // user is a follower of auth, as well as user is following auth
+  isFollower: false, // user is a follower of auth, as well as user is following auth
   repositories: [],
   followers: [],
   following: [],
@@ -26,10 +27,14 @@ const initialState = {
   isPendingCheckFollowing: false,
   isPendingCheckFollower: false,
   isPendingRepositories: false,
+  isPendingMoreRepositories: false,
   isPendingFollowers: false,
   isPendingFollowing: false,
   isPendingSearchUserRepos: false,
   error: '',
+  page: null,
+  hasMoreRepositories: false,
+  lastPage: null,
 };
 
 export const userReducer = (state = initialState, action = {}) => {
@@ -156,8 +161,29 @@ export const userReducer = (state = initialState, action = {}) => {
         ...state,
         repositories: action.payload,
         isPendingRepositories: false,
+        lastPage: action.lastPage,
+        hasMoreRepositories: action.hasMoreRepositories,
       };
     case GET_REPOSITORIES.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isPendingMoreRepositories: false,
+      };
+    case GET_MORE_REPOSITORIES.PENDING:
+      return {
+        ...state,
+        isPendingMoreRepositories: true,
+      };
+    case GET_MORE_REPOSITORIES.SUCCESS:
+      return {
+        ...state,
+        isPendingMoreRepositories: false,
+        repositories: state.repositories.concat(action.payload),
+        hasMoreRepositories: action.hasMoreRepositories,
+        page: action.page,
+      };
+    case GET_MORE_REPOSITORIES.ERROR:
       return {
         ...state,
         error: action.payload,

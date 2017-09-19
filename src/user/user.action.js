@@ -15,6 +15,7 @@ import {
   GET_IS_FOLLOWING,
   GET_IS_FOLLOWER,
   GET_REPOSITORIES,
+  GET_MORE_REPOSITORIES,
   GET_FOLLOWERS,
   GET_FOLLOWING,
   SEARCH_USER_REPOS,
@@ -72,7 +73,10 @@ const checkFollowStatusHelper = (user, followedUser, actionSet) => {
 
     dispatch({ type: actionSet.PENDING });
 
-    fetchUrlNormal(`${USER_ENDPOINT(user)}/following/${followedUser}`, accessToken)
+    fetchUrlNormal(
+      `${USER_ENDPOINT(user)}/following/${followedUser}`,
+      accessToken
+    )
       .then(data => {
         dispatch({
           type: actionSet.SUCCESS,
@@ -124,10 +128,7 @@ export const getFollowers = user => {
 
 export const getUserInfo = user => {
   return dispatch => {
-    Promise.all([
-      dispatch(getUser(user)),
-      dispatch(getOrgs(user)),
-    ]);
+    Promise.all([dispatch(getUser(user)), dispatch(getOrgs(user))]);
   };
 };
 
@@ -183,19 +184,64 @@ export const getRepositories = user => {
     dispatch({ type: GET_REPOSITORIES.PENDING });
 
     const url = isAuthUser
-      ? `${apiRoot}/user/repos?affiliation=owner&sort=updated&per_page=50`
-      : `${USER_ENDPOINT(user.login)}/repos?sort=updated&per_page=50`;
+      ? `${apiRoot}/user/repos?affiliation=owner&sort=updated&per_page=50&page=1`
+      : `${USER_ENDPOINT(user.login)}/repos?sort=updated&per_page=50&page=1`;
 
-    fetchUrl(url, accessToken)
-      .then(data => {
+    let lastPage = null;
+
+    fetchUrlNormal(url, accessToken)
+      .then(response => {
+        lastPage = +response.headers
+          .get('Link')
+          .match(/<.*[&?]page=(\d+).*>;\s+rel="last"/)[1];
+
+        return response.json();
+      })
+      .then(result => {
         dispatch({
           type: GET_REPOSITORIES.SUCCESS,
-          payload: data,
+          payload: result,
+          lastPage,
+          hasMoreRepositories: lastPage > 1,
         });
       })
       .catch(error => {
         dispatch({
           type: GET_REPOSITORIES.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+export const getMoreRepositories = (user, page) => {
+  return (dispatch, getState) => {
+    const {
+      auth: { accessToken, user: authUser },
+      user: { lastPage },
+    } = getState();
+    const isAuthUser = user.login === authUser.login;
+
+    dispatch({ type: GET_MORE_REPOSITORIES.PENDING });
+
+    const url = isAuthUser
+      ? `${apiRoot}/user/repos?affiliation=owner&sort=updated&per_page=50&page=${page}`
+      : `${USER_ENDPOINT(
+          user.login
+        )}/repos?sort=updated&per_page=50&page=${page}`;
+
+    fetchUrl(url, accessToken)
+      .then(data => {
+        dispatch({
+          type: GET_MORE_REPOSITORIES.SUCCESS,
+          payload: data,
+          hasMoreRepositories: lastPage > page,
+          page,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: GET_MORE_REPOSITORIES.ERROR,
           payload: error,
         });
       });

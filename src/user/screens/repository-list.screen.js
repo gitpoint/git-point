@@ -9,7 +9,7 @@ import {
   SearchBar,
 } from 'components';
 import { colors } from 'config';
-import { getRepositories, searchUserRepos } from 'user';
+import { getRepositories, getMoreRepositories, searchUserRepos } from 'user';
 
 const mapStateToProps = state => ({
   user: state.user.user,
@@ -17,11 +17,15 @@ const mapStateToProps = state => ({
   searchedUserRepos: state.user.searchedUserRepos,
   isPendingRepositories: state.user.isPendingRepositories,
   isPendingSearchUserRepos: state.user.isPendingSearchUserRepos,
+  page: state.user.page,
+  hasMoreRepositories: state.user.hasMoreRepositories,
 });
 
 const mapDispatchToProps = dispatch => ({
   getRepositoriesByDispatch: (user, type) =>
     dispatch(getRepositories(user, type)),
+  getMoreRepositoriesByDispatch: (user, type) =>
+    dispatch(getMoreRepositories(user, type)),
   searchUserReposByDispatch: (user, type) =>
     dispatch(searchUserRepos(user, type)),
 });
@@ -50,6 +54,7 @@ const styles = StyleSheet.create({
 class RepositoryList extends Component {
   props: {
     getRepositoriesByDispatch: Function,
+    getMoreRepositoriesByDispatch: Function,
     searchUserReposByDispatch: Function,
     user: Object,
     repositories: Array,
@@ -57,6 +62,8 @@ class RepositoryList extends Component {
     isPendingRepositories: boolean,
     isPendingSearchUserRepos: boolean,
     navigation: Object,
+    page: number,
+    hasMoreRepositories: boolean,
   };
 
   state: {
@@ -114,8 +121,12 @@ class RepositoryList extends Component {
       isPendingRepositories,
       isPendingSearchUserRepos,
       navigation,
+      getMoreRepositoriesByDispatch,
+      hasMoreRepositories,
+      page,
     } = this.props;
     const repoCount = navigation.state.params.repoCount;
+    const user = navigation.state.params.user;
     const { searchStart, searchFocus } = this.state;
     const loading =
       (isPendingRepositories && !searchStart) ||
@@ -159,6 +170,11 @@ class RepositoryList extends Component {
                     repository={item}
                     navigation={navigation}
                   />}
+                onEndReached={
+                  !hasMoreRepositories
+                    ? () => null
+                    : () => getMoreRepositoriesByDispatch(user, page + 1)
+                }
               />
             </View>}
         </View>
