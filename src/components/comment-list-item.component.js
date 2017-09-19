@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   Image,
   Platform,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import { MarkdownHtmlView } from 'components';
 import { Icon } from 'react-native-elements';
@@ -72,7 +73,6 @@ const styles = StyleSheet.create({
     paddingTop: 4,
     paddingBottom: 2,
     marginLeft: 54,
-    marginRight: 15,
     borderBottomColor: colors.greyLight,
     borderBottomWidth: 1,
   },
@@ -91,7 +91,6 @@ const styles = StyleSheet.create({
     ...regularFont,
   },
   actionButtonIconContainer: {
-    paddingLeft: 10,
     alignItems: 'flex-end',
     justifyContent: 'center',
   },
@@ -146,102 +145,108 @@ class CommentListItemComponent extends Component {
       !Object.prototype.hasOwnProperty.call(comment, 'repository_url');
 
     return (
-      <View style={styles.container}>
-        <View style={styles.header}>
-          {comment.user && (
-            <TouchableOpacity
-              style={styles.avatarContainer}
-              onPress={() =>
-                navigation.navigate(
-                  authUser.login === comment.user.login
-                    ? 'AuthProfile'
-                    : 'Profile',
-                  {
-                    user: comment.user,
-                  }
-                )}
-            >
-              <Image
-                style={styles.avatar}
-                source={{
-                  uri: comment.user.avatar_url,
-                }}
-              />
-            </TouchableOpacity>
-          )}
+      <TouchableWithoutFeedback onLongPress={this.showMenu}>
+        <View style={styles.container}>
+          <View style={styles.header}>
+            {comment.user && (
+              <TouchableOpacity
+                style={styles.avatarContainer}
+                onPress={() =>
+                  navigation.navigate(
+                    authUser.login === comment.user.login
+                      ? 'AuthProfile'
+                      : 'Profile',
+                    {
+                      user: comment.user,
+                    }
+                  )}
+              >
+                <Image
+                  style={styles.avatar}
+                  source={{
+                    uri: comment.user.avatar_url,
+                  }}
+                />
+              </TouchableOpacity>
+            )}
 
-          {comment.user && (
-            <TouchableOpacity
-              style={styles.titleSubtitleContainer}
-              onPress={() =>
-                navigation.navigate(
-                  authUser.login === comment.user.login
-                    ? 'AuthProfile'
-                    : 'Profile',
-                  {
-                    user: comment.user,
-                  }
-                )}
-            >
-              <Text style={styles.linkDescription}>
-                {comment.user.login}
-                {'  '}
+            {comment.user && (
+              <TouchableOpacity
+                style={styles.titleSubtitleContainer}
+                onPress={() =>
+                  navigation.navigate(
+                    authUser.login === comment.user.login
+                      ? 'AuthProfile'
+                      : 'Profile',
+                    {
+                      user: comment.user,
+                    }
+                  )}
+              >
+                <Text style={styles.linkDescription}>
+                  {comment.user.login}
+                  {'  '}
+                </Text>
+              </TouchableOpacity>
+            )}
+
+            <View style={styles.dateContainer}>
+              <Text style={styles.date}>
+                {moment(comment.created_at).fromNow()}
               </Text>
-            </TouchableOpacity>
-          )}
-
-          <View style={styles.dateContainer}>
-            <Text style={styles.date}>
-              {moment(comment.created_at).fromNow()}
-            </Text>
+            </View>
           </View>
 
-          {isActionButtonVisible && (
-            <View style={styles.actionButtonIconContainer}>
-              <Icon
-                color={colors.grey}
-                size={24}
-                name={'ellipsis-h'}
-                type={'font-awesome'}
-                onPress={this.showMenu}
+          {!!commentPresent && (
+            <View style={styles.commentContainer}>
+              <MarkdownHtmlView
+                source={comment.body}
+                onLinkPress={onLinkPress}
               />
+
+              {isActionButtonVisible && (
+                <View style={styles.actionButtonIconContainer}>
+                  <Icon
+                    color={colors.grey}
+                    size={20}
+                    name={'ellipsis-h'}
+                    type={'font-awesome'}
+                    onPress={this.showMenu}
+                  />
+                </View>
+              )}
             </View>
           )}
+
+          {!commentPresent && (
+            <View style={styles.commentContainer}>
+              <Text
+                style={[
+                  styles.commentTextNone,
+                  Platform.OS === 'ios'
+                    ? styles.commentLight
+                    : styles.commentRegular,
+                ]}
+              >
+                {translate('issue.main.noDescription', language)}
+              </Text>
+            </View>
+          )}
+
+          <ActionSheet
+            ref={o => {
+              this.ActionSheet = o;
+            }}
+            title={translate('issue.comment.commentActions', language)}
+            options={[
+              ...commentActionSheetOptions,
+              translate('common.cancel', language),
+            ]}
+            cancelButtonIndex={commentActionSheetOptions.length}
+            onPress={this.handlePress}
+          />
         </View>
-
-        {!!commentPresent &&
-          <View style={styles.commentContainer}>
-            <MarkdownHtmlView source={comment.body} onLinkPress={onLinkPress} />
-          </View>}
-
-        {!commentPresent && (
-          <View style={styles.commentContainer}>
-            <Text
-              style={[
-                styles.commentTextNone,
-                Platform.OS === 'ios'
-                  ? styles.commentLight
-                  : styles.commentRegular,
-              ]}
-            >
-              {translate('issue.main.noDescription', language)}
-            </Text>
-          </View>
-        )}
-
-        <ActionSheet
-          ref={o => {
-            this.ActionSheet = o;
-          }}
-          title={translate('issue.comment.commentActions', language)}
-          options={[
-            ...commentActionSheetOptions,
-            translate('common.cancel', language),
-          ]}
-          cancelButtonIndex={commentActionSheetOptions.length}
-          onPress={this.handlePress}
-        />
-      </View>
+      </TouchableWithoutFeedback>
     );
   }
 }
