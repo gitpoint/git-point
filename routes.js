@@ -302,6 +302,7 @@ const MainTabNavigator = TabNavigator(
     },
   },
   {
+    lazy: true,
     tabBarPosition: 'bottom',
     tabBarOptions: {
       showLabel: false,
