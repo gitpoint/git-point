@@ -370,5 +370,8 @@ export const GitPoint = StackNavigator(
   {
     headerMode: 'screen',
     URIPrefix: 'gitpoint://',
-  }
+    cardStyle: {
+      backgroundColor: 'transparent',
+    },
+  },
 );
