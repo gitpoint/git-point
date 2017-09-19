@@ -8,8 +8,8 @@ export const GET_REPOSITORIES = createActionSet('GET_REPOSITORIES');
 export const GET_STARRED_REPOSITORIES = createActionSet(
   'GET_STARRED_REPOSITORIES'
 );
-export const ADD_STARRED_REPOSITORIES = createActionSet(
-  'ADD_STARRED_REPOSITORIES'
+export const GET_MORE_STARRED_REPOSITORIES = createActionSet(
+  'GET_MORE_STARRED_REPOSITORIES'
 );
 export const GET_FOLLOWERS = createActionSet('GET_FOLLOWERS');
 export const GET_FOLLOWING = createActionSet('GET_FOLLOWING');

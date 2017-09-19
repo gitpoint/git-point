@@ -1,18 +1,10 @@
 import React, { Component } from 'react';
-import { FlatList, View, Text } from 'react-native';
+import { FlatList } from 'react-native';
 import { connect } from 'react-redux';
-import { colors } from 'config';
 
-import { getStarredRepositories, addStarredRepositories } from 'user';
+import { getStarredRepositories, getMoreStarredRepositories } from 'user';
 
-import {
-  ViewContainer,
-  RepositoryListItem,
-  LoadingRepositoryListItem,
-  SearchBar,
-} from 'components';
-
-import { fetchUrl, USER_ENDPOINT } from 'api';
+import { ViewContainer, RepositoryListItem } from 'components';
 
 const mapStateToProps = state => ({
   user: state.user.user,
@@ -23,21 +15,18 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getStarredRepositories: (user, type) =>
     dispatch(getStarredRepositories(user, type)),
-  addStarredRepositories: (user, page, type) =>
-    dispatch(addStarredRepositories(user, page, type)),
+  getMoreStarredRepositories: (user, page, type) =>
+    dispatch(getMoreStarredRepositories(user, page, type)),
 });
-
-const styles = {
-  listContainer: {
-    backgroundColor: colors.white,
-  },
-};
 
 class StarredRepositoryList extends Component {
   props: {
     user: Object,
     starredRepositories: Array,
     navigation: Object,
+    isPendingStarredRepositories: boolean,
+    getStarredRepositories: Function,
+    getMoreStarredRepositories: Function,
   };
 
   constructor() {
@@ -49,41 +38,35 @@ class StarredRepositoryList extends Component {
 
   componentDidMount() {
     const user = this.props.navigation.state.params.user;
-    const { starredRepositories } = this.props;
+
     this.props.getStarredRepositories(user);
   }
 
-  getMoreStarredRepositories = () => {
+  getMoreRepositories = () => {
     const user = this.props.navigation.state.params.user;
-    const {
-      isPendingStarredRepositories,
-      addStarredRepositories,
-      starredRepositories,
-    } = this.props;
+    const { isPendingStarredRepositories } = this.props;
 
     if (!isPendingStarredRepositories) {
       this.setState(
         {
           page: this.state.page + 1,
         },
-        () => addStarredRepositories(user, this.state.page)
+        () => {
+          this.props.getMoreStarredRepositories(user, this.state.page);
+        }
       );
     }
   };
 
   render() {
-    const {
-      starredRepositories,
-      navigation,
-      addStarredRepositories,
-    } = this.props;
+    const { starredRepositories, navigation } = this.props;
 
     return (
       <ViewContainer>
         <FlatList
           data={starredRepositories}
           onEndReachedThreshold={0.5}
-          onEndReached={this.getMoreStarredRepositories}
+          onEndReached={this.getMoreRepositories}
           renderItem={({ item }) =>
             <RepositoryListItem repository={item} navigation={navigation} />}
         />

@@ -16,7 +16,7 @@ import {
   GET_IS_FOLLOWER,
   GET_REPOSITORIES,
   GET_STARRED_REPOSITORIES,
-  ADD_STARRED_REPOSITORIES,
+  GET_MORE_STARRED_REPOSITORIES,
   GET_FOLLOWERS,
   GET_FOLLOWING,
   SEARCH_USER_REPOS,
@@ -227,23 +227,23 @@ export const getStarredRepositories = user => {
   };
 };
 
-export const addStarredRepositories = (user, page = 1) => {
+export const getMoreStarredRepositories = (user, page = 1) => {
   return (dispatch, getState) => {
     const { accessToken } = getState().auth;
     const url = `${USER_ENDPOINT(user.login)}/starred?page=${page}`;
 
-    dispatch({ type: ADD_STARRED_REPOSITORIES.PENDING });
+    dispatch({ type: GET_MORE_STARRED_REPOSITORIES.PENDING });
 
     fetchUrl(url, accessToken)
       .then(data => {
         dispatch({
-          type: ADD_STARRED_REPOSITORIES.SUCCESS,
+          type: GET_MORE_STARRED_REPOSITORIES.SUCCESS,
           payload: data,
         });
       })
       .catch(error => {
         dispatch({
-          type: ADD_STARRED_REPOSITORIES.ERROR,
+          type: GET_MORE_STARRED_REPOSITORIES.ERROR,
           payload: error,
         });
       });

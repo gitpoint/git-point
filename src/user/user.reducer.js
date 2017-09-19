@@ -5,7 +5,7 @@ import {
   GET_IS_FOLLOWER,
   GET_REPOSITORIES,
   GET_STARRED_REPOSITORIES,
-  ADD_STARRED_REPOSITORIES,
+  GET_MORE_STARRED_REPOSITORIES,
   GET_FOLLOWERS,
   GET_FOLLOWING,
   SEARCH_USER_REPOS,
@@ -22,6 +22,7 @@ const initialState = {
   followers: [],
   following: [],
   searchedUserRepos: [],
+  starredRepositories: [],
   isPendingUser: false,
   isPendingOrgs: false,
   isPendingStarCount: false,
@@ -31,6 +32,7 @@ const initialState = {
   isPendingFollowers: false,
   isPendingFollowing: false,
   isPendingSearchUserRepos: false,
+  isPendingStarredRepositories: false,
   error: '',
 };
 
@@ -182,12 +184,12 @@ export const userReducer = (state = initialState, action = {}) => {
         error: action.payload,
         isPendingStarredRepositories: false,
       };
-    case ADD_STARRED_REPOSITORIES.PENDING:
+    case GET_MORE_STARRED_REPOSITORIES.PENDING:
       return {
         ...state,
         isPendingStarredRepositories: true,
       };
-    case ADD_STARRED_REPOSITORIES.SUCCESS:
+    case GET_MORE_STARRED_REPOSITORIES.SUCCESS:
       return {
         ...state,
         isPendingStarredRepositories: false,
@@ -196,7 +198,7 @@ export const userReducer = (state = initialState, action = {}) => {
             ? [...state.starredRepositories, ...action.payload]
             : state.starredRepositories,
       };
-    case ADD_STARRED_REPOSITORIES.ERROR:
+    case GET_MORE_STARRED_REPOSITORIES.ERROR:
       return {
         ...state,
         error: action.payload,
