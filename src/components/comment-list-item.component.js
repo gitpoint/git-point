@@ -10,7 +10,6 @@ import {
   TouchableOpacity,
   Image,
   Platform,
-  TouchableWithoutFeedback,
 } from 'react-native';
 import { MarkdownHtmlView } from 'components';
 import { Icon } from 'react-native-elements';
@@ -145,7 +144,7 @@ class CommentListItemComponent extends Component {
       !Object.prototype.hasOwnProperty.call(comment, 'repository_url');
 
     return (
-      <TouchableWithoutFeedback onLongPress={this.showMenu}>
+      <TouchableOpacity onLongPress={this.showMenu}>
         <View style={styles.container}>
           <View style={styles.header}>
             {comment.user && (
@@ -246,7 +245,7 @@ class CommentListItemComponent extends Component {
             onPress={this.handlePress}
           />
         </View>
-      </TouchableWithoutFeedback>
+      </TouchableOpacity>
     );
   }
 }
