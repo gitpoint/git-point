@@ -235,8 +235,7 @@ export const getCommitDiffFromUrl = url => {
 };
 
 export const getCommitDetails = commit => {
-  // eslint-disable-next-line no-unused-vars
-  return (dispatch, getState) => {
+  return dispatch => {
     const url = commit.url || commit.commit.url;
 
     dispatch(getCommitFromUrl(url));
