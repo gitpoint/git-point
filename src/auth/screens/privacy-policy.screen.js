@@ -4,6 +4,7 @@ import { StyleSheet, ScrollView, View, Text } from 'react-native';
 import { ViewContainer } from 'components';
 import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
+import { root as apiRoot } from 'api';
 
 const styles = StyleSheet.create({
   container: {
@@ -118,8 +119,7 @@ export class PrivacyPolicyScreen extends Component {
                   style={styles.link}
                   onPress={() =>
                     navigation.navigate('Repository', {
-                      repositoryUrl:
-                        'https://api.github.com/repos/gitpoint/git-point',
+                      repositoryUrl: `${apiRoot}/repos/gitpoint/git-point`,
                     })}
                 >
                   {translate('auth.privacyPolicy.contactLink', language)}

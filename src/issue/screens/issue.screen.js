@@ -16,6 +16,7 @@ import {
   CommentListItem,
   CommentInput,
 } from 'components';
+import { root as apiRoot } from 'api';
 import { translate } from 'utils';
 import { colors } from 'config';
 import { getRepository, getContributors } from 'repository';
@@ -120,10 +121,7 @@ class Issue extends Component {
       node.attribs.class.includes('issue-link')
     ) {
       navigation.navigate('Issue', {
-        issueURL: node.attribs['data-url'].replace(
-          'github.com',
-          'api.github.com/repos'
-        ),
+        issueURL: this.getIssueUrlFromNode(node, navigation.state.params),
       });
     } else {
       Linking.openURL(node.attribs.href);
@@ -136,6 +134,19 @@ class Issue extends Component {
     navigation.navigate('Repository', {
       repositoryUrl: url,
     });
+  };
+
+  getIssueUrlFromNode = (node, params) => {
+    if (node.attribs['data-id']) {
+      return params.issue
+        ? `${params.issue.repository_url}/issues/${node.attribs['data-id']}`
+        : params.issueURL.replace(/\d+$/, node.attribs['data-id']);
+    }
+
+    return node.attribs['data-url'].replace(
+      'https://github.com',
+      `${apiRoot}/repos`
+    );
   };
 
   getIssueInformation = () => {
@@ -162,7 +173,7 @@ class Issue extends Component {
       if (
         issueParam &&
         repository.full_name !==
-          issueParam.repository_url.replace('https://api.github.com/repos/', '')
+          issueParam.repository_url.replace(`${apiRoot}/repos/`, '')
       ) {
         Promise.all([
           getRepositoryByDispatch(issue.repository_url),

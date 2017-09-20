@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { WebView, StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { connect } from 'react-redux';
 
-import { ViewContainer, LoadingContainer } from 'components';
+import { MarkdownWebView, ViewContainer, LoadingContainer } from 'components';
 import { normalize } from 'config';
 import { getReadMe } from '../repository.action';
 
@@ -63,8 +63,13 @@ class ReadMe extends Component {
       <ViewContainer>
         {isPendingReadMe &&
           <LoadingContainer animating={isPendingReadMe} center />}
-        {!isPendingReadMe && !noReadMe && <WebView source={{ html: readMe }} />}
-
+        {!isPendingReadMe &&
+          !noReadMe &&
+          <MarkdownWebView
+            html={readMe}
+            baseUrl={`${this.props.navigation.state.params.repository
+              .html_url}/raw/master/`}
+          />}
         {!isPendingReadMe &&
           noReadMe &&
           <View style={styles.textContainer}>
