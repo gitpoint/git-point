@@ -167,8 +167,9 @@ class AuthProfile extends Component {
               >
                 {orgs.map(item =>
                   <UserListItem
-                    key={item.id}
                     user={item}
+                    key={item.id}
+                    imageUrl={item.avatarUrl}
                     navigation={navigation}
                   />
                 )}

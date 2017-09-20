@@ -1,3 +1,4 @@
+import gql from 'graphql-tag';
 import { abbreviateNumber } from 'utils';
 
 // These keys are for development purposes and do not represent the actual application keys.
@@ -7,6 +8,7 @@ export const CLIENT_ID = '87c7f05700c052937cfb';
 export const CLIENT_SECRET = '3a70aee4d5e26c457720a31c3efe2f9062a4997a';
 
 export const root = 'https://api.github.com';
+export const GRAPHQL_ENDPOINT = `${root}/graphql`;
 export const USER_ENDPOINT = user => `${root}/users/${user}`;
 
 const accessTokenParameters = accessToken => ({
@@ -51,6 +53,18 @@ const accessTokenParametersPOST = (accessToken, body) => ({
     Authorization: `token ${accessToken}`,
   },
   body: JSON.stringify(body),
+});
+
+const accessTokenParametersGraphQL = (accessToken, query, variables) => ({
+  method: 'POST',
+  headers: {
+    Accept: 'application/vnd.github.v3+json',
+    Authorization: `token ${accessToken}`,
+  },
+  body: JSON.stringify({
+    query: query.replace(/\n/g, ''),
+    variables: variables,
+  }),
 });
 
 const accessTokenParametersHTML = accessToken => ({
@@ -153,13 +167,42 @@ export async function fetchUser(user, accessToken) {
 }
 
 export async function fetchUserOrgs(user, accessToken) {
-  const ORGS_ENDPOINT = `${root}/users/${user}/orgs`;
+  const getOrganizationsQuery = `
+    query($login: String!) {
+      user(login: $login) {
+          organizations(first: 100) {
+            edges {
+              node {
+                id
+                login
+                name
+                avatarUrl
+              }
+            }
+          }
+      }
+    }
+  `;
+
   const response = await fetch(
-    ORGS_ENDPOINT,
-    accessTokenParameters(accessToken)
+    GRAPHQL_ENDPOINT,
+    accessTokenParametersGraphQL(accessToken, getOrganizationsQuery, {login: user})
   );
 
-  return response.json();
+  return response.json().then(data => {
+    let orgs = [];
+    data.data.user.organizations.edges.reduce(
+      (key, item) => {
+        orgs.push(item.node)
+      }
+    );
+
+    return orgs.sort(
+      (org1, org2) => org1.name > org2.name
+    );
+  });
+
+
 }
 
 export async function fetchUserEvents(user, accessToken) {

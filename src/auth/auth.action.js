@@ -1,6 +1,5 @@
 import { AsyncStorage } from 'react-native';
 
-import uniqby from 'lodash.uniqby';
 import { delay, resetNavigationTo, configureLocale } from 'utils';
 import { saveLanguage } from 'locale';
 
@@ -114,18 +113,11 @@ export const getOrgs = () => {
 
     dispatch({ type: GET_AUTH_ORGS.PENDING });
 
-    Promise.all([
-      fetchAuthUserOrgs(accessToken),
-      fetchUserOrgs(login, accessToken),
-    ])
+    fetchUserOrgs(login, accessToken)
       .then(data => {
-        const orgs = data[0].concat(data[1]);
-
         dispatch({
           type: GET_AUTH_ORGS.SUCCESS,
-          payload: uniqby(orgs, 'login').sort(
-            (org1, org2) => org1.login > org2.login
-          ),
+          payload: data,
         });
       })
       .catch(error => {

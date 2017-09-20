@@ -91,6 +91,7 @@ class UserListItemComponent extends Component {
       noBorderBottom,
       iconAction,
       authUser,
+      imageUrl
     } = this.props;
 
     const ContainerComponent =
@@ -131,7 +132,7 @@ class UserListItemComponent extends Component {
               <Image
                 style={styles.avatar}
                 source={{
-                  uri: user.avatar_url,
+                  uri: imageUrl || user.avatar_url,
                 }}
               />
             </ImageContainerComponent>
