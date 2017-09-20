@@ -153,7 +153,7 @@ class Login extends Component {
 
   signIn = () =>
     openURLInView(
-      `https://github.com/login/oauth/authorize?response_type=token&client_id=${CLIENT_ID}&redirect_uri=gitpoint://welcome&scope=user%20repo&state=${stateRandom}`
+      `https://github.com/login/oauth/authorize?response_type=token&client_id=${CLIENT_ID}&redirect_uri=gitpoint://welcome&scope=user%20repo%20read:org&state=${stateRandom}`
     );
 
   render() {
