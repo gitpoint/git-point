@@ -43,6 +43,7 @@
     ]
   },
   "dependencies": {
+    "entities": "^1.1.1",
     "fuzzy-search": "^1.4.0",
     "lodash.uniqby": "^4.7.0",
     "lowlight": "^1.5.0",
