@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { colors, fonts, normalize } from 'config';
+import { colors, constraints, fonts, normalize } from 'config';
 import { translate } from 'utils';
 import { ImageZoom } from 'components';
 
@@ -130,7 +130,10 @@ export const UserProfile = ({
           navigation.navigate('RepositoryList', {
             title: translate('user.repositoryList.title', language),
             user,
-            repoCount: user.public_repos > 15 ? 15 : user.public_repos,
+            repoCount:
+              user.public_repos > constraints.maxPublicRepos
+                ? constraints.maxPublicRepos
+                : user.public_repos,
           })}
       >
         <Text style={styles.unitNumber}>
@@ -150,7 +153,10 @@ export const UserProfile = ({
             navigation.navigate('StarredRepositoryList', {
               title: 'Starred Repositories',
               user,
-              repoCount: starCount > 15 ? 15 : starCount,
+              repoCount:
+                starCount > constraints.maxStars
+                  ? constraints.maxStars
+                  : starCount,
             })}
         >
           <Text style={styles.unitNumber}>
@@ -168,7 +174,10 @@ export const UserProfile = ({
             navigation.navigate('FollowerList', {
               title: translate('user.followerList.title', language),
               user,
-              followerCount: user.followers > 15 ? 15 : user.followers,
+              followerCount:
+                user.followers > constraints.maxFollowers
+                  ? constraints.maxFollowers
+                  : user.followers,
             })}
         >
           <Text style={styles.unitNumber}>
@@ -190,7 +199,10 @@ export const UserProfile = ({
             navigation.navigate('FollowingList', {
               title: translate('user.followingList.title', language),
               user,
-              followingCount: user.following > 15 ? 15 : user.following,
+              followingCount:
+                user.following > constraints.maxFollowing
+                  ? constraints.maxFollowing
+                  : user.following,
             })}
         >
           <Text style={styles.unitNumber}>
