@@ -32,7 +32,7 @@ const initialState = {
   isPendingFollowing: false,
   isPendingSearchUserRepos: false,
   error: '',
-  page: null,
+  page: 1,
   hasMoreRepositories: false,
   lastPage: null,
 };
