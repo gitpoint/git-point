@@ -6,7 +6,6 @@ import { saveLanguage } from 'locale';
 import {
   fetchAccessToken,
   fetchAuthUser,
-  fetchAuthUserOrgs,
   fetchUserOrgs,
   fetchUserEvents,
   fetchStarCount,

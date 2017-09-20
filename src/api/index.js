@@ -1,4 +1,3 @@
-import gql from 'graphql-tag';
 import { abbreviateNumber } from 'utils';
 
 // These keys are for development purposes and do not represent the actual application keys.
@@ -63,7 +62,7 @@ const accessTokenParametersGraphQL = (accessToken, query, variables) => ({
   },
   body: JSON.stringify({
     query: query.replace(/\n/g, ''),
-    variables: variables,
+    variables,
   }),
 });
 
@@ -186,23 +185,20 @@ export async function fetchUserOrgs(user, accessToken) {
 
   const response = await fetch(
     GRAPHQL_ENDPOINT,
-    accessTokenParametersGraphQL(accessToken, getOrganizationsQuery, {login: user})
+    accessTokenParametersGraphQL(accessToken, getOrganizationsQuery, {
+      login: user,
+    })
   );
 
   return response.json().then(data => {
-    let orgs = [];
-    data.data.user.organizations.edges.reduce(
-      (key, item) => {
-        orgs.push(item.node)
-      }
+    const orgs = [];
+
+    data.data.user.organizations.edges.reduce((key, item) =>
+      orgs.push(item.node)
     );
 
-    return orgs.sort(
-      (org1, org2) => org1.name > org2.name
-    );
+    return orgs.sort((org1, org2) => org1.name > org2.name);
   });
-
-
 }
 
 export async function fetchUserEvents(user, accessToken) {

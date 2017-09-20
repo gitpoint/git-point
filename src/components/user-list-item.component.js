@@ -72,6 +72,7 @@ class UserListItemComponent extends Component {
     subtitle: string,
     onlyImageNavigate: boolean,
     titleStyle: Object,
+    imageUrl: string,
     navigation: Object,
     icon: string,
     iconAction: Function,
@@ -85,13 +86,13 @@ class UserListItemComponent extends Component {
       title,
       subtitle,
       titleStyle,
+      imageUrl,
       onlyImageNavigate,
       navigation,
       icon,
       noBorderBottom,
       iconAction,
       authUser,
-      imageUrl
     } = this.props;
 
     const ContainerComponent =

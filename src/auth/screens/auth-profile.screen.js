@@ -170,6 +170,7 @@ class AuthProfile extends Component {
                     user={item}
                     key={item.id}
                     imageUrl={item.avatarUrl}
+                    title={item.name}
                     navigation={navigation}
                   />
                 )}
