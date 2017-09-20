@@ -1,5 +1,7 @@
+/* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
   StyleSheet,
   ActivityIndicator,
@@ -20,7 +22,13 @@ import {
 } from 'components';
 import { emojifyText, translate } from 'utils';
 import { colors, fonts } from 'config';
-import { getUserInfo, getStarCount, getIsFollowing, getIsFollower, changeFollowStatus } from '../user.action';
+import {
+  getUserInfo,
+  getStarCount,
+  getIsFollowing,
+  getIsFollower,
+  changeFollowStatus,
+} from '../user.action';
 
 const mapStateToProps = state => ({
   auth: state.auth.user,
@@ -37,14 +45,17 @@ const mapStateToProps = state => ({
   isPendingCheckFollower: state.user.isPendingCheckFollower,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getUserInfoByDispatch: user => dispatch(getUserInfo(user)),
-  getUserStarCountByDispatch: user => dispatch(getStarCount(user)),
-  getIsFollowingByDispatch: (user, auth) => dispatch(getIsFollowing(user, auth)),
-  getIsFollowerByDispatch: (user, auth) => dispatch(getIsFollower(user, auth)),
-  changeFollowStatusByDispatch: (user, isFollowing) =>
-    dispatch(changeFollowStatus(user, isFollowing)),
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getUserInfo,
+      getStarCount,
+      getIsFollowing,
+      getIsFollower,
+      changeFollowStatus,
+    },
+    dispatch
+  );
 
 const styles = StyleSheet.create({
   listTitle: {
@@ -59,11 +70,11 @@ const styles = StyleSheet.create({
 
 class Profile extends Component {
   props: {
-    getUserInfoByDispatch: Function,
-    getUserStarCountByDispatch: Function,
-    getIsFollowingByDispatch: Function,
-    getIsFollowerByDispatch: Function,
-    changeFollowStatusByDispatch: Function,
+    getUserInfo: Function,
+    getStarCount: Function,
+    getIsFollowing: Function,
+    getIsFollower: Function,
+    changeFollowStatus: Function,
     auth: Object,
     user: Object,
     orgs: Array,
@@ -94,10 +105,10 @@ class Profile extends Component {
     const user = this.props.navigation.state.params.user;
     const auth = this.props.auth;
 
-    this.props.getUserInfoByDispatch(user.login);
-    this.props.getUserStarCountByDispatch(user.login);
-    this.props.getIsFollowingByDispatch(user.login, auth.login);
-    this.props.getIsFollowerByDispatch(user.login, auth.login);
+    this.props.getUserInfo(user.login);
+    this.props.getStarCount(user.login);
+    this.props.getIsFollowing(user.login, auth.login);
+    this.props.getIsFollower(user.login, auth.login);
   }
 
   getUserInfo = () => {
@@ -107,10 +118,10 @@ class Profile extends Component {
     const auth = this.props.auth;
 
     Promise.all([
-      this.props.getUserInfoByDispatch(user.login),
-      this.props.getUserStarCountByDispatch(user.login),
-      this.props.getIsFollowingByDispatch(user.login, auth.login),
-      this.props.getIsFollowerByDispatch(user.login, auth.login),
+      this.props.getUserInfo(user.login),
+      this.props.getStarCount(user.login),
+      this.props.getIsFollowing(user.login, auth.login),
+      this.props.getIsFollower(user.login, auth.login),
     ]).then(() => {
       this.setState({ refreshing: false });
     });
@@ -121,10 +132,10 @@ class Profile extends Component {
   };
 
   handlePress = index => {
-    const { user, isFollowing, changeFollowStatusByDispatch } = this.props;
+    const { user, isFollowing, changeFollowStatus } = this.props;
 
     if (index === 0) {
-      changeFollowStatusByDispatch(user.login, isFollowing);
+      changeFollowStatus(user.login, isFollowing);
     }
   };
 
@@ -155,13 +166,11 @@ class Profile extends Component {
     return (
       <ViewContainer>
         <ParallaxScroll
-          renderContent={() =>
+          renderContent={() => (
             <UserProfile
               type="user"
               initialUser={initialUser}
-              starCount={
-                isPendingStarCount ? '' : starCount
-              }
+              starCount={isPendingStarCount ? '' : starCount}
               isFollowing={
                 isPendingUser || isPendingCheckFollowing ? false : isFollowing
               }
@@ -171,7 +180,8 @@ class Profile extends Component {
               user={initialUser.login === user.login ? user : {}}
               language={language}
               navigation={navigation}
-            />}
+            />
+          )}
           refreshControl={
             <RefreshControl
               refreshing={refreshing}
@@ -188,42 +198,45 @@ class Profile extends Component {
           navigateBack
           navigation={navigation}
         >
-          {isPending &&
+          {isPending && (
             <ActivityIndicator
               animating={isPending}
               style={{ height: Dimensions.get('window').height / 3 }}
               size="large"
-            />}
+            />
+          )}
 
           {!isPending &&
-            initialUser.login === user.login &&
-            <View>
-              {!!user.bio &&
-                user.bio !== '' &&
-                <SectionList title={translate('common.bio', language)}>
-                  <ListItem
-                    subtitle={emojifyText(user.bio)}
-                    subtitleStyle={styles.listSubTitle}
-                    hideChevron
-                  />
-                </SectionList>}
+            initialUser.login === user.login && (
+              <View>
+                {!!user.bio &&
+                  user.bio !== '' && (
+                    <SectionList title={translate('common.bio', language)}>
+                      <ListItem
+                        subtitle={emojifyText(user.bio)}
+                        subtitleStyle={styles.listSubTitle}
+                        hideChevron
+                      />
+                    </SectionList>
+                  )}
 
-              <EntityInfo entity={user} orgs={orgs} navigation={navigation} />
+                <EntityInfo entity={user} orgs={orgs} navigation={navigation} />
 
-              <SectionList
-                title={translate('common.orgs', language)}
-                noItems={orgs.length === 0}
-                noItemsMessage={translate('common.noOrgsMessage', language)}
-              >
-                {orgs.map(item =>
-                  <UserListItem
-                    key={item.id}
-                    user={item}
-                    navigation={navigation}
-                  />
-                )}
-              </SectionList>
-            </View>}
+                <SectionList
+                  title={translate('common.orgs', language)}
+                  noItems={orgs.length === 0}
+                  noItemsMessage={translate('common.noOrgsMessage', language)}
+                >
+                  {orgs.map(item => (
+                    <UserListItem
+                      key={item.id}
+                      user={item}
+                      navigation={navigation}
+                    />
+                  ))}
+                </SectionList>
+              </View>
+            )}
         </ParallaxScroll>
 
         <ActionSheet

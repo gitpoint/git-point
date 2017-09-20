@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import { MarkdownWebView, ViewContainer, LoadingContainer } from 'components';
 import { normalize } from 'config';
@@ -11,9 +12,9 @@ const mapStateToProps = state => ({
   isPendingReadMe: state.repository.isPendingReadMe,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getReadMeByDispatch: (user, repoName) => dispatch(getReadMe(user, repoName)),
-});
+const mapDispatchToProps = dispatch => bindActionCreators({
+  getReadMe,
+}, dispatch);
 
 const styles = StyleSheet.create({
   textContainer: {
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
 
 class ReadMe extends Component {
   props: {
-    getReadMeByDispatch: Function,
+    getReadMe: Function,
     readMe: string,
     isPendingReadMe: boolean,
     navigation: Object,
@@ -38,7 +39,7 @@ class ReadMe extends Component {
   componentDidMount() {
     const repo = this.props.navigation.state.params.repository;
 
-    this.props.getReadMeByDispatch(repo.owner.login, repo.name);
+    this.props.getReadMe(repo.owner.login, repo.name);
   }
 
   isJsonString = str => {

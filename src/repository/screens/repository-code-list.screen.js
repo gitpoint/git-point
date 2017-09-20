@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { StyleSheet, FlatList, View, Text } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
@@ -13,9 +14,9 @@ const mapStateToProps = state => ({
   isPendingContents: state.repository.isPendingContents,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getContentsByDispatch: (url, level) => dispatch(getContents(url, level)),
-});
+const mapDispatchToProps = dispatch => bindActionCreators({
+  getContents,
+}, dispatch);
 
 const styles = StyleSheet.create({
   title: {
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
 
 class RepositoryCodeList extends Component {
   props: {
-    getContentsByDispatch: Function,
+    getContents: Function,
     repository: Object,
     contents: Array,
     isPendingContents: boolean,
@@ -55,7 +56,7 @@ class RepositoryCodeList extends Component {
       ? 'top'
       : navigationParams.content.name;
 
-    this.props.getContentsByDispatch(url, level);
+    this.props.getContents(url, level);
   }
 
   sortedContents = contents => {

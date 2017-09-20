@@ -1,5 +1,7 @@
+/* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
   FlatList,
   View,
@@ -32,12 +34,8 @@ const mapStateToProps = state => ({
   isPendingSearchClosedPulls: state.repository.isPendingSearchClosedPulls,
 });
 
-const mapDispatchToProps = dispatch => ({
-  searchOpenRepoPullsByDispatch: (query, repo) =>
-    dispatch(searchOpenRepoPulls(query, repo)),
-  searchClosedRepoPullsByDispatch: (query, repo) =>
-    dispatch(searchClosedRepoPulls(query, repo)),
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ searchOpenRepoPulls, searchClosedRepoPulls }, dispatch);
 
 const styles = StyleSheet.create({
   header: {
@@ -104,8 +102,8 @@ class PullList extends Component {
     searchedClosedPulls: Array,
     isPendingSearchOpenPulls: boolean,
     isPendingSearchClosedPulls: boolean,
-    searchOpenRepoPullsByDispatch: Function,
-    searchClosedRepoPullsByDispatch: Function,
+    searchOpenRepoPulls: Function,
+    searchClosedRepoPulls: Function,
     navigation: Object,
   };
 
@@ -164,8 +162,8 @@ class PullList extends Component {
 
   search(query, selectedType = null) {
     const {
-      searchOpenRepoPullsByDispatch,
-      searchClosedRepoPullsByDispatch,
+      searchOpenRepoPulls,
+      searchClosedRepoPulls,
       repository,
     } = this.props;
 
@@ -179,9 +177,9 @@ class PullList extends Component {
       });
 
       if (selectedSearchType === 0) {
-        searchOpenRepoPullsByDispatch(query, repository.full_name);
+        searchOpenRepoPulls(query, repository.full_name);
       } else {
-        searchClosedRepoPullsByDispatch(query, repository.full_name);
+        searchClosedRepoPulls(query, repository.full_name);
       }
     }
   }
@@ -190,13 +188,14 @@ class PullList extends Component {
     return item.id;
   };
 
-  renderItem = ({ item }) =>
+  renderItem = ({ item }) => (
     <IssueListItem
       type={this.props.navigation.state.params.type}
       issue={item}
       navigation={this.props.navigation}
       language={this.props.language}
-    />;
+    />
+  );
 
   render() {
     const {
@@ -242,26 +241,36 @@ class PullList extends Component {
         </View>
 
         {isPendingSearchOpenPulls &&
-          searchType === 0 &&
-          <LoadingContainer
-            animating={isPendingSearchOpenPulls && searchType === 0}
-            text={translate('repository.pullList.searchingMessage', language, {
-              query,
-            })}
-            style={styles.marginSpacing}
-          />}
+          searchType === 0 && (
+            <LoadingContainer
+              animating={isPendingSearchOpenPulls && searchType === 0}
+              text={translate(
+                'repository.pullList.searchingMessage',
+                language,
+                {
+                  query,
+                }
+              )}
+              style={styles.marginSpacing}
+            />
+          )}
 
         {isPendingSearchClosedPulls &&
-          searchType === 1 &&
-          <LoadingContainer
-            animating={isPendingSearchClosedPulls && searchType === 1}
-            text={translate('repository.pullList.searchingMessage', language, {
-              query,
-            })}
-            style={styles.marginSpacing}
-          />}
+          searchType === 1 && (
+            <LoadingContainer
+              animating={isPendingSearchClosedPulls && searchType === 1}
+              text={translate(
+                'repository.pullList.searchingMessage',
+                language,
+                {
+                  query,
+                }
+              )}
+              style={styles.marginSpacing}
+            />
+          )}
 
-        {this.getList().length > 0 &&
+        {this.getList().length > 0 && (
           <FlatList
             ref={ref => {
               this.pullList = ref;
@@ -270,27 +279,30 @@ class PullList extends Component {
             data={this.getList()}
             keyExtractor={this.keyExtractor}
             renderItem={this.renderItem}
-          />}
+          />
+        )}
 
         {searchStart &&
           !isPendingSearchOpenPulls &&
           searchedOpenPulls.length === 0 &&
-          searchType === 0 &&
-          <View style={styles.marginSpacing}>
-            <Text style={styles.searchTitle}>
-              {translate('repository.pullList.noOpenPulls', language)}
-            </Text>
-          </View>}
+          searchType === 0 && (
+            <View style={styles.marginSpacing}>
+              <Text style={styles.searchTitle}>
+                {translate('repository.pullList.noOpenPulls', language)}
+              </Text>
+            </View>
+          )}
 
         {searchStart &&
           !isPendingSearchClosedPulls &&
           searchedClosedPulls.length === 0 &&
-          searchType === 1 &&
-          <View style={styles.marginSpacing}>
-            <Text style={styles.searchTitle}>
-              {translate('repository.pullList.noOpenPulls', language)}
-            </Text>
-          </View>}
+          searchType === 1 && (
+            <View style={styles.marginSpacing}>
+              <Text style={styles.searchTitle}>
+                {translate('repository.pullList.noOpenPulls', language)}
+              </Text>
+            </View>
+          )}
       </ViewContainer>
     );
   }

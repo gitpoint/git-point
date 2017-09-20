@@ -1,5 +1,7 @@
+/* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
   ScrollView,
   StyleSheet,
@@ -22,10 +24,14 @@ const mapStateToProps = state => ({
   language: state.auth.language,
 });
 
-const mapDispatchToProps = dispatch => ({
-  signOutByDispatch: () => dispatch(signOut()),
-  changeLanguageByDispatch: lang => dispatch(changeLanguage(lang)),
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      signOut,
+      changeLanguage,
+    },
+    dispatch
+  );
 
 const styles = StyleSheet.create({
   listTitle: {
@@ -65,8 +71,8 @@ const updateText = lang => ({
 class UserOptions extends Component {
   props: {
     language: string,
-    changeLanguageByDispatch: () => void,
-    signOutByDispatch: () => void,
+    changeLanguage: () => void,
+    signOut: () => void,
     navigation: Object,
   };
 
@@ -118,9 +124,9 @@ class UserOptions extends Component {
   };
 
   signOutUser() {
-    const { signOutByDispatch, navigation } = this.props;
+    const { signOut, navigation } = this.props;
 
-    signOutByDispatch().then(() => {
+    signOut().then(() => {
       const url = 'https://github.com/logout';
 
       openURLInView(url);
@@ -129,7 +135,7 @@ class UserOptions extends Component {
   }
 
   render() {
-    const { language, changeLanguageByDispatch, navigation } = this.props;
+    const { language, changeLanguage, navigation } = this.props;
 
     return (
       <ViewContainer>
@@ -137,15 +143,16 @@ class UserOptions extends Component {
           <SectionList title={translate('auth.userOptions.language', language)}>
             <FlatList
               data={languages}
-              renderItem={({ item }) =>
+              renderItem={({ item }) => (
                 <ListItem
                   title={item.name}
                   titleStyle={styles.listTitle}
                   hideChevron={language !== item.code}
                   rightIcon={{ name: 'check' }}
-                  onPress={() => changeLanguageByDispatch(item.code)}
+                  onPress={() => changeLanguage(item.code)}
                   underlayColor={colors.greyLight}
-                />}
+                />
+              )}
               keyExtractor={(item, index) => index}
               extraData={this.props.language}
             />
@@ -173,9 +180,7 @@ class UserOptions extends Component {
           </SectionList>
 
           <TouchableOpacity style={styles.update} onPress={this.checkForUpdate}>
-            <Text style={styles.updateText}>
-              GitPoint v{version}
-            </Text>
+            <Text style={styles.updateText}>GitPoint v{version}</Text>
             <Text style={[styles.updateText, styles.updateTextSub]}>
               {this.state.updateText}
             </Text>
