@@ -191,13 +191,11 @@ export async function fetchUserOrgs(user, accessToken) {
   );
 
   return response.json().then(data => {
-    const orgs = [];
-
-    data.data.user.organizations.edges.reduce((key, item) =>
-      orgs.push(item.node)
-    );
-
-    return orgs.sort((org1, org2) => org1.name > org2.name);
+    return data.data.user.organizations.edges
+      .map(item => item.node)
+      .sort((org1, org2) =>
+        org1.name.toLowerCase().localeCompare(org2.name.toLowerCase())
+      );
   });
 }
 
