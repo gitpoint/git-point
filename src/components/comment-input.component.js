@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     padding: 10,
-    marginLeft: 5,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -31,7 +30,6 @@ const styles = StyleSheet.create({
   textInput: {
     fontSize: normalize(12),
     flex: 1,
-    marginLeft: 15,
     marginRight: 5,
     color: colors.black,
     ...fonts.fontPrimaryLight,
@@ -40,11 +38,6 @@ const styles = StyleSheet.create({
     flex: 0.15,
     alignItems: 'flex-end',
     justifyContent: 'center',
-  },
-  postButton: {
-    fontSize: normalize(12),
-    letterSpacing: 1,
-    ...fonts.fontPrimarySemiBold,
   },
   postButtonDisabled: {
     color: colors.grey,
@@ -109,8 +102,6 @@ export class CommentInput extends Component {
           users={users}
         />
         <View style={styles.wrapper}>
-          <Icon name="send" color={colors.grey} />
-
           {userCanPost &&
             <TextInput
               underlineColorAndroid={'transparent'}
@@ -139,25 +130,23 @@ export class CommentInput extends Component {
               {translate('issue.main.lockedIssue', language)}
             </Text>}
 
-          {!this.props.issueLocked &&
+          {userCanPost &&
             <TouchableOpacity
               disabled={this.state.text === ''}
               style={styles.postButtonContainer}
               onPress={() => this.handleSubmit(this.state.text)}
             >
-              <Text
-                style={[
-                  styles.postButton,
+              <Icon
+                name="send"
+                iconStyle={
                   this.state.text === ''
                     ? styles.postButtonDisabled
-                    : styles.postButtonEnabled,
-                ]}
-              >
-                {translate('issue.main.commentButton', language)}
-              </Text>
+                    : styles.postButtonEnabled
+                }
+              />
             </TouchableOpacity>}
 
-          {this.props.issueLocked &&
+          {!userCanPost && this.props.issueLocked &&
             <View style={styles.postButtonContainer}>
               <Icon name="lock" type="octicon" color={colors.grey} />
             </View>}

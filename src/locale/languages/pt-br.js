@@ -251,7 +251,6 @@ export const ptBr = {
       noDescription: 'Nenhuma descrição fornecida.',
       lockedCommentInput: 'Trancada, mas você ainda pode comentar...',
       commentInput: 'Adicionar um comentário...',
-      commentButton: 'Postar',
       lockedIssue: 'A issue está trancada',
       states: {
         open: 'Aberta',
