@@ -27,7 +27,8 @@ import {
   FOLLOWERS,
 } from './user.type';
 
-import { CALL_API, Schemas } from '../api/api.middleware';
+import { CALL_API } from '../api/api.middleware';
+import { Schemas } from '../api/api.schema';
 
 const getUser = user => {
   return (dispatch, getState) => {

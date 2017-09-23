@@ -35,7 +35,8 @@ import {
   STARGAZERS,
 } from './repository.type';
 
-import { CALL_API, Schemas } from '../api/api.middleware';
+import { CALL_API } from '../api/api.middleware';
+import { Schemas } from '../api/api.schema';
 
 export const getRepository = url => {
   return (dispatch, getState) => {

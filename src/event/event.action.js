@@ -1,8 +1,8 @@
 import has from 'lodash/has';
 
 import { EVENTS } from './event.type';
-
-import { CALL_API, Schemas } from '../api/api.middleware';
+import { Schemas } from './../api/api.schema';
+import { CALL_API } from '../api/api.middleware';
 
 /** NEW API */
 
@@ -19,8 +19,6 @@ export const loadEvents = (login, requiredFields = []) => (
   getState
 ) => {
   const event = getState().entities.events[login];
-
-  console.log(EVENTS);
 
   if (event && requiredFields.every(key => has(event, key))) {
     return null;
