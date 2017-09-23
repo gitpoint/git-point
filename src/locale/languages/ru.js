@@ -130,7 +130,7 @@ export const ru = {
   },
   user: {
     profile: {
-      userActions: 'Действия пользователя',
+      userActions: 'Действия с пользователем',
       unfollow: 'Отписаться',
       follow: 'Следить',
     },
@@ -156,7 +156,7 @@ export const ru = {
       starAction: 'Отметить',
       unstarAction: 'Снять отметку',
       shareAction: 'Поделиться',
-      unwatchAction: 'Перестать следить',
+      unwatchAction: 'Перестать наблюдать',
       watchAction: 'Следить',
       ownerTitle: 'ВЛАДЕЛЕЦ',
       contributorsTitle: 'УЧАСТНИКИ',
@@ -175,8 +175,9 @@ export const ru = {
       starsTitle: 'Звёзд',
       forksTitle: 'Форков',
       forkedFromMessage: 'склонировано от',
-      starred: 'Отмечен вами',
-      watching: 'Следите за ним',
+      starred: 'Отмечено',
+      watching: 'Наблюдаю',
+      watchers: 'Наблюдателей',
     },
     codeList: {
       title: 'Код',
@@ -200,8 +201,8 @@ export const ru = {
     pullDiff: {
       title: 'Сравнить изменения',
       numFilesChanged: '{{numFilesChanged}} файлов',
-      new: 'НОВЫХ',
-      deleted: 'УДАЛЕННЫХ',
+      new: 'НОВЫЙ',
+      deleted: 'УДАЛЕННЫЙ',
       fileRenamed: 'Файл переименован без каких-либо изменений',
     },
   },
@@ -215,8 +216,8 @@ export const ru = {
     settings: {
       title: 'Настройки',
       pullRequestType: 'Pull-запросы',
-      issueType: 'Задачи',
-      applyLabelButton: 'Применить ярлык',
+      issueType: 'задачу',
+      applyLabelButton: 'Добавить ярлык',
       noneMessage: 'Пока нет',
       labelsTitle: 'ЯРЛЫКИ',
       assignYourselfButton: 'Назначить на самого себя',
@@ -227,7 +228,7 @@ export const ru = {
       closeIssue: 'Закрыть {{issueType}}',
       reopenIssue: 'Открыть снова {{issueType}}',
       areYouSurePrompt: 'Вы уверены?',
-      applyLabelTitle: 'Применить ярлык к этой задаче',
+      applyLabelTitle: 'Добавить ярлык к этой задаче',
     },
     main: {
       assignees: 'Ответственные',
@@ -282,7 +283,7 @@ export const ru = {
     website: 'Сайт',
     repositories: 'Репозиториев',
     followers: 'Подписчиков',
-    following: 'Подписок',
+    following: 'Подписан',
     pullRequest: 'pull-запрос',
     issue: 'задача',
     cancel: 'Отменить',
@@ -304,7 +305,7 @@ export const ru = {
       yy: '%d г',
     },
     abbreviations: {
-      thousand: 'тыс.',
+      thousand: ' тыс.',
     },
   },
 };

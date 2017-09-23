@@ -23,8 +23,6 @@ import { translate } from 'utils';
 import { colors, fonts } from 'config';
 import {
   getRepositoryInfo,
-  getContributors,
-  getIssues,
   changeStarStatusRepo,
   forkRepo,
   subscribeToRepo,
@@ -40,9 +38,11 @@ const mapStateToProps = state => ({
   starred: state.repository.starred,
   forked: state.repository.forked,
   subscribed: state.repository.subscribed,
+  hasReadMe: state.repository.hasReadMe,
   isPendingRepository: state.repository.isPendingRepository,
   isPendingContributors: state.repository.isPendingContributors,
   isPendingIssues: state.repository.isPendingIssues,
+  isPendingCheckReadMe: state.repository.isPendingCheckReadMe,
   isPendingCheckStarred: state.repository.isPendingCheckStarred,
   isPendingFork: state.repository.isPendingFork,
   isPendingSubscribe: state.repository.isPendingSubscribe,
@@ -52,8 +52,6 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getRepositoryInfo,
-      getContributors,
-      getIssues,
       changeStarStatusRepo,
       forkRepo,
       subscribeToRepo,
@@ -71,19 +69,19 @@ const styles = StyleSheet.create({
 
 class Repository extends Component {
   props: {
-    // selectRepositoryByDispatch: Function,
     getRepositoryInfo: Function,
-    // getIssuesByDispatch: Function,
     changeStarStatusRepo: Function,
     forkRepo: Function,
     // repositoryName: string,
     repository: Object,
     contributors: Array,
+    hasReadMe: boolean,
     issues: Array,
     starred: boolean,
     // forked: boolean,
     isPendingRepository: boolean,
     isPendingContributors: boolean,
+    isPendingCheckReadMe: boolean,
     isPendingIssues: boolean,
     isPendingCheckStarred: boolean,
     isPendingFork: boolean,
@@ -189,11 +187,13 @@ class Repository extends Component {
     const {
       repository,
       contributors,
+      hasReadMe,
       issues,
       starred,
       language,
       isPendingRepository,
       isPendingContributors,
+      isPendingCheckReadMe,
       isPendingIssues,
       isPendingCheckStarred,
       isPendingFork,
@@ -239,6 +239,8 @@ class Repository extends Component {
       isPendingRepository || isPendingSubscribe ? false : subscribed;
     const isStarred =
       isPendingRepository || isPendingCheckStarred ? false : starred;
+
+    const showReadMe = !isPendingCheckReadMe && hasReadMe;
 
     return (
       <ViewContainer>
@@ -326,7 +328,7 @@ class Repository extends Component {
           <SectionList
             title={translate('repository.main.sourceTitle', language)}
           >
-            <ListItem
+            {showReadMe && <ListItem
               title={translate('repository.main.readMe', language)}
               leftIcon={{
                 name: 'book',
@@ -339,7 +341,7 @@ class Repository extends Component {
                   repository,
                 })}
               underlayColor={colors.greyLight}
-            />
+            />}
             <ListItem
               title={translate('repository.main.viewSource', language)}
               titleStyle={styles.listTitle}
