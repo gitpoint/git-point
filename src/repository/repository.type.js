@@ -9,9 +9,7 @@ export const GET_REPOSITORY_CONTENTS = createActionSet(
 );
 export const GET_REPOSITORY_FILE = createActionSet('GET_REPOSITORY_FILE');
 export const GET_REPOSITORY_ISSUES = createActionSet('GET_REPOSITORY_ISSUES');
-export const GET_REPO_README_STATUS = createActionSet(
-  'GET_REPO_README_STATUS'
-);
+export const GET_REPO_README_STATUS = createActionSet('GET_REPO_README_STATUS');
 export const GET_REPO_STARRED_STATUS = createActionSet(
   'GET_REPO_STARRED_STATUS'
 );
@@ -26,3 +24,6 @@ export const SEARCH_CLOSED_PULLS = createActionSet('SEARCH_CLOSED_PULLS');
 export const GET_REPOSITORY_SUBSCRIBED_STATUS = createActionSet(
   'GET_REPOSITORY_SUBSCRIBED_STATUS'
 );
+
+export const REPO = createActionSet('REPO');
+export const STARGAZERS = createActionSet('STARGAZERS');

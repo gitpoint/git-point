@@ -6,8 +6,12 @@ import { organizationReducer } from 'organization';
 import { issueReducer } from 'issue';
 import { searchReducer } from 'search';
 import { notificationsReducer } from 'notifications';
+import { entities, errorMessage, pagination } from './src/api/api.reducer';
 
 export const rootReducer = combineReducers({
+  entities,
+  errorMessage,
+  pagination,
   auth: authReducer,
   user: userReducer,
   repository: repositoryReducer,

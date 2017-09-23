@@ -8,9 +8,9 @@ import queryString from 'query-string';
 
 import { ViewContainer, LoadingContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
-import { CLIENT_ID } from 'api';
 import { auth } from 'auth';
 import { openURLInView, translate } from 'utils';
+import { CLIENT_ID } from '../../api/api.client';
 
 const stateRandom = Math.random().toString();
 

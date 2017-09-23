@@ -25,27 +25,40 @@ import {
   forkRepo,
   subscribeToRepo,
   unSubscribeToRepo,
+  // new api
+  loadRepo,
 } from '../repository.action';
 
-const mapStateToProps = state => ({
-  username: state.auth.user.login,
-  language: state.auth.language,
-  repository: state.repository.repository,
-  contributors: state.repository.contributors,
-  issues: state.repository.issues,
-  starred: state.repository.starred,
-  forked: state.repository.forked,
-  subscribed: state.repository.subscribed,
-  hasReadMe: state.repository.hasReadMe,
-  isPendingRepository: state.repository.isPendingRepository,
-  isPendingContributors: state.repository.isPendingContributors,
-  isPendingIssues: state.repository.isPendingIssues,
-  isPendingCheckReadMe: state.repository.isPendingCheckReadMe,
-  isPendingCheckStarred: state.repository.isPendingCheckStarred,
-  isPendingFork: state.repository.isPendingFork,
-  isPendingSubscribe: state.repository.isPendingSubscribe,
-});
+const loadData = ({ name, loadRepo }) => {
+  loadRepo(name);
+};
 
+const mapStateToProps = (state, ownProps) => {
+  const name = ownProps.navigation.state.params.name.toLowerCase();
+  const { entities: { repos } } = state;
+
+  return {
+    username: state.auth.user.login,
+    language: state.auth.language,
+    name,
+    repository: repos[name],
+    contributors: state.repository.contributors,
+    issues: state.repository.issues,
+    starred: state.repository.starred,
+    forked: state.repository.forked,
+    subscribed: state.repository.subscribed,
+    hasReadMe: state.repository.hasReadMe,
+    isPendingRepository: state.repository.isPendingRepository,
+    isPendingContributors: state.repository.isPendingContributors,
+    isPendingIssues: state.repository.isPendingIssues,
+    isPendingCheckReadMe: state.repository.isPendingCheckReadMe,
+    isPendingCheckStarred: state.repository.isPendingCheckStarred,
+    isPendingFork: state.repository.isPendingFork,
+    isPendingSubscribe: state.repository.isPendingSubscribe,
+  };
+};
+
+/*
 const mapDispatchToProps = dispatch => ({
   getRepositoryInfoByDispatch: url => dispatch(getRepositoryInfo(url)),
   changeStarStatusRepoByDispatch: (owner, repo, starred) =>
@@ -53,7 +66,7 @@ const mapDispatchToProps = dispatch => ({
   forkRepoByDispatch: (owner, repo) => dispatch(forkRepo(owner, repo)),
   subscribeToRepo: (owner, repo) => dispatch(subscribeToRepo(owner, repo)),
   unSubscribeToRepo: (owner, repo) => dispatch(unSubscribeToRepo(owner, repo)),
-});
+});*/
 
 const styles = StyleSheet.create({
   listTitle: {
@@ -64,9 +77,10 @@ const styles = StyleSheet.create({
 
 class Repository extends Component {
   props: {
-    getRepositoryInfoByDispatch: Function,
+    name: String,
+    /*    getRepositoryInfoByDispatch: Function,
     changeStarStatusRepoByDispatch: Function,
-    forkRepoByDispatch: Function,
+    forkRepoByDispatch: Function, */
     // repositoryName: string,
     repository: Object,
     contributors: Array,
@@ -107,7 +121,8 @@ class Repository extends Component {
       repositoryUrl: repoUrl,
     } = this.props.navigation.state.params;
 
-    this.props.getRepositoryInfoByDispatch(repo ? repo.url : repoUrl);
+    loadData(this.props);
+    //this.props.getRepositoryInfoByDispatch(repo ? repo.url : repoUrl);
   }
 
   showMenuActionSheet = () => {
@@ -119,8 +134,8 @@ class Repository extends Component {
       starred,
       subscribed,
       repository,
-      changeStarStatusRepoByDispatch,
-      forkRepoByDispatch,
+      //  changeStarStatusRepoByDispatch,
+      // forkRepoByDispatch,
       navigation,
       username,
     } = this.props;
@@ -155,11 +170,10 @@ class Repository extends Component {
     } = this.props.navigation.state.params;
 
     this.setState({ refreshing: true });
-    this.props
-      .getRepositoryInfoByDispatch(repo ? repo.url : repoUrl)
-      .then(() => {
+    loadData(this.props);
+    /*.then(() => {
         this.setState({ refreshing: false });
-      });
+      });*/
   };
 
   shareRepository = repository => {
@@ -277,27 +291,25 @@ class Repository extends Component {
           navigateBack
         >
           {initalRepository &&
-          !initalRepository.owner &&
-          isPendingRepository && (
+            !initalRepository.owner &&
+            isPendingRepository &&
             <SectionList
               title={translate('repository.main.ownerTitle', language)}
             >
               <LoadingUserListItem />
-            </SectionList>
-          )}
+            </SectionList>}
 
           {!(initalRepository && initalRepository.owner) &&
-          (repository && repository.owner) &&
-          !isPendingRepository && (
+            (repository && repository.owner) &&
+            !isPendingRepository &&
             <SectionList
               title={translate('repository.main.ownerTitle', language)}
             >
               <UserListItem user={repository.owner} navigation={navigation} />
-            </SectionList>
-          )}
+            </SectionList>}
 
           {initalRepository &&
-          initalRepository.owner && (
+            initalRepository.owner &&
             <SectionList
               title={translate('repository.main.ownerTitle', language)}
             >
@@ -305,16 +317,14 @@ class Repository extends Component {
                 user={initalRepository.owner}
                 navigation={navigation}
               />
-            </SectionList>
-          )}
+            </SectionList>}
 
-          {(isPendingRepository || isPendingContributors) && (
+          {(isPendingRepository || isPendingContributors) &&
             <LoadingMembersList
               title={translate('repository.main.contributorsTitle', language)}
-            />
-          )}
+            />}
 
-          {!isPendingContributors && (
+          {!isPendingContributors &&
             <MembersList
               title={translate('repository.main.contributorsTitle', language)}
               members={contributors}
@@ -323,26 +333,26 @@ class Repository extends Component {
                 language
               )}
               navigation={navigation}
-            />
-          )}
+            />}
 
           <SectionList
             title={translate('repository.main.sourceTitle', language)}
           >
-            {showReadMe && <ListItem
-              title={translate('repository.main.readMe', language)}
-              leftIcon={{
-                name: 'book',
-                color: colors.grey,
-                type: 'octicon',
-              }}
-              titleStyle={styles.listTitle}
-              onPress={() =>
-                navigation.navigate('ReadMe', {
-                  repository,
-                })}
-              underlayColor={colors.greyLight}
-            />}
+            {showReadMe &&
+              <ListItem
+                title={translate('repository.main.readMe', language)}
+                leftIcon={{
+                  name: 'book',
+                  color: colors.grey,
+                  type: 'octicon',
+                }}
+                titleStyle={styles.listTitle}
+                onPress={() =>
+                  navigation.navigate('ReadMe', {
+                    repository,
+                  })}
+                underlayColor={colors.greyLight}
+              />}
             <ListItem
               title={translate('repository.main.viewSource', language)}
               titleStyle={styles.listTitle}
@@ -361,25 +371,21 @@ class Repository extends Component {
           </SectionList>
 
           {!repository.fork &&
-          repository.has_issues && (
+            repository.has_issues &&
             <SectionList
               loading={isPendingIssues}
               title={translate('repository.main.issuesTitle', language)}
               noItems={openIssues.length === 0}
               noItemsMessage={
-                pureIssues.length === 0 ? (
-                  translate('repository.main.noIssuesMessage', language)
-                ) : (
-                  translate('repository.main.noOpenIssuesMessage', language)
-                )
+                pureIssues.length === 0
+                  ? translate('repository.main.noIssuesMessage', language)
+                  : translate('repository.main.noOpenIssuesMessage', language)
               }
               showButton
               buttonTitle={
-                pureIssues.length > 0 ? (
-                  translate('repository.main.viewAllButton', language)
-                ) : (
-                  translate('repository.main.newIssueButton', language)
-                )
+                pureIssues.length > 0
+                  ? translate('repository.main.viewAllButton', language)
+                  : translate('repository.main.newIssueButton', language)
               }
               buttonAction={() => {
                 if (pureIssues.length > 0) {
@@ -397,7 +403,7 @@ class Repository extends Component {
             >
               {openIssues
                 .slice(0, 3)
-                .map(item => (
+                .map(item =>
                   <IssueListItem
                     key={item.id}
                     type="issue"
@@ -405,20 +411,20 @@ class Repository extends Component {
                     navigation={navigation}
                     language={language}
                   />
-                ))}
-            </SectionList>
-          )}
+                )}
+            </SectionList>}
 
           <SectionList
             loading={isPendingIssues}
             title={translate('repository.main.pullRequestTitle', language)}
             noItems={openPulls.length === 0}
             noItemsMessage={
-              pulls.length === 0 ? (
-                translate('repository.main.noPullRequestsMessage', language)
-              ) : (
-                translate('repository.main.noOpenPullRequestsMessage', language)
-              )
+              pulls.length === 0
+                ? translate('repository.main.noPullRequestsMessage', language)
+                : translate(
+                    'repository.main.noOpenPullRequestsMessage',
+                    language
+                  )
             }
             showButton={pulls.length > 0}
             buttonTitle={translate('repository.main.viewAllButton', language)}
@@ -431,7 +437,7 @@ class Repository extends Component {
           >
             {openPulls
               .slice(0, 3)
-              .map(item => (
+              .map(item =>
                 <IssueListItem
                   key={item.id}
                   type="pull"
@@ -439,7 +445,7 @@ class Repository extends Component {
                   navigation={navigation}
                   language={language}
                 />
-              ))}
+              )}
           </SectionList>
         </ParallaxScroll>
 
@@ -457,6 +463,6 @@ class Repository extends Component {
   }
 }
 
-export const RepositoryScreen = connect(mapStateToProps, mapDispatchToProps)(
-  Repository
-);
+export const RepositoryScreen = connect(mapStateToProps, {
+  loadRepo,
+})(Repository);

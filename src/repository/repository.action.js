@@ -1,3 +1,5 @@
+import has from 'lodash/has';
+
 import {
   root as apiRoot,
   fetchUrl,
@@ -29,7 +31,12 @@ import {
   SEARCH_OPEN_PULLS,
   SEARCH_CLOSED_PULLS,
   GET_REPOSITORY_SUBSCRIBED_STATUS,
+  REPO,
+  STARGAZERS,
 } from './repository.type';
+
+import { CALL_API } from '../api/api.middleware';
+import { Schemas } from '../api/api.schema';
 
 export const getRepository = url => {
   return (dispatch, getState) => {
@@ -230,11 +237,14 @@ export const unSubscribeToRepo = (owner, repo) => (dispatch, getState) => {
     });
 };
 
-export const getRepositoryInfo = url => {
+export const getRepositoryInfo = name => {
   return (dispatch, getState) => {
-    return dispatch(getRepository(url)).then(() => {
+    console.log('repo name', name);
+    return dispatch(loadRepo(name)).then(() => {
       const repo = getState().repository.repository;
       const contributorsUrl = getState().repository.repository.contributors_url;
+
+      console.log(repo, getState().repository);
       const issuesUrl = getState().repository.repository.issues_url.replace(
         '{/number}',
         '?state=all&per_page=100'
@@ -483,4 +493,56 @@ export const searchClosedRepoPulls = (query, repoFullName) => {
         });
       });
   };
+};
+
+/* New API */
+
+// Fetches a single repository from Github API.
+// Relies on the custom API middleware defined in ../middleware/api.js.
+const fetchRepo = fullName => ({
+  [CALL_API]: {
+    types: REPO,
+    endpoint: `repos/${fullName}`,
+    schema: Schemas.REPO,
+  },
+});
+
+// Fetches a single repository from Github API unless it is cached.
+// Relies on Redux Thunk middleware.
+export const loadRepo = (fullName, requiredFields = []) => (
+  dispatch,
+  getState
+) => {
+  const repo = getState().entities.repos[fullName];
+
+  if (repo && requiredFields.every(key => has(repo, key))) {
+    return null;
+  }
+
+  return dispatch(fetchRepo(fullName));
+};
+
+// Fetches a page of stargazers for a particular repo.
+// Relies on the custom API middleware defined in ../middleware/api.js.
+const fetchStargazers = (fullName, nextPageUrl) => ({
+  fullName,
+  [CALL_API]: {
+    types: STARGAZERS,
+    endpoint: nextPageUrl,
+    schema: Schemas.USER_ARRAY,
+  },
+});
+
+// Fetches a page of stargazers for a particular repo.
+// Bails out if page is cached and user didn't specifically request next page.
+// Relies on Redux Thunk middleware.
+export const loadStargazers = (fullName, nextPage) => (dispatch, getState) => {
+  const { nextPageUrl = `repos/${fullName}/stargazers`, pageCount = 0 } =
+    getState().pagination.stargazersByRepo[fullName] || {};
+
+  if (pageCount > 0 && !nextPage) {
+    return null;
+  }
+
+  return dispatch(fetchStargazers(fullName, nextPageUrl));
 };

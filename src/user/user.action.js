@@ -1,3 +1,5 @@
+import has from 'lodash/has';
+
 import {
   fetchUser,
   fetchUserOrgs,
@@ -20,7 +22,14 @@ import {
   SEARCH_USER_REPOS,
   CHANGE_FOLLOW_STATUS,
   GET_STAR_COUNT,
+  USER,
+  USER_REPOS,
+  STARRED,
+  FOLLOWERS,
 } from './user.type';
+
+import { CALL_API } from '../api/api.middleware';
+import { Schemas } from '../api/api.schema';
 
 const getUser = user => {
   return (dispatch, getState) => {
@@ -72,7 +81,10 @@ const checkFollowStatusHelper = (user, followedUser, actionSet) => {
 
     dispatch({ type: actionSet.PENDING });
 
-    fetchUrlNormal(`${USER_ENDPOINT(user)}/following/${followedUser}`, accessToken)
+    fetchUrlNormal(
+      `${USER_ENDPOINT(user)}/following/${followedUser}`,
+      accessToken
+    )
       .then(data => {
         dispatch({
           type: actionSet.SUCCESS,
@@ -124,10 +136,7 @@ export const getFollowers = user => {
 
 export const getUserInfo = user => {
   return dispatch => {
-    Promise.all([
-      dispatch(getUser(user)),
-      dispatch(getOrgs(user)),
-    ]);
+    Promise.all([dispatch(getUser(user)), dispatch(getOrgs(user))]);
   };
 };
 
@@ -249,4 +258,89 @@ export const searchUserRepos = (query, user) => {
         });
       });
   };
+};
+
+/** NEW API */
+
+// Fetches a single user from Github API.
+// Relies on the custom API middleware defined in ../middleware/api.js.
+const _fetchUser = login => ({
+  [CALL_API]: {
+    types: USER, // [USER.REQUEST, USER.SUCCESS, USER.FAILURE],
+    endpoint: `users/${login}`,
+    schema: Schemas.USER,
+  },
+});
+
+export const loadUser = (login, requiredFields = []) => (
+  dispatch,
+  getState
+) => {
+  const user = getState().entities.users[login];
+
+  if (user && requiredFields.every(key => has(user, key))) {
+    return null;
+  }
+
+  return dispatch(_fetchUser(login));
+};
+
+const fetchFollowers = (login, nextPageUrl) => ({
+  login,
+  [CALL_API]: {
+    types: FOLLOWERS,
+    endpoint: nextPageUrl,
+    schema: Schemas.USER_ARRAY,
+  },
+});
+
+export const loadFollowers = (login, nextPage) => (dispatch, getState) => {
+  const { nextPageUrl = `users/${login}/followers`, pageCount = 0 } =
+    getState().pagination.followersByUser[login] || {};
+
+  if ((pageCount > 0 && !nextPage) || !nextPageUrl) {
+    return null;
+  }
+
+  return dispatch(fetchFollowers(login, nextPageUrl));
+};
+
+const fetchRepos = (login, nextPageUrl) => ({
+  login,
+  [CALL_API]: {
+    types: USER_REPOS,
+    endpoint: nextPageUrl,
+    schema: Schemas.REPO_ARRAY,
+  },
+});
+
+export const loadRepos = (login, nextPage) => (dispatch, getState) => {
+  const { nextPageUrl = `users/${login}/repos`, pageCount = 0 } =
+    getState().pagination.reposByUser[login] || {};
+
+  if ((pageCount > 0 && !nextPage) || !nextPageUrl) {
+    return null;
+  }
+
+  return dispatch(fetchRepos(login, nextPageUrl));
+};
+
+const fetchStarred = (login, nextPageUrl) => ({
+  login,
+  [CALL_API]: {
+    types: STARRED,
+    endpoint: nextPageUrl,
+    schema: Schemas.REPO_ARRAY,
+  },
+});
+
+export const loadStarred = (login, nextPage) => (dispatch, getState) => {
+  const { nextPageUrl = `users/${login}/starred`, pageCount = 0 } =
+    getState().pagination.starredByUser[login] || {};
+
+  if (pageCount > 0 && !nextPage) {
+    return null;
+  }
+
+  return dispatch(fetchStarred(login, nextPageUrl));
 };

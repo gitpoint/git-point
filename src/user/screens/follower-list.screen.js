@@ -3,30 +3,43 @@ import { connect } from 'react-redux';
 import { FlatList, View } from 'react-native';
 
 import { ViewContainer, UserListItem, LoadingUserListItem } from 'components';
-import { getFollowers } from 'user';
+import { loadFollowers } from '../user.action';
 
-const mapStateToProps = state => ({
-  user: state.user.user,
-  followers: state.user.followers,
-  isPendingFollowers: state.user.isPendingFollowers,
-});
+const mapStateToProps = (state, ownProps) => {
+  const login = ownProps.navigation.state.params.user.login.toLowerCase();
 
-const mapDispatchToProps = dispatch => ({
-  getFollowers: (user, type) => dispatch(getFollowers(user, type)),
-});
+  const { entities: { users }, pagination: { followersByUser } } = state;
+
+  const followersPagination = followersByUser[login] || { ids: [] };
+  const followers = followersPagination.ids.map(id => users[id]);
+
+  return {
+    login,
+    followers,
+    followersPagination,
+    user: users[login],
+  };
+};
+
+const loadData = ({ login, getFollowers }) => {
+  getFollowers(login);
+};
 
 class FollowerList extends Component {
   props: {
     getFollowers: Function,
+    login: String,
     followers: Array,
     isPendingFollowers: boolean,
     navigation: Object,
   };
 
-  componentDidMount() {
-    const user = this.props.navigation.state.params.user;
+  componentWillMount() {
+    loadData(this.props);
+  }
 
-    this.props.getFollowers(user);
+  componentDidMount() {
+    loadData(this.props);
   }
 
   keyExtractor = item => {
@@ -34,7 +47,13 @@ class FollowerList extends Component {
   };
 
   render() {
-    const { followers, isPendingFollowers, navigation } = this.props;
+    const {
+      login,
+      getFollowers,
+      followers,
+      isPendingFollowers,
+      navigation,
+    } = this.props;
     const followerCount = navigation.state.params.followerCount;
 
     return (
@@ -56,6 +75,8 @@ class FollowerList extends Component {
                   navigation={navigation}
                   showFullName
                 />}
+              onEndReachedThreshold={0.5}
+              onEndReached={() => getFollowers(login, true)}
             />
           </View>}
       </ViewContainer>
@@ -63,6 +84,6 @@ class FollowerList extends Component {
   }
 }
 
-export const FollowerListScreen = connect(mapStateToProps, mapDispatchToProps)(
-  FollowerList
-);
+export const FollowerListScreen = connect(mapStateToProps, {
+  getFollowers: loadFollowers,
+})(FollowerList);

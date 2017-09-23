@@ -9,15 +9,27 @@ import {
   SearchBar,
 } from 'components';
 import { colors } from 'config';
-import { getRepositories, searchUserRepos } from 'user';
+import { getRepositories, searchUserRepos, loadRepos } from 'user';
 
-const mapStateToProps = state => ({
-  user: state.user.user,
-  repositories: state.user.repositories,
-  searchedUserRepos: state.user.searchedUserRepos,
-  isPendingRepositories: state.user.isPendingRepositories,
-  isPendingSearchUserRepos: state.user.isPendingSearchUserRepos,
-});
+const loadData = ({ login, getRepos }) => {
+  getRepos(login);
+};
+
+const mapStateToProps = (state, ownProps) => {
+  const login = ownProps.navigation.state.params.user.login.toLowerCase();
+
+  const { entities: { repos }, pagination: { reposByUser } } = state;
+  const reposPagination = reposByUser[login] || { ids: [] };
+  const repositories = reposPagination.ids.map(id => repos[id]);
+
+  return {
+    login,
+    repositories,
+    searchedUserRepos: state.user.searchedUserRepos,
+    isPendingRepositories: state.user.isPendingRepositories,
+    isPendingSearchUserRepos: state.user.isPendingSearchUserRepos,
+  };
+};
 
 const mapDispatchToProps = dispatch => ({
   getRepositoriesByDispatch: (user, type) =>
@@ -49,7 +61,9 @@ const styles = StyleSheet.create({
 
 class RepositoryList extends Component {
   props: {
-    getRepositoriesByDispatch: Function,
+    getRepos: Function,
+    login: String,
+    // getRepositoriesByDispatch: Function,
     searchUserReposByDispatch: Function,
     user: Object,
     repositories: Array,
@@ -79,9 +93,7 @@ class RepositoryList extends Component {
   }
 
   componentDidMount() {
-    const user = this.props.navigation.state.params.user;
-
-    this.props.getRepositoriesByDispatch(user);
+    loadData(this.props);
   }
 
   getList = () => {
@@ -111,6 +123,8 @@ class RepositoryList extends Component {
 
   render() {
     const {
+      login,
+      getRepos,
       isPendingRepositories,
       isPendingSearchUserRepos,
       navigation,
@@ -159,6 +173,8 @@ class RepositoryList extends Component {
                     repository={item}
                     navigation={navigation}
                   />}
+                onEndReachedThreshold={0.5}
+                onEndReached={() => getRepos(login, true)}
               />
             </View>}
         </View>
@@ -167,7 +183,6 @@ class RepositoryList extends Component {
   }
 }
 
-export const RepositoryListScreen = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(RepositoryList);
+export const RepositoryListScreen = connect(mapStateToProps, {
+  getRepos: loadRepos,
+})(RepositoryList);

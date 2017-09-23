@@ -4,22 +4,37 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, FlatList, View } from 'react-native';
 import moment from 'moment/min/moment-with-locales.min';
+import { denormalize, schema } from 'normalizr';
+import values from 'lodash/values';
 
 import { LoadingUserListItem, UserListItem, ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { emojifyText, translate } from 'utils';
-import { getUserEvents } from '../auth.action';
 
-const mapStateToProps = state => ({
-  user: state.auth.user,
-  userEvents: state.auth.events,
-  language: state.auth.language,
-  isPendingEvents: state.auth.isPendingEvents,
-});
+import { loadEvents } from '../../event/event.action';
+import { eventSchema } from '../../event/event.schema';
 
+const loadData = ({ user, getEvents }) => {
+  getEvents(user.login);
+};
+
+const mapStateToProps = (state, ownProps) => {
+  const { entities: { users, events } } = state;
+
+  return {
+    user: state.auth.user,
+    // userEvents: state.auth.events,
+    language: state.auth.language,
+    isPendingEvents: state.auth.isPendingEvents,
+    userEvents: events,
+    users: users,
+  };
+};
+
+/*
 const mapDispatchToProps = dispatch => ({
   getUserEvents: user => dispatch(getUserEvents(user)),
-});
+});*/
 
 const styles = StyleSheet.create({
   descriptionContainer: {
@@ -71,18 +86,18 @@ const styles = StyleSheet.create({
 class Events extends Component {
   componentDidMount() {
     if (this.props.user.login) {
-      this.getUserEvents(this.props.user);
+      loadData(this.props);
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.user.login && !this.props.user.login) {
-      this.getUserEvents(nextProps.user);
+      loadData(nextProps);
     }
   }
 
-  getUserEvents = (user = this.props.user) => {
-    this.props.getUserEvents(user.login);
+  getUserEvents = () => {
+    loadData(this.props);
   };
 
   getAction = userEvent => {
@@ -213,7 +228,7 @@ class Events extends Component {
               style={styles.linkDescription}
               onPress={() => this.navigateToRepository(userEvent)}
             >
-              {userEvent.repo.name}
+              {userEvent.repo}
             </Text>
           );
         }
@@ -234,7 +249,7 @@ class Events extends Component {
             style={styles.linkDescription}
             onPress={() => this.navigateToRepository(userEvent)}
           >
-            {userEvent.repo.name}
+            {userEvent.repo}
           </Text>
         );
       case 'GollumEvent':
@@ -245,7 +260,7 @@ class Events extends Component {
               style={styles.linkDescription}
               onPress={() => this.navigateToRepository(userEvent)}
             >
-              {userEvent.repo.name}
+              {userEvent.repo}
             </Text>{' '}
             wiki
           </Text>
@@ -266,7 +281,7 @@ class Events extends Component {
             style={styles.linkDescription}
             onPress={() => this.navigateToProfile(userEvent)}
           >
-            {userEvent.payload.member.login}
+            {userEvent.payload.member}
           </Text>
         );
       case 'PullRequestEvent':
@@ -298,7 +313,7 @@ class Events extends Component {
               }
             }}
           >
-            {userEvent.repo.name}
+            {userEvent.repo}
           </Text>
         );
       default:
@@ -352,7 +367,7 @@ class Events extends Component {
               style={styles.linkDescription}
               onPress={() => this.navigateToRepository(userEvent)}
             >
-              {userEvent.repo.name}
+              {userEvent.repo}
             </Text>
           );
         }
@@ -371,7 +386,7 @@ class Events extends Component {
             style={styles.linkDescription}
             onPress={() => this.navigateToRepository(userEvent)}
           >
-            {userEvent.repo.name}
+            {userEvent.repo}
           </Text>
         );
       case 'ForkEvent':
@@ -380,7 +395,7 @@ class Events extends Component {
             style={styles.linkDescription}
             onPress={() => this.navigateToRepository(userEvent, true)}
           >
-            {userEvent.payload.forkee.full_name}
+            {userEvent.payload.forkee}
           </Text>
         );
       default:
@@ -448,14 +463,7 @@ class Events extends Component {
 
   navigateToRepository = (userEvent, isForkEvent) => {
     this.props.navigation.navigate('Repository', {
-      repository: !isForkEvent
-        ? {
-            ...userEvent.repo,
-            name: userEvent.repo.name.substring(
-              userEvent.repo.name.indexOf('/') + 1
-            ),
-          }
-        : userEvent.payload.forkee,
+      name: !isForkEvent ? userEvent.repo : userEvent.payload.forkee,
     });
   };
 
@@ -471,7 +479,7 @@ class Events extends Component {
 
   navigateToProfile = (userEvent, isActor) => {
     this.props.navigation.navigate('Profile', {
-      user: !isActor ? userEvent.payload.member : userEvent.actor,
+      login: !isActor ? userEvent.payload.member : userEvent.actor,
     });
   };
 
@@ -480,13 +488,15 @@ class Events extends Component {
   };
 
   renderDescription(userEvent) {
+    const user = this.props.users[userEvent.actor];
+
     return (
       <Text style={styles.descriptionContainer}>
         <Text
           style={styles.linkDescription}
           onPress={() => this.navigateToProfile(userEvent, true)}
         >
-          {userEvent.actor.login}{' '}
+          {user.login}{' '}
         </Text>
         <Text>
           {this.getAction(userEvent)}{' '}
@@ -505,7 +515,13 @@ class Events extends Component {
   }
 
   render() {
-    const { isPendingEvents, userEvents, language, navigation } = this.props;
+    const {
+      users,
+      isPendingEvents,
+      userEvents,
+      language,
+      navigation,
+    } = this.props;
     const linebreaksPattern = /(\r\n|\n|\r)/gm;
     let content;
 
@@ -514,7 +530,7 @@ class Events extends Component {
         // eslint-disable-next-line react/no-array-index-key
         return <LoadingUserListItem key={index} />;
       });
-    } else if (!isPendingEvents && userEvents && userEvents.length === 0) {
+    } else if (userEvents && userEvents.length === 0) {
       content = (
         <View style={styles.textContainer}>
           <Text style={styles.noneTitle}>
@@ -526,14 +542,14 @@ class Events extends Component {
       content = (
         <FlatList
           removeClippedSubviews={false}
-          data={userEvents}
+          data={values(userEvents)}
           onRefresh={this.getUserEvents}
           refreshing={isPendingEvents}
           keyExtractor={this.keyExtractor}
           renderItem={({ item }) =>
             <View>
               <UserListItem
-                user={item.actor}
+                user={users[item.actor]}
                 title={this.renderDescription(item)}
                 titleStyle={{ fontSize: normalize(12) }}
                 navigation={navigation}
@@ -567,6 +583,6 @@ class Events extends Component {
   }
 }
 
-export const EventsScreen = connect(mapStateToProps, mapDispatchToProps)(
-  Events
-);
+export const EventsScreen = connect(mapStateToProps, {
+  getEvents: loadEvents,
+})(Events);

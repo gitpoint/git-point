@@ -10,8 +10,9 @@ import {
   fetchAuthUserOrgs,
   fetchUserOrgs,
   fetchUserEvents,
-  fetchStarCount,
-} from 'api';
+  //  fetchStarCount,
+} from '../api/api.client';
+
 import {
   LOGIN,
   LOGOUT,
@@ -90,7 +91,7 @@ export const getStarCount = () => {
     const user = getState().auth.user.login;
 
     dispatch({ type: GET_AUTH_STAR_COUNT.PENDING });
-
+    /*
     fetchStarCount(user)
       .then(data => {
         dispatch({
@@ -103,7 +104,7 @@ export const getStarCount = () => {
           type: GET_AUTH_STAR_COUNT.ERROR,
           payload: error,
         });
-      });
+      });*/
   };
 };
 

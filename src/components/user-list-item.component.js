@@ -108,7 +108,9 @@ class UserListItemComponent extends Component {
         onPress={() =>
           navigation.navigate(
             user.type === 'User' ? userScreen : 'Organization',
-            user.type === 'User' ? { user } : { organization: user }
+            user.type === 'User'
+              ? { login: user.login }
+              : { organization: user }
           )}
         underlayColor={colors.greyLight}
         style={!noBorderBottom && styles.borderContainer}
@@ -118,14 +120,14 @@ class UserListItemComponent extends Component {
             style={styles.userInfo}
             onPress={() =>
               navigation.navigate(userScreen, {
-                user,
+                login: user.login,
               })}
           >
             <ImageContainerComponent
               style={styles.avatarContainer}
               onPress={() =>
                 navigation.navigate(userScreen, {
-                  user,
+                  login: user.login,
                 })}
             >
               <Image

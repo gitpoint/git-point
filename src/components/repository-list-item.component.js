@@ -108,5 +108,6 @@ export const RepositoryListItem = ({ repository, navigation }: Props) =>
       type: 'octicon',
     }}
     underlayColor={colors.greyLight}
-    onPress={() => navigation.navigate('Repository', { repository })}
+    onPress={() =>
+      navigation.navigate('Repository', { name: repository.full_name })}
   />;
