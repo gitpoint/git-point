@@ -13,5 +13,6 @@ export const GET_STAR_COUNT = createActionSet('GET_STAR_COUNT');
 
 // New API
 export const USER = createActionSet('USER');
+export const USER_REPOS = createActionSet('USER_REPOS');
 export const STARRED = createActionSet('STARRED');
 export const FOLLOWERS = createActionSet('FOLLOWERS');

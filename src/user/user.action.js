@@ -23,6 +23,7 @@ import {
   CHANGE_FOLLOW_STATUS,
   GET_STAR_COUNT,
   USER,
+  USER_REPOS,
   STARRED,
   FOLLOWERS,
 } from './user.type';
@@ -271,8 +272,6 @@ const _fetchUser = login => ({
   },
 });
 
-// Fetches a single user from Github API unless it is cached.
-// Relies on Redux Thunk middleware.
 export const loadUser = (login, requiredFields = []) => (
   dispatch,
   getState
@@ -295,9 +294,6 @@ const fetchFollowers = (login, nextPageUrl) => ({
   },
 });
 
-// Fetches a page of followers repos by a particular user.
-// Bails out if page is cached and user didn't specifically request next page.
-// Relies on Redux Thunk middleware.
 export const loadFollowers = (login, nextPage) => (dispatch, getState) => {
   const { nextPageUrl = `users/${login}/followers`, pageCount = 0 } =
     getState().pagination.followersByUser[login] || {};
@@ -309,8 +305,26 @@ export const loadFollowers = (login, nextPage) => (dispatch, getState) => {
   return dispatch(fetchFollowers(login, nextPageUrl));
 };
 
-// Fetches a page of starred repos by a particular user.
-// Relies on the custom API middleware defined in ../middleware/api.js.
+const fetchRepos = (login, nextPageUrl) => ({
+  login,
+  [CALL_API]: {
+    types: USER_REPOS,
+    endpoint: nextPageUrl,
+    schema: Schemas.REPO_ARRAY,
+  },
+});
+
+export const loadRepos = (login, nextPage) => (dispatch, getState) => {
+  const { nextPageUrl = `users/${login}/repos`, pageCount = 0 } =
+    getState().pagination.reposByUser[login] || {};
+
+  if ((pageCount > 0 && !nextPage) || !nextPageUrl) {
+    return null;
+  }
+
+  return dispatch(fetchRepos(login, nextPageUrl));
+};
+
 const fetchStarred = (login, nextPageUrl) => ({
   login,
   [CALL_API]: {
@@ -320,9 +334,6 @@ const fetchStarred = (login, nextPageUrl) => ({
   },
 });
 
-// Fetches a page of starred repos by a particular user.
-// Bails out if page is cached and user didn't specifically request next page.
-// Relies on Redux Thunk middleware.
 export const loadStarred = (login, nextPage) => (dispatch, getState) => {
   const { nextPageUrl = `users/${login}/starred`, pageCount = 0 } =
     getState().pagination.starredByUser[login] || {};

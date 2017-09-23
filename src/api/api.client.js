@@ -460,7 +460,7 @@ export const callApi = (endpoint, theSchema, accessToken) => {
   const fullUrl =
     endpoint.indexOf(API_ROOT) === -1 ? API_ROOT + endpoint : endpoint;
 
-  console.log(`[New API] Calling ${accessToken} ${fullUrl}`);
+  console.log(`[New API] Calling ${fullUrl}`);
 
   return fetch(fullUrl, {
     headers: {

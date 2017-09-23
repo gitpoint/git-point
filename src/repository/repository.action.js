@@ -237,11 +237,14 @@ export const unSubscribeToRepo = (owner, repo) => (dispatch, getState) => {
     });
 };
 
-export const getRepositoryInfo = url => {
+export const getRepositoryInfo = name => {
   return (dispatch, getState) => {
-    return dispatch(getRepository(url)).then(() => {
+    console.log('repo name', name);
+    return dispatch(loadRepo(name)).then(() => {
       const repo = getState().repository.repository;
       const contributorsUrl = getState().repository.repository.contributors_url;
+
+      console.log(repo, getState().repository);
       const issuesUrl = getState().repository.repository.issues_url.replace(
         '{/number}',
         '?state=all&per_page=100'

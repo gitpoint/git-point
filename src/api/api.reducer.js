@@ -122,6 +122,14 @@ export const pagination = combineReducers({
       ActionTypes.FOLLOWERS.ERROR,
     ],
   }),
+  reposByUser: paginate({
+    mapActionToKey: action => action.login,
+    types: [
+      ActionTypes.USER_REPOS.PENDING,
+      ActionTypes.USER_REPOS.SUCCESS,
+      ActionTypes.USER_REPOS.ERROR,
+    ],
+  }),
   stargazersByRepo: paginate({
     mapActionToKey: action => action.fullName,
     types: [

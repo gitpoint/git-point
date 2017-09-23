@@ -7,5 +7,8 @@ import { repoSchema } from '../repository/repository.schema';
 export const eventSchema = new schema.Entity('events', {
   actor: userSchema,
   repo: repoSchema,
-  payload: { forkee: repoSchema },
+  payload: {
+    forkee: repoSchema,
+    member: userSchema,
+  },
 });

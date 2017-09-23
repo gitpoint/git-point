@@ -25,27 +25,40 @@ import {
   forkRepo,
   subscribeToRepo,
   unSubscribeToRepo,
+  // new api
+  loadRepo,
 } from '../repository.action';
 
-const mapStateToProps = state => ({
-  username: state.auth.user.login,
-  language: state.auth.language,
-  repository: state.repository.repository,
-  contributors: state.repository.contributors,
-  issues: state.repository.issues,
-  starred: state.repository.starred,
-  forked: state.repository.forked,
-  subscribed: state.repository.subscribed,
-  hasReadMe: state.repository.hasReadMe,
-  isPendingRepository: state.repository.isPendingRepository,
-  isPendingContributors: state.repository.isPendingContributors,
-  isPendingIssues: state.repository.isPendingIssues,
-  isPendingCheckReadMe: state.repository.isPendingCheckReadMe,
-  isPendingCheckStarred: state.repository.isPendingCheckStarred,
-  isPendingFork: state.repository.isPendingFork,
-  isPendingSubscribe: state.repository.isPendingSubscribe,
-});
+const loadData = ({ name, loadRepo }) => {
+  loadRepo(name);
+};
 
+const mapStateToProps = (state, ownProps) => {
+  const name = ownProps.navigation.state.params.name.toLowerCase();
+  const { entities: { repos } } = state;
+
+  return {
+    username: state.auth.user.login,
+    language: state.auth.language,
+    name,
+    repository: repos[name],
+    contributors: state.repository.contributors,
+    issues: state.repository.issues,
+    starred: state.repository.starred,
+    forked: state.repository.forked,
+    subscribed: state.repository.subscribed,
+    hasReadMe: state.repository.hasReadMe,
+    isPendingRepository: state.repository.isPendingRepository,
+    isPendingContributors: state.repository.isPendingContributors,
+    isPendingIssues: state.repository.isPendingIssues,
+    isPendingCheckReadMe: state.repository.isPendingCheckReadMe,
+    isPendingCheckStarred: state.repository.isPendingCheckStarred,
+    isPendingFork: state.repository.isPendingFork,
+    isPendingSubscribe: state.repository.isPendingSubscribe,
+  };
+};
+
+/*
 const mapDispatchToProps = dispatch => ({
   getRepositoryInfoByDispatch: url => dispatch(getRepositoryInfo(url)),
   changeStarStatusRepoByDispatch: (owner, repo, starred) =>
@@ -53,7 +66,7 @@ const mapDispatchToProps = dispatch => ({
   forkRepoByDispatch: (owner, repo) => dispatch(forkRepo(owner, repo)),
   subscribeToRepo: (owner, repo) => dispatch(subscribeToRepo(owner, repo)),
   unSubscribeToRepo: (owner, repo) => dispatch(unSubscribeToRepo(owner, repo)),
-});
+});*/
 
 const styles = StyleSheet.create({
   listTitle: {
@@ -64,9 +77,10 @@ const styles = StyleSheet.create({
 
 class Repository extends Component {
   props: {
-    getRepositoryInfoByDispatch: Function,
+    name: String,
+    /*    getRepositoryInfoByDispatch: Function,
     changeStarStatusRepoByDispatch: Function,
-    forkRepoByDispatch: Function,
+    forkRepoByDispatch: Function, */
     // repositoryName: string,
     repository: Object,
     contributors: Array,
@@ -107,7 +121,8 @@ class Repository extends Component {
       repositoryUrl: repoUrl,
     } = this.props.navigation.state.params;
 
-    this.props.getRepositoryInfoByDispatch(repo ? repo.url : repoUrl);
+    loadData(this.props);
+    //this.props.getRepositoryInfoByDispatch(repo ? repo.url : repoUrl);
   }
 
   showMenuActionSheet = () => {
@@ -119,8 +134,8 @@ class Repository extends Component {
       starred,
       subscribed,
       repository,
-      changeStarStatusRepoByDispatch,
-      forkRepoByDispatch,
+      //  changeStarStatusRepoByDispatch,
+      // forkRepoByDispatch,
       navigation,
       username,
     } = this.props;
@@ -155,11 +170,10 @@ class Repository extends Component {
     } = this.props.navigation.state.params;
 
     this.setState({ refreshing: true });
-    this.props
-      .getRepositoryInfoByDispatch(repo ? repo.url : repoUrl)
-      .then(() => {
+    loadData(this.props);
+    /*.then(() => {
         this.setState({ refreshing: false });
-      });
+      });*/
   };
 
   shareRepository = repository => {
@@ -449,6 +463,6 @@ class Repository extends Component {
   }
 }
 
-export const RepositoryScreen = connect(mapStateToProps, mapDispatchToProps)(
-  Repository
-);
+export const RepositoryScreen = connect(mapStateToProps, {
+  loadRepo,
+})(Repository);
