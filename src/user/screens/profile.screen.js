@@ -28,8 +28,10 @@ import {
   getIsFollowing,
   getIsFollower,
   changeFollowStatus,
+  // new api
+  loadStarred,
+  loadFollowers,
 } from '../user.action';
-import { loadStarred, loadFollowers } from './../../actions';
 
 const loadData = ({ login, loadUser, loadStarred }) => {
   loadUser(login, ['name']);

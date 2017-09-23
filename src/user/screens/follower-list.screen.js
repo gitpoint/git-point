@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { FlatList, View } from 'react-native';
 
 import { ViewContainer, UserListItem, LoadingUserListItem } from 'components';
-import { loadFollowers } from './../../actions';
+import { loadFollowers } from '../user.action';
 
 const mapStateToProps = (state, ownProps) => {
   const login = ownProps.navigation.state.params.user.login.toLowerCase();

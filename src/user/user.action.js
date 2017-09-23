@@ -25,6 +25,12 @@ import {
   USER_REQUEST,
   USER_SUCCESS,
   USER_FAILURE,
+  STARRED_REQUEST,
+  STARRED_SUCCESS,
+  STARRED_FAILURE,
+  FOLLOWERS_REQUEST,
+  FOLLOWERS_SUCCESS,
+  FOLLOWERS_FAILURE,
 } from './user.type';
 
 import { CALL_API, Schemas } from '../api/api.middleware';
@@ -283,4 +289,52 @@ export const loadUser = (login, requiredFields = []) => (
   }
 
   return dispatch(_fetchUser(login));
+};
+
+const fetchFollowers = (login, nextPageUrl) => ({
+  login,
+  [CALL_API]: {
+    types: [FOLLOWERS_REQUEST, FOLLOWERS_SUCCESS, FOLLOWERS_FAILURE],
+    endpoint: nextPageUrl,
+    schema: Schemas.USER_ARRAY,
+  },
+});
+
+// Fetches a page of followers repos by a particular user.
+// Bails out if page is cached and user didn't specifically request next page.
+// Relies on Redux Thunk middleware.
+export const loadFollowers = (login, nextPage) => (dispatch, getState) => {
+  const { nextPageUrl = `users/${login}/followers`, pageCount = 0 } =
+    getState().pagination.followersByUser[login] || {};
+
+  if ((pageCount > 0 && !nextPage) || !nextPageUrl) {
+    return null;
+  }
+
+  return dispatch(fetchFollowers(login, nextPageUrl));
+};
+
+// Fetches a page of starred repos by a particular user.
+// Relies on the custom API middleware defined in ../middleware/api.js.
+const fetchStarred = (login, nextPageUrl) => ({
+  login,
+  [CALL_API]: {
+    types: [STARRED_REQUEST, STARRED_SUCCESS, STARRED_FAILURE],
+    endpoint: nextPageUrl,
+    schema: Schemas.REPO_ARRAY,
+  },
+});
+
+// Fetches a page of starred repos by a particular user.
+// Bails out if page is cached and user didn't specifically request next page.
+// Relies on Redux Thunk middleware.
+export const loadStarred = (login, nextPage) => (dispatch, getState) => {
+  const { nextPageUrl = `users/${login}/starred`, pageCount = 0 } =
+    getState().pagination.starredByUser[login] || {};
+
+  if (pageCount > 0 && !nextPage) {
+    return null;
+  }
+
+  return dispatch(fetchStarred(login, nextPageUrl));
 };
