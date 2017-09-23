@@ -18,6 +18,15 @@ const accessTokenParameters = accessToken => ({
   },
 });
 
+const accessTokenParametersHEAD = accessToken => ({
+  method: 'HEAD',
+  headers: {
+    Accept: 'application/vnd.github.v3+json',
+    Authorization: `token ${accessToken}`,
+    'Cache-Control': 'no-cache',
+  },
+});
+
 const accessTokenParametersPUT = (accessToken, body = {}) => ({
   method: 'PUT',
   headers: {
@@ -97,6 +106,12 @@ export async function fetchUrl(url, accessToken) {
 
 export async function fetchUrlNormal(url, accessToken) {
   const response = await fetch(url, accessTokenParameters(accessToken));
+
+  return response;
+}
+
+export async function fetchUrlHead(url, accessToken) {
+  const response = await fetch(url, accessTokenParametersHEAD(accessToken));
 
   return response;
 }
