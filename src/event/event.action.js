@@ -1,6 +1,6 @@
 import has from 'lodash/has';
 
-import { EVENTS_REQUEST, EVENTS_SUCCESS, EVENTS_FAILURE } from './event.type';
+import { EVENTS } from './event.type';
 
 import { CALL_API, Schemas } from '../api/api.middleware';
 
@@ -8,7 +8,7 @@ import { CALL_API, Schemas } from '../api/api.middleware';
 
 const _fetchEvents = login => ({
   [CALL_API]: {
-    types: [EVENTS_REQUEST, EVENTS_SUCCESS, EVENTS_FAILURE],
+    types: EVENTS,
     endpoint: `users/${login}/received_events`,
     schema: Schemas.EVENT_ARRAY,
   },
@@ -19,6 +19,8 @@ export const loadEvents = (login, requiredFields = []) => (
   getState
 ) => {
   const event = getState().entities.events[login];
+
+  console.log(EVENTS);
 
   if (event && requiredFields.every(key => has(event, key))) {
     return null;

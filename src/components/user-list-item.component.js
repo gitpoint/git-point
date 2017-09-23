@@ -103,8 +103,6 @@ class UserListItemComponent extends Component {
     const userScreen =
       authUser.login === user.login ? 'AuthProfile' : 'Profile';
 
-    console.log(user);
-
     return (
       <ContainerComponent
         onPress={() =>

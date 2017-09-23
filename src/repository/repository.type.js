@@ -25,10 +25,5 @@ export const GET_REPOSITORY_SUBSCRIBED_STATUS = createActionSet(
   'GET_REPOSITORY_SUBSCRIBED_STATUS'
 );
 
-export const REPO_REQUEST = 'REPO_REQUEST';
-export const REPO_SUCCESS = 'REPO_SUCCESS';
-export const REPO_FAILURE = 'REPO_FAILURE';
-
-export const STARGAZERS_REQUEST = 'STARGAZERS_REQUEST';
-export const STARGAZERS_SUCCESS = 'STARGAZERS_SUCCESS';
-export const STARGAZERS_FAILURE = 'STARGAZERS_FAILURE';
+export const REPO = createActionSet('REPO');
+export const STARGAZERS = createActionSet('STARGAZERS');

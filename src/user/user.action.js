@@ -22,15 +22,9 @@ import {
   SEARCH_USER_REPOS,
   CHANGE_FOLLOW_STATUS,
   GET_STAR_COUNT,
-  USER_REQUEST,
-  USER_SUCCESS,
-  USER_FAILURE,
-  STARRED_REQUEST,
-  STARRED_SUCCESS,
-  STARRED_FAILURE,
-  FOLLOWERS_REQUEST,
-  FOLLOWERS_SUCCESS,
-  FOLLOWERS_FAILURE,
+  USER,
+  STARRED,
+  FOLLOWERS,
 } from './user.type';
 
 import { CALL_API, Schemas } from '../api/api.middleware';
@@ -270,7 +264,7 @@ export const searchUserRepos = (query, user) => {
 // Relies on the custom API middleware defined in ../middleware/api.js.
 const _fetchUser = login => ({
   [CALL_API]: {
-    types: [USER_REQUEST, USER_SUCCESS, USER_FAILURE],
+    types: USER, // [USER.REQUEST, USER.SUCCESS, USER.FAILURE],
     endpoint: `users/${login}`,
     schema: Schemas.USER,
   },
@@ -294,7 +288,7 @@ export const loadUser = (login, requiredFields = []) => (
 const fetchFollowers = (login, nextPageUrl) => ({
   login,
   [CALL_API]: {
-    types: [FOLLOWERS_REQUEST, FOLLOWERS_SUCCESS, FOLLOWERS_FAILURE],
+    types: FOLLOWERS,
     endpoint: nextPageUrl,
     schema: Schemas.USER_ARRAY,
   },
@@ -319,7 +313,7 @@ export const loadFollowers = (login, nextPage) => (dispatch, getState) => {
 const fetchStarred = (login, nextPageUrl) => ({
   login,
   [CALL_API]: {
-    types: [STARRED_REQUEST, STARRED_SUCCESS, STARRED_FAILURE],
+    types: STARRED,
     endpoint: nextPageUrl,
     schema: Schemas.REPO_ARRAY,
   },

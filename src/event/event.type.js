@@ -1,3 +1,3 @@
-export const EVENTS_REQUEST = 'EVENTS_REQUEST';
-export const EVENTS_SUCCESS = 'EVENTS_SUCCESS';
-export const EVENTS_FAILURE = 'EVENTS_FAILURE';
+import { createActionSet } from 'utils';
+
+export const EVENTS = createActionSet('EVENTS');

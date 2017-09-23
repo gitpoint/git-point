@@ -7,7 +7,8 @@ import * as ActionTypes from './api.type';
 // Creates a reducer managing pagination, given the action types to handle,
 // and a function telling how to extract the key from an action.
 const paginate = ({ types, mapActionToKey }) => {
-  console.log('first types', types);
+  console.log('paginate()', types);
+
   if (!Array.isArray(types) || types.length !== 3) {
     throw new Error('Expected types to be an array of three elements.');
   }
@@ -19,7 +20,7 @@ const paginate = ({ types, mapActionToKey }) => {
   }
 
   const [requestType, successType, failureType] = types;
-  console.log('types', types);
+
   const updatePagination = (
     state = {
       isFetching: false,
@@ -108,25 +109,25 @@ export const pagination = combineReducers({
   starredByUser: paginate({
     mapActionToKey: action => action.login,
     types: [
-      ActionTypes.STARRED_REQUEST,
-      ActionTypes.STARRED_SUCCESS,
-      ActionTypes.STARRED_FAILURE,
+      ActionTypes.STARRED.PENDING,
+      ActionTypes.STARRED.SUCCESS,
+      ActionTypes.STARRED.ERROR,
     ],
   }),
   followersByUser: paginate({
     mapActionToKey: action => action.login,
     types: [
-      ActionTypes.FOLLOWERS_REQUEST,
-      ActionTypes.FOLLOWERS_SUCCESS,
-      ActionTypes.FOLLOWERS_FAILURE,
+      ActionTypes.FOLLOWERS.PENDING,
+      ActionTypes.FOLLOWERS.SUCCESS,
+      ActionTypes.FOLLOWERS.ERROR,
     ],
   }),
   stargazersByRepo: paginate({
     mapActionToKey: action => action.fullName,
     types: [
-      ActionTypes.STARGAZERS_REQUEST,
-      ActionTypes.STARGAZERS_SUCCESS,
-      ActionTypes.STARGAZERS_FAILURE,
+      ActionTypes.STARGAZERS.PENDING,
+      ActionTypes.STARGAZERS.SUCCESS,
+      ActionTypes.STARGAZERS.ERROR,
     ],
   }),
 });

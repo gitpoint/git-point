@@ -283,8 +283,6 @@ const mapStateToProps2 = (state, ownProps) => {
     entities: { users, repos },
   } = state;
 
-  console.log('login=', login);
-
   // const starredPagination = starredByUser[login] || { ids: [] };
   //const starredRepos = starredPagination.ids.map(id => repos[id]);
   //const starredRepoOwners = starredRepos.map(repo => users[repo.owner]);

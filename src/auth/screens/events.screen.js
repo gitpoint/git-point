@@ -5,17 +5,16 @@ import { connect } from 'react-redux';
 import { StyleSheet, Text, FlatList, View } from 'react-native';
 import moment from 'moment/min/moment-with-locales.min';
 import { denormalize, schema } from 'normalizr';
+import values from 'lodash/values';
 
 import { LoadingUserListItem, UserListItem, ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { emojifyText, translate } from 'utils';
 
-import { loadUser } from '../../user/user.action';
 import { loadEvents } from '../../event/event.action';
 import { eventSchema } from '../../event/event.schema';
-import values from 'lodash/values';
+
 const loadData = ({ user, getEvents }) => {
-  console.log('called events', user, getEvents);
   getEvents(user.login);
 };
 
@@ -23,8 +22,6 @@ const mapStateToProps = (state, ownProps) => {
   // We need to lower case the login due to the way GitHub's API behaves.
   // Have a look at ../middleware/api.js for more details.
   const { entities: { users, events } } = state;
-
-  console.log('Got ', state.auth.isPendingEvents, ' events');
 
   return {
     user: state.auth.user,
@@ -90,7 +87,6 @@ const styles = StyleSheet.create({
 
 class Events extends Component {
   componentDidMount() {
-    console.log('componentDidMount', this.props);
     if (this.props.user.login) {
       loadData(this.props);
     }
@@ -506,10 +502,7 @@ class Events extends Component {
       { events: [eventSchema] },
       this.props.userEvents
     );
-    console.log(userEvent);
     const user = this.props.users[userEvent.actor];
-
-    console.log(user);
 
     // return (<Text>Description</Text>);
     return (

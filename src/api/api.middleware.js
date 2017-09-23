@@ -1,3 +1,5 @@
+import has from 'lodash/has';
+
 import { userSchema } from '../user/user.schema';
 import { repoSchema } from '../repository/repository.schema';
 import { eventSchema } from '../event/event.schema';
@@ -25,8 +27,8 @@ export default store => next => action => {
     return next(action);
   }
 
-  let { endpoint } = callAPI;
-  const { schema, types } = callAPI;
+  let { endpoint, types } = callAPI;
+  const { schema } = callAPI;
 
   if (typeof endpoint === 'function') {
     endpoint = endpoint(store.getState());
@@ -38,10 +40,19 @@ export default store => next => action => {
   if (!schema) {
     throw new Error('Specify one of the exported Schemas.');
   }
-  if (!Array.isArray(types) || types.length !== 3) {
+
+  if (typeof types === 'object') {
+    if (
+      !has(types, 'PENDING') ||
+      !has(types, 'SUCCESS') ||
+      !has(types, 'ERROR')
+    ) {
+      throw new Error('Expected an object containing the three action types.');
+    }
+    types = [types.PENDING, types.SUCCESS, types.ERROR];
+  } else if (!Array.isArray(types) || types.length !== 3) {
     throw new Error('Expected an array of three action types.');
-  }
-  if (!types.every(type => typeof type === 'string')) {
+  } else if (!types.every(type => typeof type === 'string')) {
     throw new Error('Expected action types to be strings.');
   }
 

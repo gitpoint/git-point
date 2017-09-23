@@ -12,14 +12,6 @@ export const CHANGE_FOLLOW_STATUS = createActionSet('CHANGE_FOLLOW_STATUS');
 export const GET_STAR_COUNT = createActionSet('GET_STAR_COUNT');
 
 // New API
-export const USER_REQUEST = 'USER_REQUEST';
-export const USER_SUCCESS = 'USER_SUCCESS';
-export const USER_FAILURE = 'USER_FAILURE';
-
-export const STARRED_REQUEST = 'STARRED_REQUEST';
-export const STARRED_SUCCESS = 'STARRED_SUCCESS';
-export const STARRED_FAILURE = 'STARRED_FAILURE';
-
-export const FOLLOWERS_REQUEST = 'FOLLOWERS_REQUEST';
-export const FOLLOWERS_SUCCESS = 'FOLLOWERS_SUCCESS';
-export const FOLLOWERS_FAILURE = 'FOLLOWERS_FAILURE';
+export const USER = createActionSet('USER');
+export const STARRED = createActionSet('STARRED');
+export const FOLLOWERS = createActionSet('FOLLOWERS');
