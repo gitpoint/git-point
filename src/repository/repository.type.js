@@ -23,3 +23,7 @@ export const SEARCH_CLOSED_PULLS = createActionSet('SEARCH_CLOSED_PULLS');
 export const GET_REPOSITORY_SUBSCRIBED_STATUS = createActionSet(
   'GET_REPOSITORY_SUBSCRIBED_STATUS'
 );
+
+export const REPO_REQUEST = 'REPO_REQUEST';
+export const REPO_SUCCESS = 'REPO_SUCCESS';
+export const REPO_FAILURE = 'REPO_FAILURE';

@@ -8,7 +8,7 @@ import queryString from 'query-string';
 
 import { ViewContainer, LoadingContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
-import { CLIENT_ID } from 'api';
+import { CLIENT_ID } from '../../api/api.client';
 import { auth } from 'auth';
 import { openURLInView, translate } from 'utils';
 

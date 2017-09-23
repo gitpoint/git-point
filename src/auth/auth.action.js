@@ -11,7 +11,8 @@ import {
   fetchUserOrgs,
   fetchUserEvents,
   fetchStarCount,
-} from 'api';
+} from '../api/api.client';
+
 import {
   LOGIN,
   LOGOUT,

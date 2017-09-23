@@ -4,10 +4,11 @@ import Reactotron from 'reactotron-react-native'; // eslint-disable-line import/
 import createLogger from 'redux-logger';
 import reduxThunk from 'redux-thunk';
 import 'config/reactotron';
+import apiMiddleware from 'api/api.middleware';
 import { rootReducer } from './root.reducer';
 
 const getMiddleware = () => {
-  const middlewares = [reduxThunk];
+  const middlewares = [reduxThunk, apiMiddleware];
 
   if (__DEV__) {
     if (process.env.LOGGER_ENABLED) {

@@ -1,3 +1,5 @@
+import has from 'lodash/has';
+
 import {
   fetchUser,
   fetchUserOrgs,
@@ -20,7 +22,12 @@ import {
   SEARCH_USER_REPOS,
   CHANGE_FOLLOW_STATUS,
   GET_STAR_COUNT,
+  USER_REQUEST,
+  USER_SUCCESS,
+  USER_FAILURE,
 } from './user.type';
+
+import { CALL_API, Schemas } from '../api/api.middleware';
 
 const getUser = user => {
   return (dispatch, getState) => {
@@ -72,7 +79,10 @@ const checkFollowStatusHelper = (user, followedUser, actionSet) => {
 
     dispatch({ type: actionSet.PENDING });
 
-    fetchUrlNormal(`${USER_ENDPOINT(user)}/following/${followedUser}`, accessToken)
+    fetchUrlNormal(
+      `${USER_ENDPOINT(user)}/following/${followedUser}`,
+      accessToken
+    )
       .then(data => {
         dispatch({
           type: actionSet.SUCCESS,
@@ -124,10 +134,7 @@ export const getFollowers = user => {
 
 export const getUserInfo = user => {
   return dispatch => {
-    Promise.all([
-      dispatch(getUser(user)),
-      dispatch(getOrgs(user)),
-    ]);
+    Promise.all([dispatch(getUser(user)), dispatch(getOrgs(user))]);
   };
 };
 
@@ -249,4 +256,31 @@ export const searchUserRepos = (query, user) => {
         });
       });
   };
+};
+
+/** NEW API */
+
+// Fetches a single user from Github API.
+// Relies on the custom API middleware defined in ../middleware/api.js.
+const _fetchUser = login => ({
+  [CALL_API]: {
+    types: [USER_REQUEST, USER_SUCCESS, USER_FAILURE],
+    endpoint: `users/${login}`,
+    schema: Schemas.USER,
+  },
+});
+
+// Fetches a single user from Github API unless it is cached.
+// Relies on Redux Thunk middleware.
+export const loadUser = (login, requiredFields = []) => (
+  dispatch,
+  getState
+) => {
+  const user = getState().entities.users[login];
+
+  if (user && requiredFields.every(key => has(user, key))) {
+    return null;
+  }
+
+  return dispatch(_fetchUser(login));
 };

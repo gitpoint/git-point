@@ -5,6 +5,7 @@ import {
   ActivityIndicator,
   Dimensions,
   View,
+  Text,
   RefreshControl,
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
@@ -20,8 +21,22 @@ import {
 } from 'components';
 import { emojifyText, translate } from 'utils';
 import { colors, fonts } from 'config';
-import { getUserInfo, getStarCount, getIsFollowing, getIsFollower, changeFollowStatus } from '../user.action';
+import {
+  loadUser,
+  getUserInfo,
+  getStarCount,
+  getIsFollowing,
+  getIsFollower,
+  changeFollowStatus,
+} from '../user.action';
+import { loadStarred, loadFollowers } from './../../actions';
 
+const loadData = ({ login, loadUser, loadStarred }) => {
+  loadUser(login, ['name']);
+  loadStarred(login);
+};
+
+/*
 const mapStateToProps = state => ({
   auth: state.auth.user,
   user: state.user.user,
@@ -35,12 +50,13 @@ const mapStateToProps = state => ({
   isPendingStarCount: state.user.isPendingStarCount,
   isPendingCheckFollowing: state.user.isPendingCheckFollowing,
   isPendingCheckFollower: state.user.isPendingCheckFollower,
-});
+});*/
 
 const mapDispatchToProps = dispatch => ({
   getUserInfoByDispatch: user => dispatch(getUserInfo(user)),
   getUserStarCountByDispatch: user => dispatch(getStarCount(user)),
-  getIsFollowingByDispatch: (user, auth) => dispatch(getIsFollowing(user, auth)),
+  getIsFollowingByDispatch: (user, auth) =>
+    dispatch(getIsFollowing(user, auth)),
   getIsFollowerByDispatch: (user, auth) => dispatch(getIsFollower(user, auth)),
   changeFollowStatusByDispatch: (user, isFollowing) =>
     dispatch(changeFollowStatus(user, isFollowing)),
@@ -66,6 +82,7 @@ class Profile extends Component {
     changeFollowStatusByDispatch: Function,
     auth: Object,
     user: Object,
+    login: String,
     orgs: Array,
     starCount: string,
     language: string,
@@ -90,22 +107,32 @@ class Profile extends Component {
     };
   }
 
+  componentWillMount() {
+    loadData(this.props);
+  }
+
   componentDidMount() {
-    const user = this.props.navigation.state.params.user;
-    const auth = this.props.auth;
+    //const user = this.props.navigation.state.params.user;
+    /*const auth = this.props.auth;
 
     this.props.getUserInfoByDispatch(user.login);
     this.props.getUserStarCountByDispatch(user.login);
     this.props.getIsFollowingByDispatch(user.login, auth.login);
-    this.props.getIsFollowerByDispatch(user.login, auth.login);
+    this.props.getIsFollowerByDispatch(user.login, auth.login);*/
+
+    loadData(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.login !== this.props.login) {
+      loadData(nextProps);
+    }
   }
 
   getUserInfo = () => {
     this.setState({ refreshing: true });
-
-    const user = this.props.navigation.state.params.user;
-    const auth = this.props.auth;
-
+    loadData(this.props);
+    /*
     Promise.all([
       this.props.getUserInfoByDispatch(user.login),
       this.props.getUserStarCountByDispatch(user.login),
@@ -113,7 +140,7 @@ class Profile extends Component {
       this.props.getIsFollowerByDispatch(user.login, auth.login),
     ]).then(() => {
       this.setState({ refreshing: false });
-    });
+    });*/
   };
 
   showMenuActionSheet = () => {
@@ -131,7 +158,7 @@ class Profile extends Component {
   render() {
     const {
       user,
-      orgs,
+      // orgs,
       starCount,
       language,
       isFollowing,
@@ -152,6 +179,12 @@ class Profile extends Component {
         : translate('user.profile.follow', language),
     ];
 
+    const orgs = [];
+
+    if (!user) {
+      return <Text>LOADING...</Text>;
+    }
+
     return (
       <ViewContainer>
         <ParallaxScroll
@@ -159,9 +192,7 @@ class Profile extends Component {
             <UserProfile
               type="user"
               initialUser={initialUser}
-              starCount={
-                isPendingStarCount ? '' : starCount
-              }
+              starCount={isPendingStarCount ? '' : starCount}
               isFollowing={
                 isPendingUser || isPendingCheckFollowing ? false : isFollowing
               }
@@ -240,6 +271,45 @@ class Profile extends Component {
   }
 }
 
-export const ProfileScreen = connect(mapStateToProps, mapDispatchToProps)(
-  Profile
-);
+const mapStateToProps2 = (state, ownProps) => {
+  const login = ownProps.navigation.state.params.user.login
+    ? ownProps.navigation.state.params.user.login.toLowerCase()
+    : ownProps.navigation.state.params.user.toLowerCase();
+
+  const {
+    // pagination: { starredByUser },
+    entities: { users, repos },
+  } = state;
+
+  console.log('login=', login);
+
+  // const starredPagination = starredByUser[login] || { ids: [] };
+  //const starredRepos = starredPagination.ids.map(id => repos[id]);
+  //const starredRepoOwners = starredRepos.map(repo => users[repo.owner]);
+
+  return {
+    login,
+    auth: state.auth.user,
+    orgs: state.user.orgs,
+    starCount: state.user.starCount,
+    language: state.auth.language,
+    isFollowing: state.user.isFollowing,
+    isFollower: state.user.isFollower,
+    isPendingUser: state.user.isPendingUser,
+    isPendingOrgs: state.user.isPendingOrgs,
+    isPendingStarCount: state.user.isPendingStarCount,
+    isPendingCheckFollowing: state.user.isPendingCheckFollowing,
+    isPendingCheckFollower: state.user.isPendingCheckFollower,
+
+    //  starredRepos,
+    //  starredRepoOwners,
+    //  starredPagination,
+    user: users[login],
+  };
+};
+
+export const ProfileScreen = connect(mapStateToProps2, {
+  loadUser,
+  loadStarred,
+  loadFollowers,
+})(Profile);

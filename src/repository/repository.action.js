@@ -1,3 +1,5 @@
+import has from 'lodash/has';
+
 import {
   root as apiRoot,
   fetchUrl,
@@ -27,7 +29,12 @@ import {
   SEARCH_OPEN_PULLS,
   SEARCH_CLOSED_PULLS,
   GET_REPOSITORY_SUBSCRIBED_STATUS,
+  REPO_FAILURE,
+  REPO_REQUEST,
+  REPO_SUCCESS,
 } from './repository.type';
+
+import { CALL_API, Schemas } from '../api/api.middleware';
 
 export const getRepository = url => {
   return (dispatch, getState) => {
@@ -454,4 +461,31 @@ export const searchClosedRepoPulls = (query, repoFullName) => {
         });
       });
   };
+};
+
+/* New API */
+
+// Fetches a single repository from Github API.
+// Relies on the custom API middleware defined in ../middleware/api.js.
+const fetchRepo = fullName => ({
+  [CALL_API]: {
+    types: [REPO_REQUEST, REPO_SUCCESS, REPO_FAILURE],
+    endpoint: `repos/${fullName}`,
+    schema: Schemas.REPO,
+  },
+});
+
+// Fetches a single repository from Github API unless it is cached.
+// Relies on Redux Thunk middleware.
+export const loadRepo = (fullName, requiredFields = []) => (
+  dispatch,
+  getState
+) => {
+  const repo = getState().entities.repos[fullName];
+
+  if (repo && requiredFields.every(key => has(repo, key))) {
+    return null;
+  }
+
+  return dispatch(fetchRepo(fullName));
 };
