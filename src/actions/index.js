@@ -48,10 +48,8 @@ const fetchFollowers = (login, nextPageUrl) => ({
 // Bails out if page is cached and user didn't specifically request next page.
 // Relies on Redux Thunk middleware.
 export const loadFollowers = (login, nextPage) => (dispatch, getState) => {
-  console.log('loadFollowers(', login);
   const { nextPageUrl = `users/${login}/followers`, pageCount = 0 } =
     getState().pagination.followersByUser[login] || {};
-  console.log('loadFollowers(', login, nextPage, nextPageUrl, pageCount);
 
   if ((pageCount > 0 && !nextPage) || !nextPageUrl) {
     return null;

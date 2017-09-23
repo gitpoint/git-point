@@ -440,7 +440,8 @@ const API_ROOT = 'https://api.github.com/';
 
 // Fetches an API response and normalizes the result JSON according to schema.
 // This makes every API response have the same shape, regardless of how nested it was.
-export const callApi = (endpoint, schema, accessToken) => {
+/* eslint-disable no-unused-vars */
+export const callApi = (endpoint, theSchema, accessToken) => {
   const fullUrl =
     endpoint.indexOf(API_ROOT) === -1 ? API_ROOT + endpoint : endpoint;
 
@@ -460,7 +461,7 @@ export const callApi = (endpoint, schema, accessToken) => {
 
       const nextPageUrl = getNextPageUrl(response);
 
-      return Object.assign({}, normalize(json, schema), { nextPageUrl });
+      return Object.assign({}, normalize(json, theSchema), { nextPageUrl });
     })
   );
 };
