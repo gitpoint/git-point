@@ -19,8 +19,6 @@ const loadData = ({ user, getEvents }) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  // We need to lower case the login due to the way GitHub's API behaves.
-  // Have a look at ../middleware/api.js for more details.
   const { entities: { users, events } } = state;
 
   return {
@@ -283,7 +281,7 @@ class Events extends Component {
             style={styles.linkDescription}
             onPress={() => this.navigateToProfile(userEvent)}
           >
-            {userEvent.payload.member.login}
+            {userEvent.payload.member}
           </Text>
         );
       case 'PullRequestEvent':
@@ -397,7 +395,7 @@ class Events extends Component {
             style={styles.linkDescription}
             onPress={() => this.navigateToRepository(userEvent, true)}
           >
-            {userEvent.payload.forkee.full_name}
+            {userEvent.payload.forkee}
           </Text>
         );
       default:
@@ -465,14 +463,7 @@ class Events extends Component {
 
   navigateToRepository = (userEvent, isForkEvent) => {
     this.props.navigation.navigate('Repository', {
-      repository: !isForkEvent
-        ? {
-            ...userEvent.repo,
-            name: userEvent.repo.name.substring(
-              userEvent.repo.name.indexOf('/') + 1
-            ),
-          }
-        : userEvent.payload.forkee,
+      name: !isForkEvent ? userEvent.repo : userEvent.payload.forkee,
     });
   };
 
@@ -488,7 +479,7 @@ class Events extends Component {
 
   navigateToProfile = (userEvent, isActor) => {
     this.props.navigation.navigate('Profile', {
-      login: !isActor ? userEvent.payload.member.login : userEvent.actor,
+      login: !isActor ? userEvent.payload.member : userEvent.actor,
     });
   };
 
@@ -499,9 +490,6 @@ class Events extends Component {
   renderDescription(userEvent) {
     const user = this.props.users[userEvent.actor];
 
-    console.log(userEvent);
-
-    // return (<Text>Description</Text>);
     return (
       <Text style={styles.descriptionContainer}>
         <Text
