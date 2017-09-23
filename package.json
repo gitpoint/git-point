@@ -67,7 +67,7 @@
     "react-native-i18n": "^2.0.4",
     "react-native-material-design-searchbar": "^1.1.4",
     "react-native-parallax-scroll-view": "^0.19.0",
-    "react-native-photo-view": "^1.4.0",
+    "react-native-photo-view": "^1.5.1",
     "react-native-safari-view": "^2.0.0",
     "react-native-search-bar": "^3.0.0",
     "react-native-syntax-highlighter": "^1.2.1",
@@ -78,12 +78,12 @@
     "react-syntax-highlighter": "^5.6.2",
     "redux": "^3.6.0",
     "redux-actions": "^2.2.1",
+    "redux-devtools-extension": "^2.13.2",
     "redux-logger": "^2.7.4",
     "redux-persist": "^4.3.1",
     "redux-persist-transform-encrypt": "^1.0.2",
     "redux-thunk": "^2.2.0",
-    "reselect": "^3.0.1",
-    "redux-devtools-extension": "^2.13.2"
+    "reselect": "^3.0.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^3.1.0",
