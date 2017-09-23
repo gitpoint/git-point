@@ -12,6 +12,8 @@
     "start:ios": "concurrently -r 'react-native start' 'react-native run-ios'",
     "start:ios:logger": "LOGGER_ENABLED=true concurrently -r 'react-native start --reset-cache' 'react-native run-ios'",
     "start:ios:tron": "TRON_ENABLED=true concurrently -r 'react-native start --reset-cache' 'react-native run-ios'",
+    "clean": "rm -rf node_modules",
+    "clean:android": "cd android && ./gradlew clean && cd -",
     "link": "react-native link",
     "ios": "react-native run-ios",
     "android": "react-native run-android",
@@ -41,9 +43,11 @@
     ]
   },
   "dependencies": {
+    "entities": "^1.1.1",
     "fuzzy-search": "^1.4.0",
     "lodash.uniqby": "^4.7.0",
     "lowlight": "^1.5.0",
+    "marked": "^0.3.6",
     "md5": "^2.2.1",
     "moment": "^2.17.1",
     "node-emoji": "^1.7.0",
@@ -67,6 +71,7 @@
     "react-native-safari-view": "^2.0.0",
     "react-native-search-bar": "^3.0.0",
     "react-native-syntax-highlighter": "^1.2.1",
+    "react-native-table-component": "^1.0.5",
     "react-native-vector-icons": "^4.0.0",
     "react-navigation": "^1.0.0-beta.11",
     "react-redux": "^5.0.2",
@@ -77,7 +82,8 @@
     "redux-persist": "^4.3.1",
     "redux-persist-transform-encrypt": "^1.0.2",
     "redux-thunk": "^2.2.0",
-    "reselect": "^3.0.1"
+    "reselect": "^3.0.1",
+    "redux-devtools-extension": "^2.13.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^3.1.0",

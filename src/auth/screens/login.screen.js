@@ -1,5 +1,7 @@
+/* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
   ActivityIndicator,
   View,
@@ -28,6 +30,14 @@ const mapStateToProps = state => ({
   isLoggingIn: state.auth.isLoggingIn,
   isAuthenticated: state.auth.isAuthenticated,
 });
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      auth,
+    },
+    dispatch
+  );
 
 const styles = StyleSheet.create({
   container: {
@@ -126,17 +136,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDispatchToProps = dispatch => ({
-  authByDispatch: (code, state, navigation) =>
-    dispatch(auth(code, state, navigation)),
-});
-
 class Login extends Component {
   props: {
     isAuthenticated: boolean,
     isLoggingIn: boolean,
     language: string,
-    authByDispatch: Function,
+    auth: Function,
     navigation: Object,
   };
 
@@ -200,7 +205,7 @@ class Login extends Component {
     if (url && url.substring(0, 11) === 'gitpoint://') {
       const [, queryStringFromUrl] = url.match(/\?(.*)/);
       const { state, code } = queryString.parse(queryStringFromUrl);
-      const { authByDispatch, navigation } = this.props;
+      const { auth, navigation } = this.props;
 
       if (stateRandom === state) {
         this.setState({
@@ -209,7 +214,7 @@ class Login extends Component {
           loaderText: translate('auth.login.preparingGitPoint', this.language),
         });
 
-        authByDispatch(code, state, navigation);
+        auth(code, state, navigation);
       }
     }
   };

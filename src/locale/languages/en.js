@@ -257,7 +257,6 @@ export const en = {
       noDescription: 'No description provided.',
       lockedCommentInput: 'Locked, but you can still comment...',
       commentInput: 'Add a comment...',
-      commentButton: 'Post',
       lockedIssue: 'Issue is locked',
       states: {
         open: 'Open',

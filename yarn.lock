@@ -5241,6 +5241,10 @@ react-native-tab-view@^0.0.67:
   dependencies:
     prop-types "^15.5.8"
 
+react-native-table-component@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-table-component/-/react-native-table-component-1.0.5.tgz#84e91f50e92f3cf35eb224749d28444244aced80"
+
 react-native-vector-icons@^4.0.0, react-native-vector-icons@^4.2.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-4.3.0.tgz#49eab845fbcde6354cb3dbcb62c1abd1f6abc866"
@@ -5558,6 +5562,10 @@ redux-actions@^2.2.1:
     lodash "^4.13.1"
     lodash-es "^4.17.4"
     reduce-reducers "^0.1.0"
+
+redux-devtools-extension@^2.13.2:
+  version "2.13.2"
+  resolved "https://registry.yarnpkg.com/redux-devtools-extension/-/redux-devtools-extension-2.13.2.tgz#e0f9a8e8dfca7c17be92c7124958a3b94eb2911d"
 
 redux-logger@^2.7.4:
   version "2.10.2"
