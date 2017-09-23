@@ -4,6 +4,7 @@ import {
   root as apiRoot,
   fetchUrl,
   fetchUrlNormal,
+  fetchUrlHead,
   fetchUrlFile,
   fetchCommentHTML,
   fetchReadMe,
@@ -19,6 +20,7 @@ import {
   GET_REPOSITORY_CONTENTS,
   GET_REPOSITORY_FILE,
   GET_REPOSITORY_ISSUES,
+  GET_REPO_README_STATUS,
   GET_REPO_STARRED_STATUS,
   FORK_REPO_STATUS,
   CHANGE_STAR_STATUS,
@@ -147,6 +149,28 @@ export const getIssues = url => {
   };
 };
 
+export const checkReadMe = url => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: GET_REPO_README_STATUS.PENDING });
+
+    fetchUrlHead(url, accessToken)
+      .then(data => {
+        dispatch({
+          type: GET_REPO_README_STATUS.SUCCESS,
+          payload: data.status !== 404,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: GET_REPO_README_STATUS.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
 export const checkRepoStarred = url => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
@@ -225,6 +249,11 @@ export const getRepositoryInfo = url => {
 
       dispatch(getContributors(contributorsUrl));
       dispatch(getIssues(issuesUrl));
+      dispatch(
+        checkReadMe(
+          `${apiRoot}/repos/${repo.owner.login}/${repo.name}/readme?ref=master`
+        )
+      );
       dispatch(
         checkRepoStarred(
           `${apiRoot}/user/starred/${repo.owner.login}/${repo.name}`

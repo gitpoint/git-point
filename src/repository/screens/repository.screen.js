@@ -21,8 +21,6 @@ import { translate } from 'utils';
 import { colors, fonts } from 'config';
 import {
   getRepositoryInfo,
-  getContributors,
-  getIssues,
   changeStarStatusRepo,
   forkRepo,
   subscribeToRepo,
@@ -38,9 +36,11 @@ const mapStateToProps = state => ({
   starred: state.repository.starred,
   forked: state.repository.forked,
   subscribed: state.repository.subscribed,
+  hasReadMe: state.repository.hasReadMe,
   isPendingRepository: state.repository.isPendingRepository,
   isPendingContributors: state.repository.isPendingContributors,
   isPendingIssues: state.repository.isPendingIssues,
+  isPendingCheckReadMe: state.repository.isPendingCheckReadMe,
   isPendingCheckStarred: state.repository.isPendingCheckStarred,
   isPendingFork: state.repository.isPendingFork,
   isPendingSubscribe: state.repository.isPendingSubscribe,
@@ -48,8 +48,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getRepositoryInfoByDispatch: url => dispatch(getRepositoryInfo(url)),
-  getContributorsByDispatch: url => dispatch(getContributors(url)),
-  getIssuesByDispatch: url => dispatch(getIssues(url)),
   changeStarStatusRepoByDispatch: (owner, repo, starred) =>
     dispatch(changeStarStatusRepo(owner, repo, starred)),
   forkRepoByDispatch: (owner, repo) => dispatch(forkRepo(owner, repo)),
@@ -66,19 +64,19 @@ const styles = StyleSheet.create({
 
 class Repository extends Component {
   props: {
-    // selectRepositoryByDispatch: Function,
     getRepositoryInfoByDispatch: Function,
-    // getIssuesByDispatch: Function,
     changeStarStatusRepoByDispatch: Function,
     forkRepoByDispatch: Function,
     // repositoryName: string,
     repository: Object,
     contributors: Array,
+    hasReadMe: boolean,
     issues: Array,
     starred: boolean,
     // forked: boolean,
     isPendingRepository: boolean,
     isPendingContributors: boolean,
+    isPendingCheckReadMe: boolean,
     isPendingIssues: boolean,
     isPendingCheckStarred: boolean,
     isPendingFork: boolean,
@@ -190,11 +188,13 @@ class Repository extends Component {
     const {
       repository,
       contributors,
+      hasReadMe,
       issues,
       starred,
       language,
       isPendingRepository,
       isPendingContributors,
+      isPendingCheckReadMe,
       isPendingIssues,
       isPendingCheckStarred,
       isPendingFork,
@@ -241,6 +241,8 @@ class Repository extends Component {
     const isStarred =
       isPendingRepository || isPendingCheckStarred ? false : starred;
 
+    const showReadMe = !isPendingCheckReadMe && hasReadMe;
+
     return (
       <ViewContainer>
         {loader}
@@ -275,27 +277,25 @@ class Repository extends Component {
           navigateBack
         >
           {initalRepository &&
-          !initalRepository.owner &&
-          isPendingRepository && (
+            !initalRepository.owner &&
+            isPendingRepository &&
             <SectionList
               title={translate('repository.main.ownerTitle', language)}
             >
               <LoadingUserListItem />
-            </SectionList>
-          )}
+            </SectionList>}
 
           {!(initalRepository && initalRepository.owner) &&
-          (repository && repository.owner) &&
-          !isPendingRepository && (
+            (repository && repository.owner) &&
+            !isPendingRepository &&
             <SectionList
               title={translate('repository.main.ownerTitle', language)}
             >
               <UserListItem user={repository.owner} navigation={navigation} />
-            </SectionList>
-          )}
+            </SectionList>}
 
           {initalRepository &&
-          initalRepository.owner && (
+            initalRepository.owner &&
             <SectionList
               title={translate('repository.main.ownerTitle', language)}
             >
@@ -303,16 +303,14 @@ class Repository extends Component {
                 user={initalRepository.owner}
                 navigation={navigation}
               />
-            </SectionList>
-          )}
+            </SectionList>}
 
-          {(isPendingRepository || isPendingContributors) && (
+          {(isPendingRepository || isPendingContributors) &&
             <LoadingMembersList
               title={translate('repository.main.contributorsTitle', language)}
-            />
-          )}
+            />}
 
-          {!isPendingContributors && (
+          {!isPendingContributors &&
             <MembersList
               title={translate('repository.main.contributorsTitle', language)}
               members={contributors}
@@ -321,26 +319,26 @@ class Repository extends Component {
                 language
               )}
               navigation={navigation}
-            />
-          )}
+            />}
 
           <SectionList
             title={translate('repository.main.sourceTitle', language)}
           >
-            <ListItem
-              title={translate('repository.main.readMe', language)}
-              leftIcon={{
-                name: 'book',
-                color: colors.grey,
-                type: 'octicon',
-              }}
-              titleStyle={styles.listTitle}
-              onPress={() =>
-                navigation.navigate('ReadMe', {
-                  repository,
-                })}
-              underlayColor={colors.greyLight}
-            />
+            {showReadMe &&
+              <ListItem
+                title={translate('repository.main.readMe', language)}
+                leftIcon={{
+                  name: 'book',
+                  color: colors.grey,
+                  type: 'octicon',
+                }}
+                titleStyle={styles.listTitle}
+                onPress={() =>
+                  navigation.navigate('ReadMe', {
+                    repository,
+                  })}
+                underlayColor={colors.greyLight}
+              />}
             <ListItem
               title={translate('repository.main.viewSource', language)}
               titleStyle={styles.listTitle}
@@ -359,25 +357,21 @@ class Repository extends Component {
           </SectionList>
 
           {!repository.fork &&
-          repository.has_issues && (
+            repository.has_issues &&
             <SectionList
               loading={isPendingIssues}
               title={translate('repository.main.issuesTitle', language)}
               noItems={openIssues.length === 0}
               noItemsMessage={
-                pureIssues.length === 0 ? (
-                  translate('repository.main.noIssuesMessage', language)
-                ) : (
-                  translate('repository.main.noOpenIssuesMessage', language)
-                )
+                pureIssues.length === 0
+                  ? translate('repository.main.noIssuesMessage', language)
+                  : translate('repository.main.noOpenIssuesMessage', language)
               }
               showButton
               buttonTitle={
-                pureIssues.length > 0 ? (
-                  translate('repository.main.viewAllButton', language)
-                ) : (
-                  translate('repository.main.newIssueButton', language)
-                )
+                pureIssues.length > 0
+                  ? translate('repository.main.viewAllButton', language)
+                  : translate('repository.main.newIssueButton', language)
               }
               buttonAction={() => {
                 if (pureIssues.length > 0) {
@@ -395,7 +389,7 @@ class Repository extends Component {
             >
               {openIssues
                 .slice(0, 3)
-                .map(item => (
+                .map(item =>
                   <IssueListItem
                     key={item.id}
                     type="issue"
@@ -403,20 +397,20 @@ class Repository extends Component {
                     navigation={navigation}
                     language={language}
                   />
-                ))}
-            </SectionList>
-          )}
+                )}
+            </SectionList>}
 
           <SectionList
             loading={isPendingIssues}
             title={translate('repository.main.pullRequestTitle', language)}
             noItems={openPulls.length === 0}
             noItemsMessage={
-              pulls.length === 0 ? (
-                translate('repository.main.noPullRequestsMessage', language)
-              ) : (
-                translate('repository.main.noOpenPullRequestsMessage', language)
-              )
+              pulls.length === 0
+                ? translate('repository.main.noPullRequestsMessage', language)
+                : translate(
+                    'repository.main.noOpenPullRequestsMessage',
+                    language
+                  )
             }
             showButton={pulls.length > 0}
             buttonTitle={translate('repository.main.viewAllButton', language)}
@@ -429,7 +423,7 @@ class Repository extends Component {
           >
             {openPulls
               .slice(0, 3)
-              .map(item => (
+              .map(item =>
                 <IssueListItem
                   key={item.id}
                   type="pull"
@@ -437,7 +431,7 @@ class Repository extends Component {
                   navigation={navigation}
                   language={language}
                 />
-              ))}
+              )}
           </SectionList>
         </ParallaxScroll>
 
