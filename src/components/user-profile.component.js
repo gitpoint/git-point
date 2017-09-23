@@ -6,7 +6,6 @@ import { ImageZoom } from 'components';
 
 type Props = {
   type: string,
-  initialUser: Object,
   user: Object,
   starCount: string,
   isFollowing: boolean,
@@ -94,7 +93,6 @@ const styles = StyleSheet.create({
 
 export const UserProfile = ({
   type,
-  initialUser,
   user,
   starCount,
   isFollowing,
@@ -106,21 +104,15 @@ export const UserProfile = ({
     <View style={styles.profile}>
       <ImageZoom
         uri={{
-          uri: initialUser.avatar_url
-            ? `${initialUser.avatar_url}&lastModified=${initialUser.updated_at}`
-            : `${user.avatar_url}&lastModified=${user.updated_at}`,
+          uri: `${user.avatar_url}&lastModified=${user.updated_at}`,
         }}
-        style={[
-          styles.avatar,
-          (initialUser.type === 'User' || user.type === 'User') &&
-            styles.userAvatar,
-        ]}
+        style={[styles.avatar, user.type === 'User' && styles.userAvatar]}
       />
       <Text style={styles.title}>
         {user.name || ' '}
       </Text>
       <Text style={styles.subtitle}>
-        {initialUser.login || ' '}
+        {user.login || ' '}
       </Text>
     </View>
     <View style={styles.details}>

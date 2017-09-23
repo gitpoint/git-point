@@ -230,7 +230,7 @@ class Events extends Component {
               style={styles.linkDescription}
               onPress={() => this.navigateToRepository(userEvent)}
             >
-              {userEvent.repo.name}
+              {userEvent.repo}
             </Text>
           );
         }
@@ -251,7 +251,7 @@ class Events extends Component {
             style={styles.linkDescription}
             onPress={() => this.navigateToRepository(userEvent)}
           >
-            {userEvent.repo.name}
+            {userEvent.repo}
           </Text>
         );
       case 'GollumEvent':
@@ -262,7 +262,7 @@ class Events extends Component {
               style={styles.linkDescription}
               onPress={() => this.navigateToRepository(userEvent)}
             >
-              {userEvent.repo.name}
+              {userEvent.repo}
             </Text>{' '}
             wiki
           </Text>
@@ -315,7 +315,7 @@ class Events extends Component {
               }
             }}
           >
-            {userEvent.repo.name}
+            {userEvent.repo}
           </Text>
         );
       default:
@@ -369,7 +369,7 @@ class Events extends Component {
               style={styles.linkDescription}
               onPress={() => this.navigateToRepository(userEvent)}
             >
-              {userEvent.repo.name}
+              {userEvent.repo}
             </Text>
           );
         }
@@ -388,7 +388,7 @@ class Events extends Component {
             style={styles.linkDescription}
             onPress={() => this.navigateToRepository(userEvent)}
           >
-            {userEvent.repo.name}
+            {userEvent.repo}
           </Text>
         );
       case 'ForkEvent':
@@ -488,7 +488,7 @@ class Events extends Component {
 
   navigateToProfile = (userEvent, isActor) => {
     this.props.navigation.navigate('Profile', {
-      user: !isActor ? userEvent.payload.member : userEvent.actor,
+      login: !isActor ? userEvent.payload.member.login : userEvent.actor,
     });
   };
 
@@ -497,12 +497,9 @@ class Events extends Component {
   };
 
   renderDescription(userEvent) {
-    userEvent = denormalize(
-      userEvent,
-      { events: [eventSchema] },
-      this.props.userEvents
-    );
     const user = this.props.users[userEvent.actor];
+
+    console.log(userEvent);
 
     // return (<Text>Description</Text>);
     return (

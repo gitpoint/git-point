@@ -173,7 +173,6 @@ class Profile extends Component {
       navigation,
     } = this.props;
     const { refreshing } = this.state;
-    const initialUser = navigation.state.params.user;
     const isPending = isPendingUser || isPendingOrgs;
     const userActions = [
       isFollowing
@@ -193,7 +192,6 @@ class Profile extends Component {
           renderContent={() =>
             <UserProfile
               type="user"
-              initialUser={initialUser}
               starCount={isPendingStarCount ? '' : starCount}
               isFollowing={
                 isPendingUser || isPendingCheckFollowing ? false : isFollowing
@@ -201,7 +199,7 @@ class Profile extends Component {
               isFollower={
                 isPendingUser || isPendingCheckFollower ? false : isFollower
               }
-              user={initialUser.login === user.login ? user : {}}
+              user={user}
               language={language}
               navigation={navigation}
             />}
@@ -212,11 +210,7 @@ class Profile extends Component {
             />
           }
           stickyTitle={user.login}
-          showMenu={
-            !isPendingUser &&
-            !isPendingCheckFollowing &&
-            initialUser.login === user.login
-          }
+          showMenu={!isPendingUser && !isPendingCheckFollowing}
           menuAction={() => this.showMenuActionSheet()}
           navigateBack
           navigation={navigation}
@@ -229,7 +223,6 @@ class Profile extends Component {
             />}
 
           {!isPending &&
-            initialUser.login === user.login &&
             <View>
               {!!user.bio &&
                 user.bio !== '' &&
@@ -274,9 +267,9 @@ class Profile extends Component {
 }
 
 const mapStateToProps2 = (state, ownProps) => {
-  const login = ownProps.navigation.state.params.user.login
-    ? ownProps.navigation.state.params.user.login.toLowerCase()
-    : ownProps.navigation.state.params.user.toLowerCase();
+  console.log('ownProps', ownProps);
+
+  const login = ownProps.navigation.state.params.login.toLowerCase();
 
   const {
     // pagination: { starredByUser },
