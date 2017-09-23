@@ -174,6 +174,7 @@ export const repositoryReducer = (state = initialState, action = {}) => {
     case GET_REPOSITORY_COMMITS.PENDING:
       return {
         ...state,
+        commits: [],
         isPendingCommits: true,
       };
     case GET_REPOSITORY_COMMITS.SUCCESS:
@@ -372,6 +373,7 @@ export const repositoryReducer = (state = initialState, action = {}) => {
     case GET_COMMIT.PENDING:
       return {
         ...state,
+        commit: {},
         isPendingCommit: true,
       };
     case GET_COMMIT.SUCCESS:

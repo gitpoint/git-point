@@ -114,9 +114,17 @@ class Commit extends Component {
   };
 
   renderHeader = () => {
-    const { commit, language } = this.props;
+    const { commit, language, isPendingCommit } = this.props;
     const message = commit.commit ? commit.commit.message : 'Loading...';
     const committer = commit.author ? commit.author.login : '';
+
+    if (isPendingCommit || !commit.files) {
+      return (
+        <Text>
+          {message}
+        </Text>
+      );
+    }
 
     return (
       <View style={styles.headerContainer}>
@@ -135,14 +143,14 @@ class Commit extends Component {
         <View style={styles.header}>
           <Text style={[styles.headerItem, styles.headerText]}>
             {translate('repository.commit.numFilesChanged', language, {
-              numFilesChanged: commit.files.length,
+              numFilesChanged: isPendingCommit ? 0 : commit.files.length,
             })}
           </Text>
 
           <DiffBlocks
             style={styles.headerItem}
-            additions={commit.stats.additions}
-            deletions={commit.stats.deletions}
+            additions={isPendingCommit ? 0 : commit.stats.additions}
+            deletions={isPendingCommit ? 0 : commit.stats.deletions}
             showNumbers
           />
         </View>
@@ -247,7 +255,10 @@ class Commit extends Component {
     return (
       <ViewContainer>
         {(isPendingCommit || isPendingDiff) &&
-          <LoadingContainer animating={isPendingCommit} center />}
+          <LoadingContainer
+            animating={isPendingCommit || isPendingDiff}
+            center
+          />}
 
         {!isPendingCommit &&
           !isPendingDiff &&
