@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
   StyleSheet,
   Text,
@@ -19,7 +20,7 @@ import {
   EntityInfo,
 } from 'components';
 import { colors, fonts, normalize } from 'config';
-import { getUser, getOrgs, signOut, getStarCount } from 'auth';
+import { getUser, getOrgs, getStarCount } from 'auth';
 import { emojifyText, openURLInView, translate } from 'utils';
 
 const mapStateToProps = state => ({
@@ -32,12 +33,11 @@ const mapStateToProps = state => ({
   hasInitialUser: state.auth.hasInitialUser,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getUserByDispatch: () => dispatch(getUser()),
-  getOrgsByDispatch: () => dispatch(getOrgs()),
-  getStarCountByDispatch: () => dispatch(getStarCount()),
-  signOutByDispatch: () => dispatch(signOut()),
-});
+const mapDispatchToProps = dispatch => bindActionCreators({
+  getUser,
+  getOrgs,
+  getStarCount,
+}, dispatch);
 
 const styles = StyleSheet.create({
   listTitle: {
@@ -74,9 +74,9 @@ const styles = StyleSheet.create({
 
 class AuthProfile extends Component {
   props: {
-    getUserByDispatch: Function,
-    getOrgsByDispatch: Function,
-    getStarCountByDispatch: Function,
+    getUser: Function,
+    getOrgs: Function,
+    getStarCount: Function,
     user: Object,
     orgs: Array,
     language: string,
@@ -92,9 +92,9 @@ class AuthProfile extends Component {
   }
 
   refreshProfile = () => {
-    this.props.getUserByDispatch();
-    this.props.getOrgsByDispatch();
-    this.props.getStarCountByDispatch();
+    this.props.getUser();
+    this.props.getOrgs();
+    this.props.getStarCount();
   };
 
   render() {

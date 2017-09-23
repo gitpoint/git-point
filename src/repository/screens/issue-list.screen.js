@@ -1,5 +1,7 @@
+/* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
   FlatList,
   View,
@@ -32,12 +34,14 @@ const mapStateToProps = state => ({
   isPendingSearchClosedIssues: state.repository.isPendingSearchClosedIssues,
 });
 
-const mapDispatchToProps = dispatch => ({
-  searchOpenRepoIssuesByDispatch: (query, repo) =>
-    dispatch(searchOpenRepoIssues(query, repo)),
-  searchClosedRepoIssuesByDispatch: (query, repo) =>
-    dispatch(searchClosedRepoIssues(query, repo)),
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      searchOpenRepoIssues,
+      searchClosedRepoIssues,
+    },
+    dispatch
+  );
 
 const styles = StyleSheet.create({
   header: {
@@ -119,8 +123,8 @@ class IssueList extends Component {
     searchedClosedIssues: Array,
     isPendingSearchOpenIssues: boolean,
     isPendingSearchClosedIssues: boolean,
-    searchOpenRepoIssuesByDispatch: Function,
-    searchClosedRepoIssuesByDispatch: Function,
+    searchOpenRepoIssues: Function,
+    searchClosedRepoIssues: Function,
     navigation: Object,
   };
 
@@ -183,8 +187,8 @@ class IssueList extends Component {
 
   search = (query, selectedType = null) => {
     const {
-      searchOpenRepoIssuesByDispatch,
-      searchClosedRepoIssuesByDispatch,
+      searchOpenRepoIssues,
+      searchClosedRepoIssues,
       repository,
     } = this.props;
 
@@ -198,9 +202,9 @@ class IssueList extends Component {
       });
 
       if (selectedSearchType === 0) {
-        searchOpenRepoIssuesByDispatch(query, repository.full_name);
+        searchOpenRepoIssues(query, repository.full_name);
       } else {
-        searchClosedRepoIssuesByDispatch(query, repository.full_name);
+        searchClosedRepoIssues(query, repository.full_name);
       }
     }
   };
@@ -209,13 +213,14 @@ class IssueList extends Component {
     return item.id;
   };
 
-  renderItem = ({ item }) =>
+  renderItem = ({ item }) => (
     <IssueListItem
       type={this.props.navigation.state.params.type}
       issue={item}
       navigation={this.props.navigation}
       language={this.props.language}
-    />;
+    />
+  );
 
   render() {
     const {
@@ -261,26 +266,36 @@ class IssueList extends Component {
         </View>
 
         {isPendingSearchOpenIssues &&
-          searchType === 0 &&
-          <LoadingContainer
-            animating={isPendingSearchOpenIssues && searchType === 0}
-            text={translate('repository.issueList.searchingMessage', language, {
-              query,
-            })}
-            style={styles.marginSpacing}
-          />}
+          searchType === 0 && (
+            <LoadingContainer
+              animating={isPendingSearchOpenIssues && searchType === 0}
+              text={translate(
+                'repository.issueList.searchingMessage',
+                language,
+                {
+                  query,
+                }
+              )}
+              style={styles.marginSpacing}
+            />
+          )}
 
         {isPendingSearchClosedIssues &&
-          searchType === 1 &&
-          <LoadingContainer
-            animating={isPendingSearchClosedIssues && searchType === 1}
-            text={translate('repository.issueList.searchingMessage', language, {
-              query,
-            })}
-            style={styles.marginSpacing}
-          />}
+          searchType === 1 && (
+            <LoadingContainer
+              animating={isPendingSearchClosedIssues && searchType === 1}
+              text={translate(
+                'repository.issueList.searchingMessage',
+                language,
+                {
+                  query,
+                }
+              )}
+              style={styles.marginSpacing}
+            />
+          )}
 
-        {this.getList().length > 0 &&
+        {this.getList().length > 0 && (
           <FlatList
             ref={ref => {
               this.issueList = ref;
@@ -289,27 +304,30 @@ class IssueList extends Component {
             data={this.getList()}
             keyExtractor={this.keyExtractor}
             renderItem={this.renderItem}
-          />}
+          />
+        )}
 
         {searchStart &&
           !isPendingSearchOpenIssues &&
           searchedOpenIssues.length === 0 &&
-          searchType === 0 &&
-          <View style={styles.marginSpacing}>
-            <Text style={styles.searchTitle}>
-              {translate('repository.issueList.noOpenIssues', language)}
-            </Text>
-          </View>}
+          searchType === 0 && (
+            <View style={styles.marginSpacing}>
+              <Text style={styles.searchTitle}>
+                {translate('repository.issueList.noOpenIssues', language)}
+              </Text>
+            </View>
+          )}
 
         {searchStart &&
           !isPendingSearchClosedIssues &&
           searchedClosedIssues.length === 0 &&
-          searchType === 1 &&
-          <View style={styles.marginSpacing}>
-            <Text style={styles.searchTitle}>
-              {translate('repository.issueList.noClosedIssues', language)}
-            </Text>
-          </View>}
+          searchType === 1 && (
+            <View style={styles.marginSpacing}>
+              <Text style={styles.searchTitle}>
+                {translate('repository.issueList.noClosedIssues', language)}
+              </Text>
+            </View>
+          )}
       </ViewContainer>
     );
   }

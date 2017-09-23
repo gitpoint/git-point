@@ -1,5 +1,7 @@
+/* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { ScrollView, StyleSheet, TextInput, View, Alert } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
@@ -36,14 +38,17 @@ const mapStateToProps = state => ({
   isPendingSubmitting: state.issue.isPendingSubmitting,
 });
 
-const mapDispatchToProps = dispatch => ({
-  submitNewIssueByDispatch: (owner, repoName, issueTitle, issueComment) =>
-    dispatch(submitNewIssue(owner, repoName, issueTitle, issueComment)),
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      submitNewIssue,
+    },
+    dispatch
+  );
 
 class NewIssue extends Component {
   props: {
-    submitNewIssueByDispatch: Function,
+    submitNewIssue: Function,
     language: string,
     repository: Object,
     navigation: Object,
@@ -67,12 +72,7 @@ class NewIssue extends Component {
   }
 
   submitNewIssue = () => {
-    const {
-      submitNewIssueByDispatch,
-      repository,
-      language,
-      navigation,
-    } = this.props;
+    const { submitNewIssue, repository, language, navigation } = this.props;
     const { issueTitle, issueComment } = this.state;
     const repoName = repository.name;
     const owner = repository.owner.login;
@@ -84,12 +84,7 @@ class NewIssue extends Component {
         [{ text: translate('common.ok', language) }]
       );
     } else {
-      submitNewIssueByDispatch(
-        owner,
-        repoName,
-        issueTitle,
-        issueComment
-      ).then(issue => {
+      submitNewIssue(owner, repoName, issueTitle, issueComment).then(issue => {
         navigation.navigate('Issue', {
           issue,
           headerLeft: null,
@@ -107,7 +102,7 @@ class NewIssue extends Component {
       <ViewContainer>
         {isPendingSubmitting && <LoadingModal />}
         <ScrollView>
-          {repository.full_name &&
+          {repository.full_name && (
             <ListItem
               title={repository.full_name}
               titleStyle={styles.titleSmall}
@@ -118,7 +113,8 @@ class NewIssue extends Component {
                 type: 'octicon',
               }}
               hideChevron
-            />}
+            />
+          )}
           <SectionList title={translate('issue.newIssue.issueTitle', language)}>
             <TextInput
               underlineColorAndroid={'transparent'}

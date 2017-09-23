@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { ScrollView, StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
@@ -26,13 +27,11 @@ const mapStateToProps = state => ({
   isPendingLabels: state.repository.isPendingLabels,
 });
 
-const mapDispatchToProps = dispatch => ({
-  editIssue: (owner, repoName, issueNum, editParams, updateParams) =>
-    dispatch(editIssue(owner, repoName, issueNum, editParams, updateParams)),
-  changeIssueLockStatus: (owner, repoName, issueNum, currentStatus) =>
-    dispatch(changeIssueLockStatus(owner, repoName, issueNum, currentStatus)),
-  getLabels: url => dispatch(getLabels(url)),
-});
+const mapDispatchToProps = dispatch => bindActionCreators({
+  editIssue,
+  changeIssueLockStatus,
+  getLabels,
+}, dispatch);
 
 const styles = StyleSheet.create({
   listItemTitle: {

@@ -1,5 +1,7 @@
+/* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { FlatList, View, Dimensions, StyleSheet } from 'react-native';
 
 import {
@@ -19,12 +21,14 @@ const mapStateToProps = state => ({
   isPendingSearchUserRepos: state.user.isPendingSearchUserRepos,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getRepositoriesByDispatch: (user, type) =>
-    dispatch(getRepositories(user, type)),
-  searchUserReposByDispatch: (user, type) =>
-    dispatch(searchUserRepos(user, type)),
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getRepositories,
+      searchUserRepos,
+    },
+    dispatch
+  );
 
 const styles = StyleSheet.create({
   header: {
@@ -49,8 +53,8 @@ const styles = StyleSheet.create({
 
 class RepositoryList extends Component {
   props: {
-    getRepositoriesByDispatch: Function,
-    searchUserReposByDispatch: Function,
+    getRepositories: Function,
+    searchUserRepos: Function,
     user: Object,
     repositories: Array,
     searchedUserRepos: Array,
@@ -81,7 +85,7 @@ class RepositoryList extends Component {
   componentDidMount() {
     const user = this.props.navigation.state.params.user;
 
-    this.props.getRepositoriesByDispatch(user);
+    this.props.getRepositories(user);
   }
 
   getList = () => {
@@ -92,7 +96,7 @@ class RepositoryList extends Component {
   };
 
   search(query) {
-    const { searchUserReposByDispatch } = this.props;
+    const { searchUserRepos } = this.props;
     const user = this.props.navigation.state.params.user;
 
     if (query !== '') {
@@ -101,7 +105,7 @@ class RepositoryList extends Component {
         query,
       });
 
-      searchUserReposByDispatch(query, user);
+      searchUserRepos(query, user);
     }
   }
 
@@ -148,19 +152,21 @@ class RepositoryList extends Component {
               (item, index) => <LoadingRepositoryListItem key={index} /> // eslint-disable-line react/no-array-index-key
             )}
 
-          {!loading &&
+          {!loading && (
             <View style={styles.listContainer}>
               <FlatList
                 removeClippedSubviews={false}
                 data={this.getList()}
                 keyExtractor={this.keyExtractor}
-                renderItem={({ item }) =>
+                renderItem={({ item }) => (
                   <RepositoryListItem
                     repository={item}
                     navigation={navigation}
-                  />}
+                  />
+                )}
               />
-            </View>}
+            </View>
+          )}
         </View>
       </ViewContainer>
     );

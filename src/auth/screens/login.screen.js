@@ -1,5 +1,7 @@
+/* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Linking, View, StyleSheet, Text, Platform, Image } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import SafariView from 'react-native-safari-view';
@@ -19,6 +21,14 @@ const mapStateToProps = state => ({
   isLoggingIn: state.auth.isLoggingIn,
   isAuthenticated: state.auth.isAuthenticated,
 });
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      auth,
+    },
+    dispatch
+  );
 
 const styles = StyleSheet.create({
   container: {
@@ -90,17 +100,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDispatchToProps = dispatch => ({
-  authByDispatch: (code, state, navigation) =>
-    dispatch(auth(code, state, navigation)),
-});
-
 class Login extends Component {
   props: {
     isAuthenticated: boolean,
     isLoggingIn: boolean,
     language: string,
-    authByDispatch: Function,
+    auth: Function,
     navigation: Object,
   };
 
@@ -138,12 +143,12 @@ class Login extends Component {
   handleOpenURL = ({ url }) => {
     const [, queryStringFromUrl] = url.match(/\?(.*)/);
     const { state, code } = queryString.parse(queryStringFromUrl);
-    const { authByDispatch, navigation } = this.props;
+    const { auth, navigation } = this.props;
 
     if (stateRandom === state) {
       this.setState({ code });
 
-      authByDispatch(code, state, navigation);
+      auth(code, state, navigation);
     }
 
     if (Platform.OS === 'ios') {
@@ -162,96 +167,97 @@ class Login extends Component {
     return (
       <ViewContainer barColor="light">
         {!isAuthenticated &&
-          this.state.asyncStorageChecked &&
-          <View style={styles.container}>
-            <View style={styles.miniSection}>
-              <Image
-                style={styles.logo}
-                source={require('../../assets/logo.png')}
-              />
+          this.state.asyncStorageChecked && (
+            <View style={styles.container}>
+              <View style={styles.miniSection}>
+                <Image
+                  style={styles.logo}
+                  source={require('../../assets/logo.png')}
+                />
+              </View>
+
+              <View style={styles.contentSection}>
+                <AppIntro
+                  activeDotColor={colors.white}
+                  showSkipButton={false}
+                  showDoneButton={false}
+                >
+                  <View style={[styles.slide, styles.slide1]}>
+                    <Image
+                      style={styles.logo}
+                      source={require('../../assets/logo.png')}
+                    />
+                    <Text style={styles.title}>
+                      {translate('auth.login.welcomeTitle', language)}
+                    </Text>
+                    <Text style={styles.message}>
+                      {translate('auth.login.welcomeMessage', language)}
+                    </Text>
+                  </View>
+
+                  <View style={[styles.slide, styles.slide2]}>
+                    <Icon
+                      style={styles.icon}
+                      color={colors.white}
+                      size={85}
+                      name="bell"
+                      type="octicon"
+                    />
+                    <Text style={styles.title}>
+                      {translate('auth.login.notificationsTitle', language)}
+                    </Text>
+                    <Text style={styles.message}>
+                      {translate('auth.login.notificationsMessage', language)}
+                    </Text>
+                  </View>
+
+                  <View style={[styles.slide, styles.slide3]}>
+                    <Icon
+                      containerStyle={styles.iconMargin}
+                      style={styles.icon}
+                      color={colors.white}
+                      size={85}
+                      name="repo"
+                      type="octicon"
+                    />
+                    <Text style={styles.title}>
+                      {translate('auth.login.reposTitle', language)}
+                    </Text>
+                    <Text style={styles.message}>
+                      {translate('auth.login.reposMessage', language)}
+                    </Text>
+                  </View>
+
+                  <View style={[styles.slide, styles.slide4]}>
+                    <Icon
+                      containerStyle={styles.iconMargin}
+                      style={styles.icon}
+                      color={colors.white}
+                      size={85}
+                      name="git-pull-request"
+                      type="octicon"
+                    />
+                    <Text style={styles.title}>
+                      {translate('auth.login.issuesTitle', language)}
+                    </Text>
+                    <Text style={styles.message}>
+                      {translate('auth.login.issuesMessage', language)}
+                    </Text>
+                  </View>
+                </AppIntro>
+              </View>
+
+              <View style={styles.miniSection}>
+                <Button
+                  raised
+                  title={translate('auth.login.signInButton', language)}
+                  buttonStyle={styles.button}
+                  textStyle={styles.buttonText}
+                  onPress={() => this.signIn()}
+                />
+              </View>
             </View>
-
-            <View style={styles.contentSection}>
-              <AppIntro
-                activeDotColor={colors.white}
-                showSkipButton={false}
-                showDoneButton={false}
-              >
-                <View style={[styles.slide, styles.slide1]}>
-                  <Image
-                    style={styles.logo}
-                    source={require('../../assets/logo.png')}
-                  />
-                  <Text style={styles.title}>
-                    {translate('auth.login.welcomeTitle', language)}
-                  </Text>
-                  <Text style={styles.message}>
-                    {translate('auth.login.welcomeMessage', language)}
-                  </Text>
-                </View>
-
-                <View style={[styles.slide, styles.slide2]}>
-                  <Icon
-                    style={styles.icon}
-                    color={colors.white}
-                    size={85}
-                    name="bell"
-                    type="octicon"
-                  />
-                  <Text style={styles.title}>
-                    {translate('auth.login.notificationsTitle', language)}
-                  </Text>
-                  <Text style={styles.message}>
-                    {translate('auth.login.notificationsMessage', language)}
-                  </Text>
-                </View>
-
-                <View style={[styles.slide, styles.slide3]}>
-                  <Icon
-                    containerStyle={styles.iconMargin}
-                    style={styles.icon}
-                    color={colors.white}
-                    size={85}
-                    name="repo"
-                    type="octicon"
-                  />
-                  <Text style={styles.title}>
-                    {translate('auth.login.reposTitle', language)}
-                  </Text>
-                  <Text style={styles.message}>
-                    {translate('auth.login.reposMessage', language)}
-                  </Text>
-                </View>
-
-                <View style={[styles.slide, styles.slide4]}>
-                  <Icon
-                    containerStyle={styles.iconMargin}
-                    style={styles.icon}
-                    color={colors.white}
-                    size={85}
-                    name="git-pull-request"
-                    type="octicon"
-                  />
-                  <Text style={styles.title}>
-                    {translate('auth.login.issuesTitle', language)}
-                  </Text>
-                  <Text style={styles.message}>
-                    {translate('auth.login.issuesMessage', language)}
-                  </Text>
-                </View>
-              </AppIntro>
-            </View>
-
-            <View style={styles.miniSection}>
-              <Button
-                raised
-                title={translate('auth.login.signInButton', language)}
-                buttonStyle={styles.button}
-                textStyle={styles.buttonText}
-                onPress={() => this.signIn()}
-              />
-            </View>
-          </View>}
+          )}
 
         {isAuthenticated && <LoadingContainer animating={isLoggingIn} center />}
       </ViewContainer>

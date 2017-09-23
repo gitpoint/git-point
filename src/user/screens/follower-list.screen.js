@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { FlatList, View } from 'react-native';
 
 import { ViewContainer, UserListItem, LoadingUserListItem } from 'components';
@@ -11,9 +12,9 @@ const mapStateToProps = state => ({
   isPendingFollowers: state.user.isPendingFollowers,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getFollowers: (user, type) => dispatch(getFollowers(user, type)),
-});
+const mapDispatchToProps = dispatch => bindActionCreators({
+  getFollowers,
+}, dispatch);
 
 class FollowerList extends Component {
   props: {

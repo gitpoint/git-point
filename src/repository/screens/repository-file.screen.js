@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
   View,
   ScrollView,
@@ -22,9 +23,9 @@ const mapStateToProps = state => ({
   isPendingFile: state.repository.isPendingFile,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getRepositoryFileByDispatch: url => dispatch(getRepositoryFile(url)),
-});
+const mapDispatchToProps = dispatch => bindActionCreators({
+  getRepositoryFile,
+}, dispatch);
 
 const styles = StyleSheet.create({
   contentContainer: {
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
 
 class RepositoryFile extends Component {
   props: {
-    getRepositoryFileByDispatch: Function,
+    getRepositoryFile: Function,
     fileContent: any,
     isPendingFile: boolean,
     navigation: Object,
@@ -96,7 +97,7 @@ class RepositoryFile extends Component {
     const fileType = content.name.split('.').pop();
 
     if (!this.isImage(fileType)) {
-      this.props.getRepositoryFileByDispatch(content.download_url);
+      this.props.getRepositoryFile(content.download_url);
     } else {
       this.setImageSize(content.download_url);
     }

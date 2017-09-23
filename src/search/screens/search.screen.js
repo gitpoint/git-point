@@ -1,5 +1,7 @@
+/* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
   StyleSheet,
   Text,
@@ -29,10 +31,14 @@ const mapStateToProps = state => ({
   isPendingSearchRepos: state.search.isPendingSearchRepos,
 });
 
-const mapDispatchToProps = dispatch => ({
-  searchReposByDispatch: query => dispatch(searchRepos(query)),
-  searchUsersByDispatch: query => dispatch(searchUsers(query)),
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      searchRepos,
+      searchUsers,
+    },
+    dispatch
+  );
 
 const styles = StyleSheet.create({
   searchBarWrapper: {
@@ -97,8 +103,8 @@ const styles = StyleSheet.create({
 
 class Search extends Component {
   props: {
-    searchReposByDispatch: Function,
-    searchUsersByDispatch: Function,
+    searchRepos: Function,
+    searchUsers: Function,
     users: Array,
     repos: Array,
     language: string,
@@ -130,7 +136,7 @@ class Search extends Component {
   }
 
   search(query, selectedType = null) {
-    const { searchReposByDispatch, searchUsersByDispatch } = this.props;
+    const { searchRepos, searchUsers } = this.props;
 
     const selectedSearchType =
       selectedType !== null ? selectedType : this.state.searchType;
@@ -142,9 +148,9 @@ class Search extends Component {
       });
 
       if (selectedSearchType === 0) {
-        searchReposByDispatch(query);
+        searchRepos(query);
       } else {
-        searchUsersByDispatch(query);
+        searchUsers(query);
       }
     }
   }
@@ -234,38 +240,44 @@ class Search extends Component {
         </View>
 
         {isPendingSearchRepos &&
-          searchType === 0 &&
-          <LoadingContainer
-            animating={isPendingSearchRepos && searchType === 0}
-            text={translate('search.main.searchingMessage', language, {
-              query,
-            })}
-            style={styles.marginSpacing}
-          />}
+          searchType === 0 && (
+            <LoadingContainer
+              animating={isPendingSearchRepos && searchType === 0}
+              text={translate('search.main.searchingMessage', language, {
+                query,
+              })}
+              style={styles.marginSpacing}
+            />
+          )}
 
         {isPendingSearchUsers &&
-          searchType === 1 &&
-          <LoadingContainer
-            animating={isPendingSearchUsers && searchType === 1}
-            text={translate('search.main.searchingMessage', language, {
-              query,
-            })}
-            style={styles.marginSpacing}
-          />}
+          searchType === 1 && (
+            <LoadingContainer
+              animating={isPendingSearchUsers && searchType === 1}
+              text={translate('search.main.searchingMessage', language, {
+                query,
+              })}
+              style={styles.marginSpacing}
+            />
+          )}
 
         {searchStart &&
-          noResults &&
-          <View
-            style={[styles.listContainer, isPending && styles.noBorderTopWidth]}
-          >
-            <FlatList
-              data={searchType === 0 ? repos : users}
-              keyExtractor={this.keyExtractor}
-              renderItem={this.renderItem}
-            />
-          </View>}
+          noResults && (
+            <View
+              style={[
+                styles.listContainer,
+                isPending && styles.noBorderTopWidth,
+              ]}
+            >
+              <FlatList
+                data={searchType === 0 ? repos : users}
+                keyExtractor={this.keyExtractor}
+                renderItem={this.renderItem}
+              />
+            </View>
+          )}
 
-        {!searchStart &&
+        {!searchStart && (
           <View style={styles.textContainer}>
             <Text style={styles.searchTitle}>
               {translate('search.main.searchMessage', language, {
@@ -275,27 +287,30 @@ class Search extends Component {
                     : translate('search.main.user', language),
               })}
             </Text>
-          </View>}
+          </View>
+        )}
 
         {searchStart &&
           !isPendingSearchRepos &&
           repos.length === 0 &&
-          searchType === 0 &&
-          <View style={styles.textContainer}>
-            <Text style={styles.searchTitle}>
-              {translate('search.main.noRepositoriesFound', language)}
-            </Text>
-          </View>}
+          searchType === 0 && (
+            <View style={styles.textContainer}>
+              <Text style={styles.searchTitle}>
+                {translate('search.main.noRepositoriesFound', language)}
+              </Text>
+            </View>
+          )}
 
         {searchStart &&
           !isPendingSearchUsers &&
           users.length === 0 &&
-          searchType === 1 &&
-          <View style={styles.textContainer}>
-            <Text style={styles.searchTitle}>
-              {translate('search.main.noUsersFound', language)}
-            </Text>
-          </View>}
+          searchType === 1 && (
+            <View style={styles.textContainer}>
+              <Text style={styles.searchTitle}>
+                {translate('search.main.noUsersFound', language)}
+              </Text>
+            </View>
+          )}
       </ViewContainer>
     );
   }
