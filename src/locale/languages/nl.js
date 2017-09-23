@@ -1,6 +1,9 @@
 export const nl = {
   auth: {
     login: {
+      connectingToGitHub: 'Connecting to GitHub...',
+      preparingGitPoint: 'Preparing GitPoint...',
+      cancel: 'CANCEL',
       welcomeTitle: 'Welkom bij GitPoint',
       welcomeMessage: 'De meest complete GitHub client die geen geld kost',
       notificationsTitle: 'Beheer notificaties',

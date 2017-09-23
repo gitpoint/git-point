@@ -146,7 +146,8 @@ export class CommentInput extends Component {
               />
             </TouchableOpacity>}
 
-          {!userCanPost && this.props.issueLocked &&
+          {!userCanPost &&
+            this.props.issueLocked &&
             <View style={styles.postButtonContainer}>
               <Icon name="lock" type="octicon" color={colors.grey} />
             </View>}

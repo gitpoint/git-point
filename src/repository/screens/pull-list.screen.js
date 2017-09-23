@@ -188,14 +188,13 @@ class PullList extends Component {
     return item.id;
   };
 
-  renderItem = ({ item }) => (
+  renderItem = ({ item }) =>
     <IssueListItem
       type={this.props.navigation.state.params.type}
       issue={item}
       navigation={this.props.navigation}
       language={this.props.language}
-    />
-  );
+    />;
 
   render() {
     const {
@@ -241,36 +240,26 @@ class PullList extends Component {
         </View>
 
         {isPendingSearchOpenPulls &&
-          searchType === 0 && (
-            <LoadingContainer
-              animating={isPendingSearchOpenPulls && searchType === 0}
-              text={translate(
-                'repository.pullList.searchingMessage',
-                language,
-                {
-                  query,
-                }
-              )}
-              style={styles.marginSpacing}
-            />
-          )}
+          searchType === 0 &&
+          <LoadingContainer
+            animating={isPendingSearchOpenPulls && searchType === 0}
+            text={translate('repository.pullList.searchingMessage', language, {
+              query,
+            })}
+            style={styles.marginSpacing}
+          />}
 
         {isPendingSearchClosedPulls &&
-          searchType === 1 && (
-            <LoadingContainer
-              animating={isPendingSearchClosedPulls && searchType === 1}
-              text={translate(
-                'repository.pullList.searchingMessage',
-                language,
-                {
-                  query,
-                }
-              )}
-              style={styles.marginSpacing}
-            />
-          )}
+          searchType === 1 &&
+          <LoadingContainer
+            animating={isPendingSearchClosedPulls && searchType === 1}
+            text={translate('repository.pullList.searchingMessage', language, {
+              query,
+            })}
+            style={styles.marginSpacing}
+          />}
 
-        {this.getList().length > 0 && (
+        {this.getList().length > 0 &&
           <FlatList
             ref={ref => {
               this.pullList = ref;
@@ -279,30 +268,27 @@ class PullList extends Component {
             data={this.getList()}
             keyExtractor={this.keyExtractor}
             renderItem={this.renderItem}
-          />
-        )}
+          />}
 
         {searchStart &&
           !isPendingSearchOpenPulls &&
           searchedOpenPulls.length === 0 &&
-          searchType === 0 && (
-            <View style={styles.marginSpacing}>
-              <Text style={styles.searchTitle}>
-                {translate('repository.pullList.noOpenPulls', language)}
-              </Text>
-            </View>
-          )}
+          searchType === 0 &&
+          <View style={styles.marginSpacing}>
+            <Text style={styles.searchTitle}>
+              {translate('repository.pullList.noOpenPulls', language)}
+            </Text>
+          </View>}
 
         {searchStart &&
           !isPendingSearchClosedPulls &&
           searchedClosedPulls.length === 0 &&
-          searchType === 1 && (
-            <View style={styles.marginSpacing}>
-              <Text style={styles.searchTitle}>
-                {translate('repository.pullList.noOpenPulls', language)}
-              </Text>
-            </View>
-          )}
+          searchType === 1 &&
+          <View style={styles.marginSpacing}>
+            <Text style={styles.searchTitle}>
+              {translate('repository.pullList.noOpenPulls', language)}
+            </Text>
+          </View>}
       </ViewContainer>
     );
   }

@@ -23,9 +23,13 @@ const mapStateToProps = state => ({
   isPendingFile: state.repository.isPendingFile,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  getRepositoryFile,
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getRepositoryFile,
+    },
+    dispatch
+  );
 
 const styles = StyleSheet.create({
   contentContainer: {

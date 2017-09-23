@@ -102,7 +102,7 @@ class NewIssue extends Component {
       <ViewContainer>
         {isPendingSubmitting && <LoadingModal />}
         <ScrollView>
-          {repository.full_name && (
+          {repository.full_name &&
             <ListItem
               title={repository.full_name}
               titleStyle={styles.titleSmall}
@@ -113,8 +113,7 @@ class NewIssue extends Component {
                 type: 'octicon',
               }}
               hideChevron
-            />
-          )}
+            />}
           <SectionList title={translate('issue.newIssue.issueTitle', language)}>
             <TextInput
               underlineColorAndroid={'transparent'}

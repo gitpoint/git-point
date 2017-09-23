@@ -12,9 +12,13 @@ const mapStateToProps = state => ({
   isPendingReadMe: state.repository.isPendingReadMe,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  getReadMe,
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getReadMe,
+    },
+    dispatch
+  );
 
 const styles = StyleSheet.create({
   textContainer: {

@@ -2,17 +2,26 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Linking, View, StyleSheet, Text, Platform, Image } from 'react-native';
+import {
+  ActivityIndicator,
+  View,
+  StyleSheet,
+  Text,
+  Linking,
+  Image,
+  WebView,
+  Platform,
+  Modal,
+} from 'react-native';
 import { Button, Icon } from 'react-native-elements';
-import SafariView from 'react-native-safari-view';
 import AppIntro from 'react-native-app-intro';
 import queryString from 'query-string';
 
-import { ViewContainer, LoadingContainer } from 'components';
+import { ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { CLIENT_ID } from 'api';
 import { auth } from 'auth';
-import { openURLInView, translate } from 'utils';
+import { translate } from 'utils';
 
 const stateRandom = Math.random().toString();
 
@@ -49,6 +58,28 @@ const styles = StyleSheet.create({
     ...fonts.fontPrimaryBold,
     fontSize: normalize(12),
   },
+  browserDismiss: {
+    flex: 1,
+  },
+  browserLoader: {
+    flex: 1,
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+    width: '100%',
+    textAlign: 'center',
+    backgroundColor: colors.githubDark,
+  },
+  browserLoadingLabel: {
+    fontSize: normalize(20),
+    color: colors.white,
+    ...fonts.fontPrimarySemiBold,
+    paddingBottom: 20,
+  },
+  browserSection: {
+    flex: 5,
+  },
   logo: {
     width: 90,
     height: 90,
@@ -57,6 +88,11 @@ const styles = StyleSheet.create({
     flex: 1.5,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  modalContainer: {
+    flex: 1,
+    paddingTop: 20,
+    backgroundColor: '#1f2327',
   },
   contentSection: {
     flex: 2,
@@ -114,11 +150,14 @@ class Login extends Component {
 
     this.state = {
       code: null,
+      modalVisible: false,
+      cancelDisabled: false,
+      showLoader: true,
+      loaderText: translate('auth.login.connectingToGitHub', this.language),
       asyncStorageChecked: false,
     };
   }
 
-  // Set up Linking
   componentDidMount() {
     if (this.props.isAuthenticated) {
       this.props.navigation.navigate('Main');
@@ -127,39 +166,69 @@ class Login extends Component {
       // eslint-disable-next-line react/no-did-mount-set-state
       this.setState({ asyncStorageChecked: true });
 
-      Linking.addEventListener('url', this.handleOpenURL);
-      Linking.getInitialURL().then(url => {
-        if (url) {
-          this.handleOpenURL({ url });
-        }
-      });
+      if (Platform.OS === 'android') {
+        Linking.addEventListener('url', this.handleOpenURL);
+        Linking.getInitialURL().then(url => {
+          if (url) {
+            this.handleOpenURL({ url });
+          }
+        });
+      }
     }
   }
 
   componentWillUnmount() {
-    Linking.removeEventListener('url', this.handleOpenURL);
+    if (Platform.OS === 'android') {
+      Linking.removeEventListener('url', this.handleOpenURL);
+    }
   }
 
-  handleOpenURL = ({ url }) => {
-    const [, queryStringFromUrl] = url.match(/\?(.*)/);
-    const { state, code } = queryString.parse(queryStringFromUrl);
-    const { auth, navigation } = this.props;
+  onNavigationStateChange = navState => {
+    const url = navState.url;
 
-    if (stateRandom === state) {
-      this.setState({ code });
+    this.handleOpenURL({ url });
+  };
 
-      auth(code, state, navigation);
-    }
+  setModalVisible = visible => {
+    this.setState({ modalVisible: visible });
+  };
 
-    if (Platform.OS === 'ios') {
-      SafariView.dismiss();
+  toggleCancelButton = (e, disabled) => {
+    const url = e.nativeEvent.url;
+
+    if (url === 'https://github.com/session') {
+      this.setState({ cancelDisabled: disabled });
     }
   };
 
-  signIn = () =>
-    openURLInView(
-      `https://github.com/login/oauth/authorize?response_type=token&client_id=${CLIENT_ID}&redirect_uri=gitpoint://welcome&scope=user%20repo&state=${stateRandom}`
+  handleOpenURL = ({ url }) => {
+    if (url && url.substring(0, 11) === 'gitpoint://') {
+      const [, queryStringFromUrl] = url.match(/\?(.*)/);
+      const { state, code } = queryString.parse(queryStringFromUrl);
+      const { auth, navigation } = this.props;
+
+      if (stateRandom === state) {
+        this.setState({
+          code,
+          showLoader: true,
+          loaderText: translate('auth.login.preparingGitPoint', this.language),
+        });
+
+        auth(code, state, navigation);
+      }
+    }
+  };
+
+  renderLoading() {
+    return (
+      <View style={styles.browserLoader}>
+        <Text style={styles.browserLoadingLabel}>
+          {this.state.loaderText}
+        </Text>
+        <ActivityIndicator color={colors.white} size="large" />
+      </View>
     );
+  }
 
   render() {
     const { language, isLoggingIn, isAuthenticated } = this.props;
@@ -167,99 +236,141 @@ class Login extends Component {
     return (
       <ViewContainer barColor="light">
         {!isAuthenticated &&
-          this.state.asyncStorageChecked && (
-            <View style={styles.container}>
-              <View style={styles.miniSection}>
-                <Image
-                  style={styles.logo}
-                  source={require('../../assets/logo.png')}
-                />
+          !isLoggingIn &&
+          this.state.asyncStorageChecked &&
+          <View style={styles.container}>
+            <Modal
+              animationType="slide"
+              onRequestClose={() => null}
+              visible={this.state.modalVisible}
+              style={styles.container}
+            >
+              <View style={styles.modalContainer}>
+                <View style={styles.browserSection}>
+                  <WebView
+                    source={{
+                      uri: `https://github.com/login/oauth/authorize?response_type=token&client_id=${CLIENT_ID}&redirect_uri=gitpoint://welcome&scope=user%20repo&state=${stateRandom}`,
+                    }}
+                    onLoadStart={e => this.toggleCancelButton(e, true)}
+                    onLoadEnd={e => this.toggleCancelButton(e, false)}
+                    onNavigationStateChange={e =>
+                      this.onNavigationStateChange(e)}
+                    renderLoading={() => this.renderLoading()}
+                    startInLoadingState
+                  />
+                </View>
+                <View style={styles.miniSection}>
+                  <Button
+                    title={translate('auth.login.cancel', language)}
+                    buttonStyle={styles.button}
+                    disabled={this.state.cancelDisabled}
+                    textStyle={styles.buttonText}
+                    onPress={() =>
+                      this.setModalVisible(!this.state.modalVisible)}
+                  />
+                </View>
               </View>
-
-              <View style={styles.contentSection}>
-                <AppIntro
-                  activeDotColor={colors.white}
-                  showSkipButton={false}
-                  showDoneButton={false}
-                >
-                  <View style={[styles.slide, styles.slide1]}>
-                    <Image
-                      style={styles.logo}
-                      source={require('../../assets/logo.png')}
-                    />
-                    <Text style={styles.title}>
-                      {translate('auth.login.welcomeTitle', language)}
-                    </Text>
-                    <Text style={styles.message}>
-                      {translate('auth.login.welcomeMessage', language)}
-                    </Text>
-                  </View>
-
-                  <View style={[styles.slide, styles.slide2]}>
-                    <Icon
-                      style={styles.icon}
-                      color={colors.white}
-                      size={85}
-                      name="bell"
-                      type="octicon"
-                    />
-                    <Text style={styles.title}>
-                      {translate('auth.login.notificationsTitle', language)}
-                    </Text>
-                    <Text style={styles.message}>
-                      {translate('auth.login.notificationsMessage', language)}
-                    </Text>
-                  </View>
-
-                  <View style={[styles.slide, styles.slide3]}>
-                    <Icon
-                      containerStyle={styles.iconMargin}
-                      style={styles.icon}
-                      color={colors.white}
-                      size={85}
-                      name="repo"
-                      type="octicon"
-                    />
-                    <Text style={styles.title}>
-                      {translate('auth.login.reposTitle', language)}
-                    </Text>
-                    <Text style={styles.message}>
-                      {translate('auth.login.reposMessage', language)}
-                    </Text>
-                  </View>
-
-                  <View style={[styles.slide, styles.slide4]}>
-                    <Icon
-                      containerStyle={styles.iconMargin}
-                      style={styles.icon}
-                      color={colors.white}
-                      size={85}
-                      name="git-pull-request"
-                      type="octicon"
-                    />
-                    <Text style={styles.title}>
-                      {translate('auth.login.issuesTitle', language)}
-                    </Text>
-                    <Text style={styles.message}>
-                      {translate('auth.login.issuesMessage', language)}
-                    </Text>
-                  </View>
-                </AppIntro>
-              </View>
-
-              <View style={styles.miniSection}>
-                <Button
-                  raised
-                  title={translate('auth.login.signInButton', language)}
-                  buttonStyle={styles.button}
-                  textStyle={styles.buttonText}
-                  onPress={() => this.signIn()}
-                />
-              </View>
+            </Modal>
+            <View style={styles.miniSection}>
+              <Image
+                style={styles.logo}
+                source={require('../../assets/logo.png')}
+              />
             </View>
-          )}
 
-        {isAuthenticated && <LoadingContainer animating={isLoggingIn} center />}
+            <View style={styles.contentSection}>
+              <AppIntro
+                activeDotColor={colors.white}
+                showSkipButton={false}
+                showDoneButton={false}
+              >
+                <View style={[styles.slide, styles.slide1]}>
+                  <Image
+                    style={styles.logo}
+                    source={require('../../assets/logo.png')}
+                  />
+                  <Text style={styles.title}>
+                    {translate('auth.login.welcomeTitle', language)}
+                  </Text>
+                  <Text style={styles.message}>
+                    {translate('auth.login.welcomeMessage', language)}
+                  </Text>
+                </View>
+
+                <View style={[styles.slide, styles.slide2]}>
+                  <Icon
+                    style={styles.icon}
+                    color={colors.white}
+                    size={85}
+                    name="bell"
+                    type="octicon"
+                  />
+                  <Text style={styles.title}>
+                    {translate('auth.login.notificationsTitle', language)}
+                  </Text>
+                  <Text style={styles.message}>
+                    {translate('auth.login.notificationsMessage', language)}
+                  </Text>
+                </View>
+
+                <View style={[styles.slide, styles.slide3]}>
+                  <Icon
+                    containerStyle={styles.iconMargin}
+                    style={styles.icon}
+                    color={colors.white}
+                    size={85}
+                    name="repo"
+                    type="octicon"
+                  />
+                  <Text style={styles.title}>
+                    {translate('auth.login.reposTitle', language)}
+                  </Text>
+                  <Text style={styles.message}>
+                    {translate('auth.login.reposMessage', language)}
+                  </Text>
+                </View>
+
+                <View style={[styles.slide, styles.slide4]}>
+                  <Icon
+                    containerStyle={styles.iconMargin}
+                    style={styles.icon}
+                    color={colors.white}
+                    size={85}
+                    name="git-pull-request"
+                    type="octicon"
+                  />
+                  <Text style={styles.title}>
+                    {translate('auth.login.issuesTitle', language)}
+                  </Text>
+                  <Text style={styles.message}>
+                    {translate('auth.login.issuesMessage', language)}
+                  </Text>
+                </View>
+              </AppIntro>
+            </View>
+
+            <View style={styles.miniSection}>
+              <Button
+                raised
+                title={translate('auth.login.signInButton', language)}
+                buttonStyle={styles.button}
+                textStyle={styles.buttonText}
+                onPress={() => this.setModalVisible(true)}
+              />
+            </View>
+          </View>}
+
+        {isLoggingIn &&
+          <View style={styles.browserLoader}>
+            <Text style={styles.browserLoadingLabel}>
+              {this.state.loaderText}
+            </Text>
+            <ActivityIndicator
+              animating={isLoggingIn}
+              color={colors.white}
+              size="large"
+            />
+          </View>}
       </ViewContainer>
     );
   }

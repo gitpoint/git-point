@@ -18,9 +18,13 @@ const mapStateToProps = state => ({
   isPendingEvents: state.auth.isPendingEvents,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  getUserEvents,
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getUserEvents,
+    },
+    dispatch
+  );
 
 const styles = StyleSheet.create({
   descriptionContainer: {

@@ -33,11 +33,15 @@ const mapStateToProps = state => ({
   hasInitialUser: state.auth.hasInitialUser,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  getUser,
-  getOrgs,
-  getStarCount,
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getUser,
+      getOrgs,
+      getStarCount,
+    },
+    dispatch
+  );
 
 const styles = StyleSheet.create({
   listTitle: {

@@ -27,11 +27,15 @@ const mapStateToProps = state => ({
   isPendingLabels: state.repository.isPendingLabels,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  editIssue,
-  changeIssueLockStatus,
-  getLabels,
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      editIssue,
+      changeIssueLockStatus,
+      getLabels,
+    },
+    dispatch
+  );
 
 const styles = StyleSheet.create({
   listItemTitle: {

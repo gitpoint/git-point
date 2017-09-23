@@ -152,21 +152,19 @@ class RepositoryList extends Component {
               (item, index) => <LoadingRepositoryListItem key={index} /> // eslint-disable-line react/no-array-index-key
             )}
 
-          {!loading && (
+          {!loading &&
             <View style={styles.listContainer}>
               <FlatList
                 removeClippedSubviews={false}
                 data={this.getList()}
                 keyExtractor={this.keyExtractor}
-                renderItem={({ item }) => (
+                renderItem={({ item }) =>
                   <RepositoryListItem
                     repository={item}
                     navigation={navigation}
-                  />
-                )}
+                  />}
               />
-            </View>
-          )}
+            </View>}
         </View>
       </ViewContainer>
     );

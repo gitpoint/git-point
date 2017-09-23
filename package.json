@@ -60,6 +60,7 @@
     "react-native-code-push": "^5.0.0-beta",
     "react-native-communications": "^2.2.1",
     "react-native-config": "^0.6.0",
+    "react-native-cookies": "^3.2.0",
     "react-native-device-info": "^0.11.0",
     "react-native-elements": "^0.9.3",
     "react-native-htmlview": "^0.12.0",

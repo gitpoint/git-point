@@ -300,7 +300,7 @@ class Notifications extends Component {
         </View>
 
         <ScrollView>
-          {notifications.map(notification => (
+          {notifications.map(notification =>
             <NotificationListItem
               key={notification.id}
               notification={notification}
@@ -308,7 +308,7 @@ class Notifications extends Component {
               navigationAction={notify => this.navigateToThread(notify)}
               navigation={this.props.navigation}
             />
-          ))}
+          )}
         </ScrollView>
       </Card>
     );
@@ -349,29 +349,22 @@ class Notifications extends Component {
           </View>
 
           {this.isLoading() &&
-            this.notifications().length === 0 && (
-              <LoadingContainer
-                animating={
-                  this.isLoading() && this.notifications().length === 0
-                }
-                text={translate(
-                  'notifications.main.retrievingMessage',
-                  language
-                )}
-                style={styles.marginSpacing}
-              />
-            )}
+            this.notifications().length === 0 &&
+            <LoadingContainer
+              animating={this.isLoading() && this.notifications().length === 0}
+              text={translate('notifications.main.retrievingMessage', language)}
+              style={styles.marginSpacing}
+            />}
 
           {!this.isLoading() &&
-            this.notifications().length === 0 && (
-              <View style={styles.textContainer}>
-                <Text style={styles.noneTitle}>
-                  {translate('notifications.main.noneMessage', language)}
-                </Text>
-              </View>
-            )}
+            this.notifications().length === 0 &&
+            <View style={styles.textContainer}>
+              <Text style={styles.noneTitle}>
+                {translate('notifications.main.noneMessage', language)}
+              </Text>
+            </View>}
 
-          {this.notifications().length > 0 && (
+          {this.notifications().length > 0 &&
             <FlatList
               ref={ref => {
                 this.notificationsList = ref;
@@ -382,8 +375,7 @@ class Notifications extends Component {
               data={sortedRepos}
               keyExtractor={this.keyExtractor}
               renderItem={this.renderItem}
-            />
-          )}
+            />}
         </View>
       </ViewContainer>
     );

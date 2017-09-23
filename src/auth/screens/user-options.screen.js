@@ -11,12 +11,13 @@ import {
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { NavigationActions } from 'react-navigation';
-import { version } from 'package.json';
-import codePush from 'react-native-code-push';
+import CookieManager from 'react-native-cookies';
 
 import { ViewContainer, SectionList } from 'components';
 import { colors, fonts, normalize } from 'config';
-import { openURLInView, resetNavigationTo, translate } from 'utils';
+import { resetNavigationTo, translate } from 'utils';
+import { version } from 'package.json';
+import codePush from 'react-native-code-push';
 import { signOut, changeLanguage } from 'auth';
 import languages from './language-settings';
 
@@ -127,10 +128,9 @@ class UserOptions extends Component {
     const { signOut, navigation } = this.props;
 
     signOut().then(() => {
-      const url = 'https://github.com/logout';
-
-      openURLInView(url);
-      resetNavigationTo('Login', navigation);
+      CookieManager.clearAll().then(() => {
+        resetNavigationTo('Login', navigation);
+      });
     });
   }
 
@@ -143,7 +143,7 @@ class UserOptions extends Component {
           <SectionList title={translate('auth.userOptions.language', language)}>
             <FlatList
               data={languages}
-              renderItem={({ item }) => (
+              renderItem={({ item }) =>
                 <ListItem
                   title={item.name}
                   titleStyle={styles.listTitle}
@@ -151,8 +151,7 @@ class UserOptions extends Component {
                   rightIcon={{ name: 'check' }}
                   onPress={() => changeLanguage(item.code)}
                   underlayColor={colors.greyLight}
-                />
-              )}
+                />}
               keyExtractor={(item, index) => index}
               extraData={this.props.language}
             />
@@ -180,7 +179,9 @@ class UserOptions extends Component {
           </SectionList>
 
           <TouchableOpacity style={styles.update} onPress={this.checkForUpdate}>
-            <Text style={styles.updateText}>GitPoint v{version}</Text>
+            <Text style={styles.updateText}>
+              GitPoint v{version}
+            </Text>
             <Text style={[styles.updateText, styles.updateTextSub]}>
               {this.state.updateText}
             </Text>

@@ -12,9 +12,13 @@ const mapStateToProps = state => ({
   isPendingFollowers: state.user.isPendingFollowers,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  getFollowers,
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getFollowers,
+    },
+    dispatch
+  );
 
 class FollowerList extends Component {
   props: {

@@ -14,9 +14,13 @@ const mapStateToProps = state => ({
   isPendingContents: state.repository.isPendingContents,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  getContents,
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getContents,
+    },
+    dispatch
+  );
 
 const styles = StyleSheet.create({
   title: {

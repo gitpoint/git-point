@@ -35,7 +35,10 @@ if (__DEV__ && process.env.TRON_ENABLED) {
     compose(getMiddleware(), ...getEnhancers())
   );
 } else {
-  store = createStore(rootReducer, composeWithDevTools(getMiddleware(), ...getEnhancers()));
+  store = createStore(
+    rootReducer,
+    composeWithDevTools(getMiddleware(), ...getEnhancers())
+  );
 }
 
 export const configureStore = store;
