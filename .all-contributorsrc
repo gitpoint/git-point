@@ -269,7 +269,7 @@
     },
     {
       "login": "adrianhartanto0",
-      "name": "adrianhartanto0",
+      "name": "Adrian Hartanto",
       "avatar_url": "https://avatars1.githubusercontent.com/u/11606323?v=4",
       "profile": "https://github.com/adrianhartanto0",
       "contributions": [
@@ -301,6 +301,7 @@
       "profile": "https://github.com/arthurdenner",
       "contributions": []
     },
+    {
       "login": "FlorianTaut",
       "name": "Florian Taut",
       "avatar_url": "https://avatars1.githubusercontent.com/u/18403881?v=4",
@@ -328,10 +329,19 @@
       ]
     },
     {
+      "login": "nersoh",
+      "name": "Nelson Henrique",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1930729?v=4",
+      "profile": "https://github.com/nersoh",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
       "login": "Charliekenney23",
       "name": "Charles Kenney",
-      "avatar_url": "https://avatars1.githubusercontent.com/u/23623237?v=4",
-      "profile": "https://github.com/charliekenney23",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/23623237?v=4",
+      "profile": "http://charleskenney.com",
       "contributions": [
         "code"
       ]
