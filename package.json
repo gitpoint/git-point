@@ -26,6 +26,7 @@
     "flow-status": "flow status",
     "flow-coverage": "flow coverage",
     "contributors:add": "all-contributors add",
+    "contributors:generate": "all-contributors generate",
     "cp-release:ios": "code-push release-react git-point-ios ios",
     "cp-release:android": "code-push release-react git-point-android android",
     "cp-promote:ios": "code-push promote git-point-ios Staging Production",
