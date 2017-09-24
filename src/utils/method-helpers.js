@@ -37,6 +37,8 @@ export const translate = (key, lang, interpolation = null) =>
 
 export const configureLocale = language => {
   I18n.locale = language;
+  I18n.fallbacks = true;
+
   moment.updateLocale(language, {
     relativeTime: translate('common.relativeTime', language),
   });

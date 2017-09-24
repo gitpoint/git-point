@@ -3,6 +3,7 @@ import { autoRehydrate } from 'redux-persist';
 import Reactotron from 'reactotron-react-native'; // eslint-disable-line import/no-extraneous-dependencies
 import createLogger from 'redux-logger';
 import reduxThunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import 'config/reactotron';
 import { rootReducer } from './root.reducer';
 
@@ -36,7 +37,7 @@ if (__DEV__ && process.env.TRON_ENABLED) {
 } else {
   store = createStore(
     rootReducer,
-    compose(getMiddleware(), ...getEnhancers())
+    composeWithDevTools(getMiddleware(), ...getEnhancers())
   );
 }
 

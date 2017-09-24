@@ -2,6 +2,7 @@
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { StyleSheet, Text, FlatList, View } from 'react-native';
 import moment from 'moment/min/moment-with-locales.min';
 
@@ -17,9 +18,13 @@ const mapStateToProps = state => ({
   isPendingEvents: state.auth.isPendingEvents,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getUserEvents: user => dispatch(getUserEvents(user)),
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getUserEvents,
+    },
+    dispatch
+  );
 
 const styles = StyleSheet.create({
   descriptionContainer: {
@@ -155,7 +160,7 @@ class Events extends Component {
             'auth.events.pullRequestReviewCommentEvent',
             language,
             {
-              action: translate(`auth.events.actions.${action}`, language),
+              action: translate('auth.events.actions.commented', language),
             }
           );
         } else if (action === 'edited') {

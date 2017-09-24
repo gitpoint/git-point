@@ -56,7 +56,7 @@ export const IssueListItem = ({ type, issue, navigation, language }: Props) =>
       <ListItem
         containerStyle={styles.listItemContainer}
         title={issue.title}
-        subtitle={moment(issue.created_at).fromNow()}
+        subtitle={`#${issue.number} - ${moment(issue.created_at).fromNow()}`}
         leftIcon={{
           name: type === 'issue' ? 'issue-opened' : 'git-pull-request',
           size: 36,

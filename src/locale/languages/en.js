@@ -1,6 +1,12 @@
+// Hash: 01ae4880b9b4296907d680e9b909713c36c42491
+// Link: https://github.com/gitpoint/git-point/pull/260
+
 export const en = {
   auth: {
     login: {
+      connectingToGitHub: 'Connecting to GitHub...',
+      preparingGitPoint: 'Preparing GitPoint...',
+      cancel: 'CANCEL',
       welcomeTitle: 'Welcome to GitPoint',
       welcomeMessage: 'The most feature-rich GitHub client that is 100% free',
       notificationsTitle: 'Control notifications',
@@ -88,7 +94,6 @@ export const en = {
     userOptions: {
       title: 'Options',
       language: 'Language',
-      english: 'English',
       privacyPolicy: 'Privacy Policy',
       signOut: 'Sign Out',
     },
@@ -137,9 +142,11 @@ export const en = {
       repositoryButton: 'Repositories',
       userButton: 'Users',
       searchingMessage: 'Searching for {{query}}',
-      searchMessage: 'Searching for any {{type}}',
+      searchMessage: 'Search for any {{type}}',
       repository: 'repository',
       user: 'user',
+      noUsersFound: 'No users found :(',
+      noRepositoriesFound: 'No repositories found :(',
     },
   },
   user: {
@@ -156,6 +163,9 @@ export const en = {
     },
     followingList: {
       title: 'Following',
+    },
+    followYou: {
+      title: 'Follows you',
     },
   },
   repository: {
@@ -186,6 +196,9 @@ export const en = {
       starsTitle: 'Stars',
       forksTitle: 'Forks',
       forkedFromMessage: 'forked from',
+      starred: 'Starred',
+      watching: 'Watching',
+      watchers: 'Watchers',
     },
     codeList: {
       title: 'Code',
@@ -244,7 +257,6 @@ export const en = {
       noDescription: 'No description provided.',
       lockedCommentInput: 'Locked, but you can still comment...',
       commentInput: 'Add a comment...',
-      commentButton: 'Post',
       lockedIssue: 'Issue is locked',
       states: {
         open: 'Open',
@@ -281,6 +293,7 @@ export const en = {
   },
   common: {
     bio: 'BIO',
+    stars: 'Stars',
     orgs: 'ORGANIZATIONS',
     noOrgsMessage: 'No organizations',
     info: 'INFO',
@@ -308,6 +321,9 @@ export const en = {
       MM: '%dmo',
       y: '%dy',
       yy: '%dy',
+    },
+    abbreviations: {
+      thousand: 'k',
     },
   },
 };

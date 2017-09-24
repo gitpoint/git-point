@@ -1,9 +1,11 @@
+/* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { ScrollView, StyleSheet, TextInput, View, Alert } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
-import { ViewContainer, SectionList } from 'components';
+import { ViewContainer, SectionList, LoadingModal } from 'components';
 import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
 import { submitNewIssue } from '../issue.action';
@@ -33,19 +35,24 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
   language: state.auth.language,
   repository: state.repository.repository,
+  isPendingSubmitting: state.issue.isPendingSubmitting,
 });
 
-const mapDispatchToProps = dispatch => ({
-  submitNewIssueByDispatch: (owner, repoName, issueTitle, issueComment) =>
-    dispatch(submitNewIssue(owner, repoName, issueTitle, issueComment)),
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      submitNewIssue,
+    },
+    dispatch
+  );
 
 class NewIssue extends Component {
   props: {
-    submitNewIssueByDispatch: Function,
+    submitNewIssue: Function,
     language: string,
     repository: Object,
     navigation: Object,
+    isPendingSubmitting: boolean,
   };
 
   state: {
@@ -65,12 +72,7 @@ class NewIssue extends Component {
   }
 
   submitNewIssue = () => {
-    const {
-      submitNewIssueByDispatch,
-      repository,
-      language,
-      navigation,
-    } = this.props;
+    const { submitNewIssue, repository, language, navigation } = this.props;
     const { issueTitle, issueComment } = this.state;
     const repoName = repository.name;
     const owner = repository.owner.login;
@@ -82,25 +84,23 @@ class NewIssue extends Component {
         [{ text: translate('common.ok', language) }]
       );
     } else {
-      submitNewIssueByDispatch(
-        owner,
-        repoName,
-        issueTitle,
-        issueComment
-      ).then(issue => {
+      submitNewIssue(owner, repoName, issueTitle, issueComment).then(issue => {
         navigation.navigate('Issue', {
           issue,
+          headerLeft: null,
+          gesturesEnabled: false,
         });
       });
     }
   };
 
   render() {
-    const { language, repository } = this.props;
+    const { language, repository, isPendingSubmitting } = this.props;
     const { issueTitle, issueComment } = this.state;
 
     return (
       <ViewContainer>
+        {isPendingSubmitting && <LoadingModal />}
         <ScrollView>
           {repository.full_name &&
             <ListItem
@@ -140,7 +140,6 @@ class NewIssue extends Component {
             <TextInput
               underlineColorAndroid={'transparent'}
               placeholder={translate('issue.newIssue.writeAComment', language)}
-              blurOnSubmit
               multiline
               onChangeText={text => this.setState({ issueComment: text })}
               onContentSizeChange={event =>

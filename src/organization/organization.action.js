@@ -1,68 +1,80 @@
-import { fetchOrg, fetchOrgMembers, fetchUrl } from 'api';
-import { GET_ORG, GET_ORG_REPOS, GET_ORG_MEMBERS } from './organization.type';
+import { createAction } from 'redux-actions';
 
-export const getOrg = orgName => {
-  return (dispatch, getState) => {
-    const accessToken = getState().auth.accessToken;
+import {
+  fetchOrg,
+  fetchOrgMembers,
+  fetchUrl,
+} from 'api';
+import {
+  GET_ORG,
+  GET_ORG_LOADING,
+  GET_ORG_ERROR,
+  GET_ORG_REPOS,
+  GET_ORG_REPOS_LOADING,
+  GET_ORG_REPOS_ERROR,
+  GET_ORG_MEMBERS,
+  GET_ORG_MEMBERS_LOADING,
+  GET_ORG_MEMBERS_ERROR,
+} from './organization.constants';
 
-    dispatch({ type: GET_ORG.PENDING });
+export const getOrg = createAction(GET_ORG);
+export const getOrgLoading = createAction(GET_ORG_LOADING);
+export const getOrgError = createAction(GET_ORG_ERROR);
+export const getOrgRepos = createAction(GET_ORG_REPOS);
+export const getOrgReposLoading = createAction(GET_ORG_REPOS_LOADING);
+export const getOrgReposError = createAction(GET_ORG_REPOS_ERROR);
+export const getOrgMembers = createAction(GET_ORG_MEMBERS);
+export const getOrgMembersLoading = createAction(GET_ORG_MEMBERS_LOADING);
+export const getOrgMembersError = createAction(GET_ORG_MEMBERS_ERROR);
 
-    return fetchOrg(orgName, accessToken)
-      .then(data => {
-        dispatch({
-          type: GET_ORG.SUCCESS,
-          payload: data,
-        });
-      })
-      .catch(error => {
-        dispatch({
-          type: GET_ORG.ERROR,
-          payload: error,
-        });
-      });
-  };
+export const fetchOrganizations = orgName => (dispatch, getState) => {
+  // use a selector here
+  const accessToken = getState().auth.accessToken;
+
+  dispatch(getOrgLoading(true));
+  dispatch(getOrgError(''));
+
+  return fetchOrg(orgName, accessToken)
+    .then(data => {
+      dispatch(getOrgLoading(false));
+      dispatch(getOrg(data));
+    })
+    .catch(error => {
+      dispatch(getOrgLoading(false));
+      dispatch(getOrgError(error));
+    });
 };
 
-export const getOrgRepos = url => {
-  return (dispatch, getState) => {
-    const accessToken = getState().auth.accessToken;
+export const fetchOrganizationRepos = url => (dispatch, getState) => {
+  const accessToken = getState().auth.accessToken;
 
-    dispatch({ type: GET_ORG_REPOS.PENDING });
+  dispatch(getOrgReposLoading(true));
+  dispatch(getOrgReposError(''));
 
-    fetchUrl(url, accessToken)
-      .then(data => {
-        dispatch({
-          type: GET_ORG_REPOS.SUCCESS,
-          payload: data,
-        });
-      })
-      .catch(error => {
-        dispatch({
-          type: GET_ORG_REPOS.ERROR,
-          payload: error,
-        });
-      });
-  };
+  fetchUrl(url, accessToken)
+    .then(data => {
+      dispatch(getOrgReposLoading(false));
+      dispatch(getOrgRepos(data));
+    })
+    .catch(error => {
+      dispatch(getOrgReposLoading(false));
+      dispatch(getOrgReposError(error));
+    });
 };
 
-export const getOrgMembers = orgName => {
-  return (dispatch, getState) => {
-    const accessToken = getState().auth.accessToken;
+export const fetchOrganizationMembers = orgName => (dispatch, getState) => {
+  const accessToken = getState().auth.accessToken;
 
-    dispatch({ type: GET_ORG_MEMBERS.PENDING });
+  dispatch(getOrgMembersLoading(true));
+  dispatch(getOrgMembersError(''));
 
-    return fetchOrgMembers(orgName, accessToken)
-      .then(data => {
-        dispatch({
-          type: GET_ORG_MEMBERS.SUCCESS,
-          payload: data,
-        });
-      })
-      .catch(error => {
-        dispatch({
-          type: GET_ORG_MEMBERS.ERROR,
-          payload: error,
-        });
-      });
-  };
+  return fetchOrgMembers(orgName, accessToken)
+    .then(data => {
+      dispatch(getOrgMembersLoading(false));
+      dispatch(getOrgMembers(data));
+    })
+    .catch(error => {
+      dispatch(getOrgMembersLoading(false));
+      dispatch(getOrgMembersError(error));
+    });
 };

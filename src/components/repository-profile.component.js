@@ -10,6 +10,7 @@ type Props = {
   starred: boolean,
   navigation: Object,
   loading: boolean,
+  subscribed: boolean,
   language: string,
 };
 
@@ -74,6 +75,12 @@ const styles = StyleSheet.create({
     fontSize: normalize(10),
     ...fonts.fontPrimary,
   },
+  unitStatus: {
+    textAlign: 'center',
+    color: colors.lighterBoldGreen,
+    fontSize: normalize(8),
+    ...fonts.fontPrimary,
+  },
   green: {
     color: colors.lightGreen,
   },
@@ -91,6 +98,19 @@ const styles = StyleSheet.create({
     fontSize: normalize(10),
     ...fonts.fontPrimary,
   },
+  badge: {
+    paddingTop: 3,
+    paddingBottom: 3,
+    marginTop: 5,
+    marginLeft: 27,
+    marginRight: 27,
+    borderWidth: 0.5,
+    borderRadius: 5,
+    borderColor: colors.lighterBoldGreen,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
 });
 
 export const RepositoryProfile = ({
@@ -98,6 +118,7 @@ export const RepositoryProfile = ({
   starred,
   navigation,
   loading,
+  subscribed,
   language,
 }: Props) =>
   <View style={styles.container}>
@@ -147,7 +168,9 @@ export const RepositoryProfile = ({
         <Text style={[styles.subtitle, styles.subtitleFork]}>
           {repository.parent &&
             <Text>
-              <Text>{translate('repository.main.forkedFromMessage', language)}</Text>
+              <Text>
+                {translate('repository.main.forkedFromMessage', language)}
+              </Text>
               <Text
                 style={{ ...fonts.fontPrimaryBold }}
                 onPress={() =>
@@ -163,12 +186,33 @@ export const RepositoryProfile = ({
 
     <View style={styles.details}>
       <View style={styles.unit}>
-        <Text style={[styles.unitNumber, starred && styles.green]}>
+        <Text style={styles.unitNumber}>
           {!isNaN(parseInt(repository.stargazers_count, 10))
             ? abbreviateNumber(repository.stargazers_count)
             : ' '}
         </Text>
-        <Text style={styles.unitText}>{translate('repository.main.starsTitle', language)}</Text>
+        <Text style={styles.unitText}>
+          {translate('repository.main.starsTitle', language)}
+        </Text>
+        {starred &&
+          <Text style={[styles.unitStatus, styles.badge]}>
+            {translate('repository.main.starred', language)}
+          </Text>}
+      </View>
+
+      <View style={styles.unit}>
+        <Text style={styles.unitNumber}>
+          {!isNaN(parseInt(repository.subscribers_count, 10))
+            ? abbreviateNumber(repository.subscribers_count)
+            : ' '}
+        </Text>
+        <Text style={styles.unitText}>
+          {translate('repository.main.watchers', language)}
+        </Text>
+        {subscribed &&
+          <Text style={[styles.unitStatus, styles.badge]}>
+            {translate('repository.main.watching', language)}
+          </Text>}
       </View>
 
       <View style={styles.unit}>
@@ -177,7 +221,9 @@ export const RepositoryProfile = ({
             ? abbreviateNumber(repository.forks)
             : ' '}
         </Text>
-        <Text style={styles.unitText}>{translate('repository.main.forksTitle', language)}</Text>
+        <Text style={styles.unitText}>
+          {translate('repository.main.forksTitle', language)}
+        </Text>
       </View>
     </View>
   </View>;

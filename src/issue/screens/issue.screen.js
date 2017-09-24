@@ -1,5 +1,7 @@
+/* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
   FlatList,
   KeyboardAvoidingView,
@@ -16,9 +18,10 @@ import {
   CommentListItem,
   CommentInput,
 } from 'components';
+import { root as apiRoot } from 'api';
 import { translate } from 'utils';
 import { colors } from 'config';
-import { getRepository } from 'repository';
+import { getRepository, getContributors } from 'repository';
 import {
   getIssueComments,
   postIssueComment,
@@ -41,13 +44,17 @@ const mapStateToProps = state => ({
   isPendingContributors: state.repository.isPendingContributors,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getIssueCommentsByDispatch: url => dispatch(getIssueComments(url)),
-  postIssueCommentByDispatch: (body, owner, repoName, issueNum) =>
-    dispatch(postIssueComment(body, owner, repoName, issueNum)),
-  getIssueFromUrlByDispatch: url => dispatch(getIssueFromUrl(url)),
-  getRepositoryByDispatch: url => dispatch(getRepository(url)),
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getIssueComments,
+      getRepository,
+      getContributors,
+      postIssueComment,
+      getIssueFromUrl,
+    },
+    dispatch
+  );
 
 class Issue extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -76,11 +83,11 @@ class Issue extends Component {
   };
 
   props: {
-    getIssueCommentsByDispatch: Function,
-    getRepositoryByDispatch: Function,
-    getContributorsByDispatch: Function,
-    postIssueCommentByDispatch: Function,
-    getIssueFromUrlByDispatch: Function,
+    getIssueComments: Function,
+    getRepository: Function,
+    getContributors: Function,
+    postIssueComment: Function,
+    getIssueFromUrl: Function,
     diff: string,
     issue: Object,
     isMerged: boolean,
@@ -119,10 +126,7 @@ class Issue extends Component {
       node.attribs.class.includes('issue-link')
     ) {
       navigation.navigate('Issue', {
-        issueURL: node.attribs['data-url'].replace(
-          'github.com',
-          'api.github.com/repos'
-        ),
+        issueURL: this.getIssueUrlFromNode(node, navigation.state.params),
       });
     } else {
       Linking.openURL(node.attribs.href);
@@ -137,37 +141,48 @@ class Issue extends Component {
     });
   };
 
+  getIssueUrlFromNode = (node, params) => {
+    if (node.attribs['data-id']) {
+      return params.issue
+        ? `${params.issue.repository_url}/issues/${node.attribs['data-id']}`
+        : params.issueURL.replace(/\d+$/, node.attribs['data-id']);
+    }
+
+    return node.attribs['data-url'].replace(
+      'https://github.com',
+      `${apiRoot}/repos`
+    );
+  };
+
   getIssueInformation = () => {
     const {
       issue,
       navigation,
       repository,
-      getIssueCommentsByDispatch,
-      getRepositoryByDispatch,
-      getContributorsByDispatch,
-      getIssueFromUrlByDispatch,
+      getIssueComments,
+      getRepository,
+      getContributors,
+      getIssueFromUrl,
     } = this.props;
 
     const issueParam = navigation.state.params.issue;
     const issueURLParam = navigation.state.params.issueURL;
     const issueCommentsURL = `${navigation.state.params.issueURL}/comments`;
 
-    Promise.all(
-      getIssueFromUrlByDispatch(issueURLParam || issueParam.url),
-      getIssueCommentsByDispatch(
+    Promise.all([
+      getIssueFromUrl(issueURLParam || issueParam.url),
+      getIssueComments(
         issueURLParam ? issueCommentsURL : issueParam.comments_url
-      )
-    ).then(() => {
+      ),
+    ]).then(() => {
       if (
         issueParam &&
         repository.full_name !==
-          issueParam.repository_url.replace('https://api.github.com/repos/', '')
+          issueParam.repository_url.replace(`${apiRoot}/repos/`, '')
       ) {
         Promise.all([
-          getRepositoryByDispatch(issue.repository_url),
-          getContributorsByDispatch(
-            this.getContributorsLink(issue.repository_url)
-          ),
+          getRepository(issue.repository_url),
+          getContributors(this.getContributorsLink(issue.repository_url)),
         ]).then(() => {
           this.setNavigationParams();
         });
@@ -196,7 +211,7 @@ class Issue extends Component {
     const owner = repository.owner.login;
     const issueNum = navigation.state.params.issue.number;
 
-    this.props.postIssueCommentByDispatch(body, owner, repoName, issueNum);
+    this.props.postIssueComment(body, owner, repoName, issueNum);
     Keyboard.dismiss();
     this.commentsList.scrollToEnd();
   };
@@ -283,7 +298,10 @@ class Issue extends Component {
           <KeyboardAvoidingView
             style={{ flex: 1 }}
             behavior={'padding'}
-            keyboardVerticalOffset={Platform.select({ ios: 65, android: -200 })}
+            keyboardVerticalOffset={Platform.select({
+              ios: 65,
+              android: -200,
+            })}
           >
             <FlatList
               ref={ref => {
@@ -306,7 +324,7 @@ class Issue extends Component {
               }
               issueLocked={issue.locked}
               language={language}
-              onSubmitEditing={this.postComment}
+              onSubmit={this.postComment}
             />
           </KeyboardAvoidingView>}
       </ViewContainer>

@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
   StyleSheet,
   Text,
-  TouchableOpacity,
   RefreshControl,
   View,
   ActivityIndicator,
   Dimensions,
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import codePush from 'react-native-code-push';
 
 import {
   ViewContainer,
@@ -21,24 +20,28 @@ import {
   EntityInfo,
 } from 'components';
 import { colors, fonts, normalize } from 'config';
-import { getUser, getOrgs, signOut } from 'auth';
+import { getUser, getOrgs, getStarCount } from 'auth';
 import { emojifyText, openURLInView, translate } from 'utils';
-import { version } from 'package.json';
 
 const mapStateToProps = state => ({
   user: state.auth.user,
   orgs: state.auth.orgs,
   language: state.auth.language,
+  starCount: state.auth.starCount,
   isPendingUser: state.auth.isPendingUser,
   isPendingOrgs: state.auth.isPendingOrgs,
   hasInitialUser: state.auth.hasInitialUser,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getUserByDispatch: () => dispatch(getUser()),
-  getOrgsByDispatch: () => dispatch(getOrgs()),
-  signOutByDispatch: () => dispatch(signOut()),
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getUser,
+      getOrgs,
+      getStarCount,
+    },
+    dispatch
+  );
 
 const styles = StyleSheet.create({
   listTitle: {
@@ -73,72 +76,29 @@ const styles = StyleSheet.create({
   },
 });
 
-const updateText = lang => ({
-  check: translate('auth.profile.codePushCheck', lang),
-  checking: translate('auth.profile.codePushChecking', lang),
-  updated: translate('auth.profile.codePushUpdated', lang),
-  available: translate('auth.profile.codePushAvailable', lang),
-  notApplicable: translate('auth.profile.codePushNotApplicable', lang),
-});
-
 class AuthProfile extends Component {
   props: {
-    getUserByDispatch: Function,
-    getOrgsByDispatch: Function,
+    getUser: Function,
+    getOrgs: Function,
+    getStarCount: Function,
     user: Object,
     orgs: Array,
     language: string,
+    starCount: string,
     isPendingUser: boolean,
     isPendingOrgs: boolean,
     hasInitialUser: boolean,
     navigation: Object,
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      updateText: updateText(props.language).check,
-    };
-  }
-
   componentDidMount() {
     this.refreshProfile();
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.language !== this.props.language) {
-      this.setState({
-        updateText: updateText(nextProps.language).check,
-      });
-    }
-  }
-
-  checkForUpdate = () => {
-    if (__DEV__) {
-      this.setState({
-        updateText: updateText(this.props.language).notApplicable,
-      });
-    } else {
-      this.setState({ updateText: updateText(this.props.language).checking });
-      codePush
-        .sync({
-          updateDialog: true,
-          installMode: codePush.InstallMode.IMMEDIATE,
-        })
-        .then(update => {
-          this.setState({
-            updateText: update
-              ? updateText(this.props.language).available
-              : updateText(this.props.language).updated,
-          });
-        });
-    }
-  };
-
   refreshProfile = () => {
-    this.props.getUserByDispatch();
-    this.props.getOrgsByDispatch();
+    this.props.getUser();
+    this.props.getOrgs();
+    this.props.getStarCount();
   };
 
   render() {
@@ -148,6 +108,7 @@ class AuthProfile extends Component {
       isPendingUser,
       isPendingOrgs,
       language,
+      starCount,
       navigation,
       hasInitialUser,
     } = this.props;
@@ -162,6 +123,7 @@ class AuthProfile extends Component {
               type="user"
               initialUser={hasInitialUser ? user : {}}
               user={hasInitialUser ? user : {}}
+              starCount={starCount}
               language={language}
               navigation={navigation}
             />}
@@ -229,18 +191,6 @@ class AuthProfile extends Component {
                   </Text>
                 </Text>
               </SectionList>
-
-              <TouchableOpacity
-                style={styles.update}
-                onPress={this.checkForUpdate}
-              >
-                <Text style={styles.updateText}>
-                  GitPoint v{version}
-                </Text>
-                <Text style={[styles.updateText, styles.updateTextSub]}>
-                  {this.state.updateText}
-                </Text>
-              </TouchableOpacity>
             </View>}
         </ParallaxScroll>
       </ViewContainer>
