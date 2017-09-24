@@ -1,5 +1,7 @@
+/* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
   StyleSheet,
   Text,
@@ -18,19 +20,25 @@ import {
   SearchBar,
 } from 'components';
 import { colors, fonts, normalize } from 'config';
+import { translate } from 'utils';
 import { searchRepos, searchUsers } from '../index';
 
 const mapStateToProps = state => ({
   users: state.search.users,
   repos: state.search.repos,
+  language: state.auth.language,
   isPendingSearchUsers: state.search.isPendingSearchUsers,
   isPendingSearchRepos: state.search.isPendingSearchRepos,
 });
 
-const mapDispatchToProps = dispatch => ({
-  searchReposByDispatch: query => dispatch(searchRepos(query)),
-  searchUsersByDispatch: query => dispatch(searchUsers(query)),
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      searchRepos,
+      searchUsers,
+    },
+    dispatch
+  );
 
 const styles = StyleSheet.create({
   searchBarWrapper: {
@@ -95,10 +103,11 @@ const styles = StyleSheet.create({
 
 class Search extends Component {
   props: {
-    searchReposByDispatch: Function,
-    searchUsersByDispatch: Function,
+    searchRepos: Function,
+    searchUsers: Function,
     users: Array,
     repos: Array,
+    language: string,
     isPendingSearchUsers: boolean,
     isPendingSearchRepos: boolean,
     navigation: Object,
@@ -127,7 +136,7 @@ class Search extends Component {
   }
 
   search(query, selectedType = null) {
-    const { searchReposByDispatch, searchUsersByDispatch } = this.props;
+    const { searchRepos, searchUsers } = this.props;
 
     const selectedSearchType =
       selectedType !== null ? selectedType : this.state.searchType;
@@ -139,9 +148,9 @@ class Search extends Component {
       });
 
       if (selectedSearchType === 0) {
-        searchReposByDispatch(query);
+        searchRepos(query);
       } else {
-        searchUsersByDispatch(query);
+        searchUsers(query);
       }
     }
   }
@@ -177,6 +186,7 @@ class Search extends Component {
     const {
       users,
       repos,
+      language,
       isPendingSearchUsers,
       isPendingSearchRepos,
     } = this.props;
@@ -219,7 +229,10 @@ class Search extends Component {
           <ButtonGroup
             onPress={this.switchQueryType}
             selectedIndex={this.state.searchType}
-            buttons={['Repositories', 'Users']}
+            buttons={[
+              translate('search.main.repositoryButton', language),
+              translate('search.main.userButton', language),
+            ]}
             textStyle={styles.buttonGroupText}
             selectedTextStyle={styles.buttonGroupTextSelected}
             containerStyle={styles.buttonGroupContainer}
@@ -230,7 +243,9 @@ class Search extends Component {
           searchType === 0 &&
           <LoadingContainer
             animating={isPendingSearchRepos && searchType === 0}
-            text={`Searching for ${query}`}
+            text={translate('search.main.searchingMessage', language, {
+              query,
+            })}
             style={styles.marginSpacing}
           />}
 
@@ -238,7 +253,9 @@ class Search extends Component {
           searchType === 1 &&
           <LoadingContainer
             animating={isPendingSearchUsers && searchType === 1}
-            text={`Searching for ${query}`}
+            text={translate('search.main.searchingMessage', language, {
+              query,
+            })}
             style={styles.marginSpacing}
           />}
 
@@ -257,7 +274,12 @@ class Search extends Component {
         {!searchStart &&
           <View style={styles.textContainer}>
             <Text style={styles.searchTitle}>
-              {`Search for any ${searchType === 0 ? 'repository' : 'user'}`}
+              {translate('search.main.searchMessage', language, {
+                type:
+                  searchType === 0
+                    ? translate('search.main.repository', language)
+                    : translate('search.main.user', language),
+              })}
             </Text>
           </View>}
 
@@ -266,7 +288,9 @@ class Search extends Component {
           repos.length === 0 &&
           searchType === 0 &&
           <View style={styles.textContainer}>
-            <Text style={styles.searchTitle}>No repositories found :(</Text>
+            <Text style={styles.searchTitle}>
+              {translate('search.main.noRepositoriesFound', language)}
+            </Text>
           </View>}
 
         {searchStart &&
@@ -274,7 +298,9 @@ class Search extends Component {
           users.length === 0 &&
           searchType === 1 &&
           <View style={styles.textContainer}>
-            <Text style={styles.searchTitle}>No users found :(</Text>
+            <Text style={styles.searchTitle}>
+              {translate('search.main.noUsersFound', language)}
+            </Text>
           </View>}
       </ViewContainer>
     );

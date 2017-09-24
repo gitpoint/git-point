@@ -1,5 +1,7 @@
+/* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
   FlatList,
   View,
@@ -8,7 +10,7 @@ import {
   Text,
   Platform,
 } from 'react-native';
-import { ButtonGroup } from 'react-native-elements';
+import { ButtonGroup, Icon } from 'react-native-elements';
 import {
   ViewContainer,
   IssueListItem,
@@ -16,6 +18,7 @@ import {
   SearchBar,
 } from 'components';
 
+import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
 import {
   searchOpenRepoIssues,
@@ -23,6 +26,7 @@ import {
 } from '../repository.action';
 
 const mapStateToProps = state => ({
+  language: state.auth.language,
   repository: state.repository.repository,
   searchedOpenIssues: state.repository.searchedOpenIssues,
   searchedClosedIssues: state.repository.searchedClosedIssues,
@@ -30,12 +34,14 @@ const mapStateToProps = state => ({
   isPendingSearchClosedIssues: state.repository.isPendingSearchClosedIssues,
 });
 
-const mapDispatchToProps = dispatch => ({
-  searchOpenRepoIssuesByDispatch: (query, repo) =>
-    dispatch(searchOpenRepoIssues(query, repo)),
-  searchClosedRepoIssuesByDispatch: (query, repo) =>
-    dispatch(searchClosedRepoIssues(query, repo)),
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      searchOpenRepoIssues,
+      searchClosedRepoIssues,
+    },
+    dispatch
+  );
 
 const styles = StyleSheet.create({
   header: {
@@ -90,14 +96,35 @@ const styles = StyleSheet.create({
 });
 
 class IssueList extends Component {
+  static navigationOptions = ({ navigation }) => {
+    const { state, navigate } = navigation;
+
+    return {
+      headerRight: (
+        <Icon
+          name="plus"
+          color={colors.primaryDark}
+          type="octicon"
+          containerStyle={{ marginRight: 5 }}
+          underlayColor={colors.transparent}
+          onPress={() =>
+            navigate('NewIssue', {
+              title: translate('issue.newIssue.title', state.params.language),
+            })}
+        />
+      ),
+    };
+  };
+
   props: {
+    language: string,
     repository: Object,
     searchedOpenIssues: Array,
     searchedClosedIssues: Array,
     isPendingSearchOpenIssues: boolean,
     isPendingSearchClosedIssues: boolean,
-    searchOpenRepoIssuesByDispatch: Function,
-    searchClosedRepoIssuesByDispatch: Function,
+    searchOpenRepoIssues: Function,
+    searchClosedRepoIssues: Function,
     navigation: Object,
   };
 
@@ -117,6 +144,14 @@ class IssueList extends Component {
       searchStart: false,
       searchFocus: false,
     };
+  }
+
+  componentDidMount() {
+    const { language, navigation } = this.props;
+
+    navigation.setParams({
+      language,
+    });
   }
 
   getList = () => {
@@ -152,8 +187,8 @@ class IssueList extends Component {
 
   search = (query, selectedType = null) => {
     const {
-      searchOpenRepoIssuesByDispatch,
-      searchClosedRepoIssuesByDispatch,
+      searchOpenRepoIssues,
+      searchClosedRepoIssues,
       repository,
     } = this.props;
 
@@ -167,9 +202,9 @@ class IssueList extends Component {
       });
 
       if (selectedSearchType === 0) {
-        searchOpenRepoIssuesByDispatch(query, repository.full_name);
+        searchOpenRepoIssues(query, repository.full_name);
       } else {
-        searchClosedRepoIssuesByDispatch(query, repository.full_name);
+        searchClosedRepoIssues(query, repository.full_name);
       }
     }
   };
@@ -183,10 +218,12 @@ class IssueList extends Component {
       type={this.props.navigation.state.params.type}
       issue={item}
       navigation={this.props.navigation}
+      language={this.props.language}
     />;
 
   render() {
     const {
+      language,
       searchedOpenIssues,
       searchedClosedIssues,
       isPendingSearchOpenIssues,
@@ -217,7 +254,10 @@ class IssueList extends Component {
           <ButtonGroup
             onPress={this.switchQueryType}
             selectedIndex={searchType}
-            buttons={['Open', 'Closed']}
+            buttons={[
+              translate('repository.issueList.openButton', language),
+              translate('repository.issueList.closedButton', language),
+            ]}
             textStyle={styles.buttonGroupText}
             selectedTextStyle={styles.buttonGroupTextSelected}
             containerStyle={styles.buttonGroupContainer}
@@ -228,7 +268,9 @@ class IssueList extends Component {
           searchType === 0 &&
           <LoadingContainer
             animating={isPendingSearchOpenIssues && searchType === 0}
-            text={`Searching for ${query}`}
+            text={translate('repository.issueList.searchingMessage', language, {
+              query,
+            })}
             style={styles.marginSpacing}
           />}
 
@@ -236,7 +278,9 @@ class IssueList extends Component {
           searchType === 1 &&
           <LoadingContainer
             animating={isPendingSearchClosedIssues && searchType === 1}
-            text={`Searching for ${query}`}
+            text={translate('repository.issueList.searchingMessage', language, {
+              query,
+            })}
             style={styles.marginSpacing}
           />}
 
@@ -256,7 +300,9 @@ class IssueList extends Component {
           searchedOpenIssues.length === 0 &&
           searchType === 0 &&
           <View style={styles.marginSpacing}>
-            <Text style={styles.searchTitle}>No open issues found!</Text>
+            <Text style={styles.searchTitle}>
+              {translate('repository.issueList.noOpenIssues', language)}
+            </Text>
           </View>}
 
         {searchStart &&
@@ -264,7 +310,9 @@ class IssueList extends Component {
           searchedClosedIssues.length === 0 &&
           searchType === 1 &&
           <View style={styles.marginSpacing}>
-            <Text style={styles.searchTitle}>No closed issues found!</Text>
+            <Text style={styles.searchTitle}>
+              {translate('repository.issueList.noClosedIssues', language)}
+            </Text>
           </View>}
       </ViewContainer>
     );

@@ -1,41 +1,30 @@
 /* eslint react/prop-types: 0 */
-
+/* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { StyleSheet, Text, FlatList, View } from 'react-native';
-import moment from 'moment';
+import moment from 'moment/min/moment-with-locales.min';
 
 import { LoadingUserListItem, UserListItem, ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
-import { emojifyText } from 'utils';
+import { emojifyText, translate } from 'utils';
 import { getUserEvents } from '../auth.action';
-
-moment.updateLocale('en', {
-  relativeTime: {
-    past: '%s',
-    s: '%ds',
-    m: '%dm',
-    mm: '%dm',
-    h: '%dh',
-    hh: '%dh',
-    d: '%dd',
-    dd: '%dd',
-    M: '%dmo',
-    MM: '%dmo',
-    y: '%dy',
-    yy: '%dy',
-  },
-});
 
 const mapStateToProps = state => ({
   user: state.auth.user,
   userEvents: state.auth.events,
+  language: state.auth.language,
   isPendingEvents: state.auth.isPendingEvents,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getUserEvents: user => dispatch(getUserEvents(user)),
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getUserEvents,
+    },
+    dispatch
+  );
 
 const styles = StyleSheet.create({
   descriptionContainer: {
@@ -69,6 +58,7 @@ const styles = StyleSheet.create({
     fontSize: normalize(11),
     marginTop: 1,
     ...fonts.fontPrimarySemiBold,
+    marginLeft: 39,
   },
   textContainer: {
     flex: 1,
@@ -101,63 +91,108 @@ class Events extends Component {
   };
 
   getAction = userEvent => {
+    const { language } = this.props;
     const eventType = userEvent.type;
+    /* eslint-disable prefer-const */
+    let { action, ref_type: object } = userEvent.payload;
 
     switch (eventType) {
       case 'CommitCommentEvent':
-        return 'commented on commit';
+        return translate('auth.events.commitCommentEvent', language);
       case 'CreateEvent':
-        return `created ${userEvent.payload.ref_type}`;
+        return translate('auth.events.createEvent', language, {
+          object: translate(`auth.events.objects.${object}`, language),
+        });
       case 'DeleteEvent':
-        return `deleted ${userEvent.payload.ref_type}`;
+        return translate('auth.events.deleteEvent', language, {
+          object: translate(`auth.events.objects.${object}`, language),
+        });
       case 'ForkEvent':
-        return 'forked';
+        return translate('auth.events.actions.forked', language);
       case 'GollumEvent':
-        return `${userEvent.payload.pages[0].action}`;
-      case 'IssueCommentEvent': {
-        const type = userEvent.payload.issue.pull_request
-          ? 'pull request'
-          : 'issue';
+        action = userEvent.payload.pages[0].action;
 
-        if (userEvent.payload.action === 'created') {
-          return `commented on ${type}`;
-        } else if (userEvent.payload.action === 'edited') {
-          return `edited their comment on ${type}`;
-        } else if (userEvent.payload.action === 'deleted') {
-          return `removed their comment on ${type}`;
+        return translate(`auth.events.actions.${action}`, language);
+      case 'IssueCommentEvent': {
+        const eventsByActions = {
+          created: 'issueCommentEvent',
+          edited: 'issueEditedEvent',
+          deleted: 'issueRemovedEvent',
+        };
+        const event = eventsByActions[action];
+
+        if (!event) {
+          return null;
         }
 
-        return null;
+        if (action === 'created') {
+          action = 'commented';
+        }
+
+        const issueData = {
+          type: userEvent.payload.issue.pull_request
+            ? translate('auth.events.types.pullRequest', language)
+            : translate('auth.events.types.issue', language),
+          action: translate(`auth.events.actions.${action}`, language),
+        };
+
+        return translate(`auth.events.${event}`, language, issueData);
       }
       case 'IssuesEvent':
-        return `${userEvent.payload.action} issue`;
+        return translate('auth.events.issuesEvent', language, {
+          action: translate(`auth.events.actions.${action}`, language),
+        });
       case 'MemberEvent':
-        return `${userEvent.payload.action}`;
+        return translate(`auth.events.actions.${action}`, language);
       case 'PublicEvent':
-        return 'open sourced';
+        return translate('auth.events.publicEvent.action', language);
       case 'PullRequestEvent':
-        return `${userEvent.payload.action} pull request`;
+        return translate('auth.events.pullRequestEvent', language, {
+          action: translate(`auth.events.actions.${action}`, language),
+        });
       case 'PullRequestReviewEvent':
-        return `${userEvent.payload.action} pull request review`;
+        return translate('auth.events.pullRequestReviewEvent', language, {
+          payload: translate(`auth.events.actions.${action}`, language),
+        });
       case 'PullRequestReviewCommentEvent': {
-        if (userEvent.payload.action === 'created') {
-          return 'commented on pull request';
-        } else if (userEvent.payload.action === 'edited') {
-          return 'edited their comment on pull request'; // haven't witnessed
-        } else if (userEvent.payload.action === 'deleted') {
-          return 'removed their comment on pull request'; // haven't witnessed
+        if (action === 'created') {
+          return translate(
+            'auth.events.pullRequestReviewCommentEvent',
+            language,
+            {
+              action: translate('auth.events.actions.commented', language),
+            }
+          );
+        } else if (action === 'edited') {
+          return translate(
+            'auth.events.pullRequestReviewEditedEvent',
+            language,
+            {
+              action: translate(`auth.events.actions.${action}`, language),
+            }
+          );
+        } else if (action === 'deleted') {
+          return translate(
+            'auth.events.pullRequestReviewDeletedEvent',
+            language,
+            {
+              action: translate(`auth.events.actions.${action}`, language),
+            }
+          );
         }
 
         return null;
       }
       case 'PushEvent':
-        return 'pushed to';
+        return translate('auth.events.actions.pushedTo', language);
       case 'ReleaseEvent':
-        return `${userEvent.payload.action} release`;
+        return translate('auth.events.releaseEvent', language, {
+          action: translate(`auth.events.actions.${action}`, language),
+        });
       case 'RepositoryEvent':
-        return userEvent.payload.action;
+        return translate(`auth.events.actions.${action}`, language);
       case 'WatchEvent':
-        return 'starred';
+        return translate('auth.events.actions.starred', language);
       default:
         return null;
     }
@@ -277,6 +312,7 @@ class Events extends Component {
   }
 
   getConnector = userEvent => {
+    const { language } = this.props;
     const eventType = userEvent.type;
 
     switch (eventType) {
@@ -292,14 +328,16 @@ class Events extends Component {
       }
       case 'ForkEvent':
       case 'MemberEvent':
-        return 'to';
+        return translate('auth.events.toConnector', language);
       case 'DeleteEvent':
       case 'IssueCommentEvent':
       case 'IssuesEvent':
       case 'PushEvent':
       case 'PullRequestEvent':
       case 'PullRequestReviewCommentEvent':
-        return 'at';
+        return translate('auth.events.atConnector', language);
+      case 'PublicEvent':
+        return translate('auth.events.publicEvent.connector', language);
       default:
         return null;
     }
@@ -424,19 +462,23 @@ class Events extends Component {
           }
         : userEvent.payload.forkee,
     });
-  }
+  };
 
   navigateToIssue = userEvent => {
     this.props.navigation.navigate('Issue', {
-      issue: userEvent.payload.issue || this.formatPullRequestObject(userEvent.payload.pull_request),
+      issue:
+        userEvent.payload.issue ||
+        this.formatPullRequestObject(userEvent.payload.pull_request),
+      isPR: !!userEvent.payload.pull_request,
+      language: this.props.language,
     });
-  }
+  };
 
   navigateToProfile = (userEvent, isActor) => {
     this.props.navigation.navigate('Profile', {
       user: !isActor ? userEvent.payload.member : userEvent.actor,
     });
-  }
+  };
 
   keyExtractor = item => {
     return item.id;
@@ -468,7 +510,7 @@ class Events extends Component {
   }
 
   render() {
-    const { isPendingEvents, userEvents, navigation } = this.props;
+    const { isPendingEvents, userEvents, language, navigation } = this.props;
     const linebreaksPattern = /(\r\n|\n|\r)/gm;
     let content;
 
@@ -481,8 +523,7 @@ class Events extends Component {
       content = (
         <View style={styles.textContainer}>
           <Text style={styles.noneTitle}>
-            Welcome! This is your news feed - it&apos;ll help you keep up with
-            recent activity on repositories you watch and people you follow.
+            {translate('auth.events.welcomeMessage', language)}
           </Text>
         </View>
       );

@@ -7,10 +7,12 @@ import {
   TouchableOpacity,
   Text,
   TextInput,
+  Platform,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 import { MentionArea } from 'components';
+import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
 
 const styles = StyleSheet.create({
@@ -21,7 +23,6 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     padding: 10,
-    marginLeft: 5,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -29,7 +30,6 @@ const styles = StyleSheet.create({
   textInput: {
     fontSize: normalize(12),
     flex: 1,
-    marginLeft: 15,
     marginRight: 5,
     color: colors.black,
     ...fonts.fontPrimaryLight,
@@ -38,11 +38,6 @@ const styles = StyleSheet.create({
     flex: 0.15,
     alignItems: 'flex-end',
     justifyContent: 'center',
-  },
-  postButton: {
-    fontSize: normalize(12),
-    letterSpacing: 1,
-    ...fonts.fontPrimarySemiBold,
   },
   postButtonDisabled: {
     color: colors.grey,
@@ -57,7 +52,8 @@ export class CommentInput extends Component {
     users: Array,
     userHasPushPermission: boolean,
     issueLocked: boolean,
-    onSubmitEditing: Function,
+    language: string,
+    onSubmit: Function,
   };
 
   state: {
@@ -74,13 +70,19 @@ export class CommentInput extends Component {
     };
   }
 
-  handleSubmit = (body: string): void => {
-    this.props.onSubmitEditing(body);
+  handleSubmitEditing = (body: string): void => {
+    if (Platform.OS === 'android') {
+      this.setState({ text: `${body}\n` });
+    }
+  };
+
+  handleSubmit = (): void => {
+    this.props.onSubmit(this.state.text);
     this.setState({ text: '' });
   };
 
   render() {
-    const { userHasPushPermission, issueLocked, users } = this.props;
+    const { userHasPushPermission, issueLocked, language, users } = this.props;
 
     let userCanPost = null;
 
@@ -100,23 +102,21 @@ export class CommentInput extends Component {
           users={users}
         />
         <View style={styles.wrapper}>
-          <Icon name="send" color={colors.grey} />
-
           {userCanPost &&
             <TextInput
               underlineColorAndroid={'transparent'}
               placeholder={
                 issueLocked && userHasPushPermission
-                  ? 'Locked, but you can still comment...'
-                  : 'Add a comment...'
+                  ? translate('issue.main.lockedCommentInput', language)
+                  : translate('issue.main.commentInput', language)
               }
               multiline
-              blurOnSubmit
+              blurOnSubmit={false}
               onChangeText={text => this.setState({ text })}
               onContentSizeChange={event =>
                 this.setState({ height: event.nativeEvent.contentSize.height })}
               onSubmitEditing={event =>
-                this.handleSubmit(event.nativeEvent.text)}
+                this.handleSubmitEditing(event.nativeEvent.text)}
               placeholderTextColor={colors.grey}
               style={[
                 styles.textInput,
@@ -127,28 +127,27 @@ export class CommentInput extends Component {
 
           {!userCanPost &&
             <Text style={[styles.textInput, { color: colors.grey }]}>
-              Issue is locked
+              {translate('issue.main.lockedIssue', language)}
             </Text>}
 
-          {!this.props.issueLocked &&
+          {userCanPost &&
             <TouchableOpacity
               disabled={this.state.text === ''}
               style={styles.postButtonContainer}
               onPress={() => this.handleSubmit(this.state.text)}
             >
-              <Text
-                style={[
-                  styles.postButton,
+              <Icon
+                name="send"
+                iconStyle={
                   this.state.text === ''
                     ? styles.postButtonDisabled
-                    : styles.postButtonEnabled,
-                ]}
-              >
-                Post
-              </Text>
+                    : styles.postButtonEnabled
+                }
+              />
             </TouchableOpacity>}
 
-          {this.props.issueLocked &&
+          {!userCanPost &&
+            this.props.issueLocked &&
             <View style={styles.postButtonContainer}>
               <Icon name="lock" type="octicon" color={colors.grey} />
             </View>}

@@ -1,9 +1,12 @@
+import { getLanguage } from 'locale';
 import {
   LOGIN,
   LOGOUT,
   GET_AUTH_USER,
   GET_AUTH_ORGS,
   GET_EVENTS,
+  CHANGE_LANGUAGE,
+  GET_AUTH_STAR_COUNT,
 } from './auth.type';
 
 const initialState = {
@@ -12,8 +15,10 @@ const initialState = {
   isAuthenticated: false,
   accessToken: null,
   user: {},
+  hasInitialUser: false,
   orgs: [],
   events: [],
+  language: getLanguage(),
   isPendingUser: false,
   isPendingOrgs: false,
   isPendingEvents: false,
@@ -50,6 +55,7 @@ export const authReducer = (state = initialState, action = {}) => {
     case LOGOUT.SUCCESS:
       return {
         ...initialState,
+        hasInitialUser: false,
       };
     case LOGOUT.FAILURE:
       return {
@@ -67,12 +73,31 @@ export const authReducer = (state = initialState, action = {}) => {
         ...state,
         user: action.payload,
         isPendingUser: false,
+        hasInitialUser: true,
       };
     case GET_AUTH_USER.ERROR:
       return {
         ...state,
         error: action.payload,
         isPendingUser: false,
+      };
+    case GET_AUTH_STAR_COUNT.PENDING:
+      return {
+        ...state,
+        starCount: ' ',
+        isPendingStarCount: true,
+      };
+    case GET_AUTH_STAR_COUNT.SUCCESS:
+      return {
+        ...state,
+        starCount: action.payload,
+        isPendingStarCount: false,
+      };
+    case GET_AUTH_STAR_COUNT.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isPendingStarCount: false,
       };
     case GET_AUTH_ORGS.PENDING:
       return {
@@ -107,6 +132,11 @@ export const authReducer = (state = initialState, action = {}) => {
         ...state,
         error: action.payload,
         isPendingEvents: false,
+      };
+    case CHANGE_LANGUAGE.SUCCESS:
+      return {
+        ...state,
+        language: action.payload,
       };
     default:
       return state;

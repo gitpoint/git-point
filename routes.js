@@ -9,6 +9,7 @@ import {
 import { Icon } from 'react-native-elements';
 
 import { colors } from 'config';
+import { translate } from 'utils';
 
 // Auth
 import {
@@ -18,6 +19,7 @@ import {
   AuthProfileScreen,
   EventsScreen,
   PrivacyPolicyScreen,
+  UserOptionsScreen,
 } from 'auth';
 
 // User
@@ -49,29 +51,40 @@ import {
 } from 'repository';
 
 // Issue
-import { IssueScreen, IssueSettingsScreen, PullMergeScreen } from 'issue';
+import {
+  IssueScreen,
+  IssueSettingsScreen,
+  NewIssueScreen,
+  PullMergeScreen,
+} from 'issue';
 
 const sharedRoutes = {
   RepositoryList: {
     screen: RepositoryListScreen,
-    navigationOptions: {
-      title: 'Repositories',
-    },
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    }),
   },
   FollowerList: {
     screen: FollowerListScreen,
-    navigationOptions: {
-      title: 'Followers',
-    },
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    }),
   },
   FollowingList: {
     screen: FollowingListScreen,
-    navigationOptions: {
-      title: 'Following',
-    },
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    }),
   },
   Profile: {
     screen: ProfileScreen,
+    navigationOptions: {
+      header: null,
+    },
+  },
+  AuthProfile: {
+    screen: AuthProfileScreen,
     navigationOptions: {
       header: null,
     },
@@ -92,7 +105,7 @@ const sharedRoutes = {
     screen: RepositoryCodeListScreen,
     navigationOptions: ({ navigation }) => ({
       title: navigation.state.params.topLevel
-        ? 'Code'
+        ? navigation.state.params.title
         : navigation.state.params.content.name,
     }),
   },
@@ -104,45 +117,58 @@ const sharedRoutes = {
   },
   IssueList: {
     screen: IssueListScreen,
-    navigationOptions: {
-      title: 'Issues',
-    },
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    }),
   },
   PullList: {
     screen: PullListScreen,
-    navigationOptions: {
-      title: 'Pull Requests',
-    },
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    }),
   },
   Issue: {
     screen: IssueScreen,
     navigationOptions: ({ navigation }) => {
       const issueNumberRegex = /issues\/([0-9]+)$/;
-      const { issue, issueURL, isPR } = navigation.state.params;
+      const { issue, issueURL, isPR, language } = navigation.state.params;
       const number = issue ? issue.number : issueURL.match(issueNumberRegex)[1];
+      const langKey = isPR ? 'pullRequest' : 'issue';
+      const langTitle = translate(
+        `issue.main.screenTitles.${langKey}`,
+        language
+      );
 
       return {
-        title: isPR ? `Pull Request #${number}` : `Issue #${number}`,
+        title: `${langTitle} #${number}`,
+        headerLeft: navigation.state.params.headerLeft,
+        gesturesEnabled: !(navigation.state.params.gesturesEnabled === false),
       };
     },
   },
   IssueSettings: {
     screen: IssueSettingsScreen,
-    navigationOptions: {
-      title: 'Settings',
-    },
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    }),
+  },
+  NewIssue: {
+    screen: NewIssueScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    }),
   },
   PullDiff: {
     screen: PullDiffScreen,
-    navigationOptions: {
-      title: 'Diff',
-    },
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    }),
   },
   PullMerge: {
     screen: PullMergeScreen,
-    navigationOptions: {
-      title: 'Merge',
-    },
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    }),
   },
   ReadMe: {
     screen: ReadMeScreen,
@@ -152,9 +178,15 @@ const sharedRoutes = {
   },
   PrivacyPolicy: {
     screen: PrivacyPolicyScreen,
-    navigationOptions: {
-      title: 'Privacy Policy',
-    },
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    }),
+  },
+  UserOptions: {
+    screen: UserOptionsScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    }),
   },
 };
 
@@ -163,7 +195,7 @@ const HomeStackNavigator = StackNavigator(
     Events: {
       screen: EventsScreen,
       navigationOptions: {
-        headerTitle: 'Events',
+        headerTitle: 'GitPoint',
       },
     },
     ...sharedRoutes,

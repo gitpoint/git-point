@@ -1,36 +1,47 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { bindActionCreators } from 'redux';
+import {
+  StyleSheet,
+  Text,
+  RefreshControl,
+  View,
+  ActivityIndicator,
+  Dimensions,
+} from 'react-native';
 import { ListItem } from 'react-native-elements';
-import { NavigationActions } from 'react-navigation';
-import codePush from 'react-native-code-push';
 
 import {
   ViewContainer,
   UserProfile,
   SectionList,
-  LoadingContainer,
   ParallaxScroll,
   UserListItem,
   EntityInfo,
 } from 'components';
 import { colors, fonts, normalize } from 'config';
-import { getUser, getOrgs, signOut } from 'auth';
-import { emojifyText, openURLInView } from 'utils';
-import { version } from 'package.json';
+import { getUser, getOrgs, getStarCount } from 'auth';
+import { emojifyText, openURLInView, translate } from 'utils';
 
 const mapStateToProps = state => ({
   user: state.auth.user,
   orgs: state.auth.orgs,
+  language: state.auth.language,
+  starCount: state.auth.starCount,
   isPendingUser: state.auth.isPendingUser,
   isPendingOrgs: state.auth.isPendingOrgs,
+  hasInitialUser: state.auth.hasInitialUser,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getUserByDispatch: () => dispatch(getUser()),
-  getOrgsByDispatch: () => dispatch(getOrgs()),
-  signOutByDispatch: () => dispatch(signOut()),
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getUser,
+      getOrgs,
+      getStarCount,
+    },
+    dispatch
+  );
 
 const styles = StyleSheet.create({
   listTitle: {
@@ -63,158 +74,125 @@ const styles = StyleSheet.create({
   noteLink: {
     ...fonts.fontPrimarySemiBold,
   },
-  logoutTitle: {
-    color: colors.red,
-    ...fonts.fontPrimary,
-  },
 });
-
-const updateText = {
-  check: 'Check for update',
-  checking: 'Checking for update...',
-  updated: 'App is up to date',
-  available: 'Update is available!',
-  notApplicable: 'Not applicable in debug mode',
-};
 
 class AuthProfile extends Component {
   props: {
-    getUserByDispatch: Function,
-    getOrgsByDispatch: Function,
-    signOutByDispatch: Function,
+    getUser: Function,
+    getOrgs: Function,
+    getStarCount: Function,
     user: Object,
     orgs: Array,
+    language: string,
+    starCount: string,
     isPendingUser: boolean,
     isPendingOrgs: boolean,
+    hasInitialUser: boolean,
     navigation: Object,
   };
 
-  state = {
-    updateText: updateText.check,
-  };
-
   componentDidMount() {
-    this.props.getUserByDispatch();
-    this.props.getOrgsByDispatch();
+    this.refreshProfile();
   }
 
-  checkForUpdate = () => {
-    if (__DEV__) {
-      this.setState({ updateText: updateText.notApplicable });
-    } else {
-      this.setState({ updateText: updateText.checking });
-      codePush
-        .sync({
-          updateDialog: true,
-          installMode: codePush.InstallMode.IMMEDIATE,
-        })
-        .then(update => {
-          this.setState({
-            updateText: update ? updateText.available : updateText.updated,
-          });
-        });
-    }
+  refreshProfile = () => {
+    this.props.getUser();
+    this.props.getOrgs();
+    this.props.getStarCount();
   };
-
-  signOutUser() {
-    const { signOutByDispatch, navigation } = this.props;
-
-    const resetAction = NavigationActions.reset({
-      index: 0,
-      key: null,
-      actions: [NavigationActions.navigate({ routeName: 'Login' })],
-    });
-
-    signOutByDispatch().then(() => {
-      const url = 'https://github.com/logout';
-
-      navigation.dispatch(resetAction);
-      openURLInView(url);
-    });
-  }
 
   render() {
-    const { user, orgs, isPendingUser, isPendingOrgs, navigation } = this.props;
-    const loading = isPendingUser || isPendingOrgs;
+    const {
+      user,
+      orgs,
+      isPendingUser,
+      isPendingOrgs,
+      language,
+      starCount,
+      navigation,
+      hasInitialUser,
+    } = this.props;
+
+    const isPending = isPendingUser || isPendingOrgs;
 
     return (
       <ViewContainer barColor="light">
-        {loading && <LoadingContainer animating={loading} center />}
+        <ParallaxScroll
+          renderContent={() =>
+            <UserProfile
+              type="user"
+              initialUser={hasInitialUser ? user : {}}
+              user={hasInitialUser ? user : {}}
+              starCount={starCount}
+              language={language}
+              navigation={navigation}
+            />}
+          refreshControl={
+            <RefreshControl
+              refreshing={isPending}
+              onRefresh={this.refreshProfile}
+            />
+          }
+          stickyTitle={user.login}
+          showMenu
+          menuIcon="gear"
+          menuAction={() =>
+            navigation.navigate('UserOptions', {
+              title: translate('auth.userOptions.title', language),
+            })}
+        >
+          {isPending &&
+            <ActivityIndicator
+              animating={isPending}
+              style={{ height: Dimensions.get('window').height / 3 }}
+              size="large"
+            />}
 
-        {!loading &&
-          <ParallaxScroll
-            renderContent={() =>
-              <UserProfile
-                type="user"
-                initialUser={user}
-                user={user}
-                navigation={navigation}
-              />}
-            stickyTitle={user.login}
-          >
-            {user.bio &&
-              user.bio !== '' &&
-              <SectionList title="BIO">
-                <ListItem
-                  subtitle={emojifyText(user.bio)}
-                  subtitleStyle={styles.listSubTitle}
-                  hideChevron
-                />
-              </SectionList>}
-
-            <EntityInfo entity={user} orgs={orgs} navigation={navigation} />
-
-            <SectionList
-              title="ORGANIZATIONS"
-              noItems={orgs.length === 0}
-              noItemsMessage={'No organizations'}
-            >
-              {orgs.map(item =>
-                <UserListItem
-                  key={item.id}
-                  user={item}
-                  navigation={navigation}
-                />
-              )}
-              <Text style={styles.note}>
-                Can&apos;t see all your organizations?{'\n'}
-                <Text
-                  style={styles.noteLink}
-                  onPress={() =>
-                    openURLInView('https://github.com/settings/applications')}
-                >
-                  You may have to request approval for them.
-                </Text>
-              </Text>
-            </SectionList>
-
-            <SectionList>
+          {hasInitialUser &&
+            user.bio &&
+            user.bio !== '' &&
+            <SectionList title={translate('common.bio', language)}>
               <ListItem
-                title="Privacy Policy"
-                titleStyle={styles.listTitle}
-                onPress={() => navigation.navigate('PrivacyPolicy')}
-              />
-
-              <ListItem
-                title="Sign Out"
-                titleStyle={styles.logoutTitle}
+                subtitle={emojifyText(user.bio)}
+                subtitleStyle={styles.listSubTitle}
                 hideChevron
-                onPress={() => this.signOutUser()}
               />
-            </SectionList>
+            </SectionList>}
 
-            <TouchableOpacity
-              style={styles.update}
-              onPress={this.checkForUpdate}
-            >
-              <Text style={styles.updateText}>
-                GitPoint v{version}
-              </Text>
-              <Text style={[styles.updateText, styles.updateTextSub]}>
-                {this.state.updateText}
-              </Text>
-            </TouchableOpacity>
-          </ParallaxScroll>}
+          {!isPending &&
+            <EntityInfo entity={user} orgs={orgs} navigation={navigation} />}
+
+          {!isPending &&
+            <View>
+              <SectionList
+                title={translate('common.orgs', language)}
+                noItems={orgs.length === 0}
+                noItemsMessage={translate('common.noOrgsMessage', language)}
+              >
+                {orgs.map(item =>
+                  <UserListItem
+                    key={item.id}
+                    user={item}
+                    navigation={navigation}
+                  />
+                )}
+                <Text style={styles.note}>
+                  {translate('auth.profile.orgsRequestApprovalTop', language)}
+                  {'\n'}
+                  <Text
+                    style={styles.noteLink}
+                    onPress={() =>
+                      openURLInView('https://github.com/settings/applications')}
+                  >
+                    {translate(
+                      'auth.profile.orgsRequestApprovalBottom',
+                      language
+                    )}
+                  </Text>
+                </Text>
+              </SectionList>
+            </View>}
+        </ParallaxScroll>
       </ViewContainer>
     );
   }

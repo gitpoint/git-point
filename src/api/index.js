@@ -1,3 +1,5 @@
+import { abbreviateNumber } from 'utils';
+
 // These keys are for development purposes and do not represent the actual application keys.
 // Feel free to use them or use a new set of keys by creating an OAuth application of your own.
 // https://github.com/settings/applications/new
@@ -8,6 +10,15 @@ export const root = 'https://api.github.com';
 export const USER_ENDPOINT = user => `${root}/users/${user}`;
 
 const accessTokenParameters = accessToken => ({
+  headers: {
+    Accept: 'application/vnd.github.v3+json',
+    Authorization: `token ${accessToken}`,
+    'Cache-Control': 'no-cache',
+  },
+});
+
+const accessTokenParametersHEAD = accessToken => ({
+  method: 'HEAD',
   headers: {
     Accept: 'application/vnd.github.v3+json',
     Authorization: `token ${accessToken}`,
@@ -86,228 +97,308 @@ const authParameters = (code, state) => ({
   }),
 });
 
-export const fetchUrl = (url, accessToken) => {
-  return fetch(url, accessTokenParameters(accessToken)).then(response =>
-    response.json()
-  );
-};
+export async function fetchUrl(url, accessToken) {
+  const response = await fetch(url, accessTokenParameters(accessToken));
 
-export const fetchUrlNormal = (url, accessToken) => {
-  return fetch(url, accessTokenParameters(accessToken));
-};
+  return response.json();
+}
 
-export const fetchUrlFile = (url, accessToken) => {
-  return fetch(url, accessTokenParametersRaw(accessToken)).then(response =>
-    response.text()
-  );
-};
+export async function fetchUrlNormal(url, accessToken) {
+  const response = await fetch(url, accessTokenParameters(accessToken));
 
-export const fetchCommentHTML = (url, accessToken) => {
-  return fetch(url, accessTokenParametersHTML(accessToken)).then(response =>
-    response.json()
-  );
-};
+  return response;
+}
 
-export const fetchAccessToken = (code, state) => {
+export async function fetchUrlHead(url, accessToken) {
+  const response = await fetch(url, accessTokenParametersHEAD(accessToken));
+
+  return response;
+}
+
+export async function fetchUrlFile(url, accessToken) {
+  const response = await fetch(url, accessTokenParametersRaw(accessToken));
+
+  return response.text();
+}
+
+export async function fetchCommentHTML(url, accessToken) {
+  const response = await fetch(url, accessTokenParameters(accessToken));
+
+  return response.json();
+}
+
+export async function fetchAccessToken(code, state) {
   const GITHUB_OAUTH_ENDPOINT = 'https://github.com/login/oauth/access_token';
-
-  return fetch(
+  const response = await fetch(
     GITHUB_OAUTH_ENDPOINT,
     authParameters(code, state)
-  ).then(response => response.json());
-};
+  );
 
-export const fetchAuthUser = accessToken => {
+  return response.json();
+}
+
+export async function fetchAuthUser(accessToken) {
   const FETCH_AUTH_USER_ENDPOINT = `${root}/user`;
-
-  return fetch(
+  const response = await fetch(
     FETCH_AUTH_USER_ENDPOINT,
     accessTokenParameters(accessToken)
-  ).then(response => response.json());
-};
+  );
 
-export const fetchAuthUserOrgs = accessToken => {
+  return response.json();
+}
+
+export async function fetchAuthUserOrgs(accessToken) {
   const ORGS_ENDPOINT = `${root}/user/orgs`;
-
-  return fetch(
+  const response = await fetch(
     ORGS_ENDPOINT,
     accessTokenParameters(accessToken)
-  ).then(response => response.json());
-};
+  );
 
-export const fetchUser = (user, accessToken) => {
+  return response.json();
+}
+
+export async function fetchUser(user, accessToken) {
   const FETCH_USER_ENDPOINT = `${root}/users/${user}`;
-
-  return fetch(
+  const response = await fetch(
     FETCH_USER_ENDPOINT,
     accessTokenParameters(accessToken)
-  ).then(response => response.json());
-};
+  );
 
-export const fetchUserOrgs = (user, accessToken) => {
+  return response.json();
+}
+
+export async function fetchUserOrgs(user, accessToken) {
   const ORGS_ENDPOINT = `${root}/users/${user}/orgs`;
-
-  return fetch(
+  const response = await fetch(
     ORGS_ENDPOINT,
     accessTokenParameters(accessToken)
-  ).then(response => response.json());
-};
+  );
 
-export const fetchUserEvents = (user, accessToken) => {
+  return response.json();
+}
+
+export async function fetchUserEvents(user, accessToken) {
   const EVENTS_ENDPOINT = `${root}/users/${user}/received_events?per_page=100`;
-
-  return fetch(
+  const response = await fetch(
     EVENTS_ENDPOINT,
     accessTokenParameters(accessToken)
-  ).then(response => response.json());
-};
+  );
 
-export const fetchReadMe = (user, repository, accessToken) => {
+  return response.json();
+}
+
+export async function fetchReadMe(user, repository, accessToken) {
   const README_ENDPOINT = `${root}/repos/${user}/${repository}/readme?ref=master`;
-
-  return fetch(
+  const response = await fetch(
     README_ENDPOINT,
     accessTokenParametersHTML(accessToken)
-  ).then(response => response.text());
-};
+  );
 
-export const fetchOrg = (orgName, accessToken) => {
-  return fetchUrl(`${root}/orgs/${orgName}`, accessToken);
-};
+  return response.text();
+}
 
-export const fetchOrgMembers = (orgName, accessToken) => {
-  return fetchUrl(`${root}/orgs/${orgName}/members`, accessToken);
-};
+export async function fetchOrg(orgName, accessToken) {
+  const response = await fetch(
+    `${root}/orgs/${orgName}`,
+    accessTokenParameters(accessToken)
+  );
 
-export const fetchPostIssueComment = (
+  return response.json();
+}
+
+export async function fetchOrgMembers(orgName, accessToken) {
+  const response = await fetch(
+    `${root}/orgs/${orgName}/members`,
+    accessTokenParameters(accessToken)
+  );
+
+  return response.json();
+}
+
+export async function fetchPostIssueComment(
   body,
   owner,
   repoName,
   issueNum,
   accessToken
-) => {
+) {
   const ENDPOINT = `${root}/repos/${owner}/${repoName}/issues/${issueNum}/comments`;
-
-  return fetch(
+  const response = await fetch(
     ENDPOINT,
     accessTokenParametersPOST(accessToken, { body })
-  ).then(response => response.json());
-};
+  );
 
-export const fetchEditIssue = (
+  return response.json();
+}
+
+export async function fetchEditIssue(
   owner,
   repoName,
   issueNum,
   editParams,
   updateParams,
   accessToken
-) => {
+) {
   const ENDPOINT = `${root}/repos/${owner}/${repoName}/issues/${issueNum}`;
+  const response = await fetch(
+    ENDPOINT,
+    accessTokenParametersPATCH(editParams, accessToken)
+  );
 
-  return fetch(ENDPOINT, accessTokenParametersPATCH(editParams, accessToken));
-};
+  return response;
+}
 
-export const fetchChangeIssueLockStatus = (
+export async function fetchChangeIssueLockStatus(
   owner,
   repoName,
   issueNum,
   currentStatus,
   accessToken
-) => {
+) {
   const ENDPOINT = `${root}/repos/${owner}/${repoName}/issues/${issueNum}/lock`;
-
-  return fetch(
+  const response = await fetch(
     ENDPOINT,
     currentStatus
       ? accessTokenParametersDELETE(accessToken)
       : accessTokenParametersPUT(accessToken)
   );
-};
 
-export const fetchSearch = (type, query, accessToken, params = '') => {
-  const ENDPOINT = `https://api.github.com/search/${type}?q=${query}${params}`;
+  return response;
+}
 
-  return fetch(ENDPOINT, accessTokenParameters(accessToken)).then(response =>
-    response.json()
+export async function fetchSearch(type, query, accessToken, params = '') {
+  const ENDPOINT = `${root}/search/${type}?q=${query}${params}`;
+  const response = await fetch(ENDPOINT, accessTokenParameters(accessToken));
+
+  return response.json();
+}
+
+export async function fetchNotifications(participating, all, accessToken) {
+  const ENDPOINT = `${root}/notifications?participating=${participating}&all=${all}`;
+  const response = await fetch(ENDPOINT, accessTokenParameters(accessToken));
+
+  return response.json();
+}
+
+export async function fetchMarkNotificationAsRead(notificationID, accessToken) {
+  const ENDPOINT = `${root}/notifications/threads/${notificationID}`;
+  const response = await fetch(
+    ENDPOINT,
+    accessTokenParametersPATCH(null, accessToken)
   );
-};
 
-export const fetchNotifications = (participating, all, accessToken) => {
-  const ENDPOINT = `https://api.github.com/notifications?participating=${participating}&all=${all}`;
+  return response;
+}
 
-  return fetch(ENDPOINT, accessTokenParameters(accessToken)).then(response =>
-    response.json()
-  );
-};
+export async function fetchMarkRepoNotificationAsRead(
+  repoFullName,
+  accessToken
+) {
+  const ENDPOINT = `${root}/repos/${repoFullName}/notifications`;
+  const response = await fetch(ENDPOINT, accessTokenParametersPUT(accessToken));
 
-export const fetchMarkNotificationAsRead = (notificationID, accessToken) => {
-  const ENDPOINT = `https://api.github.com/notifications/threads/${notificationID}`;
+  return response;
+}
 
-  return fetch(ENDPOINT, accessTokenParametersPATCH(null, accessToken));
-};
-
-export const fetchMarkRepoNotificationAsRead = (repoFullName, accessToken) => {
-  const ENDPOINT = `https://api.github.com/repos/${repoFullName}/notifications`;
-
-  return fetch(ENDPOINT, accessTokenParametersPUT(accessToken));
-};
-
-export const fetchChangeStarStatusRepo = (
+export async function fetchChangeStarStatusRepo(
   owner,
   repo,
   starred,
   accessToken
-) => {
-  const ENDPOINT = `https://api.github.com/user/starred/${owner}/${repo}`;
-
-  return fetch(
+) {
+  const ENDPOINT = `${root}/user/starred/${owner}/${repo}`;
+  const response = await fetch(
     ENDPOINT,
     starred
       ? accessTokenParametersDELETE(accessToken)
       : accessTokenParametersPUT(accessToken)
   );
-};
 
-export const fetchForkRepo = (owner, repo, accessToken) => {
-  const ENDPOINT = `https://api.github.com/repos/${owner}/${repo}/forks`;
+  return response;
+}
 
-  return fetch(ENDPOINT, accessTokenParametersPOST(accessToken));
-};
+export async function fetchForkRepo(owner, repo, accessToken) {
+  const ENDPOINT = `${root}/repos/${owner}/${repo}/forks`;
+  const response = await fetch(
+    ENDPOINT,
+    accessTokenParametersPOST(accessToken)
+  );
 
-export const fetchChangeFollowStatus = (user, isFollowing, accessToken) => {
-  const ENDPOINT = `https://api.github.com/user/following/${user}`;
+  return response;
+}
 
-  return fetch(
+export async function fetchStarCount(owner) {
+  const ENDPOINT = `${root}/users/${owner}/starred?per_page=1`;
+  const response = await fetch(ENDPOINT);
+
+  let linkHeader = response.headers.get('Link');
+  let output = '';
+
+  if (linkHeader == null) {
+    output = response.json().then(data => {
+      return data.length;
+    });
+  } else {
+    linkHeader = linkHeader.match(/page=(\d)+/g).pop();
+    output = linkHeader.split('=').pop();
+  }
+
+  return abbreviateNumber(output);
+}
+
+export async function watchRepo(isSubscribed, owner, repo, accessToken) {
+  const ENDPOINT = `${root}/repos/${owner}/${repo}/subscription`;
+  const response = await fetch(
+    ENDPOINT,
+    accessTokenParameters(accessToken, { subscribed: isSubscribed })
+  );
+
+  return response;
+}
+
+export async function unWatchRepo(owner, repo, accessToken) {
+  const ENDPOINT = `${root}/repos/${owner}/${repo}/subscription`;
+  const response = await fetch(ENDPOINT, accessTokenParameters(accessToken));
+
+  return response;
+}
+
+export async function fetchChangeFollowStatus(user, isFollowing, accessToken) {
+  const ENDPOINT = `${root}/user/following/${user}`;
+  const response = await fetch(
     ENDPOINT,
     isFollowing
       ? accessTokenParametersDELETE(accessToken)
       : accessTokenParametersPUT(accessToken)
   );
-};
 
-export const fetchDiff = (url, accessToken) => {
-  return fetch(url, accessTokenParametersDiff(accessToken)).then(response =>
-    response.text()
-  );
-};
+  return response;
+}
 
-export const fetchMergeStatus = (repo, issueNum, accessToken) => {
-  const ENDPOINT = `https://api.github.com/repos/${repo}/pulls/${issueNum}/merge`;
+export async function fetchDiff(url, accessToken) {
+  const response = await fetch(url, accessTokenParametersDiff(accessToken));
 
-  return fetch(ENDPOINT, accessTokenParameters(accessToken));
-};
+  return response.text();
+}
 
-export const fetchMergePullRequest = (
+export async function fetchMergeStatus(repo, issueNum, accessToken) {
+  const ENDPOINT = `${root}/repos/${repo}/pulls/${issueNum}/merge`;
+  const response = await fetch(ENDPOINT, accessTokenParameters(accessToken));
+
+  return response;
+}
+
+export async function fetchMergePullRequest(
   repo,
   issueNum,
   commitTitle,
   commitMessage,
   mergeMethod,
   accessToken
-) => {
-  const ENDPOINT = `https://api.github.com/repos/${repo}/pulls/${issueNum}/merge`;
+) {
+  const ENDPOINT = `${root}/repos/${repo}/pulls/${issueNum}/merge`;
 
-  return fetch(
+  const response = await fetch(
     ENDPOINT,
     accessTokenParametersPUT(accessToken, {
       commit_title: commitTitle,
@@ -315,4 +406,25 @@ export const fetchMergePullRequest = (
       merge_method: mergeMethod,
     })
   );
-};
+
+  return response;
+}
+
+export async function fetchSubmitNewIssue(
+  owner,
+  repo,
+  issueTitle,
+  issueComment,
+  accessToken
+) {
+  const ENDPOINT = `${root}/repos/${owner}/${repo}/issues`;
+  const response = await fetch(
+    ENDPOINT,
+    accessTokenParametersPOST(accessToken, {
+      title: issueTitle,
+      body: issueComment,
+    })
+  );
+
+  return response.json();
+}

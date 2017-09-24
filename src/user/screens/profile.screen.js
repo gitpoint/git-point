@@ -1,6 +1,14 @@
+/* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, ActivityIndicator, Dimensions, View } from 'react-native';
+import { bindActionCreators } from 'redux';
+import {
+  StyleSheet,
+  ActivityIndicator,
+  Dimensions,
+  View,
+  RefreshControl,
+} from 'react-native';
 import { ListItem } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
 
@@ -12,24 +20,42 @@ import {
   UserListItem,
   EntityInfo,
 } from 'components';
-import { emojifyText } from 'utils';
+import { emojifyText, translate } from 'utils';
 import { colors, fonts } from 'config';
-import { getUserInfo, changeFollowStatus } from '../user.action';
+import {
+  getUserInfo,
+  getStarCount,
+  getIsFollowing,
+  getIsFollower,
+  changeFollowStatus,
+} from '../user.action';
 
 const mapStateToProps = state => ({
+  auth: state.auth.user,
   user: state.user.user,
   orgs: state.user.orgs,
+  starCount: state.user.starCount,
+  language: state.auth.language,
   isFollowing: state.user.isFollowing,
+  isFollower: state.user.isFollower,
   isPendingUser: state.user.isPendingUser,
   isPendingOrgs: state.user.isPendingOrgs,
+  isPendingStarCount: state.user.isPendingStarCount,
   isPendingCheckFollowing: state.user.isPendingCheckFollowing,
+  isPendingCheckFollower: state.user.isPendingCheckFollower,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getUserInfoByDispatch: user => dispatch(getUserInfo(user)),
-  changeFollowStatusByDispatch: (user, isFollowing) =>
-    dispatch(changeFollowStatus(user, isFollowing)),
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getUserInfo,
+      getStarCount,
+      getIsFollowing,
+      getIsFollower,
+      changeFollowStatus,
+    },
+    dispatch
+  );
 
 const styles = StyleSheet.create({
   listTitle: {
@@ -44,32 +70,72 @@ const styles = StyleSheet.create({
 
 class Profile extends Component {
   props: {
-    getUserInfoByDispatch: Function,
-    changeFollowStatusByDispatch: Function,
+    getUserInfo: Function,
+    getStarCount: Function,
+    getIsFollowing: Function,
+    getIsFollower: Function,
+    changeFollowStatus: Function,
+    auth: Object,
     user: Object,
     orgs: Array,
+    starCount: string,
+    language: string,
     isFollowing: boolean,
+    isFollower: boolean,
     isPendingUser: boolean,
     isPendingOrgs: boolean,
+    isPendingStarCount: boolean,
     isPendingCheckFollowing: boolean,
+    isPendingCheckFollower: boolean,
     navigation: Object,
   };
 
-  componentDidMount() {
-    this.props.getUserInfoByDispatch(
-      this.props.navigation.state.params.user.login
-    );
+  state: {
+    refreshing: boolean,
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      refreshing: false,
+    };
   }
+
+  componentDidMount() {
+    const user = this.props.navigation.state.params.user;
+    const auth = this.props.auth;
+
+    this.props.getUserInfo(user.login);
+    this.props.getStarCount(user.login);
+    this.props.getIsFollowing(user.login, auth.login);
+    this.props.getIsFollower(user.login, auth.login);
+  }
+
+  getUserInfo = () => {
+    this.setState({ refreshing: true });
+
+    const user = this.props.navigation.state.params.user;
+    const auth = this.props.auth;
+
+    Promise.all([
+      this.props.getUserInfo(user.login),
+      this.props.getStarCount(user.login),
+      this.props.getIsFollowing(user.login, auth.login),
+      this.props.getIsFollower(user.login, auth.login),
+    ]).then(() => {
+      this.setState({ refreshing: false });
+    });
+  };
 
   showMenuActionSheet = () => {
     this.ActionSheet.show();
   };
 
   handlePress = index => {
-    const { user, isFollowing, changeFollowStatusByDispatch } = this.props;
+    const { user, isFollowing, changeFollowStatus } = this.props;
 
     if (index === 0) {
-      changeFollowStatusByDispatch(user.login, isFollowing);
+      changeFollowStatus(user.login, isFollowing);
     }
   };
 
@@ -77,16 +143,25 @@ class Profile extends Component {
     const {
       user,
       orgs,
+      starCount,
+      language,
       isFollowing,
+      isFollower,
       isPendingUser,
       isPendingOrgs,
+      isPendingStarCount,
       isPendingCheckFollowing,
+      isPendingCheckFollower,
       navigation,
     } = this.props;
-
+    const { refreshing } = this.state;
     const initialUser = navigation.state.params.user;
     const isPending = isPendingUser || isPendingOrgs;
-    const userActions = [isFollowing ? 'Unfollow' : 'Follow'];
+    const userActions = [
+      isFollowing
+        ? translate('user.profile.unfollow', language)
+        : translate('user.profile.follow', language),
+    ];
 
     return (
       <ViewContainer barColor="light">
@@ -95,12 +170,23 @@ class Profile extends Component {
             <UserProfile
               type="user"
               initialUser={initialUser}
+              starCount={isPendingStarCount ? '' : starCount}
               isFollowing={
                 isPendingUser || isPendingCheckFollowing ? false : isFollowing
               }
+              isFollower={
+                isPendingUser || isPendingCheckFollower ? false : isFollower
+              }
               user={initialUser.login === user.login ? user : {}}
+              language={language}
               navigation={navigation}
             />}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={this.getUserInfo}
+            />
+          }
           stickyTitle={user.login}
           showMenu={
             !isPendingUser &&
@@ -123,7 +209,7 @@ class Profile extends Component {
             <View>
               {!!user.bio &&
                 user.bio !== '' &&
-                <SectionList title="BIO">
+                <SectionList title={translate('common.bio', language)}>
                   <ListItem
                     subtitle={emojifyText(user.bio)}
                     subtitleStyle={styles.listSubTitle}
@@ -134,9 +220,9 @@ class Profile extends Component {
               <EntityInfo entity={user} orgs={orgs} navigation={navigation} />
 
               <SectionList
-                title="ORGANIZATIONS"
+                title={translate('common.orgs', language)}
                 noItems={orgs.length === 0}
-                noItemsMessage={'No organizations'}
+                noItemsMessage={translate('common.noOrgsMessage', language)}
               >
                 {orgs.map(item =>
                   <UserListItem
@@ -153,8 +239,8 @@ class Profile extends Component {
           ref={o => {
             this.ActionSheet = o;
           }}
-          title="User Actions"
-          options={[...userActions, 'Cancel']}
+          title={translate('user.profile.userActions', language)}
+          options={[...userActions, translate('common.cancel', language)]}
           cancelButtonIndex={1}
           onPress={this.handlePress}
         />

@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { StyleSheet, View, ActivityIndicator } from 'react-native';
 import { ListItem, Button } from 'react-native-elements';
 import Parse from 'parse-diff';
-import moment from 'moment';
+import moment from 'moment/min/moment-with-locales.min';
 
 import { StateBadge, MembersList, LabelButton, DiffBlocks } from 'components';
+import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
+import { root as apiRoot } from 'api';
 
 const styles = StyleSheet.create({
   headerContainer: {
@@ -70,6 +72,7 @@ export class IssueDescription extends Component {
     isPendingCheckMerge: boolean,
     onRepositoryPress: Function,
     userHasPushPermission: boolean,
+    language: string,
     navigation: Object,
   };
 
@@ -88,6 +91,7 @@ export class IssueDescription extends Component {
       isPendingCheckMerge,
       onRepositoryPress,
       userHasPushPermission,
+      language,
       navigation,
     } = this.props;
 
@@ -105,10 +109,7 @@ export class IssueDescription extends Component {
       <View style={(styles.container, styles.borderBottom)}>
         {issue.repository_url &&
           <ListItem
-            title={issue.repository_url.replace(
-              'https://api.github.com/repos/',
-              ''
-            )}
+            title={issue.repository_url.replace(`${apiRoot}/repos/`, '')}
             titleStyle={styles.titleSmall}
             leftIcon={{
               name: 'repo',
@@ -142,6 +143,7 @@ export class IssueDescription extends Component {
                 style={styles.badge}
                 issue={issue}
                 isMerged={isMerged && issue.pull_request}
+                language={language}
               />)}
         </View>
 
@@ -158,6 +160,8 @@ export class IssueDescription extends Component {
                 showNumbers
                 onPress={() =>
                   navigation.navigate('PullDiff', {
+                    title: translate('repository.pullDiff.title', language),
+                    language,
                     diff,
                   })}
               />}
@@ -172,7 +176,7 @@ export class IssueDescription extends Component {
           issue.assignees.length > 0 &&
           <View style={styles.assigneesSection}>
             <MembersList
-              title="Assignees"
+              title={translate('issue.main.assignees', language)}
               members={issue.assignees}
               containerStyle={{ marginTop: 0, paddingTop: 0, paddingLeft: 0 }}
               smallTitle
@@ -189,8 +193,11 @@ export class IssueDescription extends Component {
               backgroundColor={colors.green}
               borderRadius={10}
               fontSize={14}
-              onPress={() => navigation.navigate('PullMerge')}
-              title={'Merge Pull Request'}
+              onPress={() =>
+                navigation.navigate('PullMerge', {
+                  title: translate('issue.pullMerge.title', language),
+                })}
+              title={translate('issue.main.mergeButton', language)}
             />
           </View>}
       </View>

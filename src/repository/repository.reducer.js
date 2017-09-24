@@ -4,6 +4,7 @@ import {
   GET_REPOSITORY_CONTENTS,
   GET_REPOSITORY_FILE,
   GET_REPOSITORY_ISSUES,
+  GET_REPO_README_STATUS,
   GET_REPO_STARRED_STATUS,
   FORK_REPO_STATUS,
   CHANGE_STAR_STATUS,
@@ -13,6 +14,7 @@ import {
   SEARCH_CLOSED_ISSUES,
   SEARCH_OPEN_PULLS,
   SEARCH_CLOSED_PULLS,
+  GET_REPOSITORY_SUBSCRIBED_STATUS,
 } from './repository.type';
 
 const initialState = {
@@ -23,6 +25,7 @@ const initialState = {
   fileContent: '',
   issues: [],
   readMe: '',
+  hasReadMe: false,
   starred: false,
   forked: false,
   subscribed: false,
@@ -35,6 +38,7 @@ const initialState = {
   isPendingContents: false,
   isPendingFile: false,
   isPendingIssues: false,
+  isPendingCheckReadMe: false,
   isPendingCheckStarred: false,
   isPendingChangeStarred: false,
   isPendingCheckSubscribed: false,
@@ -45,6 +49,7 @@ const initialState = {
   isPendingSearchOpenPulls: false,
   isPendingSearchClosedPulls: false,
   isPendingFork: false,
+  isPendingSubscribe: false,
   error: '',
 };
 
@@ -84,6 +89,7 @@ export const repositoryReducer = (state = initialState, action = {}) => {
         ...state,
         error: action.payload,
         isPendingContributors: false,
+        contributors: [],
       };
     case GET_REPOSITORY_CONTENTS.PENDING:
       return {
@@ -139,6 +145,23 @@ export const repositoryReducer = (state = initialState, action = {}) => {
         error: action.payload,
         isPendingIssues: false,
       };
+    case GET_REPO_README_STATUS.PENDING:
+      return {
+        ...state,
+        isPendingCheckReadMe: true,
+      };
+    case GET_REPO_README_STATUS.SUCCESS:
+      return {
+        ...state,
+        hasReadMe: action.payload,
+        isPendingCheckReadMe: false,
+      };
+    case GET_REPO_README_STATUS.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isPendingCheckReadMe: false,
+      };
     case GET_REPO_STARRED_STATUS.PENDING:
       return {
         ...state,
@@ -171,6 +194,25 @@ export const repositoryReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         isPendingFork: false,
+      };
+    case GET_REPOSITORY_SUBSCRIBED_STATUS.PENDING:
+      return {
+        ...state,
+        subscribed: false,
+        isPendingSubscribe: true,
+      };
+    case GET_REPOSITORY_SUBSCRIBED_STATUS.SUCCESS:
+      return {
+        ...state,
+        subscribed: action.payload,
+        isPendingSubscribe: false,
+      };
+    case GET_REPOSITORY_SUBSCRIBED_STATUS.ERROR:
+      return {
+        ...state,
+        subscribed: action.payload,
+        isPendingCheckSubscribed: false,
+        isPendingSubscribe: false,
       };
     case CHANGE_STAR_STATUS.PENDING:
       return {

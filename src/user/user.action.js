@@ -7,16 +7,19 @@ import {
   fetchSearch,
   fetchChangeFollowStatus,
   root as apiRoot,
+  fetchStarCount,
 } from 'api';
 import {
   GET_USER,
   GET_ORGS,
-  GET_FOLLOW_STATUS,
+  GET_IS_FOLLOWING,
+  GET_IS_FOLLOWER,
   GET_REPOSITORIES,
   GET_FOLLOWERS,
   GET_FOLLOWING,
   SEARCH_USER_REPOS,
   CHANGE_FOLLOW_STATUS,
+  GET_STAR_COUNT,
 } from './user.type';
 
 const getUser = user => {
@@ -63,22 +66,56 @@ const getOrgs = user => {
   };
 };
 
-export const checkFollowStatus = url => {
+const checkFollowStatusHelper = (user, followedUser, actionSet) => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 
-    dispatch({ type: GET_FOLLOW_STATUS.PENDING });
+    dispatch({ type: actionSet.PENDING });
 
-    fetchUrlNormal(url, accessToken)
+    fetchUrlNormal(`${USER_ENDPOINT(user)}/following/${followedUser}`, accessToken)
       .then(data => {
         dispatch({
-          type: GET_FOLLOW_STATUS.SUCCESS,
-          payload: !(data.status === 404),
+          type: actionSet.SUCCESS,
+          payload: data.status !== 404,
         });
       })
       .catch(error => {
         dispatch({
-          type: GET_FOLLOW_STATUS.ERROR,
+          type: actionSet.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+export const getIsFollowing = (user, auth) => {
+  return dispatch => {
+    dispatch(checkFollowStatusHelper(auth, user, GET_IS_FOLLOWING));
+  };
+};
+
+export const getIsFollower = (user, auth) => {
+  return dispatch => {
+    dispatch(checkFollowStatusHelper(user, auth, GET_IS_FOLLOWER));
+  };
+};
+
+export const getFollowers = user => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: GET_FOLLOWERS.PENDING });
+
+    fetchUrl(`${USER_ENDPOINT(user.login)}/followers?per_page=100`, accessToken)
+      .then(data => {
+        dispatch({
+          type: GET_FOLLOWERS.SUCCESS,
+          payload: data,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: GET_FOLLOWERS.ERROR,
           payload: error,
         });
       });
@@ -87,12 +124,30 @@ export const checkFollowStatus = url => {
 
 export const getUserInfo = user => {
   return dispatch => {
-    return dispatch(getUser(user)).then(() => {
-      dispatch(getOrgs(user));
-      dispatch(
-        checkFollowStatus(`https://api.github.com/user/following/${user}`)
-      );
-    });
+    Promise.all([
+      dispatch(getUser(user)),
+      dispatch(getOrgs(user)),
+    ]);
+  };
+};
+
+export const getStarCount = user => {
+  return dispatch => {
+    dispatch({ type: GET_STAR_COUNT.PENDING });
+
+    fetchStarCount(user)
+      .then(data => {
+        dispatch({
+          type: GET_STAR_COUNT.SUCCESS,
+          payload: data,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: GET_STAR_COUNT.ERROR,
+          payload: error,
+        });
+      });
   };
 };
 
@@ -127,44 +182,20 @@ export const getRepositories = user => {
 
     dispatch({ type: GET_REPOSITORIES.PENDING });
 
-    const url = isAuthUser ? `${apiRoot}/user` : USER_ENDPOINT(user.login);
+    const url = isAuthUser
+      ? `${apiRoot}/user/repos?affiliation=owner&sort=updated&per_page=50`
+      : `${USER_ENDPOINT(user.login)}/repos?sort=updated&per_page=50`;
 
-    fetchUrl(`${url}/repos?per_page=50`, accessToken)
+    fetchUrl(url, accessToken)
       .then(data => {
-        const payload = isAuthUser
-          ? data.filter(repo => repo.permissions.admin)
-          : data;
-
         dispatch({
           type: GET_REPOSITORIES.SUCCESS,
-          payload,
-        });
-      })
-      .catch(error => {
-        dispatch({
-          type: GET_REPOSITORIES.ERROR,
-          payload: error,
-        });
-      });
-  };
-};
-
-export const getFollowers = user => {
-  return (dispatch, getState) => {
-    const accessToken = getState().auth.accessToken;
-
-    dispatch({ type: GET_FOLLOWERS.PENDING });
-
-    fetchUrl(`${USER_ENDPOINT(user.login)}/followers?per_page=100`, accessToken)
-      .then(data => {
-        dispatch({
-          type: GET_FOLLOWERS.SUCCESS,
           payload: data,
         });
       })
       .catch(error => {
         dispatch({
-          type: GET_FOLLOWERS.ERROR,
+          type: GET_REPOSITORIES.ERROR,
           payload: error,
         });
       });

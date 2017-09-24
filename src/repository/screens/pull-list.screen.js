@@ -1,5 +1,7 @@
+/* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
   FlatList,
   View,
@@ -16,6 +18,7 @@ import {
   SearchBar,
 } from 'components';
 
+import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
 import {
   searchOpenRepoPulls,
@@ -23,6 +26,7 @@ import {
 } from '../repository.action';
 
 const mapStateToProps = state => ({
+  language: state.auth.language,
   repository: state.repository.repository,
   searchedOpenPulls: state.repository.searchedOpenPulls,
   searchedClosedPulls: state.repository.searchedClosedPulls,
@@ -30,12 +34,8 @@ const mapStateToProps = state => ({
   isPendingSearchClosedPulls: state.repository.isPendingSearchClosedPulls,
 });
 
-const mapDispatchToProps = dispatch => ({
-  searchOpenRepoPullsByDispatch: (query, repo) =>
-    dispatch(searchOpenRepoPulls(query, repo)),
-  searchClosedRepoPullsByDispatch: (query, repo) =>
-    dispatch(searchClosedRepoPulls(query, repo)),
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ searchOpenRepoPulls, searchClosedRepoPulls }, dispatch);
 
 const styles = StyleSheet.create({
   header: {
@@ -96,13 +96,14 @@ const styles = StyleSheet.create({
 
 class PullList extends Component {
   props: {
+    language: string,
     repository: Object,
     searchedOpenPulls: Array,
     searchedClosedPulls: Array,
     isPendingSearchOpenPulls: boolean,
     isPendingSearchClosedPulls: boolean,
-    searchOpenRepoPullsByDispatch: Function,
-    searchClosedRepoPullsByDispatch: Function,
+    searchOpenRepoPulls: Function,
+    searchClosedRepoPulls: Function,
     navigation: Object,
   };
 
@@ -161,8 +162,8 @@ class PullList extends Component {
 
   search(query, selectedType = null) {
     const {
-      searchOpenRepoPullsByDispatch,
-      searchClosedRepoPullsByDispatch,
+      searchOpenRepoPulls,
+      searchClosedRepoPulls,
       repository,
     } = this.props;
 
@@ -176,9 +177,9 @@ class PullList extends Component {
       });
 
       if (selectedSearchType === 0) {
-        searchOpenRepoPullsByDispatch(query, repository.full_name);
+        searchOpenRepoPulls(query, repository.full_name);
       } else {
-        searchClosedRepoPullsByDispatch(query, repository.full_name);
+        searchClosedRepoPulls(query, repository.full_name);
       }
     }
   }
@@ -192,10 +193,12 @@ class PullList extends Component {
       type={this.props.navigation.state.params.type}
       issue={item}
       navigation={this.props.navigation}
+      language={this.props.language}
     />;
 
   render() {
     const {
+      language,
       searchedOpenPulls,
       searchedClosedPulls,
       isPendingSearchOpenPulls,
@@ -226,7 +229,10 @@ class PullList extends Component {
           <ButtonGroup
             onPress={this.switchQueryType}
             selectedIndex={searchType}
-            buttons={['Open', 'Closed']}
+            buttons={[
+              translate('repository.pullList.openButton', language),
+              translate('repository.pullList.closedButton', language),
+            ]}
             textStyle={styles.buttonGroupText}
             selectedTextStyle={styles.buttonGroupTextSelected}
             containerStyle={styles.buttonGroupContainer}
@@ -237,7 +243,9 @@ class PullList extends Component {
           searchType === 0 &&
           <LoadingContainer
             animating={isPendingSearchOpenPulls && searchType === 0}
-            text={`Searching for ${query}`}
+            text={translate('repository.pullList.searchingMessage', language, {
+              query,
+            })}
             style={styles.marginSpacing}
           />}
 
@@ -245,7 +253,9 @@ class PullList extends Component {
           searchType === 1 &&
           <LoadingContainer
             animating={isPendingSearchClosedPulls && searchType === 1}
-            text={`Searching for ${query}`}
+            text={translate('repository.pullList.searchingMessage', language, {
+              query,
+            })}
             style={styles.marginSpacing}
           />}
 
@@ -265,7 +275,9 @@ class PullList extends Component {
           searchedOpenPulls.length === 0 &&
           searchType === 0 &&
           <View style={styles.marginSpacing}>
-            <Text style={styles.searchTitle}>No open pull requests found!</Text>
+            <Text style={styles.searchTitle}>
+              {translate('repository.pullList.noOpenPulls', language)}
+            </Text>
           </View>}
 
         {searchStart &&
@@ -274,7 +286,7 @@ class PullList extends Component {
           searchType === 1 &&
           <View style={styles.marginSpacing}>
             <Text style={styles.searchTitle}>
-              No closed pull requests found!
+              {translate('repository.pullList.noOpenPulls', language)}
             </Text>
           </View>}
       </ViewContainer>
