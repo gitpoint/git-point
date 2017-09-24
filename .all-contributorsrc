@@ -253,6 +253,10 @@
       "name": "Mehdi Achour",
       "avatar_url": "https://avatars2.githubusercontent.com/u/304450?v=4",
       "profile": "https://machour.idk.tn/",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     },
     {
       "login": "reyhansofian",
