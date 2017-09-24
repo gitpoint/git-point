@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
@@ -38,14 +39,17 @@ const mapStateToProps = state => ({
   isEditingComment: state.issue.isEditingComment,
 });
 
-const mapDispatchToProps = dispatch => ({
-  editIssueCommentByDispatch: (owner, repoName, issueTitle, issueComment) =>
-    dispatch(editIssueComment(owner, repoName, issueTitle, issueComment)),
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      editIssueComment,
+    },
+    dispatch
+  );
 
 class EditIssueComment extends Component {
   props: {
-    editIssueCommentByDispatch: Function,
+    editIssueComment: Function,
     language: string,
     repository: Object,
     navigation: Object,
@@ -67,16 +71,16 @@ class EditIssueComment extends Component {
   }
 
   editIssueComment = () => {
-    const { navigation, editIssueCommentByDispatch } = this.props;
+    const { navigation } = this.props;
     const { repository, comment } = this.props.navigation.state.params;
 
     const repoName = repository.name;
     const owner = repository.owner.login;
     const text = this.state.issueComment;
 
-    editIssueCommentByDispatch(comment.id, owner, repoName, text).then(() =>
-      navigation.goBack()
-    );
+    this.props
+      .editIssueComment(comment.id, owner, repoName, text)
+      .then(() => navigation.goBack());
   };
 
   render() {
