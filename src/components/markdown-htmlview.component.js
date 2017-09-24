@@ -5,6 +5,7 @@ import marked from 'marked';
 import { TableWrapper, Table, Cell } from 'react-native-table-component';
 import SyntaxHighlighter from 'react-native-syntax-highlighter';
 import { github as GithubStyle } from 'react-syntax-highlighter/dist/styles';
+import entities from 'entities';
 
 import { ImageZoom } from 'components';
 import { colors, emojis, fonts, normalize } from 'config';
@@ -190,7 +191,7 @@ export class MarkdownHtmlView extends Component {
                 CodeTag={Text}
                 fontFamily={fonts.fontCode.fontFamily}
               >
-                {node.children[0].data.trim()}
+                {entities.decodeHTML(node.children[0].data).trim()}
               </SyntaxHighlighter>
             );
           }

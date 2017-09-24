@@ -1,6 +1,9 @@
 export const tr = {
   auth: {
     login: {
+      connectingToGitHub: 'Connecting to GitHub...',
+      preparingGitPoint: 'Preparing GitPoint...',
+      cancel: 'CANCEL',
       welcomeTitle: "GitPoint'e Hoşgeldiniz",
       welcomeMessage:
         "En zengin özelliklere sahip GitHub client'ı ve 100% ücretsiz",
@@ -257,7 +260,6 @@ export const tr = {
       noDescription: 'Açıklama sağlanmadı.',
       lockedCommentInput: 'Kilitli, ancak yine de yorum yapabilirsiniz...',
       commentInput: 'Yorum ekle...',
-      commentButton: 'Ekle',
       lockedIssue: 'Issue kilitli',
       states: {
         open: 'Açık',

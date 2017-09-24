@@ -1,6 +1,9 @@
 export const ptBr = {
   auth: {
     login: {
+      connectingToGitHub: 'Connecting to GitHub...',
+      preparingGitPoint: 'Preparing GitPoint...',
+      cancel: 'CANCEL',
       welcomeTitle: 'Bem-vindo ao GitPoint',
       welcomeMessage:
         'O GitHub client com a maior quantidade de funcionalidades que é 100% grátis',
@@ -257,7 +260,6 @@ export const ptBr = {
       noDescription: 'Nenhuma descrição fornecida.',
       lockedCommentInput: 'Trancada, mas você ainda pode comentar...',
       commentInput: 'Adicionar um comentário...',
-      commentButton: 'Postar',
       lockedIssue: 'A issue está trancada',
       states: {
         open: 'Aberta',

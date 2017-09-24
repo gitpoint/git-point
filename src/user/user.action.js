@@ -76,7 +76,7 @@ const checkFollowStatusHelper = (user, followedUser, actionSet) => {
       .then(data => {
         dispatch({
           type: actionSet.SUCCESS,
-          payload: !(data.status === 404),
+          payload: data.status !== 404,
         });
       })
       .catch(error => {

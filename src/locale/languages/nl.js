@@ -1,6 +1,9 @@
 export const nl = {
   auth: {
     login: {
+      connectingToGitHub: 'Connecting to GitHub...',
+      preparingGitPoint: 'Preparing GitPoint...',
+      cancel: 'CANCEL',
       welcomeTitle: 'Welkom bij GitPoint',
       welcomeMessage: 'De meest complete GitHub client die geen geld kost',
       notificationsTitle: 'Beheer notificaties',
@@ -253,7 +256,6 @@ export const nl = {
       noDescription: 'Niet voorzien van een beschrijving.',
       lockedCommentInput: 'Gesloten maar je kan nog opmerkingen maken...',
       commentInput: 'Plaats opmerking...',
-      commentButton: 'Post',
       lockedIssue: 'Issue is gesloten',
       states: {
         open: 'Open',

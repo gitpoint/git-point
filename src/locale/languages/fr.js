@@ -2,6 +2,9 @@
 export const fr = {
   auth: {
     login: {
+      connectingToGitHub: 'Connexion à GitHub..',
+      preparingGitPoint: 'Configuration de GitPoint..',
+      cancel: 'ANNULER',
       welcomeTitle: 'Bienvenue dans GitPoint',
       welcomeMessage:
         'Le client GitHub le plus riche en fonctionnalités tout en étant 100% gratuit',
@@ -257,7 +260,6 @@ export const fr = {
       noDescription: 'Aucune description fournie.',
       lockedCommentInput: 'Verrouiller, mais vous pouvez encore commenter...',
       commentInput: 'Ajouter un commentaire...',
-      commentButton: 'Publier',
       lockedIssue: 'Ce ticket est verrouillé',
       states: {
         open: 'Ouvert',
