@@ -260,7 +260,7 @@ export const checkRepoStarred = url => {
       .then(data => {
         dispatch({
           type: GET_REPO_STARRED_STATUS.SUCCESS,
-          payload: !(data.status === 404),
+          payload: data.status !== 404,
         });
       })
       .catch(error => {
@@ -282,7 +282,7 @@ export const checkRepoSubscribed = url => {
       .then(data =>
         dispatch({
           type: GET_REPOSITORY_SUBSCRIBED_STATUS.SUCCESS,
-          payload: !(data.status === 404),
+          payload: data.status !== 404,
         })
       )
       .catch(error =>

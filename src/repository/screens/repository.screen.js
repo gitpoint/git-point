@@ -1,5 +1,7 @@
+/* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { StyleSheet, RefreshControl, Share } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
@@ -50,17 +52,20 @@ const mapStateToProps = state => ({
   isPendingSubscribe: state.repository.isPendingSubscribe,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getRepositoryInfoByDispatch: url => dispatch(getRepositoryInfo(url)),
-  getContributorsByDispatch: url => dispatch(getContributors(url)),
-  getIssuesByDispatch: url => dispatch(getIssues(url)),
-  getCommitsByDispatch: url => dispatch(getCommits(url)),
-  changeStarStatusRepoByDispatch: (owner, repo, starred) =>
-    dispatch(changeStarStatusRepo(owner, repo, starred)),
-  forkRepoByDispatch: (owner, repo) => dispatch(forkRepo(owner, repo)),
-  subscribeToRepo: (owner, repo) => dispatch(subscribeToRepo(owner, repo)),
-  unSubscribeToRepo: (owner, repo) => dispatch(unSubscribeToRepo(owner, repo)),
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getRepositoryInfo,
+      getContributors,
+      getIssues,
+      getCommits,
+      changeStarStatusRepo,
+      forkRepo,
+      subscribeToRepo,
+      unSubscribeToRepo,
+    },
+    dispatch
+  );
 
 const styles = StyleSheet.create({
   listTitle: {
@@ -71,11 +76,11 @@ const styles = StyleSheet.create({
 
 class Repository extends Component {
   props: {
-    getRepositoryInfoByDispatch: Function,
-    // getIssuesByDispatch: Function,
-    // getCommitsByDispatch: Function,
-    changeStarStatusRepoByDispatch: Function,
-    forkRepoByDispatch: Function,
+    getRepositoryInfo: Function,
+    // getIssues: Function,
+    // getCommits: Function,
+    changeStarStatusRepo: Function,
+    forkRepo: Function,
     // repositoryName: string,
     repository: Object,
     contributors: Array,
@@ -117,7 +122,7 @@ class Repository extends Component {
       repositoryUrl: repoUrl,
     } = this.props.navigation.state.params;
 
-    this.props.getRepositoryInfoByDispatch(repo ? repo.url : repoUrl);
+    this.props.getRepositoryInfo(repo ? repo.url : repoUrl);
   }
 
   showMenuActionSheet = () => {
@@ -129,8 +134,8 @@ class Repository extends Component {
       starred,
       subscribed,
       repository,
-      changeStarStatusRepoByDispatch,
-      forkRepoByDispatch,
+      changeStarStatusRepo,
+      forkRepo,
       navigation,
       username,
     } = this.props;
@@ -138,13 +143,9 @@ class Repository extends Component {
     const showFork = repository.owner.login !== username;
 
     if (index === 0) {
-      changeStarStatusRepoByDispatch(
-        repository.owner.login,
-        repository.name,
-        starred
-      );
+      changeStarStatusRepo(repository.owner.login, repository.name, starred);
     } else if (index === 1 && showFork) {
-      forkRepoByDispatch(repository.owner.login, repository.name).then(json => {
+      forkRepo(repository.owner.login, repository.name).then(json => {
         navigation.navigate('Repository', { repository: json });
       });
     } else if ((index === 2 && showFork) || (index === 1 && !showFork)) {
@@ -165,11 +166,9 @@ class Repository extends Component {
     } = this.props.navigation.state.params;
 
     this.setState({ refreshing: true });
-    this.props
-      .getRepositoryInfoByDispatch(repo ? repo.url : repoUrl)
-      .then(() => {
-        this.setState({ refreshing: false });
-      });
+    this.props.getRepositoryInfo(repo ? repo.url : repoUrl).then(() => {
+      this.setState({ refreshing: false });
+    });
   };
 
   shareRepository = repository => {
@@ -350,6 +349,7 @@ class Repository extends Component {
                   })}
                 underlayColor={colors.greyLight}
               />}
+
             {commits.length > 0 &&
               <ListItem
                 title={translate('repository.main.viewCommit', language)}
@@ -369,6 +369,7 @@ class Repository extends Component {
                   })}
                 underlayColor={colors.greyLight}
               />}
+
             <ListItem
               title={translate('repository.main.viewSource', language)}
               titleStyle={styles.listTitle}
