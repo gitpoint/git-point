@@ -2,7 +2,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  View,
+  Dimensions,
+} from 'react-native';
 import { ListItem } from 'react-native-elements';
 
 import { ViewContainer, SectionList, LoadingModal } from 'components';
@@ -12,6 +18,7 @@ import { editIssueComment } from '../issue.action';
 
 const styles = StyleSheet.create({
   textInput: {
+    height: Dimensions.get('window').height / 2,
     paddingVertical: 10,
     fontSize: normalize(12),
     marginHorizontal: 15,
@@ -104,10 +111,7 @@ class EditIssueComment extends Component {
                   issueCommentHeight: event.nativeEvent.contentSize.height,
                 })}
               placeholderTextColor={colors.grey}
-              style={[
-                styles.textInput,
-                { height: Math.max(60, this.state.issueCommentHeight) },
-              ]}
+              style={styles.textInput}
               value={issueComment}
             />
           </SectionList>
