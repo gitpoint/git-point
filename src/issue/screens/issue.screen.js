@@ -231,13 +231,12 @@ class Issue extends Component {
 
   editComment = comment => {
     const { state, navigate } = this.props.navigation;
-    const { repository, issue } = this.props;
+    const { repository } = this.props;
 
     navigate('EditIssueComment', {
       title: translate('issue.comment.editCommentTitle', state.params.language),
       comment,
       repository,
-      issue,
     });
   };
 
@@ -279,8 +278,8 @@ class Issue extends Component {
       <CommentListItem
         comment={item}
         onLinkPress={node => this.onLinkPress(node)}
-        onDeletePress={comment => this.deleteComment(comment)}
-        onEditPress={comment => this.editComment(comment)}
+        onDeletePress={this.deleteComment}
+        onEditPress={this.editComment}
         language={language}
         navigation={this.props.navigation}
       />
@@ -325,41 +324,41 @@ class Issue extends Component {
         )}
 
         {!isPendingComments &&
-        !isPendingIssue &&
-        issue && (
-          <KeyboardAvoidingView
-            style={{ flex: 1 }}
-            behavior={'padding'}
-            keyboardVerticalOffset={Platform.select({
-              ios: 65,
-              android: -200,
-            })}
-          >
-            <FlatList
-              ref={ref => {
-                this.commentsList = ref;
-              }}
-              refreshing={isLoadingData}
-              onRefresh={this.getIssueInformation}
-              contentContainerStyle={{ flexGrow: 1 }}
-              ListHeaderComponent={this.renderHeader}
-              removeClippedSubviews={false}
-              data={fullComments}
-              keyExtractor={this.keyExtractor}
-              renderItem={this.renderItem}
-            />
+          !isPendingIssue &&
+          issue && (
+            <KeyboardAvoidingView
+              style={{ flex: 1 }}
+              behavior={'padding'}
+              keyboardVerticalOffset={Platform.select({
+                ios: 65,
+                android: -200,
+              })}
+            >
+              <FlatList
+                ref={ref => {
+                  this.commentsList = ref;
+                }}
+                refreshing={isLoadingData}
+                onRefresh={this.getIssueInformation}
+                contentContainerStyle={{ flexGrow: 1 }}
+                ListHeaderComponent={this.renderHeader}
+                removeClippedSubviews={false}
+                data={fullComments}
+                keyExtractor={this.keyExtractor}
+                renderItem={this.renderItem}
+              />
 
-            <CommentInput
-              users={fullUsers}
-              userHasPushPermission={
-                navigation.state.params.userHasPushPermission
-              }
-              issueLocked={issue.locked}
-              language={language}
-              onSubmit={this.postComment}
-            />
-          </KeyboardAvoidingView>
-        )}
+              <CommentInput
+                users={fullUsers}
+                userHasPushPermission={
+                  navigation.state.params.userHasPushPermission
+                }
+                issueLocked={issue.locked}
+                language={language}
+                onSubmit={this.postComment}
+              />
+            </KeyboardAvoidingView>
+          )}
       </ViewContainer>
     );
   }

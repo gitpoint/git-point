@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   Image,
   Platform,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import { MarkdownHtmlView } from 'components';
 import { Icon } from 'react-native-elements';
@@ -90,6 +91,7 @@ const styles = StyleSheet.create({
     ...regularFont,
   },
   actionButtonIconContainer: {
+    padding: 5,
     alignItems: 'flex-end',
     justifyContent: 'center',
   },
@@ -126,6 +128,9 @@ class CommentListItemComponent extends Component {
     this.ActionSheet.show();
   };
 
+  isIssueDescription = () =>
+    Object.prototype.hasOwnProperty.call(this.props.comment, 'repository_url');
+
   render() {
     const { comment, language, navigation, authUser, onLinkPress } = this.props;
 
@@ -141,10 +146,10 @@ class CommentListItemComponent extends Component {
     const isActionButtonVisible =
       comment.user &&
       authUser.login === comment.user.login &&
-      !Object.prototype.hasOwnProperty.call(comment, 'repository_url');
+      !this.isIssueDescription();
 
     return (
-      <TouchableOpacity onLongPress={this.showMenu}>
+      <TouchableWithoutFeedback onLongPress={this.showMenu}>
         <View style={styles.container}>
           <View style={styles.header}>
             {comment.user && (
@@ -245,7 +250,7 @@ class CommentListItemComponent extends Component {
             onPress={this.handlePress}
           />
         </View>
-      </TouchableOpacity>
+      </TouchableWithoutFeedback>
     );
   }
 }

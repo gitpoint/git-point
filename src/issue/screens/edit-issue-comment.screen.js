@@ -11,6 +11,7 @@ import { editIssueComment } from '../issue.action';
 
 const styles = StyleSheet.create({
   textInput: {
+    paddingVertical: 10,
     fontSize: normalize(12),
     marginHorizontal: 15,
     flex: 1,
@@ -49,7 +50,6 @@ class EditIssueComment extends Component {
     repository: Object,
     navigation: Object,
     isEditingComment: boolean,
-    issue: Object,
   };
 
   state: {
@@ -80,28 +80,13 @@ class EditIssueComment extends Component {
   };
 
   render() {
-    const { language, repository, isEditingComment } = this.props;
+    const { language, isEditingComment } = this.props;
     const { issueComment } = this.state;
-    const issueTitle = this.props.navigation.state.params.issue.title;
 
     return (
       <ViewContainer>
         {isEditingComment && <LoadingModal />}
         <ScrollView>
-          {repository.full_name && (
-            <ListItem
-              title={`${repository.full_name} - ${issueTitle}`}
-              titleStyle={styles.titleSmall}
-              leftIcon={{
-                name: 'repo',
-                size: 17,
-                color: colors.grey,
-                type: 'octicon',
-              }}
-              hideChevron
-            />
-          )}
-
           <SectionList
             title={translate('issue.newIssue.issueComment', language)}
           >
