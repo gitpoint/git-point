@@ -5,6 +5,7 @@
     "README.md"
   ],
   "imageSize": 100,
+  "contributorsPerLine": 6,
   "commit": false,
   "contributors": [
     {
@@ -45,7 +46,8 @@
       "profile": "http://lex111.ru",
       "contributions": [
         "code",
-        "bug"
+        "bug",
+        "translation"
       ]
     },
     {
@@ -131,7 +133,7 @@
       "avatar_url": "https://avatars6.githubusercontent.com/u/13142418?v=4",
       "profile": "https://wsdjeg.github.io",
       "contributions": [
-        "code"
+        "doc"
       ]
     },
     {
@@ -140,7 +142,7 @@
       "avatar_url": "https://avatars4.githubusercontent.com/u/2190589?v=4",
       "profile": "http://swapnilmj.users.sourceforge.net/",
       "contributions": [
-        "code"
+        "doc"
       ]
     },
     {
@@ -150,7 +152,8 @@
       "profile": "https://github.com/RolfKoenders",
       "contributions": [
         "code",
-        "bug"
+        "bug",
+        "translation"
       ]
     },
     {
@@ -255,7 +258,8 @@
       "profile": "https://machour.idk.tn/",
       "contributions": [
         "bug",
-        "code"
+        "code",
+        "translation"
       ]
     },
     {
@@ -291,7 +295,8 @@
       "avatar_url": "https://avatars3.githubusercontent.com/u/1736154?v=4",
       "profile": "https://github.com/chinesedfan",
       "contributions": [
-        "code"
+        "code",
+        "bug"
       ]
     },
     {
@@ -299,7 +304,9 @@
       "name": "Arthur Denner",
       "avatar_url": "https://avatars0.githubusercontent.com/u/13774309?v=4",
       "profile": "https://github.com/arthurdenner",
-      "contributions": []
+      "contributions": [
+         "translation"
+      ]
     },
     {
       "login": "FlorianTaut",
@@ -316,7 +323,7 @@
       "avatar_url": "https://avatars0.githubusercontent.com/u/15075759?v=4",
       "profile": "http://www.avarekodcu.com/iletisim",
       "contributions": [
-        "code"
+        "translation"
       ]
     },
     {
@@ -325,7 +332,7 @@
       "avatar_url": "https://avatars0.githubusercontent.com/u/23240518?v=4",
       "profile": "http://anask.xyz",
       "contributions": [
-        "code"
+        "translation"
       ]
     },
     {

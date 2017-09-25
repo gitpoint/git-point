@@ -126,7 +126,7 @@ align-text@^0.1.1, align-text@^0.1.3:
     longest "^1.0.1"
     repeat-string "^1.5.2"
 
-all-contributors-cli@^4.3.0:
+all-contributors-cli@^4.4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/all-contributors-cli/-/all-contributors-cli-4.4.0.tgz#174f1295c9735c3f9299439a22c415d542dee850"
   dependencies:
@@ -3223,7 +3223,7 @@ interpret@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.0.3.tgz#cbc35c62eeee73f19ab7b10a801511401afc0f90"
 
-invariant@^2.0.0, invariant@^2.2.0, invariant@^2.2.1:
+invariant@^2.0.0, invariant@^2.1.0, invariant@^2.2.0, invariant@^2.2.1:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.2.tgz#9e1f56ac0acdb6bf303306f338be3b204ae60360"
   dependencies:
@@ -5152,6 +5152,12 @@ react-native-communications@^2.2.1:
 react-native-config@^0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-0.6.0.tgz#0f71631ab5ac4b568637dcb8e9f6ab85ffb380ed"
+
+react-native-cookies@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-cookies/-/react-native-cookies-3.2.0.tgz#1079d4d368bb287d1c8a93f3b9b60a4bde659966"
+  dependencies:
+    invariant "^2.1.0"
 
 react-native-device-info@^0.11.0:
   version "0.11.0"
