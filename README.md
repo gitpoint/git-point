@@ -59,7 +59,7 @@ A few of the things you can do with GitPoint:
 
 ## Feedback/Contributing
 
-Feel free to send us feedback on [twitter](https://twitter.com/hdjirdeh) or [file an issue](https://github.com/gitpoint/git-point/issues/new). Feature requests are always welcome. If you wish to contribute, please take a quick look at the [guidelines](./CONTRIBUTING.md)!
+Feel free to send us feedback on [twitter](https://twitter.com/gitpointapp) or [file an issue](https://github.com/gitpoint/git-point/issues/new). Feature requests are always welcome. If you wish to contribute, please take a quick look at the [guidelines](./CONTRIBUTING.md)!
 
 Also, if there's anything you'd like to chat about, please feel free to join our [gitter chat](https://gitter.im/git-point)!
 
