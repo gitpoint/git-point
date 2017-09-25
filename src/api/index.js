@@ -153,138 +153,108 @@ const v3 = {
   },
 };
 
-export async function fetchUrl(url, accessToken) {
-  return v3.getJson(url, accessToken);
-}
+export const fetchUrl = (url, accessToken) => v3.getJson(url, accessToken);
 
-export async function fetchUrlNormal(url, accessToken) {
-  return v3.get(url, accessToken);
-}
+export const fetchUrlNormal = (url, accessToken) => v3.get(url, accessToken);
 
-export async function fetchUrlHead(url, accessToken) {
-  return v3.head(url, accessToken);
-}
+export const fetchUrlHead = (url, accessToken) => v3.head(url, accessToken);
 
-export async function fetchUrlFile(url, accessToken) {
-  return v3.getRaw(url, accessToken);
-}
+export const fetchUrlFile = (url, accessToken) => v3.getRaw(url, accessToken);
 
-export async function fetchAuthUser(accessToken) {
-  return v3.getJson('/user', accessToken);
-}
+export const fetchAuthUser = accessToken => v3.getJson('/user', accessToken);
 
-export async function fetchAuthUserOrgs(accessToken) {
-  return v3.getJson('/user/orgs', accessToken);
-}
+export const fetchAuthUserOrgs = accessToken =>
+  v3.getJson('/user/orgs', accessToken);
 
-export async function fetchUser(user, accessToken) {
-  return v3.getJson(`/users/${user}`, accessToken);
-}
+export const fetchUser = (user, accessToken) =>
+  v3.getJson(`/users/${user}`, accessToken);
 
-export async function fetchUserOrgs(user, accessToken) {
-  return v3.getJson(`/users/${user}/orgs`, accessToken);
-}
+export const fetchUserOrgs = (user, accessToken) =>
+  v3.getJson(`/users/${user}/orgs`, accessToken);
 
-export async function fetchUserEvents(user, accessToken) {
-  return v3.getJson(`/users/${user}/received_events?per_page=100`, accessToken);
-}
+export const fetchUserEvents = (user, accessToken) =>
+  v3.getJson(`/users/${user}/received_events?per_page=100`, accessToken);
 
-export async function fetchReadMe(user, repository, accessToken) {
-  return v3.getHtml(
-    `/repos/${user}/${repository}/readme?ref=master`,
-    accessToken
-  );
-}
+export const fetchReadMe = (user, repository, accessToken) =>
+  v3.getHtml(`/repos/${user}/${repository}/readme?ref=master`, accessToken);
 
-export async function fetchOrg(orgName, accessToken) {
-  return v3.getJson(`/orgs/${orgName}`, accessToken);
-}
+export const fetchOrg = (orgName, accessToken) =>
+  v3.getJson(`/orgs/${orgName}`, accessToken);
 
-export async function fetchOrgMembers(orgName, accessToken) {
-  return v3.getJson(`/orgs/${orgName}/members`, accessToken);
-}
+export const fetchOrgMembers = (orgName, accessToken) =>
+  v3.getJson(`/orgs/${orgName}/members`, accessToken);
 
-export async function fetchPostIssueComment(
+export const fetchPostIssueComment = (
   body,
   owner,
   repoName,
   issueNum,
   accessToken
-) {
-  return v3.postJson(
+) =>
+  v3.postJson(
     `/repos/${owner}/${repoName}/issues/${issueNum}/comments`,
     accessToken,
     { body }
   );
-}
 
-export async function fetchEditIssue(
+export const fetchEditIssue = (
   owner,
   repoName,
   issueNum,
   editParams,
   updateParams,
   accessToken
-) {
-  return v3.patch(
+) =>
+  v3.patch(
     `/repos/${owner}/${repoName}/issues/${issueNum}`,
     accessToken,
     editParams
   );
-}
 
-export async function fetchChangeIssueLockStatus(
+export const fetchChangeIssueLockStatus = (
   owner,
   repoName,
   issueNum,
   currentStatus,
   accessToken
-) {
+) => {
   const ENDPOINT = `/repos/${owner}/${repoName}/issues/${issueNum}/lock`;
 
   return currentStatus
     ? v3.delete(ENDPOINT, accessToken)
     : v3.put(ENDPOINT, accessToken);
-}
+};
 
-export async function fetchSearch(type, query, accessToken, params = '') {
-  return v3.getJson(`/search/${type}?q=${query}${params}`, accessToken);
-}
+export const fetchSearch = (type, query, accessToken, params = '') =>
+  v3.getJson(`/search/${type}?q=${query}${params}`, accessToken);
 
-export async function fetchNotifications(participating, all, accessToken) {
-  return v3.getJson(
+export const fetchNotifications = (participating, all, accessToken) =>
+  v3.getJson(
     `/notifications?participating=${participating}&all=${all}`,
     accessToken
   );
-}
 
-export async function fetchMarkNotificationAsRead(notificationID, accessToken) {
-  return v3.patch(`/notifications/threads/${notificationID}`, accessToken);
-}
+export const fetchMarkNotificationAsRead = (notificationID, accessToken) =>
+  v3.patch(`/notifications/threads/${notificationID}`, accessToken);
 
-export async function fetchMarkRepoNotificationAsRead(
-  repoFullName,
-  accessToken
-) {
-  return v3.put(`/repos/${repoFullName}/notifications`, accessToken);
-}
+export const fetchMarkRepoNotificationAsRead = (repoFullName, accessToken) =>
+  v3.put(`/repos/${repoFullName}/notifications`, accessToken);
 
-export async function fetchChangeStarStatusRepo(
+export const fetchChangeStarStatusRepo = (
   owner,
   repo,
   starred,
   accessToken
-) {
+) => {
   const ENDPOINT = `/user/starred/${owner}/${repo}`;
 
   return starred
     ? v3.delete(ENDPOINT, accessToken)
     : v3.put(ENDPOINT, accessToken);
-}
+};
 
-export async function fetchForkRepo(owner, repo, accessToken) {
-  return v3.post(`/repos/${owner}/${repo}/forks`, accessToken);
-}
+export const fetchForkRepo = (owner, repo, accessToken) =>
+  v3.post(`/repos/${owner}/${repo}/forks`, accessToken);
 
 export async function fetchStarCount(owner, accessToken) {
   const response = await v3.get(
@@ -307,63 +277,54 @@ export async function fetchStarCount(owner, accessToken) {
   return abbreviateNumber(output);
 }
 
-export async function isWatchingRepo(url, accessToken) {
-  return v3.head(url, accessToken);
-}
+export const isWatchingRepo = (url, accessToken) => v3.head(url, accessToken);
 
-export async function watchRepo(owner, repo, accessToken) {
-  return v3.put(`/repos/${owner}/${repo}/subscription`, accessToken, {
+export const watchRepo = (owner, repo, accessToken) =>
+  v3.put(`/repos/${owner}/${repo}/subscription`, accessToken, {
     subscribed: true,
   });
-}
 
-export async function unWatchRepo(owner, repo, accessToken) {
-  return v3.delete(`/repos/${owner}/${repo}/subscription`, accessToken);
-}
+export const unWatchRepo = (owner, repo, accessToken) =>
+  v3.delete(`/repos/${owner}/${repo}/subscription`, accessToken);
 
-export async function fetchChangeFollowStatus(user, isFollowing, accessToken) {
+export const fetchChangeFollowStatus = (user, isFollowing, accessToken) => {
   const ENDPOINT = `/user/following/${user}`;
 
   return isFollowing
     ? v3.delete(ENDPOINT, accessToken)
     : v3.put(ENDPOINT, accessToken);
-}
+};
 
-export async function fetchDiff(url, accessToken) {
-  return v3.getDiff(url, accessToken);
-}
+export const fetchDiff = (url, accessToken) => v3.getDiff(url, accessToken);
 
-export async function fetchMergeStatus(repo, issueNum, accessToken) {
-  return v3.get(`/repos/${repo}/pulls/${issueNum}/merge`, accessToken);
-}
+export const fetchMergeStatus = (repo, issueNum, accessToken) =>
+  v3.get(`/repos/${repo}/pulls/${issueNum}/merge`, accessToken);
 
-export async function fetchMergePullRequest(
+export const fetchMergePullRequest = (
   repo,
   issueNum,
   commitTitle,
   commitMessage,
   mergeMethod,
   accessToken
-) {
-  return v3.put(`/repos/${repo}/pulls/${issueNum}/merge`, accessToken, {
+) =>
+  v3.put(`/repos/${repo}/pulls/${issueNum}/merge`, accessToken, {
     commit_title: commitTitle,
     commit_message: commitMessage,
     merge_method: mergeMethod,
   });
-}
 
-export async function fetchSubmitNewIssue(
+export const fetchSubmitNewIssue = (
   owner,
   repo,
   issueTitle,
   issueComment,
   accessToken
-) {
-  return v3.postJson(`/repos/${owner}/${repo}/issues`, accessToken, {
+) =>
+  v3.postJson(`/repos/${owner}/${repo}/issues`, accessToken, {
     title: issueTitle,
     body: issueComment,
   });
-}
 
 // Auth
 const authParameters = (code, state) => ({
