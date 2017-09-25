@@ -17,6 +17,7 @@ export const colors = {
   darkGreen: '#27ae60',
   red: '#ee0701',
   darkRed: '#e74c3c',
+  redDarkest: '#da0000',
   white: '#ffffff',
   transparent: 'transparent',
   codeChunkBlue: '#f8f8ff',

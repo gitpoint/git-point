@@ -300,6 +300,21 @@ export async function fetchMarkRepoNotificationAsRead(
   return response;
 }
 
+export async function fetchNotificationsCount(accessToken) {
+  const ENDPOINT = `${root}/notifications?per_page=1`;
+  const response = await fetch(ENDPOINT, accessTokenParameters(accessToken));
+
+  let linkHeader = response.headers.get('Link');
+  let count = 0;
+
+  if (linkHeader) {
+    linkHeader = linkHeader.match(/page=(\d)+/g).pop();
+    count = linkHeader.split('=').pop();
+  }
+
+  return count;
+}
+
 export async function fetchChangeStarStatusRepo(
   owner,
   repo,

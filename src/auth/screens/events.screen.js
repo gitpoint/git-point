@@ -9,19 +9,22 @@ import moment from 'moment/min/moment-with-locales.min';
 import { LoadingUserListItem, UserListItem, ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { emojifyText, translate } from 'utils';
-import { getUserEvents } from '../auth.action';
+import { getUserEvents } from 'auth';
+import { getNotificationsCount } from 'notifications';
 
 const mapStateToProps = state => ({
   user: state.auth.user,
   userEvents: state.auth.events,
   language: state.auth.language,
   isPendingEvents: state.auth.isPendingEvents,
+  accessToken: state.auth.accessToken,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getUserEvents,
+      getNotificationsCount,
     },
     dispatch
   );
@@ -86,8 +89,11 @@ class Events extends Component {
     }
   }
 
-  getUserEvents = (user = this.props.user) => {
+  getUserEvents = () => {
+    const { user, accessToken } = this.props;
+
     this.props.getUserEvents(user.login);
+    this.props.getNotificationsCount(accessToken);
   };
 
   getAction = userEvent => {
