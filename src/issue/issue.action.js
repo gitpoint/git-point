@@ -1,12 +1,12 @@
 import {
+  fetchUrl,
   fetchDiff,
   fetchMergeStatus,
-  fetchCommentHTML,
   fetchPostIssueComment,
   fetchEditIssue,
   fetchChangeIssueLockStatus,
   fetchMergePullRequest,
-  fetchSubmitNewIssue,
+  accessTokenParametersPOST,
 } from 'api';
 import {
   GET_ISSUE_COMMENTS,
@@ -79,7 +79,7 @@ export const getIssueComments = issueCommentsURL => {
 
     dispatch({ type: GET_ISSUE_COMMENTS.PENDING });
 
-    return fetchCommentHTML(`${issueCommentsURL}?per_page=100`, accessToken)
+    return fetchUrl(`${issueCommentsURL}?per_page=100`, accessToken)
       .then(data => {
         dispatch({
           type: GET_ISSUE_COMMENTS.SUCCESS,
@@ -190,7 +190,7 @@ export const getIssueFromUrl = url => {
 
     dispatch({ type: GET_ISSUE_FROM_URL.PENDING });
 
-    return fetchCommentHTML(url, accessToken)
+    return fetchUrl(url, accessToken)
       .then(issue => {
         dispatch({
           type: GET_ISSUE_FROM_URL.SUCCESS,
@@ -244,6 +244,25 @@ export const mergePullRequest = (
       });
   };
 };
+
+async function fetchSubmitNewIssue(
+  owner,
+  repo,
+  issueTitle,
+  issueComment,
+  accessToken
+) {
+  const ENDPOINT = `${root}/repos/${owner}/${repo}/issues`;
+  const response = await fetch(
+    ENDPOINT,
+    accessTokenParametersPOST(accessToken, {
+      title: issueTitle,
+      body: issueComment,
+    })
+  );
+
+  return response.json();
+}
 
 export const submitNewIssue = (owner, repo, issueTitle, issueComment) => {
   return (dispatch, getState) => {

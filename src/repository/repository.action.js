@@ -4,7 +4,6 @@ import {
   fetchUrlNormal,
   fetchUrlHead,
   fetchUrlFile,
-  fetchCommentHTML,
   fetchReadMe,
   fetchSearch,
   fetchChangeStarStatusRepo,
@@ -126,7 +125,7 @@ export const getIssues = url => {
 
     dispatch({ type: GET_REPOSITORY_ISSUES.PENDING });
 
-    fetchCommentHTML(url, accessToken)
+    fetchUrl(url, accessToken)
       .then(data => {
         dispatch({
           type: GET_REPOSITORY_ISSUES.SUCCESS,

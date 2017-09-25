@@ -121,12 +121,6 @@ export async function fetchUrlFile(url, accessToken) {
   return response.text();
 }
 
-export async function fetchCommentHTML(url, accessToken) {
-  const response = await fetch(url, accessTokenParameters(accessToken));
-
-  return response.json();
-}
-
 export async function fetchAccessToken(code, state) {
   const GITHUB_OAUTH_ENDPOINT = 'https://github.com/login/oauth/access_token';
   const response = await fetch(
