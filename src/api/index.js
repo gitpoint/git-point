@@ -26,9 +26,11 @@ const METHOD = {
 };
 
 const v3 = {
+  root: 'https://api.github.com',
   call: async (url, parameters) => {
-    // console.log('Calling url', url, parameters);
-    const response = await fetch(url, parameters);
+    const finalUrl = url.indexOf(v3.root) === 0 ? url : `${v3.root}${url}`;
+    // console.log('Calling url', finalUrl, parameters);
+    const response = await fetch(finalUrl, parameters);
 
     return response;
   },
@@ -168,41 +170,38 @@ export async function fetchUrlFile(url, accessToken) {
 }
 
 export async function fetchAuthUser(accessToken) {
-  return v3.getJson(`${root}/user`, accessToken);
+  return v3.getJson('/user', accessToken);
 }
 
 export async function fetchAuthUserOrgs(accessToken) {
-  return v3.getJson(`${root}/user/orgs`, accessToken);
+  return v3.getJson('/user/orgs', accessToken);
 }
 
 export async function fetchUser(user, accessToken) {
-  return v3.getJson(`${root}/users/${user}`, accessToken);
+  return v3.getJson(`/users/${user}`, accessToken);
 }
 
 export async function fetchUserOrgs(user, accessToken) {
-  return v3.getJson(`${root}/users/${user}/orgs`, accessToken);
+  return v3.getJson(`/users/${user}/orgs`, accessToken);
 }
 
 export async function fetchUserEvents(user, accessToken) {
-  return v3.getJson(
-    `${root}/users/${user}/received_events?per_page=100`,
-    accessToken
-  );
+  return v3.getJson(`/users/${user}/received_events?per_page=100`, accessToken);
 }
 
 export async function fetchReadMe(user, repository, accessToken) {
   return v3.getHtml(
-    `${root}/repos/${user}/${repository}/readme?ref=master`,
+    `/repos/${user}/${repository}/readme?ref=master`,
     accessToken
   );
 }
 
 export async function fetchOrg(orgName, accessToken) {
-  return v3.getJson(`${root}/orgs/${orgName}`, accessToken);
+  return v3.getJson(`/orgs/${orgName}`, accessToken);
 }
 
 export async function fetchOrgMembers(orgName, accessToken) {
-  return v3.getJson(`${root}/orgs/${orgName}/members`, accessToken);
+  return v3.getJson(`/orgs/${orgName}/members`, accessToken);
 }
 
 export async function fetchPostIssueComment(
@@ -213,7 +212,7 @@ export async function fetchPostIssueComment(
   accessToken
 ) {
   return v3.postJson(
-    `${root}/repos/${owner}/${repoName}/issues/${issueNum}/comments`,
+    `/repos/${owner}/${repoName}/issues/${issueNum}/comments`,
     accessToken,
     { body }
   );
@@ -228,7 +227,7 @@ export async function fetchEditIssue(
   accessToken
 ) {
   return v3.patch(
-    `${root}/repos/${owner}/${repoName}/issues/${issueNum}`,
+    `/repos/${owner}/${repoName}/issues/${issueNum}`,
     accessToken,
     editParams
   );
@@ -241,7 +240,7 @@ export async function fetchChangeIssueLockStatus(
   currentStatus,
   accessToken
 ) {
-  const ENDPOINT = `${root}/repos/${owner}/${repoName}/issues/${issueNum}/lock`;
+  const ENDPOINT = `/repos/${owner}/${repoName}/issues/${issueNum}/lock`;
 
   return currentStatus
     ? v3.delete(ENDPOINT, accessToken)
@@ -249,28 +248,25 @@ export async function fetchChangeIssueLockStatus(
 }
 
 export async function fetchSearch(type, query, accessToken, params = '') {
-  return v3.getJson(`${root}/search/${type}?q=${query}${params}`, accessToken);
+  return v3.getJson(`/search/${type}?q=${query}${params}`, accessToken);
 }
 
 export async function fetchNotifications(participating, all, accessToken) {
   return v3.getJson(
-    `${root}/notifications?participating=${participating}&all=${all}`,
+    `/notifications?participating=${participating}&all=${all}`,
     accessToken
   );
 }
 
 export async function fetchMarkNotificationAsRead(notificationID, accessToken) {
-  return v3.patch(
-    `${root}/notifications/threads/${notificationID}`,
-    accessToken
-  );
+  return v3.patch(`/notifications/threads/${notificationID}`, accessToken);
 }
 
 export async function fetchMarkRepoNotificationAsRead(
   repoFullName,
   accessToken
 ) {
-  return v3.put(`${root}/repos/${repoFullName}/notifications`, accessToken);
+  return v3.put(`/repos/${repoFullName}/notifications`, accessToken);
 }
 
 export async function fetchChangeStarStatusRepo(
@@ -279,7 +275,7 @@ export async function fetchChangeStarStatusRepo(
   starred,
   accessToken
 ) {
-  const ENDPOINT = `${root}/user/starred/${owner}/${repo}`;
+  const ENDPOINT = `/user/starred/${owner}/${repo}`;
 
   return starred
     ? v3.delete(ENDPOINT, accessToken)
@@ -287,12 +283,12 @@ export async function fetchChangeStarStatusRepo(
 }
 
 export async function fetchForkRepo(owner, repo, accessToken) {
-  return v3.post(`${root}/repos/${owner}/${repo}/forks`, accessToken);
+  return v3.post(`/repos/${owner}/${repo}/forks`, accessToken);
 }
 
 export async function fetchStarCount(owner, accessToken) {
   const response = await v3.get(
-    `${root}/users/${owner}/starred?per_page=1`,
+    `/users/${owner}/starred?per_page=1`,
     accessToken
   );
 
@@ -316,17 +312,17 @@ export async function isWatchingRepo(url, accessToken) {
 }
 
 export async function watchRepo(owner, repo, accessToken) {
-  return v3.put(`${root}/repos/${owner}/${repo}/subscription`, accessToken, {
+  return v3.put(`/repos/${owner}/${repo}/subscription`, accessToken, {
     subscribed: true,
   });
 }
 
 export async function unWatchRepo(owner, repo, accessToken) {
-  return v3.delete(`${root}/repos/${owner}/${repo}/subscription`, accessToken);
+  return v3.delete(`/repos/${owner}/${repo}/subscription`, accessToken);
 }
 
 export async function fetchChangeFollowStatus(user, isFollowing, accessToken) {
-  const ENDPOINT = `${root}/user/following/${user}`;
+  const ENDPOINT = `/user/following/${user}`;
 
   return isFollowing
     ? v3.delete(ENDPOINT, accessToken)
@@ -338,7 +334,7 @@ export async function fetchDiff(url, accessToken) {
 }
 
 export async function fetchMergeStatus(repo, issueNum, accessToken) {
-  return v3.get(`${root}/repos/${repo}/pulls/${issueNum}/merge`, accessToken);
+  return v3.get(`/repos/${repo}/pulls/${issueNum}/merge`, accessToken);
 }
 
 export async function fetchMergePullRequest(
@@ -349,7 +345,7 @@ export async function fetchMergePullRequest(
   mergeMethod,
   accessToken
 ) {
-  return v3.put(`${root}/repos/${repo}/pulls/${issueNum}/merge`, accessToken, {
+  return v3.put(`/repos/${repo}/pulls/${issueNum}/merge`, accessToken, {
     commit_title: commitTitle,
     commit_message: commitMessage,
     merge_method: mergeMethod,
@@ -363,7 +359,7 @@ export async function fetchSubmitNewIssue(
   issueComment,
   accessToken
 ) {
-  return v3.postJson(`${root}/repos/${owner}/${repo}/issues`, accessToken, {
+  return v3.postJson(`/repos/${owner}/${repo}/issues`, accessToken, {
     title: issueTitle,
     body: issueComment,
   });
