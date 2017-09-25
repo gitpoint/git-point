@@ -25,185 +25,184 @@ const METHOD = {
   POST: 'POST',
 };
 
-const apiCallParameters = (
-  accessToken,
-  method = METHOD.GET,
-  accept = ACCEPT.JSON,
-  body = {}
-) => {
-  const params = {
-    method,
-    headers: {
-      Accept: accept,
-      Authorization: `token ${accessToken}`,
-      'Cache-Control': 'no-cache',
-    },
-  };
+const v3 = {
+  call: async (url, parameters) => {
+    // console.log('Calling url', url, parameters);
+    const response = await fetch(url, parameters);
 
-  if (
-    method === METHOD.PUT ||
-    method === METHOD.PATCH ||
-    method === METHOD.POST
-  ) {
-    params.body = JSON.stringify(body);
-    if (method === METHOD.PUT) {
-      params.headers['Content-Length'] = 0;
+    return response;
+  },
+  parameters: (
+    accessToken,
+    method = METHOD.GET,
+    accept = ACCEPT.JSON,
+    body = {}
+  ) => {
+    const params = {
+      method,
+      headers: {
+        Accept: accept,
+        Authorization: `token ${accessToken}`,
+        'Cache-Control': 'no-cache',
+      },
+    };
+
+    if (
+      method === METHOD.PUT ||
+      method === METHOD.PATCH ||
+      method === METHOD.POST
+    ) {
+      params.body = JSON.stringify(body);
+      if (method === METHOD.PUT) {
+        params.headers['Content-Length'] = 0;
+      }
     }
-  }
 
-  return params;
+    return params;
+  },
+
+  getJson: async (url, accessToken) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.GET, ACCEPT.JSON)
+    );
+
+    return response.json();
+  },
+  getHtml: async (url, accessToken) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.GET, ACCEPT.HTML)
+    );
+
+    return response.text();
+  },
+  getDiff: async (url, accessToken) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.GET, ACCEPT.DIFF)
+    );
+
+    return response.text();
+  },
+  getRaw: async (url, accessToken) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.GET, ACCEPT.RAW)
+    );
+
+    return response.text();
+  },
+  postJson: async (url, accessToken, body) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.POST, ACCEPT.JSON, body)
+    );
+
+    return response.json();
+  },
+  patch: async (url, accessToken, body) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.PATCH, ACCEPT.JSON, body)
+    );
+
+    return response;
+  },
+  delete: async (url, accessToken) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.DELETE, ACCEPT.JSON)
+    );
+
+    return response;
+  },
+  put: async (url, accessToken, body = {}) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.PUT, ACCEPT.JSON, body)
+    );
+
+    return response;
+  },
+  get: async (url, accessToken, body = {}) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.GET, ACCEPT.JSON, body)
+    );
+
+    return response;
+  },
+  post: async (url, accessToken, body = {}) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.POST, ACCEPT.JSON, body)
+    );
+
+    return response;
+  },
+  head: async (url, accessToken) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.HEAD, ACCEPT.JSON)
+    );
+
+    return response;
+  },
 };
 
-const accessTokenParameters = accessToken => apiCallParameters(accessToken);
-
-const accessTokenParametersHEAD = accessToken =>
-  apiCallParameters(accessToken, METHOD.HEAD);
-
-const accessTokenParametersPUT = (accessToken, body) =>
-  apiCallParameters(accessToken, METHOD.PUT, ACCEPT.JSON, body);
-
-const accessTokenParametersDELETE = accessToken =>
-  apiCallParameters(accessToken, METHOD.DELETE);
-
-const accessTokenParametersPATCH = (accessToken, editParams) =>
-  apiCallParameters(accessToken, METHOD.PATCH, ACCEPT.JSON, editParams);
-
-const accessTokenParametersPOST = (accessToken, body) =>
-  apiCallParameters(accessToken, METHOD.POST, ACCEPT.JSON, body);
-
-const accessTokenParametersHTML = accessToken =>
-  apiCallParameters(accessToken, METHOD.GET, ACCEPT.HTML);
-
-const accessTokenParametersDiff = accessToken =>
-  apiCallParameters(accessToken, METHOD.GET, ACCEPT.DIFF);
-
-const accessTokenParametersRaw = accessToken =>
-  apiCallParameters(accessToken, METHOD.GET, ACCEPT.RAW);
-
-const authParameters = (code, state) => ({
-  method: 'POST',
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    client_id: CLIENT_ID,
-    client_secret: CLIENT_SECRET,
-    code,
-    state,
-  }),
-});
-
 export async function fetchUrl(url, accessToken) {
-  const response = await fetch(url, accessTokenParameters(accessToken));
-
-  return response.json();
+  return v3.getJson(url, accessToken);
 }
 
 export async function fetchUrlNormal(url, accessToken) {
-  const response = await fetch(url, accessTokenParameters(accessToken));
-
-  return response;
+  return v3.get(url, accessToken);
 }
 
 export async function fetchUrlHead(url, accessToken) {
-  const response = await fetch(url, accessTokenParametersHEAD(accessToken));
-
-  return response;
+  return v3.head(url, accessToken);
 }
 
 export async function fetchUrlFile(url, accessToken) {
-  const response = await fetch(url, accessTokenParametersRaw(accessToken));
-
-  return response.text();
-}
-
-export async function fetchAccessToken(code, state) {
-  const GITHUB_OAUTH_ENDPOINT = 'https://github.com/login/oauth/access_token';
-  const response = await fetch(
-    GITHUB_OAUTH_ENDPOINT,
-    authParameters(code, state)
-  );
-
-  return response.json();
+  return v3.getRaw(url, accessToken);
 }
 
 export async function fetchAuthUser(accessToken) {
-  const FETCH_AUTH_USER_ENDPOINT = `${root}/user`;
-  const response = await fetch(
-    FETCH_AUTH_USER_ENDPOINT,
-    accessTokenParameters(accessToken)
-  );
-
-  return response.json();
+  return v3.getJson(`${root}/user`, accessToken);
 }
 
 export async function fetchAuthUserOrgs(accessToken) {
-  const ORGS_ENDPOINT = `${root}/user/orgs`;
-  const response = await fetch(
-    ORGS_ENDPOINT,
-    accessTokenParameters(accessToken)
-  );
-
-  return response.json();
+  return v3.getJson(`${root}/user/orgs`, accessToken);
 }
 
 export async function fetchUser(user, accessToken) {
-  const FETCH_USER_ENDPOINT = `${root}/users/${user}`;
-  const response = await fetch(
-    FETCH_USER_ENDPOINT,
-    accessTokenParameters(accessToken)
-  );
-
-  return response.json();
+  return v3.getJson(`${root}/users/${user}`, accessToken);
 }
 
 export async function fetchUserOrgs(user, accessToken) {
-  const ORGS_ENDPOINT = `${root}/users/${user}/orgs`;
-  const response = await fetch(
-    ORGS_ENDPOINT,
-    accessTokenParameters(accessToken)
-  );
-
-  return response.json();
+  return v3.getJson(`${root}/users/${user}/orgs`, accessToken);
 }
 
 export async function fetchUserEvents(user, accessToken) {
-  const EVENTS_ENDPOINT = `${root}/users/${user}/received_events?per_page=100`;
-  const response = await fetch(
-    EVENTS_ENDPOINT,
-    accessTokenParameters(accessToken)
+  return v3.getJson(
+    `${root}/users/${user}/received_events?per_page=100`,
+    accessToken
   );
-
-  return response.json();
 }
 
 export async function fetchReadMe(user, repository, accessToken) {
-  const README_ENDPOINT = `${root}/repos/${user}/${repository}/readme?ref=master`;
-  const response = await fetch(
-    README_ENDPOINT,
-    accessTokenParametersHTML(accessToken)
+  return v3.getHtml(
+    `${root}/repos/${user}/${repository}/readme?ref=master`,
+    accessToken
   );
-
-  return response.text();
 }
 
 export async function fetchOrg(orgName, accessToken) {
-  const response = await fetch(
-    `${root}/orgs/${orgName}`,
-    accessTokenParameters(accessToken)
-  );
-
-  return response.json();
+  return v3.getJson(`${root}/orgs/${orgName}`, accessToken);
 }
 
 export async function fetchOrgMembers(orgName, accessToken) {
-  const response = await fetch(
-    `${root}/orgs/${orgName}/members`,
-    accessTokenParameters(accessToken)
-  );
-
-  return response.json();
+  return v3.getJson(`${root}/orgs/${orgName}/members`, accessToken);
 }
 
 export async function fetchPostIssueComment(
@@ -213,13 +212,11 @@ export async function fetchPostIssueComment(
   issueNum,
   accessToken
 ) {
-  const ENDPOINT = `${root}/repos/${owner}/${repoName}/issues/${issueNum}/comments`;
-  const response = await fetch(
-    ENDPOINT,
-    accessTokenParametersPOST(accessToken, { body })
+  return v3.postJson(
+    `${root}/repos/${owner}/${repoName}/issues/${issueNum}/comments`,
+    accessToken,
+    { body }
   );
-
-  return response.json();
 }
 
 export async function fetchEditIssue(
@@ -230,13 +227,11 @@ export async function fetchEditIssue(
   updateParams,
   accessToken
 ) {
-  const ENDPOINT = `${root}/repos/${owner}/${repoName}/issues/${issueNum}`;
-  const response = await fetch(
-    ENDPOINT,
-    accessTokenParametersPATCH(editParams, accessToken)
+  return v3.patch(
+    `${root}/repos/${owner}/${repoName}/issues/${issueNum}`,
+    accessToken,
+    editParams
   );
-
-  return response;
 }
 
 export async function fetchChangeIssueLockStatus(
@@ -247,48 +242,35 @@ export async function fetchChangeIssueLockStatus(
   accessToken
 ) {
   const ENDPOINT = `${root}/repos/${owner}/${repoName}/issues/${issueNum}/lock`;
-  const response = await fetch(
-    ENDPOINT,
-    currentStatus
-      ? accessTokenParametersDELETE(accessToken)
-      : accessTokenParametersPUT(accessToken)
-  );
 
-  return response;
+  return currentStatus
+    ? v3.delete(ENDPOINT, accessToken)
+    : v3.put(ENDPOINT, accessToken);
 }
 
 export async function fetchSearch(type, query, accessToken, params = '') {
-  const ENDPOINT = `${root}/search/${type}?q=${query}${params}`;
-  const response = await fetch(ENDPOINT, accessTokenParameters(accessToken));
-
-  return response.json();
+  return v3.getJson(`${root}/search/${type}?q=${query}${params}`, accessToken);
 }
 
 export async function fetchNotifications(participating, all, accessToken) {
-  const ENDPOINT = `${root}/notifications?participating=${participating}&all=${all}`;
-  const response = await fetch(ENDPOINT, accessTokenParameters(accessToken));
-
-  return response.json();
+  return v3.getJson(
+    `${root}/notifications?participating=${participating}&all=${all}`,
+    accessToken
+  );
 }
 
 export async function fetchMarkNotificationAsRead(notificationID, accessToken) {
-  const ENDPOINT = `${root}/notifications/threads/${notificationID}`;
-  const response = await fetch(
-    ENDPOINT,
-    accessTokenParametersPATCH(null, accessToken)
+  return v3.patch(
+    `${root}/notifications/threads/${notificationID}`,
+    accessToken
   );
-
-  return response;
 }
 
 export async function fetchMarkRepoNotificationAsRead(
   repoFullName,
   accessToken
 ) {
-  const ENDPOINT = `${root}/repos/${repoFullName}/notifications`;
-  const response = await fetch(ENDPOINT, accessTokenParametersPUT(accessToken));
-
-  return response;
+  return v3.put(`${root}/repos/${repoFullName}/notifications`, accessToken);
 }
 
 export async function fetchChangeStarStatusRepo(
@@ -298,29 +280,21 @@ export async function fetchChangeStarStatusRepo(
   accessToken
 ) {
   const ENDPOINT = `${root}/user/starred/${owner}/${repo}`;
-  const response = await fetch(
-    ENDPOINT,
-    starred
-      ? accessTokenParametersDELETE(accessToken)
-      : accessTokenParametersPUT(accessToken)
-  );
 
-  return response;
+  return starred
+    ? v3.delete(ENDPOINT, accessToken)
+    : v3.put(ENDPOINT, accessToken);
 }
 
 export async function fetchForkRepo(owner, repo, accessToken) {
-  const ENDPOINT = `${root}/repos/${owner}/${repo}/forks`;
-  const response = await fetch(
-    ENDPOINT,
-    accessTokenParametersPOST(accessToken)
-  );
-
-  return response;
+  return v3.post(`${root}/repos/${owner}/${repo}/forks`, accessToken);
 }
 
-export async function fetchStarCount(owner) {
-  const ENDPOINT = `${root}/users/${owner}/starred?per_page=1`;
-  const response = await fetch(ENDPOINT);
+export async function fetchStarCount(owner, accessToken) {
+  const response = await v3.get(
+    `${root}/users/${owner}/starred?per_page=1`,
+    accessToken
+  );
 
   let linkHeader = response.headers.get('Link');
   let output = '';
@@ -337,46 +311,34 @@ export async function fetchStarCount(owner) {
   return abbreviateNumber(output);
 }
 
-export async function watchRepo(isSubscribed, owner, repo, accessToken) {
-  const ENDPOINT = `${root}/repos/${owner}/${repo}/subscription`;
-  const response = await fetch(
-    ENDPOINT,
-    accessTokenParameters(accessToken, { subscribed: isSubscribed })
-  );
+export async function isWatchingRepo(url, accessToken) {
+  return v3.head(url, accessToken);
+}
 
-  return response;
+export async function watchRepo(owner, repo, accessToken) {
+  return v3.put(`${root}/repos/${owner}/${repo}/subscription`, accessToken, {
+    subscribed: true,
+  });
 }
 
 export async function unWatchRepo(owner, repo, accessToken) {
-  const ENDPOINT = `${root}/repos/${owner}/${repo}/subscription`;
-  const response = await fetch(ENDPOINT, accessTokenParameters(accessToken));
-
-  return response;
+  return v3.delete(`${root}/repos/${owner}/${repo}/subscription`, accessToken);
 }
 
 export async function fetchChangeFollowStatus(user, isFollowing, accessToken) {
   const ENDPOINT = `${root}/user/following/${user}`;
-  const response = await fetch(
-    ENDPOINT,
-    isFollowing
-      ? accessTokenParametersDELETE(accessToken)
-      : accessTokenParametersPUT(accessToken)
-  );
 
-  return response;
+  return isFollowing
+    ? v3.delete(ENDPOINT, accessToken)
+    : v3.put(ENDPOINT, accessToken);
 }
 
 export async function fetchDiff(url, accessToken) {
-  const response = await fetch(url, accessTokenParametersDiff(accessToken));
-
-  return response.text();
+  return v3.getDiff(url, accessToken);
 }
 
 export async function fetchMergeStatus(repo, issueNum, accessToken) {
-  const ENDPOINT = `${root}/repos/${repo}/pulls/${issueNum}/merge`;
-  const response = await fetch(ENDPOINT, accessTokenParameters(accessToken));
-
-  return response;
+  return v3.get(`${root}/repos/${repo}/pulls/${issueNum}/merge`, accessToken);
 }
 
 export async function fetchMergePullRequest(
@@ -387,18 +349,11 @@ export async function fetchMergePullRequest(
   mergeMethod,
   accessToken
 ) {
-  const ENDPOINT = `${root}/repos/${repo}/pulls/${issueNum}/merge`;
-
-  const response = await fetch(
-    ENDPOINT,
-    accessTokenParametersPUT(accessToken, {
-      commit_title: commitTitle,
-      commit_message: commitMessage,
-      merge_method: mergeMethod,
-    })
-  );
-
-  return response;
+  return v3.put(`${root}/repos/${repo}/pulls/${issueNum}/merge`, accessToken, {
+    commit_title: commitTitle,
+    commit_message: commitMessage,
+    merge_method: mergeMethod,
+  });
 }
 
 export async function fetchSubmitNewIssue(
@@ -408,13 +363,32 @@ export async function fetchSubmitNewIssue(
   issueComment,
   accessToken
 ) {
-  const ENDPOINT = `${root}/repos/${owner}/${repo}/issues`;
+  return v3.postJson(`${root}/repos/${owner}/${repo}/issues`, accessToken, {
+    title: issueTitle,
+    body: issueComment,
+  });
+}
+
+// Auth
+const authParameters = (code, state) => ({
+  method: 'POST',
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    client_id: CLIENT_ID,
+    client_secret: CLIENT_SECRET,
+    code,
+    state,
+  }),
+});
+
+export async function fetchAccessToken(code, state) {
+  const GITHUB_OAUTH_ENDPOINT = 'https://github.com/login/oauth/access_token';
   const response = await fetch(
-    ENDPOINT,
-    accessTokenParametersPOST(accessToken, {
-      title: issueTitle,
-      body: issueComment,
-    })
+    GITHUB_OAUTH_ENDPOINT,
+    authParameters(code, state)
   );
 
   return response.json();

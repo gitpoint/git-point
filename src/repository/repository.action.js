@@ -10,6 +10,7 @@ import {
   fetchForkRepo,
   watchRepo,
   unWatchRepo,
+  isWatchingRepo,
 } from 'api';
 import {
   GET_REPOSITORY,
@@ -191,13 +192,13 @@ export const checkRepoSubscribed = url => {
 
     dispatch({ type: GET_REPOSITORY_SUBSCRIBED_STATUS.PENDING });
 
-    fetchUrlNormal(url, accessToken)
-      .then(data =>
+    isWatchingRepo(url, accessToken)
+      .then(data => {
         dispatch({
           type: GET_REPOSITORY_SUBSCRIBED_STATUS.SUCCESS,
           payload: data.status !== 404,
-        })
-      )
+        });
+      })
       .catch(error =>
         dispatch({
           type: GET_REPOSITORY_SUBSCRIBED_STATUS.ERROR,
@@ -284,13 +285,12 @@ export const changeStarStatusRepo = (owner, repo, starred) => {
 
 export const subscribeToRepo = (owner, repo) => (dispatch, getState) => {
   const accessToken = getState().auth.accessToken;
-  const isSubscribed = getState().repository.subscribed;
 
   dispatch({
     type: GET_REPOSITORY_SUBSCRIBED_STATUS.PENDING,
   });
 
-  return watchRepo(!isSubscribed, owner, repo, accessToken)
+  return watchRepo(owner, repo, accessToken)
     .then(data => data.json())
     .then(result => {
       dispatch({
