@@ -8,6 +8,7 @@ import {
   FlatList,
   Text,
   TouchableOpacity,
+  View,
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { NavigationActions } from 'react-navigation';
@@ -15,7 +16,7 @@ import CookieManager from 'react-native-cookies';
 
 import { ViewContainer, SectionList } from 'components';
 import { colors, fonts, normalize } from 'config';
-import { resetNavigationTo, translate } from 'utils';
+import { resetNavigationTo, translate, emojifyText } from 'utils';
 import { version } from 'package.json';
 import codePush from 'react-native-code-push';
 import { signOut, changeLanguage } from 'auth';
@@ -58,6 +59,13 @@ const styles = StyleSheet.create({
   },
   updateTextSub: {
     fontSize: normalize(11),
+  },
+  language: {
+    flexDirection: 'row',
+  },
+  flag: {
+    paddingRight: 7,
+    color: colors.black, // random any color for the correct display emoji
   },
 });
 
@@ -143,15 +151,29 @@ class UserOptions extends Component {
           <SectionList title={translate('auth.userOptions.language', language)}>
             <FlatList
               data={languages}
-              renderItem={({ item }) =>
-                <ListItem
-                  title={item.name}
-                  titleStyle={styles.listTitle}
-                  hideChevron={language !== item.code}
-                  rightIcon={{ name: 'check' }}
-                  onPress={() => changeLanguage(item.code)}
-                  underlayColor={colors.greyLight}
-                />}
+              renderItem={({ item }) => {
+                const langCode = item.emojiCode || item.code.substring(0, 2);
+
+                return (
+                  <ListItem
+                    title={
+                      <View style={styles.language}>
+                        <Text style={styles.flag}>
+                          {emojifyText(`:flag-${langCode}:`)}
+                        </Text>
+                        <Text style={styles.listTitle}>
+                          {item.name}
+                        </Text>
+                      </View>
+                    }
+                    titleStyle={styles.listTitle}
+                    hideChevron={language !== item.code}
+                    rightIcon={{ name: 'check' }}
+                    onPress={() => changeLanguage(item.code)}
+                    underlayColor={colors.greyLight}
+                  />
+                );
+              }}
               keyExtractor={(item, index) => index}
               extraData={this.props.language}
             />
