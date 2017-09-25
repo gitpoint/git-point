@@ -72,7 +72,10 @@ const checkFollowStatusHelper = (user, followedUser, actionSet) => {
 
     dispatch({ type: actionSet.PENDING });
 
-    fetchUrlNormal(`${USER_ENDPOINT(user)}/following/${followedUser}`, accessToken)
+    fetchUrlNormal(
+      `${USER_ENDPOINT(user)}/following/${followedUser}`,
+      accessToken
+    )
       .then(data => {
         dispatch({
           type: actionSet.SUCCESS,
@@ -124,18 +127,17 @@ export const getFollowers = user => {
 
 export const getUserInfo = user => {
   return dispatch => {
-    Promise.all([
-      dispatch(getUser(user)),
-      dispatch(getOrgs(user)),
-    ]);
+    Promise.all([dispatch(getUser(user)), dispatch(getOrgs(user))]);
   };
 };
 
 export const getStarCount = user => {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
     dispatch({ type: GET_STAR_COUNT.PENDING });
 
-    fetchStarCount(user)
+    fetchStarCount(user, accessToken)
       .then(data => {
         dispatch({
           type: GET_STAR_COUNT.SUCCESS,
