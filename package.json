@@ -88,7 +88,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^3.1.0",
-    "all-contributors-cli": "^4.3.0",
+    "all-contributors-cli": "^4.4.0",
     "babel-eslint": "^7.1.1",
     "babel-jest": "18.0.0",
     "babel-plugin-module-resolver": "^2.7.1",
