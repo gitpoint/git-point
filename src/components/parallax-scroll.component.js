@@ -134,7 +134,6 @@ export class ParallaxScroll extends Component {
               <View style={styles.fixedSectionLeft}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                   <Icon
-                    style={styles.headerIcon}
                     name="chevron-left"
                     size={42}
                     color={colors.white}
@@ -147,7 +146,6 @@ export class ParallaxScroll extends Component {
               <View style={styles.fixedSectionRight}>
                 <TouchableOpacity onPress={menuAction}>
                   <Icon
-                    style={styles.headerIcon}
                     name={menuIcon}
                     type="font-awesome"
                     color={colors.white}
