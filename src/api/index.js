@@ -9,79 +9,76 @@ export const CLIENT_SECRET = '3a70aee4d5e26c457720a31c3efe2f9062a4997a';
 export const root = 'https://api.github.com';
 export const USER_ENDPOINT = user => `${root}/users/${user}`;
 
-const accessTokenParameters = accessToken => ({
-  headers: {
-    Accept: 'application/vnd.github.v3+json',
-    Authorization: `token ${accessToken}`,
-    'Cache-Control': 'no-cache',
-  },
-});
+const ACCEPT = {
+  JSON: 'application/vnd.github.v3+json',
+  HTML: 'application/vnd.github.v3.html+json',
+  DIFF: 'application/vnd.github.v3.diff+json',
+  RAW: 'application/vnd.github.v3.raw+json',
+};
 
-const accessTokenParametersHEAD = accessToken => ({
-  method: 'HEAD',
-  headers: {
-    Accept: 'application/vnd.github.v3+json',
-    Authorization: `token ${accessToken}`,
-    'Cache-Control': 'no-cache',
-  },
-});
+const METHOD = {
+  GET: 'GET',
+  HEAD: 'HEAD',
+  PUT: 'PUT',
+  DELETE: 'DELETE',
+  PATCH: 'PATCH',
+  POST: 'POST',
+};
 
-const accessTokenParametersPUT = (accessToken, body = {}) => ({
-  method: 'PUT',
-  headers: {
-    Accept: 'application/vnd.github.v3+json',
-    Authorization: `token ${accessToken}`,
-    'Content-Length': 0,
-  },
-  body: JSON.stringify(body),
-});
+const apiCallParameters = (
+  accessToken,
+  method = METHOD.GET,
+  accept = ACCEPT.JSON,
+  body = {}
+) => {
+  const params = {
+    method,
+    headers: {
+      Accept: accept,
+      Authorization: `token ${accessToken}`,
+      'Cache-Control': 'no-cache',
+    },
+  };
 
-const accessTokenParametersDELETE = accessToken => ({
-  method: 'DELETE',
-  headers: {
-    Accept: 'application/vnd.github.v3+json',
-    Authorization: `token ${accessToken}`,
-  },
-});
+  if (
+    method === METHOD.PUT ||
+    method === METHOD.PATCH ||
+    method === METHOD.POST
+  ) {
+    params.body = JSON.stringify(body);
+    if (method === METHOD.PUT) {
+      params.headers['Content-Length'] = 0;
+    }
+  }
 
-const accessTokenParametersPATCH = (editParams, accessToken) => ({
-  method: 'PATCH',
-  headers: {
-    Accept: 'application/vnd.github.v3+json',
-    Authorization: `token ${accessToken}`,
-  },
-  body: JSON.stringify(editParams),
-});
+  return params;
+};
 
-const accessTokenParametersPOST = (accessToken, body) => ({
-  method: 'POST',
-  headers: {
-    Accept: 'application/vnd.github.v3+json',
-    Authorization: `token ${accessToken}`,
-  },
-  body: JSON.stringify(body),
-});
+const accessTokenParameters = accessToken => apiCallParameters(accessToken);
 
-const accessTokenParametersHTML = accessToken => ({
-  headers: {
-    Accept: 'application/vnd.github.v3.html+json',
-    Authorization: `token ${accessToken}`,
-  },
-});
+const accessTokenParametersHEAD = accessToken =>
+  apiCallParameters(accessToken, METHOD.HEAD);
 
-const accessTokenParametersDiff = accessToken => ({
-  headers: {
-    Accept: 'application/vnd.github.v3.diff+json',
-    Authorization: `token ${accessToken}`,
-  },
-});
+const accessTokenParametersPUT = (accessToken, body) =>
+  apiCallParameters(accessToken, METHOD.PUT, ACCEPT.JSON, body);
 
-const accessTokenParametersRaw = accessToken => ({
-  headers: {
-    Accept: 'application/vnd.github.v3.raw+json',
-    Authorization: `token ${accessToken}`,
-  },
-});
+const accessTokenParametersDELETE = accessToken =>
+  apiCallParameters(accessToken, METHOD.DELETE);
+
+const accessTokenParametersPATCH = (accessToken, editParams) =>
+  apiCallParameters(accessToken, METHOD.PATCH, ACCEPT.JSON, editParams);
+
+const accessTokenParametersPOST = (accessToken, body) =>
+  apiCallParameters(accessToken, METHOD.POST, ACCEPT.JSON, body);
+
+const accessTokenParametersHTML = accessToken =>
+  apiCallParameters(accessToken, METHOD.GET, ACCEPT.HTML);
+
+const accessTokenParametersDiff = accessToken =>
+  apiCallParameters(accessToken, METHOD.GET, ACCEPT.DIFF);
+
+const accessTokenParametersRaw = accessToken =>
+  apiCallParameters(accessToken, METHOD.GET, ACCEPT.RAW);
 
 const authParameters = (code, state) => ({
   method: 'POST',
