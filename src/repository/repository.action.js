@@ -1,13 +1,13 @@
+import { v3 } from 'api';
+import { fetchSearch } from 'search/search.api';
 import {
   fetchReadMe,
-  fetchSearch,
   fetchChangeStarStatusRepo,
   fetchForkRepo,
   watchRepo,
   unWatchRepo,
   isWatchingRepo,
-  v3,
-} from 'api';
+} from './repository.api';
 import {
   GET_REPOSITORY,
   GET_REPOSITORY_CONTRIBUTORS,
