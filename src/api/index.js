@@ -212,13 +212,11 @@ export const fetchChangeIssueLockStatus = (
   issueNum,
   currentStatus,
   accessToken
-) => {
-  const ENDPOINT = `/repos/${owner}/${repoName}/issues/${issueNum}/lock`;
-
-  return currentStatus
-    ? v3.delete(ENDPOINT, accessToken)
-    : v3.put(ENDPOINT, accessToken);
-};
+) =>
+  v3[currentStatus ? 'delete' : 'put'](
+    `/repos/${owner}/${repoName}/issues/${issueNum}/lock`,
+    accessToken
+  );
 
 export const fetchSearch = (type, query, accessToken, params = '') =>
   v3.getJson(`/search/${type}?q=${query}${params}`, accessToken);
@@ -235,18 +233,8 @@ export const fetchMarkNotificationAsRead = (notificationID, accessToken) =>
 export const fetchMarkRepoNotificationAsRead = (repoFullName, accessToken) =>
   v3.put(`/repos/${repoFullName}/notifications`, accessToken);
 
-export const fetchChangeStarStatusRepo = (
-  owner,
-  repo,
-  starred,
-  accessToken
-) => {
-  const ENDPOINT = `/user/starred/${owner}/${repo}`;
-
-  return starred
-    ? v3.delete(ENDPOINT, accessToken)
-    : v3.put(ENDPOINT, accessToken);
-};
+export const fetchChangeStarStatusRepo = (owner, repo, starred, accessToken) =>
+  v3[starred ? 'delete' : 'put'](`/user/starred/${owner}/${repo}`, accessToken);
 
 export const fetchForkRepo = (owner, repo, accessToken) =>
   v3.post(`/repos/${owner}/${repo}/forks`, accessToken);
@@ -264,13 +252,8 @@ export const watchRepo = (owner, repo, accessToken) =>
 export const unWatchRepo = (owner, repo, accessToken) =>
   v3.delete(`/repos/${owner}/${repo}/subscription`, accessToken);
 
-export const fetchChangeFollowStatus = (user, isFollowing, accessToken) => {
-  const ENDPOINT = `/user/following/${user}`;
-
-  return isFollowing
-    ? v3.delete(ENDPOINT, accessToken)
-    : v3.put(ENDPOINT, accessToken);
-};
+export const fetchChangeFollowStatus = (user, isFollowing, accessToken) =>
+  v3[isFollowing ? 'delete' : 'put'](`/user/following/${user}`, accessToken);
 
 export const fetchDiff = (url, accessToken) => v3.getDiff(url, accessToken);
 
@@ -305,7 +288,7 @@ export const fetchSubmitNewIssue = (
 
 // Auth
 const authParameters = (code, state) => ({
-  method: 'POST',
+  method: METHOD.POST,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
