@@ -154,14 +154,15 @@ export const nl = {
     repositoryList: {
       title: 'Repositories',
     },
-    followerList: {
+    followers: {
       title: 'Volgers',
+      text: 'Volgers',
+      followsYou: 'Volgt jou',
     },
-    followingList: {
+    following: {
       title: 'Volgen',
-    },
-    followYou: {
-      title: 'Volgt jou',
+      text: 'Volgen',
+      followingYou: 'Volgen',
     },
   },
   repository: {
@@ -295,8 +296,6 @@ export const nl = {
     email: 'Email',
     website: 'Website',
     repositories: 'Repositories',
-    followers: 'Volgers',
-    following: 'Volgen',
     cancel: 'Annuleren',
     yes: 'Ja',
     ok: 'OKE',
