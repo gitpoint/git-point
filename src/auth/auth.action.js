@@ -19,6 +19,7 @@ import {
   GET_AUTH_ORGS,
   GET_EVENTS,
   CHANGE_LANGUAGE,
+  CHANGE_TAB_BAR_VISIBILITY,
   GET_AUTH_STAR_COUNT,
 } from './auth.type';
 
@@ -166,5 +167,11 @@ export const changeLanguage = lang => {
 
     saveLanguage(lang);
     configureLocale(lang);
+  };
+};
+
+export const changeTabBarVisibility = isTabBarVisible => {
+  return dispatch => {
+    dispatch({ type: CHANGE_TAB_BAR_VISIBILITY, isTabBarVisible });
   };
 };

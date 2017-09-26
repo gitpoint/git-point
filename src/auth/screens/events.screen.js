@@ -9,19 +9,21 @@ import moment from 'moment/min/moment-with-locales.min';
 import { LoadingUserListItem, UserListItem, ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { emojifyText, translate } from 'utils';
-import { getUserEvents } from '../auth.action';
+import { getUserEvents, changeTabBarVisibility } from '../auth.action';
 
 const mapStateToProps = state => ({
   user: state.auth.user,
   userEvents: state.auth.events,
   language: state.auth.language,
   isPendingEvents: state.auth.isPendingEvents,
+  isTabBarVisible: state.auth.isTabBarVisible,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getUserEvents,
+      changeTabBarVisibility,
     },
     dispatch
   );
@@ -74,6 +76,13 @@ const styles = StyleSheet.create({
 });
 
 class Events extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      scrollOffset: 0,
+    };
+  }
+
   componentDidMount() {
     if (this.props.user.login) {
       this.getUserEvents(this.props.user);
@@ -484,6 +493,17 @@ class Events extends Component {
     return item.id;
   };
 
+  changeTabBarVisibility = event => {
+    const scrollOffset = event.nativeEvent.contentOffset.y;
+    const isScrollDown = scrollOffset > this.state.scrollOffset;
+
+    this.setState({
+      scrollOffset,
+    });
+
+    this.props.changeTabBarVisibility(!isScrollDown);
+  };
+
   renderDescription(userEvent) {
     return (
       <Text style={styles.descriptionContainer}>
@@ -535,6 +555,8 @@ class Events extends Component {
           onRefresh={this.getUserEvents}
           refreshing={isPendingEvents}
           keyExtractor={this.keyExtractor}
+          onScroll={this.changeTabBarVisibility}
+          onEndReachedThreshold={1200}
           renderItem={({ item }) =>
             <View>
               <UserListItem

@@ -1,15 +1,12 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import {
-  StackNavigator,
-  TabNavigator,
-  TabBarBottom,
-  NavigationActions,
-} from 'react-navigation';
+import { StackNavigator, TabNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
 import { colors } from 'config';
 import { translate } from 'utils';
+
+import { TabBar } from 'components';
 
 // Auth
 import {
@@ -309,33 +306,7 @@ const MainTabNavigator = TabNavigator(
       activeTintColor: colors.primaryDark,
       inactiveTintColor: colors.grey,
     },
-    tabBarComponent: ({ jumpToIndex, ...props }) =>
-      <TabBarBottom
-        {...props}
-        jumpToIndex={index => {
-          const { dispatch, state } = props.navigation;
-
-          if (state.index === index && state.routes[index].routes.length > 1) {
-            const stackRouteName = [
-              'Events',
-              'Notifications',
-              'Search',
-              'MyProfile',
-            ][index];
-
-            dispatch(
-              NavigationActions.reset({
-                index: 0,
-                actions: [
-                  NavigationActions.navigate({ routeName: stackRouteName }),
-                ],
-              })
-            );
-          } else {
-            jumpToIndex(index);
-          }
-        }}
-      />,
+    tabBarComponent: TabBar,
   }
 );
 
