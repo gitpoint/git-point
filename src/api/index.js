@@ -36,6 +36,7 @@ export const v3 = {
     accept = ACCEPT.JSON,
     body = {}
   ) => {
+    const withBody = [METHOD.PUT, METHOD.PATCH, METHOD.POST];
     const params = {
       method,
       headers: {
@@ -45,11 +46,7 @@ export const v3 = {
       },
     };
 
-    if (
-      method === METHOD.PUT ||
-      method === METHOD.PATCH ||
-      method === METHOD.POST
-    ) {
+    if (withBody.indexOf(method) !== -1) {
       params.body = JSON.stringify(body);
       if (method === METHOD.PUT) {
         params.headers['Content-Length'] = 0;
@@ -57,6 +54,23 @@ export const v3 = {
     }
 
     return params;
+  },
+  count: async (url, accessToken) => {
+    const finalUrl =
+      url.indexOf('?') !== -1 ? `${url}&per_page=1` : `${url}?per_page=1`;
+    const response = await v3.get(finalUrl, accessToken);
+
+    let linkHeader = response.headers.get('Link');
+    let number = 0;
+
+    if (linkHeader == null) {
+      number = response.json().length;
+    } else {
+      linkHeader = linkHeader.match(/page=(\d)+/g).pop();
+      number = linkHeader.split('=').pop();
+    }
+
+    return abbreviateNumber(number);
   },
   delete: async (url, accessToken) => {
     const response = await v3.call(
@@ -237,26 +251,8 @@ export const fetchChangeStarStatusRepo = (
 export const fetchForkRepo = (owner, repo, accessToken) =>
   v3.post(`/repos/${owner}/${repo}/forks`, accessToken);
 
-export async function fetchStarCount(owner, accessToken) {
-  const response = await v3.get(
-    `/users/${owner}/starred?per_page=1`,
-    accessToken
-  );
-
-  let linkHeader = response.headers.get('Link');
-  let output = '';
-
-  if (linkHeader == null) {
-    output = response.json().then(data => {
-      return data.length;
-    });
-  } else {
-    linkHeader = linkHeader.match(/page=(\d)+/g).pop();
-    output = linkHeader.split('=').pop();
-  }
-
-  return abbreviateNumber(output);
-}
+export const fetchStarCount = (owner, accessToken) =>
+  v3.count(`/users/${owner}/starred`, accessToken);
 
 export const isWatchingRepo = (url, accessToken) => v3.head(url, accessToken);
 
