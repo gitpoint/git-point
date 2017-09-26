@@ -16,14 +16,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: colors.githubDark,
   },
   welcomeMessage: {
-    color: colors.primaryDark,
+    color: colors.white,
+    paddingBottom: 20,
     fontSize: normalize(24),
     ...fonts.fontPrimary,
-  },
-  loadingIcon: {
-    marginTop: 30,
   },
 });
 
@@ -42,10 +41,7 @@ class Welcome extends Component {
           <Text style={styles.welcomeMessage}>
             {translate('auth.welcome.welcomeTitle', language)}
           </Text>
-          <ActivityIndicator
-            animating={isLoggingIn}
-            style={styles.loadingIcon}
-          />
+          <ActivityIndicator animating={isLoggingIn} color={colors.white} />
         </View>
       </ViewContainer>
     );

@@ -1,5 +1,7 @@
+/* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { View, ScrollView, StyleSheet, TextInput, Alert } from 'react-native';
 import { ListItem, Icon } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
@@ -16,24 +18,13 @@ const mapStateToProps = state => ({
   isPendingMerging: state.repository.isPendingMerging,
 });
 
-const mapDispatchToProps = dispatch => ({
-  mergePullRequestByDispatch: (
-    repoFullName,
-    issueNum,
-    commitTitle,
-    commitMessage,
-    mergeMethod
-  ) =>
-    dispatch(
-      mergePullRequest(
-        repoFullName,
-        issueNum,
-        commitTitle,
-        commitMessage,
-        mergeMethod
-      )
-    ),
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      mergePullRequest,
+    },
+    dispatch
+  );
 
 const styles = StyleSheet.create({
   listItemTitle: {
@@ -69,7 +60,7 @@ const styles = StyleSheet.create({
 
 class PullMerge extends Component {
   props: {
-    mergePullRequestByDispatch: Function,
+    mergePullRequest: Function,
     language: string,
     repository: Object,
     issue: Object,
@@ -120,7 +111,7 @@ class PullMerge extends Component {
     const {
       repository,
       issue,
-      mergePullRequestByDispatch,
+      mergePullRequest,
       language,
       navigation,
     } = this.props;
@@ -137,7 +128,7 @@ class PullMerge extends Component {
         [{ text: translate('common.ok', language) }]
       );
     } else {
-      mergePullRequestByDispatch(
+      mergePullRequest(
         repository.full_name,
         issue.number,
         commitTitle,
