@@ -60,12 +60,14 @@ export const v3 = {
       url.indexOf('?') !== -1 ? `${url}&per_page=1` : `${url}?per_page=1`;
     const response = await v3.get(finalUrl, accessToken);
 
-    let linkHeader = response.headers.get('Link');
-    let number = 0;
+    if (response.status === 404) {
+      return 0;
+    }
 
-    if (linkHeader == null) {
-      number = response.json().length;
-    } else {
+    let linkHeader = response.headers.get('Link');
+    let number = 1;
+
+    if (linkHeader !== null) {
       linkHeader = linkHeader.match(/page=(\d)+/g).pop();
       number = linkHeader.split('=').pop();
     }
