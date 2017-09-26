@@ -125,6 +125,8 @@ export const notificationsReducer = (state = initialState, action = {}) => {
               : notification
         ),
         isPendingRepoMarkAsRead: false,
+        notificationsCount:
+          state.notificationsCount - action.repoNotificationsCount,
       };
     case MARK_REPO_AS_READ.ERROR:
       return {

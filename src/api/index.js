@@ -315,6 +315,25 @@ export async function fetchNotificationsCount(accessToken) {
   return count;
 }
 
+export async function fetchRepoNotificationsCount(
+  owner,
+  repoName,
+  accessToken
+) {
+  const ENDPOINT = `${root}/repos/${owner}/${repoName}/notifications?per_page=1`;
+  const response = await fetch(ENDPOINT, accessTokenParameters(accessToken));
+
+  let linkHeader = response.headers.get('Link');
+  let count = 1;
+
+  if (linkHeader) {
+    linkHeader = linkHeader.match(/page=(\d)+/g).pop();
+    count = linkHeader.split('=').pop();
+  }
+
+  return +count;
+}
+
 export async function fetchChangeStarStatusRepo(
   owner,
   repo,

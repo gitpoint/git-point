@@ -3,6 +3,7 @@ import {
   fetchMarkNotificationAsRead,
   fetchMarkRepoNotificationAsRead,
   fetchNotificationsCount,
+  fetchRepoNotificationsCount,
 } from 'api';
 import {
   GET_UNREAD_NOTIFICATIONS,
@@ -104,22 +105,30 @@ export const markAsRead = notificationID => {
 export const markRepoAsRead = repoFullName => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
+    const [owner, repoName] = repoFullName.split('/');
 
     dispatch({ type: MARK_REPO_AS_READ.PENDING });
 
-    fetchMarkRepoNotificationAsRead(repoFullName, accessToken)
-      .then(() => {
-        dispatch({
-          type: MARK_REPO_AS_READ.SUCCESS,
-          repoFullName,
+    fetchRepoNotificationsCount(
+      owner,
+      repoName,
+      accessToken
+    ).then(repoNotificationsCount => {
+      fetchMarkRepoNotificationAsRead(repoFullName, accessToken)
+        .then(() => {
+          dispatch({
+            type: MARK_REPO_AS_READ.SUCCESS,
+            repoFullName,
+            repoNotificationsCount,
+          });
+        })
+        .catch(error => {
+          dispatch({
+            type: MARK_REPO_AS_READ.ERROR,
+            payload: error,
+          });
         });
-      })
-      .catch(error => {
-        dispatch({
-          type: MARK_REPO_AS_READ.ERROR,
-          payload: error,
-        });
-      });
+    });
   };
 };
 
