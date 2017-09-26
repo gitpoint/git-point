@@ -1,3 +1,4 @@
+import { v3 } from 'api';
 import {
   fetchMergeStatus,
   fetchPostIssueComment,
@@ -5,8 +6,7 @@ import {
   fetchChangeIssueLockStatus,
   fetchMergePullRequest,
   fetchSubmitNewIssue,
-  v3,
-} from 'api';
+} from './issue.api';
 import {
   GET_ISSUE_COMMENTS,
   POST_ISSUE_COMMENT,

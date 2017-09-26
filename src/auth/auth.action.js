@@ -5,13 +5,11 @@ import { delay, resetNavigationTo, configureLocale } from 'utils';
 import { saveLanguage } from 'locale';
 
 import {
-  fetchAccessToken,
-  fetchAuthUser,
-  fetchAuthUserOrgs,
   fetchUserOrgs,
   fetchUserEvents,
   fetchStarCount,
-} from 'api';
+} from '../user/user.api';
+import { fetchAccessToken, fetchAuthUser, fetchAuthUserOrgs } from './auth.api';
 import {
   LOGIN,
   LOGOUT,

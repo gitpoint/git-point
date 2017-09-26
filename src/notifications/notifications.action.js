@@ -2,7 +2,7 @@ import {
   fetchNotifications,
   fetchMarkNotificationAsRead,
   fetchMarkRepoNotificationAsRead,
-} from 'api';
+} from './notifications.api';
 import {
   GET_UNREAD_NOTIFICATIONS,
   GET_PARTICIPATING_NOTIFICATIONS,

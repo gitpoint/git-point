@@ -1,4 +1,4 @@
-import { fetchSearch } from 'api';
+import { fetchSearch } from './search.api';
 import { SEARCH_REPOS, SEARCH_USERS } from './search.type';
 
 export const searchRepos = query => {

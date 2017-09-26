@@ -1,6 +1,7 @@
 import { createAction } from 'redux-actions';
 
-import { fetchOrg, fetchOrgMembers, v3 } from 'api';
+import { v3 } from 'api';
+import { fetchOrg, fetchOrgMembers } from './organization.api';
 import {
   GET_ORG,
   GET_ORG_LOADING,

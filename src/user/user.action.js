@@ -1,11 +1,11 @@
+import { v3 } from 'api';
+import { fetchSearch } from '../search/search.api';
 import {
   fetchUser,
   fetchUserOrgs,
-  fetchSearch,
   fetchChangeFollowStatus,
   fetchStarCount,
-  v3,
-} from 'api';
+} from './user.api';
 import {
   GET_USER,
   GET_ORGS,
