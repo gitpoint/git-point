@@ -304,6 +304,9 @@ const MainTabNavigator = TabNavigator(
       showLabel: false,
       activeTintColor: colors.primaryDark,
       inactiveTintColor: colors.grey,
+      style: {
+        backgroundColor: colors.alabaster,
+      },
     },
     tabBarComponent: ({ jumpToIndex, ...props }) =>
       <TabBarBottom
@@ -369,5 +372,5 @@ export const GitPoint = StackNavigator(
     cardStyle: {
       backgroundColor: 'transparent',
     },
-  },
+  }
 );

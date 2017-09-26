@@ -9,14 +9,16 @@ import { colors, fonts } from 'config';
 const styles = StyleSheet.create({
   badge: {
     position: 'absolute',
-    right: 0,
-    top: 0,
+    right: 1,
+    top: -1,
     backgroundColor: colors.redDarkest,
     borderRadius: 18,
     width: 18,
     height: 18,
     justifyContent: 'center',
     alignItems: 'center',
+    borderColor: colors.alabaster,
+    borderWidth: 1,
   },
   badgeText: {
     alignSelf: 'center',
