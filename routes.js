@@ -316,6 +316,7 @@ const MainTabNavigator = TabNavigator(
     },
   },
   {
+    lazy: true,
     tabBarPosition: 'bottom',
     tabBarOptions: {
       showLabel: false,
@@ -383,5 +384,8 @@ export const GitPoint = StackNavigator(
   {
     headerMode: 'screen',
     URIPrefix: 'gitpoint://',
-  }
+    cardStyle: {
+      backgroundColor: 'transparent',
+    },
+  },
 );
