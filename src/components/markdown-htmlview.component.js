@@ -98,6 +98,47 @@ const headingRenderer = (node, index, siblings, parent, defaultRenderer) => {
   );
 };
 
+/* eslint-disable no-shadow */
+class CellWithImage extends Cell {
+  render() {
+    const { data, width, height, flex, style } = this.props;
+    let borderWidth;
+    let borderColor;
+
+    if (this.props.borderStyle && this.props.borderStyle.borderWidth) {
+      borderWidth = this.props.borderStyle.borderWidth;
+    } else {
+      borderWidth = 1;
+    }
+    if (this.props.borderStyle && this.props.borderStyle.borderColor) {
+      borderColor = this.props.borderStyle.borderColor;
+    } else {
+      borderColor = '#000';
+    }
+
+    return (
+      <View
+        style={[
+          {
+            alignItems: 'center',
+            borderTopWidth: borderWidth,
+            borderRightWidth: borderWidth,
+            borderColor,
+          },
+          styles.cell,
+          width && { width },
+          height && { height },
+          flex && { flex },
+          !width && !flex && !height && { flex: 1 },
+          style,
+        ]}
+      >
+        {data}
+      </View>
+    );
+  }
+}
+
 export class MarkdownHtmlView extends Component {
   props: {
     source: String,
@@ -204,10 +245,13 @@ export class MarkdownHtmlView extends Component {
           return <View key={index} style={{ ...hrStyle }} />;
         },
         img: (node, index, siblings, parent, defaultRenderer) => {
+          const zoom =
+            parent && parent.type === 'tag' && parent.name === 'td' ? 0.3 : 0.6;
+
           return (
             <ImageZoom
               key={index}
-              style={{ width: width * 0.5, height: height * 0.3 }}
+              style={{ width: width * zoom, height: height * zoom }}
               uri={{ uri: node.attribs.src }}
             />
           );
@@ -238,7 +282,7 @@ export class MarkdownHtmlView extends Component {
           return (
             <TableWrapper
               key={index}
-              style={{ width: width * 0.8, height: 30, flexDirection: 'row' }}
+              style={{ width: width * 0.8, flexDirection: 'row' }}
             >
               {defaultRenderer(
                 node.children.filter(elem => elem.type === 'tag'),
@@ -262,8 +306,15 @@ export class MarkdownHtmlView extends Component {
             styleText.textAlign = cellAlign[attribs.style];
           }
 
+          const Component =
+            node.children.filter(
+              elem => elem.type === 'tag' && elem.name === 'img'
+            ).length > 0
+              ? CellWithImage
+              : Cell;
+
           return (
-            <Cell
+            <Component
               key={index}
               data={defaultRenderer(node.children, node)}
               textStyle={styleText}
@@ -271,8 +322,15 @@ export class MarkdownHtmlView extends Component {
           );
         },
         th: (node, index, siblings, parent, defaultRenderer) => {
+          const Component =
+            node.children.filter(
+              elem => elem.type === 'tag' && elem.name === 'img'
+            ).length > 0
+              ? CellWithImage
+              : Cell;
+
           return (
-            <Cell
+            <Component
               key={index}
               data={defaultRenderer(node.children, node)}
               textStyle={{ ...fonts.fontPrimarySemiBold, textAlign: 'center' }}
