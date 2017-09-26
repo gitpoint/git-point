@@ -1,12 +1,11 @@
 import {
-  fetchDiff,
   fetchMergeStatus,
-  fetchCommentHTML,
   fetchPostIssueComment,
   fetchEditIssue,
   fetchChangeIssueLockStatus,
   fetchMergePullRequest,
   fetchSubmitNewIssue,
+  v3,
 } from 'api';
 import {
   GET_ISSUE_COMMENTS,
@@ -26,7 +25,8 @@ const getDiff = url => {
 
     dispatch({ type: GET_ISSUE_DIFF.PENDING });
 
-    return fetchDiff(url, accessToken)
+    return v3
+      .getDiff(url, accessToken)
       .then(data => {
         dispatch({
           type: GET_ISSUE_DIFF.SUCCESS,
@@ -79,7 +79,8 @@ export const getIssueComments = issueCommentsURL => {
 
     dispatch({ type: GET_ISSUE_COMMENTS.PENDING });
 
-    return fetchCommentHTML(`${issueCommentsURL}?per_page=100`, accessToken)
+    return v3
+      .getJson(`${issueCommentsURL}?per_page=100`, accessToken)
       .then(data => {
         dispatch({
           type: GET_ISSUE_COMMENTS.SUCCESS,
@@ -190,7 +191,8 @@ export const getIssueFromUrl = url => {
 
     dispatch({ type: GET_ISSUE_FROM_URL.PENDING });
 
-    return fetchCommentHTML(url, accessToken)
+    return v3
+      .getJson(url, accessToken)
       .then(issue => {
         dispatch({
           type: GET_ISSUE_FROM_URL.SUCCESS,
