@@ -152,14 +152,12 @@ class UserOptions extends Component {
             <FlatList
               data={languages}
               renderItem={({ item }) => {
-                const langCode = item.emojiCode || item.code.substring(0, 2);
-
                 return (
                   <ListItem
                     title={
                       <View style={styles.language}>
                         <Text style={styles.flag}>
-                          {emojifyText(`:flag-${langCode}:`)}
+                          {emojifyText(item.emojiCode)}
                         </Text>
                         <Text style={styles.listTitle}>
                           {item.name}
