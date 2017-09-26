@@ -4,6 +4,7 @@ import { StackNavigator, TabNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
 import { colors } from 'config';
+import { translate } from 'utils';
 
 import { TabBar } from 'components';
 
@@ -79,6 +80,12 @@ const sharedRoutes = {
       header: null,
     },
   },
+  AuthProfile: {
+    screen: AuthProfileScreen,
+    navigationOptions: {
+      header: null,
+    },
+  },
   Organization: {
     screen: OrganizationProfileScreen,
     navigationOptions: {
@@ -121,11 +128,18 @@ const sharedRoutes = {
     screen: IssueScreen,
     navigationOptions: ({ navigation }) => {
       const issueNumberRegex = /issues\/([0-9]+)$/;
-      const { issue, issueURL, isPR } = navigation.state.params;
+      const { issue, issueURL, isPR, language } = navigation.state.params;
       const number = issue ? issue.number : issueURL.match(issueNumberRegex)[1];
+      const langKey = isPR ? 'pullRequest' : 'issue';
+      const langTitle = translate(
+        `issue.main.screenTitles.${langKey}`,
+        language
+      );
 
       return {
-        title: isPR ? `Pull Request #${number}` : `Issue #${number}`,
+        title: `${langTitle} #${number}`,
+        headerLeft: navigation.state.params.headerLeft,
+        gesturesEnabled: !(navigation.state.params.gesturesEnabled === false),
       };
     },
   },
@@ -285,6 +299,7 @@ const MainTabNavigator = TabNavigator(
     },
   },
   {
+    lazy: true,
     tabBarPosition: 'bottom',
     tabBarOptions: {
       showLabel: false,
@@ -326,5 +341,8 @@ export const GitPoint = StackNavigator(
   {
     headerMode: 'screen',
     URIPrefix: 'gitpoint://',
-  }
+    cardStyle: {
+      backgroundColor: 'transparent',
+    },
+  },
 );

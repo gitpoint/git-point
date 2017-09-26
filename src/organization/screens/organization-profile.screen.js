@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { StyleSheet, RefreshControl } from 'react-native';
 import { ListItem } from 'react-native-elements';
-
+import { createStructuredSelector } from 'reselect';
+import {
+  getAuthLanguage,
+} from 'auth';
 import {
   ViewContainer,
   UserProfile,
@@ -12,24 +16,40 @@ import {
   ParallaxScroll,
   EntityInfo,
 } from 'components';
-import { emojifyText } from 'utils';
+import {
+  emojifyText,
+  translate,
+} from 'utils';
 import { colors, fonts } from 'config';
-import { getOrg, getOrgRepos, getOrgMembers } from '../index';
+import {
+  // actions
+  fetchOrganizations,
+  fetchOrganizationMembers,
+  // Selectors
+  getOrganization,
+  getOrganizationRepositories,
+  getOrganizationMembers,
+  getOrganizationIsPendingOrg,
+  getOrganizationIsPendingRepos,
+  getOrganizationIsPendingMembers,
+} from '../index';
 
-const mapStateToProps = state => ({
-  organization: state.organization.organization,
-  repositories: state.organization.repositories,
-  members: state.organization.members,
-  isPendingOrg: state.organization.isPendingOrg,
-  isPendingRepos: state.organization.isPendingRepos,
-  isPendingMembers: state.organization.isPendingMembers,
+const selectors = createStructuredSelector({
+  organization: getOrganization,
+  repositories: getOrganizationRepositories,
+  members: getOrganizationMembers,
+  isPendingOrg: getOrganizationIsPendingOrg,
+  isPendingRepos: getOrganizationIsPendingRepos,
+  isPendingMembers: getOrganizationIsPendingMembers,
+  language: getAuthLanguage,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getOrgByDispatch: orgName => dispatch(getOrg(orgName)),
-  getOrgReposByDispatch: url => dispatch(getOrgRepos(url)),
-  getOrgMembersByDispatch: orgName => dispatch(getOrgMembers(orgName)),
-});
+const actionCreators = {
+  fetchOrganizations,
+  fetchOrganizationMembers,
+};
+
+const actions = dispatch => bindActionCreators(actionCreators, dispatch);
 
 const styles = StyleSheet.create({
   listTitle: {
@@ -44,9 +64,9 @@ const styles = StyleSheet.create({
 
 class OrganizationProfile extends Component {
   props: {
-    getOrgByDispatch: Function,
+    fetchOrganizations: Function,
     // getOrgReposByDispatch: Function,
-    getOrgMembersByDispatch: Function,
+    fetchOrganizationMembers: Function,
     organization: Object,
     // repositories: Array,
     members: Array,
@@ -54,6 +74,7 @@ class OrganizationProfile extends Component {
     // isPendingRepos: boolean,
     isPendingMembers: boolean,
     navigation: Object,
+    language: string,
   };
 
   state: {
@@ -70,18 +91,18 @@ class OrganizationProfile extends Component {
   componentDidMount() {
     const organization = this.props.navigation.state.params.organization;
 
-    this.props.getOrgByDispatch(organization.login);
-    this.props.getOrgMembersByDispatch(organization.login);
+    this.props.fetchOrganizations(organization.login);
+    this.props.fetchOrganizationMembers(organization.login);
   }
 
   getOrgData = () => {
     const organization = this.props.navigation.state.params.organization;
 
     this.setState({ refreshing: true });
-    Promise.all(
-      this.props.getOrgByDispatch(organization.login),
-      this.props.getOrgMembersByDispatch(organization.login)
-    ).then(() => {
+    Promise.all([
+      this.props.fetchOrganizations(organization.login),
+      this.props.fetchOrganizationMembers(organization.login),
+    ]).then(() => {
       this.setState({ refreshing: false });
     });
   };
@@ -93,6 +114,7 @@ class OrganizationProfile extends Component {
       isPendingOrg,
       isPendingMembers,
       navigation,
+      language,
     } = this.props;
     const { refreshing } = this.state;
     const initialOrganization = this.props.navigation.state.params.organization;
@@ -121,18 +143,23 @@ class OrganizationProfile extends Component {
           navigateBack
           navigation={navigation}
         >
-          {isPendingMembers && <LoadingMembersList title="MEMBERS" />}
+          {isPendingMembers &&
+            <LoadingMembersList
+              title={translate('organization.main.membersTitle', language)}
+            />}
 
           {!isPendingMembers &&
             <MembersList
-              title="MEMBERS"
+              title={translate('organization.main.membersTitle', language)}
               members={members}
               navigation={navigation}
             />}
 
           {!!organization.description &&
             organization.description !== '' &&
-            <SectionList title="DESCRIPTION">
+            <SectionList
+              title={translate('organization.main.descriptionTitle', language)}
+            >
               <ListItem
                 subtitle={emojifyText(organization.description)}
                 subtitleStyle={styles.listSubTitle}
@@ -149,6 +176,6 @@ class OrganizationProfile extends Component {
 }
 
 export const OrganizationProfileScreen = connect(
-  mapStateToProps,
-  mapDispatchToProps
+  selectors,
+  actions
 )(OrganizationProfile);

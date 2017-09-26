@@ -8,7 +8,9 @@ type Props = {
   type: string,
   initialUser: Object,
   user: Object,
+  starCount: string,
   isFollowing: boolean,
+  isFollower: boolean,
   language: string,
   navigation: Object,
 };
@@ -68,6 +70,23 @@ const styles = StyleSheet.create({
     fontSize: normalize(10),
     ...fonts.fontPrimary,
   },
+  unitStatus: {
+    textAlign: 'center',
+    color: colors.lighterBoldGreen,
+    fontSize: normalize(8),
+    ...fonts.fontPrimary,
+  },
+  badge: {
+    paddingTop: 3,
+    paddingBottom: 3,
+    marginTop: 5,
+    marginLeft: 17,
+    marginRight: 17,
+    borderWidth: 0.5,
+    borderRadius: 5,
+    borderColor: colors.lighterBoldGreen,
+    justifyContent: 'center',
+  },
   green: {
     color: colors.lightGreen,
   },
@@ -77,7 +96,9 @@ export const UserProfile = ({
   type,
   initialUser,
   user,
+  starCount,
   isFollowing,
+  isFollower,
   language,
   navigation,
 }: Props) =>
@@ -86,8 +107,8 @@ export const UserProfile = ({
       <ImageZoom
         uri={{
           uri: initialUser.avatar_url
-            ? initialUser.avatar_url
-            : user.avatar_url,
+            ? `${initialUser.avatar_url}&lastModified=${initialUser.updated_at}`
+            : `${user.avatar_url}&lastModified=${user.updated_at}`,
         }}
         style={[
           styles.avatar,
@@ -123,6 +144,16 @@ export const UserProfile = ({
       </TouchableOpacity>
 
       {type !== 'org' &&
+        <TouchableOpacity style={styles.unit}>
+          <Text style={styles.unitNumber}>
+            {!isNaN(parseInt(starCount, 10)) ? starCount : ' '}
+          </Text>
+          <Text style={styles.unitText}>
+            {translate('common.stars', language)}
+          </Text>
+        </TouchableOpacity>}
+
+      {type !== 'org' &&
         <TouchableOpacity
           style={styles.unit}
           onPress={() =>
@@ -132,12 +163,16 @@ export const UserProfile = ({
               followerCount: user.followers > 15 ? 15 : user.followers,
             })}
         >
-          <Text style={[styles.unitNumber, isFollowing && styles.green]}>
+          <Text style={styles.unitNumber}>
             {!isNaN(parseInt(user.followers, 10)) ? user.followers : ' '}
           </Text>
           <Text style={styles.unitText}>
             {translate('common.followers', language)}
           </Text>
+          {isFollowing &&
+            <Text style={[styles.unitStatus, styles.badge]}>
+              {translate('common.following', language)}
+            </Text>}
         </TouchableOpacity>}
 
       {type !== 'org' &&
@@ -156,6 +191,10 @@ export const UserProfile = ({
           <Text style={styles.unitText}>
             {translate('common.following', language)}
           </Text>
+          {isFollower &&
+            <Text style={[styles.unitStatus, styles.badge]}>
+              {translate('user.followYou.title')}
+            </Text>}
         </TouchableOpacity>}
     </View>
   </View>;

@@ -1,21 +1,39 @@
+/* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ScrollView, StyleSheet } from 'react-native';
+import { bindActionCreators } from 'redux';
+import {
+  ScrollView,
+  StyleSheet,
+  FlatList,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { ListItem } from 'react-native-elements';
+import { NavigationActions } from 'react-navigation';
+import CookieManager from 'react-native-cookies';
 
 import { ViewContainer, SectionList } from 'components';
-import { colors, fonts } from 'config';
-import { openURLInView, resetNavigationTo, translate } from 'utils';
+import { colors, fonts, normalize } from 'config';
+import { resetNavigationTo, translate, emojifyText } from 'utils';
+import { version } from 'package.json';
+import codePush from 'react-native-code-push';
 import { signOut, changeLanguage } from 'auth';
+import languages from './language-settings';
 
 const mapStateToProps = state => ({
   language: state.auth.language,
 });
 
-const mapDispatchToProps = dispatch => ({
-  signOutByDispatch: () => dispatch(signOut()),
-  changeLanguageByDispatch: lang => dispatch(changeLanguage(lang)),
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      signOut,
+      changeLanguage,
+    },
+    dispatch
+  );
 
 const styles = StyleSheet.create({
   listTitle: {
@@ -30,41 +48,134 @@ const styles = StyleSheet.create({
     color: colors.red,
     ...fonts.fontPrimary,
   },
+  update: {
+    flex: 1,
+    alignItems: 'center',
+    marginVertical: 40,
+  },
+  updateText: {
+    color: colors.greyDark,
+    ...fonts.fontPrimary,
+  },
+  updateTextSub: {
+    fontSize: normalize(11),
+  },
+  language: {
+    flexDirection: 'row',
+  },
+  flag: {
+    paddingRight: 7,
+    color: colors.black, // random any color for the correct display emoji
+  },
+});
+
+const updateText = lang => ({
+  check: translate('auth.profile.codePushCheck', lang),
+  checking: translate('auth.profile.codePushChecking', lang),
+  updated: translate('auth.profile.codePushUpdated', lang),
+  available: translate('auth.profile.codePushAvailable', lang),
+  notApplicable: translate('auth.profile.codePushNotApplicable', lang),
 });
 
 class UserOptions extends Component {
   props: {
     language: string,
-    changeLanguageByDispatch: () => void,
-    signOutByDispatch: () => void,
+    changeLanguage: () => void,
+    signOut: () => void,
     navigation: Object,
   };
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      updateText: updateText(props.language).check,
+    };
+  }
+
+  componentWillReceiveProps(nextState) {
+    if (nextState.language !== this.props.language) {
+      this.setState({
+        updateText: updateText(nextState.language).check,
+      });
+
+      const navigationParams = NavigationActions.setParams({
+        params: {
+          title: translate('auth.userOptions.title', nextState.language),
+        },
+        key: nextState.navigation.state.key,
+      });
+
+      nextState.navigation.dispatch(navigationParams);
+    }
+  }
+
+  checkForUpdate = () => {
+    if (__DEV__) {
+      this.setState({
+        updateText: updateText(this.props.language).notApplicable,
+      });
+    } else {
+      this.setState({ updateText: updateText(this.props.language).checking });
+      codePush
+        .sync({
+          updateDialog: true,
+          installMode: codePush.InstallMode.IMMEDIATE,
+        })
+        .then(update => {
+          this.setState({
+            updateText: update
+              ? updateText(this.props.language).available
+              : updateText(this.props.language).updated,
+          });
+        });
+    }
+  };
+
   signOutUser() {
-    const { signOutByDispatch, navigation } = this.props;
+    const { signOut, navigation } = this.props;
 
-    signOutByDispatch().then(() => {
-      const url = 'https://github.com/logout';
-
-      openURLInView(url);
-      resetNavigationTo('Login', navigation);
+    signOut().then(() => {
+      CookieManager.clearAll().then(() => {
+        resetNavigationTo('Login', navigation);
+      });
     });
   }
 
   render() {
-    const { language, changeLanguageByDispatch, navigation } = this.props;
+    const { language, changeLanguage, navigation } = this.props;
 
     return (
       <ViewContainer>
         <ScrollView>
           <SectionList title={translate('auth.userOptions.language', language)}>
-            <ListItem
-              title={translate('auth.userOptions.english', language)}
-              titleStyle={styles.listTitle}
-              hideChevron={language !== 'en'}
-              rightIcon={{ name: 'check' }}
-              onPress={() => changeLanguageByDispatch('en')}
-              underlayColor={colors.greyLight}
+            <FlatList
+              data={languages}
+              renderItem={({ item }) => {
+                const langCode = item.emojiCode || item.code.substring(0, 2);
+
+                return (
+                  <ListItem
+                    title={
+                      <View style={styles.language}>
+                        <Text style={styles.flag}>
+                          {emojifyText(`:flag-${langCode}:`)}
+                        </Text>
+                        <Text style={styles.listTitle}>
+                          {item.name}
+                        </Text>
+                      </View>
+                    }
+                    titleStyle={styles.listTitle}
+                    hideChevron={language !== item.code}
+                    rightIcon={{ name: 'check' }}
+                    onPress={() => changeLanguage(item.code)}
+                    underlayColor={colors.greyLight}
+                  />
+                );
+              }}
+              keyExtractor={(item, index) => index}
+              extraData={this.props.language}
             />
           </SectionList>
 
@@ -88,6 +199,15 @@ class UserOptions extends Component {
               underlayColor={colors.greyLight}
             />
           </SectionList>
+
+          <TouchableOpacity style={styles.update} onPress={this.checkForUpdate}>
+            <Text style={styles.updateText}>
+              GitPoint v{version}
+            </Text>
+            <Text style={[styles.updateText, styles.updateTextSub]}>
+              {this.state.updateText}
+            </Text>
+          </TouchableOpacity>
         </ScrollView>
       </ViewContainer>
     );

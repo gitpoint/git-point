@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { StyleSheet, View, ActivityIndicator } from 'react-native';
 import { ListItem, Button } from 'react-native-elements';
 import Parse from 'parse-diff';
-import moment from 'moment';
+import moment from 'moment/min/moment-with-locales.min';
 
 import { StateBadge, MembersList, LabelButton, DiffBlocks } from 'components';
 import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
+import { v3 } from 'api';
 
 const styles = StyleSheet.create({
   headerContainer: {
@@ -108,10 +109,7 @@ export class IssueDescription extends Component {
       <View style={(styles.container, styles.borderBottom)}>
         {issue.repository_url &&
           <ListItem
-            title={issue.repository_url.replace(
-              'https://api.github.com/repos/',
-              ''
-            )}
+            title={issue.repository_url.replace(`${v3.root}/repos/`, '')}
             titleStyle={styles.titleSmall}
             leftIcon={{
               name: 'repo',
@@ -145,6 +143,7 @@ export class IssueDescription extends Component {
                 style={styles.badge}
                 issue={issue}
                 isMerged={isMerged && issue.pull_request}
+                language={language}
               />)}
         </View>
 

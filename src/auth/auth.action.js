@@ -1,8 +1,8 @@
 import { AsyncStorage } from 'react-native';
-import I18n from 'react-native-i18n';
 
 import uniqby from 'lodash.uniqby';
-import { delay, resetNavigationTo } from 'utils';
+import { delay, resetNavigationTo, configureLocale } from 'utils';
+import { saveLanguage } from 'locale';
 
 import {
   fetchAccessToken,
@@ -10,6 +10,7 @@ import {
   fetchAuthUserOrgs,
   fetchUserOrgs,
   fetchUserEvents,
+  fetchStarCount,
 } from 'api';
 import {
   LOGIN,
@@ -19,6 +20,7 @@ import {
   GET_EVENTS,
   CHANGE_LANGUAGE,
   CHANGE_TAB_BAR_VISIBILITY,
+  GET_AUTH_STAR_COUNT,
 } from './auth.type';
 
 export const auth = (code, state, navigation) => {
@@ -84,6 +86,29 @@ export const getUser = () => {
   };
 };
 
+export const getStarCount = () => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+    const user = getState().auth.user.login;
+
+    dispatch({ type: GET_AUTH_STAR_COUNT.PENDING });
+
+    fetchStarCount(user, accessToken)
+      .then(data => {
+        dispatch({
+          type: GET_AUTH_STAR_COUNT.SUCCESS,
+          payload: data,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: GET_AUTH_STAR_COUNT.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
 export const getOrgs = () => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
@@ -100,7 +125,7 @@ export const getOrgs = () => {
 
         dispatch({
           type: GET_AUTH_ORGS.SUCCESS,
-          payload: uniqby(orgs, 'id').sort(
+          payload: uniqby(orgs, 'login').sort(
             (org1, org2) => org1.login > org2.login
           ),
         });
@@ -139,7 +164,9 @@ export const getUserEvents = user => {
 export const changeLanguage = lang => {
   return dispatch => {
     dispatch({ type: CHANGE_LANGUAGE.SUCCESS, payload: lang });
-    I18n.locale = lang;
+
+    saveLanguage(lang);
+    configureLocale(lang);
   };
 };
 

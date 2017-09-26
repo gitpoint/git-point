@@ -1,4 +1,4 @@
-import I18n from 'react-native-i18n';
+import { getLanguage } from 'locale';
 import {
   LOGIN,
   LOGOUT,
@@ -7,6 +7,7 @@ import {
   GET_EVENTS,
   CHANGE_LANGUAGE,
   CHANGE_TAB_BAR_VISIBILITY,
+  GET_AUTH_STAR_COUNT,
 } from './auth.type';
 
 const initialState = {
@@ -18,7 +19,7 @@ const initialState = {
   hasInitialUser: false,
   orgs: [],
   events: [],
-  language: I18n.locale.substr(0, 2),
+  language: getLanguage(),
   isPendingUser: false,
   isPendingOrgs: false,
   isPendingEvents: false,
@@ -81,6 +82,24 @@ export const authReducer = (state = initialState, action = {}) => {
         ...state,
         error: action.payload,
         isPendingUser: false,
+      };
+    case GET_AUTH_STAR_COUNT.PENDING:
+      return {
+        ...state,
+        starCount: ' ',
+        isPendingStarCount: true,
+      };
+    case GET_AUTH_STAR_COUNT.SUCCESS:
+      return {
+        ...state,
+        starCount: action.payload,
+        isPendingStarCount: false,
+      };
+    case GET_AUTH_STAR_COUNT.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isPendingStarCount: false,
       };
     case GET_AUTH_ORGS.PENDING:
       return {
