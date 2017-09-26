@@ -278,7 +278,7 @@ export class MarkdownHtmlView extends Component {
           return (
             <Cell
               key={index}
-              data={node.children[0].data}
+              data={defaultRenderer(node.children, node)}
               textStyle={{ ...fonts.fontPrimarySemiBold, textAlign: 'center' }}
             />
           );
