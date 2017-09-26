@@ -103,7 +103,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 10,
   },
   noneTitle: {
     fontSize: normalize(16),
@@ -134,6 +133,7 @@ class Notifications extends Component {
 
     this.state = {
       type: 0,
+      contentBlockHeight: null,
     };
 
     this.switchType = this.switchType.bind(this);
@@ -174,6 +174,12 @@ class Notifications extends Component {
         return null;
     }
   }
+
+  saveContentBlockHeight = e => {
+    const { height } = e.nativeEvent.layout;
+
+    this.setState({ contentBlockHeight: height });
+  };
 
   navigateToRepo = fullName => {
     const { navigation } = this.props;
@@ -330,6 +336,11 @@ class Notifications extends Component {
       return a.toLowerCase() > b.toLowerCase() ? 1 : -1;
     });
 
+    const isRetrievingNotifications =
+      this.isLoading() && this.notifications().length === 0;
+    const isLoadingNewNotifications =
+      this.isLoading() && this.notifications().length > 0;
+
     return (
       <ViewContainer>
         <View style={styles.container}>
@@ -348,34 +359,54 @@ class Notifications extends Component {
             />
           </View>
 
-          {this.isLoading() &&
-            this.notifications().length === 0 &&
-            <LoadingContainer
-              animating={this.isLoading() && this.notifications().length === 0}
-              text={translate('notifications.main.retrievingMessage', language)}
-              style={styles.marginSpacing}
-            />}
+          <View
+            onLayout={this.saveContentBlockHeight}
+            style={{ height: this.state.contentBlockHeight }}
+          >
+            {isRetrievingNotifications &&
+              <View
+                style={[
+                  styles.textContainer,
+                  { height: this.state.contentBlockHeight },
+                ]}
+              >
+                <LoadingContainer
+                  animating={isRetrievingNotifications}
+                  text={translate(
+                    'notifications.main.retrievingMessage',
+                    language
+                  )}
+                  style={styles.marginSpacing}
+                  center
+                />
+              </View>}
 
-          {!this.isLoading() &&
-            this.notifications().length === 0 &&
-            <View style={styles.textContainer}>
-              <Text style={styles.noneTitle}>
-                {translate('notifications.main.noneMessage', language)}
-              </Text>
-            </View>}
-
-          {this.notifications().length > 0 &&
-            <FlatList
-              ref={ref => {
-                this.notificationsList = ref;
-              }}
-              removeClippedSubviews={false}
-              onRefresh={this.getNotifications()}
-              refreshing={this.isLoading()}
-              data={sortedRepos}
-              keyExtractor={this.keyExtractor}
-              renderItem={this.renderItem}
-            />}
+            {!isRetrievingNotifications &&
+              <FlatList
+                ref={ref => {
+                  this.notificationsList = ref;
+                }}
+                removeClippedSubviews={false}
+                onRefresh={this.getNotifications()}
+                refreshing={isLoadingNewNotifications}
+                data={sortedRepos}
+                keyExtractor={this.keyExtractor}
+                renderItem={this.renderItem}
+                ListEmptyComponent={
+                  !isLoadingNewNotifications &&
+                  <View
+                    style={[
+                      styles.textContainer,
+                      { height: this.state.contentBlockHeight },
+                    ]}
+                  >
+                    <Text style={styles.noneTitle}>
+                      {translate('notifications.main.noneMessage', language)}
+                    </Text>
+                  </View>
+                }
+              />}
+          </View>
         </View>
       </ViewContainer>
     );
