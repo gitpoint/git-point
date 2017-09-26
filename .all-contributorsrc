@@ -305,7 +305,7 @@
       "avatar_url": "https://avatars0.githubusercontent.com/u/13774309?v=4",
       "profile": "https://github.com/arthurdenner",
       "contributions": [
-         "translation"
+        "translation"
       ]
     },
     {
@@ -351,6 +351,15 @@
       "profile": "http://charleskenney.com",
       "contributions": [
         "code"
+      ]
+    },
+    {
+      "login": "vitalkanev",
+      "name": "Vitaliy Kanev",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/18398761?v=4",
+      "profile": "https://github.com/vitalkanev",
+      "contributions": [
+        "doc"
       ]
     }
   ]
