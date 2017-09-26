@@ -1,6 +1,7 @@
 export default [
   {
     code: 'en',
+    emojiCode: 'us',
     name: 'English',
   },
   {
@@ -18,5 +19,9 @@ export default [
   {
     code: 'pt-br',
     name: 'Português do Brasil',
+  },
+  {
+    code: 'ru',
+    name: 'Русский',
   },
 ];

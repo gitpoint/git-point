@@ -87,11 +87,12 @@ export const getUser = () => {
 
 export const getStarCount = () => {
   return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
     const user = getState().auth.user.login;
 
     dispatch({ type: GET_AUTH_STAR_COUNT.PENDING });
 
-    fetchStarCount(user)
+    fetchStarCount(user, accessToken)
       .then(data => {
         dispatch({
           type: GET_AUTH_STAR_COUNT.SUCCESS,

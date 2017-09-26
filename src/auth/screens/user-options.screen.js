@@ -1,20 +1,24 @@
+/* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
   ScrollView,
   StyleSheet,
   FlatList,
   Text,
   TouchableOpacity,
+  View,
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { NavigationActions } from 'react-navigation';
-import { version } from 'package.json';
-import codePush from 'react-native-code-push';
+import CookieManager from 'react-native-cookies';
 
 import { ViewContainer, SectionList } from 'components';
 import { colors, fonts, normalize } from 'config';
-import { openURLInView, resetNavigationTo, translate } from 'utils';
+import { resetNavigationTo, translate, emojifyText } from 'utils';
+import { version } from 'package.json';
+import codePush from 'react-native-code-push';
 import { signOut, changeLanguage } from 'auth';
 import languages from './language-settings';
 
@@ -22,10 +26,14 @@ const mapStateToProps = state => ({
   language: state.auth.language,
 });
 
-const mapDispatchToProps = dispatch => ({
-  signOutByDispatch: () => dispatch(signOut()),
-  changeLanguageByDispatch: lang => dispatch(changeLanguage(lang)),
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      signOut,
+      changeLanguage,
+    },
+    dispatch
+  );
 
 const styles = StyleSheet.create({
   listTitle: {
@@ -52,6 +60,13 @@ const styles = StyleSheet.create({
   updateTextSub: {
     fontSize: normalize(11),
   },
+  language: {
+    flexDirection: 'row',
+  },
+  flag: {
+    paddingRight: 7,
+    color: colors.black, // random any color for the correct display emoji
+  },
 });
 
 const updateText = lang => ({
@@ -65,8 +80,8 @@ const updateText = lang => ({
 class UserOptions extends Component {
   props: {
     language: string,
-    changeLanguageByDispatch: () => void,
-    signOutByDispatch: () => void,
+    changeLanguage: () => void,
+    signOut: () => void,
     navigation: Object,
   };
 
@@ -118,18 +133,17 @@ class UserOptions extends Component {
   };
 
   signOutUser() {
-    const { signOutByDispatch, navigation } = this.props;
+    const { signOut, navigation } = this.props;
 
-    signOutByDispatch().then(() => {
-      const url = 'https://github.com/logout';
-
-      openURLInView(url);
-      resetNavigationTo('Login', navigation);
+    signOut().then(() => {
+      CookieManager.clearAll().then(() => {
+        resetNavigationTo('Login', navigation);
+      });
     });
   }
 
   render() {
-    const { language, changeLanguageByDispatch, navigation } = this.props;
+    const { language, changeLanguage, navigation } = this.props;
 
     return (
       <ViewContainer>
@@ -137,15 +151,29 @@ class UserOptions extends Component {
           <SectionList title={translate('auth.userOptions.language', language)}>
             <FlatList
               data={languages}
-              renderItem={({ item }) =>
-                <ListItem
-                  title={item.name}
-                  titleStyle={styles.listTitle}
-                  hideChevron={language !== item.code}
-                  rightIcon={{ name: 'check' }}
-                  onPress={() => changeLanguageByDispatch(item.code)}
-                  underlayColor={colors.greyLight}
-                />}
+              renderItem={({ item }) => {
+                const langCode = item.emojiCode || item.code.substring(0, 2);
+
+                return (
+                  <ListItem
+                    title={
+                      <View style={styles.language}>
+                        <Text style={styles.flag}>
+                          {emojifyText(`:flag-${langCode}:`)}
+                        </Text>
+                        <Text style={styles.listTitle}>
+                          {item.name}
+                        </Text>
+                      </View>
+                    }
+                    titleStyle={styles.listTitle}
+                    hideChevron={language !== item.code}
+                    rightIcon={{ name: 'check' }}
+                    onPress={() => changeLanguage(item.code)}
+                    underlayColor={colors.greyLight}
+                  />
+                );
+              }}
               keyExtractor={(item, index) => index}
               extraData={this.props.language}
             />
