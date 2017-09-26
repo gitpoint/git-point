@@ -1,5 +1,5 @@
 import { v3 } from 'api';
-import { fetchSearch } from '../search/search.api';
+import { fetchSearch } from 'search/search.api';
 import {
   fetchUser,
   fetchUserOrgs,

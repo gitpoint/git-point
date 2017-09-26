@@ -4,11 +4,7 @@ import uniqby from 'lodash.uniqby';
 import { delay, resetNavigationTo, configureLocale } from 'utils';
 import { saveLanguage } from 'locale';
 
-import {
-  fetchUserOrgs,
-  fetchUserEvents,
-  fetchStarCount,
-} from '../user/user.api';
+import { fetchUserOrgs, fetchUserEvents, fetchStarCount } from 'user/user.api';
 import { fetchAccessToken, fetchAuthUser, fetchAuthUserOrgs } from './auth.api';
 import {
   LOGIN,
