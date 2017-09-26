@@ -26,6 +26,7 @@ import {
   getIssueComments,
   postIssueComment,
   getIssueFromUrl,
+  getCommits,
 } from '../issue.action';
 
 const mapStateToProps = state => ({
@@ -35,9 +36,11 @@ const mapStateToProps = state => ({
   contributors: state.repository.contributors,
   issue: state.issue.issue,
   diff: state.issue.diff,
+  commits: state.issue.commits,
   isMerged: state.issue.isMerged,
   comments: state.issue.comments,
   isPendingDiff: state.issue.isPendingDiff,
+  isPendingCommits: state.issue.isPendingCommits,
   isPendingCheckMerge: state.issue.isPendingCheckMerge,
   isPendingComments: state.issue.isPendingComments,
   isPostingComment: state.issue.isPostingComment,
@@ -52,6 +55,7 @@ const mapDispatchToProps = dispatch =>
       getContributors,
       postIssueComment,
       getIssueFromUrl,
+      getCommits,
     },
     dispatch
   );
@@ -88,7 +92,9 @@ class Issue extends Component {
     getContributors: Function,
     postIssueComment: Function,
     getIssueFromUrl: Function,
+    getCommits: Function,
     diff: string,
+    commits: Array,
     issue: Object,
     isMerged: boolean,
     authUser: Object,
@@ -97,6 +103,7 @@ class Issue extends Component {
     comments: Array,
     isPendingIssue: boolean,
     isPendingDiff: boolean,
+    isPendingCommits: boolean,
     isPendingCheckMerge: boolean,
     isPendingComments: boolean,
     isPendingContributors: boolean,
@@ -163,17 +170,23 @@ class Issue extends Component {
       getRepository,
       getContributors,
       getIssueFromUrl,
+      getCommits,
     } = this.props;
 
     const issueParam = navigation.state.params.issue;
     const issueURLParam = navigation.state.params.issueURL;
     const issueCommentsURL = `${navigation.state.params.issueURL}/comments`;
+    const pullRequestCommitsURL = `${(issueURLParam || issueParam.url)
+      .replace('issues', 'pulls')}/commits`;
 
     Promise.all([
       getIssueFromUrl(issueURLParam || issueParam.url),
       getIssueComments(
         issueURLParam ? issueCommentsURL : issueParam.comments_url
       ),
+      issue.pull_request
+        ? getCommits(pullRequestCommitsURL)
+        : Promise.resolve(),
     ]).then(() => {
       if (
         issueParam &&
@@ -224,8 +237,10 @@ class Issue extends Component {
     const {
       issue,
       diff,
+      commits,
       isMerged,
       isPendingDiff,
+      isPendingCommits,
       isPendingCheckMerge,
       language,
       navigation,
@@ -235,8 +250,10 @@ class Issue extends Component {
       <IssueDescription
         issue={issue}
         diff={diff}
+        commits={commits}
         isMerged={isMerged}
         isPendingDiff={isPendingDiff}
+        isPendingCommits={isPendingCommits}
         isPendingCheckMerge={isPendingCheckMerge}
         onRepositoryPress={url => this.onRepositoryPress(url)}
         onLinkPress={node => this.onLinkPress(node)}

@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, ActivityIndicator } from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  View,
+  ActivityIndicator,
+  TouchableHighlight,
+} from 'react-native';
 import { ListItem, Button } from 'react-native-elements';
 import Parse from 'parse-diff';
 import moment from 'moment/min/moment-with-locales.min';
@@ -35,9 +41,10 @@ const styles = StyleSheet.create({
   },
   diffBlocksContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
+    alignItems: 'stretch',
+    justifyContent: 'space-between',
     paddingRight: 10,
+    paddingLeft: 10,
     paddingBottom: 10,
   },
   badge: {
@@ -67,13 +74,31 @@ export class IssueDescription extends Component {
   props: {
     issue: Object,
     diff: string,
+    commits: Array,
     isMerged: boolean,
     isPendingDiff: boolean,
+    isPendingCommit: boolean,
     isPendingCheckMerge: boolean,
     onRepositoryPress: Function,
     userHasPushPermission: boolean,
     language: string,
     navigation: Object,
+  };
+
+  navigateToCommitList = () => {
+    const { commits } = this.props;
+
+    if (commits.length > 1) {
+      this.props.navigation.navigate('CommitList', {
+        title: translate('repository.commitList.title', this.props.language),
+        commits,
+      });
+    } else {
+      this.props.navigation.navigate('Commit', {
+        commit: commits[0],
+        title: commits[0].sha.substring(0, 7),
+      });
+    }
   };
 
   renderLabelButtons = labels => {
@@ -86,8 +111,10 @@ export class IssueDescription extends Component {
     const {
       diff,
       issue,
+      commits,
       isMerged,
       isPendingDiff,
+      isPendingCommit,
       isPendingCheckMerge,
       onRepositoryPress,
       userHasPushPermission,
@@ -149,8 +176,19 @@ export class IssueDescription extends Component {
 
         {issue.pull_request &&
           <View style={styles.diffBlocksContainer}>
+            {isPendingCommit &&
+              <ActivityIndicator animating={isPendingCommit} size="small" />}
+
             {isPendingDiff &&
               <ActivityIndicator animating={isPendingDiff} size="small" />}
+
+            {!isPendingCommit &&
+              <TouchableHighlight
+                onPress={() => this.navigateToCommitList()}
+                underlayColor={colors.greyLight}
+              >
+                <Text>{`${commits.length} commits`}</Text>
+              </TouchableHighlight>}
 
             {!isPendingDiff &&
               (lineAdditions !== 0 || lineDeletions !== 0) &&

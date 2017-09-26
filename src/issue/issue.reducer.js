@@ -4,6 +4,7 @@ import {
   EDIT_ISSUE,
   CHANGE_LOCK_STATUS,
   GET_ISSUE_DIFF,
+  GET_ISSUE_COMMITS,
   GET_ISSUE_MERGE_STATUS,
   MERGE_PULL_REQUEST,
   GET_ISSUE_FROM_URL,
@@ -14,12 +15,14 @@ const initialState = {
   issue: {},
   comments: [],
   diff: '',
+  commits: [],
   isMerged: false,
   isPendingComments: false,
   isPostingComment: false,
   isEditingIssue: false,
   isChangingLockStatus: false,
   isPendingDiff: false,
+  isPendingCommits: false,
   isPendingCheckMerge: false,
   isPendingMerging: false,
   isPendingIssue: false,
@@ -115,6 +118,24 @@ export const issueReducer = (state = initialState, action = {}) => {
         ...state,
         error: action.payload,
         isPendingDiff: false,
+      };
+    case GET_ISSUE_COMMITS.PENDING:
+      return {
+        ...state,
+        commits: [],
+        isPendingCommits: true,
+      };
+    case GET_ISSUE_COMMITS.SUCCESS:
+      return {
+        ...state,
+        commits: action.payload,
+        isPendingCommits: false,
+      };
+    case GET_ISSUE_COMMITS.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isPendingCommits: false,
       };
     case GET_ISSUE_MERGE_STATUS.PENDING:
       return {
