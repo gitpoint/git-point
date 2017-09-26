@@ -11,6 +11,9 @@ export const GET_STARRED_REPOSITORIES = createActionSet(
 export const GET_MORE_STARRED_REPOSITORIES = createActionSet(
   'GET_MORE_STARRED_REPOSITORIES'
 );
+export const GET_STARRED_REPOSITORIES_PAGINATION = createActionSet(
+  'GET_STARRED_REPOSITORIES_PAGINATION'
+);
 export const GET_FOLLOWERS = createActionSet('GET_FOLLOWERS');
 export const GET_FOLLOWING = createActionSet('GET_FOLLOWING');
 export const SEARCH_USER_REPOS = createActionSet('SEARCH_USER_REPOS');

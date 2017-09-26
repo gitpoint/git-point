@@ -23,3 +23,4 @@ export * from './user-list-item.component';
 export * from './user-profile.component';
 export * from './view-container.component';
 export * from './image-zoom.component';
+export * from './scrollable-repository-list.component';

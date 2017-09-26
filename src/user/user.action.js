@@ -16,6 +16,7 @@ import {
   GET_IS_FOLLOWER,
   GET_REPOSITORIES,
   GET_STARRED_REPOSITORIES,
+  GET_STARRED_REPOSITORIES_PAGINATION,
   GET_MORE_STARRED_REPOSITORIES,
   GET_FOLLOWERS,
   GET_FOLLOWING,
@@ -207,14 +208,25 @@ export const getRepositories = user => {
 export const getStarredRepositories = user => {
   return (dispatch, getState) => {
     const { accessToken } = getState().auth;
-    const url = `${USER_ENDPOINT(user.login)}/starred`;
+    const url = `${USER_ENDPOINT(user.login)}/starred?page=1`;
+    let lastPage = null;
 
     dispatch({ type: GET_STARRED_REPOSITORIES.PENDING });
 
-    fetchUrl(url, accessToken)
+    fetchUrlNormal(url, accessToken)
+      .then(response => {
+        const linkHeader = response.headers.get('Link');
+        const lastPage = Number(headerLink.match(/(\d+)(?=>;\srel="last")/)[0]);
+        return response.json();
+      })
       .then(data => {
         dispatch({
           type: GET_STARRED_REPOSITORIES.SUCCESS,
+          payload: lastPage,
+        });
+
+        dispatch({
+          type: GET_STARRED_REPOSITORIES_PAGINATION.SUCCESS,
           payload: data,
         });
       })
@@ -236,6 +248,8 @@ export const getMoreStarredRepositories = (user, page = 1) => {
 
     fetchUrl(url, accessToken)
       .then(data => {
+        console.log('GET MORE STARRED REPOS headers');
+        console.log(data.headers);
         dispatch({
           type: GET_MORE_STARRED_REPOSITORIES.SUCCESS,
           payload: data,

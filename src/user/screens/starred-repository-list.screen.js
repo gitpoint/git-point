@@ -4,12 +4,19 @@ import { connect } from 'react-redux';
 
 import { getStarredRepositories, getMoreStarredRepositories } from 'user';
 
-import { ViewContainer, RepositoryListItem } from 'components';
+import {
+  ViewContainer,
+  RepositoryListItem,
+  ScrollableRepositoryList,
+  LoadingRepositoryListItem,
+} from 'components';
 
 const mapStateToProps = state => ({
   user: state.user.user,
-  isPendingStarredRepositories: state.user.isPendingStarredRepositories,
   starredRepositories: state.user.starredRepositories,
+  isPendingStarredRepositories: state.user.isPendingStarredRepositories,
+  isPendingMoreStarredRepositories: state.user.isPendingMoreStarredRepositories,
+  starredRepositoriesLastPage: state.user.starredRepositoriesLastPage,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -25,8 +32,10 @@ class StarredRepositoryList extends Component {
     starredRepositories: Array,
     navigation: Object,
     isPendingStarredRepositories: boolean,
+    isPendingMoreStarredRepositories: boolean,
     getStarredRepositories: Function,
     getMoreStarredRepositories: Function,
+    nelson: string,
   };
 
   constructor() {
@@ -42,10 +51,22 @@ class StarredRepositoryList extends Component {
     this.props.getStarredRepositories(user);
   }
 
+  /*
+  <FlatList
+          data={starredRepositories}
+          onEndReachedThreshold={0.5}
+          onEndReached={this.getMoreRepositories}
+          renderItem={({ item }) =>
+            <RepositoryListItem repository={item} navigation={navigation} />}
+        />
+
+  */
+
   getMoreRepositories = () => {
     const user = this.props.navigation.state.params.user;
     const { isPendingStarredRepositories } = this.props;
-
+    console.log('CALLL');
+    console.log(isPendingStarredRepositories);
     if (!isPendingStarredRepositories) {
       this.setState(
         {
@@ -59,17 +80,31 @@ class StarredRepositoryList extends Component {
   };
 
   render() {
-    const { starredRepositories, navigation } = this.props;
-
+    const {
+      starredRepositories,
+      navigation,
+      isPendingStarredRepositories,
+      isPendingMoreStarredRepositories,
+    } = this.props;
+    console.log(this.props);
+    console.log('RENDER STARRED REPOS');
+    console.log(`isPendingRepositories ${isPendingStarredRepositories}`);
+    console.log(
+      `isPendingMORERepositories ${isPendingMoreStarredRepositories}`
+    );
     return (
       <ViewContainer>
-        <FlatList
-          data={starredRepositories}
-          onEndReachedThreshold={0.5}
-          onEndReached={this.getMoreRepositories}
-          renderItem={({ item }) =>
-            <RepositoryListItem repository={item} navigation={navigation} />}
-        />
+        {isPendingStarredRepositories &&
+          [...Array(starredRepositories.length)].map((item, index) =>
+            <LoadingRepositoryListItem key={index} />
+          )}
+        {!isPendingStarredRepositories &&
+          <ScrollableRepositoryList
+            getMoreRepositories={this.getMoreRepositories.bind(this)}
+            repositories={starredRepositories}
+            navigation={navigation}
+            isLoadingMoreRepositories={isPendingMoreStarredRepositories}
+          />}
       </ViewContainer>
     );
   }

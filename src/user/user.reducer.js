@@ -5,6 +5,7 @@ import {
   GET_IS_FOLLOWER,
   GET_REPOSITORIES,
   GET_STARRED_REPOSITORIES,
+  GET_STARRED_REPOSITORIES_PAGINATION,
   GET_MORE_STARRED_REPOSITORIES,
   GET_FOLLOWERS,
   GET_FOLLOWING,
@@ -33,6 +34,7 @@ const initialState = {
   isPendingFollowing: false,
   isPendingSearchUserRepos: false,
   isPendingStarredRepositories: false,
+  starredRepositoriesLastPage: 0,
   error: '',
 };
 
@@ -177,6 +179,12 @@ export const userReducer = (state = initialState, action = {}) => {
         ...state,
         starredRepositories: action.payload,
         isPendingStarredRepositories: false,
+      };
+    case GET_STARRED_REPOSITORIES_PAGINATION.SUCCESS:
+      console.log('REPOSSSSSSS PAGINATION');
+      return {
+        ...state,
+        starredRepositoriesLastPage: action.payload,
       };
     case GET_STARRED_REPOSITORIES.ERROR:
       return {
