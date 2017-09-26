@@ -178,7 +178,7 @@ class Issue extends Component {
       if (
         issueParam &&
         repository.full_name !==
-          issueParam.repository_url.replace(`${v3.route}/repos/`, '')
+          issueParam.repository_url.replace(`${v3.root}/repos/`, '')
       ) {
         Promise.all([
           getRepository(issue.repository_url),
