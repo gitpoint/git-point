@@ -312,3 +312,9 @@ export async function fetchAccessToken(code, state) {
 
   return response.json();
 }
+
+export const fetchNotificationsCount = accessToken =>
+  v3.count('/notifications?per_page=1', accessToken);
+
+export const fetchRepoNotificationsCount = (owner, repoName, accessToken) =>
+  v3.count(`/repos/${owner}/${repoName}/notifications?per_page=1`, accessToken);
