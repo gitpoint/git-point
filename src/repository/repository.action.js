@@ -1,9 +1,5 @@
 import {
   root as apiRoot,
-  fetchUrl,
-  fetchUrlNormal,
-  fetchUrlHead,
-  fetchUrlFile,
   fetchReadMe,
   fetchSearch,
   fetchChangeStarStatusRepo,
@@ -11,6 +7,7 @@ import {
   watchRepo,
   unWatchRepo,
   isWatchingRepo,
+  v3,
 } from 'api';
 import {
   GET_REPOSITORY,
@@ -37,7 +34,8 @@ export const getRepository = url => {
 
     dispatch({ type: GET_REPOSITORY.PENDING });
 
-    return fetchUrl(url, accessToken)
+    return v3
+      .getJson(url, accessToken)
       .then(data => {
         dispatch({
           type: GET_REPOSITORY.SUCCESS,
@@ -59,7 +57,8 @@ export const getContributors = url => {
 
     dispatch({ type: GET_REPOSITORY_CONTRIBUTORS.PENDING });
 
-    fetchUrl(url, accessToken)
+    v3
+      .getJson(url, accessToken)
       .then(data => {
         dispatch({
           type: GET_REPOSITORY_CONTRIBUTORS.SUCCESS,
@@ -81,7 +80,8 @@ export const getContents = (url, level) => {
 
     dispatch({ type: GET_REPOSITORY_CONTENTS.PENDING });
 
-    fetchUrl(url, accessToken)
+    v3
+      .getJson(url, accessToken)
       .then(data => {
         dispatch({
           type: GET_REPOSITORY_CONTENTS.SUCCESS,
@@ -104,7 +104,8 @@ export const getRepositoryFile = url => {
 
     dispatch({ type: GET_REPOSITORY_FILE.PENDING });
 
-    fetchUrlFile(url, accessToken)
+    v3
+      .getRaw(url, accessToken)
       .then(data => {
         dispatch({
           type: GET_REPOSITORY_FILE.SUCCESS,
@@ -126,7 +127,8 @@ export const getIssues = url => {
 
     dispatch({ type: GET_REPOSITORY_ISSUES.PENDING });
 
-    fetchUrl(url, accessToken)
+    v3
+      .getJson(url, accessToken)
       .then(data => {
         dispatch({
           type: GET_REPOSITORY_ISSUES.SUCCESS,
@@ -148,7 +150,8 @@ export const checkReadMe = url => {
 
     dispatch({ type: GET_REPO_README_STATUS.PENDING });
 
-    fetchUrlHead(url, accessToken)
+    v3
+      .head(url, accessToken)
       .then(data => {
         dispatch({
           type: GET_REPO_README_STATUS.SUCCESS,
@@ -170,7 +173,8 @@ export const checkRepoStarred = url => {
 
     dispatch({ type: GET_REPO_STARRED_STATUS.PENDING });
 
-    fetchUrlNormal(url, accessToken)
+    v3
+      .get(url, accessToken)
       .then(data => {
         dispatch({
           type: GET_REPO_STARRED_STATUS.SUCCESS,
@@ -360,7 +364,8 @@ export const getLabels = url => {
 
     dispatch({ type: GET_REPOSITORY_LABELS.PENDING });
 
-    fetchUrl(url, accessToken)
+    v3
+      .getJson(url, accessToken)
       .then(data => {
         dispatch({
           type: GET_REPOSITORY_LABELS.SUCCESS,

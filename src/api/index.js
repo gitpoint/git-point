@@ -25,11 +25,10 @@ const METHOD = {
   POST: 'POST',
 };
 
-const v3 = {
+export const v3 = {
   root: 'https://api.github.com',
   call: async (url, parameters) => {
     const finalUrl = url.indexOf(v3.root) === 0 ? url : `${v3.root}${url}`;
-    // console.log('Calling url', finalUrl, parameters);
     const response = await fetch(finalUrl, parameters);
 
     return response;
@@ -152,14 +151,6 @@ const v3 = {
     return response;
   },
 };
-
-export const fetchUrl = (url, accessToken) => v3.getJson(url, accessToken);
-
-export const fetchUrlNormal = (url, accessToken) => v3.get(url, accessToken);
-
-export const fetchUrlHead = (url, accessToken) => v3.head(url, accessToken);
-
-export const fetchUrlFile = (url, accessToken) => v3.getRaw(url, accessToken);
 
 export const fetchAuthUser = accessToken => v3.getJson('/user', accessToken);
 
