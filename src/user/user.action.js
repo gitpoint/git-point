@@ -1,10 +1,8 @@
 import {
   fetchUser,
   fetchUserOrgs,
-  USER_ENDPOINT,
   fetchSearch,
   fetchChangeFollowStatus,
-  root as apiRoot,
   fetchStarCount,
   v3,
 } from 'api';
@@ -72,7 +70,7 @@ const checkFollowStatusHelper = (user, followedUser, actionSet) => {
     dispatch({ type: actionSet.PENDING });
 
     v3
-      .head(`${USER_ENDPOINT(user)}/following/${followedUser}`, accessToken)
+      .head(`/users/${user}/following/${followedUser}`, accessToken)
       .then(data => {
         dispatch({
           type: actionSet.SUCCESS,
@@ -107,10 +105,7 @@ export const getFollowers = user => {
     dispatch({ type: GET_FOLLOWERS.PENDING });
 
     v3
-      .getJson(
-        `${USER_ENDPOINT(user.login)}/followers?per_page=100`,
-        accessToken
-      )
+      .getJson(`/users/${user.login}/followers?per_page=100`, accessToken)
       .then(data => {
         dispatch({
           type: GET_FOLLOWERS.SUCCESS,
@@ -186,8 +181,8 @@ export const getRepositories = user => {
     dispatch({ type: GET_REPOSITORIES.PENDING });
 
     const url = isAuthUser
-      ? `${apiRoot}/user/repos?affiliation=owner&sort=updated&per_page=50`
-      : `${USER_ENDPOINT(user.login)}/repos?sort=updated&per_page=50`;
+      ? '/user/repos?affiliation=owner&sort=updated&per_page=50'
+      : `/users/${user.login}/repos?sort=updated&per_page=50`;
 
     v3
       .getJson(url, accessToken)
@@ -213,10 +208,7 @@ export const getFollowing = user => {
     dispatch({ type: GET_FOLLOWING.PENDING });
 
     v3
-      .getJson(
-        `${USER_ENDPOINT(user.login)}/following?per_page=100`,
-        accessToken
-      )
+      .getJson(`/users/${user.login}/following?per_page=100`, accessToken)
       .then(data => {
         dispatch({
           type: GET_FOLLOWING.SUCCESS,

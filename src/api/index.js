@@ -6,9 +6,6 @@ import { abbreviateNumber } from 'utils';
 export const CLIENT_ID = '87c7f05700c052937cfb';
 export const CLIENT_SECRET = '3a70aee4d5e26c457720a31c3efe2f9062a4997a';
 
-export const root = 'https://api.github.com';
-export const USER_ENDPOINT = user => `${root}/users/${user}`;
-
 const ACCEPT = {
   JSON: 'application/vnd.github.v3+json',
   HTML: 'application/vnd.github.v3.html+json',

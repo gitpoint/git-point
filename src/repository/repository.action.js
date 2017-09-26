@@ -1,5 +1,4 @@
 import {
-  root as apiRoot,
   fetchReadMe,
   fetchSearch,
   fetchChangeStarStatusRepo,
@@ -248,17 +247,17 @@ export const getRepositoryInfo = url => {
       dispatch(getIssues(issuesUrl));
       dispatch(
         checkReadMe(
-          `${apiRoot}/repos/${repo.owner.login}/${repo.name}/readme?ref=master`
+          `${v3.root}/repos/${repo.owner.login}/${repo.name}/readme?ref=master`
         )
       );
       dispatch(
         checkRepoStarred(
-          `${apiRoot}/user/starred/${repo.owner.login}/${repo.name}`
+          `${v3.root}/user/starred/${repo.owner.login}/${repo.name}`
         )
       );
       dispatch(
         checkRepoSubscribed(
-          `${apiRoot}/repos/${repo.owner.login}/${repo.name}/subscription`
+          `${v3.root}/repos/${repo.owner.login}/${repo.name}/subscription`
         )
       );
     });
