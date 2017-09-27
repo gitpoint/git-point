@@ -4,6 +4,7 @@ import {
   GET_ALL_NOTIFICATIONS,
   MARK_NOTIFICATION_AS_READ,
   MARK_REPO_AS_READ,
+  MARK_ALL_NOTIFICATIONS_AS_READ,
 } from './notifications.type';
 
 const initialState = {
@@ -15,6 +16,7 @@ const initialState = {
   isPendingAll: false,
   isPendingMarkNotificationAsRead: false,
   isPendingRepoMarkAsRead: false,
+  isPendingMarkAllNotificationsAsRead: false,
   error: '',
 };
 
@@ -128,6 +130,22 @@ export const notificationsReducer = (state = initialState, action = {}) => {
         ...state,
         error: action.payload,
         isPendingRepoMarkAsRead: false,
+      };
+    case MARK_ALL_NOTIFICATIONS_AS_READ.PENDING:
+      return {
+        ...state,
+        isPendingMarkAllNotificationsAsRead: true,
+      };
+    case MARK_ALL_NOTIFICATIONS_AS_READ.SUCCESS:
+      return {
+        ...state,
+        isPendingMarkAllNotificationsAsRead: false,
+      };
+    case MARK_ALL_NOTIFICATIONS_AS_READ.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isPendingMarkAllNotificationsAsRead: false,
       };
     default:
       return state;

@@ -13,7 +13,7 @@ import {
   Image,
   Platform,
 } from 'react-native';
-import { ButtonGroup, Card, Icon } from 'react-native-elements';
+import { ButtonGroup, Card, Icon, Button } from 'react-native-elements';
 
 import { v3 } from 'api';
 import {
@@ -29,6 +29,7 @@ import {
   getAllNotifications,
   markAsRead,
   markRepoAsRead,
+  markAllNotificationsAsRead,
 } from '../index';
 
 const mapStateToProps = state => ({
@@ -40,6 +41,8 @@ const mapStateToProps = state => ({
   isPendingUnread: state.notifications.isPendingUnread,
   isPendingParticipating: state.notifications.isPendingParticipating,
   isPendingAll: state.notifications.isPendingAll,
+  isPendingMarkAllNotificationsAsRead:
+    state.notifications.isPendingMarkAllNotificationsAsRead,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -50,6 +53,7 @@ const mapDispatchToProps = dispatch =>
       getAllNotifications,
       markAsRead,
       markRepoAsRead,
+      markAllNotificationsAsRead,
     },
     dispatch
   );
@@ -57,10 +61,12 @@ const mapDispatchToProps = dispatch =>
 const styles = StyleSheet.create({
   buttonGroupWrapper: {
     backgroundColor: colors.greyLight,
-    paddingTop: Platform.OS === 'ios' ? 28 : 15,
+    paddingTop: Platform.OS === 'ios' ? 30 : 10,
+    paddingBottom: 10,
   },
   buttonGroupContainer: {
     height: 30,
+    marginTop: 0,
   },
   buttonGroupText: {
     ...fonts.fontPrimaryBold,
@@ -70,7 +76,7 @@ const styles = StyleSheet.create({
   },
   repositoryContainer: {
     padding: 0,
-    marginVertical: 25,
+    marginBottom: 15,
   },
   headerContainer: {
     flexDirection: 'row',
@@ -110,6 +116,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     ...fonts.fontPrimary,
   },
+  markAllAsReadButton: {
+    marginTop: 3,
+    paddingTop: 3,
+    paddingBottom: 3,
+    marginLeft: 11,
+    marginRight: 11,
+    borderColor: colors.mercury,
+    borderWidth: 1,
+    borderRadius: 3,
+  },
 });
 
 class Notifications extends Component {
@@ -119,6 +135,7 @@ class Notifications extends Component {
     getAllNotifications: Function,
     markAsRead: Function,
     markRepoAsRead: Function,
+    markAllNotificationsAsRead: Function,
     unread: Array,
     participating: Array,
     all: Array,
@@ -126,6 +143,7 @@ class Notifications extends Component {
     isPendingUnread: boolean,
     isPendingParticipating: boolean,
     isPendingAll: boolean,
+    isPendingMarkAllNotificationsAsRead: boolean,
     navigation: Object,
   };
 
@@ -145,6 +163,16 @@ class Notifications extends Component {
     this.props.getUnreadNotifications();
     this.props.getParticipatingNotifications();
     this.props.getAllNotifications();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (
+      !nextProps.isPendingMarkAllNotificationsAsRead &&
+      this.props.isPendingMarkAllNotificationsAsRead &&
+      !this.isLoading()
+    ) {
+      this.getNotifications()();
+    }
   }
 
   getImage(repoName) {
@@ -316,7 +344,7 @@ class Notifications extends Component {
 
   render() {
     const { type } = this.state;
-    const { language } = this.props;
+    const { language, markAllNotificationsAsRead } = this.props;
 
     const repositories = [
       ...new Set(
@@ -329,6 +357,8 @@ class Notifications extends Component {
     const sortedRepos = repositories.sort((a, b) => {
       return a.toLowerCase() > b.toLowerCase() ? 1 : -1;
     });
+
+    const isEmptyNotifications = this.notifications().length === 0;
 
     return (
       <ViewContainer>
@@ -346,25 +376,41 @@ class Notifications extends Component {
               selectedTextStyle={styles.buttonGroupTextSelected}
               containerStyle={styles.buttonGroupContainer}
             />
+
+            <Button
+              icon={{
+                name: 'check',
+                size: 20,
+                type: 'octicon',
+                color: colors.shark,
+              }}
+              title={translate('notifications.main.markAllAsRead')}
+              buttonStyle={styles.markAllAsReadButton}
+              color={colors.shark}
+              backgroundColor={colors.white}
+              textStyle={styles.buttonGroupText}
+              onPress={() => markAllNotificationsAsRead()}
+              disabled={isEmptyNotifications}
+            />
           </View>
 
           {this.isLoading() &&
-            this.notifications().length === 0 &&
+            isEmptyNotifications &&
             <LoadingContainer
-              animating={this.isLoading() && this.notifications().length === 0}
+              animating={this.isLoading() && isEmptyNotifications}
               text={translate('notifications.main.retrievingMessage', language)}
               style={styles.marginSpacing}
             />}
 
           {!this.isLoading() &&
-            this.notifications().length === 0 &&
+            isEmptyNotifications &&
             <View style={styles.textContainer}>
               <Text style={styles.noneTitle}>
                 {translate('notifications.main.noneMessage', language)}
               </Text>
             </View>}
 
-          {this.notifications().length > 0 &&
+          {!isEmptyNotifications &&
             <FlatList
               ref={ref => {
                 this.notificationsList = ref;

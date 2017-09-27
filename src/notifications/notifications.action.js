@@ -2,6 +2,7 @@ import {
   fetchNotifications,
   fetchMarkNotificationAsRead,
   fetchMarkRepoNotificationAsRead,
+  fetchMarkAllNotificationsAsRead,
 } from 'api';
 import {
   GET_UNREAD_NOTIFICATIONS,
@@ -9,6 +10,7 @@ import {
   GET_ALL_NOTIFICATIONS,
   MARK_NOTIFICATION_AS_READ,
   MARK_REPO_AS_READ,
+  MARK_ALL_NOTIFICATIONS_AS_READ,
 } from './notifications.type';
 
 export const getUnreadNotifications = () => {
@@ -115,6 +117,27 @@ export const markRepoAsRead = repoFullName => {
       .catch(error => {
         dispatch({
           type: MARK_REPO_AS_READ.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+export const markAllNotificationsAsRead = () => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: MARK_ALL_NOTIFICATIONS_AS_READ.PENDING });
+
+    fetchMarkAllNotificationsAsRead(accessToken)
+      .then(() => {
+        dispatch({
+          type: MARK_ALL_NOTIFICATIONS_AS_READ.SUCCESS,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: MARK_ALL_NOTIFICATIONS_AS_READ.ERROR,
           payload: error,
         });
       });

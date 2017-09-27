@@ -29,6 +29,8 @@ export const colors = {
   purple: '#8e44ad',
   orange: '#e67e22',
   githubDark: '#1f2327',
+  mercury: '#e3e3e3',
+  shark: '#24292e',
 };
 
 export const languageColors = {
