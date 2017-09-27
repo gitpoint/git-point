@@ -102,18 +102,14 @@ const headingRenderer = (node, index, siblings, parent, defaultRenderer) => {
 class CellWithImage extends Cell {
   render() {
     const { data, width, height, flex, style } = this.props;
-    let borderWidth;
-    let borderColor;
+    let borderWidth = 1;
+    let borderColor = '#000';
 
     if (this.props.borderStyle && this.props.borderStyle.borderWidth) {
       borderWidth = this.props.borderStyle.borderWidth;
-    } else {
-      borderWidth = 1;
     }
     if (this.props.borderStyle && this.props.borderStyle.borderColor) {
       borderColor = this.props.borderStyle.borderColor;
-    } else {
-      borderColor = '#000';
     }
 
     return (
@@ -138,6 +134,15 @@ class CellWithImage extends Cell {
     );
   }
 }
+
+const cellForNode = node =>
+  node.children.filter(elem => elem.type === 'tag' && elem.name === 'img')
+    .length > 0
+    ? CellWithImage
+    : Cell;
+
+const onlyTagsChildren = node =>
+  node.children.filter(elem => elem.type === 'tag');
 
 export class MarkdownHtmlView extends Component {
   props: {
@@ -192,34 +197,28 @@ export class MarkdownHtmlView extends Component {
       /* eslint-disable no-unused-vars */
       const onLinkPress = this.props.onLinkPress;
       const renderers = {
-        blockquote: (node, index, siblings, parent, defaultRenderer) => {
-          return (
-            <View
-              key={index}
+        blockquote: (node, index, siblings, parent, defaultRenderer) =>
+          <View
+            key={index}
+            style={{
+              paddingHorizontal: 12,
+              borderLeftWidth: 3,
+              borderLeftColor: colors.greyMid,
+            }}
+          >
+            <Text
               style={{
-                paddingHorizontal: 12,
-                borderLeftWidth: 3,
-                borderLeftColor: colors.greyMid,
+                color: colors.greyBlue,
+                ...fonts.fontPrimaryLight,
               }}
             >
-              <Text
-                style={{
-                  color: colors.greyBlue,
-                  ...fonts.fontPrimaryLight,
-                }}
-              >
-                {defaultRenderer(node.children, parent)}
-              </Text>
-            </View>
-          );
-        },
-        pre: (node, index, siblings, parent, defaultRenderer) => {
-          return (
-            <View>
-              {defaultRenderer(node.children, node)}
-            </View>
-          );
-        },
+              {defaultRenderer(node.children, parent)}
+            </Text>
+          </View>,
+        pre: (node, index, siblings, parent, defaultRenderer) =>
+          <View>
+            {defaultRenderer(node.children, node)}
+          </View>,
         code: (node, index, siblings, parent, defaultRenderer) => {
           if (parent.name === 'pre') {
             return (
@@ -241,9 +240,8 @@ export class MarkdownHtmlView extends Component {
         h4: headingRenderer,
         h5: headingRenderer,
         h6: headingRenderer,
-        hr: (node, index, siblings, parent, defaultRenderer) => {
-          return <View key={index} style={{ ...hrStyle }} />;
-        },
+        hr: (node, index, siblings, parent, defaultRenderer) =>
+          <View key={index} style={{ ...hrStyle }} />,
         img: (node, index, siblings, parent, defaultRenderer) => {
           const zoom =
             parent && parent.type === 'tag' && parent.name === 'td' ? 0.3 : 0.6;
@@ -256,42 +254,23 @@ export class MarkdownHtmlView extends Component {
             />
           );
         },
-        table: (node, index, siblings, parent, defaultRenderer) => {
-          return (
-            <Table key={index} style={{ width: width * 0.8 }}>
-              {defaultRenderer(
-                node.children.filter(elem => elem.type === 'tag'),
-                node
-              )}
-            </Table>
-          );
-        },
-        thead: (node, index, siblings, parent, defaultRenderer) => {
-          return defaultRenderer(
-            node.children.filter(elem => elem.type === 'tag'),
-            node
-          );
-        },
-        tbody: (node, index, siblings, parent, defaultRenderer) => {
-          return defaultRenderer(
-            node.children.filter(elem => elem.type === 'tag'),
-            node
-          );
-        },
-        tr: (node, index, siblings, parent, defaultRenderer) => {
-          return (
-            <TableWrapper
-              key={index}
-              style={{ width: width * 0.8, flexDirection: 'row' }}
-            >
-              {defaultRenderer(
-                node.children.filter(elem => elem.type === 'tag'),
-                node
-              )}
-            </TableWrapper>
-          );
-        },
+        table: (node, index, siblings, parent, defaultRenderer) =>
+          <Table key={index} style={{ width: width * 0.8 }}>
+            {defaultRenderer(onlyTagsChildren(node), node)}
+          </Table>,
+        thead: (node, index, siblings, parent, defaultRenderer) =>
+          defaultRenderer(onlyTagsChildren(node), node),
+        tbody: (node, index, siblings, parent, defaultRenderer) =>
+          defaultRenderer(onlyTagsChildren(node), node),
+        tr: (node, index, siblings, parent, defaultRenderer) =>
+          <TableWrapper
+            key={index}
+            style={{ width: width * 0.8, flexDirection: 'row' }}
+          >
+            {defaultRenderer(onlyTagsChildren(node), node)}
+          </TableWrapper>,
         td: (node, index, siblings, parent, defaultRenderer) => {
+          const Component = cellForNode(node);
           const attribs = node.attribs;
           const cellAlign = {
             'text-align:right': 'right',
@@ -306,13 +285,6 @@ export class MarkdownHtmlView extends Component {
             styleText.textAlign = cellAlign[attribs.style];
           }
 
-          const Component =
-            node.children.filter(
-              elem => elem.type === 'tag' && elem.name === 'img'
-            ).length > 0
-              ? CellWithImage
-              : Cell;
-
           return (
             <Component
               key={index}
@@ -322,12 +294,7 @@ export class MarkdownHtmlView extends Component {
           );
         },
         th: (node, index, siblings, parent, defaultRenderer) => {
-          const Component =
-            node.children.filter(
-              elem => elem.type === 'tag' && elem.name === 'img'
-            ).length > 0
-              ? CellWithImage
-              : Cell;
+          const Component = cellForNode(node);
 
           return (
             <Component
@@ -337,20 +304,14 @@ export class MarkdownHtmlView extends Component {
             />
           );
         },
-        issue: (node, index, siblings, parent, defaultRenderer) => {
-          return (
-            <Text style={styles.strong} onPress={() => onLinkPress(node)}>
-              #{node.attribs['data-id']}
-            </Text>
-          );
-        },
-        profile: (node, index, siblings, parent, defaultRenderer) => {
-          return (
-            <Text style={styles.strong} onPress={() => onLinkPress(node)}>
-              {node.children[0].data}
-            </Text>
-          );
-        },
+        issue: (node, index, siblings, parent, defaultRenderer) =>
+          <Text style={styles.strong} onPress={() => onLinkPress(node)}>
+            #{node.attribs['data-id']}
+          </Text>,
+        profile: (node, index, siblings, parent, defaultRenderer) =>
+          <Text style={styles.strong} onPress={() => onLinkPress(node)}>
+            {node.children[0].data}
+          </Text>,
       };
 
       if (_node.type === 'text') {
