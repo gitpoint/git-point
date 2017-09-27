@@ -156,6 +156,10 @@ const defaultDisabledStyle = {
   borderWidth: 1,
 };
 
+const defaultDisabledTextStyle = {
+  color: '#d2d2d2',
+};
+
 export class Button extends Component {
   props: {
     icon: string,
@@ -173,8 +177,12 @@ export class Button extends Component {
 
     const isAndroid = Platform.OS === 'android';
 
-    const disabledStyle = this.props.disabled
-      ? { ...defaultDisabledStyle, ...types[type].disabledStyle }
+    const disabledStyle = {
+      ...defaultDisabledStyle,
+      ...types[type].disabledStyle,
+    };
+    const disabledTextColor = this.props.disabled
+      ? defaultDisabledTextStyle
       : {};
 
     return (
@@ -191,6 +199,7 @@ export class Button extends Component {
           ...defaultTextStyle,
           ...types[type].textStyle,
           ...sizes[size].textStyle,
+          ...disabledTextColor,
         }}
         disabledStyle={disabledStyle}
         icon={
