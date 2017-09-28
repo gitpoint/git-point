@@ -8,6 +8,7 @@ import {
 } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
+import { NotificationIcon } from 'components';
 import { colors } from 'config';
 import { translate } from 'utils';
 
@@ -276,12 +277,7 @@ const MainTabNavigator = TabNavigator(
       screen: NotificationsStackNavigator,
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => (
-          <Icon
-            containerStyle={{ justifyContent: 'center', alignItems: 'center' }}
-            color={tintColor}
-            name="notifications"
-            size={33}
-          />
+          <NotificationIcon iconColor={tintColor} />
         ),
       },
     },
@@ -319,6 +315,9 @@ const MainTabNavigator = TabNavigator(
       showLabel: false,
       activeTintColor: colors.primaryDark,
       inactiveTintColor: colors.grey,
+      style: {
+        backgroundColor: colors.alabaster,
+      },
     },
     tabBarComponent: ({ jumpToIndex, ...props }) => (
       <TabBarBottom
@@ -385,5 +384,5 @@ export const GitPoint = StackNavigator(
     cardStyle: {
       backgroundColor: 'transparent',
     },
-  },
+  }
 );

@@ -29,6 +29,7 @@ import {
   getAllNotifications,
   markAsRead,
   markRepoAsRead,
+  getNotificationsCount,
   markAllNotificationsAsRead,
 } from '../index';
 
@@ -53,6 +54,7 @@ const mapDispatchToProps = dispatch =>
       getAllNotifications,
       markAsRead,
       markRepoAsRead,
+      getNotificationsCount,
       markAllNotificationsAsRead,
     },
     dispatch
@@ -136,6 +138,7 @@ class Notifications extends Component {
     getAllNotifications: Function,
     markAsRead: Function,
     markRepoAsRead: Function,
+    getNotificationsCount: Function,
     markAllNotificationsAsRead: Function,
     unread: Array,
     participating: Array,
@@ -165,6 +168,7 @@ class Notifications extends Component {
     this.props.getUnreadNotifications();
     this.props.getParticipatingNotifications();
     this.props.getAllNotifications();
+    this.props.getNotificationsCount();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -190,8 +194,11 @@ class Notifications extends Component {
       getUnreadNotifications,
       getParticipatingNotifications,
       getAllNotifications,
+      getNotificationsCount,
     } = this.props;
     const { type } = this.state;
+
+    getNotificationsCount();
 
     switch (type) {
       case 0:

@@ -4,6 +4,7 @@ import {
   GET_ALL_NOTIFICATIONS,
   MARK_NOTIFICATION_AS_READ,
   MARK_REPO_AS_READ,
+  GET_NOTIFICATIONS_COUNT,
   MARK_ALL_NOTIFICATIONS_AS_READ,
 } from './notifications.type';
 
@@ -18,6 +19,7 @@ const initialState = {
   isPendingRepoMarkAsRead: false,
   isPendingMarkAllNotificationsAsRead: false,
   error: '',
+  notificationsCount: null,
 };
 
 export const notificationsReducer = (state = initialState, action = {}) => {
@@ -94,6 +96,8 @@ export const notificationsReducer = (state = initialState, action = {}) => {
               : notification
         ),
         isPendingMarkNotificationAsRead: false,
+        notificationsCount:
+          state.notificationsCount && state.notificationsCount - 1,
       };
     case MARK_NOTIFICATION_AS_READ.ERROR:
       return {
@@ -124,6 +128,9 @@ export const notificationsReducer = (state = initialState, action = {}) => {
               : notification
         ),
         isPendingRepoMarkAsRead: false,
+        notificationsCount:
+          state.notificationsCount &&
+          state.notificationsCount - action.repoNotificationsCount,
       };
     case MARK_REPO_AS_READ.ERROR:
       return {
@@ -131,6 +138,20 @@ export const notificationsReducer = (state = initialState, action = {}) => {
         error: action.payload,
         isPendingRepoMarkAsRead: false,
       };
+    case GET_NOTIFICATIONS_COUNT.PENDING:
+      return {
+        ...state,
+      };
+    case GET_NOTIFICATIONS_COUNT.SUCCESS:
+      return {
+        ...state,
+        notificationsCount: action.payload,
+      };
+    case GET_NOTIFICATIONS_COUNT.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+      };  
     case MARK_ALL_NOTIFICATIONS_AS_READ.PENDING:
       return {
         ...state,

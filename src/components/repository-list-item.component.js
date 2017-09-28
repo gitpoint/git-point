@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
   extraInfoSubject: {
     color: colors.greyDark,
     paddingLeft: 3,
+    paddingTop: 2,
     marginRight: 15,
     fontSize: normalize(10),
     ...fonts.fontPrimary,
@@ -79,8 +80,22 @@ const renderTitle = repository =>
         color={colors.greyDark}
       />
 
-      <Text style={[styles.extraInfoSubject, { paddingTop: 2 }]}>
+      <Text style={styles.extraInfoSubject}>
         {abbreviateNumber(repository.stargazers_count)}
+      </Text>
+
+      <Icon
+        containerStyle={styles.extraInfoIcon}
+        name="repo-forked"
+        type="octicon"
+        size={15}
+        color={colors.greyDark}
+      />
+
+      <Text
+        style={[styles.extraInfoSubject, { paddingLeft: 0, marginLeft: -2 }]}
+      >
+        {abbreviateNumber(repository.forks_count)}
       </Text>
 
       {repository.language !== null &&
@@ -91,7 +106,7 @@ const renderTitle = repository =>
           color={languageColors[repository.language]}
         />}
 
-      <Text style={[styles.extraInfoSubject, { paddingTop: 2 }]}>
+      <Text style={styles.extraInfoSubject}>
         {repository.language}
       </Text>
     </View>
