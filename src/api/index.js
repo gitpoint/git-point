@@ -65,11 +65,15 @@ export const v3 = {
     }
 
     let linkHeader = response.headers.get('Link');
-    let number = 1;
+    let number;
 
     if (linkHeader !== null) {
       linkHeader = linkHeader.match(/page=(\d)+/g).pop();
       number = linkHeader.split('=').pop();
+    } else {
+      number = await response.json().then(data => {
+        return data.length;
+      });
     }
 
     return abbreviateNumber(number);
@@ -336,3 +340,9 @@ export async function fetchAccessToken(code, state) {
 
   return response.json();
 }
+
+export const fetchNotificationsCount = accessToken =>
+  v3.count('/notifications?per_page=1', accessToken);
+
+export const fetchRepoNotificationsCount = (owner, repoName, accessToken) =>
+  v3.count(`/repos/${owner}/${repoName}/notifications?per_page=1`, accessToken);

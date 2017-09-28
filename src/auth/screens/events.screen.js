@@ -9,19 +9,22 @@ import moment from 'moment/min/moment-with-locales.min';
 import { LoadingUserListItem, UserListItem, ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { emojifyText, translate } from 'utils';
-import { getUserEvents } from '../auth.action';
+import { getUserEvents } from 'auth';
+import { getNotificationsCount } from 'notifications';
 
 const mapStateToProps = state => ({
   user: state.auth.user,
   userEvents: state.auth.events,
   language: state.auth.language,
   isPendingEvents: state.auth.isPendingEvents,
+  accessToken: state.auth.accessToken,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getUserEvents,
+      getNotificationsCount,
     },
     dispatch
   );
@@ -76,18 +79,19 @@ const styles = StyleSheet.create({
 class Events extends Component {
   componentDidMount() {
     if (this.props.user.login) {
-      this.getUserEvents(this.props.user);
+      this.getUserEvents();
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.user.login && !this.props.user.login) {
-      this.getUserEvents(nextProps.user);
+      this.getUserEvents(nextProps);
     }
   }
 
-  getUserEvents = (user = this.props.user) => {
+  getUserEvents = ({ user, accessToken } = this.props) => {
     this.props.getUserEvents(user.login);
+    this.props.getNotificationsCount(accessToken);
   };
 
   getAction = userEvent => {
