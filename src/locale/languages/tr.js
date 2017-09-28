@@ -154,14 +154,15 @@ export const tr = {
     repositoryList: {
       title: "Repository'ler",
     },
-    followerList: {
+    followers: {
       title: 'Takipçiler',
+      text: 'Takipçiler',
+      followsYou: 'Seni takip ediyor',
     },
-    followingList: {
+    following: {
       title: 'Takip',
-    },
-    followYou: {
-      title: 'Seni takip ediyor',
+      text: 'Takip',
+      followingYou: 'Takip',
     },
   },
   repository: {
@@ -248,6 +249,12 @@ export const tr = {
       areYouSurePrompt: 'Emin misiniz?',
       applyLabelTitle: "Bu issue'ya bir etiket uygulayın",
     },
+    comment: {
+      commentActions: 'Comment Actions',
+      editCommentTitle: 'Edit Comment',
+      editAction: 'Edit',
+      deleteAction: 'Delete',
+    },
     main: {
       assignees: 'Atananlar',
       mergeButton: 'Merge Pull Request',
@@ -299,8 +306,6 @@ export const tr = {
     email: 'Email',
     website: 'Website',
     repositories: "Repository'ler",
-    followers: 'Takipçiler',
-    following: 'Takip',
     cancel: 'Vazgeç',
     yes: 'Evet',
     ok: 'TAMAM',

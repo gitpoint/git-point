@@ -58,6 +58,7 @@ import {
   IssueSettingsScreen,
   NewIssueScreen,
   PullMergeScreen,
+  EditIssueCommentScreen,
 } from 'issue';
 
 const sharedRoutes = {
@@ -172,6 +173,12 @@ const sharedRoutes = {
       title: navigation.state.params.title,
     }),
   },
+  EditIssueComment: {
+    screen: EditIssueCommentScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    }),
+  },
   PullDiff: {
     screen: PullDiffScreen,
     navigationOptions: ({ navigation }) => ({
@@ -269,49 +276,53 @@ const MainTabNavigator = TabNavigator(
     Home: {
       screen: HomeStackNavigator,
       navigationOptions: {
-        tabBarIcon: ({ tintColor }) =>
+        tabBarIcon: ({ tintColor }) => (
           <Icon
             containerStyle={{ justifyContent: 'center', alignItems: 'center' }}
             color={tintColor}
             name="home"
             size={33}
-          />,
+          />
+        ),
       },
     },
     Notifications: {
       screen: NotificationsStackNavigator,
       navigationOptions: {
-        tabBarIcon: ({ tintColor }) =>
+        tabBarIcon: ({ tintColor }) => (
           <Icon
             containerStyle={{ justifyContent: 'center', alignItems: 'center' }}
             color={tintColor}
             name="notifications"
             size={33}
-          />,
+          />
+        ),
       },
     },
     Search: {
       screen: SearchStackNavigator,
       navigationOptions: {
-        tabBarIcon: ({ tintColor }) =>
+        tabBarIcon: ({ tintColor }) => (
           <Icon
             containerStyle={{ justifyContent: 'center', alignItems: 'center' }}
             color={tintColor}
             name="search"
             size={33}
-          />,
+          />
+        ),
       },
     },
     MyProfile: {
       screen: MyProfileStackNavigator,
       navigationOptions: {
-        tabBarIcon: ({ tintColor }) =>
+        tabBarIcon: ({ tintColor }) => (
           <Icon
             containerStyle={{ justifyContent: 'center', alignItems: 'center' }}
             color={tintColor}
             name="person"
             size={33}
-          />,
+          />
+        ),
       },
     },
   },
@@ -323,7 +334,7 @@ const MainTabNavigator = TabNavigator(
       activeTintColor: colors.primaryDark,
       inactiveTintColor: colors.grey,
     },
-    tabBarComponent: ({ jumpToIndex, ...props }) =>
+    tabBarComponent: ({ jumpToIndex, ...props }) => (
       <TabBarBottom
         {...props}
         jumpToIndex={index => {
@@ -349,7 +360,8 @@ const MainTabNavigator = TabNavigator(
             jumpToIndex(index);
           }
         }}
-      />,
+      />
+    ),
   }
 );
 

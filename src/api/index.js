@@ -194,6 +194,30 @@ export const fetchPostIssueComment = (
     { body }
   );
 
+export const fetchDeleteIssueComment = (
+  issueCommentId,
+  owner,
+  repoName,
+  accessToken
+) =>
+  v3.delete(
+    `/repos/${owner}/${repoName}/issues/comments/${issueCommentId}`,
+    accessToken
+  );
+
+export const fetchEditIssueComment = (
+  issueCommentId: number,
+  owner: string,
+  repoName: string,
+  editParams: any,
+  accessToken: string
+) =>
+  v3.patch(
+    `/repos/${owner}/${repoName}/issues/comments/${issueCommentId}`,
+    accessToken,
+    editParams
+  );
+
 export const fetchEditIssue = (
   owner,
   repoName,

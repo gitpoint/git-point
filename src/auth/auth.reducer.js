@@ -84,7 +84,6 @@ export const authReducer = (state = initialState, action = {}) => {
     case GET_AUTH_STAR_COUNT.PENDING:
       return {
         ...state,
-        starCount: ' ',
         isPendingStarCount: true,
       };
     case GET_AUTH_STAR_COUNT.SUCCESS:
