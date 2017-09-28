@@ -6,6 +6,8 @@ import { abbreviateNumber } from 'utils';
 export const CLIENT_ID = '87c7f05700c052937cfb';
 export const CLIENT_SECRET = '3a70aee4d5e26c457720a31c3efe2f9062a4997a';
 
+export const GRAPHQL_ENDPOINT = `${root}/graphql`;
+
 const ACCEPT = {
   JSON: 'application/vnd.github.v3+json',
   HTML: 'application/vnd.github.v3.html+json',
@@ -335,4 +337,52 @@ export async function fetchAccessToken(code, state) {
   );
 
   return response.json();
+}
+
+// GraphQL
+
+const accessTokenParametersGraphQL = (accessToken, query, variables) => ({
+  method: 'POST',
+  headers: {
+    Accept: 'application/vnd.github.v3+json',
+    Authorization: `token ${accessToken}`,
+  },
+  body: JSON.stringify({
+    query: query.replace(/\n/g, ''),
+    variables,
+  }),
+});
+
+export async function fetchUserOrgs(user, accessToken) {
+  const getOrganizationsQuery = `
+    query($login: String!) {
+      user(login: $login) {
+          organizations(first: 100) {
+            edges {
+              node {
+                id
+                login
+                name
+                avatarUrl
+              }
+            }
+          }
+      }
+    }
+  `;
+
+  const response = await fetch(
+    GRAPHQL_ENDPOINT,
+    accessTokenParametersGraphQL(accessToken, getOrganizationsQuery, {
+      login: user,
+    })
+  );
+
+  return response.json().then(data => {
+    return data.data.user.organizations.edges
+      .map(item => item.node)
+      .sort((org1, org2) =>
+        org1.name.toLowerCase().localeCompare(org2.name.toLowerCase())
+      );
+  });
 }

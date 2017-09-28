@@ -72,6 +72,7 @@ class UserListItemComponent extends Component {
     subtitle: string,
     onlyImageNavigate: boolean,
     titleStyle: Object,
+    imageUrl: string,
     navigation: Object,
     icon: string,
     iconAction: Function,
@@ -85,6 +86,7 @@ class UserListItemComponent extends Component {
       title,
       subtitle,
       titleStyle,
+      imageUrl,
       onlyImageNavigate,
       navigation,
       icon,
@@ -131,7 +133,7 @@ class UserListItemComponent extends Component {
               <Image
                 style={styles.avatar}
                 source={{
-                  uri: user.avatar_url,
+                  uri: imageUrl || user.avatar_url,
                 }}
               />
             </ImageContainerComponent>
