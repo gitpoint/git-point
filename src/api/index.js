@@ -244,6 +244,15 @@ export const fetchChangeIssueLockStatus = (
     accessToken
   );
 
+export const fetchSearch = (type, query, accessToken, params = '') =>
+  v3.getJson(`/search/${type}?q=${query}${params}`, accessToken);
+
+export const fetchNotifications = (participating, all, accessToken) =>
+  v3.getJson(
+    `/notifications?participating=${participating}&all=${all}`,
+    accessToken
+  );
+
 export const fetchMarkNotificationAsRead = (notificationID, accessToken) =>
   v3.patch(`/notifications/threads/${notificationID}`, accessToken);
 
