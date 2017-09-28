@@ -1,6 +1,8 @@
 /* eslint-disable no-nested-ternary */
+/* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
   StyleSheet,
   FlatList,
@@ -13,7 +15,7 @@ import {
 } from 'react-native';
 import { ButtonGroup, Card, Icon } from 'react-native-elements';
 
-import { root as apiRoot } from 'api';
+import { v3 } from 'api';
 import {
   ViewContainer,
   LoadingContainer,
@@ -21,7 +23,6 @@ import {
 } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { translate } from 'utils';
-import { getIssueFromUrl } from 'issue';
 import {
   getUnreadNotifications,
   getParticipatingNotifications,
@@ -41,16 +42,17 @@ const mapStateToProps = state => ({
   isPendingAll: state.notifications.isPendingAll,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getUnreadNotificationsByDispatch: () => dispatch(getUnreadNotifications()),
-  getParticipatingNotificationsByDispatch: () =>
-    dispatch(getParticipatingNotifications()),
-  getAllNotificationsByDispatch: () => dispatch(getAllNotifications()),
-  markAsReadByDispatch: notificationID => dispatch(markAsRead(notificationID)),
-  markRepoAsReadByDispatch: repoFullName =>
-    dispatch(markRepoAsRead(repoFullName)),
-  getIssueFromUrlByDispatch: url => dispatch(getIssueFromUrl(url)),
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getUnreadNotifications,
+      getParticipatingNotifications,
+      getAllNotifications,
+      markAsRead,
+      markRepoAsRead,
+    },
+    dispatch
+  );
 
 const styles = StyleSheet.create({
   buttonGroupWrapper: {
@@ -101,7 +103,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 10,
   },
   noneTitle: {
     fontSize: normalize(16),
@@ -112,11 +113,11 @@ const styles = StyleSheet.create({
 
 class Notifications extends Component {
   props: {
-    getUnreadNotificationsByDispatch: Function,
-    getParticipatingNotificationsByDispatch: Function,
-    getAllNotificationsByDispatch: Function,
-    markAsReadByDispatch: Function,
-    markRepoAsReadByDispatch: Function,
+    getUnreadNotifications: Function,
+    getParticipatingNotifications: Function,
+    getAllNotifications: Function,
+    markAsRead: Function,
+    markRepoAsRead: Function,
     unread: Array,
     participating: Array,
     all: Array,
@@ -132,6 +133,7 @@ class Notifications extends Component {
 
     this.state = {
       type: 0,
+      contentBlockHeight: null,
     };
 
     this.switchType = this.switchType.bind(this);
@@ -140,9 +142,9 @@ class Notifications extends Component {
   }
 
   componentDidMount() {
-    this.props.getUnreadNotificationsByDispatch();
-    this.props.getParticipatingNotificationsByDispatch();
-    this.props.getAllNotificationsByDispatch();
+    this.props.getUnreadNotifications();
+    this.props.getParticipatingNotifications();
+    this.props.getAllNotifications();
   }
 
   getImage(repoName) {
@@ -155,36 +157,42 @@ class Notifications extends Component {
 
   getNotifications() {
     const {
-      getUnreadNotificationsByDispatch,
-      getParticipatingNotificationsByDispatch,
-      getAllNotificationsByDispatch,
+      getUnreadNotifications,
+      getParticipatingNotifications,
+      getAllNotifications,
     } = this.props;
     const { type } = this.state;
 
     switch (type) {
       case 0:
-        return getUnreadNotificationsByDispatch;
+        return getUnreadNotifications;
       case 1:
-        return getParticipatingNotificationsByDispatch;
+        return getParticipatingNotifications;
       case 2:
-        return getAllNotificationsByDispatch;
+        return getAllNotifications;
       default:
         return null;
     }
   }
 
+  saveContentBlockHeight = e => {
+    const { height } = e.nativeEvent.layout;
+
+    this.setState({ contentBlockHeight: height });
+  };
+
   navigateToRepo = fullName => {
     const { navigation } = this.props;
 
     navigation.navigate('Repository', {
-      repositoryUrl: `${apiRoot}/repos/${fullName}`,
+      repositoryUrl: `${v3.root}/repos/${fullName}`,
     });
   };
 
   navigateToThread(notification) {
-    const { markAsReadByDispatch, navigation } = this.props;
+    const { markAsRead, navigation } = this.props;
 
-    markAsReadByDispatch(notification.id);
+    markAsRead(notification.id);
     navigation.navigate('Issue', {
       issueURL: notification.subject.url.replace('pulls', 'issues'),
       isPR: notification.subject.type === 'PullRequest',
@@ -202,11 +210,11 @@ class Notifications extends Component {
     }
 
     if (selectedType === 0 && unread.length === 0) {
-      this.props.getUnreadNotificationsByDispatch();
+      this.props.getUnreadNotifications();
     } else if (selectedType === 1 && participating.length === 0) {
-      this.props.getParticipatingNotificationsByDispatch();
+      this.props.getParticipatingNotifications();
     } else if (selectedType === 2 && all.length === 0) {
-      this.props.getAllNotificationsByDispatch();
+      this.props.getAllNotifications();
     }
 
     if (this.notifications().length > 0) {
@@ -262,7 +270,7 @@ class Notifications extends Component {
   };
 
   renderItem = ({ item }) => {
-    const { markAsReadByDispatch, markRepoAsReadByDispatch } = this.props;
+    const { markAsRead, markRepoAsRead } = this.props;
     const notifications = this.notifications().filter(
       notification => notification.repository.full_name === item
     );
@@ -286,7 +294,7 @@ class Notifications extends Component {
 
           <TouchableOpacity
             style={styles.markAsReadIconRepo}
-            onPress={() => markRepoAsReadByDispatch(item)}
+            onPress={() => markRepoAsRead(item)}
           >
             <Icon
               color={colors.greyDark}
@@ -302,8 +310,7 @@ class Notifications extends Component {
             <NotificationListItem
               key={notification.id}
               notification={notification}
-              iconAction={notificationID =>
-                markAsReadByDispatch(notificationID)}
+              iconAction={notificationID => markAsRead(notificationID)}
               navigationAction={notify => this.navigateToThread(notify)}
               navigation={this.props.navigation}
             />
@@ -329,6 +336,11 @@ class Notifications extends Component {
       return a.toLowerCase() > b.toLowerCase() ? 1 : -1;
     });
 
+    const isRetrievingNotifications =
+      this.isLoading() && this.notifications().length === 0;
+    const isLoadingNewNotifications =
+      this.isLoading() && this.notifications().length > 0;
+
     return (
       <ViewContainer>
         <View style={styles.container}>
@@ -347,34 +359,54 @@ class Notifications extends Component {
             />
           </View>
 
-          {this.isLoading() &&
-            this.notifications().length === 0 &&
-            <LoadingContainer
-              animating={this.isLoading() && this.notifications().length === 0}
-              text={translate('notifications.main.retrievingMessage', language)}
-              style={styles.marginSpacing}
-            />}
+          <View
+            onLayout={this.saveContentBlockHeight}
+            style={{ height: this.state.contentBlockHeight }}
+          >
+            {isRetrievingNotifications &&
+              <View
+                style={[
+                  styles.textContainer,
+                  { height: this.state.contentBlockHeight },
+                ]}
+              >
+                <LoadingContainer
+                  animating={isRetrievingNotifications}
+                  text={translate(
+                    'notifications.main.retrievingMessage',
+                    language
+                  )}
+                  style={styles.marginSpacing}
+                  center
+                />
+              </View>}
 
-          {!this.isLoading() &&
-            this.notifications().length === 0 &&
-            <View style={styles.textContainer}>
-              <Text style={styles.noneTitle}>
-                {translate('notifications.main.noneMessage', language)}
-              </Text>
-            </View>}
-
-          {this.notifications().length > 0 &&
-            <FlatList
-              ref={ref => {
-                this.notificationsList = ref;
-              }}
-              removeClippedSubviews={false}
-              onRefresh={this.getNotifications()}
-              refreshing={this.isLoading()}
-              data={sortedRepos}
-              keyExtractor={this.keyExtractor}
-              renderItem={this.renderItem}
-            />}
+            {!isRetrievingNotifications &&
+              <FlatList
+                ref={ref => {
+                  this.notificationsList = ref;
+                }}
+                removeClippedSubviews={false}
+                onRefresh={this.getNotifications()}
+                refreshing={isLoadingNewNotifications}
+                data={sortedRepos}
+                keyExtractor={this.keyExtractor}
+                renderItem={this.renderItem}
+                ListEmptyComponent={
+                  !isLoadingNewNotifications &&
+                  <View
+                    style={[
+                      styles.textContainer,
+                      { height: this.state.contentBlockHeight },
+                    ]}
+                  >
+                    <Text style={styles.noneTitle}>
+                      {translate('notifications.main.noneMessage', language)}
+                    </Text>
+                  </View>
+                }
+              />}
+          </View>
         </View>
       </ViewContainer>
     );

@@ -1,6 +1,9 @@
 export const tr = {
   auth: {
     login: {
+      connectingToGitHub: 'Connecting to GitHub...',
+      preparingGitPoint: 'Preparing GitPoint...',
+      cancel: 'CANCEL',
       welcomeTitle: "GitPoint'e Hoşgeldiniz",
       welcomeMessage:
         "En zengin özelliklere sahip GitHub client'ı ve 100% ücretsiz",
@@ -151,14 +154,15 @@ export const tr = {
     repositoryList: {
       title: "Repository'ler",
     },
-    followerList: {
+    followers: {
       title: 'Takipçiler',
+      text: 'Takipçiler',
+      followsYou: 'Seni takip ediyor',
     },
-    followingList: {
+    following: {
       title: 'Takip',
-    },
-    followYou: {
-      title: 'Seni takip ediyor',
+      text: 'Takip',
+      followingYou: 'Takip',
     },
   },
   repository: {
@@ -245,13 +249,18 @@ export const tr = {
       areYouSurePrompt: 'Emin misiniz?',
       applyLabelTitle: "Bu issue'ya bir etiket uygulayın",
     },
+    comment: {
+      commentActions: 'Comment Actions',
+      editCommentTitle: 'Edit Comment',
+      editAction: 'Edit',
+      deleteAction: 'Delete',
+    },
     main: {
       assignees: 'Atananlar',
       mergeButton: 'Merge Pull Request',
       noDescription: 'Açıklama sağlanmadı.',
       lockedCommentInput: 'Kilitli, ancak yine de yorum yapabilirsiniz...',
       commentInput: 'Yorum ekle...',
-      commentButton: 'Ekle',
       lockedIssue: 'Issue kilitli',
       states: {
         open: 'Açık',
@@ -297,8 +306,6 @@ export const tr = {
     email: 'Email',
     website: 'Website',
     repositories: "Repository'ler",
-    followers: 'Takipçiler',
-    following: 'Takip',
     cancel: 'Vazgeç',
     yes: 'Evet',
     ok: 'TAMAM',

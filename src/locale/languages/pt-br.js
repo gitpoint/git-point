@@ -1,6 +1,9 @@
 export const ptBr = {
   auth: {
     login: {
+      connectingToGitHub: 'Connecting to GitHub...',
+      preparingGitPoint: 'Preparing GitPoint...',
+      cancel: 'CANCEL',
       welcomeTitle: 'Bem-vindo ao GitPoint',
       welcomeMessage:
         'O GitHub client com a maior quantidade de funcionalidades que é 100% grátis',
@@ -152,14 +155,15 @@ export const ptBr = {
     repositoryList: {
       title: 'Repositórios',
     },
-    followerList: {
+    followers: {
       title: 'Seguidores',
+      text: 'Seguidores',
+      followsYou: 'Segue você',
     },
-    followingList: {
+    following: {
       title: 'Seguindo',
-    },
-    followYou: {
-      title: 'Segue você',
+      text: 'Seguindo',
+      followingYou: 'Seguindo',
     },
   },
   repository: {
@@ -245,13 +249,18 @@ export const ptBr = {
       areYouSurePrompt: 'Tem certeza?',
       applyLabelTitle: 'Aplicar um label a esta issue',
     },
+    comment: {
+      commentActions: 'Ações do comentário',
+      editCommentTitle: 'Editar Comentário',
+      editAction: 'Editar',
+      deleteAction: 'Deletar',
+    },
     main: {
       assignees: 'Atribuída a',
       mergeButton: 'Merge Pull Request',
       noDescription: 'Nenhuma descrição fornecida.',
       lockedCommentInput: 'Trancada, mas você ainda pode comentar...',
       commentInput: 'Adicionar um comentário...',
-      commentButton: 'Postar',
       lockedIssue: 'A issue está trancada',
       states: {
         open: 'Aberta',
@@ -297,8 +306,6 @@ export const ptBr = {
     email: 'E-mail',
     website: 'Website',
     repositories: 'Repositórios',
-    followers: 'Seguidores',
-    following: 'Seguindo',
     cancel: 'Cancelar',
     yes: 'Sim',
     ok: 'OK',

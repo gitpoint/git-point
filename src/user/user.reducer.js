@@ -76,7 +76,6 @@ export const userReducer = (state = initialState, action = {}) => {
     case GET_STAR_COUNT.PENDING:
       return {
         ...state,
-        starCount: ' ',
         isPendingStarCount: true,
       };
     case GET_STAR_COUNT.SUCCESS:

@@ -1,5 +1,7 @@
+/* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { FlatList, View, Dimensions, StyleSheet } from 'react-native';
 
 import {
@@ -21,14 +23,15 @@ const mapStateToProps = state => ({
   hasMoreRepositories: state.user.hasMoreRepositories,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getRepositoriesByDispatch: (user, type) =>
-    dispatch(getRepositories(user, type)),
-  getMoreRepositoriesByDispatch: (user, type) =>
-    dispatch(getMoreRepositories(user, type)),
-  searchUserReposByDispatch: (user, type) =>
-    dispatch(searchUserRepos(user, type)),
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getRepositories,
+      searchUserRepos,
+      getMoreRepositories,
+    },
+    dispatch
+  );
 
 const styles = StyleSheet.create({
   header: {
@@ -53,9 +56,9 @@ const styles = StyleSheet.create({
 
 class RepositoryList extends Component {
   props: {
-    getRepositoriesByDispatch: Function,
-    getMoreRepositoriesByDispatch: Function,
-    searchUserReposByDispatch: Function,
+    getMoreRepositories: Function,
+    getRepositories: Function,
+    searchUserRepos: Function,
     user: Object,
     repositories: Array,
     searchedUserRepos: Array,
@@ -88,7 +91,7 @@ class RepositoryList extends Component {
   componentDidMount() {
     const user = this.props.navigation.state.params.user;
 
-    this.props.getRepositoriesByDispatch(user);
+    this.props.getRepositories(user);
   }
 
   getList = () => {
@@ -99,7 +102,7 @@ class RepositoryList extends Component {
   };
 
   search(query) {
-    const { searchUserReposByDispatch } = this.props;
+    const { searchUserRepos } = this.props;
     const user = this.props.navigation.state.params.user;
 
     if (query !== '') {
@@ -108,7 +111,7 @@ class RepositoryList extends Component {
         query,
       });
 
-      searchUserReposByDispatch(query, user);
+      searchUserRepos(query, user);
     }
   }
 

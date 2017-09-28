@@ -18,21 +18,15 @@ const styles = StyleSheet.create({
   center: {
     justifyContent: 'center',
   },
-  loadingIcon: {
-    height: 80,
-  },
   text: {
+    paddingTop: 20,
     ...fonts.fontPrimary,
   },
 });
 
 export const LoadingContainer = ({ animating, text, center }: Props) =>
   <View style={[styles.loadingContainer, center && styles.center]}>
-    <ActivityIndicator
-      animating={animating}
-      style={styles.loadingIcon}
-      size="large"
-    />
+    <ActivityIndicator animating={animating} size="large" />
     {text &&
       <Text style={styles.text}>
         {text}

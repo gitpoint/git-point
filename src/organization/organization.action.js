@@ -1,10 +1,6 @@
 import { createAction } from 'redux-actions';
 
-import {
-  fetchOrg,
-  fetchOrgMembers,
-  fetchUrl,
-} from 'api';
+import { fetchOrg, fetchOrgMembers, v3 } from 'api';
 import {
   GET_ORG,
   GET_ORG_LOADING,
@@ -51,7 +47,8 @@ export const fetchOrganizationRepos = url => (dispatch, getState) => {
   dispatch(getOrgReposLoading(true));
   dispatch(getOrgReposError(''));
 
-  fetchUrl(url, accessToken)
+  v3
+    .getJson(url, accessToken)
     .then(data => {
       dispatch(getOrgReposLoading(false));
       dispatch(getOrgRepos(data));
