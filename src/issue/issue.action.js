@@ -5,6 +5,8 @@ import {
   fetchChangeIssueLockStatus,
   fetchMergePullRequest,
   fetchSubmitNewIssue,
+  fetchDeleteIssueComment,
+  fetchEditIssueComment,
   v3,
 } from 'api';
 import {
@@ -17,6 +19,8 @@ import {
   MERGE_PULL_REQUEST,
   GET_ISSUE_FROM_URL,
   SUBMIT_NEW_ISSUE,
+  DELETE_ISSUE_COMMENT,
+  EDIT_ISSUE_COMMENT,
 } from './issue.type';
 
 const getDiff = url => {
@@ -112,6 +116,56 @@ export const postIssueComment = (body, owner, repoName, issueNum) => {
       .catch(error => {
         dispatch({
           type: POST_ISSUE_COMMENT.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+export const deleteIssueComment = (issueCommentId, owner, repoName) => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: DELETE_ISSUE_COMMENT.PENDING });
+
+    return fetchDeleteIssueComment(issueCommentId, owner, repoName, accessToken)
+      .then(() => {
+        dispatch({
+          type: DELETE_ISSUE_COMMENT.SUCCESS,
+          payload: issueCommentId,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: DELETE_ISSUE_COMMENT.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+export const editIssueComment = (issueCommentId, owner, repoName, body) => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: EDIT_ISSUE_COMMENT.PENDING });
+
+    return fetchEditIssueComment(
+      issueCommentId,
+      owner,
+      repoName,
+      { body },
+      accessToken
+    )
+      .then(() => {
+        dispatch({
+          type: EDIT_ISSUE_COMMENT.SUCCESS,
+          payload: { id: issueCommentId, body },
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: EDIT_ISSUE_COMMENT.ERROR,
           payload: error,
         });
       });

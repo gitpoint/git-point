@@ -248,6 +248,12 @@ export const ptBr = {
       areYouSurePrompt: 'Tem certeza?',
       applyLabelTitle: 'Aplicar um label a esta issue',
     },
+    comment: {
+      commentActions: 'Ações do comentário',
+      editCommentTitle: 'Editar Comentário',
+      editAction: 'Editar',
+      deleteAction: 'Deletar',
+    },
     main: {
       assignees: 'Atribuída a',
       mergeButton: 'Merge Pull Request',

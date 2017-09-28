@@ -248,6 +248,12 @@ export const tr = {
       areYouSurePrompt: 'Emin misiniz?',
       applyLabelTitle: "Bu issue'ya bir etiket uygulayın",
     },
+    comment: {
+      commentActions: 'Comment Actions',
+      editCommentTitle: 'Edit Comment',
+      editAction: 'Edit',
+      deleteAction: 'Delete',
+    },
     main: {
       assignees: 'Atananlar',
       mergeButton: 'Merge Pull Request',

@@ -26,6 +26,7 @@ import {
   getIssueComments,
   postIssueComment,
   getIssueFromUrl,
+  deleteIssueComment,
 } from '../issue.action';
 
 const mapStateToProps = state => ({
@@ -42,6 +43,7 @@ const mapStateToProps = state => ({
   isPendingComments: state.issue.isPendingComments,
   isPostingComment: state.issue.isPostingComment,
   isPendingContributors: state.repository.isPendingContributors,
+  isDeletingComment: state.issue.isDeletingComment,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -52,6 +54,7 @@ const mapDispatchToProps = dispatch =>
       getContributors,
       postIssueComment,
       getIssueFromUrl,
+      deleteIssueComment,
     },
     dispatch
   );
@@ -88,6 +91,7 @@ class Issue extends Component {
     getContributors: Function,
     postIssueComment: Function,
     getIssueFromUrl: Function,
+    deleteIssueComment: Function,
     diff: string,
     issue: Object,
     isMerged: boolean,
@@ -99,6 +103,7 @@ class Issue extends Component {
     isPendingDiff: boolean,
     isPendingCheckMerge: boolean,
     isPendingComments: boolean,
+    isDeletingComment: boolean,
     isPendingContributors: boolean,
     // isPostingComment: boolean,
     language: string,
@@ -216,6 +221,25 @@ class Issue extends Component {
     this.commentsList.scrollToEnd();
   };
 
+  deleteComment = comment => {
+    const { repository } = this.props;
+    const repoName = repository.name;
+    const owner = repository.owner.login;
+
+    this.props.deleteIssueComment(comment.id, owner, repoName);
+  };
+
+  editComment = comment => {
+    const { state, navigate } = this.props.navigation;
+    const { repository } = this.props;
+
+    navigate('EditIssueComment', {
+      title: translate('issue.comment.editCommentTitle', state.params.language),
+      comment,
+      repository,
+    });
+  };
+
   keyExtractor = item => {
     return item.id;
   };
@@ -254,6 +278,8 @@ class Issue extends Component {
       <CommentListItem
         comment={item}
         onLinkPress={node => this.onLinkPress(node)}
+        onDeletePress={this.deleteComment}
+        onEditPress={this.editComment}
         language={language}
         navigation={this.props.navigation}
       />
@@ -268,12 +294,19 @@ class Issue extends Component {
       isPendingComments,
       isPendingContributors,
       isPendingIssue,
+      isDeletingComment,
       language,
       navigation,
     } = this.props;
 
-    const isLoadingData = !!(isPendingComments || isPendingIssue);
+    const isLoadingData = !!(
+      isPendingComments ||
+      isPendingIssue ||
+      isDeletingComment
+    );
+    const isShowLoadingContainer = isPendingComments || isPendingIssue;
     const fullComments = !isPendingComments ? [issue, ...comments] : [];
+
     const participantNames = !isPendingComments
       ? fullComments.map(item => item && item.user && item.user.login)
       : [];
@@ -286,47 +319,46 @@ class Issue extends Component {
 
     return (
       <ViewContainer>
-        {isLoadingData &&
-          <LoadingContainer
-            animating={isPendingComments || isPendingIssue}
-            center
-          />}
+        {isShowLoadingContainer && (
+          <LoadingContainer animating={isShowLoadingContainer} center />
+        )}
 
         {!isPendingComments &&
           !isPendingIssue &&
-          issue &&
-          <KeyboardAvoidingView
-            style={{ flex: 1 }}
-            behavior={'padding'}
-            keyboardVerticalOffset={Platform.select({
-              ios: 65,
-              android: -200,
-            })}
-          >
-            <FlatList
-              ref={ref => {
-                this.commentsList = ref;
-              }}
-              refreshing={isLoadingData}
-              onRefresh={this.getIssueInformation}
-              contentContainerStyle={{ flexGrow: 1 }}
-              ListHeaderComponent={this.renderHeader}
-              removeClippedSubviews={false}
-              data={fullComments}
-              keyExtractor={this.keyExtractor}
-              renderItem={this.renderItem}
-            />
+          issue && (
+            <KeyboardAvoidingView
+              style={{ flex: 1 }}
+              behavior={'padding'}
+              keyboardVerticalOffset={Platform.select({
+                ios: 65,
+                android: -200,
+              })}
+            >
+              <FlatList
+                ref={ref => {
+                  this.commentsList = ref;
+                }}
+                refreshing={isLoadingData}
+                onRefresh={this.getIssueInformation}
+                contentContainerStyle={{ flexGrow: 1 }}
+                ListHeaderComponent={this.renderHeader}
+                removeClippedSubviews={false}
+                data={fullComments}
+                keyExtractor={this.keyExtractor}
+                renderItem={this.renderItem}
+              />
 
-            <CommentInput
-              users={fullUsers}
-              userHasPushPermission={
-                navigation.state.params.userHasPushPermission
-              }
-              issueLocked={issue.locked}
-              language={language}
-              onSubmit={this.postComment}
-            />
-          </KeyboardAvoidingView>}
+              <CommentInput
+                users={fullUsers}
+                userHasPushPermission={
+                  navigation.state.params.userHasPushPermission
+                }
+                issueLocked={issue.locked}
+                language={language}
+                onSubmit={this.postComment}
+              />
+            </KeyboardAvoidingView>
+          )}
       </ViewContainer>
     );
   }

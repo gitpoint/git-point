@@ -244,6 +244,12 @@ export const nl = {
       areYouSurePrompt: 'Weet je het zeker?',
       applyLabelTitle: 'Voeg een label toe aan deze issue',
     },
+    comment: {
+      commentActions: 'Comment Actions',
+      editCommentTitle: 'Edit Comment',
+      editAction: 'Edit',
+      deleteAction: 'Delete',
+    },
     main: {
       assignees: 'Assignees',
       mergeButton: 'Merge Pull Request',

@@ -194,6 +194,30 @@ export const fetchPostIssueComment = (
     { body }
   );
 
+export const fetchDeleteIssueComment = (
+  issueCommentId,
+  owner,
+  repoName,
+  accessToken
+) =>
+  v3.delete(
+    `/repos/${owner}/${repoName}/issues/comments/${issueCommentId}`,
+    accessToken
+  );
+
+export const fetchEditIssueComment = (
+  issueCommentId: number,
+  owner: string,
+  repoName: string,
+  editParams: any,
+  accessToken: string
+) =>
+  v3.patch(
+    `/repos/${owner}/${repoName}/issues/comments/${issueCommentId}`,
+    accessToken,
+    editParams
+  );
+
 export const fetchEditIssue = (
   owner,
   repoName,
@@ -217,15 +241,6 @@ export const fetchChangeIssueLockStatus = (
 ) =>
   v3[currentStatus ? 'delete' : 'put'](
     `/repos/${owner}/${repoName}/issues/${issueNum}/lock`,
-    accessToken
-  );
-
-export const fetchSearch = (type, query, accessToken, params = '') =>
-  v3.getJson(`/search/${type}?q=${query}${params}`, accessToken);
-
-export const fetchNotifications = (participating, all, accessToken) =>
-  v3.getJson(
-    `/notifications?participating=${participating}&all=${all}`,
     accessToken
   );
 

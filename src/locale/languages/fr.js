@@ -248,6 +248,12 @@ export const fr = {
       areYouSurePrompt: 'Êtes-vous certain ?',
       applyLabelTitle: 'Appliquer un libellé à ce ticket',
     },
+    comment: {
+      commentActions: 'Comment Actions',
+      editCommentTitle: 'Edit Comment',
+      editAction: 'Edit',
+      deleteAction: 'Delete',
+    },
     main: {
       assignees: 'Assignés',
       mergeButton: 'Fusionner la pull request',
