@@ -15,7 +15,7 @@ const initialState = {
   user: {},
   orgs: [],
   isFollowing: false, // auth is following user
-  isFollower: false,  // user is a follower of auth, as well as user is following auth
+  isFollower: false, // user is a follower of auth, as well as user is following auth
   repositories: [],
   followers: [],
   following: [],
@@ -71,7 +71,6 @@ export const userReducer = (state = initialState, action = {}) => {
     case GET_STAR_COUNT.PENDING:
       return {
         ...state,
-        starCount: ' ',
         isPendingStarCount: true,
       };
     case GET_STAR_COUNT.SUCCESS:
