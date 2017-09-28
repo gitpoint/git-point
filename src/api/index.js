@@ -55,7 +55,7 @@ export const v3 = {
 
     return params;
   },
-  count: async (url, accessToken) => {
+  count: async (url, accessToken, defaultNumber = 1) => {
     const finalUrl =
       url.indexOf('?') !== -1 ? `${url}&per_page=1` : `${url}?per_page=1`;
     const response = await v3.get(finalUrl, accessToken);
@@ -65,7 +65,7 @@ export const v3 = {
     }
 
     let linkHeader = response.headers.get('Link');
-    let number = 1;
+    let number = defaultNumber;
 
     if (linkHeader !== null) {
       linkHeader = linkHeader.match(/page=(\d)+/g).pop();
@@ -314,7 +314,7 @@ export async function fetchAccessToken(code, state) {
 }
 
 export const fetchNotificationsCount = accessToken =>
-  v3.count('/notifications?per_page=1', accessToken);
+  v3.count('/notifications?per_page=1', accessToken, 0);
 
 export const fetchRepoNotificationsCount = (owner, repoName, accessToken) =>
   v3.count(`/repos/${owner}/${repoName}/notifications?per_page=1`, accessToken);
