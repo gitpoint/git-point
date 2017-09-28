@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, Dimensions, StyleSheet, Platform } from 'react-native';
+import {
+  View,
+  Text,
+  Dimensions,
+  StyleSheet,
+  Platform,
+  TouchableOpacity,
+} from 'react-native';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { Icon } from 'react-native-elements';
 
@@ -125,26 +132,26 @@ export class ParallaxScroll extends Component {
           <View key="fixed-header">
             {navigateBack &&
               <View style={styles.fixedSectionLeft}>
-                <Icon
-                  style={styles.headerIcon}
-                  name="chevron-left"
-                  size={42}
-                  color={colors.white}
-                  onPress={() => navigation.goBack()}
-                  underlayColor="transparent"
-                />
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <Icon
+                    name="chevron-left"
+                    size={42}
+                    color={colors.white}
+                    underlayColor="transparent"
+                  />
+                </TouchableOpacity>
               </View>}
 
             {showMenu &&
               <View style={styles.fixedSectionRight}>
-                <Icon
-                  style={styles.headerIcon}
-                  name={menuIcon}
-                  type="font-awesome"
-                  onPress={menuAction}
-                  color={colors.white}
-                  underlayColor="transparent"
-                />
+                <TouchableOpacity onPress={menuAction}>
+                  <Icon
+                    name={menuIcon}
+                    type="font-awesome"
+                    color={colors.white}
+                    underlayColor="transparent"
+                  />
+                </TouchableOpacity>
               </View>}
           </View>}
         refreshControl={refreshControl}

@@ -59,7 +59,11 @@ class App extends Component {
 
     persistStore(
       configureStore,
-      { storage: AsyncStorage, transforms: [encryptor] },
+      {
+        storage: AsyncStorage,
+        transforms: [encryptor],
+        blacklist: ['user'],
+      },
       () => {
         this.setState({ rehydrated: true });
       }

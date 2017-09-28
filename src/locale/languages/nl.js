@@ -1,6 +1,9 @@
 export const nl = {
   auth: {
     login: {
+      connectingToGitHub: 'Connecting to GitHub...',
+      preparingGitPoint: 'Preparing GitPoint...',
+      cancel: 'CANCEL',
       welcomeTitle: 'Welkom bij GitPoint',
       welcomeMessage: 'De meest complete GitHub client die geen geld kost',
       notificationsTitle: 'Beheer notificaties',
@@ -151,14 +154,15 @@ export const nl = {
     repositoryList: {
       title: 'Repositories',
     },
-    followerList: {
+    followers: {
       title: 'Volgers',
+      text: 'Volgers',
+      followsYou: 'Volgt jou',
     },
-    followingList: {
+    following: {
       title: 'Volgen',
-    },
-    followYou: {
-      title: 'Volgt jou',
+      text: 'Volgen',
+      followingYou: 'Volgen',
     },
   },
   repository: {
@@ -241,13 +245,18 @@ export const nl = {
       areYouSurePrompt: 'Weet je het zeker?',
       applyLabelTitle: 'Voeg een label toe aan deze issue',
     },
+    comment: {
+      commentActions: 'Comment Actions',
+      editCommentTitle: 'Edit Comment',
+      editAction: 'Edit',
+      deleteAction: 'Delete',
+    },
     main: {
       assignees: 'Assignees',
       mergeButton: 'Merge Pull Request',
       noDescription: 'Niet voorzien van een beschrijving.',
       lockedCommentInput: 'Gesloten maar je kan nog opmerkingen maken...',
       commentInput: 'Plaats opmerking...',
-      commentButton: 'Post',
       lockedIssue: 'Issue is gesloten',
       states: {
         open: 'Open',
@@ -293,8 +302,6 @@ export const nl = {
     email: 'Email',
     website: 'Website',
     repositories: 'Repositories',
-    followers: 'Volgers',
-    following: 'Volgen',
     cancel: 'Annuleren',
     yes: 'Ja',
     ok: 'OKE',

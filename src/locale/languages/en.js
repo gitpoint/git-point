@@ -4,6 +4,9 @@
 export const en = {
   auth: {
     login: {
+      connectingToGitHub: 'Connecting to GitHub...',
+      preparingGitPoint: 'Preparing GitPoint...',
+      cancel: 'CANCEL',
       welcomeTitle: 'Welcome to GitPoint',
       welcomeMessage: 'The most feature-rich GitHub client that is 100% free',
       notificationsTitle: 'Control notifications',
@@ -155,14 +158,15 @@ export const en = {
     repositoryList: {
       title: 'Repositories',
     },
-    followerList: {
+    followers: {
       title: 'Followers',
+      text: 'Followers',
+      followsYou: 'Follows you',
     },
-    followingList: {
+    following: {
       title: 'Following',
-    },
-    followYou: {
-      title: 'Follows you',
+      text: 'Following',
+      followingYou: 'Following',
     },
   },
   repository: {
@@ -248,13 +252,18 @@ export const en = {
       areYouSurePrompt: 'Are you sure?',
       applyLabelTitle: 'Apply a label to this issue',
     },
+    comment: {
+      commentActions: 'Comment Actions',
+      editCommentTitle: 'Edit Comment',
+      editAction: 'Edit',
+      deleteAction: 'Delete',
+    },
     main: {
       assignees: 'Assignees',
       mergeButton: 'Merge Pull Request',
       noDescription: 'No description provided.',
       lockedCommentInput: 'Locked, but you can still comment...',
       commentInput: 'Add a comment...',
-      commentButton: 'Post',
       lockedIssue: 'Issue is locked',
       states: {
         open: 'Open',
@@ -300,8 +309,6 @@ export const en = {
     email: 'Email',
     website: 'Website',
     repositories: 'Repositories',
-    followers: 'Followers',
-    following: 'Following',
     cancel: 'Cancel',
     yes: 'Yes',
     ok: 'OK',
