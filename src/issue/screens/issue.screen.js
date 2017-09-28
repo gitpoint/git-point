@@ -18,7 +18,7 @@ import {
   CommentListItem,
   CommentInput,
 } from 'components';
-import { root as apiRoot } from 'api';
+import { v3 } from 'api';
 import { translate } from 'utils';
 import { colors } from 'config';
 import { getRepository, getContributors } from 'repository';
@@ -155,7 +155,7 @@ class Issue extends Component {
 
     return node.attribs['data-url'].replace(
       'https://github.com',
-      `${apiRoot}/repos`
+      `${v3.root}/repos`
     );
   };
 
@@ -183,7 +183,7 @@ class Issue extends Component {
       if (
         issueParam &&
         repository.full_name !==
-          issueParam.repository_url.replace(`${apiRoot}/repos/`, '')
+          issueParam.repository_url.replace(`${v3.root}/repos/`, '')
       ) {
         Promise.all([
           getRepository(issue.repository_url),

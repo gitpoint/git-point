@@ -1,6 +1,7 @@
 export default [
   {
     code: 'en',
+    emojiCode: 'us',
     name: 'English',
   },
   {
