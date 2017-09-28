@@ -133,7 +133,7 @@ export const nl = {
       allButton: 'Alles',
       retrievingMessage: 'Notificaties ophalen',
       noneMessage: 'Je hebt geen notificaties met dit type',
-      markAllAsRead: 'Mark all notifications as read',
+      markAllAsRead: 'Mark all as read',
     },
   },
   search: {

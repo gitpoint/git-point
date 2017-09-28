@@ -67,6 +67,9 @@ const styles = StyleSheet.create({
   buttonGroupContainer: {
     height: 30,
     marginTop: 0,
+    marginBottom: 0,
+    marginLeft: 15,
+    marginRight: 15,
   },
   buttonGroupText: {
     ...fonts.fontPrimaryBold,
@@ -76,7 +79,8 @@ const styles = StyleSheet.create({
   },
   repositoryContainer: {
     padding: 0,
-    marginBottom: 15,
+    marginTop: 0,
+    marginBottom: 25,
   },
   headerContainer: {
     flexDirection: 'row',
@@ -117,12 +121,10 @@ const styles = StyleSheet.create({
     ...fonts.fontPrimary,
   },
   markAllAsReadButton: {
-    marginTop: 3,
-    paddingTop: 3,
-    paddingBottom: 3,
-    marginLeft: 11,
-    marginRight: 11,
-    borderColor: colors.mercury,
+    marginVertical: 15,
+    marginBottom: 20,
+    paddingVertical: 3,
+    borderColor: colors.greyMid,
     borderWidth: 1,
     borderRadius: 3,
   },
@@ -203,23 +205,61 @@ class Notifications extends Component {
     }
   }
 
-  navigateToRepo = fullName => {
-    const { navigation } = this.props;
+  getSortedRepos = () => {
+    const repositories = [
+      ...new Set(
+        this.notifications().map(
+          notification => notification.repository.full_name
+        )
+      ),
+    ];
 
-    navigation.navigate('Repository', {
-      repositoryUrl: `${v3.root}/repos/${fullName}`,
+    return repositories.sort((a, b) => {
+      return a.toLowerCase() > b.toLowerCase() ? 1 : -1;
     });
   };
 
-  navigateToThread(notification) {
-    const { markAsRead, navigation } = this.props;
+  keyExtractor = (item, index) => {
+    return index;
+  };
 
-    markAsRead(notification.id);
-    navigation.navigate('Issue', {
-      issueURL: notification.subject.url.replace('pulls', 'issues'),
-      isPR: notification.subject.type === 'PullRequest',
-      language: this.props.language,
-    });
+  isLoading() {
+    const {
+      unread,
+      participating,
+      all,
+      isPendingUnread,
+      isPendingParticipating,
+      isPendingAll,
+    } = this.props;
+    const { type } = this.state;
+
+    switch (type) {
+      case 0:
+        return unread && isPendingUnread;
+      case 1:
+        return participating && isPendingParticipating;
+      case 2:
+        return all && isPendingAll;
+      default:
+        return null;
+    }
+  }
+
+  notifications() {
+    const { unread, participating, all } = this.props;
+    const { type } = this.state;
+
+    switch (type) {
+      case 0:
+        return unread;
+      case 1:
+        return participating;
+      case 2:
+        return all;
+      default:
+        return null;
+    }
   }
 
   switchType(selectedType) {
@@ -248,116 +288,104 @@ class Notifications extends Component {
     }
   }
 
-  notifications() {
-    const { unread, participating, all } = this.props;
-    const { type } = this.state;
+  navigateToThread(notification) {
+    const { markAsRead, navigation } = this.props;
 
-    switch (type) {
-      case 0:
-        return unread;
-      case 1:
-        return participating;
-      case 2:
-        return all;
-      default:
-        return null;
-    }
+    markAsRead(notification.id);
+    navigation.navigate('Issue', {
+      issueURL: notification.subject.url.replace('pulls', 'issues'),
+      isPR: notification.subject.type === 'PullRequest',
+      language: this.props.language,
+    });
   }
 
-  isLoading() {
-    const {
-      unread,
-      participating,
-      all,
-      isPendingUnread,
-      isPendingParticipating,
-      isPendingAll,
-    } = this.props;
-    const { type } = this.state;
+  navigateToRepo = fullName => {
+    const { navigation } = this.props;
 
-    switch (type) {
-      case 0:
-        return unread && isPendingUnread;
-      case 1:
-        return participating && isPendingParticipating;
-      case 2:
-        return all && isPendingAll;
-      default:
-        return null;
-    }
-  }
-
-  keyExtractor = (item, index) => {
-    return index;
+    navigation.navigate('Repository', {
+      repositoryUrl: `${v3.root}/repos/${fullName}`,
+    });
   };
 
   renderItem = ({ item }) => {
-    const { markAsRead, markRepoAsRead } = this.props;
+    const isFirst = this.getSortedRepos().indexOf(item) === 0;
+
+    const {
+      markAsRead,
+      markRepoAsRead,
+      markAllNotificationsAsRead,
+    } = this.props;
     const notifications = this.notifications().filter(
       notification => notification.repository.full_name === item
     );
 
     return (
-      <Card containerStyle={styles.repositoryContainer}>
-        <View style={styles.headerContainer}>
-          <Image
-            style={styles.repositoryOwnerAvatar}
-            source={{
-              uri: this.getImage(item),
+      <View>
+        {isFirst &&
+          <Button
+            icon={{
+              name: 'check',
+              size: 20,
+              type: 'octicon',
+              color: colors.black,
             }}
-          />
+            title={translate('notifications.main.markAllAsRead')}
+            buttonStyle={styles.markAllAsReadButton}
+            color={colors.black}
+            backgroundColor={colors.white}
+            textStyle={styles.buttonGroupText}
+            onPress={() => markAllNotificationsAsRead()}
+          />}
 
-          <Text
-            style={styles.repositoryTitle}
-            onPress={() => this.navigateToRepo(item)}
-          >
-            {item}
-          </Text>
-
-          <TouchableOpacity
-            style={styles.markAsReadIconRepo}
-            onPress={() => markRepoAsRead(item)}
-          >
-            <Icon
-              color={colors.greyDark}
-              size={28}
-              name="check"
-              type="octicon"
+        <Card containerStyle={styles.repositoryContainer}>
+          <View style={styles.headerContainer}>
+            <Image
+              style={styles.repositoryOwnerAvatar}
+              source={{
+                uri: this.getImage(item),
+              }}
             />
-          </TouchableOpacity>
-        </View>
 
-        <ScrollView>
-          {notifications.map(notification =>
-            <NotificationListItem
-              key={notification.id}
-              notification={notification}
-              iconAction={notificationID => markAsRead(notificationID)}
-              navigationAction={notify => this.navigateToThread(notify)}
-              navigation={this.props.navigation}
-            />
-          )}
-        </ScrollView>
-      </Card>
+            <Text
+              style={styles.repositoryTitle}
+              onPress={() => this.navigateToRepo(item)}
+            >
+              {item}
+            </Text>
+
+            <TouchableOpacity
+              style={styles.markAsReadIconRepo}
+              onPress={() => markRepoAsRead(item)}
+            >
+              <Icon
+                color={colors.greyDark}
+                size={28}
+                name="check"
+                type="octicon"
+              />
+            </TouchableOpacity>
+          </View>
+
+          <ScrollView>
+            {notifications.map(notification =>
+              <NotificationListItem
+                key={notification.id}
+                notification={notification}
+                iconAction={notificationID => markAsRead(notificationID)}
+                navigationAction={notify => this.navigateToThread(notify)}
+                navigation={this.props.navigation}
+              />
+            )}
+          </ScrollView>
+        </Card>
+      </View>
     );
   };
 
   render() {
     const { type } = this.state;
-    const { language, markAllNotificationsAsRead } = this.props;
-
-    const repositories = [
-      ...new Set(
-        this.notifications().map(
-          notification => notification.repository.full_name
-        )
-      ),
-    ];
-
-    const sortedRepos = repositories.sort((a, b) => {
-      return a.toLowerCase() > b.toLowerCase() ? 1 : -1;
-    });
-
+    const { language } = this.props;
+    const sortedRepos = this.getSortedRepos();
     const isEmptyNotifications = this.notifications().length === 0;
 
     return (
@@ -375,22 +403,6 @@ class Notifications extends Component {
               textStyle={styles.buttonGroupText}
               selectedTextStyle={styles.buttonGroupTextSelected}
               containerStyle={styles.buttonGroupContainer}
-            />
-
-            <Button
-              icon={{
-                name: 'check',
-                size: 20,
-                type: 'octicon',
-                color: colors.shark,
-              }}
-              title={translate('notifications.main.markAllAsRead')}
-              buttonStyle={styles.markAllAsReadButton}
-              color={colors.shark}
-              backgroundColor={colors.white}
-              textStyle={styles.buttonGroupText}
-              onPress={() => markAllNotificationsAsRead()}
-              disabled={isEmptyNotifications}
             />
           </View>
 
