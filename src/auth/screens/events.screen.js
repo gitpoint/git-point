@@ -77,8 +77,8 @@ const styles = StyleSheet.create({
 });
 
 class Events extends Component {
-  componentDidMount({ user } = this.props) {
-    if (user.login) {
+  componentDidMount() {
+    if (this.props.user.login) {
       this.getUserEvents();
     }
   }
