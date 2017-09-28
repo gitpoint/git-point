@@ -18,7 +18,7 @@ import { editIssueComment } from '../issue.action';
 
 const styles = StyleSheet.create({
   textInput: {
-    height: Dimensions.get('window').height / 2,
+    maxHeight: Dimensions.get('window').height / 2,
     paddingVertical: 10,
     fontSize: normalize(12),
     marginHorizontal: 15,
