@@ -4477,10 +4477,6 @@ netmask@^1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/netmask/-/netmask-1.0.6.tgz#20297e89d86f6f6400f250d9f4f6b4c1945fcd35"
 
-node-bin-setup@^1.0.0:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/node-bin-setup/-/node-bin-setup-1.0.6.tgz#4b5c9bb937ece702d7069b36ca78af4684677528"
-
 node-emoji@^1.4.1, node-emoji@^1.7.0:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/node-emoji/-/node-emoji-1.8.1.tgz#6eec6bfb07421e2148c75c6bba72421f8530a826"
@@ -4523,12 +4519,6 @@ node-pre-gyp@^0.6.36:
     semver "^5.3.0"
     tar "^2.2.1"
     tar-pack "^3.4.0"
-
-node@^8.3.0:
-  version "8.3.0"
-  resolved "https://registry.yarnpkg.com/node/-/node-8.3.0.tgz#478e84ffcc4be39938306ace1c4613c8231e5f44"
-  dependencies:
-    node-bin-setup "^1.0.0"
 
 nopt@^4.0.1:
   version "4.0.1"
@@ -5210,11 +5200,10 @@ react-native-parallax-scroll-view@^0.19.0:
   version "0.19.0"
   resolved "https://registry.yarnpkg.com/react-native-parallax-scroll-view/-/react-native-parallax-scroll-view-0.19.0.tgz#23b9af1f13249a610f4641e2582a58997df7d80a"
 
-react-native-photo-view@^1.5.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/react-native-photo-view/-/react-native-photo-view-1.5.1.tgz#b1dc6c8890e39a7fa57fbbbf7937979ad26e78b7"
+react-native-photo-view@^1.5.2:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/react-native-photo-view/-/react-native-photo-view-1.5.2.tgz#5d7f406ed5532a5a8a78c8ef8f40e81f688de1e2"
   dependencies:
-    node "^8.3.0"
     prop-types "^15.5.10"
 
 react-native-safari-view@^2.0.0:
