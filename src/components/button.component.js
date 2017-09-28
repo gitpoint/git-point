@@ -7,7 +7,6 @@ const types = {
   default: {
     buttonStyle: {
       borderColor: '#adadad',
-      borderWidth: 1,
       backgroundColor: '#e6e6e6',
     },
     textStyle: {
@@ -15,62 +14,52 @@ const types = {
     },
     disabledStyle: {
       borderColor: '#cccccc',
-      borderWidth: 1,
       backgroundColor: '#ffffff',
     },
   },
   danger: {
     buttonStyle: {
       borderColor: '#dc3545',
-      borderWidth: 1,
       backgroundColor: '#c9302c',
     },
     disabledStyle: {
       borderColor: '#d43f3a',
-      borderWidth: 1,
       backgroundColor: '#d9534f',
     },
   },
   warning: {
     buttonStyle: {
       borderColor: '#eea236',
-      borderWidth: 1,
       backgroundColor: '#ec971f',
     },
     disabledStyle: {
       borderColor: '#eea236',
-      borderWidth: 1,
       backgroundColor: '#f0ad4e',
     },
   },
   info: {
     buttonStyle: {
       borderColor: '#46b8da',
-      borderWidth: 1,
       backgroundColor: '#31b0d5',
     },
     disabledStyle: {
       borderColor: '#46b8da',
-      borderWidth: 1,
       backgroundColor: '#5bc0de',
     },
   },
   success: {
     buttonStyle: {
       borderColor: '#4cae4c',
-      borderWidth: 1,
       backgroundColor: '#449d44',
     },
     disabledStyle: {
       borderColor: '#4cae4c',
-      borderWidth: 1,
       backgroundColor: '#5cb85c',
     },
   },
   primary: {
     buttonStyle: {
       borderColor: '#2e6da4',
-      borderWidth: 1,
       backgroundColor: '#286090',
     },
     disabledStyle: {
@@ -170,11 +159,7 @@ export class Button extends Component {
   };
 
   render() {
-    const size = this.props.size;
-    const type = this.props.type;
-    const icon = this.props.icon;
-    const title = this.props.title;
-
+    const { size, type, icon, title } = this.props;
     const isAndroid = Platform.OS === 'android';
 
     const disabledStyle = {
