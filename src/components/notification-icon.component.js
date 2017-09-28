@@ -28,7 +28,7 @@ class NotificationIconComponent extends Component {
           size={33}
         />
 
-        {notificationsCount &&
+        {!!notificationsCount &&
           <Badge text={notificationsCount > 99 ? '99+' : notificationsCount} />}
       </View>
     );
