@@ -1,33 +1,10 @@
 // @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Text, View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-import { colors, fonts } from 'config';
-
-const styles = StyleSheet.create({
-  badge: {
-    position: 'absolute',
-    right: 1,
-    top: -1,
-    backgroundColor: colors.darkerRed,
-    borderRadius: 18,
-    width: 18,
-    height: 18,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderColor: colors.alabaster,
-    borderWidth: 1,
-  },
-  badgeText: {
-    alignSelf: 'center',
-    fontSize: 9,
-    ...fonts.fontPrimary,
-    color: colors.white,
-    backgroundColor: 'transparent',
-  },
-});
+import { Badge } from 'components';
 
 const mapStateToProps = state => ({
   notificationsCount: state.notifications.notificationsCount,
@@ -51,13 +28,8 @@ class NotificationIconComponent extends Component {
           size={33}
         />
 
-        {notificationsCount
-          ? <View style={styles.badge}>
-              <Text style={styles.badgeText}>
-                {notificationsCount > 99 ? '99+' : notificationsCount}
-              </Text>
-            </View>
-          : null}
+        {notificationsCount &&
+          <Badge text={notificationsCount > 99 ? '99+' : notificationsCount} />}
       </View>
     );
   }
