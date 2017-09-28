@@ -67,6 +67,13 @@ const styles = StyleSheet.create({
     paddingRight: 7,
     color: colors.black, // random any color for the correct display emoji
   },
+  containerStyle: {
+    paddingTop: 0,
+    paddingBottom: 0,
+    height: 45,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 const updateText = lang => ({
@@ -165,6 +172,7 @@ class UserOptions extends Component {
                       </View>
                     }
                     titleStyle={styles.listTitle}
+                    containerStyle={styles.containerStyle}
                     hideChevron={language !== item.code}
                     rightIcon={{ name: 'check' }}
                     onPress={() => changeLanguage(item.code)}
