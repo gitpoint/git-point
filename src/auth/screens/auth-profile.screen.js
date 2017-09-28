@@ -123,7 +123,7 @@ class AuthProfile extends Component {
               type="user"
               initialUser={hasInitialUser ? user : {}}
               user={hasInitialUser ? user : {}}
-              starCount={starCount}
+              starCount={hasInitialUser ? starCount : ''}
               language={language}
               navigation={navigation}
             />}
