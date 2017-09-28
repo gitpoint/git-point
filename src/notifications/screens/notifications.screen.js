@@ -113,7 +113,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 10,
   },
   noneTitle: {
     fontSize: normalize(16),
@@ -154,6 +153,7 @@ class Notifications extends Component {
 
     this.state = {
       type: 0,
+      contentBlockHeight: null,
     };
 
     this.switchType = this.switchType.bind(this);
@@ -217,6 +217,20 @@ class Notifications extends Component {
     return repositories.sort((a, b) => {
       return a.toLowerCase() > b.toLowerCase() ? 1 : -1;
     });
+  };
+
+  navigateToRepo = fullName => {
+    const { navigation } = this.props;
+
+    navigation.navigate('Repository', {
+      repositoryUrl: `${v3.root}/repos/${fullName}`,
+    });
+  };
+
+  saveContentBlockHeight = e => {
+    const { height } = e.nativeEvent.layout;
+
+    this.setState({ contentBlockHeight: height });
   };
 
   keyExtractor = (item, index) => {
@@ -386,7 +400,11 @@ class Notifications extends Component {
     const { type } = this.state;
     const { language } = this.props;
     const sortedRepos = this.getSortedRepos();
-    const isEmptyNotifications = this.notifications().length === 0;
+
+    const isRetrievingNotifications =
+      this.isLoading() && this.notifications().length === 0;
+    const isLoadingNewNotifications =
+      this.isLoading() && this.notifications().length > 0;
 
     return (
       <ViewContainer>
@@ -406,34 +424,54 @@ class Notifications extends Component {
             />
           </View>
 
-          {this.isLoading() &&
-            isEmptyNotifications &&
-            <LoadingContainer
-              animating={this.isLoading() && isEmptyNotifications}
-              text={translate('notifications.main.retrievingMessage', language)}
-              style={styles.marginSpacing}
-            />}
+          <View
+            onLayout={this.saveContentBlockHeight}
+            style={{ height: this.state.contentBlockHeight }}
+          >
+            {isRetrievingNotifications &&
+              <View
+                style={[
+                  styles.textContainer,
+                  { height: this.state.contentBlockHeight },
+                ]}
+              >
+                <LoadingContainer
+                  animating={isRetrievingNotifications}
+                  text={translate(
+                    'notifications.main.retrievingMessage',
+                    language
+                  )}
+                  style={styles.marginSpacing}
+                  center
+                />
+              </View>}
 
-          {!this.isLoading() &&
-            isEmptyNotifications &&
-            <View style={styles.textContainer}>
-              <Text style={styles.noneTitle}>
-                {translate('notifications.main.noneMessage', language)}
-              </Text>
-            </View>}
-
-          {!isEmptyNotifications &&
-            <FlatList
-              ref={ref => {
-                this.notificationsList = ref;
-              }}
-              removeClippedSubviews={false}
-              onRefresh={this.getNotifications()}
-              refreshing={this.isLoading()}
-              data={sortedRepos}
-              keyExtractor={this.keyExtractor}
-              renderItem={this.renderItem}
-            />}
+            {!isRetrievingNotifications &&
+              <FlatList
+                ref={ref => {
+                  this.notificationsList = ref;
+                }}
+                removeClippedSubviews={false}
+                onRefresh={this.getNotifications()}
+                refreshing={isLoadingNewNotifications}
+                data={sortedRepos}
+                keyExtractor={this.keyExtractor}
+                renderItem={this.renderItem}
+                ListEmptyComponent={
+                  !isLoadingNewNotifications &&
+                  <View
+                    style={[
+                      styles.textContainer,
+                      { height: this.state.contentBlockHeight },
+                    ]}
+                  >
+                    <Text style={styles.noneTitle}>
+                      {translate('notifications.main.noneMessage', language)}
+                    </Text>
+                  </View>
+                }
+              />}
+          </View>
         </View>
       </ViewContainer>
     );

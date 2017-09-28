@@ -159,14 +159,15 @@ export const en = {
     repositoryList: {
       title: 'Repositories',
     },
-    followerList: {
+    followers: {
       title: 'Followers',
+      text: 'Followers',
+      followsYou: 'Follows you',
     },
-    followingList: {
+    following: {
       title: 'Following',
-    },
-    followYou: {
-      title: 'Follows you',
+      text: 'Following',
+      followingYou: 'Following',
     },
   },
   repository: {
@@ -252,6 +253,12 @@ export const en = {
       areYouSurePrompt: 'Are you sure?',
       applyLabelTitle: 'Apply a label to this issue',
     },
+    comment: {
+      commentActions: 'Comment Actions',
+      editCommentTitle: 'Edit Comment',
+      editAction: 'Edit',
+      deleteAction: 'Delete',
+    },
     main: {
       assignees: 'Assignees',
       mergeButton: 'Merge Pull Request',
@@ -303,8 +310,6 @@ export const en = {
     email: 'Email',
     website: 'Website',
     repositories: 'Repositories',
-    followers: 'Followers',
-    following: 'Following',
     cancel: 'Cancel',
     yes: 'Yes',
     ok: 'OK',

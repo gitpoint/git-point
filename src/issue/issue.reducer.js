@@ -1,6 +1,8 @@
 import {
   GET_ISSUE_COMMENTS,
   POST_ISSUE_COMMENT,
+  DELETE_ISSUE_COMMENT,
+  EDIT_ISSUE_COMMENT,
   EDIT_ISSUE,
   CHANGE_LOCK_STATUS,
   GET_ISSUE_DIFF,
@@ -17,6 +19,8 @@ const initialState = {
   isMerged: false,
   isPendingComments: false,
   isPostingComment: false,
+  isDeletingComment: false,
+  isEditingComment: false,
   isEditingIssue: false,
   isChangingLockStatus: false,
   isPendingDiff: false,
@@ -62,6 +66,47 @@ export const issueReducer = (state = initialState, action = {}) => {
         ...state,
         error: action.payload,
         isPostingComment: false,
+      };
+    case DELETE_ISSUE_COMMENT.PENDING:
+      return {
+        ...state,
+        isDeletingComment: true,
+      };
+    case DELETE_ISSUE_COMMENT.SUCCESS:
+      return {
+        ...state,
+        comments: state.comments.filter(
+          comment => comment.id !== action.payload
+        ),
+        isDeletingComment: false,
+      };
+    case DELETE_ISSUE_COMMENT.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isDeletingComment: false,
+      };
+    case EDIT_ISSUE_COMMENT.PENDING:
+      return {
+        ...state,
+        isEditingComment: true,
+      };
+    case EDIT_ISSUE_COMMENT.SUCCESS:
+      return {
+        ...state,
+        comments: state.comments.map(
+          comment =>
+            comment.id === action.payload.id
+              ? { ...comment, body: action.payload.body }
+              : comment
+        ),
+        isEditingComment: false,
+      };
+    case EDIT_ISSUE_COMMENT.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isEditingComment: false,
       };
     case EDIT_ISSUE.PENDING:
       return {

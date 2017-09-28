@@ -154,14 +154,15 @@ export const ru = {
     repositoryList: {
       title: 'Репозитории',
     },
-    followerList: {
+    followers: {
       title: 'Подписчики',
+      text: 'Подписчиков',
+      followsYou: 'Подписан на вас',
     },
-    followingList: {
+    following: {
       title: 'Подписки',
-    },
-    followYou: {
-      title: 'Подписан на вас',
+      text: 'Подписок',
+      followingYou: 'Подписан',
     },
   },
   repository: {
@@ -300,8 +301,6 @@ export const ru = {
     email: 'Электронная почта',
     website: 'Сайт',
     repositories: 'Репозиториев',
-    followers: 'Подписчиков',
-    following: 'Подписан',
     pullRequest: 'pull-запрос',
     issue: 'задача',
     cancel: 'Отменить',
