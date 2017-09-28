@@ -21,7 +21,7 @@ import {
   LoadingContainer,
   NotificationListItem,
 } from 'components';
-import { colors, fonts, normalize } from 'config';
+import { colors, fonts, normalize, sizes } from 'config';
 import { translate } from 'utils';
 import {
   getUnreadNotifications,
@@ -237,7 +237,7 @@ class Notifications extends Component {
   saveContentBlockHeight = e => {
     const { height } = e.nativeEvent.layout;
 
-    this.setState({ contentBlockHeight: height });
+    this.setState({ contentBlockHeight: height - sizes.tabBar });
   };
 
   keyExtractor = (item, index) => {
