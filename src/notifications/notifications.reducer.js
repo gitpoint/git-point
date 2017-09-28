@@ -151,7 +151,7 @@ export const notificationsReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         error: action.payload,
-      };  
+      };
     case MARK_ALL_NOTIFICATIONS_AS_READ.PENDING:
       return {
         ...state,
