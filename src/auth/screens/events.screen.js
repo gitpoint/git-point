@@ -77,21 +77,20 @@ const styles = StyleSheet.create({
 });
 
 class Events extends Component {
-  componentDidMount() {
-    if (this.props.user.login) {
-      this.getUserEvents(this.props.user);
+  componentDidMount(user = this.props) {
+    if (user.login) {
+      this.getUserEvents(user);
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.user.login && !this.props.user.login) {
-      this.getUserEvents(nextProps.user);
+  // eslint-disable-next-line no-undef
+  componentWillReceiveProps(user = nextProps) {
+    if (user.login && !this.props.user.login) {
+      this.getUserEvents(user);
     }
   }
 
-  getUserEvents = () => {
-    const { user, accessToken } = this.props;
-
+  getUserEvents = ({ user, accessToken } = this.props) => {
     this.props.getUserEvents(user.login);
     this.props.getNotificationsCount(accessToken);
   };
