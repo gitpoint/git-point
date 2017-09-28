@@ -155,14 +155,15 @@ export const ptBr = {
     repositoryList: {
       title: 'Repositórios',
     },
-    followerList: {
+    followers: {
       title: 'Seguidores',
+      text: 'Seguidores',
+      followsYou: 'Segue você',
     },
-    followingList: {
+    following: {
       title: 'Seguindo',
-    },
-    followYou: {
-      title: 'Segue você',
+      text: 'Seguindo',
+      followingYou: 'Seguindo',
     },
   },
   repository: {
@@ -305,8 +306,6 @@ export const ptBr = {
     email: 'E-mail',
     website: 'Website',
     repositories: 'Repositórios',
-    followers: 'Seguidores',
-    following: 'Seguindo',
     cancel: 'Cancelar',
     yes: 'Sim',
     ok: 'OK',

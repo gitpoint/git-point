@@ -158,14 +158,15 @@ export const fr = {
     repositoryList: {
       title: 'Dépôts',
     },
-    followerList: {
+    followers: {
       title: 'Followers',
+      text: 'Followers',
+      followsYou: 'Vous suit',
     },
-    followingList: {
+    following: {
       title: 'Following',
-    },
-    followYou: {
-      title: 'Vous suit',
+      text: 'Following',
+      followingYou: 'Following',
     },
   },
   repository: {
@@ -305,8 +306,6 @@ export const fr = {
     email: 'Email',
     website: 'Site web',
     repositories: 'Dépôts',
-    followers: 'Followers',
-    following: 'Following',
     cancel: 'Annuler',
     yes: 'Oui',
     ok: 'OK',
