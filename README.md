@@ -19,6 +19,14 @@
   </a>
 </p>
 
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Features](#features)
+- [Feedback/Contributing](#feedbackcontributing)
+- [Build process](#build-process)
+- [Contributors](#contributors)
+
 ## Introduction
 
 [![Build Status](https://img.shields.io/travis/gitpoint/git-point.svg?style=flat-square)](https://travis-ci.org/gitpoint/git-point)
