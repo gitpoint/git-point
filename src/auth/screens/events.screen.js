@@ -77,16 +77,16 @@ const styles = StyleSheet.create({
 });
 
 class Events extends Component {
-  componentDidMount(user = this.props) {
+  componentDidMount({ user } = this.props) {
     if (user.login) {
-      this.getUserEvents(user);
+      this.getUserEvents();
     }
   }
 
   // eslint-disable-next-line no-undef
   componentWillReceiveProps(user = nextProps) {
     if (user.login && !this.props.user.login) {
-      this.getUserEvents(user);
+      this.getUserEvents(nextProps);
     }
   }
 
