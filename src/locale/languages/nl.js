@@ -154,14 +154,15 @@ export const nl = {
     repositoryList: {
       title: 'Repositories',
     },
-    followerList: {
+    followers: {
       title: 'Volgers',
+      text: 'Volgers',
+      followsYou: 'Volgt jou',
     },
-    followingList: {
+    following: {
       title: 'Volgen',
-    },
-    followYou: {
-      title: 'Volgt jou',
+      text: 'Volgen',
+      followingYou: 'Volgen',
     },
   },
   repository: {
@@ -244,6 +245,12 @@ export const nl = {
       areYouSurePrompt: 'Weet je het zeker?',
       applyLabelTitle: 'Voeg een label toe aan deze issue',
     },
+    comment: {
+      commentActions: 'Comment Actions',
+      editCommentTitle: 'Edit Comment',
+      editAction: 'Edit',
+      deleteAction: 'Delete',
+    },
     main: {
       assignees: 'Assignees',
       mergeButton: 'Merge Pull Request',
@@ -295,8 +302,6 @@ export const nl = {
     email: 'Email',
     website: 'Website',
     repositories: 'Repositories',
-    followers: 'Volgers',
-    following: 'Volgen',
     cancel: 'Annuleren',
     yes: 'Ja',
     ok: 'OKE',
