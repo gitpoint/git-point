@@ -83,9 +83,8 @@ class Events extends Component {
     }
   }
 
-  // eslint-disable-next-line no-undef
-  componentWillReceiveProps(user = nextProps) {
-    if (user.login && !this.props.user.login) {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.user.login && !this.props.user.login) {
       this.getUserEvents(nextProps);
     }
   }
