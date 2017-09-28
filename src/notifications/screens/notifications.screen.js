@@ -164,10 +164,11 @@ class Notifications extends Component {
       getUnreadNotifications,
       getParticipatingNotifications,
       getAllNotifications,
+      getNotificationsCount,
     } = this.props;
     const { type } = this.state;
 
-    this.props.getNotificationsCount();
+    getNotificationsCount();
 
     switch (type) {
       case 0:
