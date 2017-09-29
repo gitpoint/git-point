@@ -9,7 +9,7 @@ import moment from 'moment/min/moment-with-locales.min';
 import { LoadingUserListItem, UserListItem, ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { emojifyText, translate } from 'utils';
-import { getUserEvents } from 'auth';
+import { getUserEvents, getUser } from 'auth';
 import { getNotificationsCount } from 'notifications';
 
 const mapStateToProps = state => ({
@@ -25,6 +25,7 @@ const mapDispatchToProps = dispatch =>
     {
       getUserEvents,
       getNotificationsCount,
+      getUser,
     },
     dispatch
   );
@@ -78,8 +79,12 @@ const styles = StyleSheet.create({
 
 class Events extends Component {
   componentDidMount() {
-    if (this.props.user.login) {
+    const { user: { login }, getUser } = this.props;
+
+    if (login) {
       this.getUserEvents();
+    } else {
+      getUser();
     }
   }
 
