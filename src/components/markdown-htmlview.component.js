@@ -216,13 +216,14 @@ export class MarkdownHtmlView extends Component {
             </Text>
           </View>,
         pre: (node, index, siblings, parent, defaultRenderer) =>
-          <View>
+          <View key={index}>
             {defaultRenderer(node.children, node)}
           </View>,
         code: (node, index, siblings, parent, defaultRenderer) => {
           if (parent.name === 'pre') {
             return (
               <SyntaxHighlighter
+                key={index}
                 style={{ ...GithubStyle }}
                 CodeTag={Text}
                 fontFamily={fonts.fontCode.fontFamily}
@@ -305,11 +306,19 @@ export class MarkdownHtmlView extends Component {
           );
         },
         issue: (node, index, siblings, parent, defaultRenderer) =>
-          <Text style={styles.strong} onPress={() => onLinkPress(node)}>
+          <Text
+            key={index}
+            style={styles.strong}
+            onPress={() => onLinkPress(node)}
+          >
             #{node.attribs['data-id']}
           </Text>,
         profile: (node, index, siblings, parent, defaultRenderer) =>
-          <Text style={styles.strong} onPress={() => onLinkPress(node)}>
+          <Text
+            key={index}
+            style={styles.strong}
+            onPress={() => onLinkPress(node)}
+          >
             {node.children[0].data}
           </Text>,
       };
@@ -317,7 +326,10 @@ export class MarkdownHtmlView extends Component {
       if (_node.type === 'text') {
         if (_node.data === '\n') {
           return (
-            <Text style={{ height: 8, fontSize: normalize(8), width: 2 }}>
+            <Text
+              key={_index}
+              style={{ height: 8, fontSize: normalize(8), width: 2 }}
+            >
               {_node.data}
             </Text>
           );
