@@ -150,7 +150,8 @@ class CommentListItemComponent extends Component {
 
     return (
       <TouchableWithoutFeedback
-        onLongPress={() => isActionMenuEnabled && this.showMenu()}
+        disabled={!isActionMenuEnabled}
+        onLongPress={this.showMenu}
       >
         <View style={styles.container}>
           <View style={styles.header}>
