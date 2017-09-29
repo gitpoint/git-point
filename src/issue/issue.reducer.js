@@ -41,7 +41,7 @@ export const issueReducer = (state = initialState, action = {}) => {
     case GET_ISSUE_COMMENTS.SUCCESS:
       return {
         ...state,
-        comments: action.payload,
+        comments: JSON.parse(action.payload),
         isPendingComments: false,
       };
     case GET_ISSUE_COMMENTS.ERROR:

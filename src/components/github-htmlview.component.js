@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { Dimensions, StyleSheet, View, Text, Platform } from 'react-native';
 import HTMLView from 'react-native-htmlview';
-import marked from 'marked';
 import { TableWrapper, Table, Cell } from 'react-native-table-component';
 import SyntaxHighlighter from 'react-native-syntax-highlighter';
 import { github as GithubStyle } from 'react-syntax-highlighter/dist/styles';
 import entities from 'entities';
 
 import { ImageZoom } from 'components';
-import { colors, emojis, fonts, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 
 const lightFont = {
   ...fonts.fontPrimaryLight,
@@ -77,13 +76,6 @@ const styles = {
 
 const styleSheet = StyleSheet.create(styles);
 
-marked.setOptions({
-  renderer: new marked.Renderer(),
-  gfm: true,
-  tables: true,
-  pedantic: true,
-});
-
 const { height, width } = Dimensions.get('window');
 
 const headingRenderer = (node, index, siblings, parent, defaultRenderer) => {
@@ -144,26 +136,17 @@ const cellForNode = node =>
 const onlyTagsChildren = node =>
   node.children.filter(elem => elem.type === 'tag');
 
-export class MarkdownHtmlView extends Component {
+export class GithubHtmlView extends Component {
   props: {
     source: String,
     onLinkPress: Function,
   };
 
-  transformMarkdown = md => {
-    const issueReference = /(\W)#(\d+)/;
-    const profileReference = /(\W)@([_0-9A-Za-z]+)/;
-    const todoItem = /<li>\s*\[(x|\s)?\](.*)<\/li>/g;
-    const emojiMarkup = /:(\w+):/g;
-
-    const numericEntitiesSwap = '~~~ESCAPED_NUMERIC_ENTITY~~~';
-
-    return marked(md)
-      .replace(/&#/g, numericEntitiesSwap)
-      .replace(issueReference, (match, spacing, number) => {
-        return `${spacing}<issue class="issue-link" data-id="${number}"></issue>`;
-      })
-      .replace(new RegExp(numericEntitiesSwap, 'g'), '&#')
+  prepareHtml = html => {
+    // console.log(html);
+    const prepared = html
+      .replace(/<br>/g, '')
+      .replace(/<a[^>]+><img([^>]+)><\/a>/g, '<img$1>')
       .replace(/<p>*>/g, '<span>')
       .replace(/<\/p>*>/g, '</span>')
       .replace(/<ul>[\n]*?<li>/g, '<ul><li>')
@@ -172,6 +155,29 @@ export class MarkdownHtmlView extends Component {
       .replace(/<\/li>[\n]*?<\/ol>/g, '</li></ol>')
       .replace(/><li>/g, '>\n<li>')
       .replace(/<\/li><\/ul>\n/g, '</li></ul>')
+      .replace(/<img([^>]+?)>/, (match, img) => {
+        return `</span><img ${img}/><span>`;
+      });
+
+    // console.log(prepared);
+
+    return prepared;
+
+    /*    const issueReference = /(\W)#(\d+)/;
+    const profileReference = /(\W)@([_0-9A-Za-z]+)/;
+    const todoItem = /<li>\s*\[(x|\s)?\](.*)<\/li>/g;
+    const emojiMarkup = /:(\w+):/g;
+
+    const numericEntitiesSwap = '~~~ESCAPED_NUMERIC_ENTITY~~~';
+
+    const m = marked(md)
+      .replace(/&#/g, numericEntitiesSwap)
+      .replace(issueReference, (match, spacing, number) => {
+        return `${spacing}<issue class="issue-link" data-id="${number}"></issue>`;
+      })
+      .replace(new RegExp(numericEntitiesSwap, 'g'), '&#')
+      .replace(/<p>*>/g, '<span>')
+      .replace(/<\/p>*>/g, '</span>')
       .replace(profileReference, (match, spacing, username) => {
         return `${spacing}<profile class="user-mention">@${username}</profile>`;
       })
@@ -188,6 +194,10 @@ export class MarkdownHtmlView extends Component {
       .replace(/<img([^>]+?)>/, (match, img) => {
         return `</span><img ${img}/><span>`;
       });
+
+      console.log(m);
+
+      return m; */
   };
 
   render() {
@@ -309,22 +319,20 @@ export class MarkdownHtmlView extends Component {
             />
           );
         },
-        issue: (node, index, siblings, parent, defaultRenderer) =>
-          <Text
-            key={index}
-            style={styles.strong}
-            onPress={() => onLinkPress(node)}
-          >
-            #{node.attribs['data-id']}
-          </Text>,
-        profile: (node, index, siblings, parent, defaultRenderer) =>
-          <Text
-            key={index}
-            style={styles.strong}
-            onPress={() => onLinkPress(node)}
-          >
-            {node.children[0].data}
-          </Text>,
+        'g-emoji': (node, index, siblings, parent, defaultRenderer) => {
+          return node.children[0].data;
+        },
+        a: (node, index, siblings, parent, defaultRenderer) => {
+          return (
+            <Text
+              key={index}
+              style={styles.strong}
+              onPress={() => onLinkPress(node)}
+            >
+              {node.children[0].data}
+            </Text>
+          );
+        },
       };
 
       if (_node.type === 'text') {
@@ -353,7 +361,7 @@ export class MarkdownHtmlView extends Component {
 
     return (
       <HTMLView
-        value={this.transformMarkdown(this.props.source)}
+        value={this.prepareHtml(this.props.source)}
         stylesheet={styleSheet}
         renderNode={myDomElement}
         textComponentProps={{ style: { ...textStyle } }}

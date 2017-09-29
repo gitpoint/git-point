@@ -12,7 +12,7 @@ import {
   Platform,
   TouchableWithoutFeedback,
 } from 'react-native';
-import { MarkdownHtmlView } from 'components';
+import { GithubHtmlView } from 'components';
 import { Icon } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
 
@@ -152,7 +152,7 @@ class CommentListItemComponent extends Component {
       <TouchableWithoutFeedback onLongPress={this.showMenu}>
         <View style={styles.container}>
           <View style={styles.header}>
-            {comment.user && (
+            {comment.user &&
               <TouchableOpacity
                 style={styles.avatarContainer}
                 onPress={() =>
@@ -171,10 +171,9 @@ class CommentListItemComponent extends Component {
                     uri: comment.user.avatar_url,
                   }}
                 />
-              </TouchableOpacity>
-            )}
+              </TouchableOpacity>}
 
-            {comment.user && (
+            {comment.user &&
               <TouchableOpacity
                 style={styles.titleSubtitleContainer}
                 onPress={() =>
@@ -191,8 +190,7 @@ class CommentListItemComponent extends Component {
                   {comment.user.login}
                   {'  '}
                 </Text>
-              </TouchableOpacity>
-            )}
+              </TouchableOpacity>}
 
             <View style={styles.dateContainer}>
               <Text style={styles.date}>
@@ -201,14 +199,14 @@ class CommentListItemComponent extends Component {
             </View>
           </View>
 
-          {!!commentPresent && (
+          {!!commentPresent &&
             <View style={styles.commentContainer}>
-              <MarkdownHtmlView
-                source={comment.body}
+              <GithubHtmlView
+                source={comment.body_html}
                 onLinkPress={onLinkPress}
               />
 
-              {isActionButtonVisible && (
+              {isActionButtonVisible &&
                 <View style={styles.actionButtonIconContainer}>
                   <Icon
                     color={colors.grey}
@@ -217,12 +215,10 @@ class CommentListItemComponent extends Component {
                     type={'font-awesome'}
                     onPress={this.showMenu}
                   />
-                </View>
-              )}
-            </View>
-          )}
+                </View>}
+            </View>}
 
-          {!commentPresent && (
+          {!commentPresent &&
             <View style={styles.commentContainer}>
               <Text
                 style={[
@@ -234,8 +230,7 @@ class CommentListItemComponent extends Component {
               >
                 {translate('issue.main.noDescription', language)}
               </Text>
-            </View>
-          )}
+            </View>}
 
           <ActionSheet
             ref={o => {
