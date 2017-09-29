@@ -1,6 +1,9 @@
 export const ru = {
   auth: {
     login: {
+      connectingToGitHub: 'Подключение к GitHub...',
+      preparingGitPoint: 'Подготовка GitPoint...',
+      cancel: 'ОТМЕНА',
       welcomeTitle: 'Добро пожаловать в GitPoint',
       welcomeMessage: 'Самый многофункциональный бесплатный GitHub клиент',
       notificationsTitle: 'Управление уведомлениями',
