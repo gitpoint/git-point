@@ -263,6 +263,9 @@ export const fetchMarkNotificationAsRead = (notificationID, accessToken) =>
 export const fetchMarkRepoNotificationAsRead = (repoFullName, accessToken) =>
   v3.put(`/repos/${repoFullName}/notifications`, accessToken);
 
+export const fetchMarkAllNotificationsAsRead = accessToken =>
+  v3.put('/notifications', accessToken);
+
 export const fetchChangeStarStatusRepo = (owner, repo, starred, accessToken) =>
   v3[starred ? 'delete' : 'put'](`/user/starred/${owner}/${repo}`, accessToken);
 

@@ -4,6 +4,7 @@ import {
   fetchMarkRepoNotificationAsRead,
   fetchNotificationsCount,
   fetchRepoNotificationsCount,
+  fetchMarkAllNotificationsAsRead,
 } from 'api';
 import {
   GET_UNREAD_NOTIFICATIONS,
@@ -12,6 +13,7 @@ import {
   MARK_NOTIFICATION_AS_READ,
   MARK_REPO_AS_READ,
   GET_NOTIFICATIONS_COUNT,
+  MARK_ALL_NOTIFICATIONS_AS_READ,
 } from './notifications.type';
 
 export const getUnreadNotifications = () => {
@@ -148,6 +150,27 @@ export const getNotificationsCount = () => {
       .catch(error => {
         dispatch({
           type: GET_NOTIFICATIONS_COUNT.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+export const markAllNotificationsAsRead = () => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: MARK_ALL_NOTIFICATIONS_AS_READ.PENDING });
+
+    fetchMarkAllNotificationsAsRead(accessToken)
+      .then(() => {
+        dispatch({
+          type: MARK_ALL_NOTIFICATIONS_AS_READ.SUCCESS,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: MARK_ALL_NOTIFICATIONS_AS_READ.ERROR,
           payload: error,
         });
       });

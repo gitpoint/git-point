@@ -135,6 +135,7 @@ export const ru = {
       allButton: 'Все',
       retrievingMessage: 'Получение уведомлений',
       noneMessage: 'У вас нет уведомлений по этому типу',
+      markAllAsRead: 'Отметить все как прочитанные',
     },
   },
   search: {
