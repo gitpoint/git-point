@@ -161,7 +161,6 @@ class Issue extends Component {
 
   getIssueInformation = () => {
     const {
-      issue,
       navigation,
       repository,
       getIssueComments,
@@ -180,10 +179,11 @@ class Issue extends Component {
         issueURLParam ? issueCommentsURL : issueParam.comments_url
       ),
     ]).then(() => {
+      const issue = this.props.issue;
+
       if (
-        issueParam &&
         repository.full_name !==
-          issueParam.repository_url.replace(`${v3.root}/repos/`, '')
+          issue.repository_url.replace(`${v3.root}/repos/`, '')
       ) {
         Promise.all([
           getRepository(issue.repository_url),
