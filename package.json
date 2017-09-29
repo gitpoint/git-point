@@ -34,7 +34,8 @@
     "cp-history:ios-staging": "code-push deployment history git-point-ios Staging",
     "cp-history:android-staging": "code-push deployment history git-point-android Staging",
     "cp-history:android-production": "code-push deployment history git-point-android Production",
-    "cp-history:ios-production": "code-push deployment history git-point-ios Production"
+    "cp-history:ios-production": "code-push deployment history git-point-ios Production",
+    "doctoc": "doctoc --title='## Table of Contents' README.md"
   },
   "lint-staged": {
     "*.js": [
@@ -97,6 +98,7 @@
     "babel-preset-react-native": "1.9.1",
     "concurrently": "^3.5.0",
     "cz-conventional-changelog": "^2.0.0",
+    "doctoc": "^1.3.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.2",
     "eslint-config-airbnb-base": "~11.2.0",
