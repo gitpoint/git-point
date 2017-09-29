@@ -9,7 +9,7 @@ import {
 import { Icon } from 'react-native-elements';
 
 import { NotificationIcon } from 'components';
-import { colors, sizes } from 'config';
+import { colors } from 'config';
 import { translate } from 'utils';
 
 // Auth
@@ -312,7 +312,6 @@ const MainTabNavigator = TabNavigator(
       activeTintColor: colors.primaryDark,
       inactiveTintColor: colors.grey,
       style: {
-        height: sizes.tabBar,
         backgroundColor: colors.alabaster,
       },
     },

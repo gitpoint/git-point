@@ -21,7 +21,7 @@ import {
   LoadingContainer,
   NotificationListItem,
 } from 'components';
-import { colors, fonts, normalize, sizes } from 'config';
+import { colors, fonts, normalize } from 'config';
 import { translate } from 'utils';
 import {
   getUnreadNotifications,
@@ -129,6 +129,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 3,
   },
+  contentBlock: {
+    flex: 1,
+  },
 });
 
 class Notifications extends Component {
@@ -172,12 +175,18 @@ class Notifications extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const pendingType = this.getPendingType();
+
     if (
       !nextProps.isPendingMarkAllNotificationsAsRead &&
       this.props.isPendingMarkAllNotificationsAsRead &&
       !this.isLoading()
     ) {
       this.getNotifications()();
+    }
+
+    if (!nextProps[pendingType] && this.props[pendingType]) {
+      this.props.getNotificationsCount();
     }
   }
 
@@ -194,11 +203,8 @@ class Notifications extends Component {
       getUnreadNotifications,
       getParticipatingNotifications,
       getAllNotifications,
-      getNotificationsCount,
     } = this.props;
     const { type } = this.state;
-
-    getNotificationsCount();
 
     switch (type) {
       case 0:
@@ -226,6 +232,21 @@ class Notifications extends Component {
     });
   };
 
+  getPendingType = () => {
+    const { type } = this.state;
+
+    switch (type) {
+      case 0:
+        return 'isPendingUnread';
+      case 1:
+        return 'isPendingParticipating';
+      case 2:
+        return 'isPendingAll';
+      default:
+        return null;
+    }
+  };
+
   navigateToRepo = fullName => {
     const { navigation } = this.props;
 
@@ -237,7 +258,7 @@ class Notifications extends Component {
   saveContentBlockHeight = e => {
     const { height } = e.nativeEvent.layout;
 
-    this.setState({ contentBlockHeight: height - sizes.tabBar });
+    this.setState({ contentBlockHeight: height });
   };
 
   keyExtractor = (item, index) => {
@@ -404,7 +425,7 @@ class Notifications extends Component {
   };
 
   render() {
-    const { type } = this.state;
+    const { type, contentBlockHeight } = this.state;
     const { language } = this.props;
     const sortedRepos = this.getSortedRepos();
 
@@ -433,14 +454,11 @@ class Notifications extends Component {
 
           <View
             onLayout={this.saveContentBlockHeight}
-            style={{ height: this.state.contentBlockHeight }}
+            style={styles.contentBlock}
           >
             {isRetrievingNotifications &&
               <View
-                style={[
-                  styles.textContainer,
-                  { height: this.state.contentBlockHeight },
-                ]}
+                style={[styles.textContainer, { height: contentBlockHeight }]}
               >
                 <LoadingContainer
                   animating={isRetrievingNotifications}
@@ -469,7 +487,7 @@ class Notifications extends Component {
                   <View
                     style={[
                       styles.textContainer,
-                      { height: this.state.contentBlockHeight },
+                      { height: contentBlockHeight },
                     ]}
                   >
                     <Text style={styles.noneTitle}>
