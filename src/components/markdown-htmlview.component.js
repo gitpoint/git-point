@@ -151,8 +151,8 @@ export class MarkdownHtmlView extends Component {
   };
 
   transformMarkdown = md => {
-    const issueReference = /(\s)#(\d+)/;
-    const profileReference = /(\s)@([_0-9A-Za-z]+)/;
+    const issueReference = /(\W)#(\d+)/;
+    const profileReference = /(\W)@([_0-9A-Za-z]+)/;
     const todoItem = /<li>\s*\[(x|\s)?\](.*)<\/li>/g;
     const emojiMarkup = /:(\w+):/g;
 
