@@ -156,7 +156,14 @@ export class MarkdownHtmlView extends Component {
     const todoItem = /<li>\s*\[(x|\s)?\](.*)<\/li>/g;
     const emojiMarkup = /:(\w+):/g;
 
+    const numericEntitiesSwap = '~~~ESCAPED_NUMERIC_ENTITY~~~';
+
     return marked(md)
+      .replace(/&#/g, numericEntitiesSwap)
+      .replace(issueReference, (match, spacing, number) => {
+        return `${spacing}<issue class="issue-link" data-id="${number}"></issue>`;
+      })
+      .replace(new RegExp(numericEntitiesSwap, 'g'), '&#')
       .replace(/<p>*>/g, '<span>')
       .replace(/<\/p>*>/g, '</span>')
       .replace(/<ul>[\n]*?<li>/g, '<ul><li>')
@@ -165,9 +172,6 @@ export class MarkdownHtmlView extends Component {
       .replace(/<\/li>[\n]*?<\/ol>/g, '</li></ol>')
       .replace(/><li>/g, '>\n<li>')
       .replace(/<\/li><\/ul>\n/g, '</li></ul>')
-      .replace(issueReference, (match, spacing, number) => {
-        return `${spacing}<issue class="issue-link" data-id="${number}" />`;
-      })
       .replace(profileReference, (match, spacing, username) => {
         return `${spacing}<profile class="user-mention">@${username}</profile>`;
       })
