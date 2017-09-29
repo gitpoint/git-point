@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.greyLight,
     paddingTop: Platform.OS === 'ios' ? 30 : 10,
     paddingBottom: 10,
+    marginBottom: 15,
   },
   buttonGroupContainer: {
     height: 30,
@@ -123,6 +124,7 @@ const styles = StyleSheet.create({
   },
   markAllAsReadButton: {
     marginVertical: 15,
+    marginTop: 0,
     marginBottom: 20,
     paddingVertical: 3,
     borderColor: colors.greyMid,
@@ -350,20 +352,22 @@ class Notifications extends Component {
   };
 
   renderItem = ({ item }) => {
-    const isFirst = this.getSortedRepos().indexOf(item) === 0;
-
     const {
       markAsRead,
       markRepoAsRead,
       markAllNotificationsAsRead,
     } = this.props;
+    const { type } = this.state;
     const notifications = this.notifications().filter(
       notification => notification.repository.full_name === item
     );
+    const isFirstItem = this.getSortedRepos().indexOf(item) === 0;
+    const isFirstTab = type === 0;
 
     return (
       <View>
-        {isFirst &&
+        {isFirstItem &&
+          isFirstTab &&
           <Button
             icon={{
               name: 'check',
