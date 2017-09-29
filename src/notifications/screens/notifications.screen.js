@@ -170,10 +170,7 @@ class Notifications extends Component {
   }
 
   componentDidMount() {
-    this.props.getUnreadNotifications();
-    this.props.getParticipatingNotifications();
-    this.props.getAllNotifications();
-    this.props.getNotificationsCount();
+    this.getNotifications();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -184,7 +181,7 @@ class Notifications extends Component {
       this.props.isPendingMarkAllNotificationsAsRead &&
       !this.isLoading()
     ) {
-      this.getNotifications()();
+      this.getNotificationsForCurrentType()();
     }
 
     if (!nextProps[pendingType] && this.props[pendingType]) {
@@ -201,6 +198,13 @@ class Notifications extends Component {
   }
 
   getNotifications() {
+    this.props.getUnreadNotifications();
+    this.props.getParticipatingNotifications();
+    this.props.getAllNotifications();
+    this.props.getNotificationsCount();
+  }
+
+  getNotificationsForCurrentType() {
     const {
       getUnreadNotifications,
       getParticipatingNotifications,
@@ -286,7 +290,7 @@ class Notifications extends Component {
       case 2:
         return all && isPendingAll;
       default:
-        return null;
+        return false;
     }
   }
 
@@ -302,7 +306,7 @@ class Notifications extends Component {
       case 2:
         return all;
       default:
-        return null;
+        return [];
     }
   }
 
@@ -481,7 +485,7 @@ class Notifications extends Component {
                   this.notificationsList = ref;
                 }}
                 removeClippedSubviews={false}
-                onRefresh={this.getNotifications()}
+                onRefresh={this.getNotificationsForCurrentType()}
                 refreshing={isLoadingNewNotifications}
                 data={sortedRepos}
                 keyExtractor={this.keyExtractor}
