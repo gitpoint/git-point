@@ -8,8 +8,9 @@ import {
   StyleSheet,
   Dimensions,
   Image,
+  ImageBackground,
 } from 'react-native';
-import { Card, Icon } from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import SyntaxHighlighter from 'react-native-syntax-highlighter';
 import { getLanguage } from 'lowlight';
 import { github as GithubStyle } from 'react-syntax-highlighter/dist/styles';
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   branchIcon: {
-    marginRight: 5,
+    marginRight: 2,
   },
   headerText: {
     color: colors.primaryDark,
@@ -69,6 +70,8 @@ const styles = StyleSheet.create({
   },
   codeContainer: {
     flex: 1,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
   },
   imageContainer: {
     flex: 1,
@@ -77,6 +80,15 @@ const styles = StyleSheet.create({
     height: 400,
   },
 });
+
+const syntaxHighlighterStyle = {
+  ...GithubStyle,
+  hljs: {
+    background: 'white',
+  },
+};
+
+const { width } = Dimensions.get('window');
 
 class RepositoryFile extends Component {
   props: {
@@ -109,9 +121,9 @@ class RepositoryFile extends Component {
 
   setImageSize = uri => {
     Image.getSize(uri, (imageWidth, imageHeight) => {
-      if (imageWidth > Dimensions.get('window').width) {
+      if (imageWidth > width) {
         this.setState({
-          imageWidth: Dimensions.get('window').width,
+          imageWidth: width,
           imageHeight: 400,
         });
       } else {
@@ -146,62 +158,69 @@ class RepositoryFile extends Component {
         {isPendingFile && <LoadingContainer animating={isPendingFile} center />}
 
         {!isPendingFile &&
-          <Card
-            containerStyle={styles.contentContainer}
-            dividerStyle={styles.dividerStyle}
-          >
-            <ScrollView>
-              <View style={styles.header}>
-                <Icon
-                  containerStyle={styles.branchIcon}
-                  name="git-branch"
-                  type="octicon"
-                  size={22}
-                />
-                <Text style={styles.headerText}>master</Text>
-              </View>
+          <ScrollView>
+            <View style={styles.header}>
+              <Icon
+                containerStyle={styles.branchIcon}
+                name="git-branch"
+                type="octicon"
+                size={18}
+              />
+              <Text style={styles.headerText}>master</Text>
+            </View>
 
-              {isUnknownType &&
-                <View style={styles.content}>
-                  <ScrollView
-                    automaticallyAdjustContentInsets={false}
-                    showsHorizontalScrollIndicator={false}
-                    horizontal
-                  >
-                    <Text style={styles.contentText}>
-                      {fileContent}
-                    </Text>
-                  </ScrollView>
-                </View>}
-
-              {this.isKnownType(fileType) &&
-                <View style={styles.codeContainer}>
-                  <SyntaxHighlighter
-                    language={fileType}
-                    CodeTag={Text}
-                    codeTagProps={{ style: styles.contentCode }}
-                    style={GithubStyle}
-                    fontFamily={fonts.fontCode.fontFamily}
-                    fontSize={styles.contentText.fontSize}
-                  >
+            {isUnknownType &&
+              <View style={styles.content}>
+                <ScrollView
+                  automaticallyAdjustContentInsets={false}
+                  showsHorizontalScrollIndicator={false}
+                  horizontal
+                >
+                  <Text style={styles.contentText}>
                     {fileContent}
-                  </SyntaxHighlighter>
-                </View>}
+                  </Text>
+                </ScrollView>
+              </View>}
 
-              {this.isImage(fileType) &&
-                <View style={styles.imageContainer}>
+            {this.isKnownType(fileType) &&
+              <View style={styles.codeContainer}>
+                <SyntaxHighlighter
+                  language={fileType}
+                  CodeTag={Text}
+                  codeTagProps={{ style: styles.contentCode }}
+                  style={syntaxHighlighterStyle}
+                  fontFamily={fonts.fontCode.fontFamily}
+                  fontSize={styles.contentText.fontSize}
+                >
+                  {fileContent}
+                </SyntaxHighlighter>
+              </View>}
+
+            {this.isImage(fileType) &&
+              <View style={styles.imageContainer}>
+                <ImageBackground
+                  style={{
+                    width: this.state.imageWidth,
+                    height: this.state.imageHeight,
+                  }}
+                  imageStyle={{
+                    resizeMode: 'cover',
+                  }}
+                  source={require('assets/images/bg-checkered.png')}
+                >
                   <Image
                     style={{
                       width: this.state.imageWidth,
                       height: this.state.imageHeight,
+                      resizeMode: 'contain',
                     }}
                     source={{
                       uri: navigation.state.params.content.download_url,
                     }}
                   />
-                </View>}
-            </ScrollView>
-          </Card>}
+                </ImageBackground>
+              </View>}
+          </ScrollView>}
       </ViewContainer>
     );
   }
