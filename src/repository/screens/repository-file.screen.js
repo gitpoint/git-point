@@ -101,7 +101,7 @@ class RepositoryFile extends Component {
     const fileType = content.name.split('.').pop();
 
     if (!this.isImage(fileType)) {
-      this.props.getRepositoryFile(content.download_url);
+      this.props.getRepositoryFile(content.url);
     } else {
       this.setImageSize(content.download_url);
     }
