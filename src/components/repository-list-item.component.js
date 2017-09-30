@@ -75,7 +75,7 @@ const renderTitle = repository =>
       <Icon
         containerStyle={styles.extraInfoIcon}
         name="star"
-        type="octicion"
+        type="octicon"
         size={15}
         color={colors.greyDark}
       />
@@ -93,7 +93,7 @@ const renderTitle = repository =>
       />
 
       <Text
-        style={[styles.extraInfoSubject, { paddingLeft: 0, marginLeft: -2 }]}
+        style={[styles.extraInfoSubject, { paddingLeft: 0, marginRight: 13 }]}
       >
         {abbreviateNumber(repository.forks_count)}
       </Text>
