@@ -209,7 +209,7 @@ class CommentListItemComponent extends Component {
                 onLinkPress={onLinkPress}
               />
 
-              {isActionMenuEnabled && (
+              {isActionMenuEnabled &&
                 <View style={styles.actionButtonIconContainer}>
                   <Icon
                     color={colors.grey}
