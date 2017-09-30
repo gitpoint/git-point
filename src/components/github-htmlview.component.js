@@ -58,17 +58,17 @@ const styles = {
   h1: {
     ...fonts.fontPrimarySemiBold,
     ...hrStyle,
-    fontSize: normalize(24),
+    fontSize: normalize(20),
   },
   h2: {
     ...fonts.fontPrimarySemiBold,
     ...hrStyle,
-    fontSize: normalize(20),
+    fontSize: normalize(18),
   },
-  h3: { ...fonts.fontPrimarySemiBold, fontSize: normalize(18) },
-  h4: { ...fonts.fontPrimarySemiBold, fontSize: normalize(16) },
-  h5: { ...fonts.fontPrimarySemiBold, fontSize: normalize(14) },
-  h6: { ...fonts.fontPrimarySemiBold, fontSize: normalize(12) },
+  h3: { ...fonts.fontPrimarySemiBold, fontSize: normalize(16) },
+  h4: { ...fonts.fontPrimarySemiBold, fontSize: normalize(14) },
+  h5: { ...fonts.fontPrimarySemiBold, fontSize: normalize(12) },
+  h6: { ...fonts.fontPrimarySemiBold, fontSize: normalize(10) },
   hr: { ...hrStyle },
   li: textStyle,
   a: linkStyle,
@@ -143,23 +143,67 @@ export class GithubHtmlView extends Component {
   };
 
   prepareHtml = html => {
-    // console.log(html);
     const prepared = html
-      .replace(/<br>/g, '')
-      .replace(/<a[^>]+><img([^>]+)><\/a>/g, '<img$1>')
-      .replace(/<p>*>/g, '<span>')
+      // Basic markup cleanup
+      .replace(/<p([^>]*)>/g, '<span$1>')
       .replace(/<\/p>*>/g, '</span>')
-      .replace(/<ul>[\n]*?<li>/g, '<ul><li>')
-      .replace(/<\/li>[\n]*?<\/ul>/g, '</li></ul>')
-      .replace(/<ol>[\n]*?<li>/g, '<ol><li>')
-      .replace(/<\/li>[\n]*?<\/ol>/g, '</li></ol>')
-      .replace(/><li>/g, '>\n<li>')
-      .replace(/<\/li><\/ul>\n/g, '</li></ul>')
-      .replace(/<img([^>]+?)>/, (match, img) => {
+      // No carriage return after <li> of before </li>
+      .replace(/<li( class="[^"]*")?>\n(.*)/g, '<li$1>$2')
+      .replace(/\n<\/li>/g, '</li>')
+      // task list
+      .replace(
+        /<li class="task-list-item">(<span>)?<input class="task-list-item-checkbox" disabled="" id="" type="checkbox"> ?\.? ?/g,
+        '$1⬜ '
+      )
+      .replace(
+        /<li class="task-list-item">(<span>)?<input checked="" class="task-list-item-checkbox" disabled="" id="" type="checkbox"> ?\.? ?/g,
+        '$1✅ '
+      )
+      //      .replace(/<br>/g, '')
+      // Remove links & spans around images
+      .replace(/<a[^>]+><img([^>]+)><\/a>/g, '<img$1>')
+      .replace(/<span[^>]*><img([^>]+)><\/span>/g, '<img$1>')
+      // Break free from big spans
+      .replace(/<br>\n<img([^>]+)>/g, '<br></span><img$1><span>');
+    // Remove \n between <ul> and <li>
+    //  .replace(/<ul>[\n]*?<li>/g, '<ul><li>')
+    //  .replace(/<\/li>[\n]*?<\/ul>/g, '</li></ul>')
+    // Remove \n between <ul> and <li>
+    //  .replace(/<ol>[\n]*?<li>/g, '<ol><li>')
+    //  .replace(/<\/li>[\n]*?<\/ol>/g, '</li></ol>')
+    // Remove \n between <ul> and <li>
+    //      .replace(/><li>/g, '>\n<li>')
+    //      .replace(/<\/li><\/ul>\n/g, '</li></ul>')
+    /* .replace(/<img([^>]+?)>/, (match, img) => {
         return `</span><img ${img}/><span>`;
-      });
+      }) */
 
-    // console.log(prepared);
+    /* console.log(
+      '***********************************************************************'
+    );
+    console.log(
+      '***********************************************************************'
+    );
+    console.log(
+      '***********************************************************************'
+    );
+    console.log(
+      '***********************************************************************'
+    );
+    console.log(
+      '***********************************************************************'
+    );
+    console.log(
+      '***********************************************************************'
+    );
+    console.log(html);
+    console.log(
+      '***********************************************************************'
+    );
+    console.log(
+      '***********************************************************************'
+    );
+    console.log(prepared); */
 
     return prepared;
 
