@@ -17,19 +17,18 @@ const regularFont = {
   ...fonts.fontPrimary,
 };
 
-const textStyleLight = {
-  ...lightFont,
-  fontSize: Platform.OS === 'ios' ? normalize(11) : normalize(12),
-  color: colors.primaryDark,
-};
-
-const textStyleRegular = {
-  ...regularFont,
-  fontSize: Platform.OS === 'ios' ? normalize(11) : normalize(12),
-  color: colors.primaryDark,
-};
-
-const textStyle = Platform.OS === 'ios' ? textStyleLight : textStyleRegular;
+const textStyle = Platform.select({
+  ios: {
+    ...lightFont,
+    fontSize: normalize(11),
+    color: colors.primaryDark,
+  },
+  android: {
+    ...regularFont,
+    fontSize: normalize(12),
+    color: colors.primaryDark,
+  },
+});
 
 const boldStyle = {
   ...textStyle,
