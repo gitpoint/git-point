@@ -102,13 +102,7 @@ class Profile extends Component {
   }
 
   componentDidMount() {
-    const user = this.props.navigation.state.params.user;
-    const auth = this.props.auth;
-
-    this.props.getUserInfo(user.login);
-    this.props.getStarCount(user.login);
-    this.props.getIsFollowing(user.login, auth.login);
-    this.props.getIsFollower(user.login, auth.login);
+    this.getUserInfo();
   }
 
   getUserInfo = () => {
@@ -162,6 +156,13 @@ class Profile extends Component {
         ? translate('user.profile.unfollow', language)
         : translate('user.profile.follow', language),
     ];
+    const isAllDataLoaded =
+      initialUser.login === user.login &&
+      !(
+        isPendingStarCount ||
+        isPendingCheckFollowing ||
+        isPendingCheckFollower
+      );
 
     return (
       <ViewContainer>
@@ -170,14 +171,10 @@ class Profile extends Component {
             <UserProfile
               type="user"
               initialUser={initialUser}
-              starCount={isPendingStarCount ? '' : starCount}
-              isFollowing={
-                isPendingUser || isPendingCheckFollowing ? false : isFollowing
-              }
-              isFollower={
-                isPendingUser || isPendingCheckFollower ? false : isFollower
-              }
-              user={initialUser.login === user.login ? user : {}}
+              starCount={isAllDataLoaded ? starCount : ''}
+              isFollowing={!isAllDataLoaded ? false : isFollowing}
+              isFollower={!isAllDataLoaded ? false : isFollower}
+              user={isAllDataLoaded ? user : {}}
               language={language}
               navigation={navigation}
             />}

@@ -17,6 +17,7 @@ export const colors = {
   darkGreen: '#27ae60',
   red: '#ee0701',
   darkRed: '#e74c3c',
+  darkerRed: '#da0000',
   white: '#ffffff',
   transparent: 'transparent',
   codeChunkBlue: '#f8f8ff',
@@ -29,6 +30,7 @@ export const colors = {
   purple: '#8e44ad',
   orange: '#e67e22',
   githubDark: '#1f2327',
+  alabaster: '#f7f7f7',
 };
 
 export const languageColors = {

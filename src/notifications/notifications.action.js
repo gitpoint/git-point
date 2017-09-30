@@ -2,6 +2,9 @@ import {
   fetchNotifications,
   fetchMarkNotificationAsRead,
   fetchMarkRepoNotificationAsRead,
+  fetchNotificationsCount,
+  fetchRepoNotificationsCount,
+  fetchMarkAllNotificationsAsRead,
 } from 'api';
 import {
   GET_UNREAD_NOTIFICATIONS,
@@ -9,6 +12,8 @@ import {
   GET_ALL_NOTIFICATIONS,
   MARK_NOTIFICATION_AS_READ,
   MARK_REPO_AS_READ,
+  GET_NOTIFICATIONS_COUNT,
+  MARK_ALL_NOTIFICATIONS_AS_READ,
 } from './notifications.type';
 
 export const getUnreadNotifications = () => {
@@ -102,19 +107,70 @@ export const markAsRead = notificationID => {
 export const markRepoAsRead = repoFullName => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
+    const [owner, repoName] = repoFullName.split('/');
 
     dispatch({ type: MARK_REPO_AS_READ.PENDING });
 
-    fetchMarkRepoNotificationAsRead(repoFullName, accessToken)
-      .then(() => {
+    fetchRepoNotificationsCount(
+      owner,
+      repoName,
+      accessToken
+    ).then(repoNotificationsCount => {
+      fetchMarkRepoNotificationAsRead(repoFullName, accessToken)
+        .then(() => {
+          dispatch({
+            type: MARK_REPO_AS_READ.SUCCESS,
+            repoFullName,
+            repoNotificationsCount,
+          });
+        })
+        .catch(error => {
+          dispatch({
+            type: MARK_REPO_AS_READ.ERROR,
+            payload: error,
+          });
+        });
+    });
+  };
+};
+
+export const getNotificationsCount = () => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: GET_NOTIFICATIONS_COUNT.PENDING });
+
+    fetchNotificationsCount(accessToken)
+      .then(data => {
         dispatch({
-          type: MARK_REPO_AS_READ.SUCCESS,
-          repoFullName,
+          type: GET_NOTIFICATIONS_COUNT.SUCCESS,
+          payload: data,
         });
       })
       .catch(error => {
         dispatch({
-          type: MARK_REPO_AS_READ.ERROR,
+          type: GET_NOTIFICATIONS_COUNT.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+export const markAllNotificationsAsRead = () => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: MARK_ALL_NOTIFICATIONS_AS_READ.PENDING });
+
+    fetchMarkAllNotificationsAsRead(accessToken)
+      .then(() => {
+        dispatch({
+          type: MARK_ALL_NOTIFICATIONS_AS_READ.SUCCESS,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: MARK_ALL_NOTIFICATIONS_AS_READ.ERROR,
           payload: error,
         });
       });

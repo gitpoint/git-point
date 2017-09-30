@@ -1,6 +1,9 @@
 export const ru = {
   auth: {
     login: {
+      connectingToGitHub: 'Подключение к GitHub...',
+      preparingGitPoint: 'Подготовка GitPoint...',
+      cancel: 'ОТМЕНА',
       welcomeTitle: 'Добро пожаловать в GitPoint',
       welcomeMessage: 'Самый многофункциональный бесплатный GitHub клиент',
       notificationsTitle: 'Управление уведомлениями',
@@ -132,6 +135,7 @@ export const ru = {
       allButton: 'Все',
       retrievingMessage: 'Получение уведомлений',
       noneMessage: 'У вас нет уведомлений по этому типу',
+      markAllAsRead: 'Отметить все как прочитанные',
     },
   },
   search: {
@@ -153,14 +157,15 @@ export const ru = {
     repositoryList: {
       title: 'Репозитории',
     },
-    followerList: {
+    followers: {
       title: 'Подписчики',
+      text: 'Подписчиков',
+      followsYou: 'Подписан на вас',
     },
-    followingList: {
+    following: {
       title: 'Подписки',
-    },
-    followYou: {
-      title: 'Подписан на вас',
+      text: 'Подписок',
+      followingYou: 'Подписан',
     },
   },
   repository: {
@@ -299,8 +304,6 @@ export const ru = {
     email: 'Электронная почта',
     website: 'Сайт',
     repositories: 'Репозиториев',
-    followers: 'Подписчиков',
-    following: 'Подписан',
     pullRequest: 'pull-запрос',
     issue: 'задача',
     cancel: 'Отменить',

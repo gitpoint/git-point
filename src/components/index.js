@@ -26,3 +26,5 @@ export * from './user-profile.component';
 export * from './view-container.component';
 export * from './image-zoom.component';
 export * from './button.component';
+export * from './notification-icon.component';
+export * from './badge.component';
