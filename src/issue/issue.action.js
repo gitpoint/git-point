@@ -72,7 +72,7 @@ const getPullRequestDetails = issue => {
   return (dispatch, getState) => {
     const repoFullName = getState().repository.repository.full_name;
 
-    dispatch(getDiff(issue.pull_request.diff_url));
+    dispatch(getDiff(issue.pull_request.url));
     dispatch(getMergeStatus(repoFullName, issue.number));
   };
 };
