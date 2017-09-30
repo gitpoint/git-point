@@ -6,7 +6,7 @@ import SyntaxHighlighter from 'react-native-syntax-highlighter';
 import { github as GithubStyle } from 'react-syntax-highlighter/dist/styles';
 import entities from 'entities';
 
-import { ImageZoom } from 'components';
+import FitImage from 'react-native-fit-image';
 import { colors, fonts, normalize } from 'config';
 
 const lightFont = {
@@ -76,7 +76,7 @@ const styles = {
 
 const styleSheet = StyleSheet.create(styles);
 
-const { height, width } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 const headingRenderer = (node, index, siblings, parent, defaultRenderer) => {
   const style = node.name === 'h1' || node.name === 'h2' ? { ...hrStyle } : {};
@@ -243,10 +243,12 @@ export class GithubHtmlView extends Component {
             parent && parent.type === 'tag' && parent.name === 'td' ? 0.3 : 0.6;
 
           return (
-            <ImageZoom
+            <FitImage
               key={index}
-              style={{ width: width * zoom, height: height * zoom }}
-              uri={{ uri: node.attribs.src }}
+              indicator
+              indicatorColor={colors.greyDark}
+              indicatorSize="large"
+              source={{ uri: node.attribs.src }}
             />
           );
         },
