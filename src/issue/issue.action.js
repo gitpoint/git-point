@@ -84,7 +84,7 @@ export const getIssueComments = issueCommentsURL => {
     dispatch({ type: GET_ISSUE_COMMENTS.PENDING });
 
     return v3
-      .getJson(`${issueCommentsURL}?per_page=100`, accessToken)
+      .getHtml(`${issueCommentsURL}?per_page=100`, accessToken)
       .then(data => {
         dispatch({
           type: GET_ISSUE_COMMENTS.SUCCESS,
@@ -110,7 +110,7 @@ export const postIssueComment = (body, owner, repoName, issueNum) => {
       .then(data => {
         dispatch({
           type: POST_ISSUE_COMMENT.SUCCESS,
-          payload: data,
+          payload: JSON.parse(data),
         });
       })
       .catch(error => {
@@ -246,15 +246,17 @@ export const getIssueFromUrl = url => {
     dispatch({ type: GET_ISSUE_FROM_URL.PENDING });
 
     return v3
-      .getJson(url, accessToken)
+      .getHtml(url, accessToken)
       .then(issue => {
+        const parsedIssue = JSON.parse(issue);
+
         dispatch({
           type: GET_ISSUE_FROM_URL.SUCCESS,
-          payload: issue,
+          payload: parsedIssue,
         });
 
-        if (issue.pull_request) {
-          dispatch(getPullRequestDetails(issue));
+        if (parsedIssue.pull_request) {
+          dispatch(getPullRequestDetails(parsedIssue));
         }
       })
       .catch(error => {

@@ -144,6 +144,14 @@ export const v3 = {
 
     return response.json();
   },
+  postHtml: async (url, accessToken, body = {}) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.POST, ACCEPT.HTML, body)
+    );
+
+    return response.text();
+  },
   post: async (url, accessToken, body = {}) => {
     const response = await v3.call(
       url,
@@ -192,7 +200,7 @@ export const fetchPostIssueComment = (
   issueNum,
   accessToken
 ) =>
-  v3.postJson(
+  v3.postHtml(
     `/repos/${owner}/${repoName}/issues/${issueNum}/comments`,
     accessToken,
     { body }

@@ -131,7 +131,9 @@ class Issue extends Component {
       node.attribs.class.includes('issue-link')
     ) {
       navigation.navigate('Issue', {
-        issueURL: this.getIssueUrlFromNode(node, navigation.state.params),
+        issueURL: node.attribs.href
+          .replace('https://github.com', `${v3.root}/repos`)
+          .replace(/pull\/([0-9]+)$/, 'issues/$1'),
       });
     } else {
       Linking.openURL(node.attribs.href);
@@ -144,19 +146,6 @@ class Issue extends Component {
     navigation.navigate('Repository', {
       repositoryUrl: url,
     });
-  };
-
-  getIssueUrlFromNode = (node, params) => {
-    if (node.attribs['data-id']) {
-      return params.issue
-        ? `${params.issue.repository_url}/issues/${node.attribs['data-id']}`
-        : params.issueURL.replace(/\d+$/, node.attribs['data-id']);
-    }
-
-    return node.attribs['data-url'].replace(
-      'https://github.com',
-      `${v3.root}/repos`
-    );
   };
 
   getIssueInformation = () => {
@@ -183,7 +172,7 @@ class Issue extends Component {
 
       if (
         repository.full_name !==
-          issue.repository_url.replace(`${v3.root}/repos/`, '')
+        issue.repository_url.replace(`${v3.root}/repos/`, '')
       ) {
         Promise.all([
           getRepository(issue.repository_url),
@@ -319,46 +308,44 @@ class Issue extends Component {
 
     return (
       <ViewContainer>
-        {isShowLoadingContainer && (
-          <LoadingContainer animating={isShowLoadingContainer} center />
-        )}
+        {isShowLoadingContainer &&
+          <LoadingContainer animating={isShowLoadingContainer} center />}
 
         {!isPendingComments &&
           !isPendingIssue &&
-          issue && (
-            <KeyboardAvoidingView
-              style={{ flex: 1 }}
-              behavior={'padding'}
-              keyboardVerticalOffset={Platform.select({
-                ios: 65,
-                android: -200,
-              })}
-            >
-              <FlatList
-                ref={ref => {
-                  this.commentsList = ref;
-                }}
-                refreshing={isLoadingData}
-                onRefresh={this.getIssueInformation}
-                contentContainerStyle={{ flexGrow: 1 }}
-                ListHeaderComponent={this.renderHeader}
-                removeClippedSubviews={false}
-                data={fullComments}
-                keyExtractor={this.keyExtractor}
-                renderItem={this.renderItem}
-              />
+          issue &&
+          <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior={'padding'}
+            keyboardVerticalOffset={Platform.select({
+              ios: 65,
+              android: -200,
+            })}
+          >
+            <FlatList
+              ref={ref => {
+                this.commentsList = ref;
+              }}
+              refreshing={isLoadingData}
+              onRefresh={this.getIssueInformation}
+              contentContainerStyle={{ flexGrow: 1 }}
+              ListHeaderComponent={this.renderHeader}
+              removeClippedSubviews={false}
+              data={fullComments}
+              keyExtractor={this.keyExtractor}
+              renderItem={this.renderItem}
+            />
 
-              <CommentInput
-                users={fullUsers}
-                userHasPushPermission={
-                  navigation.state.params.userHasPushPermission
-                }
-                issueLocked={issue.locked}
-                language={language}
-                onSubmit={this.postComment}
-              />
-            </KeyboardAvoidingView>
-          )}
+            <CommentInput
+              users={fullUsers}
+              userHasPushPermission={
+                navigation.state.params.userHasPushPermission
+              }
+              issueLocked={issue.locked}
+              language={language}
+              onSubmit={this.postComment}
+            />
+          </KeyboardAvoidingView>}
       </ViewContainer>
     );
   }
