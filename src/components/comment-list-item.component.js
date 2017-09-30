@@ -134,9 +134,7 @@ class CommentListItemComponent extends Component {
   render() {
     const { comment, language, navigation, authUser, onLinkPress } = this.props;
 
-    const commentPresent =
-      (comment.body_html && comment.body_html !== '') ||
-      (comment.body && comment.body !== '');
+    const commentPresent = comment.body_html && comment.body_html !== '';
 
     const commentActionSheetOptions = [
       translate('issue.comment.editAction', language),

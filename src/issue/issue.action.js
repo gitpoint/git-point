@@ -110,7 +110,7 @@ export const postIssueComment = (body, owner, repoName, issueNum) => {
       .then(data => {
         dispatch({
           type: POST_ISSUE_COMMENT.SUCCESS,
-          payload: data,
+          payload: JSON.parse(data),
         });
       })
       .catch(error => {
