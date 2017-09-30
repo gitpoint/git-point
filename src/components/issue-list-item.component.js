@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, TouchableHighlight, View, Text } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import { ListItem, Icon } from 'react-native-elements';
 import moment from 'moment/min/moment-with-locales.min';
 
 import { StateBadge } from 'components';
@@ -35,21 +35,19 @@ const styles = StyleSheet.create({
     color: colors.primaryDark,
     ...fonts.fontPrimary,
   },
-  subtitleView: {
+  commentsContainer: {
     flexDirection: 'row',
     marginTop: 2,
   },
-  desc: {
-    flex: 1,
+  comments: {
+    paddingLeft: 5,
     fontSize: normalize(12),
     color: colors.greyBlue,
   },
-  comments: {
-    paddingHorizontal: 5,
+  description: {
+    marginTop: 2,
     fontSize: normalize(12),
-    backgroundColor: colors.greyLight,
-    borderRadius: 5,
-    overflow: 'hidden',
+    color: colors.greyBlue,
   },
   badge: {
     alignItems: 'flex-end',
@@ -57,7 +55,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const IssueListItem = ({ type, issue, navigation, language }: Props) =>
+export const IssueListItem = ({ type, issue, navigation, language }: Props) => (
   <TouchableHighlight
     style={issue.state === 'closed' && styles.closedIssue}
     onPress={() =>
@@ -73,11 +71,23 @@ export const IssueListItem = ({ type, issue, navigation, language }: Props) =>
         containerStyle={styles.listItemContainer}
         title={issue.title}
         subtitle={
-          <View style={styles.subtitleView}>
-            <Text style={styles.desc} numberOfLines={1}>
-              {`#${issue.number} - ${moment(issue.created_at).fromNow()} - ${issue.user.login}`}
+          <View>
+            {!!issue.comments && (
+              <View style={styles.commentsContainer}>
+                <Icon
+                  name="comment"
+                  type="octicon"
+                  size={15}
+                  color={colors.greyDark}
+                />
+                <Text style={styles.comments}>{issue.comments}</Text>
+              </View>
+            )}
+            <Text style={styles.description} numberOfLines={2}>
+              {`#${issue.number} opened ${moment(
+                issue.created_at
+              ).fromNow()} ago by ${issue.user.login}`}
             </Text>
-            {!!issue.comments && <Text style={styles.comments}>{issue.comments}</Text>}
           </View>
         }
         leftIcon={{
@@ -91,4 +101,5 @@ export const IssueListItem = ({ type, issue, navigation, language }: Props) =>
       />
       <StateBadge style={styles.badge} issue={issue} language={language} />
     </View>
-  </TouchableHighlight>;
+  </TouchableHighlight>
+);
