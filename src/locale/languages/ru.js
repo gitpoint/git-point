@@ -1,6 +1,9 @@
 export const ru = {
   auth: {
     login: {
+      connectingToGitHub: 'Подключение к GitHub...',
+      preparingGitPoint: 'Подготовка GitPoint...',
+      cancel: 'ОТМЕНА',
       welcomeTitle: 'Добро пожаловать в GitPoint',
       welcomeMessage: 'Самый многофункциональный бесплатный GitHub клиент',
       notificationsTitle: 'Управление уведомлениями',
@@ -132,6 +135,7 @@ export const ru = {
       allButton: 'Все',
       retrievingMessage: 'Получение уведомлений',
       noneMessage: 'У вас нет уведомлений по этому типу',
+      markAllAsRead: 'Отметить все как прочитанные',
     },
   },
   search: {

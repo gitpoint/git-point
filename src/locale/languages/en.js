@@ -135,6 +135,7 @@ export const en = {
       allButton: 'All',
       retrievingMessage: 'Retrieving notifications',
       noneMessage: "You don't have any notifications of this type",
+      markAllAsRead: 'Mark all as read',
     },
   },
   search: {

@@ -65,11 +65,15 @@ export const v3 = {
     }
 
     let linkHeader = response.headers.get('Link');
-    let number = 1;
+    let number;
 
     if (linkHeader !== null) {
       linkHeader = linkHeader.match(/page=(\d)+/g).pop();
       number = linkHeader.split('=').pop();
+    } else {
+      number = await response.json().then(data => {
+        return data.length;
+      });
     }
 
     return abbreviateNumber(number);
@@ -140,6 +144,14 @@ export const v3 = {
 
     return response.json();
   },
+  postHtml: async (url, accessToken, body = {}) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.POST, ACCEPT.HTML, body)
+    );
+
+    return response.text();
+  },
   post: async (url, accessToken, body = {}) => {
     const response = await v3.call(
       url,
@@ -188,7 +200,7 @@ export const fetchPostIssueComment = (
   issueNum,
   accessToken
 ) =>
-  v3.postJson(
+  v3.postHtml(
     `/repos/${owner}/${repoName}/issues/${issueNum}/comments`,
     accessToken,
     { body }
@@ -258,6 +270,9 @@ export const fetchMarkNotificationAsRead = (notificationID, accessToken) =>
 
 export const fetchMarkRepoNotificationAsRead = (repoFullName, accessToken) =>
   v3.put(`/repos/${repoFullName}/notifications`, accessToken);
+
+export const fetchMarkAllNotificationsAsRead = accessToken =>
+  v3.put('/notifications', accessToken);
 
 export const fetchChangeStarStatusRepo = (owner, repo, starred, accessToken) =>
   v3[starred ? 'delete' : 'put'](`/user/starred/${owner}/${repo}`, accessToken);
@@ -336,3 +351,9 @@ export async function fetchAccessToken(code, state) {
 
   return response.json();
 }
+
+export const fetchNotificationsCount = accessToken =>
+  v3.count('/notifications?per_page=1', accessToken);
+
+export const fetchRepoNotificationsCount = (owner, repoName, accessToken) =>
+  v3.count(`/repos/${owner}/${repoName}/notifications?per_page=1`, accessToken);

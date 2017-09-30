@@ -132,6 +132,7 @@ export const ptBr = {
       allButton: 'Todas',
       retrievingMessage: 'Buscando notificações',
       noneMessage: 'Você não tem notificações deste tipo',
+      markAllAsRead: 'Mark all as read',
     },
   },
   search: {

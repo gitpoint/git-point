@@ -133,6 +133,7 @@ export const tr = {
       allButton: 'Tümü',
       retrievingMessage: 'Bildirim alınıyor',
       noneMessage: 'Bu türde hiçbir bildirime sahip değilsiniz',
+      markAllAsRead: 'Mark all as read',
     },
   },
   search: {

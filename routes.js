@@ -8,6 +8,7 @@ import {
 } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
+import { NotificationIcon } from 'components';
 import { colors } from 'config';
 import { translate } from 'utils';
 
@@ -276,53 +277,44 @@ const MainTabNavigator = TabNavigator(
     Home: {
       screen: HomeStackNavigator,
       navigationOptions: {
-        tabBarIcon: ({ tintColor }) => (
+        tabBarIcon: ({ tintColor }) =>
           <Icon
             containerStyle={{ justifyContent: 'center', alignItems: 'center' }}
             color={tintColor}
             name="home"
             size={33}
-          />
-        ),
+          />,
       },
     },
     Notifications: {
       screen: NotificationsStackNavigator,
       navigationOptions: {
-        tabBarIcon: ({ tintColor }) => (
-          <Icon
-            containerStyle={{ justifyContent: 'center', alignItems: 'center' }}
-            color={tintColor}
-            name="notifications"
-            size={33}
-          />
-        ),
+        tabBarIcon: ({ tintColor }) =>
+          <NotificationIcon iconColor={tintColor} />,
       },
     },
     Search: {
       screen: SearchStackNavigator,
       navigationOptions: {
-        tabBarIcon: ({ tintColor }) => (
+        tabBarIcon: ({ tintColor }) =>
           <Icon
             containerStyle={{ justifyContent: 'center', alignItems: 'center' }}
             color={tintColor}
             name="search"
             size={33}
-          />
-        ),
+          />,
       },
     },
     MyProfile: {
       screen: MyProfileStackNavigator,
       navigationOptions: {
-        tabBarIcon: ({ tintColor }) => (
+        tabBarIcon: ({ tintColor }) =>
           <Icon
             containerStyle={{ justifyContent: 'center', alignItems: 'center' }}
             color={tintColor}
             name="person"
             size={33}
-          />
-        ),
+          />,
       },
     },
   },
@@ -333,8 +325,11 @@ const MainTabNavigator = TabNavigator(
       showLabel: false,
       activeTintColor: colors.primaryDark,
       inactiveTintColor: colors.grey,
+      style: {
+        backgroundColor: colors.alabaster,
+      },
     },
-    tabBarComponent: ({ jumpToIndex, ...props }) => (
+    tabBarComponent: ({ jumpToIndex, ...props }) =>
       <TabBarBottom
         {...props}
         jumpToIndex={index => {
@@ -360,8 +355,7 @@ const MainTabNavigator = TabNavigator(
             jumpToIndex(index);
           }
         }}
-      />
-    ),
+      />,
   }
 );
 
@@ -399,5 +393,5 @@ export const GitPoint = StackNavigator(
     cardStyle: {
       backgroundColor: 'transparent',
     },
-  },
+  }
 );

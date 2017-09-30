@@ -7,10 +7,17 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import { ListItem, Button } from 'react-native-elements';
+
 import Parse from 'parse-diff';
 import moment from 'moment/min/moment-with-locales.min';
 
-import { StateBadge, MembersList, LabelButton, DiffBlocks } from 'components';
+import {
+  StateBadge,
+  MembersList,
+  LabelButton,
+  DiffBlocks,
+  Button,
+} from 'components';
 import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
 import { v3 } from 'api';
@@ -228,9 +235,8 @@ export class IssueDescription extends Component {
           userHasPushPermission &&
           <View style={styles.mergeButtonContainer}>
             <Button
-              backgroundColor={colors.green}
-              borderRadius={10}
-              fontSize={14}
+              type="success"
+              icon={{ name: 'git-merge', type: 'octicon' }}
               onPress={() =>
                 navigation.navigate('PullMerge', {
                   title: translate('issue.pullMerge.title', language),
