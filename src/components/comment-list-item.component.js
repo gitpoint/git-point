@@ -143,13 +143,16 @@ class CommentListItemComponent extends Component {
       translate('issue.comment.deleteAction', language),
     ];
 
-    const isActionButtonVisible =
+    const isActionMenuEnabled =
       comment.user &&
       authUser.login === comment.user.login &&
       !this.isIssueDescription();
 
     return (
-      <TouchableWithoutFeedback onLongPress={this.showMenu}>
+      <TouchableWithoutFeedback
+        disabled={!isActionMenuEnabled}
+        onLongPress={this.showMenu}
+      >
         <View style={styles.container}>
           <View style={styles.header}>
             {comment.user && (
@@ -208,7 +211,7 @@ class CommentListItemComponent extends Component {
                 onLinkPress={onLinkPress}
               />
 
-              {isActionButtonVisible && (
+              {isActionMenuEnabled && (
                 <View style={styles.actionButtonIconContainer}>
                   <Icon
                     color={colors.grey}
