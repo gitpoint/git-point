@@ -136,6 +136,14 @@ const cellForNode = node =>
 const onlyTagsChildren = node =>
   node.children.filter(elem => elem.type === 'tag');
 
+const removeTags = node => {
+  return node.children
+    .map(e => {
+      return e.type === 'tag' ? removeTags(e) : e.data;
+    })
+    .join('');
+};
+
 export class GithubHtmlView extends Component {
   props: {
     source: String,
@@ -146,8 +154,10 @@ export class GithubHtmlView extends Component {
     return (
       html
         // Basic markup cleanup
-        .replace(/<p([^>]*)>/g, '<span$1>')
+        .replace(/<p(| [^>]*)>/g, '<span $1>')
         .replace(/<\/p>*>/g, '</span>')
+        // Emojis
+        .replace(/<g-emoji[^>]+>(.+)<\/g-emoji>/g, '$1')
         // No carriage return after <li> of before </li>
         .replace(/<li( class="[^"]*")?>\n(.*)/g, '<li$1>$2')
         .replace(/\n<\/li>/g, '</li>')
@@ -165,6 +175,9 @@ export class GithubHtmlView extends Component {
         .replace(/<span[^>]*><img([^>]+)><\/span>/g, '<img$1>')
         // Break images free from big spans
         .replace(/<br>\n<img([^>]+)>/g, '<br></span><img$1><span>')
+        // Code syntax
+        .replace(/<div class="highlight[^"]*"><pre>/g, '<pre><code>')
+        .replace('</pre></div>', '</code></pre>')
     );
   };
 
@@ -210,7 +223,7 @@ export class GithubHtmlView extends Component {
                 CodeTag={Text}
                 fontFamily={fonts.fontCode.fontFamily}
               >
-                {entities.decodeHTML(node.children[0].data).trim()}
+                {entities.decodeHTML(removeTags(node)).trim()}
               </SyntaxHighlighter>
             );
           }
@@ -286,9 +299,6 @@ export class GithubHtmlView extends Component {
               textStyle={{ ...fonts.fontPrimarySemiBold, textAlign: 'center' }}
             />
           );
-        },
-        'g-emoji': (node, index, siblings, parent, defaultRenderer) => {
-          return node.children[0].data;
         },
         a: (node, index, siblings, parent, defaultRenderer) => {
           return (
