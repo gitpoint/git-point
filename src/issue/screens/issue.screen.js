@@ -131,10 +131,9 @@ class Issue extends Component {
       node.attribs.class.includes('issue-link')
     ) {
       navigation.navigate('Issue', {
-        issueURL: node.attribs.href.replace(
-          'https://github.com',
-          `${v3.root}/repos`
-        ),
+        issueURL: node.attribs.href
+          .replace('https://github.com', `${v3.root}/repos`)
+          .replace(/pull\/([0-9]+)$/, 'issues/$1'),
       });
     } else {
       Linking.openURL(node.attribs.href);
@@ -173,7 +172,7 @@ class Issue extends Component {
 
       if (
         repository.full_name !==
-          issue.repository_url.replace(`${v3.root}/repos/`, '')
+        issue.repository_url.replace(`${v3.root}/repos/`, '')
       ) {
         Promise.all([
           getRepository(issue.repository_url),
