@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Dimensions,
   Image,
+  ImageBackground,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import SyntaxHighlighter from 'react-native-syntax-highlighter';
@@ -197,16 +198,27 @@ class RepositoryFile extends Component {
 
             {this.isImage(fileType) &&
               <View style={styles.imageContainer}>
-                <Image
+                <ImageBackground
                   style={{
                     width: this.state.imageWidth,
                     height: this.state.imageHeight,
-                    resizeMode: 'contain',
                   }}
-                  source={{
-                    uri: navigation.state.params.content.download_url,
+                  imageStyle={{
+                    resizeMode: 'cover',
                   }}
-                />
+                  source={require('assets/images/bg-checkered.png')}
+                >
+                  <Image
+                    style={{
+                      width: this.state.imageWidth,
+                      height: this.state.imageHeight,
+                      resizeMode: 'contain',
+                    }}
+                    source={{
+                      uri: navigation.state.params.content.download_url,
+                    }}
+                  />
+                </ImageBackground>
               </View>}
           </ScrollView>}
       </ViewContainer>
