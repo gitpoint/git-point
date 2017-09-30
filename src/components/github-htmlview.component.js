@@ -270,18 +270,13 @@ export class GithubHtmlView extends Component {
           </TableWrapper>,
         td: (node, index, siblings, parent, defaultRenderer) => {
           const Component = cellForNode(node);
-          const attribs = node.attribs;
-          const cellAlign = {
-            'text-align:right': 'right',
-            'text-align:center': 'center',
-          };
           const styleText = {
             marginLeft: 5,
             marginRight: 5,
           };
 
-          if (cellAlign[attribs.style]) {
-            styleText.textAlign = cellAlign[attribs.style];
+          if (node.attribs.align) {
+            styleText.textAlign = node.attribs.align;
           }
 
           return (
