@@ -6,7 +6,7 @@ import SyntaxHighlighter from 'react-native-syntax-highlighter';
 import { github as GithubStyle } from 'react-syntax-highlighter/dist/styles';
 import entities from 'entities';
 
-import FitImage from 'react-native-fit-image';
+import { ImageZoom } from 'components';
 import { colors, fonts, normalize } from 'config';
 
 const lightFont = {
@@ -163,11 +163,11 @@ export class GithubHtmlView extends Component {
         .replace(/\n<\/li>/g, '</li>')
         // task list
         .replace(
-          /<li class="task-list-item">(<span>)?<input class="task-list-item-checkbox" disabled="" id="" type="checkbox"> ?\.? ?/g,
+          /<li class="task-list-item">(<span[^>]*>)?<input class="task-list-item-checkbox" disabled="" id="" type="checkbox"> ?\.? ?/g,
           '$1⬜ '
         )
         .replace(
-          /<li class="task-list-item">(<span>)?<input checked="" class="task-list-item-checkbox" disabled="" id="" type="checkbox"> ?\.? ?/g,
+          /<li class="task-list-item">(<span[^>]*>)?<input checked="" class="task-list-item-checkbox" disabled="" id="" type="checkbox"> ?\.? ?/g,
           '$1✅ '
         )
         // Remove links & spans around images
@@ -243,12 +243,14 @@ export class GithubHtmlView extends Component {
             parent && parent.type === 'tag' && parent.name === 'td' ? 0.3 : 0.6;
 
           return (
-            <FitImage
+            <ImageZoom
               key={index}
-              indicator
-              indicatorColor={colors.greyDark}
-              indicatorSize="large"
-              source={{ uri: node.attribs.src }}
+              style={{
+                width: width * zoom,
+                height: 200,
+                resizeMode: 'contain',
+              }}
+              uri={{ uri: node.attribs.src }}
             />
           );
         },
