@@ -28,12 +28,6 @@ describe('<Button />', () => {
     expect(
       wrapper
         .find('text')
-        .first()
-        .text()
-    ).toEqual('');
-    expect(
-      wrapper
-        .find('text')
         .last()
         .text()
     ).toEqual('missing title!');
@@ -44,12 +38,6 @@ describe('<Button />', () => {
       <Button title="test text" icon={{ name: 'git-merge', type: 'octicon' }} />
     );
 
-    expect(
-      wrapper
-        .find('text')
-        .first()
-        .text()
-    ).toEqual('');
     expect(
       wrapper
         .find('text')
