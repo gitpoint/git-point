@@ -377,7 +377,10 @@
       "name": "Ernoff",
       "avatar_url": "https://avatars3.githubusercontent.com/u/10849025?v=4",
       "profile": "https://github.com/Ernoff",
-      "contributions": []
+      "contributions": [
+        "code",
+        "bug"
+      ]
     }
   ]
 }
