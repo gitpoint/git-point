@@ -5710,9 +5710,17 @@ react-native-tab-view@^0.0.67:
   version "1.0.5"
   resolved "https://github.com/jaynakus/react-native-table-component/tarball/master#e1a23f9b2239ebac8c0f7c5b7024870e93a1696f"
 
-react-native-vector-icons@^4.0.0, react-native-vector-icons@^4.2.0:
+react-native-vector-icons@^4.2.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-4.3.0.tgz#49eab845fbcde6354cb3dbcb62c1abd1f6abc866"
+  dependencies:
+    lodash "^4.0.0"
+    prop-types "^15.5.10"
+    yargs "^8.0.2"
+
+react-native-vector-icons@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-4.4.0.tgz#cdfc1cd86ab495b2a4926bcec8f08c155475cbf1"
   dependencies:
     lodash "^4.0.0"
     prop-types "^15.5.10"
