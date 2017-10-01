@@ -14,7 +14,7 @@ import {
   Modal,
 } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
-import AppIntro from 'react-native-app-intro';
+import AppIntro from 'rn-app-intro';
 import queryString from 'query-string';
 
 import { ViewContainer } from 'components';
@@ -223,8 +223,8 @@ class Login extends Component {
     return (
       <View style={styles.browserLoader}>
         <Text style={styles.browserLoadingLabel}>
-          {this.state.loaderText}
-        </Text>
+          {' '}{this.state.loaderText}{' '}
+        </Text>{' '}
         <ActivityIndicator color={colors.white} size="large" />
       </View>
     );
@@ -235,7 +235,7 @@ class Login extends Component {
 
     return (
       <ViewContainer barColor="light">
-        {!isAuthenticated &&
+        {' '}{!isAuthenticated &&
           !isLoggingIn &&
           this.state.asyncStorageChecked &&
           <View style={styles.container}>
@@ -258,7 +258,7 @@ class Login extends Component {
                     renderLoading={() => this.renderLoading()}
                     startInLoadingState
                   />
-                </View>
+                </View>{' '}
                 <View style={styles.miniSection}>
                   <Button
                     title={translate('auth.login.cancel', language)}
@@ -267,17 +267,16 @@ class Login extends Component {
                     textStyle={styles.buttonText}
                     onPress={() =>
                       this.setModalVisible(!this.state.modalVisible)}
-                  />
-                </View>
-              </View>
-            </Modal>
+                  />{' '}
+                </View>{' '}
+              </View>{' '}
+            </Modal>{' '}
             <View style={styles.miniSection}>
               <Image
                 style={styles.logo}
                 source={require('../../assets/logo.png')}
-              />
+              />{' '}
             </View>
-
             <View style={styles.contentSection}>
               <AppIntro
                 activeDotColor={colors.white}
@@ -288,15 +287,14 @@ class Login extends Component {
                   <Image
                     style={styles.logo}
                     source={require('../../assets/logo.png')}
-                  />
+                  />{' '}
                   <Text style={styles.title}>
-                    {translate('auth.login.welcomeTitle', language)}
-                  </Text>
+                    {' '}{translate('auth.login.welcomeTitle', language)}{' '}
+                  </Text>{' '}
                   <Text style={styles.message}>
-                    {translate('auth.login.welcomeMessage', language)}
-                  </Text>
+                    {' '}{translate('auth.login.welcomeMessage', language)}{' '}
+                  </Text>{' '}
                 </View>
-
                 <View style={[styles.slide, styles.slide2]}>
                   <Icon
                     style={styles.icon}
@@ -306,13 +304,18 @@ class Login extends Component {
                     type="octicon"
                   />
                   <Text style={styles.title}>
-                    {translate('auth.login.notificationsTitle', language)}
-                  </Text>
+                    {' '}{translate(
+                      'auth.login.notificationsTitle',
+                      language
+                    )}{' '}
+                  </Text>{' '}
                   <Text style={styles.message}>
-                    {translate('auth.login.notificationsMessage', language)}
-                  </Text>
+                    {' '}{translate(
+                      'auth.login.notificationsMessage',
+                      language
+                    )}{' '}
+                  </Text>{' '}
                 </View>
-
                 <View style={[styles.slide, styles.slide3]}>
                   <Icon
                     containerStyle={styles.iconMargin}
@@ -323,13 +326,12 @@ class Login extends Component {
                     type="octicon"
                   />
                   <Text style={styles.title}>
-                    {translate('auth.login.reposTitle', language)}
-                  </Text>
+                    {' '}{translate('auth.login.reposTitle', language)}{' '}
+                  </Text>{' '}
                   <Text style={styles.message}>
-                    {translate('auth.login.reposMessage', language)}
-                  </Text>
+                    {' '}{translate('auth.login.reposMessage', language)}{' '}
+                  </Text>{' '}
                 </View>
-
                 <View style={[styles.slide, styles.slide4]}>
                   <Icon
                     containerStyle={styles.iconMargin}
@@ -340,15 +342,14 @@ class Login extends Component {
                     type="octicon"
                   />
                   <Text style={styles.title}>
-                    {translate('auth.login.issuesTitle', language)}
-                  </Text>
+                    {' '}{translate('auth.login.issuesTitle', language)}{' '}
+                  </Text>{' '}
                   <Text style={styles.message}>
-                    {translate('auth.login.issuesMessage', language)}
-                  </Text>
-                </View>
-              </AppIntro>
+                    {' '}{translate('auth.login.issuesMessage', language)}{' '}
+                  </Text>{' '}
+                </View>{' '}
+              </AppIntro>{' '}
             </View>
-
             <View style={styles.miniSection}>
               <Button
                 raised
@@ -356,21 +357,20 @@ class Login extends Component {
                 buttonStyle={styles.button}
                 textStyle={styles.buttonText}
                 onPress={() => this.setModalVisible(true)}
-              />
-            </View>
+              />{' '}
+            </View>{' '}
           </View>}
-
         {isLoggingIn &&
           <View style={styles.browserLoader}>
             <Text style={styles.browserLoadingLabel}>
-              {this.state.loaderText}
-            </Text>
+              {' '}{this.state.loaderText}{' '}
+            </Text>{' '}
             <ActivityIndicator
               animating={isLoggingIn}
               color={colors.white}
               size="large"
             />
-          </View>}
+          </View>}{' '}
       </ViewContainer>
     );
   }
