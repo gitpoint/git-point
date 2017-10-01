@@ -57,7 +57,6 @@
     "react": "16.0.0-alpha.12",
     "react-native": "0.48.1",
     "react-native-actionsheet": "^2.2.0",
-    "react-native-app-intro": "^1.1.5",
     "react-native-code-push": "^5.0.0-beta",
     "react-native-communications": "^2.2.1",
     "react-native-config": "^0.6.0",
@@ -84,7 +83,8 @@
     "redux-persist": "^4.3.1",
     "redux-persist-transform-encrypt": "^1.0.2",
     "redux-thunk": "^2.2.0",
-    "reselect": "^3.0.1"
+    "reselect": "^3.0.1",
+    "rn-app-intro": "^0.0.4"
   },
   "devDependencies": {
     "@commitlint/cli": "^3.1.0",
