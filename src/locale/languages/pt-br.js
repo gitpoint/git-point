@@ -132,6 +132,7 @@ export const ptBr = {
       allButton: 'Todas',
       retrievingMessage: 'Buscando notificações',
       noneMessage: 'Você não tem notificações deste tipo',
+      markAllAsRead: 'Mark all as read',
     },
   },
   search: {
@@ -155,14 +156,15 @@ export const ptBr = {
     repositoryList: {
       title: 'Repositórios',
     },
-    followerList: {
+    followers: {
       title: 'Seguidores',
+      text: 'Seguidores',
+      followsYou: 'Segue você',
     },
-    followingList: {
+    following: {
       title: 'Seguindo',
-    },
-    followYou: {
-      title: 'Segue você',
+      text: 'Seguindo',
+      followingYou: 'Seguindo',
     },
   },
   repository: {
@@ -248,6 +250,12 @@ export const ptBr = {
       areYouSurePrompt: 'Tem certeza?',
       applyLabelTitle: 'Aplicar um label a esta issue',
     },
+    comment: {
+      commentActions: 'Ações do comentário',
+      editCommentTitle: 'Editar Comentário',
+      editAction: 'Editar',
+      deleteAction: 'Deletar',
+    },
     main: {
       assignees: 'Atribuída a',
       mergeButton: 'Merge Pull Request',
@@ -299,8 +307,6 @@ export const ptBr = {
     email: 'E-mail',
     website: 'Website',
     repositories: 'Repositórios',
-    followers: 'Seguidores',
-    following: 'Seguindo',
     cancel: 'Cancelar',
     yes: 'Sim',
     ok: 'OK',

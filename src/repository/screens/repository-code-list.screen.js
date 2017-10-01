@@ -87,7 +87,7 @@ class RepositoryCodeList extends Component {
   };
 
   keyExtractor = item => {
-    return item.id;
+    return item.path;
   };
 
   renderItem = ({ item }) =>
