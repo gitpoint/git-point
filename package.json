@@ -124,6 +124,7 @@
   },
   "jest": {
     "preset": "react-native",
+    "testMatch": ["**/__tests__/tests/**/*.js"],
     "setupFiles": [
       "./testenv.js"
     ],
