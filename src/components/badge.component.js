@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
-import { fonts, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 
 type Props = {
   color: string,
@@ -18,13 +18,15 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     width: 18,
     height: 18,
+    borderColor: colors.alabaster,
+    borderWidth: 1,
   },
   badgeText: {
     ...fonts.fontPrimaryBold,
     backgroundColor: 'transparent',
   },
   textSmall: {
-    fontSize: normalize(8),
+    fontSize: normalize(7),
   },
   textLarge: {
     fontSize: normalize(9.5),
