@@ -1,6 +1,6 @@
 import React from 'react';
 import sinon from 'sinon';
-import { shallow, mount, render } from 'enzyme';
+import { shallow, render } from 'enzyme';
 
 import { Button } from 'components';
 

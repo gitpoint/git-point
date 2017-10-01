@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow, mount, render } from 'enzyme';
+import { shallow } from 'enzyme';
 
 import { CodeLine } from 'components';
 
@@ -14,10 +14,23 @@ describe('<CodeLine />', () => {
     ).childAt(0);
 
     const lineNumbers = wrapper.childAt(0);
-    const lineContent = wrapper.childAt(1).childAt(0).childAt(0);
+    const lineContent = wrapper
+      .childAt(1)
+      .childAt(0)
+      .childAt(0);
 
-    expect(lineNumbers.childAt(0).childAt(0).text()).toEqual('...');
-    expect(lineNumbers.childAt(1).childAt(0).text()).toEqual('...');
+    expect(
+      lineNumbers
+        .childAt(0)
+        .childAt(0)
+        .text()
+    ).toEqual('...');
+    expect(
+      lineNumbers
+        .childAt(1)
+        .childAt(0)
+        .text()
+    ).toEqual('...');
 
     expect(lineContent.text()).toEqual('test line');
   });
@@ -32,10 +45,23 @@ describe('<CodeLine />', () => {
     ).childAt(0);
 
     const lineNumbers = wrapper.childAt(0);
-    const lineContent = wrapper.childAt(1).childAt(0).childAt(0);
+    const lineContent = wrapper
+      .childAt(1)
+      .childAt(0)
+      .childAt(0);
 
-    expect(lineNumbers.childAt(0).childAt(0).text()).toEqual('50');
-    expect(lineNumbers.childAt(1).childAt(0).text()).toEqual('51');
+    expect(
+      lineNumbers
+        .childAt(0)
+        .childAt(0)
+        .text()
+    ).toEqual('50');
+    expect(
+      lineNumbers
+        .childAt(1)
+        .childAt(0)
+        .text()
+    ).toEqual('51');
 
     expect(lineContent.text()).toEqual('test line');
   });
@@ -49,10 +75,23 @@ describe('<CodeLine />', () => {
     ).childAt(0);
 
     const lineNumbers = wrapper.childAt(0);
-    const lineContent = wrapper.childAt(1).childAt(0).childAt(0);
+    const lineContent = wrapper
+      .childAt(1)
+      .childAt(0)
+      .childAt(0);
 
-    expect(lineNumbers.childAt(0).childAt(0).text()).toEqual('');
-    expect(lineNumbers.childAt(1).childAt(0).text()).toEqual('57');
+    expect(
+      lineNumbers
+        .childAt(0)
+        .childAt(0)
+        .text()
+    ).toEqual('');
+    expect(
+      lineNumbers
+        .childAt(1)
+        .childAt(0)
+        .text()
+    ).toEqual('57');
 
     expect(lineContent.text()).toEqual('test line');
   });
@@ -66,10 +105,23 @@ describe('<CodeLine />', () => {
     ).childAt(0);
 
     const lineNumbers = wrapper.childAt(0);
-    const lineContent = wrapper.childAt(1).childAt(0).childAt(0);
+    const lineContent = wrapper
+      .childAt(1)
+      .childAt(0)
+      .childAt(0);
 
-    expect(lineNumbers.childAt(0).childAt(0).text()).toEqual('57');
-    expect(lineNumbers.childAt(1).childAt(0).text()).toEqual('');
+    expect(
+      lineNumbers
+        .childAt(0)
+        .childAt(0)
+        .text()
+    ).toEqual('57');
+    expect(
+      lineNumbers
+        .childAt(1)
+        .childAt(0)
+        .text()
+    ).toEqual('');
 
     expect(lineContent.text()).toEqual('test line');
   });

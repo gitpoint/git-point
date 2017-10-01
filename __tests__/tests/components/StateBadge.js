@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow, mount, render } from 'enzyme';
+import { shallow } from 'enzyme';
 
 import { closed as closedIssue, open as openIssue } from '../../data/issue';
 import {
