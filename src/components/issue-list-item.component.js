@@ -3,7 +3,6 @@ import { StyleSheet, TouchableHighlight, View, Text } from 'react-native';
 import { ListItem, Icon } from 'react-native-elements';
 import moment from 'moment/min/moment-with-locales.min';
 
-import { StateBadge } from 'components';
 import { colors, fonts, normalize } from 'config';
 
 type Props = {
@@ -16,7 +15,7 @@ type Props = {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'center',
     paddingRight: 10,
     paddingVertical: 5,
@@ -35,23 +34,20 @@ const styles = StyleSheet.create({
     color: colors.primaryDark,
     ...fonts.fontPrimary,
   },
+  subtitleStyle: {
+    marginTop: 2,
+    marginRight: -30,
+    fontSize: normalize(12),
+    color: colors.greyBlue,
+  },
   commentsContainer: {
     flexDirection: 'row',
-    marginTop: 2,
+    paddingTop: 13,
   },
   comments: {
     paddingLeft: 5,
     fontSize: normalize(12),
     color: colors.greyBlue,
-  },
-  description: {
-    marginTop: 2,
-    fontSize: normalize(12),
-    color: colors.greyBlue,
-  },
-  badge: {
-    alignItems: 'flex-end',
-    justifyContent: 'center',
   },
 });
 
@@ -70,36 +66,23 @@ export const IssueListItem = ({ type, issue, navigation, language }: Props) => (
       <ListItem
         containerStyle={styles.listItemContainer}
         title={issue.title}
-        subtitle={
-          <View>
-            {!!issue.comments && (
-              <View style={styles.commentsContainer}>
-                <Icon
-                  name="comment"
-                  type="octicon"
-                  size={15}
-                  color={colors.greyDark}
-                />
-                <Text style={styles.comments}>{issue.comments}</Text>
-              </View>
-            )}
-            <Text style={styles.description} numberOfLines={2}>
-              {`#${issue.number} opened ${moment(
-                issue.created_at
-              ).fromNow()} ago by ${issue.user.login}`}
-            </Text>
-          </View>
-        }
+        subtitle={`#${issue.number} opened ${moment(
+          issue.created_at
+        ).fromNow()} ago by ${issue.user.login}`}
         leftIcon={{
           name: type === 'issue' ? 'issue-opened' : 'git-pull-request',
           size: 36,
-          color: colors.grey,
+          color: issue.state === 'open' ? colors.green : colors.red,
           type: 'octicon',
         }}
         hideChevron
         titleStyle={styles.title}
+        subtitleStyle={styles.subtitleStyle}
       />
-      <StateBadge style={styles.badge} issue={issue} language={language} />
+      <View style={styles.commentsContainer}>
+        <Icon name="comment" type="octicon" size={18} color={colors.grey} />
+        <Text style={styles.comments}>{issue.comments}</Text>
+      </View>
     </View>
   </TouchableHighlight>
 );
