@@ -132,6 +132,18 @@ const cellForNode = node =>
     ? CellWithImage
     : Cell;
 
+const hasAncestor = (node, ancestorName) => {
+  if (node.parent === null) {
+    return false;
+  }
+
+  if (node.parent.type === 'tag' && node.parent.name === ancestorName) {
+    return true;
+  }
+
+  return hasAncestor(node.parent, ancestorName);
+};
+
 const onlyTagsChildren = node =>
   node.children.filter(elem => elem.type === 'tag');
 
@@ -238,8 +250,20 @@ export class GithubHtmlView extends Component {
         hr: (node, index, siblings, parent, defaultRenderer) =>
           <View key={index} style={{ ...hrStyle }} />,
         img: (node, index, siblings, parent, defaultRenderer) => {
-          const zoom =
-            parent && parent.type === 'tag' && parent.name === 'td' ? 0.3 : 0.6;
+          if (hasAncestor(node, 'li')) {
+            return (
+              <Text
+                style={linkStyle}
+                onPress={() =>
+                  onLinkPress({ ...node, attribs: { href: node.attribs.src } })}
+              >
+                [{node.attribs.alt}]
+                {'\n'}
+              </Text>
+            );
+          }
+
+          const zoom = hasAncestor(node, 'table') ? 0.3 : 0.6;
 
           return (
             <ImageZoom
