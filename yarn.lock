@@ -5226,14 +5226,6 @@ react-native-actionsheet@^2.2.0:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/react-native-actionsheet/-/react-native-actionsheet-2.2.2.tgz#469075a7d1c8e5b5d0829294bf9a2c4d2eb7e34e"
 
-"react-native-app-intro@https://github.com/Ernoff/react-native-app-intro.git#updated-packageJson":
-  version "1.1.5"
-  resolved "https://github.com/Ernoff/react-native-app-intro.git#ab94abe7b0592993bda085ddecf28939563453c6"
-  dependencies:
-    assign-deep "^0.4.5"
-    prop-types "^15.5.10"
-    react-native-swiper "git+https://github.com/FuYaoDe/react-native-swiper.git"
-
 react-native-cli@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/react-native-cli/-/react-native-cli-2.0.1.tgz#f2cd3c7aa1b83828cdfba630e2dfd817df766d54"
@@ -5942,6 +5934,14 @@ rimraf@2, rimraf@2.x.x, rimraf@^2.2.8, rimraf@^2.5.1, rimraf@^2.5.4, rimraf@^2.6
 rimraf@~2.2.6:
   version "2.2.8"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
+
+rn-app-intro@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/rn-app-intro/-/rn-app-intro-0.0.4.tgz#c094d36fa0f2c437799d5c11c89d5fbf4cc961c5"
+  dependencies:
+    assign-deep "^0.4.5"
+    prop-types "^15.5.10"
+    react-native-swiper "git+https://github.com/FuYaoDe/react-native-swiper.git"
 
 rn-host-detect@^1.1.3:
   version "1.1.3"
