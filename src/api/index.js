@@ -11,6 +11,7 @@ const ACCEPT = {
   HTML: 'application/vnd.github.v3.html+json',
   DIFF: 'application/vnd.github.v3.diff+json',
   RAW: 'application/vnd.github.v3.raw+json',
+  FULL: 'application/vnd.github.v3.full+json',
 };
 
 const METHOD = {
@@ -107,6 +108,14 @@ export const v3 = {
 
     return response.text();
   },
+  getFull: async (url, accessToken) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.GET, ACCEPT.FULL)
+    );
+
+    return response.json();
+  },
   getJson: async (url, accessToken) => {
     const response = await v3.call(url, v3.parameters(accessToken));
 
@@ -136,6 +145,14 @@ export const v3 = {
 
     return response;
   },
+  patchFull: async (url, accessToken, body = {}) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.PATCH, ACCEPT.FULL, body)
+    );
+
+    return response.json();
+  },
   postJson: async (url, accessToken, body = {}) => {
     const response = await v3.call(
       url,
@@ -151,6 +168,14 @@ export const v3 = {
     );
 
     return response.text();
+  },
+  postFull: async (url, accessToken, body = {}) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.POST, ACCEPT.FULL, body)
+    );
+
+    return response.json();
   },
   post: async (url, accessToken, body = {}) => {
     const response = await v3.call(
@@ -200,7 +225,7 @@ export const fetchPostIssueComment = (
   issueNum,
   accessToken
 ) =>
-  v3.postHtml(
+  v3.postFull(
     `/repos/${owner}/${repoName}/issues/${issueNum}/comments`,
     accessToken,
     { body }
@@ -224,7 +249,7 @@ export const fetchEditIssueComment = (
   editParams: any,
   accessToken: string
 ) =>
-  v3.patch(
+  v3.patchFull(
     `/repos/${owner}/${repoName}/issues/comments/${issueCommentId}`,
     accessToken,
     editParams
