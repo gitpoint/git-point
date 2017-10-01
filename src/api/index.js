@@ -55,7 +55,7 @@ export const v3 = {
 
     return params;
   },
-  count: async (url, accessToken) => {
+  count: async (url, accessToken, abbreviate = false) => {
     const finalUrl =
       url.indexOf('?') !== -1 ? `${url}&per_page=1` : `${url}?per_page=1`;
     const response = await v3.get(finalUrl, accessToken);
@@ -76,7 +76,7 @@ export const v3 = {
       });
     }
 
-    return abbreviateNumber(number);
+    return abbreviate ? abbreviateNumber(number) : number;
   },
   delete: async (url, accessToken) => {
     const response = await v3.call(
@@ -281,7 +281,7 @@ export const fetchForkRepo = (owner, repo, accessToken) =>
   v3.post(`/repos/${owner}/${repo}/forks`, accessToken);
 
 export const fetchStarCount = (owner, accessToken) =>
-  v3.count(`/users/${owner}/starred`, accessToken);
+  v3.count(`/users/${owner}/starred`, accessToken, true);
 
 export const isWatchingRepo = (url, accessToken) => v3.head(url, accessToken);
 
