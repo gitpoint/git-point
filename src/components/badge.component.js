@@ -1,38 +1,47 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
-import { colors, fonts } from 'config';
+import { colors, fonts, normalize } from 'config';
 
 type Props = {
+  color: string,
+  backgroundColor: string,
   text: string,
+  largeText: boolean,
 };
 
 const styles = StyleSheet.create({
   badge: {
-    position: 'absolute',
-    right: 1,
-    top: -1,
-    backgroundColor: colors.darkerRed,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 18,
     width: 18,
     height: 18,
-    justifyContent: 'center',
-    alignItems: 'center',
     borderColor: colors.alabaster,
     borderWidth: 1,
   },
   badgeText: {
-    alignSelf: 'center',
-    fontSize: 9,
-    ...fonts.fontPrimary,
-    color: colors.white,
+    ...fonts.fontPrimaryBold,
     backgroundColor: 'transparent',
+  },
+  textSmall: {
+    fontSize: normalize(7),
+  },
+  textLarge: {
+    fontSize: normalize(9.5),
   },
 });
 
-export const Badge = ({ text }: Props) =>
-  <View style={styles.badge}>
-    <Text style={styles.badgeText}>
+export const Badge = ({ color, backgroundColor, text, largeText }: Props) =>
+  <View style={StyleSheet.flatten([styles.badge, { backgroundColor }])}>
+    <Text
+      style={[
+        styles.badgeText,
+        largeText ? styles.textLarge : styles.textSmall,
+        { color },
+      ]}
+    >
       {text}
     </Text>
   </View>;
