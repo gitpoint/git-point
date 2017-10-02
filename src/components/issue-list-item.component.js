@@ -34,10 +34,11 @@ const styles = StyleSheet.create({
     color: colors.primaryDark,
     ...fonts.fontPrimary,
   },
-  subtitleStyle: {
+  subtitle: {
     marginTop: 2,
     marginRight: -30,
     fontSize: normalize(12),
+    fontWeight: '400',
     color: colors.greyBlue,
   },
   commentsContainer: {
@@ -91,7 +92,7 @@ export const IssueListItem = ({ type, issue, navigation, language }: Props) => (
         }}
         hideChevron
         titleStyle={styles.title}
-        subtitleStyle={styles.subtitleStyle}
+        subtitleStyle={styles.subtitle}
       />
       <View style={styles.commentsContainer}>
         <Icon name="comment" type="octicon" size={18} color={colors.grey} />
