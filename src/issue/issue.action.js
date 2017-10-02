@@ -13,6 +13,7 @@ import {
   GET_ISSUE_COMMENTS,
   POST_ISSUE_COMMENT,
   EDIT_ISSUE,
+  EDIT_ISSUE_BODY,
   CHANGE_LOCK_STATUS,
   GET_ISSUE_DIFF,
   GET_ISSUE_MERGE_STATUS,
@@ -172,6 +173,28 @@ export const editIssueComment = (issueCommentId, owner, repoName, body) => {
   };
 };
 
+export const editIssueBody = (owner, repoName, issueNum, body) => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: EDIT_ISSUE_BODY.PENDING });
+
+    return fetchEditIssue(owner, repoName, issueNum, { body }, accessToken)
+      .then(data => {
+        dispatch({
+          type: EDIT_ISSUE_BODY.SUCCESS,
+          payload: data,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: EDIT_ISSUE_BODY.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
 export const editIssue = (
   owner,
   repoName,
@@ -184,14 +207,7 @@ export const editIssue = (
 
     dispatch({ type: EDIT_ISSUE.PENDING });
 
-    return fetchEditIssue(
-      owner,
-      repoName,
-      issueNum,
-      editParams,
-      updateParams,
-      accessToken
-    )
+    return fetchEditIssue(owner, repoName, issueNum, editParams, accessToken)
       .then(() => {
         dispatch({
           type: EDIT_ISSUE.SUCCESS,
@@ -246,17 +262,15 @@ export const getIssueFromUrl = url => {
     dispatch({ type: GET_ISSUE_FROM_URL.PENDING });
 
     return v3
-      .getHtml(url, accessToken)
+      .getFull(url, accessToken)
       .then(issue => {
-        const parsedIssue = JSON.parse(issue);
-
         dispatch({
           type: GET_ISSUE_FROM_URL.SUCCESS,
-          payload: parsedIssue,
+          payload: issue,
         });
 
-        if (parsedIssue.pull_request) {
-          dispatch(getPullRequestDetails(parsedIssue));
+        if (issue.pull_request) {
+          dispatch(getPullRequestDetails(issue));
         }
       })
       .catch(error => {
