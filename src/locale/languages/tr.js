@@ -1,9 +1,9 @@
 export const tr = {
   auth: {
     login: {
-      connectingToGitHub: 'Connecting to GitHub...',
-      preparingGitPoint: 'Preparing GitPoint...',
-      cancel: 'CANCEL',
+      connectingToGitHub: "GitHub'a Bağlanılıyor...",
+      preparingGitPoint: 'GitPoint Hazırlanıyor...',
+      cancel: 'İPTAL',
       welcomeTitle: "GitPoint'e Hoşgeldiniz",
       welcomeMessage:
         "En zengin özelliklere sahip GitHub client'ı ve 100% ücretsiz",
