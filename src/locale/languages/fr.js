@@ -137,7 +137,7 @@ export const fr = {
       allButton: 'Tous',
       retrievingMessage: 'Récupération des notifications',
       noneMessage: "Vous n'avez aucune notification de ce type",
-      markAllAsRead: 'Mark all as read',
+      markAllAsRead: 'Marquer tous comme lus',
     },
   },
   search: {
@@ -251,10 +251,10 @@ export const fr = {
       applyLabelTitle: 'Appliquer un libellé à ce ticket',
     },
     comment: {
-      commentActions: 'Comment Actions',
-      editCommentTitle: 'Edit Comment',
-      editAction: 'Edit',
-      deleteAction: 'Delete',
+      commentActions: 'Actions sur le commentaire',
+      editCommentTitle: 'Editer le commentaire',
+      editAction: 'Editer',
+      deleteAction: 'Supprimer',
     },
     main: {
       assignees: 'Assignés',
