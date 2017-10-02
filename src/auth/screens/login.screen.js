@@ -235,7 +235,7 @@ class Login extends Component {
 
     return (
       <ViewContainer barColor="light">
-        {' '}{!isAuthenticated &&
+        {!isAuthenticated &&
           !isLoggingIn &&
           this.state.asyncStorageChecked &&
           <View style={styles.container}>
