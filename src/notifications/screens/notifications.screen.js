@@ -119,7 +119,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   noneTitle: {
-    paddingHorizontal: 35,
     fontSize: normalize(16),
     textAlign: 'center',
     ...fonts.fontPrimary,
