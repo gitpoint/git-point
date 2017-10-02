@@ -1,7 +1,8 @@
+/* eslint-disable no-prototype-builtins */
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { colors, fonts, normalize } from 'config';
-import { translate } from 'utils';
+import { translate, abbreviateNumber } from 'utils';
 import { ImageZoom } from 'components';
 
 type Props = {
@@ -124,6 +125,7 @@ export const UserProfile = ({
       </Text>
     </View>
     <View style={styles.details}>
+      {user.hasOwnProperty('public_repos') &&
       <TouchableOpacity
         style={styles.unit}
         onPress={() =>
@@ -141,19 +143,19 @@ export const UserProfile = ({
         <Text style={styles.unitText}>
           {translate('common.repositories', language)}
         </Text>
-      </TouchableOpacity>
+      </TouchableOpacity>}
 
-      {type !== 'org' &&
+      {type !== 'org' && !isNaN(parseInt(starCount, 10)) &&
         <TouchableOpacity style={styles.unit}>
           <Text style={styles.unitNumber}>
-            {!isNaN(parseInt(starCount, 10)) ? starCount : ' '}
+            {abbreviateNumber(starCount)}
           </Text>
           <Text style={styles.unitText}>
             {translate('common.stars', language)}
           </Text>
         </TouchableOpacity>}
 
-      {type !== 'org' &&
+      {type !== 'org' && user.hasOwnProperty('followers') &&
         <TouchableOpacity
           style={styles.unit}
           onPress={() =>
@@ -175,7 +177,7 @@ export const UserProfile = ({
             </Text>}
         </TouchableOpacity>}
 
-      {type !== 'org' &&
+      {type !== 'org' && user.hasOwnProperty('following') &&
         <TouchableOpacity
           style={styles.unit}
           onPress={() =>

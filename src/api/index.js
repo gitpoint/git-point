@@ -1,5 +1,3 @@
-import { abbreviateNumber } from 'utils';
-
 // These keys are for development purposes and do not represent the actual application keys.
 // Feel free to use them or use a new set of keys by creating an OAuth application of your own.
 // https://github.com/settings/applications/new
@@ -56,7 +54,7 @@ export const v3 = {
 
     return params;
   },
-  count: async (url, accessToken, abbreviate = false) => {
+  count: async (url, accessToken) => {
     const finalUrl =
       url.indexOf('?') !== -1 ? `${url}&per_page=1` : `${url}?per_page=1`;
     const response = await v3.get(finalUrl, accessToken);
@@ -77,7 +75,7 @@ export const v3 = {
       });
     }
 
-    return abbreviate ? abbreviateNumber(number) : number;
+    return number;
   },
   delete: async (url, accessToken) => {
     const response = await v3.call(
@@ -305,7 +303,7 @@ export const fetchForkRepo = (owner, repo, accessToken) =>
   v3.post(`/repos/${owner}/${repo}/forks`, accessToken);
 
 export const fetchStarCount = (owner, accessToken) =>
-  v3.count(`/users/${owner}/starred`, accessToken, true);
+  v3.count(`/users/${owner}/starred`, accessToken);
 
 export const isWatchingRepo = (url, accessToken) => v3.head(url, accessToken);
 
