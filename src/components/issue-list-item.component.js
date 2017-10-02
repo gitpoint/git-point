@@ -4,6 +4,7 @@ import { ListItem, Icon } from 'react-native-elements';
 import moment from 'moment/min/moment-with-locales.min';
 
 import { colors, fonts, normalize } from 'config';
+import { translate } from 'utils';
 
 type Props = {
   type: string,
@@ -77,12 +78,16 @@ export const IssueListItem = ({ type, issue, navigation, language }: Props) => (
         title={issue.title}
         subtitle={
           issue.state === 'open'
-            ? `#${issue.number} opened ${moment(
-                issue.created_at
-              ).fromNow()} ago by ${issue.user.login}`
-            : `#${issue.number} by ${issue.user.login} was closed ${moment(
-                issue.created_at
-              ).fromNow()} ago`
+            ? translate('issue.main.openIssueSubTitle', language, {
+                number: issue.number,
+                user: issue.user.login,
+                time: moment(issue.created_at).fromNow(),
+              })
+            : translate('issue.main.closedIssueSubTitle', language, {
+                number: issue.number,
+                user: issue.user.login,
+                time: moment(issue.closed_at).fromNow(),
+              })
         }
         leftIcon={{
           name: getIconName(type, issue),
