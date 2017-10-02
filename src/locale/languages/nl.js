@@ -90,6 +90,7 @@ export const nl = {
       codePushNotApplicable: 'Niet beschikbaar in debug mode',
     },
     userOptions: {
+      donate: 'Doe een donatie',
       title: 'Opties',
       language: 'Taal',
       privacyPolicy: 'Privacybeleid',

@@ -9,22 +9,14 @@ import entities from 'entities';
 import { ImageZoom } from 'components';
 import { colors, fonts, normalize } from 'config';
 
-const lightFont = {
-  ...fonts.fontPrimaryLight,
-};
-
-const regularFont = {
-  ...fonts.fontPrimary,
-};
-
 const textStyle = Platform.select({
   ios: {
-    ...lightFont,
-    fontSize: normalize(11),
+    ...fonts.fontPrimary,
+    fontSize: normalize(12),
     color: colors.primaryDark,
   },
   android: {
-    ...regularFont,
+    ...fonts.fontPrimary,
     fontSize: normalize(12),
     color: colors.primaryDark,
   },
@@ -175,11 +167,11 @@ export class GithubHtmlView extends Component {
         // task list
         .replace(
           /<li class="task-list-item">(<span[^>]*>)?<input class="task-list-item-checkbox" disabled="" id="" type="checkbox"> ?\.? ?/g,
-          '$1⬜ '
+          '$1⬜ ',
         )
         .replace(
           /<li class="task-list-item">(<span[^>]*>)?<input checked="" class="task-list-item-checkbox" disabled="" id="" type="checkbox"> ?\.? ?/g,
-          '$1✅ '
+          '$1✅ ',
         )
         // Remove links & spans around images
         .replace(/<a[^>]+><img([^>]+)><\/a>/g, '<img$1>')
@@ -198,7 +190,7 @@ export class GithubHtmlView extends Component {
       _index,
       _siblings,
       _parent,
-      _defaultRenderer
+      _defaultRenderer,
     ) => {
       /* eslint-disable no-unused-vars */
       const onLinkPress = this.props.onLinkPress;
@@ -352,7 +344,7 @@ export class GithubHtmlView extends Component {
           _index,
           _siblings,
           _parent,
-          _defaultRenderer
+          _defaultRenderer,
         );
       }
 

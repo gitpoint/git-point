@@ -90,6 +90,7 @@ export const tr = {
       codePushNotApplicable: 'Hata ayıklama modunda uygulanamaz',
     },
     userOptions: {
+      donate: 'Bağış yap',
       title: 'Ayarlar',
       language: 'Dil',
       privacyPolicy: 'Gizlilik Politikası',

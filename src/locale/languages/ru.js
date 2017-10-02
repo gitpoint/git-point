@@ -92,6 +92,7 @@ export const ru = {
       codePushNotApplicable: 'Не поддерживается в режиме отладки',
     },
     userOptions: {
+      donate: 'Сделать пожертвование',
       title: 'Настройки',
       language: 'Язык',
       privacyPolicy: 'Политика конфиденциальности',
@@ -269,8 +270,10 @@ export const ru = {
         issue: 'Задача',
         pullRequest: 'Pull-запрос',
       },
-      openIssueSubTitle: '#{{number}} открыт {{time}} назад пользователем {{user}}',
-      closedIssueSubTitle: '#{{number}} закрыт {{time}} назад пользователем {{user}}',
+      openIssueSubTitle:
+        '#{{number}} открыт {{time}} назад пользователем {{user}}',
+      closedIssueSubTitle:
+        '#{{number}} закрыт {{time}} назад пользователем {{user}}',
     },
     newIssue: {
       title: 'Новая задача',

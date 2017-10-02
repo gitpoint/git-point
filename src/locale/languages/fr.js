@@ -94,6 +94,7 @@ export const fr = {
       codePushNotApplicable: 'Non applicable en mode débogage',
     },
     userOptions: {
+      donate: 'Faire un don',
       title: 'Options',
       language: 'Langue',
       privacyPolicy: 'Politique de confidentialité',

@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     flex: 1,
     color: colors.black,
-    ...fonts.fontPrimaryLight,
+    ...fonts.fontPrimary,
   },
   submitTitle: {
     color: colors.green,
@@ -53,7 +53,7 @@ const mapDispatchToProps = dispatch =>
       editIssueBody,
       editIssueComment,
     },
-    dispatch
+    dispatch,
   );
 
 class EditIssueComment extends Component {
@@ -140,5 +140,5 @@ class EditIssueComment extends Component {
 
 export const EditIssueCommentScreen = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(EditIssueComment);
