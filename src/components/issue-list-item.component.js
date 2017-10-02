@@ -51,6 +51,14 @@ const styles = StyleSheet.create({
   },
 });
 
+const getIconName = (type, issue) => {
+  if (type === 'issue') {
+    return issue.state === 'closed' ? 'issue-closed' : 'issue-opened';
+  }
+
+  return 'git-pull-request';
+};
+
 export const IssueListItem = ({ type, issue, navigation, language }: Props) => (
   <TouchableHighlight
     style={issue.state === 'closed' && styles.closedIssue}
@@ -66,11 +74,17 @@ export const IssueListItem = ({ type, issue, navigation, language }: Props) => (
       <ListItem
         containerStyle={styles.listItemContainer}
         title={issue.title}
-        subtitle={`#${issue.number} opened ${moment(
-          issue.created_at
-        ).fromNow()} ago by ${issue.user.login}`}
+        subtitle={
+          issue.state === 'open'
+            ? `#${issue.number} opened ${moment(
+                issue.created_at
+              ).fromNow()} ago by ${issue.user.login}`
+            : `#${issue.number} by ${issue.user.login} was closed ${moment(
+                issue.created_at
+              ).fromNow()} ago`
+        }
         leftIcon={{
-          name: type === 'issue' ? 'issue-opened' : 'git-pull-request',
+          name: getIconName(type, issue),
           size: 36,
           color: issue.state === 'open' ? colors.green : colors.red,
           type: 'octicon',
