@@ -260,10 +260,9 @@ export const fetchEditIssue = (
   repoName,
   issueNum,
   editParams,
-  updateParams,
   accessToken
 ) =>
-  v3.patch(
+  v3.patchFull(
     `/repos/${owner}/${repoName}/issues/${issueNum}`,
     accessToken,
     editParams

@@ -63,7 +63,7 @@ const renderTitle = repository =>
     <View style={styles.repositoryContainer}>
       <View style={styles.titleWrapper}>
         <Text style={styles.title}>
-          {repository.full_name}
+          {repository.name}
         </Text>
         {repository.private && <Text style={styles.private}>Private</Text>}
       </View>

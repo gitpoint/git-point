@@ -13,10 +13,11 @@ import {
   Image,
   Platform,
 } from 'react-native';
-import { ButtonGroup, Card, Icon, Button } from 'react-native-elements';
+import { ButtonGroup, Card, Icon } from 'react-native-elements';
 
 import { v3 } from 'api';
 import {
+  Button,
   ViewContainer,
   LoadingContainer,
   NotificationListItem,
@@ -118,18 +119,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   noneTitle: {
+    paddingHorizontal: 35,
     fontSize: normalize(16),
     textAlign: 'center',
     ...fonts.fontPrimary,
   },
-  markAllAsReadButton: {
-    marginVertical: 15,
+  markAllAsReadButtonContainer: {
     marginTop: 0,
     marginBottom: 20,
-    paddingVertical: 3,
-    borderColor: colors.greyMid,
-    borderWidth: 1,
-    borderRadius: 3,
+    marginHorizontal: 10,
   },
   contentBlock: {
     flex: 1,
@@ -372,20 +370,14 @@ class Notifications extends Component {
       <View>
         {isFirstItem &&
           isFirstTab &&
-          <Button
-            icon={{
-              name: 'check',
-              size: 20,
-              type: 'octicon',
-              color: colors.black,
-            }}
-            title={translate('notifications.main.markAllAsRead')}
-            buttonStyle={styles.markAllAsReadButton}
-            color={colors.black}
-            backgroundColor={colors.white}
-            textStyle={styles.buttonGroupText}
-            onPress={() => markAllNotificationsAsRead()}
-          />}
+          <View style={styles.markAllAsReadButtonContainer}>
+            <Button
+              type="success"
+              icon={{ name: 'check', type: 'octicon' }}
+              onPress={() => markAllNotificationsAsRead()}
+              title={translate('notifications.main.markAllAsRead')}
+            />
+          </View>}
 
         <Card containerStyle={styles.repositoryContainer}>
           <View style={styles.headerContainer}>
