@@ -137,10 +137,10 @@ export const UserProfile = ({
           navigation.navigate('RepositoryList', {
             title: translate('user.repositoryList.title', language),
             user,
-            repoCount:
-              user.public_repos > maxLoadingConstraints.maxPublicRepos
-                ? maxLoadingConstraints.maxPublicRepos
-                : user.public_repos,
+            repoCount: Math.min(
+              maxLoadingConstraints.maxPublicRepos,
+              user.public_repos
+            ),
           })}
       >
         <Text style={styles.unitNumber}>
@@ -160,10 +160,7 @@ export const UserProfile = ({
             navigation.navigate('StarredRepositoryList', {
               title: translate('common.stars', language),
               user,
-              repoCount:
-                starCount > maxLoadingConstraints.maxStars
-                  ? maxLoadingConstraints.maxStars
-                  : starCount,
+              repoCount: Math.min(maxLoadingConstraints.maxStars, starCount),
             })}
         >
           <Text style={styles.unitNumber}>
@@ -181,10 +178,10 @@ export const UserProfile = ({
             navigation.navigate('FollowerList', {
               title: translate('user.followerList.title', language),
               user,
-              followerCount:
-                user.followers > maxLoadingConstraints.maxFollowers
-                  ? maxLoadingConstraints.maxFollowers
-                  : user.followers,
+              followerCount: Math.min(
+                maxLoadingConstraints.maxFollowers,
+                user.followers
+              ),
             })}
         >
           <Text style={styles.unitNumber}>
@@ -206,10 +203,10 @@ export const UserProfile = ({
             navigation.navigate('FollowingList', {
               title: translate('user.followingList.title', language),
               user,
-              followingCount:
-                user.following > maxLoadingConstraints.maxFollowing
-                  ? maxLoadingConstraints.maxFollowing
-                  : user.following,
+              followingCount: Math.min(
+                maxLoadingConstraints.maxFollowing,
+                user.following
+              ),
             })}
         >
           <Text style={styles.unitNumber}>

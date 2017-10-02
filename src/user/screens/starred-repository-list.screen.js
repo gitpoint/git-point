@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { FlatList } from 'react-native';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { FlatList } from 'react-native';
 
 import { getStarredRepositories } from 'user';
 
@@ -16,10 +17,8 @@ const mapStateToProps = state => ({
   isPendingStarredRepositories: state.user.isPendingStarredRepositories,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getStarredRepositories: (user, type) =>
-    dispatch(getStarredRepositories(user, type)),
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ getStarredRepositories }, dispatch);
 
 class StarredRepositoryList extends Component {
   props: {
