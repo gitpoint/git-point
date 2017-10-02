@@ -21,7 +21,7 @@ export async function saveLanguage(language) {
   return true;
 }
 
-export const getLanguage = () => I18n.locale.substr(0, 2);
+export const getLanguage = () => (I18n.locale ? I18n.locale.substr(0, 2) : '');
 
 export async function determineLanguage() {
   const deviceLanguage = getLanguage();
