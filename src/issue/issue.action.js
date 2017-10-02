@@ -84,7 +84,7 @@ export const getIssueComments = issueCommentsURL => {
     dispatch({ type: GET_ISSUE_COMMENTS.PENDING });
 
     return v3
-      .getHtml(`${issueCommentsURL}?per_page=100`, accessToken)
+      .getFull(`${issueCommentsURL}?per_page=100`, accessToken)
       .then(data => {
         dispatch({
           type: GET_ISSUE_COMMENTS.SUCCESS,
@@ -110,7 +110,7 @@ export const postIssueComment = (body, owner, repoName, issueNum) => {
       .then(data => {
         dispatch({
           type: POST_ISSUE_COMMENT.SUCCESS,
-          payload: JSON.parse(data),
+          payload: data,
         });
       })
       .catch(error => {
@@ -157,10 +157,10 @@ export const editIssueComment = (issueCommentId, owner, repoName, body) => {
       { body },
       accessToken
     )
-      .then(() => {
+      .then(data => {
         dispatch({
           type: EDIT_ISSUE_COMMENT.SUCCESS,
-          payload: { id: issueCommentId, body },
+          payload: data,
         });
       })
       .catch(error => {

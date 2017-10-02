@@ -1,10 +1,20 @@
 // @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 import { Badge } from 'components';
+
+import { colors } from 'config';
+
+const styles = StyleSheet.create({
+  badgeContainer: {
+    position: 'absolute',
+    right: -1,
+    top: -1,
+  },
+});
 
 const mapStateToProps = state => ({
   notificationsCount: state.notifications.notificationsCount,
@@ -13,7 +23,7 @@ const mapStateToProps = state => ({
 class NotificationIconComponent extends Component {
   props: {
     iconColor: string,
-    notificationsCount: string,
+    notificationsCount: number,
   };
 
   render() {
@@ -21,15 +31,17 @@ class NotificationIconComponent extends Component {
 
     return (
       <View>
-        <Icon
-          containerStyle={{ justifyContent: 'center', alignItems: 'center' }}
-          color={iconColor}
-          name="notifications"
-          size={33}
-        />
+        <Icon color={iconColor} name="notifications" size={33} />
 
         {!!notificationsCount &&
-          <Badge text={notificationsCount > 99 ? '99+' : notificationsCount} />}
+          <View style={styles.badgeContainer}>
+            <Badge
+              color={colors.white}
+              backgroundColor={colors.darkerRed}
+              text={notificationsCount > 99 ? '99+' : notificationsCount}
+              largeText={notificationsCount <= 99}
+            />
+          </View>}
       </View>
     );
   }

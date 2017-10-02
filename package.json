@@ -72,7 +72,7 @@
     "react-native-search-bar": "^3.0.0",
     "react-native-syntax-highlighter": "^1.2.1",
     "react-native-table-component": "^1.0.5",
-    "react-native-vector-icons": "^4.0.0",
+    "react-native-vector-icons": "^4.4.0",
     "react-navigation": "^1.0.0-beta.11",
     "react-redux": "^5.0.2",
     "react-syntax-highlighter": "^5.6.2",
