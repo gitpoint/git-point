@@ -269,6 +269,8 @@ export const ru = {
         issue: 'Задача',
         pullRequest: 'Pull-запрос',
       },
+      openIssueSubTitle: '#{{number}} opened {{time}} ago by {{user}}',
+      closedIssueSubTitle: '#{{number}} by {{user}} was closed {{time}} ago',
     },
     newIssue: {
       title: 'Новая задача',

@@ -1,10 +1,10 @@
 import React from 'react';
-import { StyleSheet, TouchableHighlight, View } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import { StyleSheet, TouchableHighlight, View, Text } from 'react-native';
+import { ListItem, Icon } from 'react-native-elements';
 import moment from 'moment/min/moment-with-locales.min';
 
-import { StateBadge } from 'components';
-import { colors, fonts } from 'config';
+import { colors, fonts, normalize } from 'config';
+import { translate } from 'utils';
 
 type Props = {
   type: string,
@@ -16,7 +16,7 @@ type Props = {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'center',
     paddingRight: 10,
     paddingVertical: 5,
@@ -33,15 +33,35 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.primaryDark,
-    ...fonts.fontPrimary,
+    ...fonts.fontPrimarySemiBold,
   },
-  badge: {
-    alignItems: 'flex-end',
-    justifyContent: 'center',
+  subtitle: {
+    marginTop: 2,
+    marginRight: -30,
+    fontSize: normalize(12),
+    fontWeight: '400',
+    color: colors.greyBlue,
+  },
+  commentsContainer: {
+    flexDirection: 'row',
+    paddingTop: 13,
+  },
+  comments: {
+    paddingLeft: 5,
+    fontSize: normalize(12),
+    color: colors.greyBlue,
   },
 });
 
-export const IssueListItem = ({ type, issue, navigation, language }: Props) =>
+const getIconName = (type, issue) => {
+  if (type === 'issue') {
+    return issue.state === 'closed' ? 'issue-closed' : 'issue-opened';
+  }
+
+  return 'git-pull-request';
+};
+
+export const IssueListItem = ({ type, issue, navigation, language }: Props) => (
   <TouchableHighlight
     style={issue.state === 'closed' && styles.closedIssue}
     onPress={() =>
@@ -56,16 +76,33 @@ export const IssueListItem = ({ type, issue, navigation, language }: Props) =>
       <ListItem
         containerStyle={styles.listItemContainer}
         title={issue.title}
-        subtitle={`#${issue.number} - ${moment(issue.created_at).fromNow()}`}
+        subtitle={
+          issue.state === 'open'
+            ? translate('issue.main.openIssueSubTitle', language, {
+                number: issue.number,
+                user: issue.user.login,
+                time: moment(issue.created_at).fromNow(),
+              })
+            : translate('issue.main.closedIssueSubTitle', language, {
+                number: issue.number,
+                user: issue.user.login,
+                time: moment(issue.closed_at).fromNow(),
+              })
+        }
         leftIcon={{
-          name: type === 'issue' ? 'issue-opened' : 'git-pull-request',
+          name: getIconName(type, issue),
           size: 36,
-          color: colors.grey,
+          color: issue.state === 'open' ? colors.green : colors.red,
           type: 'octicon',
         }}
         hideChevron
         titleStyle={styles.title}
+        subtitleStyle={styles.subtitle}
       />
-      <StateBadge style={styles.badge} issue={issue} language={language} />
+      <View style={styles.commentsContainer}>
+        <Icon name="comment" type="octicon" size={18} color={colors.grey} />
+        <Text style={styles.comments}>{issue.comments}</Text>
+      </View>
     </View>
-  </TouchableHighlight>;
+  </TouchableHighlight>
+);
