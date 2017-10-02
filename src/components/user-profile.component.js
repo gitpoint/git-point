@@ -19,6 +19,9 @@ type Props = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  wrapperContainer: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -104,99 +107,103 @@ export const UserProfile = ({
   navigation,
 }: Props) =>
   <View style={styles.container}>
-    <View style={styles.profile}>
-      <ImageZoom
-        uri={{
-          uri: initialUser.avatar_url
-            ? `${initialUser.avatar_url}&lastModified=${initialUser.updated_at}`
-            : `${user.avatar_url}&lastModified=${user.updated_at}`,
-        }}
-        style={[
-          styles.avatar,
-          (initialUser.type === 'User' || user.type === 'User') &&
-            styles.userAvatar,
-        ]}
-      />
-      <Text style={styles.title}>
-        {user.name || ' '}
-      </Text>
-      <Text style={styles.subtitle}>
-        {initialUser.login || ' '}
-      </Text>
-    </View>
-    <View style={styles.details}>
-      {user.hasOwnProperty('public_repos') &&
-      <TouchableOpacity
-        style={styles.unit}
-        onPress={() =>
-          navigation.navigate('RepositoryList', {
-            title: translate('user.repositoryList.title', language),
-            user,
-            repoCount: user.public_repos > 15 ? 15 : user.public_repos,
-          })}
-      >
-        <Text style={styles.unitNumber}>
-          {!isNaN(parseInt(user.public_repos, 10))
-            ? user.public_repos + (user.total_private_repos || 0)
-            : ' '}
-        </Text>
-        <Text style={styles.unitText}>
-          {translate('common.repositories', language)}
-        </Text>
-      </TouchableOpacity>}
+    {((user.hasOwnProperty('public_repos') &&
+      !isNaN(parseInt(starCount, 10))) ||
+      type === 'org') &&
+      <View style={styles.wrapperContainer}>
+        <View style={styles.profile}>
+          <ImageZoom
+            uri={{
+              uri: initialUser.avatar_url
+                ? `${initialUser.avatar_url}&lastModified=${initialUser.updated_at}`
+                : `${user.avatar_url}&lastModified=${user.updated_at}`,
+            }}
+            style={[
+              styles.avatar,
+              (initialUser.type === 'User' || user.type === 'User') &&
+                styles.userAvatar,
+            ]}
+          />
+          <Text style={styles.title}>
+            {user.name || ' '}
+          </Text>
+          <Text style={styles.subtitle}>
+            {initialUser.login || ' '}
+          </Text>
+        </View>
+        <View style={styles.details}>
+          <TouchableOpacity
+            style={styles.unit}
+            onPress={() =>
+              navigation.navigate('RepositoryList', {
+                title: translate('user.repositoryList.title', language),
+                user,
+                repoCount: user.public_repos > 15 ? 15 : user.public_repos,
+              })}
+          >
+            <Text style={styles.unitNumber}>
+              {!isNaN(parseInt(user.public_repos, 10))
+                ? user.public_repos + (user.total_private_repos || 0)
+                : ' '}
+            </Text>
+            <Text style={styles.unitText}>
+              {translate('common.repositories', language)}
+            </Text>
+          </TouchableOpacity>
 
-      {type !== 'org' && !isNaN(parseInt(starCount, 10)) &&
-        <TouchableOpacity style={styles.unit}>
-          <Text style={styles.unitNumber}>
-            {abbreviateNumber(starCount)}
-          </Text>
-          <Text style={styles.unitText}>
-            {translate('common.stars', language)}
-          </Text>
-        </TouchableOpacity>}
+          {type !== 'org' &&
+            <TouchableOpacity style={styles.unit}>
+              <Text style={styles.unitNumber}>
+                {abbreviateNumber(starCount)}
+              </Text>
+              <Text style={styles.unitText}>
+                {translate('common.stars', language)}
+              </Text>
+            </TouchableOpacity>}
 
-      {type !== 'org' && user.hasOwnProperty('followers') &&
-        <TouchableOpacity
-          style={styles.unit}
-          onPress={() =>
-            navigation.navigate('FollowerList', {
-              title: translate('user.followers.title', language),
-              user,
-              followerCount: user.followers > 15 ? 15 : user.followers,
-            })}
-        >
-          <Text style={styles.unitNumber}>
-            {!isNaN(parseInt(user.followers, 10)) ? user.followers : ' '}
-          </Text>
-          <Text style={styles.unitText}>
-            {translate('user.followers.text', language)}
-          </Text>
-          {isFollowing &&
-            <Text style={[styles.unitStatus, styles.badge]}>
-              {translate('user.following.followingYou', language)}
-            </Text>}
-        </TouchableOpacity>}
+          {type !== 'org' &&
+            <TouchableOpacity
+              style={styles.unit}
+              onPress={() =>
+                navigation.navigate('FollowerList', {
+                  title: translate('user.followers.title', language),
+                  user,
+                  followerCount: user.followers > 15 ? 15 : user.followers,
+                })}
+            >
+              <Text style={styles.unitNumber}>
+                {!isNaN(parseInt(user.followers, 10)) ? user.followers : ' '}
+              </Text>
+              <Text style={styles.unitText}>
+                {translate('user.followers.text', language)}
+              </Text>
+              {isFollowing &&
+                <Text style={[styles.unitStatus, styles.badge]}>
+                  {translate('user.following.followingYou', language)}
+                </Text>}
+            </TouchableOpacity>}
 
-      {type !== 'org' && user.hasOwnProperty('following') &&
-        <TouchableOpacity
-          style={styles.unit}
-          onPress={() =>
-            navigation.navigate('FollowingList', {
-              title: translate('user.following.title', language),
-              user,
-              followingCount: user.following > 15 ? 15 : user.following,
-            })}
-        >
-          <Text style={styles.unitNumber}>
-            {!isNaN(parseInt(user.following, 10)) ? user.following : ' '}
-          </Text>
-          <Text style={styles.unitText}>
-            {translate('user.following.text', language)}
-          </Text>
-          {isFollower &&
-            <Text style={[styles.unitStatus, styles.badge]}>
-              {translate('user.followers.followsYou')}
-            </Text>}
-        </TouchableOpacity>}
-    </View>
+          {type !== 'org' &&
+            <TouchableOpacity
+              style={styles.unit}
+              onPress={() =>
+                navigation.navigate('FollowingList', {
+                  title: translate('user.following.title', language),
+                  user,
+                  followingCount: user.following > 15 ? 15 : user.following,
+                })}
+            >
+              <Text style={styles.unitNumber}>
+                {!isNaN(parseInt(user.following, 10)) ? user.following : ' '}
+              </Text>
+              <Text style={styles.unitText}>
+                {translate('user.following.text', language)}
+              </Text>
+              {isFollower &&
+                <Text style={[styles.unitStatus, styles.badge]}>
+                  {translate('user.followers.followsYou')}
+                </Text>}
+            </TouchableOpacity>}
+        </View>
+      </View>}
   </View>;
