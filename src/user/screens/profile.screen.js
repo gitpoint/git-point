@@ -150,7 +150,12 @@ class Profile extends Component {
     } = this.props;
     const { refreshing } = this.state;
     const initialUser = navigation.state.params.user;
-    const isPending = isPendingUser || isPendingOrgs || isPendingStarCount || isPendingCheckFollowing || isPendingCheckFollower;
+    const isPending =
+      isPendingUser ||
+      isPendingOrgs ||
+      isPendingStarCount ||
+      isPendingCheckFollowing ||
+      isPendingCheckFollower;
     const userActions = [
       isFollowing
         ? translate('user.profile.unfollow', language)
@@ -173,7 +178,7 @@ class Profile extends Component {
             />}
           refreshControl={
             <RefreshControl
-              refreshing={refreshing}
+              refreshing={refreshing || isPending}
               onRefresh={this.getUserInfo}
             />
           }

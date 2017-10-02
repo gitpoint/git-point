@@ -121,15 +121,15 @@ class AuthProfile extends Component {
           renderContent={() =>
             <UserProfile
               type="user"
-              initialUser={hasInitialUser && !!starCount ? user : {}}
-              user={hasInitialUser && !!starCount ? user : {}}
-              starCount={hasInitialUser && !!starCount ? starCount : ''}
+              initialUser={hasInitialUser ? user : {}}
+              user={hasInitialUser ? user : {}}
+              starCount={hasInitialUser ? starCount : ''}
               language={language}
               navigation={navigation}
             />}
           refreshControl={
             <RefreshControl
-              refreshing={isPending}
+              refreshing={isPendingUser}
               onRefresh={this.refreshProfile}
             />
           }
