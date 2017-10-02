@@ -121,9 +121,9 @@ class AuthProfile extends Component {
           renderContent={() =>
             <UserProfile
               type="user"
-              initialUser={hasInitialUser ? user : {}}
-              user={hasInitialUser ? user : {}}
-              starCount={hasInitialUser ? starCount : ''}
+              initialUser={hasInitialUser && !!starCount ? user : {}}
+              user={hasInitialUser && !!starCount ? user : {}}
+              starCount={hasInitialUser && !!starCount ? starCount : ''}
               language={language}
               navigation={navigation}
             />}
