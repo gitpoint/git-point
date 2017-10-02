@@ -167,7 +167,7 @@ export const UserProfile = ({
             })}
         >
           <Text style={styles.unitNumber}>
-            {starCount}
+            {!isNaN(parseInt(starCount, 10)) ? starCount : ' '}
           </Text>
           <Text style={styles.unitText}>
             {translate('common.stars', language)}
