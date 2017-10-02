@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { colors, constraints, fonts, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 import { translate } from 'utils';
 import { ImageZoom } from 'components';
 
@@ -92,6 +92,13 @@ const styles = StyleSheet.create({
   },
 });
 
+const maxLoadingConstraints = {
+  maxFollowers: 15,
+  maxFollowing: 15,
+  maxPublicRepos: 15,
+  maxStars: 15,
+};
+
 export const UserProfile = ({
   type,
   initialUser,
@@ -131,8 +138,8 @@ export const UserProfile = ({
             title: translate('user.repositoryList.title', language),
             user,
             repoCount:
-              user.public_repos > constraints.maxPublicRepos
-                ? constraints.maxPublicRepos
+              user.public_repos > maxLoadingConstraints.maxPublicRepos
+                ? maxLoadingConstraints.maxPublicRepos
                 : user.public_repos,
           })}
       >
@@ -151,11 +158,11 @@ export const UserProfile = ({
           style={styles.unit}
           onPress={() =>
             navigation.navigate('StarredRepositoryList', {
-              title: 'Starred Repositories',
+              title: translate('common.stars', language),
               user,
               repoCount:
-                starCount > constraints.maxStars
-                  ? constraints.maxStars
+                starCount > maxLoadingConstraints.maxStars
+                  ? maxLoadingConstraints.maxStars
                   : starCount,
             })}
         >
@@ -175,8 +182,8 @@ export const UserProfile = ({
               title: translate('user.followerList.title', language),
               user,
               followerCount:
-                user.followers > constraints.maxFollowers
-                  ? constraints.maxFollowers
+                user.followers > maxLoadingConstraints.maxFollowers
+                  ? maxLoadingConstraints.maxFollowers
                   : user.followers,
             })}
         >
@@ -200,8 +207,8 @@ export const UserProfile = ({
               title: translate('user.followingList.title', language),
               user,
               followingCount:
-                user.following > constraints.maxFollowing
-                  ? constraints.maxFollowing
+                user.following > maxLoadingConstraints.maxFollowing
+                  ? maxLoadingConstraints.maxFollowing
                   : user.following,
             })}
         >

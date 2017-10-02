@@ -16,8 +16,6 @@ import {
   GET_IS_FOLLOWER,
   GET_REPOSITORIES,
   GET_STARRED_REPOSITORIES,
-  GET_STARRED_REPOSITORIES_PAGINATION,
-  GET_MORE_STARRED_REPOSITORIES,
   GET_FOLLOWERS,
   GET_FOLLOWING,
   SEARCH_USER_REPOS,
@@ -207,57 +205,23 @@ export const getRepositories = user => {
 
 export const getStarredRepositories = user => {
   return (dispatch, getState) => {
-    const { accessToken } = getState().auth;
-    const url = `${USER_ENDPOINT(user.login)}/starred?page=1`;
-    let lastPage = null;
+    const url = `${USER_ENDPOINT(
+      user.login
+    )}/starred?&sort=updated&per_page=50`;
+    const accessToken = getState().auth.accessToken;
 
     dispatch({ type: GET_STARRED_REPOSITORIES.PENDING });
 
-    fetchUrlNormal(url, accessToken)
-      .then(response => {
-        const linkHeader = response.headers.get('Link');
-        const lastPage = Number(headerLink.match(/(\d+)(?=>;\srel="last")/)[0]);
-        return response.json();
-      })
+    fetchUrl(url, accessToken)
       .then(data => {
         dispatch({
           type: GET_STARRED_REPOSITORIES.SUCCESS,
-          payload: lastPage,
-        });
-
-        dispatch({
-          type: GET_STARRED_REPOSITORIES_PAGINATION.SUCCESS,
           payload: data,
         });
       })
       .catch(error => {
         dispatch({
           type: GET_STARRED_REPOSITORIES.ERROR,
-          payload: error,
-        });
-      });
-  };
-};
-
-export const getMoreStarredRepositories = (user, page = 1) => {
-  return (dispatch, getState) => {
-    const { accessToken } = getState().auth;
-    const url = `${USER_ENDPOINT(user.login)}/starred?page=${page}`;
-
-    dispatch({ type: GET_MORE_STARRED_REPOSITORIES.PENDING });
-
-    fetchUrl(url, accessToken)
-      .then(data => {
-        console.log('GET MORE STARRED REPOS headers');
-        console.log(data.headers);
-        dispatch({
-          type: GET_MORE_STARRED_REPOSITORIES.SUCCESS,
-          payload: data,
-        });
-      })
-      .catch(error => {
-        dispatch({
-          type: GET_MORE_STARRED_REPOSITORIES.ERROR,
           payload: error,
         });
       });

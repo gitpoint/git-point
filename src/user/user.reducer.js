@@ -5,8 +5,6 @@ import {
   GET_IS_FOLLOWER,
   GET_REPOSITORIES,
   GET_STARRED_REPOSITORIES,
-  GET_STARRED_REPOSITORIES_PAGINATION,
-  GET_MORE_STARRED_REPOSITORIES,
   GET_FOLLOWERS,
   GET_FOLLOWING,
   SEARCH_USER_REPOS,
@@ -34,7 +32,6 @@ const initialState = {
   isPendingFollowing: false,
   isPendingSearchUserRepos: false,
   isPendingStarredRepositories: false,
-  starredRepositoriesLastPage: 0,
   error: '',
 };
 
@@ -180,33 +177,7 @@ export const userReducer = (state = initialState, action = {}) => {
         starredRepositories: action.payload,
         isPendingStarredRepositories: false,
       };
-    case GET_STARRED_REPOSITORIES_PAGINATION.SUCCESS:
-      console.log('REPOSSSSSSS PAGINATION');
-      return {
-        ...state,
-        starredRepositoriesLastPage: action.payload,
-      };
     case GET_STARRED_REPOSITORIES.ERROR:
-      return {
-        ...state,
-        error: action.payload,
-        isPendingStarredRepositories: false,
-      };
-    case GET_MORE_STARRED_REPOSITORIES.PENDING:
-      return {
-        ...state,
-        isPendingStarredRepositories: true,
-      };
-    case GET_MORE_STARRED_REPOSITORIES.SUCCESS:
-      return {
-        ...state,
-        isPendingStarredRepositories: false,
-        starredRepositories:
-          action.payload.length > 0
-            ? [...state.starredRepositories, ...action.payload]
-            : state.starredRepositories,
-      };
-    case GET_MORE_STARRED_REPOSITORIES.ERROR:
       return {
         ...state,
         error: action.payload,
