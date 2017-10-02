@@ -37,7 +37,7 @@
 
 ## Introduction
 
-[![Build Status](https://img.shields.io/travis/gitpoint/git-point.svg?style=flat-square)](https://travis-ci.org/gitpoint/git-point)
+[![Backers on Open Collective](https://opencollective.com/git-point/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/git-point/sponsors/badge.svg)](#sponsors) [![Build Status](https://img.shields.io/travis/gitpoint/git-point.svg?style=flat-square)](https://travis-ci.org/gitpoint/git-point)
 [![All Contributors](https://img.shields.io/badge/all_contributors-39-orange.svg?style=flat-square)](#contributors)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)](http://commitizen.github.io/cz-cli/)
@@ -104,3 +104,28 @@ Please take a look at the [contributing guidelines](./CONTRIBUTING.md) for a det
 | [<img src="https://avatars0.githubusercontent.com/u/13774309?v=4" width="100px;"/><br /><sub>Arthur Denner</sub>](https://github.com/arthurdenner)<br />[🌍](#translation-arthurdenner "Translation") | [<img src="https://avatars1.githubusercontent.com/u/18403881?v=4" width="100px;"/><br /><sub>Florian Taut</sub>](https://taut-fl.de)<br />[💻](https://github.com/gitpoint/git-point/commits?author=FlorianTaut "Code") | [<img src="https://avatars0.githubusercontent.com/u/15075759?v=4" width="100px;"/><br /><sub>Avare Kodcu</sub>](http://www.avarekodcu.com/iletisim)<br />[🌍](#translation-abdurrahmanekr "Translation") | [<img src="https://avatars0.githubusercontent.com/u/23240518?v=4" width="100px;"/><br /><sub>Anas Khan</sub>](http://anask.xyz)<br />[🌍](#translation-anaskhan96 "Translation") | [<img src="https://avatars0.githubusercontent.com/u/1930729?v=4" width="100px;"/><br /><sub>Nelson Henrique</sub>](https://github.com/nersoh)<br />[💻](https://github.com/gitpoint/git-point/commits?author=nersoh "Code") | [<img src="https://avatars3.githubusercontent.com/u/23623237?v=4" width="100px;"/><br /><sub>Charles Kenney</sub>](http://charleskenney.com)<br />[💻](https://github.com/gitpoint/git-point/commits?author=Charliekenney23 "Code") |
 | [<img src="https://avatars0.githubusercontent.com/u/18398761?v=4" width="100px;"/><br /><sub>Vitaliy Kanev</sub>](https://github.com/vitalkanev)<br />[📖](https://github.com/gitpoint/git-point/commits?author=vitalkanev "Documentation") | [<img src="https://avatars3.githubusercontent.com/u/3691490?v=4" width="100px;"/><br /><sub>Peter Dave Hello</sub>](https://www.peterdavehello.org/)<br />[📖](https://github.com/gitpoint/git-point/commits?author=PeterDaveHello "Documentation") [🔧](#tool-PeterDaveHello "Tools") | [<img src="https://avatars3.githubusercontent.com/u/10849025?v=4" width="100px;"/><br /><sub>Ernoff</sub>](https://github.com/Ernoff)<br /> |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
+
+## Backers
+
+Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/git-point#backer)]
+
+<a href="https://opencollective.com/git-point#backers" target="_blank"><img src="https://opencollective.com/git-point/backers.svg?width=890"></a>
+
+
+## Sponsors
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/git-point#sponsor)]
+
+<a href="https://opencollective.com/git-point/sponsor/0/website" target="_blank"><img src="https://opencollective.com/git-point/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/git-point/sponsor/1/website" target="_blank"><img src="https://opencollective.com/git-point/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/git-point/sponsor/2/website" target="_blank"><img src="https://opencollective.com/git-point/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/git-point/sponsor/3/website" target="_blank"><img src="https://opencollective.com/git-point/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/git-point/sponsor/4/website" target="_blank"><img src="https://opencollective.com/git-point/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/git-point/sponsor/5/website" target="_blank"><img src="https://opencollective.com/git-point/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/git-point/sponsor/6/website" target="_blank"><img src="https://opencollective.com/git-point/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/git-point/sponsor/7/website" target="_blank"><img src="https://opencollective.com/git-point/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/git-point/sponsor/8/website" target="_blank"><img src="https://opencollective.com/git-point/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/git-point/sponsor/9/website" target="_blank"><img src="https://opencollective.com/git-point/sponsor/9/avatar.svg"></a>
+
+
