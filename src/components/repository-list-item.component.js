@@ -61,7 +61,7 @@ const renderTitle = (repository, showFullName) =>
         {repository.private &&
           <View style={styles.privateIconContainer}>
             <Icon
-              size={20}
+              size={16}
               name="lock"
               type="octicon"
               color={colors.greyDarkest}

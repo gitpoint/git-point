@@ -58,7 +58,7 @@ const mapDispatchToProps = dispatch =>
       getNotificationsCount,
       markAllNotificationsAsRead,
     },
-    dispatch
+    dispatch,
   );
 
 const styles = StyleSheet.create({
@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   noneTitle: {
+    paddingHorizontal: 15,
     fontSize: normalize(16),
     textAlign: 'center',
     ...fonts.fontPrimary,
@@ -188,7 +189,7 @@ class Notifications extends Component {
 
   getImage(repoName) {
     const notificationForRepo = this.notifications().find(
-      notification => notification.repository.full_name === repoName
+      notification => notification.repository.full_name === repoName,
     );
 
     return notificationForRepo.repository.owner.avatar_url;
@@ -225,8 +226,8 @@ class Notifications extends Component {
     const repositories = [
       ...new Set(
         this.notifications().map(
-          notification => notification.repository.full_name
-        )
+          notification => notification.repository.full_name,
+        ),
       ),
     ];
 
@@ -360,7 +361,7 @@ class Notifications extends Component {
     } = this.props;
     const { type } = this.state;
     const notifications = this.notifications().filter(
-      notification => notification.repository.full_name === item
+      notification => notification.repository.full_name === item,
     );
     const isFirstItem = this.getSortedRepos().indexOf(item) === 0;
     const isFirstTab = type === 0;
@@ -415,7 +416,7 @@ class Notifications extends Component {
                 iconAction={notificationID => markAsRead(notificationID)}
                 navigationAction={notify => this.navigateToThread(notify)}
                 navigation={this.props.navigation}
-              />
+              />,
             )}
           </ScrollView>
         </Card>
@@ -463,7 +464,7 @@ class Notifications extends Component {
                   animating={isRetrievingNotifications}
                   text={translate(
                     'notifications.main.retrievingMessage',
-                    language
+                    language,
                   )}
                   style={styles.marginSpacing}
                   center
@@ -503,5 +504,5 @@ class Notifications extends Component {
 }
 
 export const NotificationsScreen = connect(mapStateToProps, mapDispatchToProps)(
-  Notifications
+  Notifications,
 );
