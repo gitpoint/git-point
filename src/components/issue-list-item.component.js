@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.primaryDark,
-    ...fonts.fontPrimary,
+    ...fonts.fontPrimarySemiBold,
   },
   subtitle: {
     marginTop: 2,
