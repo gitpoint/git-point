@@ -1,9 +1,9 @@
 export const ptBr = {
   auth: {
     login: {
-      connectingToGitHub: 'Connecting to GitHub...',
-      preparingGitPoint: 'Preparing GitPoint...',
-      cancel: 'CANCEL',
+      connectingToGitHub: 'Conectando ao GitHub...',
+      preparingGitPoint: 'Preparando GitPoint...',
+      cancel: 'CANCELAR',
       welcomeTitle: 'Bem-vindo ao GitPoint',
       welcomeMessage:
         'O GitHub client com a maior quantidade de funcionalidades que é 100% grátis',
@@ -132,7 +132,7 @@ export const ptBr = {
       allButton: 'Todas',
       retrievingMessage: 'Buscando notificações',
       noneMessage: 'Você não tem notificações deste tipo',
-      markAllAsRead: 'Mark all as read',
+      markAllAsRead: 'Marcar todos como lido',
     },
   },
   search: {
