@@ -11,6 +11,7 @@ const ACCEPT = {
   HTML: 'application/vnd.github.v3.html+json',
   DIFF: 'application/vnd.github.v3.diff+json',
   RAW: 'application/vnd.github.v3.raw+json',
+  FULL: 'application/vnd.github.v3.full+json',
 };
 
 const METHOD = {
@@ -55,7 +56,7 @@ export const v3 = {
 
     return params;
   },
-  count: async (url, accessToken) => {
+  count: async (url, accessToken, abbreviate = false) => {
     const finalUrl =
       url.indexOf('?') !== -1 ? `${url}&per_page=1` : `${url}?per_page=1`;
     const response = await v3.get(finalUrl, accessToken);
@@ -76,7 +77,7 @@ export const v3 = {
       });
     }
 
-    return abbreviateNumber(number);
+    return abbreviate ? abbreviateNumber(number) : number;
   },
   delete: async (url, accessToken) => {
     const response = await v3.call(
@@ -107,6 +108,14 @@ export const v3 = {
 
     return response.text();
   },
+  getFull: async (url, accessToken) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.GET, ACCEPT.FULL)
+    );
+
+    return response.json();
+  },
   getJson: async (url, accessToken) => {
     const response = await v3.call(url, v3.parameters(accessToken));
 
@@ -136,6 +145,14 @@ export const v3 = {
 
     return response;
   },
+  patchFull: async (url, accessToken, body = {}) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.PATCH, ACCEPT.FULL, body)
+    );
+
+    return response.json();
+  },
   postJson: async (url, accessToken, body = {}) => {
     const response = await v3.call(
       url,
@@ -151,6 +168,14 @@ export const v3 = {
     );
 
     return response.text();
+  },
+  postFull: async (url, accessToken, body = {}) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.POST, ACCEPT.FULL, body)
+    );
+
+    return response.json();
   },
   post: async (url, accessToken, body = {}) => {
     const response = await v3.call(
@@ -200,7 +225,7 @@ export const fetchPostIssueComment = (
   issueNum,
   accessToken
 ) =>
-  v3.postHtml(
+  v3.postFull(
     `/repos/${owner}/${repoName}/issues/${issueNum}/comments`,
     accessToken,
     { body }
@@ -224,7 +249,7 @@ export const fetchEditIssueComment = (
   editParams: any,
   accessToken: string
 ) =>
-  v3.patch(
+  v3.patchFull(
     `/repos/${owner}/${repoName}/issues/comments/${issueCommentId}`,
     accessToken,
     editParams
@@ -281,7 +306,7 @@ export const fetchForkRepo = (owner, repo, accessToken) =>
   v3.post(`/repos/${owner}/${repo}/forks`, accessToken);
 
 export const fetchStarCount = (owner, accessToken) =>
-  v3.count(`/users/${owner}/starred`, accessToken);
+  v3.count(`/users/${owner}/starred`, accessToken, true);
 
 export const isWatchingRepo = (url, accessToken) => v3.head(url, accessToken);
 

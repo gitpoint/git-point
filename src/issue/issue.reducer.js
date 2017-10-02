@@ -41,7 +41,7 @@ export const issueReducer = (state = initialState, action = {}) => {
     case GET_ISSUE_COMMENTS.SUCCESS:
       return {
         ...state,
-        comments: JSON.parse(action.payload),
+        comments: action.payload,
         isPendingComments: false,
       };
     case GET_ISSUE_COMMENTS.ERROR:
@@ -97,7 +97,11 @@ export const issueReducer = (state = initialState, action = {}) => {
         comments: state.comments.map(
           comment =>
             comment.id === action.payload.id
-              ? { ...comment, body: action.payload.body }
+              ? {
+                  ...comment,
+                  body: action.payload.body,
+                  body_html: action.payload.body_html,
+                }
               : comment
         ),
         isEditingComment: false,
