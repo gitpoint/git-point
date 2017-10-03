@@ -1,9 +1,9 @@
 export const tr = {
   auth: {
     login: {
-      connectingToGitHub: 'Connecting to GitHub...',
-      preparingGitPoint: 'Preparing GitPoint...',
-      cancel: 'CANCEL',
+      connectingToGitHub: "GitHub'a Bağlanılıyor...",
+      preparingGitPoint: 'GitPoint Hazırlanıyor...',
+      cancel: 'İPTAL',
       welcomeTitle: "GitPoint'e Hoşgeldiniz",
       welcomeMessage:
         "En zengin özelliklere sahip GitHub client'ı ve 100% ücretsiz",
@@ -134,7 +134,7 @@ export const tr = {
       allButton: 'Tümü',
       retrievingMessage: 'Bildirim alınıyor',
       noneMessage: 'Bu türde hiçbir bildirime sahip değilsiniz',
-      markAllAsRead: 'Mark all as read',
+      markAllAsRead: 'Hepsini okundu olarak işaretle',
     },
   },
   search: {
@@ -252,10 +252,10 @@ export const tr = {
       applyLabelTitle: "Bu issue'ya bir etiket uygulayın",
     },
     comment: {
-      commentActions: 'Comment Actions',
-      editCommentTitle: 'Edit Comment',
-      editAction: 'Edit',
-      deleteAction: 'Delete',
+      commentActions: 'Yorum Hareketleri',
+      editCommentTitle: 'Yorumu Düzenle',
+      editAction: 'Düzenle',
+      deleteAction: 'Sil',
     },
     main: {
       assignees: 'Atananlar',

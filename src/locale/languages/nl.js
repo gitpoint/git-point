@@ -1,9 +1,9 @@
 export const nl = {
   auth: {
     login: {
-      connectingToGitHub: 'Connecting to GitHub...',
-      preparingGitPoint: 'Preparing GitPoint...',
-      cancel: 'CANCEL',
+      connectingToGitHub: 'Verbinding maken met GitHub ...', // google translate
+      preparingGitPoint: 'GitPoint voorbereiden ...', // google translate
+      cancel: 'ANNULEER', // google translate
       welcomeTitle: 'Welkom bij GitPoint',
       welcomeMessage: 'De meest complete GitHub client die geen geld kost',
       notificationsTitle: 'Beheer notificaties',
@@ -134,7 +134,7 @@ export const nl = {
       allButton: 'Alles',
       retrievingMessage: 'Notificaties ophalen',
       noneMessage: 'Je hebt geen notificaties met dit type',
-      markAllAsRead: 'Mark all as read',
+      markAllAsRead: 'Alles als gelezen markeren', // google translate
     },
   },
   search: {
@@ -248,10 +248,10 @@ export const nl = {
       applyLabelTitle: 'Voeg een label toe aan deze issue',
     },
     comment: {
-      commentActions: 'Comment Actions',
-      editCommentTitle: 'Edit Comment',
-      editAction: 'Edit',
-      deleteAction: 'Delete',
+      commentActions: 'Commentaaracties', // google translate
+      editCommentTitle: 'Bewerk commentaar', // google translate
+      editAction: 'Bewerk', // google translate
+      deleteAction: 'Verwijder', // google translate
     },
     main: {
       assignees: 'Assignees',

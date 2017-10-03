@@ -273,8 +273,8 @@ export const fr = {
         issue: 'Ticket',
         pullRequest: 'Pull Request',
       },
-      openIssueSubTitle: '#{{number}} opened {{time}} ago by {{user}}',
-      closedIssueSubTitle: '#{{number}} by {{user}} was closed {{time}} ago',
+      openIssueSubTitle: '#{{number}} ouvert il y a {{time}} par {{user}}',
+      closedIssueSubTitle: '#{{number}} par {{user}} fermé il y a {{time}}',
     },
     newIssue: {
       title: 'Nouveau ticket',
