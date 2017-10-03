@@ -1,5 +1,7 @@
+/* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
   StyleSheet,
   ActivityIndicator,
@@ -20,27 +22,40 @@ import {
 } from 'components';
 import { emojifyText, translate } from 'utils';
 import { colors, fonts } from 'config';
-import { getUserInfo, changeFollowStatus, getStarCount } from '../user.action';
+import {
+  getUserInfo,
+  getStarCount,
+  getIsFollowing,
+  getIsFollower,
+  changeFollowStatus,
+} from '../user.action';
 
 const mapStateToProps = state => ({
   auth: state.auth.user,
   user: state.user.user,
-  followers: state.user.followers,
   orgs: state.user.orgs,
   starCount: state.user.starCount,
   language: state.auth.language,
   isFollowing: state.user.isFollowing,
+  isFollower: state.user.isFollower,
   isPendingUser: state.user.isPendingUser,
   isPendingOrgs: state.user.isPendingOrgs,
+  isPendingStarCount: state.user.isPendingStarCount,
   isPendingCheckFollowing: state.user.isPendingCheckFollowing,
+  isPendingCheckFollower: state.user.isPendingCheckFollower,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getUserInfoByDispatch: user => dispatch(getUserInfo(user)),
-  getUserStarCountByDispatch: user => dispatch(getStarCount(user)),
-  changeFollowStatusByDispatch: (user, isFollowing) =>
-    dispatch(changeFollowStatus(user, isFollowing)),
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getUserInfo,
+      getStarCount,
+      getIsFollowing,
+      getIsFollower,
+      changeFollowStatus,
+    },
+    dispatch
+  );
 
 const styles = StyleSheet.create({
   listTitle: {
@@ -55,19 +70,23 @@ const styles = StyleSheet.create({
 
 class Profile extends Component {
   props: {
-    getUserInfoByDispatch: Function,
-    changeFollowStatusByDispatch: Function,
-    getUserStarCountByDispatch: Function,
+    getUserInfo: Function,
+    getStarCount: Function,
+    getIsFollowing: Function,
+    getIsFollower: Function,
+    changeFollowStatus: Function,
     auth: Object,
     user: Object,
-    followers: Array,
     orgs: Array,
     starCount: string,
     language: string,
     isFollowing: boolean,
+    isFollower: boolean,
     isPendingUser: boolean,
     isPendingOrgs: boolean,
+    isPendingStarCount: boolean,
     isPendingCheckFollowing: boolean,
+    isPendingCheckFollower: boolean,
     navigation: Object,
   };
 
@@ -83,27 +102,23 @@ class Profile extends Component {
   }
 
   componentDidMount() {
-    this.props.getUserInfoByDispatch(
-      this.props.navigation.state.params.user.login
-    );
-
-    this.props.getUserStarCountByDispatch(
-      this.props.navigation.state.params.user.login
-    );
+    this.getUserInfo();
   }
 
   getUserInfo = () => {
     this.setState({ refreshing: true });
 
-    this.props.getUserStarCountByDispatch(
-      this.props.navigation.state.params.user.login
-    );
+    const user = this.props.navigation.state.params.user;
+    const auth = this.props.auth;
 
-    this.props
-      .getUserInfoByDispatch(this.props.navigation.state.params.user.login)
-      .then(() => {
-        this.setState({ refreshing: false });
-      });
+    Promise.all([
+      this.props.getUserInfo(user.login),
+      this.props.getStarCount(user.login),
+      this.props.getIsFollowing(user.login, auth.login),
+      this.props.getIsFollower(user.login, auth.login),
+    ]).then(() => {
+      this.setState({ refreshing: false });
+    });
   };
 
   showMenuActionSheet = () => {
@@ -111,17 +126,11 @@ class Profile extends Component {
   };
 
   handlePress = index => {
-    const { user, isFollowing, changeFollowStatusByDispatch } = this.props;
+    const { user, isFollowing, changeFollowStatus } = this.props;
 
     if (index === 0) {
-      changeFollowStatusByDispatch(user.login, isFollowing);
+      changeFollowStatus(user.login, isFollowing);
     }
-  };
-
-  isFollower = () => {
-    const { auth, followers } = this.props;
-
-    return followers.filter(follower => follower.login === auth).legth > 0;
   };
 
   render() {
@@ -131,14 +140,22 @@ class Profile extends Component {
       starCount,
       language,
       isFollowing,
+      isFollower,
       isPendingUser,
       isPendingOrgs,
+      isPendingStarCount,
       isPendingCheckFollowing,
+      isPendingCheckFollower,
       navigation,
     } = this.props;
     const { refreshing } = this.state;
     const initialUser = navigation.state.params.user;
-    const isPending = isPendingUser || isPendingOrgs;
+    const isPending =
+      isPendingUser ||
+      isPendingOrgs ||
+      isPendingStarCount ||
+      isPendingCheckFollowing ||
+      isPendingCheckFollower;
     const userActions = [
       isFollowing
         ? translate('user.profile.unfollow', language)
@@ -152,18 +169,16 @@ class Profile extends Component {
             <UserProfile
               type="user"
               initialUser={initialUser}
-              starCount={starCount}
-              isFollowing={
-                isPendingUser || isPendingCheckFollowing ? false : isFollowing
-              }
-              isFollower={this.isFollower}
-              user={initialUser.login === user.login ? user : {}}
+              starCount={!isPending ? starCount : ''}
+              isFollowing={!isPending ? isFollowing : false}
+              isFollower={!isPending ? isFollower : false}
+              user={!isPending ? user : {}}
               language={language}
               navigation={navigation}
             />}
           refreshControl={
             <RefreshControl
-              refreshing={refreshing}
+              refreshing={refreshing || isPending}
               onRefresh={this.getUserInfo}
             />
           }

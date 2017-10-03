@@ -4,76 +4,354 @@
 export const CLIENT_ID = '87c7f05700c052937cfb';
 export const CLIENT_SECRET = '3a70aee4d5e26c457720a31c3efe2f9062a4997a';
 
-export const root = 'https://api.github.com';
-export const USER_ENDPOINT = user => `${root}/users/${user}`;
+const ACCEPT = {
+  JSON: 'application/vnd.github.v3+json',
+  HTML: 'application/vnd.github.v3.html+json',
+  DIFF: 'application/vnd.github.v3.diff+json',
+  RAW: 'application/vnd.github.v3.raw+json',
+  FULL: 'application/vnd.github.v3.full+json',
+};
 
-const accessTokenParameters = accessToken => ({
-  headers: {
-    Accept: 'application/vnd.github.v3+json',
-    Authorization: `token ${accessToken}`,
-    'Cache-Control': 'no-cache',
+const METHOD = {
+  GET: 'GET',
+  HEAD: 'HEAD',
+  PUT: 'PUT',
+  DELETE: 'DELETE',
+  PATCH: 'PATCH',
+  POST: 'POST',
+};
+
+export const v3 = {
+  root: 'https://api.github.com',
+  call: async (url, parameters) => {
+    const finalUrl = url.indexOf(v3.root) === 0 ? url : `${v3.root}${url}`;
+    const response = await fetch(finalUrl, parameters);
+
+    return response;
   },
-});
+  parameters: (
+    accessToken,
+    method = METHOD.GET,
+    accept = ACCEPT.JSON,
+    body = {}
+  ) => {
+    const withBody = [METHOD.PUT, METHOD.PATCH, METHOD.POST];
+    const params = {
+      method,
+      headers: {
+        Accept: accept,
+        Authorization: `token ${accessToken}`,
+        'Cache-Control': 'no-cache',
+      },
+    };
 
-const accessTokenParametersPUT = (accessToken, body = {}) => ({
-  method: 'PUT',
-  headers: {
-    Accept: 'application/vnd.github.v3+json',
-    Authorization: `token ${accessToken}`,
-    'Content-Length': 0,
+    if (withBody.indexOf(method) !== -1) {
+      params.body = JSON.stringify(body);
+      if (method === METHOD.PUT) {
+        params.headers['Content-Length'] = 0;
+      }
+    }
+
+    return params;
   },
-  body: JSON.stringify(body),
-});
+  count: async (url, accessToken) => {
+    const finalUrl =
+      url.indexOf('?') !== -1 ? `${url}&per_page=1` : `${url}?per_page=1`;
+    const response = await v3.get(finalUrl, accessToken);
 
-const accessTokenParametersDELETE = accessToken => ({
-  method: 'DELETE',
-  headers: {
-    Accept: 'application/vnd.github.v3+json',
-    Authorization: `token ${accessToken}`,
+    if (response.status === 404) {
+      return 0;
+    }
+
+    let linkHeader = response.headers.get('Link');
+    let number;
+
+    if (linkHeader !== null) {
+      linkHeader = linkHeader.match(/page=(\d)+/g).pop();
+      number = linkHeader.split('=').pop();
+    } else {
+      number = await response.json().then(data => {
+        return data.length;
+      });
+    }
+
+    return number;
   },
-});
+  delete: async (url, accessToken) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.DELETE)
+    );
 
-const accessTokenParametersPATCH = (editParams, accessToken) => ({
-  method: 'PATCH',
-  headers: {
-    Accept: 'application/vnd.github.v3+json',
-    Authorization: `token ${accessToken}`,
+    return response;
   },
-  body: JSON.stringify(editParams),
-});
+  get: async (url, accessToken) => {
+    const response = await v3.call(url, v3.parameters(accessToken));
 
-const accessTokenParametersPOST = (accessToken, body) => ({
-  method: 'POST',
-  headers: {
-    Accept: 'application/vnd.github.v3+json',
-    Authorization: `token ${accessToken}`,
+    return response;
   },
-  body: JSON.stringify(body),
-});
+  getDiff: async (url, accessToken) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.GET, ACCEPT.DIFF)
+    );
 
-const accessTokenParametersHTML = accessToken => ({
-  headers: {
-    Accept: 'application/vnd.github.v3.html+json',
-    Authorization: `token ${accessToken}`,
+    return response.text();
   },
-});
+  getHtml: async (url, accessToken) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.GET, ACCEPT.HTML)
+    );
 
-const accessTokenParametersDiff = accessToken => ({
-  headers: {
-    Accept: 'application/vnd.github.v3.diff+json',
-    Authorization: `token ${accessToken}`,
+    return response.text();
   },
-});
+  getFull: async (url, accessToken) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.GET, ACCEPT.FULL)
+    );
 
-const accessTokenParametersRaw = accessToken => ({
-  headers: {
-    Accept: 'application/vnd.github.v3.raw+json',
-    Authorization: `token ${accessToken}`,
+    return response.json();
   },
-});
+  getJson: async (url, accessToken) => {
+    const response = await v3.call(url, v3.parameters(accessToken));
 
+    return response.json();
+  },
+  getRaw: async (url, accessToken) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.GET, ACCEPT.RAW)
+    );
+
+    return response.text();
+  },
+  head: async (url, accessToken) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.HEAD)
+    );
+
+    return response;
+  },
+  patch: async (url, accessToken, body = {}) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.PATCH, ACCEPT.JSON, body)
+    );
+
+    return response;
+  },
+  patchFull: async (url, accessToken, body = {}) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.PATCH, ACCEPT.FULL, body)
+    );
+
+    return response.json();
+  },
+  postJson: async (url, accessToken, body = {}) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.POST, ACCEPT.JSON, body)
+    );
+
+    return response.json();
+  },
+  postHtml: async (url, accessToken, body = {}) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.POST, ACCEPT.HTML, body)
+    );
+
+    return response.text();
+  },
+  postFull: async (url, accessToken, body = {}) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.POST, ACCEPT.FULL, body)
+    );
+
+    return response.json();
+  },
+  post: async (url, accessToken, body = {}) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.POST, ACCEPT.JSON, body)
+    );
+
+    return response;
+  },
+  put: async (url, accessToken, body = {}) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.PUT, ACCEPT.JSON, body)
+    );
+
+    return response;
+  },
+};
+
+export const fetchAuthUser = accessToken => v3.getJson('/user', accessToken);
+
+export const fetchAuthUserOrgs = accessToken =>
+  v3.getJson('/user/orgs', accessToken);
+
+export const fetchUser = (user, accessToken) =>
+  v3.getJson(`/users/${user}`, accessToken);
+
+export const fetchUserOrgs = (user, accessToken) =>
+  v3.getJson(`/users/${user}/orgs`, accessToken);
+
+export const fetchUserEvents = (user, accessToken) =>
+  v3.getJson(`/users/${user}/received_events?per_page=100`, accessToken);
+
+export const fetchReadMe = (user, repository, accessToken) =>
+  v3.getHtml(`/repos/${user}/${repository}/readme?ref=master`, accessToken);
+
+export const fetchOrg = (orgName, accessToken) =>
+  v3.getJson(`/orgs/${orgName}`, accessToken);
+
+export const fetchOrgMembers = (orgName, accessToken) =>
+  v3.getJson(`/orgs/${orgName}/members`, accessToken);
+
+export const fetchPostIssueComment = (
+  body,
+  owner,
+  repoName,
+  issueNum,
+  accessToken
+) =>
+  v3.postFull(
+    `/repos/${owner}/${repoName}/issues/${issueNum}/comments`,
+    accessToken,
+    { body }
+  );
+
+export const fetchDeleteIssueComment = (
+  issueCommentId,
+  owner,
+  repoName,
+  accessToken
+) =>
+  v3.delete(
+    `/repos/${owner}/${repoName}/issues/comments/${issueCommentId}`,
+    accessToken
+  );
+
+export const fetchEditIssueComment = (
+  issueCommentId: number,
+  owner: string,
+  repoName: string,
+  editParams: any,
+  accessToken: string
+) =>
+  v3.patchFull(
+    `/repos/${owner}/${repoName}/issues/comments/${issueCommentId}`,
+    accessToken,
+    editParams
+  );
+
+export const fetchEditIssue = (
+  owner,
+  repoName,
+  issueNum,
+  editParams,
+  accessToken
+) =>
+  v3.patchFull(
+    `/repos/${owner}/${repoName}/issues/${issueNum}`,
+    accessToken,
+    editParams
+  );
+
+export const fetchChangeIssueLockStatus = (
+  owner,
+  repoName,
+  issueNum,
+  currentStatus,
+  accessToken
+) =>
+  v3[currentStatus ? 'delete' : 'put'](
+    `/repos/${owner}/${repoName}/issues/${issueNum}/lock`,
+    accessToken
+  );
+
+export const fetchSearch = (type, query, accessToken, params = '') =>
+  v3.getJson(`/search/${type}?q=${query}${params}`, accessToken);
+
+export const fetchNotifications = (participating, all, accessToken) =>
+  v3.getJson(
+    `/notifications?participating=${participating}&all=${all}`,
+    accessToken
+  );
+
+export const fetchMarkNotificationAsRead = (notificationID, accessToken) =>
+  v3.patch(`/notifications/threads/${notificationID}`, accessToken);
+
+export const fetchMarkRepoNotificationAsRead = (repoFullName, accessToken) =>
+  v3.put(`/repos/${repoFullName}/notifications`, accessToken);
+
+export const fetchMarkAllNotificationsAsRead = accessToken =>
+  v3.put('/notifications', accessToken);
+
+export const fetchChangeStarStatusRepo = (owner, repo, starred, accessToken) =>
+  v3[starred ? 'delete' : 'put'](`/user/starred/${owner}/${repo}`, accessToken);
+
+export const fetchForkRepo = (owner, repo, accessToken) =>
+  v3.post(`/repos/${owner}/${repo}/forks`, accessToken);
+
+export const fetchStarCount = (owner, accessToken) =>
+  v3.count(`/users/${owner}/starred`, accessToken);
+
+export const isWatchingRepo = (url, accessToken) => v3.head(url, accessToken);
+
+export const watchRepo = (owner, repo, accessToken) =>
+  v3.put(`/repos/${owner}/${repo}/subscription`, accessToken, {
+    subscribed: true,
+  });
+
+export const unWatchRepo = (owner, repo, accessToken) =>
+  v3.delete(`/repos/${owner}/${repo}/subscription`, accessToken);
+
+export const fetchChangeFollowStatus = (user, isFollowing, accessToken) =>
+  v3[isFollowing ? 'delete' : 'put'](`/user/following/${user}`, accessToken);
+
+export const fetchDiff = (url, accessToken) => v3.getDiff(url, accessToken);
+
+export const fetchMergeStatus = (repo, issueNum, accessToken) =>
+  v3.get(`/repos/${repo}/pulls/${issueNum}/merge`, accessToken);
+
+export const fetchMergePullRequest = (
+  repo,
+  issueNum,
+  commitTitle,
+  commitMessage,
+  mergeMethod,
+  accessToken
+) =>
+  v3.put(`/repos/${repo}/pulls/${issueNum}/merge`, accessToken, {
+    commit_title: commitTitle,
+    commit_message: commitMessage,
+    merge_method: mergeMethod,
+  });
+
+export const fetchSubmitNewIssue = (
+  owner,
+  repo,
+  issueTitle,
+  issueComment,
+  accessToken
+) =>
+  v3.postJson(`/repos/${owner}/${repo}/issues`, accessToken, {
+    title: issueTitle,
+    body: issueComment,
+  });
+
+// Auth
 const authParameters = (code, state) => ({
-  method: 'POST',
+  method: METHOD.POST,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
@@ -86,30 +364,6 @@ const authParameters = (code, state) => ({
   }),
 });
 
-export async function fetchUrl(url, accessToken) {
-  const response = await fetch(url, accessTokenParameters(accessToken));
-
-  return response.json();
-}
-
-export async function fetchUrlNormal(url, accessToken) {
-  const response = await fetch(url, accessTokenParameters(accessToken));
-
-  return response;
-}
-
-export async function fetchUrlFile(url, accessToken) {
-  const response = await fetch(url, accessTokenParametersRaw(accessToken));
-
-  return response.text();
-}
-
-export async function fetchCommentHTML(url, accessToken) {
-  const response = await fetch(url, accessTokenParameters(accessToken));
-
-  return response.json();
-}
-
 export async function fetchAccessToken(code, state) {
   const GITHUB_OAUTH_ENDPOINT = 'https://github.com/login/oauth/access_token';
   const response = await fetch(
@@ -120,303 +374,8 @@ export async function fetchAccessToken(code, state) {
   return response.json();
 }
 
-export async function fetchAuthUser(accessToken) {
-  const FETCH_AUTH_USER_ENDPOINT = `${root}/user`;
-  const response = await fetch(
-    FETCH_AUTH_USER_ENDPOINT,
-    accessTokenParameters(accessToken)
-  );
+export const fetchNotificationsCount = accessToken =>
+  v3.count('/notifications?per_page=1', accessToken);
 
-  return response.json();
-}
-
-export async function fetchAuthUserOrgs(accessToken) {
-  const ORGS_ENDPOINT = `${root}/user/orgs`;
-  const response = await fetch(
-    ORGS_ENDPOINT,
-    accessTokenParameters(accessToken)
-  );
-
-  return response.json();
-}
-
-export async function fetchUser(user, accessToken) {
-  const FETCH_USER_ENDPOINT = `${root}/users/${user}`;
-  const response = await fetch(
-    FETCH_USER_ENDPOINT,
-    accessTokenParameters(accessToken)
-  );
-
-  return response.json();
-}
-
-export async function fetchUserOrgs(user, accessToken) {
-  const ORGS_ENDPOINT = `${root}/users/${user}/orgs`;
-  const response = await fetch(
-    ORGS_ENDPOINT,
-    accessTokenParameters(accessToken)
-  );
-
-  return response.json();
-}
-
-export async function fetchUserEvents(user, accessToken) {
-  const EVENTS_ENDPOINT = `${root}/users/${user}/received_events?per_page=100`;
-  const response = await fetch(
-    EVENTS_ENDPOINT,
-    accessTokenParameters(accessToken)
-  );
-
-  return response.json();
-}
-
-export async function fetchReadMe(user, repository, accessToken) {
-  const README_ENDPOINT = `${root}/repos/${user}/${repository}/readme?ref=master`;
-  const response = await fetch(
-    README_ENDPOINT,
-    accessTokenParametersHTML(accessToken)
-  );
-
-  return response.text();
-}
-
-export async function fetchOrg(orgName, accessToken) {
-  const response = await fetch(
-    `${root}/orgs/${orgName}`,
-    accessTokenParameters(accessToken)
-  );
-
-  return response;
-}
-
-export async function fetchOrgMembers(orgName, accessToken) {
-  const response = await fetch(
-    `${root}/orgs/${orgName}/members`,
-    accessTokenParameters(accessToken)
-  );
-
-  return response;
-}
-
-export async function fetchPostIssueComment(
-  body,
-  owner,
-  repoName,
-  issueNum,
-  accessToken
-) {
-  const ENDPOINT = `${root}/repos/${owner}/${repoName}/issues/${issueNum}/comments`;
-  const response = await fetch(
-    ENDPOINT,
-    accessTokenParametersPOST(accessToken, { body })
-  );
-
-  return response.json();
-}
-
-export async function fetchEditIssue(
-  owner,
-  repoName,
-  issueNum,
-  editParams,
-  updateParams,
-  accessToken
-) {
-  const ENDPOINT = `${root}/repos/${owner}/${repoName}/issues/${issueNum}`;
-  const response = await fetch(
-    ENDPOINT,
-    accessTokenParametersPATCH(editParams, accessToken)
-  );
-
-  return response;
-}
-
-export async function fetchChangeIssueLockStatus(
-  owner,
-  repoName,
-  issueNum,
-  currentStatus,
-  accessToken
-) {
-  const ENDPOINT = `${root}/repos/${owner}/${repoName}/issues/${issueNum}/lock`;
-  const response = await fetch(
-    ENDPOINT,
-    currentStatus
-      ? accessTokenParametersDELETE(accessToken)
-      : accessTokenParametersPUT(accessToken)
-  );
-
-  return response;
-}
-
-export async function fetchSearch(type, query, accessToken, params = '') {
-  const ENDPOINT = `https://api.github.com/search/${type}?q=${query}${params}`;
-  const response = await fetch(ENDPOINT, accessTokenParameters(accessToken));
-
-  return response.json();
-}
-
-export async function fetchNotifications(participating, all, accessToken) {
-  const ENDPOINT = `https://api.github.com/notifications?participating=${participating}&all=${all}`;
-  const response = fetch(ENDPOINT, accessTokenParameters(accessToken));
-
-  return response.json();
-}
-
-export async function fetchMarkNotificationAsRead(notificationID, accessToken) {
-  const ENDPOINT = `https://api.github.com/notifications/threads/${notificationID}`;
-  const response = await fetch(
-    ENDPOINT,
-    accessTokenParametersPATCH(null, accessToken)
-  );
-
-  return response;
-}
-
-export async function fetchMarkRepoNotificationAsRead(
-  repoFullName,
-  accessToken
-) {
-  const ENDPOINT = `https://api.github.com/repos/${repoFullName}/notifications`;
-  const response = await fetch(ENDPOINT, accessTokenParametersPUT(accessToken));
-
-  return response;
-}
-
-export async function fetchChangeStarStatusRepo(
-  owner,
-  repo,
-  starred,
-  accessToken
-) {
-  const ENDPOINT = `https://api.github.com/user/starred/${owner}/${repo}`;
-  const response = await fetch(
-    ENDPOINT,
-    starred
-      ? accessTokenParametersDELETE(accessToken)
-      : accessTokenParametersPUT(accessToken)
-  );
-
-  return response;
-}
-
-export async function fetchForkRepo(owner, repo, accessToken) {
-  const ENDPOINT = `https://api.github.com/repos/${owner}/${repo}/forks`;
-  const response = await fetch(
-    ENDPOINT,
-    accessTokenParametersPOST(accessToken)
-  );
-
-  return response;
-}
-
-export async function fetchStarCount(owner) {
-  const ENDPOINT = `https://api.github.com/users/${owner}/starred?per_page=1`;
-  const response = await fetch(ENDPOINT);
-
-  let linkHeader = response.headers.get('Link');
-  let output = '';
-
-  if (linkHeader == null) {
-    output = response.json().then(data => {
-      return data.length;
-    });
-  } else {
-    linkHeader = linkHeader.match(/page=(\d)+/g).pop();
-    output = linkHeader.split('=').pop();
-  }
-
-  // Add 'k' if star more than 1000
-
-  if (output > 1000) {
-    const outDecimal = (output / 1000).toString();
-    const dotIndex = outDecimal.indexOf('.');
-
-    output = `${outDecimal.substring(0, dotIndex + 3)}k`;
-  }
-
-  return output;
-}
-
-export async function watchRepo(isSubscribed, owner, repo, accessToken) {
-  const ENDPOINT = `https://api.github.com/repos/${owner}/${repo}/subscription`;
-  const response = await fetch(
-    ENDPOINT,
-    accessTokenParameters(accessToken, { subscribed: isSubscribed })
-  );
-
-  return response;
-}
-
-export async function unWatchRepo(owner, repo, accessToken) {
-  const ENDPOINT = `https://api.github.com/repos/${owner}/${repo}/subscription`;
-  const response = await fetch(ENDPOINT, accessTokenParameters(accessToken));
-
-  return response;
-}
-
-export async function fetchChangeFollowStatus(user, isFollowing, accessToken) {
-  const ENDPOINT = `https://api.github.com/user/following/${user}`;
-  const response = await fetch(
-    ENDPOINT,
-    isFollowing
-      ? accessTokenParametersDELETE(accessToken)
-      : accessTokenParametersPUT(accessToken)
-  );
-
-  return response;
-}
-
-export async function fetchDiff(url, accessToken) {
-  const response = await fetch(url, accessTokenParametersDiff(accessToken));
-
-  return response.text();
-}
-
-export async function fetchMergeStatus(repo, issueNum, accessToken) {
-  const ENDPOINT = `https://api.github.com/repos/${repo}/pulls/${issueNum}/merge`;
-  const response = await fetch(ENDPOINT, accessTokenParameters(accessToken));
-
-  return response;
-}
-
-export async function fetchMergePullRequest(
-  repo,
-  issueNum,
-  commitTitle,
-  commitMessage,
-  mergeMethod,
-  accessToken
-) {
-  const ENDPOINT = `https://api.github.com/repos/${repo}/pulls/${issueNum}/merge`;
-
-  const response = await fetch(
-    ENDPOINT,
-    accessTokenParametersPUT(accessToken, {
-      commit_title: commitTitle,
-      commit_message: commitMessage,
-      merge_method: mergeMethod,
-    })
-  );
-
-  return response;
-}
-
-export async function fetchSubmitNewIssue(
-  owner,
-  repo,
-  issueTitle,
-  issueComment,
-  accessToken
-) {
-  const ENDPOINT = `https://api.github.com/repos/${owner}/${repo}/issues`;
-  const response = await fetch(
-    ENDPOINT,
-    accessTokenParametersPOST(accessToken, {
-      title: issueTitle,
-      body: issueComment,
-    })
-  );
-
-  return response.json();
-}
+export const fetchRepoNotificationsCount = (owner, repoName, accessToken) =>
+  v3.count(`/repos/${owner}/${repoName}/notifications?per_page=1`, accessToken);

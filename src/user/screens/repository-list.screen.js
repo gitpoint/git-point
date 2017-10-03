@@ -1,5 +1,7 @@
+/* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { FlatList, View, Dimensions, StyleSheet } from 'react-native';
 
 import {
@@ -12,6 +14,7 @@ import { colors } from 'config';
 import { getRepositories, searchUserRepos } from 'user';
 
 const mapStateToProps = state => ({
+  authUser: state.auth.user,
   user: state.user.user,
   repositories: state.user.repositories,
   searchedUserRepos: state.user.searchedUserRepos,
@@ -19,12 +22,14 @@ const mapStateToProps = state => ({
   isPendingSearchUserRepos: state.user.isPendingSearchUserRepos,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getRepositoriesByDispatch: (user, type) =>
-    dispatch(getRepositories(user, type)),
-  searchUserReposByDispatch: (user, type) =>
-    dispatch(searchUserRepos(user, type)),
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getRepositories,
+      searchUserRepos,
+    },
+    dispatch,
+  );
 
 const styles = StyleSheet.create({
   header: {
@@ -49,8 +54,9 @@ const styles = StyleSheet.create({
 
 class RepositoryList extends Component {
   props: {
-    getRepositoriesByDispatch: Function,
-    searchUserReposByDispatch: Function,
+    getRepositories: Function,
+    searchUserRepos: Function,
+    authUser: Object,
     user: Object,
     repositories: Array,
     searchedUserRepos: Array,
@@ -81,7 +87,7 @@ class RepositoryList extends Component {
   componentDidMount() {
     const user = this.props.navigation.state.params.user;
 
-    this.props.getRepositoriesByDispatch(user);
+    this.props.getRepositories(user);
   }
 
   getList = () => {
@@ -92,7 +98,7 @@ class RepositoryList extends Component {
   };
 
   search(query) {
-    const { searchUserReposByDispatch } = this.props;
+    const { searchUserRepos } = this.props;
     const user = this.props.navigation.state.params.user;
 
     if (query !== '') {
@@ -101,7 +107,7 @@ class RepositoryList extends Component {
         query,
       });
 
-      searchUserReposByDispatch(query, user);
+      searchUserRepos(query, user);
     }
   }
 
@@ -111,6 +117,7 @@ class RepositoryList extends Component {
 
   render() {
     const {
+      authUser,
       isPendingRepositories,
       isPendingSearchUserRepos,
       navigation,
@@ -145,7 +152,7 @@ class RepositoryList extends Component {
 
           {loading &&
             [...Array(searchStart ? repoCount : 10)].map(
-              (item, index) => <LoadingRepositoryListItem key={index} /> // eslint-disable-line react/no-array-index-key
+              (item, index) => <LoadingRepositoryListItem key={index} />, // eslint-disable-line react/no-array-index-key
             )}
 
           {!loading &&
@@ -157,6 +164,7 @@ class RepositoryList extends Component {
                 renderItem={({ item }) =>
                   <RepositoryListItem
                     repository={item}
+                    showFullName={authUser.login !== item.owner.login}
                     navigation={navigation}
                   />}
               />
@@ -169,5 +177,5 @@ class RepositoryList extends Component {
 
 export const RepositoryListScreen = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(RepositoryList);

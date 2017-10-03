@@ -59,5 +59,6 @@ haste-map-react-native-packager*
 # eslint cache
 .eslintcache
 
-# Editors
+# editors
 .vscode
+.idea

@@ -1,5 +1,7 @@
+/* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
   FlatList,
   KeyboardAvoidingView,
@@ -16,13 +18,15 @@ import {
   CommentListItem,
   CommentInput,
 } from 'components';
+import { v3 } from 'api';
 import { translate } from 'utils';
 import { colors } from 'config';
-import { getRepository } from 'repository';
+import { getRepository, getContributors } from 'repository';
 import {
   getIssueComments,
   postIssueComment,
   getIssueFromUrl,
+  deleteIssueComment,
 } from '../issue.action';
 
 const mapStateToProps = state => ({
@@ -39,15 +43,21 @@ const mapStateToProps = state => ({
   isPendingComments: state.issue.isPendingComments,
   isPostingComment: state.issue.isPostingComment,
   isPendingContributors: state.repository.isPendingContributors,
+  isDeletingComment: state.issue.isDeletingComment,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getIssueCommentsByDispatch: url => dispatch(getIssueComments(url)),
-  postIssueCommentByDispatch: (body, owner, repoName, issueNum) =>
-    dispatch(postIssueComment(body, owner, repoName, issueNum)),
-  getIssueFromUrlByDispatch: url => dispatch(getIssueFromUrl(url)),
-  getRepositoryByDispatch: url => dispatch(getRepository(url)),
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getIssueComments,
+      getRepository,
+      getContributors,
+      postIssueComment,
+      getIssueFromUrl,
+      deleteIssueComment,
+    },
+    dispatch
+  );
 
 class Issue extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -76,11 +86,12 @@ class Issue extends Component {
   };
 
   props: {
-    getIssueCommentsByDispatch: Function,
-    getRepositoryByDispatch: Function,
-    getContributorsByDispatch: Function,
-    postIssueCommentByDispatch: Function,
-    getIssueFromUrlByDispatch: Function,
+    getIssueComments: Function,
+    getRepository: Function,
+    getContributors: Function,
+    postIssueComment: Function,
+    getIssueFromUrl: Function,
+    deleteIssueComment: Function,
     diff: string,
     issue: Object,
     isMerged: boolean,
@@ -92,6 +103,7 @@ class Issue extends Component {
     isPendingDiff: boolean,
     isPendingCheckMerge: boolean,
     isPendingComments: boolean,
+    isDeletingComment: boolean,
     isPendingContributors: boolean,
     // isPostingComment: boolean,
     language: string,
@@ -119,10 +131,9 @@ class Issue extends Component {
       node.attribs.class.includes('issue-link')
     ) {
       navigation.navigate('Issue', {
-        issueURL: node.attribs['data-url'].replace(
-          'github.com',
-          'api.github.com/repos'
-        ),
+        issueURL: node.attribs.href
+          .replace('https://github.com', `${v3.root}/repos`)
+          .replace(/pull\/([0-9]+)$/, 'issues/$1'),
       });
     } else {
       Linking.openURL(node.attribs.href);
@@ -139,35 +150,33 @@ class Issue extends Component {
 
   getIssueInformation = () => {
     const {
-      issue,
       navigation,
       repository,
-      getIssueCommentsByDispatch,
-      getRepositoryByDispatch,
-      getContributorsByDispatch,
-      getIssueFromUrlByDispatch,
+      getIssueComments,
+      getRepository,
+      getContributors,
+      getIssueFromUrl,
     } = this.props;
 
     const issueParam = navigation.state.params.issue;
     const issueURLParam = navigation.state.params.issueURL;
     const issueCommentsURL = `${navigation.state.params.issueURL}/comments`;
 
-    Promise.all(
-      getIssueFromUrlByDispatch(issueURLParam || issueParam.url),
-      getIssueCommentsByDispatch(
+    Promise.all([
+      getIssueFromUrl(issueURLParam || issueParam.url),
+      getIssueComments(
         issueURLParam ? issueCommentsURL : issueParam.comments_url
-      )
-    ).then(() => {
+      ),
+    ]).then(() => {
+      const issue = this.props.issue;
+
       if (
-        issueParam &&
         repository.full_name !==
-          issueParam.repository_url.replace('https://api.github.com/repos/', '')
+        issue.repository_url.replace(`${v3.root}/repos/`, '')
       ) {
         Promise.all([
-          getRepositoryByDispatch(issue.repository_url),
-          getContributorsByDispatch(
-            this.getContributorsLink(issue.repository_url)
-          ),
+          getRepository(issue.repository_url),
+          getContributors(this.getContributorsLink(issue.repository_url)),
         ]).then(() => {
           this.setNavigationParams();
         });
@@ -196,9 +205,28 @@ class Issue extends Component {
     const owner = repository.owner.login;
     const issueNum = navigation.state.params.issue.number;
 
-    this.props.postIssueCommentByDispatch(body, owner, repoName, issueNum);
+    this.props.postIssueComment(body, owner, repoName, issueNum);
     Keyboard.dismiss();
     this.commentsList.scrollToEnd();
+  };
+
+  deleteComment = comment => {
+    const { repository } = this.props;
+    const repoName = repository.name;
+    const owner = repository.owner.login;
+
+    this.props.deleteIssueComment(comment.id, owner, repoName);
+  };
+
+  editComment = comment => {
+    const { state, navigate } = this.props.navigation;
+    const { repository } = this.props;
+
+    navigate('EditIssueComment', {
+      title: translate('issue.comment.editCommentTitle', state.params.language),
+      comment,
+      repository,
+    });
   };
 
   keyExtractor = item => {
@@ -239,6 +267,8 @@ class Issue extends Component {
       <CommentListItem
         comment={item}
         onLinkPress={node => this.onLinkPress(node)}
+        onDeletePress={this.deleteComment}
+        onEditPress={this.editComment}
         language={language}
         navigation={this.props.navigation}
       />
@@ -253,12 +283,19 @@ class Issue extends Component {
       isPendingComments,
       isPendingContributors,
       isPendingIssue,
+      isDeletingComment,
       language,
       navigation,
     } = this.props;
 
-    const isLoadingData = !!(isPendingComments || isPendingIssue);
+    const isLoadingData = !!(
+      isPendingComments ||
+      isPendingIssue ||
+      isDeletingComment
+    );
+    const isShowLoadingContainer = isPendingComments || isPendingIssue;
     const fullComments = !isPendingComments ? [issue, ...comments] : [];
+
     const participantNames = !isPendingComments
       ? fullComments.map(item => item && item.user && item.user.login)
       : [];
@@ -271,11 +308,8 @@ class Issue extends Component {
 
     return (
       <ViewContainer>
-        {isLoadingData &&
-          <LoadingContainer
-            animating={isPendingComments || isPendingIssue}
-            center
-          />}
+        {isShowLoadingContainer &&
+          <LoadingContainer animating={isShowLoadingContainer} center />}
 
         {!isPendingComments &&
           !isPendingIssue &&
@@ -283,7 +317,10 @@ class Issue extends Component {
           <KeyboardAvoidingView
             style={{ flex: 1 }}
             behavior={'padding'}
-            keyboardVerticalOffset={Platform.select({ ios: 65, android: -200 })}
+            keyboardVerticalOffset={Platform.select({
+              ios: 65,
+              android: -200,
+            })}
           >
             <FlatList
               ref={ref => {

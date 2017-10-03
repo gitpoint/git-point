@@ -3,33 +3,20 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  Platform,
-} from 'react-native';
-import HTMLView from 'react-native-htmlview';
+import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
+import { GithubHtmlView } from 'components';
+import { Icon } from 'react-native-elements';
+import ActionSheet from 'react-native-actionsheet';
+
 import moment from 'moment/min/moment-with-locales.min';
 
 import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
 
-const lightFont = {
-  ...fonts.fontPrimaryLight,
-};
-
-const regularFont = {
-  ...fonts.fontPrimary,
-};
-
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 10,
     paddingRight: 10,
-    paddingBottom: 10,
+    paddingTop: 10,
     backgroundColor: 'transparent',
   },
   header: {
@@ -59,64 +46,37 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   linkDescription: {
-    ...fonts.fontPrimarySemiBold,
+    ...fonts.fontPrimaryBold,
+    fontSize: normalize(13),
     color: colors.primaryDark,
   },
   date: {
     color: colors.greyDark,
   },
   commentContainer: {
-    paddingTop: 4,
-    paddingBottom: 22,
+    paddingTop: 5,
     marginLeft: 54,
-    marginRight: 20,
     borderBottomColor: colors.greyLight,
     borderBottomWidth: 1,
   },
+  commentBottomPadding: {
+    paddingBottom: 15,
+  },
   commentText: {
-    fontSize: Platform.OS === 'ios' ? normalize(11) : normalize(12),
+    fontSize: normalize(12),
     color: colors.primaryDark,
   },
   commentTextNone: {
+    ...fonts.fontPrimary,
     color: colors.primaryDark,
     fontStyle: 'italic',
   },
-  commentLight: {
-    ...lightFont,
+  actionButtonIconContainer: {
+    paddingTop: 5,
+    paddingBottom: 10,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
   },
-  commentRegular: {
-    ...regularFont,
-  },
-});
-
-const textStyleLight = {
-  fontSize: Platform.OS === 'ios' ? normalize(11) : normalize(12),
-  color: colors.primaryDark,
-  ...lightFont,
-};
-
-const textStyleRegular = {
-  fontSize: Platform.OS === 'ios' ? normalize(11) : normalize(12),
-  color: colors.primaryDark,
-  ...regularFont,
-};
-
-const textStyle = Platform.OS === 'ios' ? textStyleLight : textStyleRegular;
-
-const linkStyle = {
-  color: colors.primaryDark,
-  ...fonts.fontPrimarySemiBold,
-};
-
-const commentStyles = StyleSheet.create({
-  span: textStyle,
-  p: textStyle,
-  h1: textStyle,
-  h2: textStyle,
-  h3: textStyle,
-  h4: textStyle,
-  li: textStyle,
-  a: linkStyle,
 });
 
 const mapStateToProps = state => ({
@@ -127,121 +87,50 @@ class CommentListItemComponent extends Component {
   props: {
     comment: Object,
     onLinkPress: Function,
+    onEditPress: Function,
+    onDeletePress: Function,
     language: string,
     navigation: Object,
     authUser: Object,
   };
 
+  ActionSheet: ActionSheet;
+
+  handlePress = (index: number) => {
+    const { onDeletePress, onEditPress, comment } = this.props;
+
+    if (index === 0) {
+      onEditPress(comment);
+    } else if (index === 1) {
+      onDeletePress(comment);
+    }
+  };
+
+  showMenu = () => {
+    this.ActionSheet.show();
+  };
+
+  isIssueDescription = () =>
+    Object.prototype.hasOwnProperty.call(this.props.comment, 'repository_url');
+
+  commentActionSheetOptions = comment => {
+    const { language } = this.props;
+    const actions = [translate('issue.comment.editAction', language)];
+
+    if (!comment.repository_url) {
+      actions.push(translate('issue.comment.deleteAction', language));
+    }
+
+    return actions;
+  };
+
   render() {
-    const { comment, language, navigation, authUser } = this.props;
-    const commentBodyAdjusted = () =>
-      comment.body_html
-        .replace(new RegExp(/<img[^>]*>/g), 'Image')
-        .replace(new RegExp(/<ul>[\n]*?<li>/g), '<ul><li>')
-        .replace(new RegExp(/<\/li>[\n]*?<\/ul>/g), '</li></ul>')
-        .replace(new RegExp(/<ol>[\n]*?<li>/g), '<ol><li>')
-        .replace(new RegExp(/<\/li>[\n]*?<\/ol>/g), '</li></ol>')
-        .replace(new RegExp(/<li>[\n]*?<p>/g), '<li><span>')
-        .replace(new RegExp(/<\/h1>[\n]*?<p>/g), '</h1><span>')
-        .replace(new RegExp(/<\/h2>[\n]*?<p>/g), '</h2><span>')
-        .replace(new RegExp(/<\/h3>[\n]*?<p>/g), '</h3><span>')
-        .replace(new RegExp(/<p>*>/g), '<span>')
-        .replace(new RegExp(/<\/p>*>/g), '</span>');
+    const { comment, language, navigation, authUser, onLinkPress } = this.props;
 
-    const myDomElement = (node, index, siblings, parent, defaultRenderer) => {
-      const onLinkPress = this.props.onLinkPress;
+    const commentPresent = comment.body_html && comment.body_html !== '';
 
-      if (node.name === 'blockquote') {
-        return (
-          <View
-            key={index}
-            style={{
-              paddingHorizontal: 12,
-              borderLeftWidth: 3,
-              borderLeftColor: colors.greyMid,
-            }}
-          >
-            <Text
-              style={{
-                color: colors.greyBlue,
-                ...fonts.fontPrimaryLight,
-              }}
-            >
-              {defaultRenderer(node.children, parent)}
-            </Text>
-          </View>
-        );
-      } else if (node.name === 'hr') {
-        return (
-          <View
-            key={index}
-            style={{ height: 4, backgroundColor: colors.greyLight }}
-          />
-        );
-      } else if (node.name === 'code') {
-        return (
-          <Text
-            key={index}
-            style={{
-              ...fonts.fontCode,
-              backgroundColor: colors.greyMidLight,
-              fontSize: normalize(11),
-              margin: node.parent.name === 'pre' ? 12 : 3,
-            }}
-          >
-            {defaultRenderer(node.children, parent)}
-          </Text>
-        );
-      } else if (
-        node.name === 'h1' ||
-        node.name === 'h2' ||
-        node.name === 'h3'
-      ) {
-        return (
-          <View
-            key={index}
-            style={{
-              borderBottomWidth: node.name !== 'h3' ? 1 : 0,
-              borderBottomColor: colors.greyMid,
-              marginBottom: 12,
-            }}
-          >
-            <Text
-              style={{
-                color: colors.primaryDark,
-                ...fonts.fontPrimarySemiBold,
-                fontSize:
-                  node.name === 'h1'
-                    ? normalize(24)
-                    : node.name === 'h2' ? normalize(20) : normalize(18),
-                paddingBottom: 4,
-              }}
-            >
-              {defaultRenderer(node.children, parent)}
-            </Text>
-          </View>
-        );
-      } else if (node.name === 'a') {
-        return (
-          <Text
-            key={index}
-            style={{
-              ...fonts.fontPrimarySemiBold,
-              color: colors.primaryDark,
-            }}
-            onPress={() => onLinkPress(node)}
-          >
-            {defaultRenderer(node.children, parent)}
-          </Text>
-        );
-      }
-
-      return undefined;
-    };
-
-    const commentPresent =
-      (comment.body_html && comment.body_html !== '') ||
-      (comment.body && comment.body !== '');
+    const isActionMenuEnabled =
+      comment.user && authUser.login === comment.user.login;
 
     return (
       <View style={styles.container}>
@@ -256,7 +145,7 @@ class CommentListItemComponent extends Component {
                     : 'Profile',
                   {
                     user: comment.user,
-                  }
+                  },
                 )}
             >
               <Image
@@ -277,7 +166,7 @@ class CommentListItemComponent extends Component {
                     : 'Profile',
                   {
                     user: comment.user,
-                  }
+                  },
                 )}
             >
               <Text style={styles.linkDescription}>
@@ -293,50 +182,50 @@ class CommentListItemComponent extends Component {
           </View>
         </View>
 
-        {commentPresent &&
-          <View style={styles.commentContainer}>
-            {comment.body_html &&
-              comment.body_html !== '' &&
-              <HTMLView
-                value={commentBodyAdjusted()}
-                stylesheet={commentStyles}
-                renderNode={myDomElement}
-                addLineBreaks={false}
-              />}
-
-            {comment.body &&
-              comment.body !== '' &&
-              !comment.body_html &&
-              <Text
-                style={[
-                  styles.commentText,
-                  Platform.OS === 'ios'
-                    ? styles.commentLight
-                    : styles.commentRegular,
-                ]}
-              >
-                {comment.body}
+        <View
+          style={[
+            styles.commentContainer,
+            !isActionMenuEnabled && styles.commentBottomPadding,
+          ]}
+        >
+          {commentPresent
+            ? <GithubHtmlView
+                source={comment.body_html}
+                onLinkPress={onLinkPress}
+              />
+            : <Text style={styles.commentTextNone}>
+                {translate('issue.main.noDescription', language)}
               </Text>}
-          </View>}
 
-        {!commentPresent &&
-          <View style={styles.commentContainer}>
-            <Text
-              style={[
-                styles.commentTextNone,
-                Platform.OS === 'ios'
-                  ? styles.commentLight
-                  : styles.commentRegular,
-              ]}
-            >
-              {translate('issue.main.noDescription', language)}
-            </Text>
-          </View>}
+          {isActionMenuEnabled &&
+            <View style={styles.actionButtonIconContainer}>
+              <Icon
+                color={colors.grey}
+                size={20}
+                name={'ellipsis-h'}
+                type={'font-awesome'}
+                onPress={this.showMenu}
+              />
+            </View>}
+        </View>
+
+        <ActionSheet
+          ref={o => {
+            this.ActionSheet = o;
+          }}
+          title={translate('issue.comment.commentActions', language)}
+          options={[
+            ...this.commentActionSheetOptions(comment),
+            translate('common.cancel', language),
+          ]}
+          cancelButtonIndex={this.commentActionSheetOptions(comment).length}
+          onPress={this.handlePress}
+        />
       </View>
     );
   }
 }
 
 export const CommentListItem = connect(mapStateToProps)(
-  CommentListItemComponent
+  CommentListItemComponent,
 );

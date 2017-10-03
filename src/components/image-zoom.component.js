@@ -14,6 +14,10 @@ import PhotoView from 'react-native-photo-view';
 import { colors } from 'config';
 
 const styles = StyleSheet.create({
+  touchable: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   modalContainer: {
     flex: 1,
     backgroundColor: colors.black,
@@ -54,7 +58,7 @@ export class ImageZoom extends Component {
 
     if (this.state.imgZoom) {
       return (
-        <Modal animationType={'fade'}>
+        <Modal animationType={'fade'} onRequestClose={() => null}>
           <View style={styles.modalContainer}>
             <PhotoView
               resizeMode={'contain'}
@@ -78,7 +82,11 @@ export class ImageZoom extends Component {
     }
 
     return (
-      <TouchableHighlight onPress={() => this.openModal()}>
+      <TouchableHighlight
+        onPress={() => this.openModal()}
+        underlayColor="transparent"
+        style={styles.touchable}
+      >
         <Image style={style} source={uri} />
       </TouchableHighlight>
     );
