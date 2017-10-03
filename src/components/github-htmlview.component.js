@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { Dimensions, StyleSheet, View, Text, Platform } from 'react-native';
 import HTMLView from 'react-native-htmlview';
-import marked from 'marked';
 import { TableWrapper, Table, Cell } from 'react-native-table-component';
 import SyntaxHighlighter from 'react-native-syntax-highlighter';
 import { github as GithubStyle } from 'react-syntax-highlighter/dist/styles';
 import entities from 'entities';
 
 import { ImageZoom } from 'components';
-import { colors, emojis, fonts, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 
 const lightFont = {
   ...fonts.fontPrimaryLight,
@@ -18,19 +17,18 @@ const regularFont = {
   ...fonts.fontPrimary,
 };
 
-const textStyleLight = {
-  ...lightFont,
-  fontSize: Platform.OS === 'ios' ? normalize(11) : normalize(12),
-  color: colors.primaryDark,
-};
-
-const textStyleRegular = {
-  ...regularFont,
-  fontSize: Platform.OS === 'ios' ? normalize(11) : normalize(12),
-  color: colors.primaryDark,
-};
-
-const textStyle = Platform.OS === 'ios' ? textStyleLight : textStyleRegular;
+const textStyle = Platform.select({
+  ios: {
+    ...lightFont,
+    fontSize: normalize(11),
+    color: colors.primaryDark,
+  },
+  android: {
+    ...regularFont,
+    fontSize: normalize(12),
+    color: colors.primaryDark,
+  },
+});
 
 const boldStyle = {
   ...textStyle,
@@ -59,17 +57,17 @@ const styles = {
   h1: {
     ...fonts.fontPrimarySemiBold,
     ...hrStyle,
-    fontSize: normalize(24),
+    fontSize: normalize(20),
   },
   h2: {
     ...fonts.fontPrimarySemiBold,
     ...hrStyle,
-    fontSize: normalize(20),
+    fontSize: normalize(18),
   },
-  h3: { ...fonts.fontPrimarySemiBold, fontSize: normalize(18) },
-  h4: { ...fonts.fontPrimarySemiBold, fontSize: normalize(16) },
-  h5: { ...fonts.fontPrimarySemiBold, fontSize: normalize(14) },
-  h6: { ...fonts.fontPrimarySemiBold, fontSize: normalize(12) },
+  h3: { ...fonts.fontPrimarySemiBold, fontSize: normalize(16) },
+  h4: { ...fonts.fontPrimarySemiBold, fontSize: normalize(14) },
+  h5: { ...fonts.fontPrimarySemiBold, fontSize: normalize(12) },
+  h6: { ...fonts.fontPrimarySemiBold, fontSize: normalize(10) },
   hr: { ...hrStyle },
   li: textStyle,
   a: linkStyle,
@@ -77,14 +75,7 @@ const styles = {
 
 const styleSheet = StyleSheet.create(styles);
 
-marked.setOptions({
-  renderer: new marked.Renderer(),
-  gfm: true,
-  tables: true,
-  pedantic: true,
-});
-
-const { height, width } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 const headingRenderer = (node, index, siblings, parent, defaultRenderer) => {
   const style = node.name === 'h1' || node.name === 'h2' ? { ...hrStyle } : {};
@@ -141,49 +132,64 @@ const cellForNode = node =>
     ? CellWithImage
     : Cell;
 
+const hasAncestor = (node, ancestorName) => {
+  if (node.parent === null) {
+    return false;
+  }
+
+  if (node.parent.type === 'tag' && node.parent.name === ancestorName) {
+    return true;
+  }
+
+  return hasAncestor(node.parent, ancestorName);
+};
+
 const onlyTagsChildren = node =>
   node.children.filter(elem => elem.type === 'tag');
 
-export class MarkdownHtmlView extends Component {
+const removeTags = node => {
+  return node.children
+    .map(e => {
+      return e.type === 'tag' ? removeTags(e) : e.data;
+    })
+    .join('');
+};
+
+export class GithubHtmlView extends Component {
   props: {
     source: String,
     onLinkPress: Function,
   };
 
-  transformMarkdown = md => {
-    const issueReference = /(\s)#(\d+)/;
-    const profileReference = /(\s)@([_0-9A-Za-z]+)/;
-    const todoItem = /<li>\s*\[(x|\s)?\](.*)<\/li>/g;
-    const emojiMarkup = /:(\w+):/g;
-
-    return marked(md)
-      .replace(/<p>*>/g, '<span>')
-      .replace(/<\/p>*>/g, '</span>')
-      .replace(/<ul>[\n]*?<li>/g, '<ul><li>')
-      .replace(/<\/li>[\n]*?<\/ul>/g, '</li></ul>')
-      .replace(/<ol>[\n]*?<li>/g, '<ol><li>')
-      .replace(/<\/li>[\n]*?<\/ol>/g, '</li></ol>')
-      .replace(/><li>/g, '>\n<li>')
-      .replace(/<\/li><\/ul>\n/g, '</li></ul>')
-      .replace(issueReference, (match, spacing, number) => {
-        return `${spacing}<issue class="issue-link" data-id="${number}" />`;
-      })
-      .replace(profileReference, (match, spacing, username) => {
-        return `${spacing}<profile class="user-mention">@${username}</profile>`;
-      })
-      .replace(todoItem, (match, type, contents) => {
-        return `${type.trim()
-          ? emojis.white_check_mark
-          : emojis.white_large_square} ${contents}`;
-      })
-      .replace(emojiMarkup, text => {
-        const emoji = text.replace(/:/g, '');
-
-        return emojis[emoji] ? emojis[emoji] : text;
-      })
-      .replace(/<img([^>]+?)>/, (match, img) => {
-        return `</span><img ${img}/><span>`;
-      });
+  prepareHtml = html => {
+    return (
+      html
+        // Basic markup cleanup
+        .replace(/<p(| [^>]*)>/g, '<span $1>')
+        .replace(/<\/p>*>/g, '</span>')
+        // Emojis
+        .replace(/<g-emoji[^>]+>(.+)<\/g-emoji>/g, '$1')
+        // No carriage return after <li> of before </li>
+        .replace(/<li( class="[^"]*")?>\n(.*)/g, '<li$1>$2')
+        .replace(/\n<\/li>/g, '</li>')
+        // task list
+        .replace(
+          /<li class="task-list-item">(<span[^>]*>)?<input class="task-list-item-checkbox" disabled="" id="" type="checkbox"> ?\.? ?/g,
+          '$1⬜ '
+        )
+        .replace(
+          /<li class="task-list-item">(<span[^>]*>)?<input checked="" class="task-list-item-checkbox" disabled="" id="" type="checkbox"> ?\.? ?/g,
+          '$1✅ '
+        )
+        // Remove links & spans around images
+        .replace(/<a[^>]+><img([^>]+)><\/a>/g, '<img$1>')
+        .replace(/<span[^>]*><img([^>]+)><\/span>/g, '<img$1>')
+        // Break images free from big spans
+        .replace(/<br>\n<img([^>]+)>/g, '<br></span><img$1><span>')
+        // Code syntax
+        .replace(/<div class="highlight[^"]*"><pre>/g, '<pre><code>')
+        .replace('</pre></div>', '</code></pre>')
+    );
   };
 
   render() {
@@ -216,18 +222,19 @@ export class MarkdownHtmlView extends Component {
             </Text>
           </View>,
         pre: (node, index, siblings, parent, defaultRenderer) =>
-          <View>
+          <View key={index}>
             {defaultRenderer(node.children, node)}
           </View>,
         code: (node, index, siblings, parent, defaultRenderer) => {
           if (parent.name === 'pre') {
             return (
               <SyntaxHighlighter
+                key={index}
                 style={{ ...GithubStyle }}
                 CodeTag={Text}
                 fontFamily={fonts.fontCode.fontFamily}
               >
-                {entities.decodeHTML(node.children[0].data).trim()}
+                {entities.decodeHTML(removeTags(node)).trim()}
               </SyntaxHighlighter>
             );
           }
@@ -243,13 +250,29 @@ export class MarkdownHtmlView extends Component {
         hr: (node, index, siblings, parent, defaultRenderer) =>
           <View key={index} style={{ ...hrStyle }} />,
         img: (node, index, siblings, parent, defaultRenderer) => {
-          const zoom =
-            parent && parent.type === 'tag' && parent.name === 'td' ? 0.3 : 0.6;
+          if (hasAncestor(node, 'li')) {
+            return (
+              <Text
+                style={linkStyle}
+                onPress={() =>
+                  onLinkPress({ ...node, attribs: { href: node.attribs.src } })}
+              >
+                [{node.attribs.alt}]
+                {'\n'}
+              </Text>
+            );
+          }
+
+          const zoom = hasAncestor(node, 'table') ? 0.3 : 0.6;
 
           return (
             <ImageZoom
               key={index}
-              style={{ width: width * zoom, height: height * zoom }}
+              style={{
+                width: width * zoom,
+                height: 200,
+                resizeMode: 'contain',
+              }}
               uri={{ uri: node.attribs.src }}
             />
           );
@@ -271,18 +294,13 @@ export class MarkdownHtmlView extends Component {
           </TableWrapper>,
         td: (node, index, siblings, parent, defaultRenderer) => {
           const Component = cellForNode(node);
-          const attribs = node.attribs;
-          const cellAlign = {
-            'text-align:right': 'right',
-            'text-align:center': 'center',
-          };
           const styleText = {
             marginLeft: 5,
             marginRight: 5,
           };
 
-          if (cellAlign[attribs.style]) {
-            styleText.textAlign = cellAlign[attribs.style];
+          if (node.attribs.align) {
+            styleText.textAlign = node.attribs.align;
           }
 
           return (
@@ -304,20 +322,26 @@ export class MarkdownHtmlView extends Component {
             />
           );
         },
-        issue: (node, index, siblings, parent, defaultRenderer) =>
-          <Text style={styles.strong} onPress={() => onLinkPress(node)}>
-            #{node.attribs['data-id']}
-          </Text>,
-        profile: (node, index, siblings, parent, defaultRenderer) =>
-          <Text style={styles.strong} onPress={() => onLinkPress(node)}>
-            {node.children[0].data}
-          </Text>,
+        a: (node, index, siblings, parent, defaultRenderer) => {
+          return (
+            <Text
+              key={index}
+              style={styles.strong}
+              onPress={() => onLinkPress(node)}
+            >
+              {node.children[0].data}
+            </Text>
+          );
+        },
       };
 
       if (_node.type === 'text') {
         if (_node.data === '\n') {
           return (
-            <Text style={{ height: 8, fontSize: normalize(8), width: 2 }}>
+            <Text
+              key={_index}
+              style={{ height: 8, fontSize: normalize(8), width: 2 }}
+            >
               {_node.data}
             </Text>
           );
@@ -337,7 +361,7 @@ export class MarkdownHtmlView extends Component {
 
     return (
       <HTMLView
-        value={this.transformMarkdown(this.props.source)}
+        value={this.prepareHtml(this.props.source)}
         stylesheet={styleSheet}
         renderNode={myDomElement}
         textComponentProps={{ style: { ...textStyle } }}

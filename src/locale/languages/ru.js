@@ -5,7 +5,7 @@ export const ru = {
       preparingGitPoint: 'Подготовка GitPoint...',
       cancel: 'ОТМЕНА',
       welcomeTitle: 'Добро пожаловать в GitPoint',
-      welcomeMessage: 'Самый многофункциональный бесплатный GitHub клиент',
+      welcomeMessage: 'Самый многофункциональный бесплатный GitHub-клиент',
       notificationsTitle: 'Управление уведомлениями',
       notificationsMessage:
         'Просматривайте и управляйте всеми вашими непрочитанными и активными уведомлениями',
@@ -22,7 +22,7 @@ export const ru = {
     },
     events: {
       welcomeMessage:
-        'Добро пожаловать! Это ваша лента новостей - она поможет следить вам за последней активностью в репозиториях, которые вы отслеживаете, и за людьми, на которых вы подписаны.',
+        'Добро пожаловать! Это ваша лента новостей - она поможет следить вам за последней активностью в репозиториях, которые вы отслеживаете, и за пользователями, на которых вы подписаны.',
       commitCommentEvent: 'прокомментировал коммит',
       createEvent: 'создал {{object}}',
       deleteEvent: 'удалил {{object}}',
@@ -269,6 +269,8 @@ export const ru = {
         issue: 'Задача',
         pullRequest: 'Pull-запрос',
       },
+      openIssueSubTitle: '#{{number}} открыт {{time}} назад пользователем {{user}}',
+      closedIssueSubTitle: '#{{number}} закрыт {{time}} назад пользователем {{user}}',
     },
     newIssue: {
       title: 'Новая задача',

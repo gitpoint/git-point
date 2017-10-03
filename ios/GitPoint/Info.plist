@@ -62,6 +62,11 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>Nunito-Bold.ttf</string>
+		<string>Nunito-Italic.ttf</string>
+		<string>Nunito-Light.ttf</string>
+		<string>Nunito-Regular.ttf</string>
+		<string>Nunito-SemiBold.ttf</string>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>

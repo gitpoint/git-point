@@ -14,7 +14,7 @@ import {
   Modal,
 } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
-import AppIntro from 'react-native-app-intro';
+import AppIntro from 'rn-app-intro';
 import queryString from 'query-string';
 
 import { ViewContainer } from 'components';
@@ -277,7 +277,6 @@ class Login extends Component {
                 source={require('../../assets/logo.png')}
               />
             </View>
-
             <View style={styles.contentSection}>
               <AppIntro
                 activeDotColor={colors.white}
@@ -296,7 +295,6 @@ class Login extends Component {
                     {translate('auth.login.welcomeMessage', language)}
                   </Text>
                 </View>
-
                 <View style={[styles.slide, styles.slide2]}>
                   <Icon
                     style={styles.icon}
@@ -312,7 +310,6 @@ class Login extends Component {
                     {translate('auth.login.notificationsMessage', language)}
                   </Text>
                 </View>
-
                 <View style={[styles.slide, styles.slide3]}>
                   <Icon
                     containerStyle={styles.iconMargin}
@@ -329,7 +326,6 @@ class Login extends Component {
                     {translate('auth.login.reposMessage', language)}
                   </Text>
                 </View>
-
                 <View style={[styles.slide, styles.slide4]}>
                   <Icon
                     containerStyle={styles.iconMargin}
@@ -348,7 +344,6 @@ class Login extends Component {
                 </View>
               </AppIntro>
             </View>
-
             <View style={styles.miniSection}>
               <Button
                 raised
@@ -359,7 +354,6 @@ class Login extends Component {
               />
             </View>
           </View>}
-
         {isLoggingIn &&
           <View style={styles.browserLoader}>
             <Text style={styles.browserLoadingLabel}>

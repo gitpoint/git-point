@@ -4,6 +4,7 @@ import {
   DELETE_ISSUE_COMMENT,
   EDIT_ISSUE_COMMENT,
   EDIT_ISSUE,
+  EDIT_ISSUE_BODY,
   CHANGE_LOCK_STATUS,
   GET_ISSUE_DIFF,
   GET_ISSUE_MERGE_STATUS,
@@ -97,7 +98,11 @@ export const issueReducer = (state = initialState, action = {}) => {
         comments: state.comments.map(
           comment =>
             comment.id === action.payload.id
-              ? { ...comment, body: action.payload.body }
+              ? {
+                  ...comment,
+                  body: action.payload.body,
+                  body_html: action.payload.body_html,
+                }
               : comment
         ),
         isEditingComment: false,
@@ -125,6 +130,28 @@ export const issueReducer = (state = initialState, action = {}) => {
         ...state,
         error: action.payload,
         isEditingIssue: false,
+      };
+    case EDIT_ISSUE_BODY.PENDING:
+      return {
+        ...state,
+        isEditingComment: true,
+      };
+    case EDIT_ISSUE_BODY.SUCCESS: {
+      return {
+        ...state,
+        issue: {
+          ...state.issue,
+          body: action.payload.body,
+          body_html: action.payload.body_html,
+        },
+        isEditingComment: false,
+      };
+    }
+    case EDIT_ISSUE_BODY.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isEditingComment: false,
       };
     case CHANGE_LOCK_STATUS.PENDING:
       return {

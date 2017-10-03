@@ -14,7 +14,7 @@ import { ListItem } from 'react-native-elements';
 import { ViewContainer, SectionList, LoadingModal } from 'components';
 import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
-import { editIssueComment } from '../issue.action';
+import { editIssueBody, editIssueComment } from '../issue.action';
 
 const styles = StyleSheet.create({
   textInput: {
@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
   language: state.auth.language,
+  issue: state.issue.issue,
   repository: state.repository.repository,
   isEditingComment: state.issue.isEditingComment,
 });
@@ -49,6 +50,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
+      editIssueBody,
       editIssueComment,
     },
     dispatch
@@ -56,10 +58,12 @@ const mapDispatchToProps = dispatch =>
 
 class EditIssueComment extends Component {
   props: {
+    editIssueBody: Function,
     editIssueComment: Function,
     language: string,
     repository: Object,
     navigation: Object,
+    issue: Object,
     isEditingComment: boolean,
   };
 
@@ -77,17 +81,18 @@ class EditIssueComment extends Component {
     };
   }
 
-  editIssueComment = () => {
-    const { navigation } = this.props;
+  editComment = () => {
+    const { issue, navigation } = this.props;
     const { repository, comment } = this.props.navigation.state.params;
 
     const repoName = repository.name;
     const owner = repository.owner.login;
     const text = this.state.issueComment;
+    const action = comment.repository_url
+      ? this.props.editIssueBody(owner, repoName, issue.number, text)
+      : this.props.editIssueComment(comment.id, owner, repoName, text);
 
-    this.props
-      .editIssueComment(comment.id, owner, repoName, text)
-      .then(() => navigation.goBack());
+    action.then(() => navigation.goBack());
   };
 
   render() {
@@ -123,7 +128,7 @@ class EditIssueComment extends Component {
                 hideChevron
                 underlayColor={colors.greyLight}
                 titleStyle={styles.submitTitle}
-                onPress={() => this.editIssueComment()}
+                onPress={this.editComment}
               />
             </View>
           </SectionList>

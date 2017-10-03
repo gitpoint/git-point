@@ -35,7 +35,8 @@
     "cp-history:android-staging": "code-push deployment history git-point-android Staging",
     "cp-history:android-production": "code-push deployment history git-point-android Production",
     "cp-history:ios-production": "code-push deployment history git-point-ios Production",
-    "doctoc": "doctoc --title='## Table of Contents' README.md"
+    "doctoc": "doctoc --title='## Table of Contents' README.md",
+    "postinstall": "opencollective postinstall"
   },
   "lint-staged": {
     "*.js": [
@@ -49,16 +50,15 @@
     "fuzzy-search": "^1.4.0",
     "lodash.uniqby": "^4.7.0",
     "lowlight": "^1.5.0",
-    "marked": "^0.3.6",
     "md5": "^2.2.1",
     "moment": "^2.17.1",
     "node-emoji": "^1.7.0",
+    "opencollective": "^1.0.3",
     "parse-diff": "^0.4.0",
     "query-string": "^4.3.1",
     "react": "16.0.0-alpha.12",
     "react-native": "0.48.1",
     "react-native-actionsheet": "^2.2.0",
-    "react-native-app-intro": "^1.1.5",
     "react-native-code-push": "^5.0.0-beta",
     "react-native-communications": "^2.2.1",
     "react-native-config": "^0.6.0",
@@ -74,7 +74,7 @@
     "react-native-search-bar": "^3.0.0",
     "react-native-syntax-highlighter": "^1.2.1",
     "react-native-table-component": "^1.0.5",
-    "react-native-vector-icons": "^4.0.0",
+    "react-native-vector-icons": "^4.4.0",
     "react-navigation": "^1.0.0-beta.11",
     "react-redux": "^5.0.2",
     "react-syntax-highlighter": "^5.6.2",
@@ -85,7 +85,8 @@
     "redux-persist": "^4.3.1",
     "redux-persist-transform-encrypt": "^1.0.2",
     "redux-thunk": "^2.2.0",
-    "reselect": "^3.0.1"
+    "reselect": "^3.0.1",
+    "rn-app-intro": "^0.0.4"
   },
   "devDependencies": {
     "@commitlint/cli": "^3.1.0",
@@ -131,5 +132,10 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "collective": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/git-point",
+    "logo": "https://opencollective.com/opencollective/logo.txt"
   }
 }

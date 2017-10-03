@@ -10,9 +10,8 @@ import {
   TouchableOpacity,
   Image,
   Platform,
-  TouchableWithoutFeedback,
 } from 'react-native';
-import { MarkdownHtmlView } from 'components';
+import { GithubHtmlView } from 'components';
 import { Icon } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
 
@@ -31,9 +30,8 @@ const regularFont = {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 10,
     paddingRight: 10,
-    paddingBottom: 10,
+    paddingTop: 10,
     backgroundColor: 'transparent',
   },
   header: {
@@ -70,11 +68,13 @@ const styles = StyleSheet.create({
     color: colors.greyDark,
   },
   commentContainer: {
-    paddingTop: 4,
-    paddingBottom: 2,
+    paddingTop: 5,
     marginLeft: 54,
     borderBottomColor: colors.greyLight,
     borderBottomWidth: 1,
+  },
+  commentBottomPadding: {
+    paddingBottom: 15,
   },
   commentText: {
     fontSize: Platform.OS === 'ios' ? normalize(11) : normalize(12),
@@ -91,7 +91,8 @@ const styles = StyleSheet.create({
     ...regularFont,
   },
   actionButtonIconContainer: {
-    padding: 5,
+    paddingTop: 5,
+    paddingBottom: 10,
     alignItems: 'flex-end',
     justifyContent: 'center',
   },
@@ -131,100 +132,87 @@ class CommentListItemComponent extends Component {
   isIssueDescription = () =>
     Object.prototype.hasOwnProperty.call(this.props.comment, 'repository_url');
 
+  commentActionSheetOptions = comment => {
+    const { language } = this.props;
+    const actions = [translate('issue.comment.editAction', language)];
+
+    if (!comment.repository_url) {
+      actions.push(translate('issue.comment.deleteAction', language));
+    }
+
+    return actions;
+  };
+
   render() {
     const { comment, language, navigation, authUser, onLinkPress } = this.props;
 
-    const commentPresent =
-      (comment.body_html && comment.body_html !== '') ||
-      (comment.body && comment.body !== '');
+    const commentPresent = comment.body_html && comment.body_html !== '';
 
-    const commentActionSheetOptions = [
-      translate('issue.comment.editAction', language),
-      translate('issue.comment.deleteAction', language),
-    ];
-
-    const isActionButtonVisible =
-      comment.user &&
-      authUser.login === comment.user.login &&
-      !this.isIssueDescription();
+    const isActionMenuEnabled =
+      comment.user && authUser.login === comment.user.login;
 
     return (
-      <TouchableWithoutFeedback onLongPress={this.showMenu}>
-        <View style={styles.container}>
-          <View style={styles.header}>
-            {comment.user && (
-              <TouchableOpacity
-                style={styles.avatarContainer}
-                onPress={() =>
-                  navigation.navigate(
-                    authUser.login === comment.user.login
-                      ? 'AuthProfile'
-                      : 'Profile',
-                    {
-                      user: comment.user,
-                    }
-                  )}
-              >
-                <Image
-                  style={styles.avatar}
-                  source={{
-                    uri: comment.user.avatar_url,
-                  }}
-                />
-              </TouchableOpacity>
-            )}
+      <View style={styles.container}>
+        <View style={styles.header}>
+          {comment.user &&
+            <TouchableOpacity
+              style={styles.avatarContainer}
+              onPress={() =>
+                navigation.navigate(
+                  authUser.login === comment.user.login
+                    ? 'AuthProfile'
+                    : 'Profile',
+                  {
+                    user: comment.user,
+                  }
+                )}
+            >
+              <Image
+                style={styles.avatar}
+                source={{
+                  uri: comment.user.avatar_url,
+                }}
+              />
+            </TouchableOpacity>}
 
-            {comment.user && (
-              <TouchableOpacity
-                style={styles.titleSubtitleContainer}
-                onPress={() =>
-                  navigation.navigate(
-                    authUser.login === comment.user.login
-                      ? 'AuthProfile'
-                      : 'Profile',
-                    {
-                      user: comment.user,
-                    }
-                  )}
-              >
-                <Text style={styles.linkDescription}>
-                  {comment.user.login}
-                  {'  '}
-                </Text>
-              </TouchableOpacity>
-            )}
-
-            <View style={styles.dateContainer}>
-              <Text style={styles.date}>
-                {moment(comment.created_at).fromNow()}
+          {comment.user &&
+            <TouchableOpacity
+              style={styles.titleSubtitleContainer}
+              onPress={() =>
+                navigation.navigate(
+                  authUser.login === comment.user.login
+                    ? 'AuthProfile'
+                    : 'Profile',
+                  {
+                    user: comment.user,
+                  }
+                )}
+            >
+              <Text style={styles.linkDescription}>
+                {comment.user.login}
+                {'  '}
               </Text>
-            </View>
-          </View>
+            </TouchableOpacity>}
 
-          {!!commentPresent && (
-            <View style={styles.commentContainer}>
-              <MarkdownHtmlView
-                source={comment.body}
+          <View style={styles.dateContainer}>
+            <Text style={styles.date}>
+              {moment(comment.created_at).fromNow()}
+            </Text>
+          </View>
+        </View>
+
+        <View
+          style={[
+            styles.commentContainer,
+            !isActionMenuEnabled && styles.commentBottomPadding,
+          ]}
+        >
+          {commentPresent
+            ? <GithubHtmlView
+                source={comment.body_html}
                 onLinkPress={onLinkPress}
               />
-
-              {isActionButtonVisible && (
-                <View style={styles.actionButtonIconContainer}>
-                  <Icon
-                    color={colors.grey}
-                    size={20}
-                    name={'ellipsis-h'}
-                    type={'font-awesome'}
-                    onPress={this.showMenu}
-                  />
-                </View>
-              )}
-            </View>
-          )}
-
-          {!commentPresent && (
-            <View style={styles.commentContainer}>
-              <Text
+            : <Text
                 style={[
                   styles.commentTextNone,
                   Platform.OS === 'ios'
@@ -233,24 +221,33 @@ class CommentListItemComponent extends Component {
                 ]}
               >
                 {translate('issue.main.noDescription', language)}
-              </Text>
-            </View>
-          )}
+              </Text>}
 
-          <ActionSheet
-            ref={o => {
-              this.ActionSheet = o;
-            }}
-            title={translate('issue.comment.commentActions', language)}
-            options={[
-              ...commentActionSheetOptions,
-              translate('common.cancel', language),
-            ]}
-            cancelButtonIndex={commentActionSheetOptions.length}
-            onPress={this.handlePress}
-          />
+          {isActionMenuEnabled &&
+            <View style={styles.actionButtonIconContainer}>
+              <Icon
+                color={colors.grey}
+                size={20}
+                name={'ellipsis-h'}
+                type={'font-awesome'}
+                onPress={this.showMenu}
+              />
+            </View>}
         </View>
-      </TouchableWithoutFeedback>
+
+        <ActionSheet
+          ref={o => {
+            this.ActionSheet = o;
+          }}
+          title={translate('issue.comment.commentActions', language)}
+          options={[
+            ...this.commentActionSheetOptions(comment),
+            translate('common.cancel', language),
+          ]}
+          cancelButtonIndex={this.commentActionSheetOptions(comment).length}
+          onPress={this.handlePress}
+        />
+      </View>
     );
   }
 }
