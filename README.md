@@ -30,14 +30,16 @@
 - [Introduction](#introduction)
 - [Features](#features)
 - [Feedback/Contributing](#feedbackcontributing)
-- [Build process](#build-process)
+- [Build Process](#build-process)
 - [Contributors](#contributors)
+- [Backers](#backers)
+- [Sponsors](#sponsors)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Introduction
 
-[![Backers on Open Collective](https://opencollective.com/git-point/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/git-point/sponsors/badge.svg)](#sponsors) [![Build Status](https://img.shields.io/travis/gitpoint/git-point.svg?style=flat-square)](https://travis-ci.org/gitpoint/git-point)
+[![Build Status](https://img.shields.io/travis/gitpoint/git-point.svg?style=flat-square)](https://travis-ci.org/gitpoint/git-point)
 [![All Contributors](https://img.shields.io/badge/all_contributors-39-orange.svg?style=flat-square)](#contributors)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)](http://commitizen.github.io/cz-cli/)
@@ -79,7 +81,7 @@ Feel free to send us feedback on [Twitter](https://twitter.com/gitpointapp) or [
 
 Also, if there's anything you'd like to chat about, please feel free to join our [Gitter chat](https://gitter.im/git-point)!
 
-## Build process
+## Build Process
 
 - Follow the [React Native Guide](https://facebook.github.io/react-native/docs/getting-started.html) for getting started building a project with native code. **A Mac is required if you wish to develop for iOS.**
 - Clone or download the repo
@@ -106,14 +108,14 @@ Please take a look at the [contributing guidelines](./CONTRIBUTING.md) for a det
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 
-## Backers
+## Backers [![Backers on Open Collective](https://opencollective.com/git-point/backers/badge.svg)](#backers)
 
 Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/git-point#backer)]
 
 <a href="https://opencollective.com/git-point#backers" target="_blank"><img src="https://opencollective.com/git-point/backers.svg?width=890"></a>
 
 
-## Sponsors
+## Sponsors [![Sponsors on Open Collective](https://opencollective.com/git-point/sponsors/badge.svg)](#sponsors)
 
 Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/git-point#sponsor)]
 
