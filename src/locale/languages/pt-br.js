@@ -89,6 +89,7 @@ export const ptBr = {
       codePushNotApplicable: 'Não aplicável em modo de depuração',
     },
     userOptions: {
+      donate: 'Faça uma doação',
       title: 'Opções',
       language: 'Idioma',
       privacyPolicy: 'Política de Privacidade',

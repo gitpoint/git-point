@@ -16,7 +16,12 @@ import CookieManager from 'react-native-cookies';
 
 import { ViewContainer, SectionList } from 'components';
 import { colors, fonts, normalize } from 'config';
-import { resetNavigationTo, translate, emojifyText } from 'utils';
+import {
+  resetNavigationTo,
+  openURLInView,
+  translate,
+  emojifyText,
+} from 'utils';
 import { version } from 'package.json';
 import codePush from 'react-native-code-push';
 import { signOut, changeLanguage } from 'auth';
@@ -32,7 +37,7 @@ const mapDispatchToProps = dispatch =>
       signOut,
       changeLanguage,
     },
-    dispatch
+    dispatch,
   );
 
 const styles = StyleSheet.create({
@@ -196,7 +201,13 @@ class UserOptions extends Component {
                 })}
               underlayColor={colors.greyLight}
             />
-
+            <ListItem
+              title={translate('auth.userOptions.donate', language)}
+              titleStyle={styles.listTitle}
+              onPress={() =>
+                openURLInView('https://opencollective.com/git-point')}
+              underlayColor={colors.greyLight}
+            />
             <ListItem
               title={translate('auth.userOptions.signOut', language)}
               titleStyle={styles.logoutTitle}
@@ -221,5 +232,5 @@ class UserOptions extends Component {
 }
 
 export const UserOptionsScreen = connect(mapStateToProps, mapDispatchToProps)(
-  UserOptions
+  UserOptions,
 );

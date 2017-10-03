@@ -23,7 +23,7 @@ const mapDispatchToProps = dispatch =>
     {
       mergePullRequest,
     },
-    dispatch
+    dispatch,
   );
 
 const styles = StyleSheet.create({
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     flex: 1,
     color: colors.black,
-    ...fonts.fontPrimaryLight,
+    ...fonts.fontPrimary,
   },
   mergeActionTitle: {
     color: colors.green,
@@ -125,7 +125,7 @@ class PullMerge extends Component {
       Alert.alert(
         translate('issue.pullMerge.missingTitleAlert', language),
         null,
-        [{ text: translate('common.ok', language) }]
+        [{ text: translate('common.ok', language) }],
       );
     } else {
       mergePullRequest(
@@ -133,7 +133,7 @@ class PullMerge extends Component {
         issue.number,
         commitTitle,
         commitMessage,
-        mergeMethodTypes[mergeMethod]
+        mergeMethodTypes[mergeMethod],
       ).then(() => {
         navigation.goBack();
       });
@@ -234,5 +234,5 @@ class PullMerge extends Component {
 }
 
 export const PullMergeScreen = connect(mapStateToProps, mapDispatchToProps)(
-  PullMerge
+  PullMerge,
 );

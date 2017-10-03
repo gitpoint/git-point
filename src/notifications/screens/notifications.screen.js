@@ -372,7 +372,6 @@ class Notifications extends Component {
           isFirstTab &&
           <View style={styles.markAllAsReadButtonContainer}>
             <Button
-              type="success"
               icon={{ name: 'check', type: 'octicon' }}
               onPress={() => markAllNotificationsAsRead()}
               title={translate('notifications.main.markAllAsRead')}

@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     flex: 1,
     color: colors.black,
-    ...fonts.fontPrimaryLight,
+    ...fonts.fontPrimary,
   },
   submitTitle: {
     color: colors.green,
@@ -43,7 +43,7 @@ const mapDispatchToProps = dispatch =>
     {
       submitNewIssue,
     },
-    dispatch
+    dispatch,
   );
 
 class NewIssue extends Component {
@@ -81,7 +81,7 @@ class NewIssue extends Component {
       Alert.alert(
         translate('issue.newIssue.missingTitleAlert', language),
         null,
-        [{ text: translate('common.ok', language) }]
+        [{ text: translate('common.ok', language) }],
       );
     } else {
       submitNewIssue(owner, repoName, issueTitle, issueComment).then(issue => {
@@ -173,5 +173,5 @@ class NewIssue extends Component {
 }
 
 export const NewIssueScreen = connect(mapStateToProps, mapDispatchToProps)(
-  NewIssue
+  NewIssue,
 );

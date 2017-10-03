@@ -92,6 +92,7 @@ export const en = {
       codePushNotApplicable: 'Not applicable in debug mode',
     },
     userOptions: {
+      donate: 'Make a donation',
       title: 'Options',
       language: 'Language',
       privacyPolicy: 'Privacy Policy',

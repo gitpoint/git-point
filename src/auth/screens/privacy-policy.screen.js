@@ -25,13 +25,13 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: normalize(12),
     color: colors.primaryDark,
-    ...fonts.fontPrimarySemiBold,
+    ...fonts.fontPrimaryBold,
     marginBottom: 15,
   },
   text: {
-    fontSize: normalize(11),
+    fontSize: normalize(12),
     color: colors.primaryDark,
-    ...fonts.fontPrimaryLight,
+    ...fonts.fontPrimary,
     marginBottom: 15,
   },
   link: {

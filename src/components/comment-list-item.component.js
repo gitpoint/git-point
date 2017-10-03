@@ -3,14 +3,7 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  Platform,
-} from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import { GithubHtmlView } from 'components';
 import { Icon } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
@@ -19,14 +12,6 @@ import moment from 'moment/min/moment-with-locales.min';
 
 import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
-
-const lightFont = {
-  ...fonts.fontPrimaryLight,
-};
-
-const regularFont = {
-  ...fonts.fontPrimary,
-};
 
 const styles = StyleSheet.create({
   container: {
@@ -61,7 +46,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   linkDescription: {
-    ...fonts.fontPrimarySemiBold,
+    ...fonts.fontPrimaryBold,
+    fontSize: normalize(13),
     color: colors.primaryDark,
   },
   date: {
@@ -77,18 +63,13 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
   },
   commentText: {
-    fontSize: Platform.OS === 'ios' ? normalize(11) : normalize(12),
+    fontSize: normalize(12),
     color: colors.primaryDark,
   },
   commentTextNone: {
+    ...fonts.fontPrimary,
     color: colors.primaryDark,
     fontStyle: 'italic',
-  },
-  commentLight: {
-    ...lightFont,
-  },
-  commentRegular: {
-    ...regularFont,
   },
   actionButtonIconContainer: {
     paddingTop: 5,
@@ -164,7 +145,7 @@ class CommentListItemComponent extends Component {
                     : 'Profile',
                   {
                     user: comment.user,
-                  }
+                  },
                 )}
             >
               <Image
@@ -185,7 +166,7 @@ class CommentListItemComponent extends Component {
                     : 'Profile',
                   {
                     user: comment.user,
-                  }
+                  },
                 )}
             >
               <Text style={styles.linkDescription}>
@@ -212,14 +193,7 @@ class CommentListItemComponent extends Component {
                 source={comment.body_html}
                 onLinkPress={onLinkPress}
               />
-            : <Text
-                style={[
-                  styles.commentTextNone,
-                  Platform.OS === 'ios'
-                    ? styles.commentLight
-                    : styles.commentRegular,
-                ]}
-              >
+            : <Text style={styles.commentTextNone}>
                 {translate('issue.main.noDescription', language)}
               </Text>}
 
@@ -253,5 +227,5 @@ class CommentListItemComponent extends Component {
 }
 
 export const CommentListItem = connect(mapStateToProps)(
-  CommentListItemComponent
+  CommentListItemComponent,
 );
