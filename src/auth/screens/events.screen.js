@@ -569,6 +569,7 @@ class Events extends Component {
                   </Text>
                 </View>}
             </View>}
+          extraData={this.props.language}
         />
       );
     }

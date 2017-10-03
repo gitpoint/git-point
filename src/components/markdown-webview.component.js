@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { WebView, Platform } from 'react-native';
+import githubStyle from './github-style';
 
 export class MarkdownWebView extends Component {
   props: {
@@ -31,15 +32,12 @@ export class MarkdownWebView extends Component {
       }
     }
 
-    const cssUri =
-      Platform.OS === 'ios'
-        ? 'https://machour.idk.tn/github-markdown.css'
-        : 'file:///android_asset/css/github-markdown.css';
-
     return `<html>
     <head>
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="stylesheet" href="${cssUri}" />
+      <style>
+        ${githubStyle}
+      </style>
     </head>
     <body class="markdown-body">
       ${markdown}

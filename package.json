@@ -35,7 +35,8 @@
     "cp-history:android-staging": "code-push deployment history git-point-android Staging",
     "cp-history:android-production": "code-push deployment history git-point-android Production",
     "cp-history:ios-production": "code-push deployment history git-point-ios Production",
-    "doctoc": "doctoc --title='## Table of Contents' README.md"
+    "doctoc": "doctoc --title='## Table of Contents' README.md",
+    "postinstall": "opencollective postinstall"
   },
   "lint-staged": {
     "*.js": [
@@ -52,6 +53,7 @@
     "md5": "^2.2.1",
     "moment": "^2.17.1",
     "node-emoji": "^1.7.0",
+    "opencollective": "^1.0.3",
     "parse-diff": "^0.4.0",
     "query-string": "^4.3.1",
     "react": "16.0.0-alpha.12",
@@ -130,5 +132,10 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "collective": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/git-point",
+    "logo": "https://opencollective.com/opencollective/logo.txt"
   }
 }

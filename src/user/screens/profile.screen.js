@@ -150,19 +150,17 @@ class Profile extends Component {
     } = this.props;
     const { refreshing } = this.state;
     const initialUser = navigation.state.params.user;
-    const isPending = isPendingUser || isPendingOrgs;
+    const isPending =
+      isPendingUser ||
+      isPendingOrgs ||
+      isPendingStarCount ||
+      isPendingCheckFollowing ||
+      isPendingCheckFollower;
     const userActions = [
       isFollowing
         ? translate('user.profile.unfollow', language)
         : translate('user.profile.follow', language),
     ];
-    const isAllDataLoaded =
-      initialUser.login === user.login &&
-      !(
-        isPendingStarCount ||
-        isPendingCheckFollowing ||
-        isPendingCheckFollower
-      );
 
     return (
       <ViewContainer>
@@ -171,16 +169,16 @@ class Profile extends Component {
             <UserProfile
               type="user"
               initialUser={initialUser}
-              starCount={isAllDataLoaded ? starCount : ''}
-              isFollowing={!isAllDataLoaded ? false : isFollowing}
-              isFollower={!isAllDataLoaded ? false : isFollower}
-              user={isAllDataLoaded ? user : {}}
+              starCount={!isPending ? starCount : ''}
+              isFollowing={!isPending ? isFollowing : false}
+              isFollower={!isPending ? isFollower : false}
+              user={!isPending ? user : {}}
               language={language}
               navigation={navigation}
             />}
           refreshControl={
             <RefreshControl
-              refreshing={refreshing}
+              refreshing={refreshing || isPending}
               onRefresh={this.getUserInfo}
             />
           }
