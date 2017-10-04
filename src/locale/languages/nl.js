@@ -223,7 +223,7 @@ export const nl = {
       fileRenamed: 'Bestand hernoemd zonder veranderingen',
     },
     readMe: {
-      readMeActions: 'README actions',
+      readMeActions: 'README Actions',
     },
   },
   organization: {
@@ -331,6 +331,6 @@ export const nl = {
     abbreviations: {
       thousand: 'k',
     },
-    openInBrowser: 'Open in browser',
+    openInBrowser: 'Open in Browser',
   },
 };

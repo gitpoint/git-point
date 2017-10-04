@@ -332,6 +332,6 @@ export const ptBr = {
       y: '%dy',
       yy: '%dy',
     },
-    openInBrowser: 'Abrir no navegador.',
+    openInBrowser: 'Abrir no Navegador.',
   },
 };

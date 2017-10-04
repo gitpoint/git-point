@@ -230,7 +230,7 @@ export const en = {
       fileRenamed: 'File renamed without any changes',
     },
     readMe: {
-      readMeActions: 'README actions',
+      readMeActions: 'README Actions',
     },
   },
   organization: {
@@ -338,6 +338,6 @@ export const en = {
     abbreviations: {
       thousand: 'k',
     },
-    openInBrowser: 'Open in browser',
+    openInBrowser: 'Open in Browser',
   },
 };

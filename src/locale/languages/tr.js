@@ -227,7 +227,7 @@ export const tr = {
         'Dosya herhangi bir değişiklik yapılmaksızın yeniden adlandırıldı',
     },
     readMe: {
-      readMeActions: 'README actions',
+      readMeActions: 'README Actions',
     },
   },
   organization: {
@@ -335,6 +335,6 @@ export const tr = {
     abbreviations: {
       thousand: 'k',
     },
-    openInBrowser: 'Open in browser',
+    openInBrowser: 'Open in Browser',
   },
 };

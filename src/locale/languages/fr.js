@@ -227,7 +227,7 @@ export const fr = {
       fileRenamed: 'Fichier renommé sans aucune modification',
     },
     readMe: {
-      readMeActions: 'README actions',
+      readMeActions: 'Actions sur le README',
     },
   },
   organization: {
@@ -235,7 +235,7 @@ export const fr = {
       membersTitle: 'MEMBRES',
       descriptionTitle: 'DESCRIPTION',
     },
-    organizationActions: 'Organization Actions',
+    organizationActions: "Actions sur l'organization",
   },
   issue: {
     settings: {
@@ -335,6 +335,6 @@ export const fr = {
     abbreviations: {
       thousand: 'k',
     },
-    openInBrowser: 'Open in browser',
+    openInBrowser: 'Ouvrir dans le navigateur',
   },
 };

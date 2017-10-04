@@ -228,7 +228,7 @@ export const ru = {
       fileRenamed: 'Файл переименован без каких-либо изменений',
     },
     readMe: {
-      readMeActions: 'README actions',
+      readMeActions: 'README Actions',
     },
   },
   organization: {
