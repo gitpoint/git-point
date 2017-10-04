@@ -228,7 +228,7 @@ export const ru = {
       fileRenamed: 'Файл переименован без каких-либо изменений',
     },
     readMe: {
-      readMeActions: 'README Actions',
+      readMeActions: 'Действия с README',
     },
   },
   organization: {
@@ -236,7 +236,7 @@ export const ru = {
       membersTitle: 'УЧАСТНИКИ',
       descriptionTitle: 'ОПИСАНИЕ',
     },
-    organizationActions: 'Organization Actions',
+    organizationActions: 'Действия с организацией',
   },
   issue: {
     settings: {
@@ -336,6 +336,6 @@ export const ru = {
     abbreviations: {
       thousand: ' тыс.',
     },
-    openInBrowser: 'Open in browser',
+    openInBrowser: 'Открыть в браузере',
   },
 };
