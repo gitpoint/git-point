@@ -226,12 +226,16 @@ export const tr = {
       fileRenamed:
         'Dosya herhangi bir değişiklik yapılmaksızın yeniden adlandırıldı',
     },
+    readMe: {
+      readMeActions: 'README actions',
+    },
   },
   organization: {
     main: {
       membersTitle: 'ÜYELER',
       descriptionTitle: 'AÇIKLAMA',
     },
+    organizationActions: 'Organization Actions',
   },
   issue: {
     settings: {
@@ -331,5 +335,6 @@ export const tr = {
     abbreviations: {
       thousand: 'k',
     },
+    openInBrowser: 'Open in browser',
   },
 };

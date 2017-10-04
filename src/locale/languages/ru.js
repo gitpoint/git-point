@@ -227,12 +227,16 @@ export const ru = {
       deleted: 'УДАЛЕННЫЙ',
       fileRenamed: 'Файл переименован без каких-либо изменений',
     },
+    readMe: {
+      readMeActions: 'README actions',
+    },
   },
   organization: {
     main: {
       membersTitle: 'УЧАСТНИКИ',
       descriptionTitle: 'ОПИСАНИЕ',
     },
+    organizationActions: 'Organization Actions',
   },
   issue: {
     settings: {
@@ -332,5 +336,6 @@ export const ru = {
     abbreviations: {
       thousand: ' тыс.',
     },
+    openInBrowser: 'Open in browser',
   },
 };

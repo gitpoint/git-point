@@ -20,7 +20,7 @@ import {
   UserListItem,
   EntityInfo,
 } from 'components';
-import { emojifyText, translate } from 'utils';
+import { emojifyText, translate, openURLInView } from 'utils';
 import { colors, fonts } from 'config';
 import {
   getUserInfo,
@@ -130,6 +130,8 @@ class Profile extends Component {
 
     if (index === 0) {
       changeFollowStatus(user.login, isFollowing);
+    } else if (index === 1) {
+      openURLInView(user.html_url);
     }
   };
 
@@ -160,12 +162,13 @@ class Profile extends Component {
       isFollowing
         ? translate('user.profile.unfollow', language)
         : translate('user.profile.follow', language),
+      translate('common.openInBrowser', language),
     ];
 
     return (
       <ViewContainer>
         <ParallaxScroll
-          renderContent={() =>
+          renderContent={() => (
             <UserProfile
               type="user"
               initialUser={initialUser}
@@ -175,7 +178,8 @@ class Profile extends Component {
               user={!isPending ? user : {}}
               language={language}
               navigation={navigation}
-            />}
+            />
+          )}
           refreshControl={
             <RefreshControl
               refreshing={refreshing || isPending}
@@ -192,42 +196,45 @@ class Profile extends Component {
           navigateBack
           navigation={navigation}
         >
-          {isPending &&
+          {isPending && (
             <ActivityIndicator
               animating={isPending}
               style={{ height: Dimensions.get('window').height / 3 }}
               size="large"
-            />}
+            />
+          )}
 
           {!isPending &&
-            initialUser.login === user.login &&
-            <View>
-              {!!user.bio &&
-                user.bio !== '' &&
-                <SectionList title={translate('common.bio', language)}>
-                  <ListItem
-                    subtitle={emojifyText(user.bio)}
-                    subtitleStyle={styles.listSubTitle}
-                    hideChevron
-                  />
-                </SectionList>}
+            initialUser.login === user.login && (
+              <View>
+                {!!user.bio &&
+                  user.bio !== '' && (
+                    <SectionList title={translate('common.bio', language)}>
+                      <ListItem
+                        subtitle={emojifyText(user.bio)}
+                        subtitleStyle={styles.listSubTitle}
+                        hideChevron
+                      />
+                    </SectionList>
+                  )}
 
-              <EntityInfo entity={user} orgs={orgs} navigation={navigation} />
+                <EntityInfo entity={user} orgs={orgs} navigation={navigation} />
 
-              <SectionList
-                title={translate('common.orgs', language)}
-                noItems={orgs.length === 0}
-                noItemsMessage={translate('common.noOrgsMessage', language)}
-              >
-                {orgs.map(item =>
-                  <UserListItem
-                    key={item.id}
-                    user={item}
-                    navigation={navigation}
-                  />
-                )}
-              </SectionList>
-            </View>}
+                <SectionList
+                  title={translate('common.orgs', language)}
+                  noItems={orgs.length === 0}
+                  noItemsMessage={translate('common.noOrgsMessage', language)}
+                >
+                  {orgs.map(item => (
+                    <UserListItem
+                      key={item.id}
+                      user={item}
+                      navigation={navigation}
+                    />
+                  ))}
+                </SectionList>
+              </View>
+            )}
         </ParallaxScroll>
 
         <ActionSheet
@@ -236,7 +243,7 @@ class Profile extends Component {
           }}
           title={translate('user.profile.userActions', language)}
           options={[...userActions, translate('common.cancel', language)]}
-          cancelButtonIndex={1}
+          cancelButtonIndex={2}
           onPress={this.handlePress}
         />
       </ViewContainer>

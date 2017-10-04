@@ -226,12 +226,16 @@ export const fr = {
       deleted: 'SUPPRIMÉ',
       fileRenamed: 'Fichier renommé sans aucune modification',
     },
+    readMe: {
+      readMeActions: 'README actions',
+    },
   },
   organization: {
     main: {
       membersTitle: 'MEMBRES',
       descriptionTitle: 'DESCRIPTION',
     },
+    organizationActions: 'Organization Actions',
   },
   issue: {
     settings: {
@@ -331,5 +335,6 @@ export const fr = {
     abbreviations: {
       thousand: 'k',
     },
+    openInBrowser: 'Open in browser',
   },
 };

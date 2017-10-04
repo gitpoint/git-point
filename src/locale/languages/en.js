@@ -229,12 +229,16 @@ export const en = {
       deleted: 'DELETED',
       fileRenamed: 'File renamed without any changes',
     },
+    readMe: {
+      readMeActions: 'README actions',
+    },
   },
   organization: {
     main: {
       membersTitle: 'MEMBERS',
       descriptionTitle: 'DESCRIPTION',
     },
+    organizationActions: 'Organization Actions',
   },
   issue: {
     settings: {
@@ -334,5 +338,6 @@ export const en = {
     abbreviations: {
       thousand: 'k',
     },
+    openInBrowser: 'Open in browser',
   },
 };
