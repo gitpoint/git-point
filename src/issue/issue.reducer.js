@@ -8,6 +8,7 @@ import {
   CHANGE_LOCK_STATUS,
   GET_ISSUE_DIFF,
   GET_ISSUE_MERGE_STATUS,
+  GET_PULL_REQUEST_FROM_URL,
   MERGE_PULL_REQUEST,
   GET_ISSUE_FROM_URL,
   SUBMIT_NEW_ISSUE,
@@ -16,6 +17,7 @@ import {
 const initialState = {
   issue: {},
   comments: [],
+  pr: {},
   diff: '',
   isMerged: false,
   isPendingComments: false,
@@ -221,6 +223,23 @@ export const issueReducer = (state = initialState, action = {}) => {
         ...state,
         error: action.payload,
         isPendingMerging: false,
+      };
+    case GET_PULL_REQUEST_FROM_URL.PENDING:
+      return {
+        ...state,
+        isPendingPR: true,
+      };
+    case GET_PULL_REQUEST_FROM_URL.SUCCESS:
+      return {
+        ...state,
+        pr: action.payload,
+        isPendingPR: false,
+      };
+    case GET_PULL_REQUEST_FROM_URL.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isPendingPR: false,
       };
     case GET_ISSUE_FROM_URL.PENDING:
       return {

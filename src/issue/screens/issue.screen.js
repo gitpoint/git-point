@@ -36,6 +36,7 @@ const mapStateToProps = state => ({
   contributors: state.repository.contributors,
   issue: state.issue.issue,
   diff: state.issue.diff,
+  pr: state.issue.pr,
   isMerged: state.issue.isMerged,
   comments: state.issue.comments,
   isPendingDiff: state.issue.isPendingDiff,
@@ -94,6 +95,7 @@ class Issue extends Component {
     deleteIssueComment: Function,
     diff: string,
     issue: Object,
+    pr: Object,
     isMerged: boolean,
     authUser: Object,
     repository: Object,
@@ -158,22 +160,19 @@ class Issue extends Component {
       getIssueFromUrl,
     } = this.props;
 
-    const issueParam = navigation.state.params.issue;
-    const issueURLParam = navigation.state.params.issueURL;
-    const issueCommentsURL = `${navigation.state.params.issueURL}/comments`;
+    const params = navigation.state.params;
+    const issueURL = params.issueURL || params.issue.url;
+    const issueRepository = issueURL
+      .replace(`${v3.root}/repos/`, '')
+      .replace(/([^/]+\/[^/]+)\/issues\/\d+$/, '$1');
 
     Promise.all([
-      getIssueFromUrl(issueURLParam || issueParam.url),
-      getIssueComments(
-        issueURLParam ? issueCommentsURL : issueParam.comments_url
-      ),
+      getIssueFromUrl(issueURL),
+      getIssueComments(`${issueURL}/comments`),
     ]).then(() => {
       const issue = this.props.issue;
 
-      if (
-        repository.full_name !==
-        issue.repository_url.replace(`${v3.root}/repos/`, '')
-      ) {
+      if (repository.full_name !== issueRepository) {
         Promise.all([
           getRepository(issue.repository_url),
           getContributors(this.getContributorsLink(issue.repository_url)),
@@ -236,6 +235,7 @@ class Issue extends Component {
   renderHeader = () => {
     const {
       issue,
+      pr,
       diff,
       isMerged,
       isPendingDiff,
@@ -248,6 +248,7 @@ class Issue extends Component {
       <IssueDescription
         issue={issue}
         diff={diff}
+        isMergeable={pr.mergeable}
         isMerged={isMerged}
         isPendingDiff={isPendingDiff}
         isPendingCheckMerge={isPendingCheckMerge}
@@ -308,44 +309,46 @@ class Issue extends Component {
 
     return (
       <ViewContainer>
-        {isShowLoadingContainer &&
-          <LoadingContainer animating={isShowLoadingContainer} center />}
+        {isShowLoadingContainer && (
+          <LoadingContainer animating={isShowLoadingContainer} center />
+        )}
 
         {!isPendingComments &&
           !isPendingIssue &&
-          issue &&
-          <KeyboardAvoidingView
-            style={{ flex: 1 }}
-            behavior={'padding'}
-            keyboardVerticalOffset={Platform.select({
-              ios: 65,
-              android: -200,
-            })}
-          >
-            <FlatList
-              ref={ref => {
-                this.commentsList = ref;
-              }}
-              refreshing={isLoadingData}
-              onRefresh={this.getIssueInformation}
-              contentContainerStyle={{ flexGrow: 1 }}
-              ListHeaderComponent={this.renderHeader}
-              removeClippedSubviews={false}
-              data={fullComments}
-              keyExtractor={this.keyExtractor}
-              renderItem={this.renderItem}
-            />
+          issue && (
+            <KeyboardAvoidingView
+              style={{ flex: 1 }}
+              behavior={'padding'}
+              keyboardVerticalOffset={Platform.select({
+                ios: 65,
+                android: -200,
+              })}
+            >
+              <FlatList
+                ref={ref => {
+                  this.commentsList = ref;
+                }}
+                refreshing={isLoadingData}
+                onRefresh={this.getIssueInformation}
+                contentContainerStyle={{ flexGrow: 1 }}
+                ListHeaderComponent={this.renderHeader}
+                removeClippedSubviews={false}
+                data={fullComments}
+                keyExtractor={this.keyExtractor}
+                renderItem={this.renderItem}
+              />
 
-            <CommentInput
-              users={fullUsers}
-              userHasPushPermission={
-                navigation.state.params.userHasPushPermission
-              }
-              issueLocked={issue.locked}
-              language={language}
-              onSubmit={this.postComment}
-            />
-          </KeyboardAvoidingView>}
+              <CommentInput
+                users={fullUsers}
+                userHasPushPermission={
+                  navigation.state.params.userHasPushPermission
+                }
+                issueLocked={issue.locked}
+                language={language}
+                onSubmit={this.postComment}
+              />
+            </KeyboardAvoidingView>
+          )}
       </ViewContainer>
     );
   }
