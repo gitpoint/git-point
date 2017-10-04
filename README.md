@@ -31,9 +31,8 @@
 - [Features](#features)
 - [Feedback/Contributing](#feedbackcontributing)
 - [Build Process](#build-process)
-- [Contributors](#contributors)
-- [Backers](#backers)
-- [Sponsors](#sponsors)
+- [Backers *](#backers-)
+- [Sponsors *](#sponsors-)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
