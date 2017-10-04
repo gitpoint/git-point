@@ -4,6 +4,9 @@
 export const en = {
   auth: {
     login: {
+      connectingToGitHub: 'Connecting to GitHub...',
+      preparingGitPoint: 'Preparing GitPoint...',
+      cancel: 'CANCEL',
       welcomeTitle: 'Welcome to GitPoint',
       welcomeMessage: 'The most feature-rich GitHub client that is 100% free',
       notificationsTitle: 'Control notifications',
@@ -89,6 +92,7 @@ export const en = {
       codePushNotApplicable: 'Not applicable in debug mode',
     },
     userOptions: {
+      donate: 'Make a donation',
       title: 'Options',
       language: 'Language',
       privacyPolicy: 'Privacy Policy',
@@ -132,6 +136,7 @@ export const en = {
       allButton: 'All',
       retrievingMessage: 'Retrieving notifications',
       noneMessage: "You don't have any notifications of this type",
+      markAllAsRead: 'Mark all as read',
     },
   },
   search: {
@@ -139,9 +144,11 @@ export const en = {
       repositoryButton: 'Repositories',
       userButton: 'Users',
       searchingMessage: 'Searching for {{query}}',
-      searchMessage: 'Searching for any {{type}}',
+      searchMessage: 'Search for any {{type}}',
       repository: 'repository',
       user: 'user',
+      noUsersFound: 'No users found :(',
+      noRepositoriesFound: 'No repositories found :(',
     },
   },
   user: {
@@ -153,14 +160,15 @@ export const en = {
     repositoryList: {
       title: 'Repositories',
     },
-    followerList: {
+    followers: {
       title: 'Followers',
+      text: 'Followers',
+      followsYou: 'Follows you',
     },
-    followingList: {
+    following: {
       title: 'Following',
-    },
-    followYou: {
-      title: 'Follows you',
+      text: 'Following',
+      followingYou: 'Following',
     },
   },
   repository: {
@@ -193,6 +201,7 @@ export const en = {
       forkedFromMessage: 'forked from',
       starred: 'Starred',
       watching: 'Watching',
+      watchers: 'Watchers',
     },
     codeList: {
       title: 'Code',
@@ -245,13 +254,18 @@ export const en = {
       areYouSurePrompt: 'Are you sure?',
       applyLabelTitle: 'Apply a label to this issue',
     },
+    comment: {
+      commentActions: 'Comment Actions',
+      editCommentTitle: 'Edit Comment',
+      editAction: 'Edit',
+      deleteAction: 'Delete',
+    },
     main: {
       assignees: 'Assignees',
       mergeButton: 'Merge Pull Request',
       noDescription: 'No description provided.',
       lockedCommentInput: 'Locked, but you can still comment...',
       commentInput: 'Add a comment...',
-      commentButton: 'Post',
       lockedIssue: 'Issue is locked',
       states: {
         open: 'Open',
@@ -262,6 +276,8 @@ export const en = {
         issue: 'Issue',
         pullRequest: 'Pull Request',
       },
+      openIssueSubTitle: '#{{number}} opened {{time}} ago by {{user}}',
+      closedIssueSubTitle: '#{{number}} by {{user}} was closed {{time}} ago',
     },
     newIssue: {
       title: 'New Issue',
@@ -288,6 +304,7 @@ export const en = {
   },
   common: {
     bio: 'BIO',
+    stars: 'Stars',
     orgs: 'ORGANIZATIONS',
     noOrgsMessage: 'No organizations',
     info: 'INFO',
@@ -296,8 +313,6 @@ export const en = {
     email: 'Email',
     website: 'Website',
     repositories: 'Repositories',
-    followers: 'Followers',
-    following: 'Following',
     cancel: 'Cancel',
     yes: 'Yes',
     ok: 'OK',
@@ -315,6 +330,9 @@ export const en = {
       MM: '%dmo',
       y: '%dy',
       yy: '%dy',
+    },
+    abbreviations: {
+      thousand: 'k',
     },
   },
 };

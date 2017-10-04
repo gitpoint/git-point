@@ -1,22 +1,22 @@
 import {
   fetchUser,
   fetchUserOrgs,
-  fetchUrl,
-  fetchUrlNormal,
-  USER_ENDPOINT,
   fetchSearch,
   fetchChangeFollowStatus,
-  root as apiRoot,
+  fetchStarCount,
+  v3,
 } from 'api';
 import {
   GET_USER,
   GET_ORGS,
-  GET_FOLLOW_STATUS,
+  GET_IS_FOLLOWING,
+  GET_IS_FOLLOWER,
   GET_REPOSITORIES,
   GET_FOLLOWERS,
   GET_FOLLOWING,
   SEARCH_USER_REPOS,
   CHANGE_FOLLOW_STATUS,
+  GET_STAR_COUNT,
 } from './user.type';
 
 const getUser = user => {
@@ -63,25 +63,38 @@ const getOrgs = user => {
   };
 };
 
-export const checkFollowStatus = url => {
+const checkFollowStatusHelper = (user, followedUser, actionSet) => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 
-    dispatch({ type: GET_FOLLOW_STATUS.PENDING });
+    dispatch({ type: actionSet.PENDING });
 
-    fetchUrlNormal(url, accessToken)
+    v3
+      .head(`/users/${user}/following/${followedUser}`, accessToken)
       .then(data => {
         dispatch({
-          type: GET_FOLLOW_STATUS.SUCCESS,
-          payload: !(data.status === 404),
+          type: actionSet.SUCCESS,
+          payload: data.status !== 404,
         });
       })
       .catch(error => {
         dispatch({
-          type: GET_FOLLOW_STATUS.ERROR,
+          type: actionSet.ERROR,
           payload: error,
         });
       });
+  };
+};
+
+export const getIsFollowing = (user, auth) => {
+  return dispatch => {
+    dispatch(checkFollowStatusHelper(auth, user, GET_IS_FOLLOWING));
+  };
+};
+
+export const getIsFollower = (user, auth) => {
+  return dispatch => {
+    dispatch(checkFollowStatusHelper(user, auth, GET_IS_FOLLOWER));
   };
 };
 
@@ -91,7 +104,8 @@ export const getFollowers = user => {
 
     dispatch({ type: GET_FOLLOWERS.PENDING });
 
-    fetchUrl(`${USER_ENDPOINT(user.login)}/followers?per_page=100`, accessToken)
+    v3
+      .getJson(`/users/${user.login}/followers?per_page=100`, accessToken)
       .then(data => {
         dispatch({
           type: GET_FOLLOWERS.SUCCESS,
@@ -109,13 +123,29 @@ export const getFollowers = user => {
 
 export const getUserInfo = user => {
   return dispatch => {
-    return dispatch(getUser(user)).then(() => {
-      dispatch(getOrgs(user));
-      dispatch(
-        checkFollowStatus(`https://api.github.com/user/following/${user}`)
-      );
-      dispatch(getFollowers(user));
-    });
+    Promise.all([dispatch(getUser(user)), dispatch(getOrgs(user))]);
+  };
+};
+
+export const getStarCount = user => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: GET_STAR_COUNT.PENDING });
+
+    fetchStarCount(user, accessToken)
+      .then(data => {
+        dispatch({
+          type: GET_STAR_COUNT.SUCCESS,
+          payload: data,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: GET_STAR_COUNT.ERROR,
+          payload: error,
+        });
+      });
   };
 };
 
@@ -150,17 +180,16 @@ export const getRepositories = user => {
 
     dispatch({ type: GET_REPOSITORIES.PENDING });
 
-    const url = isAuthUser ? `${apiRoot}/user` : USER_ENDPOINT(user.login);
+    const url = isAuthUser
+      ? '/user/repos?affiliation=owner&sort=updated&per_page=50'
+      : `/users/${user.login}/repos?sort=updated&per_page=50`;
 
-    fetchUrl(`${url}/repos?per_page=50`, accessToken)
+    v3
+      .getJson(url, accessToken)
       .then(data => {
-        const payload = isAuthUser
-          ? data.filter(repo => repo.permissions.admin)
-          : data;
-
         dispatch({
           type: GET_REPOSITORIES.SUCCESS,
-          payload,
+          payload: data,
         });
       })
       .catch(error => {
@@ -178,7 +207,8 @@ export const getFollowing = user => {
 
     dispatch({ type: GET_FOLLOWING.PENDING });
 
-    fetchUrl(`${USER_ENDPOINT(user.login)}/following?per_page=100`, accessToken)
+    v3
+      .getJson(`/users/${user.login}/following?per_page=100`, accessToken)
       .then(data => {
         dispatch({
           type: GET_FOLLOWING.SUCCESS,

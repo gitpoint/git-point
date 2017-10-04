@@ -1,19 +1,8 @@
-import { Platform } from 'react-native';
-
-const iosFonts = {
-  fontPrimaryLight: { fontFamily: 'AvenirNext-Regular' },
-  fontPrimary: { fontFamily: 'AvenirNext-Medium' },
-  fontPrimarySemiBold: { fontFamily: 'AvenirNext-DemiBold' },
-  fontPrimaryBold: { fontFamily: 'AvenirNext-Bold' },
+export const fonts = {
+  fontPrimaryLight: { fontFamily: 'Nunito-Light' },
+  fontPrimary: { fontFamily: 'Nunito-Regular' },
+  fontPrimaryItalic: { fontFamily: 'Nunito-Italic' },
+  fontPrimarySemiBold: { fontFamily: 'Nunito-SemiBold' },
+  fontPrimaryBold: { fontFamily: 'Nunito-Bold' },
   fontCode: { fontFamily: 'Menlo' },
 };
-
-const androidFonts = {
-  fontPrimaryLight: { fontFamily: 'OpenSans-Regular' },
-  fontPrimary: { fontFamily: 'OpenSans-Regular' },
-  fontPrimarySemiBold: { fontFamily: 'OpenSans-SemiBold', fontWeight: '600' },
-  fontPrimaryBold: { fontFamily: 'OpenSans-Bold', fontWeight: '700' },
-  fontCode: { fontFamily: 'Menlo' },
-};
-
-export const fonts = Platform.OS === 'ios' ? iosFonts : androidFonts;

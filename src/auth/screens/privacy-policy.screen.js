@@ -4,6 +4,7 @@ import { StyleSheet, ScrollView, View, Text } from 'react-native';
 import { ViewContainer } from 'components';
 import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
+import { v3 } from 'api';
 
 const styles = StyleSheet.create({
   container: {
@@ -24,13 +25,13 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: normalize(12),
     color: colors.primaryDark,
-    ...fonts.fontPrimarySemiBold,
+    ...fonts.fontPrimaryBold,
     marginBottom: 15,
   },
   text: {
-    fontSize: normalize(11),
+    fontSize: normalize(12),
     color: colors.primaryDark,
-    ...fonts.fontPrimaryLight,
+    ...fonts.fontPrimary,
     marginBottom: 15,
   },
   link: {
@@ -118,8 +119,7 @@ export class PrivacyPolicyScreen extends Component {
                   style={styles.link}
                   onPress={() =>
                     navigation.navigate('Repository', {
-                      repositoryUrl:
-                        'https://api.github.com/repos/gitpoint/git-point',
+                      repositoryUrl: `${v3.root}/repos/gitpoint/git-point`,
                     })}
                 >
                   {translate('auth.privacyPolicy.contactLink', language)}

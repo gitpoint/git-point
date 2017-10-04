@@ -1,6 +1,9 @@
 export const nl = {
   auth: {
     login: {
+      connectingToGitHub: 'Verbinding maken met GitHub ...', // google translate
+      preparingGitPoint: 'GitPoint voorbereiden ...', // google translate
+      cancel: 'ANNULEER', // google translate
       welcomeTitle: 'Welkom bij GitPoint',
       welcomeMessage: 'De meest complete GitHub client die geen geld kost',
       notificationsTitle: 'Beheer notificaties',
@@ -20,8 +23,8 @@ export const nl = {
       welcomeMessage:
         'Welkom! Dit is je nieuws tijdlijn - dit helpt je up to date te blijven bij repositories en gebruikers die je volgt.',
       commitCommentEvent: 'heeft een reactie geplaatst op commit',
-      createEvent: 'aangemaakt {{object}}',
-      deleteEvent: 'verwijderd {{object}}',
+      createEvent: '{{object}} aangemaakt',
+      deleteEvent: '{{object}} verwijderd',
       issueCommentEvent: '{{action}} op {{type}}',
       issueEditedEvent: 'heeft een opmerking {{action}} op {{type}}',
       issueRemovedEvent: 'heeft een opmerking {{action}} bij {{type}}',
@@ -30,11 +33,13 @@ export const nl = {
         action: 'heeft',
         connector: 'openbaar gemaakt',
       },
-      pullRequestEvent: '{{action}} pull request',
-      pullRequestReviewEvent: '{{action}} pull request review',
+      pullRequestEvent: 'heeft pull request {{action}}',
+      pullRequestReviewEvent: 'pull request review {{action}} ',
       pullRequestReviewCommentEvent: '{{action}} op pull request',
-      pullRequestReviewEditedEvent: 'heeft een opmerking {{action}} op pull request',
-      pullRequestReviewDeletedEvent: 'heeft een opmerking {{action}} op pull request',
+      pullRequestReviewEditedEvent:
+        'heeft een opmerking {{action}} op pull request',
+      pullRequestReviewDeletedEvent:
+        'heeft een opmerking {{action}} op pull request',
       releaseEvent: '{{action}} release',
       atConnector: 'op',
       toConnector: 'bij',
@@ -85,6 +90,7 @@ export const nl = {
       codePushNotApplicable: 'Niet beschikbaar in debug mode',
     },
     userOptions: {
+      donate: 'Doe een donatie',
       title: 'Opties',
       language: 'Taal',
       privacyPolicy: 'Privacybeleid',
@@ -128,6 +134,7 @@ export const nl = {
       allButton: 'Alles',
       retrievingMessage: 'Notificaties ophalen',
       noneMessage: 'Je hebt geen notificaties met dit type',
+      markAllAsRead: 'Alles als gelezen markeren', // google translate
     },
   },
   search: {
@@ -149,14 +156,15 @@ export const nl = {
     repositoryList: {
       title: 'Repositories',
     },
-    followerList: {
+    followers: {
       title: 'Volgers',
+      text: 'Volgers',
+      followsYou: 'Volgt jou',
     },
-    followingList: {
+    following: {
       title: 'Volgen',
-    },
-    followYou: {
-      title: 'Volgt jou',
+      text: 'Volgen',
+      followingYou: 'Volgen',
     },
   },
   repository: {
@@ -239,13 +247,18 @@ export const nl = {
       areYouSurePrompt: 'Weet je het zeker?',
       applyLabelTitle: 'Voeg een label toe aan deze issue',
     },
+    comment: {
+      commentActions: 'Commentaaracties', // google translate
+      editCommentTitle: 'Bewerk commentaar', // google translate
+      editAction: 'Bewerk', // google translate
+      deleteAction: 'Verwijder', // google translate
+    },
     main: {
       assignees: 'Assignees',
       mergeButton: 'Merge Pull Request',
       noDescription: 'Niet voorzien van een beschrijving.',
       lockedCommentInput: 'Gesloten maar je kan nog opmerkingen maken...',
       commentInput: 'Plaats opmerking...',
-      commentButton: 'Post',
       lockedIssue: 'Issue is gesloten',
       states: {
         open: 'Open',
@@ -256,6 +269,8 @@ export const nl = {
         issue: 'Issue',
         pullRequest: 'Pull Request',
       },
+      openIssueSubTitle: '#{{number}} opened {{time}} ago by {{user}}',
+      closedIssueSubTitle: '#{{number}} by {{user}} was closed {{time}} ago',
     },
     newIssue: {
       title: 'Niew Issue',
@@ -282,6 +297,7 @@ export const nl = {
   },
   common: {
     bio: 'BIO',
+    stars: 'Sterren',
     orgs: 'ORGANISATIES',
     noOrgsMessage: 'Geen organizations',
     info: 'INFO',
@@ -290,8 +306,6 @@ export const nl = {
     email: 'Email',
     website: 'Website',
     repositories: 'Repositories',
-    followers: 'Volgers',
-    following: 'Volgen',
     cancel: 'Annuleren',
     yes: 'Ja',
     ok: 'OKE',
@@ -309,6 +323,9 @@ export const nl = {
       MM: '%dmo',
       y: '%dy',
       yy: '%dy',
+    },
+    abbreviations: {
+      thousand: 'k',
     },
   },
 };
