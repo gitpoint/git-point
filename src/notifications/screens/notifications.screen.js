@@ -339,7 +339,7 @@ class Notifications extends Component {
 
     markAsRead(notification.id);
     navigation.navigate('Issue', {
-      issueURL: notification.subject.url.replace('pulls', 'issues'),
+      issueURL: notification.subject.url.replace(/pulls\/(\d+)$/, 'issues/$1'),
       isPR: notification.subject.type === 'PullRequest',
       language: this.props.language,
     });
