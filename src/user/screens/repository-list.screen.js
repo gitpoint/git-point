@@ -14,6 +14,7 @@ import { colors } from 'config';
 import { getRepositories, searchUserRepos } from 'user';
 
 const mapStateToProps = state => ({
+  authUser: state.auth.user,
   user: state.user.user,
   repositories: state.user.repositories,
   searchedUserRepos: state.user.searchedUserRepos,
@@ -27,7 +28,7 @@ const mapDispatchToProps = dispatch =>
       getRepositories,
       searchUserRepos,
     },
-    dispatch
+    dispatch,
   );
 
 const styles = StyleSheet.create({
@@ -55,6 +56,7 @@ class RepositoryList extends Component {
   props: {
     getRepositories: Function,
     searchUserRepos: Function,
+    authUser: Object,
     user: Object,
     repositories: Array,
     searchedUserRepos: Array,
@@ -115,6 +117,7 @@ class RepositoryList extends Component {
 
   render() {
     const {
+      authUser,
       isPendingRepositories,
       isPendingSearchUserRepos,
       navigation,
@@ -149,7 +152,7 @@ class RepositoryList extends Component {
 
           {loading &&
             [...Array(searchStart ? repoCount : 10)].map(
-              (item, index) => <LoadingRepositoryListItem key={index} /> // eslint-disable-line react/no-array-index-key
+              (item, index) => <LoadingRepositoryListItem key={index} />, // eslint-disable-line react/no-array-index-key
             )}
 
           {!loading &&
@@ -161,6 +164,7 @@ class RepositoryList extends Component {
                 renderItem={({ item }) =>
                   <RepositoryListItem
                     repository={item}
+                    showFullName={authUser.login !== item.owner.login}
                     navigation={navigation}
                   />}
               />
@@ -173,5 +177,5 @@ class RepositoryList extends Component {
 
 export const RepositoryListScreen = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(RepositoryList);

@@ -92,6 +92,7 @@ export const en = {
       codePushNotApplicable: 'Not applicable in debug mode',
     },
     userOptions: {
+      donate: 'Make a donation',
       title: 'Options',
       language: 'Language',
       privacyPolicy: 'Privacy Policy',
@@ -287,6 +288,8 @@ export const en = {
         issue: 'Issue',
         pullRequest: 'Pull Request',
       },
+      openIssueSubTitle: '#{{number}} opened {{time}} ago by {{user}}',
+      closedIssueSubTitle: '#{{number}} by {{user}} was closed {{time}} ago',
     },
     newIssue: {
       title: 'New Issue',

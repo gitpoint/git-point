@@ -1,9 +1,9 @@
 export const ptBr = {
   auth: {
     login: {
-      connectingToGitHub: 'Connecting to GitHub...',
-      preparingGitPoint: 'Preparing GitPoint...',
-      cancel: 'CANCEL',
+      connectingToGitHub: 'Conectando ao GitHub...',
+      preparingGitPoint: 'Preparando GitPoint...',
+      cancel: 'CANCELAR',
       welcomeTitle: 'Bem-vindo ao GitPoint',
       welcomeMessage:
         'O GitHub client com a maior quantidade de funcionalidades que é 100% grátis',
@@ -89,6 +89,7 @@ export const ptBr = {
       codePushNotApplicable: 'Não aplicável em modo de depuração',
     },
     userOptions: {
+      donate: 'Faça uma doação',
       title: 'Opções',
       language: 'Idioma',
       privacyPolicy: 'Política de Privacidade',
@@ -132,7 +133,7 @@ export const ptBr = {
       allButton: 'Todas',
       retrievingMessage: 'Buscando notificações',
       noneMessage: 'Você não tem notificações deste tipo',
-      markAllAsRead: 'Mark all as read',
+      markAllAsRead: 'Marcar todos como lido',
     },
   },
   search: {
@@ -272,6 +273,8 @@ export const ptBr = {
         issue: 'Issue',
         pullRequest: 'Pull Request',
       },
+      openIssueSubTitle: '#{{number}} opened {{time}} ago by {{user}}',
+      closedIssueSubTitle: '#{{number}} by {{user}} was closed {{time}} ago',
     },
     newIssue: {
       title: 'Nova Issue',

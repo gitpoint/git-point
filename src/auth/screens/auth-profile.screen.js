@@ -129,7 +129,7 @@ class AuthProfile extends Component {
             />}
           refreshControl={
             <RefreshControl
-              refreshing={isPending}
+              refreshing={isPendingUser}
               onRefresh={this.refreshProfile}
             />
           }

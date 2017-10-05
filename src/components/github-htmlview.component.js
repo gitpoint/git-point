@@ -9,22 +9,14 @@ import entities from 'entities';
 import { ImageZoom } from 'components';
 import { colors, fonts, normalize } from 'config';
 
-const lightFont = {
-  ...fonts.fontPrimaryLight,
-};
-
-const regularFont = {
-  ...fonts.fontPrimary,
-};
-
 const textStyle = Platform.select({
   ios: {
-    ...lightFont,
-    fontSize: normalize(11),
+    ...fonts.fontPrimary,
+    fontSize: normalize(12),
     color: colors.primaryDark,
   },
   android: {
-    ...regularFont,
+    ...fonts.fontPrimary,
     fontSize: normalize(12),
     color: colors.primaryDark,
   },
@@ -132,6 +124,18 @@ const cellForNode = node =>
     ? CellWithImage
     : Cell;
 
+const hasAncestor = (node, ancestorName) => {
+  if (node.parent === null) {
+    return false;
+  }
+
+  if (node.parent.type === 'tag' && node.parent.name === ancestorName) {
+    return true;
+  }
+
+  return hasAncestor(node.parent, ancestorName);
+};
+
 const onlyTagsChildren = node =>
   node.children.filter(elem => elem.type === 'tag');
 
@@ -163,11 +167,11 @@ export class GithubHtmlView extends Component {
         // task list
         .replace(
           /<li class="task-list-item">(<span[^>]*>)?<input class="task-list-item-checkbox" disabled="" id="" type="checkbox"> ?\.? ?/g,
-          '$1⬜ '
+          '$1⬜ ',
         )
         .replace(
           /<li class="task-list-item">(<span[^>]*>)?<input checked="" class="task-list-item-checkbox" disabled="" id="" type="checkbox"> ?\.? ?/g,
-          '$1✅ '
+          '$1✅ ',
         )
         // Remove links & spans around images
         .replace(/<a[^>]+><img([^>]+)><\/a>/g, '<img$1>')
@@ -186,7 +190,7 @@ export class GithubHtmlView extends Component {
       _index,
       _siblings,
       _parent,
-      _defaultRenderer
+      _defaultRenderer,
     ) => {
       /* eslint-disable no-unused-vars */
       const onLinkPress = this.props.onLinkPress;
@@ -238,8 +242,20 @@ export class GithubHtmlView extends Component {
         hr: (node, index, siblings, parent, defaultRenderer) =>
           <View key={index} style={{ ...hrStyle }} />,
         img: (node, index, siblings, parent, defaultRenderer) => {
-          const zoom =
-            parent && parent.type === 'tag' && parent.name === 'td' ? 0.3 : 0.6;
+          if (hasAncestor(node, 'li')) {
+            return (
+              <Text
+                style={linkStyle}
+                onPress={() =>
+                  onLinkPress({ ...node, attribs: { href: node.attribs.src } })}
+              >
+                [{node.attribs.alt}]
+                {'\n'}
+              </Text>
+            );
+          }
+
+          const zoom = hasAncestor(node, 'table') ? 0.3 : 0.6;
 
           return (
             <ImageZoom
@@ -328,7 +344,7 @@ export class GithubHtmlView extends Component {
           _index,
           _siblings,
           _parent,
-          _defaultRenderer
+          _defaultRenderer,
         );
       }
 

@@ -94,6 +94,7 @@ export const fr = {
       codePushNotApplicable: 'Non applicable en mode débogage',
     },
     userOptions: {
+      donate: 'Faire un don',
       title: 'Options',
       language: 'Langue',
       privacyPolicy: 'Politique de confidentialité',
@@ -137,7 +138,7 @@ export const fr = {
       allButton: 'Tous',
       retrievingMessage: 'Récupération des notifications',
       noneMessage: "Vous n'avez aucune notification de ce type",
-      markAllAsRead: 'Mark all as read',
+      markAllAsRead: 'Marquer tous comme lus',
     },
   },
   search: {
@@ -251,10 +252,10 @@ export const fr = {
       applyLabelTitle: 'Appliquer un libellé à ce ticket',
     },
     comment: {
-      commentActions: 'Comment Actions',
-      editCommentTitle: 'Edit Comment',
-      editAction: 'Edit',
-      deleteAction: 'Delete',
+      commentActions: 'Actions sur le commentaire',
+      editCommentTitle: 'Editer le commentaire',
+      editAction: 'Editer',
+      deleteAction: 'Supprimer',
     },
     main: {
       assignees: 'Assignés',
@@ -272,6 +273,8 @@ export const fr = {
         issue: 'Ticket',
         pullRequest: 'Pull Request',
       },
+      openIssueSubTitle: '#{{number}} ouvert il y a {{time}} par {{user}}',
+      closedIssueSubTitle: '#{{number}} par {{user}} fermé il y a {{time}}',
     },
     newIssue: {
       title: 'Nouveau ticket',
