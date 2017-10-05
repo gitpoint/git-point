@@ -7,6 +7,7 @@ export * from './diff-blocks.component';
 export * from './entity-info.component';
 export * from './issue-description.component';
 export * from './issue-list-item.component';
+export * from './issue-event-list-item.component';
 export * from './label-button.component';
 export * from './label-list-item.component';
 export * from './github-htmlview.component';

@@ -17,6 +17,7 @@ import {
   IssueDescription,
   CommentListItem,
   CommentInput,
+  IssueEventListItem,
 } from 'components';
 import { v3 } from 'api';
 import { translate } from 'utils';
@@ -27,6 +28,7 @@ import {
   postIssueComment,
   getIssueFromUrl,
   deleteIssueComment,
+  getIssueEvents,
 } from '../issue.action';
 
 const mapStateToProps = state => ({
@@ -38,9 +40,11 @@ const mapStateToProps = state => ({
   diff: state.issue.diff,
   isMerged: state.issue.isMerged,
   comments: state.issue.comments,
+  events: state.issue.events,
   isPendingDiff: state.issue.isPendingDiff,
   isPendingCheckMerge: state.issue.isPendingCheckMerge,
   isPendingComments: state.issue.isPendingComments,
+  isPendingEvents: state.issue.isPendingEvents,
   isPostingComment: state.issue.isPostingComment,
   isPendingContributors: state.repository.isPendingContributors,
   isDeletingComment: state.issue.isDeletingComment,
@@ -55,9 +59,20 @@ const mapDispatchToProps = dispatch =>
       postIssueComment,
       getIssueFromUrl,
       deleteIssueComment,
+      getIssueEvents,
     },
     dispatch
   );
+
+const compareCreatedAt = (a, b) => {
+  if (a.created_at < b.created_at) {
+    return -1;
+  } else if (a.created_at > b.created_at) {
+    return 1;
+  }
+
+  return 0;
+};
 
 class Issue extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -91,6 +106,7 @@ class Issue extends Component {
     getContributors: Function,
     postIssueComment: Function,
     getIssueFromUrl: Function,
+    getIssueEvents: Function,
     deleteIssueComment: Function,
     diff: string,
     issue: Object,
@@ -99,10 +115,12 @@ class Issue extends Component {
     repository: Object,
     contributors: Array,
     comments: Array,
+    events: Array,
     isPendingIssue: boolean,
     isPendingDiff: boolean,
     isPendingCheckMerge: boolean,
     isPendingComments: boolean,
+    isPendingEvents: boolean,
     isDeletingComment: boolean,
     isPendingContributors: boolean,
     // isPostingComment: boolean,
@@ -156,11 +174,15 @@ class Issue extends Component {
       getRepository,
       getContributors,
       getIssueFromUrl,
+      getIssueEvents,
     } = this.props;
 
     const issueParam = navigation.state.params.issue;
     const issueURLParam = navigation.state.params.issueURL;
     const issueCommentsURL = `${navigation.state.params.issueURL}/comments`;
+
+    const repoName = repository.name;
+    const owner = repository.owner.login;
 
     Promise.all([
       getIssueFromUrl(issueURLParam || issueParam.url),
@@ -183,6 +205,8 @@ class Issue extends Component {
       } else {
         this.setNavigationParams();
       }
+
+      return getIssueEvents(owner, repoName, issue.number);
     });
   };
 
@@ -263,6 +287,10 @@ class Issue extends Component {
   renderItem = ({ item }) => {
     const { language } = this.props;
 
+    if (item.event) {
+      return <IssueEventListItem event={item} />;
+    }
+
     return (
       <CommentListItem
         comment={item}
@@ -279,8 +307,10 @@ class Issue extends Component {
     const {
       issue,
       comments,
+      events,
       contributors,
       isPendingComments,
+      isPendingEvents,
       isPendingContributors,
       isPendingIssue,
       isDeletingComment,
@@ -293,8 +323,11 @@ class Issue extends Component {
       isPendingIssue ||
       isDeletingComment
     );
-    const isShowLoadingContainer = isPendingComments || isPendingIssue;
-    const fullComments = !isPendingComments ? [issue, ...comments] : [];
+    const isShowLoadingContainer =
+      isPendingComments || isPendingIssue || isPendingEvents;
+    const fullComments = !isPendingComments
+      ? [issue, ...comments, ...events].sort(compareCreatedAt)
+      : [];
 
     const participantNames = !isPendingComments
       ? fullComments.map(item => item && item.user && item.user.login)
