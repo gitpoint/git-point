@@ -6,7 +6,7 @@ import {
   ActivityIndicator,
   TouchableHighlight,
 } from 'react-native';
-import { ListItem, Button } from 'react-native-elements';
+import { ListItem } from 'react-native-elements';
 
 import Parse from 'parse-diff';
 import moment from 'moment/min/moment-with-locales.min';

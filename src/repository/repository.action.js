@@ -176,7 +176,8 @@ export const getCommits = url => {
 
     dispatch({ type: GET_REPOSITORY_COMMITS.PENDING });
 
-    fetchUrl(url, accessToken)
+    v3
+      .getJson(url, accessToken)
       .then(data => {
         dispatch({
           type: GET_REPOSITORY_COMMITS.SUCCESS,
@@ -198,7 +199,8 @@ export const getCommitFromUrl = url => {
 
     dispatch({ type: GET_COMMIT.PENDING });
 
-    fetchUrl(url, accessToken)
+    v3
+      .getJson(url, accessToken)
       .then(data => {
         dispatch({
           type: GET_COMMIT.SUCCESS,

@@ -1,5 +1,4 @@
 import {
-  fetchUrl,
   fetchMergeStatus,
   fetchPostIssueComment,
   fetchEditIssue,
@@ -108,7 +107,8 @@ export const getCommits = url => {
 
     dispatch({ type: GET_ISSUE_COMMITS.PENDING });
 
-    fetchUrl(url, accessToken)
+    return v3
+      .getJson(url, accessToken)
       .then(data => {
         dispatch({
           type: GET_ISSUE_COMMITS.SUCCESS,

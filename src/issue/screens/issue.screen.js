@@ -164,6 +164,7 @@ class Issue extends Component {
       getContributors,
       getIssueFromUrl,
       getCommits,
+      issue,
     } = this.props;
 
     const issueParam = navigation.state.params.issue;
@@ -177,7 +178,7 @@ class Issue extends Component {
       getIssueComments(
         issueURLParam ? issueCommentsURL : issueParam.comments_url
       ),
-      issue.pull_request
+      (issue || issueParam).pull_request
         ? getCommits(pullRequestCommitsURL)
         : Promise.resolve(),
     ]).then(() => {
