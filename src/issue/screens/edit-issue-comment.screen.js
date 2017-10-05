@@ -18,7 +18,6 @@ import { editIssueBody, editIssueComment } from '../issue.action';
 
 const styles = StyleSheet.create({
   textInput: {
-    maxHeight: Dimensions.get('window').height / 2,
     paddingVertical: 10,
     fontSize: normalize(12),
     marginHorizontal: 15,
@@ -116,7 +115,13 @@ class EditIssueComment extends Component {
                   issueCommentHeight: event.nativeEvent.contentSize.height,
                 })}
               placeholderTextColor={colors.grey}
-              style={styles.textInput}
+              style={[
+                styles.textInput,
+                {
+                  height: this.state.issueCommentHeight,
+                  maxHeight: Dimensions.get('window').height / 2,
+                },
+              ]}
               value={issueComment}
             />
           </SectionList>
