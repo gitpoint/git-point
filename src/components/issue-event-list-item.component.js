@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     flexDirection: 'row',
     flexGrow: 1,
+    flexShrink: 1,
     borderBottomColor: colors.greyLight,
     borderBottomWidth: 1,
   },
@@ -37,6 +38,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     flexDirection: 'row',
     flexGrow: 1,
+    flexShrink: 1,
   },
   dateContainer: {
     flex: 1,
@@ -53,7 +55,7 @@ const styles = StyleSheet.create({
     padding: 1,
     paddingRight: 4,
   },
-  linkDescription: {
+  boldText: {
     ...fonts.fontPrimaryBold,
     fontSize: normalize(13),
     color: colors.primaryDark,
@@ -80,11 +82,13 @@ export class IssueEventListItem extends Component {
         return <Labeled unlabeled event={event} />;
       case 'closed':
         return <Closed event={event} />;
-      // case 'reopened':
+      case 'reopened':
+        return <Reopened event={event} />;
       case 'merged':
         return <Merged event={event} />;
       // case 'referenced':
-      // case 'renamed':
+      case 'renamed':
+        return <Renamed event={event} />;
       case 'assigned':
         return <Assigned event={event} />;
       case 'unassigned':
@@ -208,6 +212,33 @@ class Closed extends Component {
   }
 }
 
+class Reopened extends Component {
+  props: {
+    event: Object,
+  };
+
+  render() {
+    const { actor, created_at: createdAt } = this.props.event;
+
+    return (
+      <View style={[styles.container, styles.header]}>
+        <EventIcon
+          name="primitive-dot"
+          backgroundColor={colors.green}
+          iconColor={colors.white}
+        />
+        <View style={styles.contentContainer}>
+          <View style={styles.eventTextContainer}>
+            <ActorLink actor={actor} />
+            <Text style={{ padding: 3 }}>reopened this</Text>
+          </View>
+          <Date date={createdAt} />
+        </View>
+      </View>
+    );
+  }
+}
+
 class Merged extends Component {
   props: {
     event: Object,
@@ -233,6 +264,31 @@ class Merged extends Component {
             <ActorLink actor={actor} />
             <Text style={{ padding: 3 }}>
               merged {commitId.slice(0, 7)}
+            </Text>
+          </View>
+          <Date date={createdAt} />
+        </View>
+      </View>
+    );
+  }
+}
+
+class Renamed extends Component {
+  props: {
+    event: Object,
+  };
+
+  render() {
+    const { actor, rename, created_at: createdAt } = this.props.event;
+
+    return (
+      <View style={[styles.container, styles.header]}>
+        <EventIcon name="pencil" />
+        <View style={styles.contentContainer}>
+          <View style={styles.eventTextContainer}>
+            <Text style={{ padding: 1 }}>
+              <Bold>{actor.login}</Bold> changed the title from{' '}
+              <Bold>{rename.from}</Bold> to <Bold>{rename.to}</Bold>
             </Text>
           </View>
           <Date date={createdAt} />
@@ -323,7 +379,7 @@ class ActorLink extends Component {
           // )
         }}
       >
-        <Text style={styles.linkDescription}>
+        <Text style={styles.boldText}>
           {actor.login}
         </Text>
       </TouchableOpacity>
@@ -335,6 +391,7 @@ const marginLeftForIconName = name => {
   switch (name) {
     case 'git-branch':
     case 'git-merge':
+    case 'primitive-dot':
       return 8;
     case 'person':
       return 4;
@@ -387,6 +444,20 @@ class Date extends Component {
           {moment(date).fromNow()}
         </Text>
       </View>
+    );
+  }
+}
+
+class Bold extends Component {
+  props: {
+    children: Object | String,
+  };
+
+  render() {
+    return (
+      <Text style={styles.boldText}>
+        {this.props.children}
+      </Text>
     );
   }
 }
