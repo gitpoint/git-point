@@ -85,8 +85,10 @@ export class IssueEventListItem extends Component {
         return <Merged event={event} />;
       // case 'referenced':
       // case 'renamed':
-      // case 'assigned':
-      // case 'unassigned':
+      case 'assigned':
+        return <Assigned event={event} />;
+      case 'unassigned':
+        return <Assigned unassigned event={event} />;
       // case 'review_dismissed':
       // case 'review_request_removed':
       // case 'dismissed_review':
@@ -240,6 +242,34 @@ class Merged extends Component {
   }
 }
 
+class Assigned extends Component {
+  props: {
+    event: Object,
+    unassigned: boolean,
+  };
+
+  render() {
+    const { assigner, assignee, created_at: createdAt } = this.props.event;
+    const action = this.props.unassigned ? 'unassigned' : 'assigned';
+
+    return (
+      <View style={[styles.container, styles.header]}>
+        <EventIcon name="person" />
+        <View style={styles.contentContainer}>
+          <View style={styles.eventTextContainer}>
+            <ActorLink actor={assigner} />
+            <Text style={{ padding: 3 }}>
+              {action}
+            </Text>
+            <ActorLink actor={assignee} />
+          </View>
+          <Date date={createdAt} />
+        </View>
+      </View>
+    );
+  }
+}
+
 class HeadRef extends Component {
   props: {
     event: Object,
@@ -306,6 +336,8 @@ const marginLeftForIconName = name => {
     case 'git-branch':
     case 'git-merge':
       return 8;
+    case 'person':
+      return 4;
     default:
       return 2;
   }
@@ -321,8 +353,8 @@ class EventIcon extends Component {
   render() {
     const {
       name,
-      iconColor = 'black',
-      backgroundColor = colors.greyLight,
+      iconColor = '#586069',
+      backgroundColor = '#E6EBF1',
     } = this.props;
 
     return (
