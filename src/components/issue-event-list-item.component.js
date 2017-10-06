@@ -76,7 +76,8 @@ export class IssueEventListItem extends Component {
         return <ReviewRequested event={event} />;
       case 'labeled':
         return <Labeled event={event} />;
-      // case 'closed':
+      case 'closed':
+        return <Closed event={event} />;
       // case 'reopened':
       // case 'merged':
       // case 'referenced':
@@ -177,6 +178,38 @@ class LabeledComponent extends Component {
               added
             </Text>
             <LabelButton label={label} />
+          </View>
+          <View style={styles.dateContainer}>
+            <Text style={styles.date}>
+              {moment(created_at).fromNow()}
+            </Text>
+          </View>
+        </View>
+      </View>
+    );
+  }
+}
+
+class Closed extends Component {
+  props: {
+    event: Object,
+  };
+
+  render() {
+    const { actor, created_at } = this.props.event;
+
+    return (
+      <View style={[styles.container, styles.header]}>
+        <Icon
+          containerStyle={styles.iconContainer}
+          name="circle-slash"
+          type="octicon"
+          size={16}
+        />
+        <View style={styles.contentContainer}>
+          <View style={styles.eventTextContainer}>
+            <ActorLink actor={actor} />
+            <Text style={{ padding: 3 }}>closed this</Text>
           </View>
           <View style={styles.dateContainer}>
             <Text style={styles.date}>
