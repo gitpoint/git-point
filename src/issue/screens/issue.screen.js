@@ -325,12 +325,12 @@ class Issue extends Component {
     );
     const isShowLoadingContainer =
       isPendingComments || isPendingIssue || isPendingEvents;
-    const fullComments = !isPendingComments
+    const fullEvents = !isPendingComments
       ? [issue, ...comments, ...events].sort(compareCreatedAt)
       : [];
 
     const participantNames = !isPendingComments
-      ? fullComments.map(item => item && item.user && item.user.login)
+      ? fullEvents.map(item => item && item.user && item.user.login)
       : [];
     const contributorNames = !isPendingContributors
       ? contributors.map(item => item && item.login)
@@ -338,6 +338,10 @@ class Issue extends Component {
     const fullUsers = [
       ...new Set([...participantNames, ...contributorNames]),
     ].filter(item => !!item);
+
+    const eventsToRender = fullEvents.filter(
+      ({ event }) => event !== 'mentioned' && event !== 'subscribed'
+    );
 
     return (
       <ViewContainer>
@@ -364,7 +368,7 @@ class Issue extends Component {
               contentContainerStyle={{ flexGrow: 1 }}
               ListHeaderComponent={this.renderHeader}
               removeClippedSubviews={false}
-              data={fullComments}
+              data={eventsToRender}
               keyExtractor={this.keyExtractor}
               renderItem={this.renderItem}
             />
