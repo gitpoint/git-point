@@ -9,7 +9,7 @@ I18n.translations = {
   fr,
   nl,
   tr,
-  'pt-br': ptPT,
+  'pt-pt': ptPT,
   'pt-br': ptBr,
   ru,
 };
