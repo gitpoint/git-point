@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import moment from 'moment/min/moment-with-locales.min';
@@ -132,9 +132,10 @@ class ReviewRequested extends Component {
         <EventIcon name="eye" />
         <View style={styles.contentContainer}>
           <View style={styles.eventTextContainer}>
-            <ActorLink actor={reviewRequester} />
-            <Text style={{ padding: 3 }}>requested review from</Text>
-            <ActorLink actor={requestedReviewer} />
+            <Text style={{ padding: 3 }}>
+              <ActorLink actor={reviewRequester} /> requested review from{' '}
+              <ActorLink actor={requestedReviewer} />
+            </Text>
           </View>
           <Date date={createdAt} />
         </View>
@@ -166,7 +167,6 @@ class LabeledComponent extends Component {
         <EventIcon name="tag" />
         <View style={styles.contentContainer}>
           <View style={styles.eventTextContainer}>
-            <ActorLink actor={actor} />
             <Text
               style={{
                 padding: 3,
@@ -174,7 +174,7 @@ class LabeledComponent extends Component {
                 paddingLeft: 0,
               }}
             >
-              {action}
+              <ActorLink actor={actor} /> {action}
             </Text>
             <LabelButton label={label} />
           </View>
@@ -202,8 +202,9 @@ class Closed extends Component {
         />
         <View style={styles.contentContainer}>
           <View style={styles.eventTextContainer}>
-            <ActorLink actor={actor} />
-            <Text style={{ padding: 3 }}>closed this</Text>
+            <Text style={{ padding: 3 }}>
+              <ActorLink actor={actor} /> closed this
+            </Text>
           </View>
           <Date date={createdAt} />
         </View>
@@ -229,8 +230,9 @@ class Reopened extends Component {
         />
         <View style={styles.contentContainer}>
           <View style={styles.eventTextContainer}>
-            <ActorLink actor={actor} />
-            <Text style={{ padding: 3 }}>reopened this</Text>
+            <Text style={{ padding: 3 }}>
+              <ActorLink actor={actor} /> reopened this
+            </Text>
           </View>
           <Date date={createdAt} />
         </View>
@@ -261,9 +263,8 @@ class Merged extends Component {
         />
         <View style={styles.contentContainer}>
           <View style={styles.eventTextContainer}>
-            <ActorLink actor={actor} />
             <Text style={{ padding: 3 }}>
-              merged {commitId.slice(0, 7)}
+              <ActorLink actor={actor} /> merged {commitId.slice(0, 7)}
             </Text>
           </View>
           <Date date={createdAt} />
@@ -287,7 +288,7 @@ class Renamed extends Component {
         <View style={styles.contentContainer}>
           <View style={styles.eventTextContainer}>
             <Text style={{ padding: 1 }}>
-              <Bold>{actor.login}</Bold> changed the title from{' '}
+              <ActorLink actor={actor} /> changed the title from{' '}
               <Bold>{rename.from}</Bold> to <Bold>{rename.to}</Bold>
             </Text>
           </View>
@@ -313,11 +314,10 @@ class Assigned extends Component {
         <EventIcon name="person" />
         <View style={styles.contentContainer}>
           <View style={styles.eventTextContainer}>
-            <ActorLink actor={assigner} />
             <Text style={{ padding: 3 }}>
-              {action}
+              <ActorLink actor={assigner} /> {action}{' '}
+              <ActorLink actor={assignee} />
             </Text>
-            <ActorLink actor={assignee} />
           </View>
           <Date date={createdAt} />
         </View>
@@ -344,9 +344,8 @@ class HeadRef extends Component {
         />
         <View style={styles.contentContainer}>
           <View style={styles.eventTextContainer}>
-            <ActorLink actor={actor} />
             <Text style={{ padding: 3 }}>
-              {this.props.action} this branch
+              <ActorLink actor={actor} /> {this.props.action} this branch
             </Text>
           </View>
           <Date date={createdAt} />
@@ -365,24 +364,9 @@ class ActorLink extends Component {
     const { actor } = this.props;
 
     return (
-      <TouchableOpacity
-        style={styles.actorLink}
-        onPress={() => {
-          // TODO: figure out navigation
-          // navigation.navigate(
-          //   authUser.login === actor.login
-          //     ? 'AuthProfile'
-          //     : 'Profile',
-          //   {
-          //     user: actor,
-          //   },
-          // )
-        }}
-      >
-        <Text style={styles.boldText}>
-          {actor.login}
-        </Text>
-      </TouchableOpacity>
+      <Text style={styles.boldText}>
+        {actor.login}
+      </Text>
     );
   }
 }
