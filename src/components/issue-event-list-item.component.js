@@ -114,28 +114,19 @@ class ReviewRequested extends Component {
     const {
       review_requester: reviewRequester,
       requested_reviewer: requestedReviewer,
-      created_at,
+      created_at: createdAt,
     } = this.props.event;
 
     return (
       <View style={[styles.container, styles.header]}>
-        <Icon
-          containerStyle={styles.iconContainer}
-          name="eye"
-          type="octicon"
-          size={16}
-        />
+        <EventIcon name="eye" />
         <View style={styles.contentContainer}>
           <View style={styles.eventTextContainer}>
             <ActorLink actor={reviewRequester} />
             <Text style={{ padding: 3 }}>requested review from</Text>
             <ActorLink actor={requestedReviewer} />
           </View>
-          <View style={styles.dateContainer}>
-            <Text style={styles.date}>
-              {moment(created_at).fromNow()}
-            </Text>
-          </View>
+          <Date date={createdAt} />
         </View>
       </View>
     );
@@ -152,19 +143,14 @@ class LabeledComponent extends Component {
     const {
       actor,
       label,
-      created_at,
+      created_at: createdAt,
       // navigation,
       // authUser,
     } = this.props.event;
 
     return (
       <View style={[styles.container, styles.header]}>
-        <Icon
-          containerStyle={styles.iconContainer}
-          name="tag"
-          type="octicon"
-          size={16}
-        />
+        <EventIcon name="tag" />
         <View style={styles.contentContainer}>
           <View style={styles.eventTextContainer}>
             <ActorLink actor={actor} />
@@ -179,11 +165,7 @@ class LabeledComponent extends Component {
             </Text>
             <LabelButton label={label} />
           </View>
-          <View style={styles.dateContainer}>
-            <Text style={styles.date}>
-              {moment(created_at).fromNow()}
-            </Text>
-          </View>
+          <Date date={createdAt} />
         </View>
       </View>
     );
@@ -196,26 +178,17 @@ class Closed extends Component {
   };
 
   render() {
-    const { actor, created_at } = this.props.event;
+    const { actor, created_at: createdAt } = this.props.event;
 
     return (
       <View style={[styles.container, styles.header]}>
-        <Icon
-          containerStyle={styles.iconContainer}
-          name="circle-slash"
-          type="octicon"
-          size={16}
-        />
+        <EventIcon name="circle-slash" />
         <View style={styles.contentContainer}>
           <View style={styles.eventTextContainer}>
             <ActorLink actor={actor} />
             <Text style={{ padding: 3 }}>closed this</Text>
           </View>
-          <View style={styles.dateContainer}>
-            <Text style={styles.date}>
-              {moment(created_at).fromNow()}
-            </Text>
-          </View>
+          <Date date={createdAt} />
         </View>
       </View>
     );
@@ -249,6 +222,43 @@ class ActorLink extends Component {
           {actor.login}
         </Text>
       </TouchableOpacity>
+    );
+  }
+}
+
+class EventIcon extends Component {
+  props: {
+    name: String,
+  };
+
+  render() {
+    const { name } = this.props;
+
+    return (
+      <Icon
+        containerStyle={styles.iconContainer}
+        name={name}
+        type="octicon"
+        size={16}
+      />
+    );
+  }
+}
+
+class Date extends Component {
+  props: {
+    date: String,
+  };
+
+  render() {
+    const { date } = this.props;
+
+    return (
+      <View style={styles.dateContainer}>
+        <Text style={styles.date}>
+          {moment(date).fromNow()}
+        </Text>
+      </View>
     );
   }
 }
