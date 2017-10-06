@@ -76,12 +76,30 @@ export class IssueEventListItem extends Component {
         return <ReviewRequested event={event} />;
       case 'labeled':
         return <Labeled event={event} />;
+      // case 'closed':
+      // case 'reopened':
+      // case 'merged':
+      // case 'referenced':
+      // case 'unlabeled':
       // case 'renamed':
       // case 'assigned':
       // case 'unassigned':
+      // case 'review_dismissed':
+      // case 'review_request_removed':
+      // case 'dismissed_review':
+      // case 'milestoned':
+      // case 'demilestoned':
+      // case 'locked':
+      // case 'unlocked':
+      // case 'head_ref_deleted':
+      // case 'head_ref_restored':
       default:
-        return null;
-      // return <Text>{event.event}</Text>;
+        // return null;
+        return (
+          <Text>
+            {event.event}
+          </Text>
+        );
     }
   }
 }
@@ -92,14 +110,32 @@ class ReviewRequested extends Component {
   };
 
   render() {
-    const { review_requester, requested_reviewer } = this.props.event;
+    const {
+      review_requester: reviewRequester,
+      requested_reviewer: requestedReviewer,
+      created_at,
+    } = this.props.event;
 
     return (
-      <View style={styles.container}>
-        <Text>
-          {review_requester.login} requested review from{' '}
-          {requested_reviewer.login}
-        </Text>
+      <View style={[styles.container, styles.header]}>
+        <Icon
+          containerStyle={styles.iconContainer}
+          name="eye"
+          type="octicon"
+          size={16}
+        />
+        <View style={styles.contentContainer}>
+          <View style={styles.eventTextContainer}>
+            <ActorLink actor={reviewRequester} />
+            <Text style={{ padding: 3 }}>requested review from</Text>
+            <ActorLink actor={requestedReviewer} />
+          </View>
+          <View style={styles.dateContainer}>
+            <Text style={styles.date}>
+              {moment(created_at).fromNow()}
+            </Text>
+          </View>
+        </View>
       </View>
     );
   }
@@ -130,24 +166,7 @@ class LabeledComponent extends Component {
         />
         <View style={styles.contentContainer}>
           <View style={styles.eventTextContainer}>
-            <TouchableOpacity
-              style={styles.actorLink}
-              onPress={() => {
-                // TODO: figure out navigation
-                // navigation.navigate(
-                //   authUser.login === actor.login
-                //     ? 'AuthProfile'
-                //     : 'Profile',
-                //   {
-                //     user: actor,
-                //   },
-                // )
-              }}
-            >
-              <Text style={styles.linkDescription}>
-                {actor.login}
-              </Text>
-            </TouchableOpacity>
+            <ActorLink actor={actor} />
             <Text
               style={{
                 padding: 3,
@@ -158,13 +177,6 @@ class LabeledComponent extends Component {
               added
             </Text>
             <LabelButton label={label} />
-            <Text
-              style={{
-                padding: 3,
-                paddingLeft: 6,
-                paddingRight: 0,
-              }}
-            />
           </View>
           <View style={styles.dateContainer}>
             <Text style={styles.date}>
@@ -173,6 +185,37 @@ class LabeledComponent extends Component {
           </View>
         </View>
       </View>
+    );
+  }
+}
+
+class ActorLink extends Component {
+  props: {
+    actor: Object,
+  };
+
+  render() {
+    const { actor } = this.props;
+
+    return (
+      <TouchableOpacity
+        style={styles.actorLink}
+        onPress={() => {
+          // TODO: figure out navigation
+          // navigation.navigate(
+          //   authUser.login === actor.login
+          //     ? 'AuthProfile'
+          //     : 'Profile',
+          //   {
+          //     user: actor,
+          //   },
+          // )
+        }}
+      >
+        <Text style={styles.linkDescription}>
+          {actor.login}
+        </Text>
+      </TouchableOpacity>
     );
   }
 }
