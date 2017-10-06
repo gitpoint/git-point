@@ -29,4 +29,9 @@ export default [
     emojiCode: ':flag-ru:',
     name: 'Русский',
   },
+  {
+    code: 'es',
+    emojiCode: ':flag-es:',
+    name: 'Español',
+  },
 ];
