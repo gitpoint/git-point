@@ -98,8 +98,10 @@ export class IssueEventListItem extends Component {
       // case 'dismissed_review':
       // case 'milestoned':
       // case 'demilestoned':
-      // case 'locked':
-      // case 'unlocked':
+      case 'locked':
+        return <Locked event={event} />;
+      case 'unlocked':
+        return <Locked unlocked event={event} />;
       case 'head_ref_deleted':
         return <HeadRef action="deleted" event={event} />;
       case 'head_ref_restored':
@@ -264,7 +266,8 @@ class Merged extends Component {
         <View style={styles.contentContainer}>
           <View style={styles.eventTextContainer}>
             <Text style={{ padding: 3 }}>
-              <ActorLink actor={actor} /> merged {commitId.slice(0, 7)}
+              <ActorLink actor={actor} /> merged{' '}
+              <Bold>{commitId.slice(0, 7)}</Bold>
             </Text>
           </View>
           <Date date={createdAt} />
@@ -327,6 +330,37 @@ class Assigned extends Component {
   }
 }
 
+class Locked extends Component {
+  props: {
+    event: Object,
+    unlocked: boolean,
+  };
+
+  render() {
+    const { actor, created_at: createdAt } = this.props.event;
+    const { unlocked = false } = this.props;
+    const action = unlocked ? 'unlocked' : 'locked';
+
+    return (
+      <View style={[styles.container, styles.header]}>
+        <EventIcon
+          name={unlocked ? 'key' : 'lock'}
+          backgroundColor="black"
+          iconColor="white"
+        />
+        <View style={styles.contentContainer}>
+          <View style={styles.eventTextContainer}>
+            <Text style={{ padding: 3 }}>
+              <ActorLink actor={actor} /> {action} this conversation
+            </Text>
+          </View>
+          <Date date={createdAt} />
+        </View>
+      </View>
+    );
+  }
+}
+
 class HeadRef extends Component {
   props: {
     event: Object,
@@ -379,6 +413,7 @@ const marginLeftForIconName = name => {
     case 'primitive-dot':
       return 8;
     case 'person':
+    case 'lock':
       return 4;
     default:
       return 2;
