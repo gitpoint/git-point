@@ -43,10 +43,10 @@ class ReadMe extends Component {
     return {
       headerRight: (
         <Icon
-          name="gear"
+          name="ellipsis-h"
           color={colors.primaryDark}
-          type="octicon"
-          containerStyle={{ marginRight: 5 }}
+          type="font-awesome"
+          containerStyle={{ marginRight: 10 }}
           underlayColor={colors.transparent}
           onPress={state.params.showActionSheet}
         />
