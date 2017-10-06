@@ -278,7 +278,7 @@ export const ru = {
         '#{{number}} открыт {{time}} назад пользователем {{user}}',
       closedIssueSubTitle:
         '#{{number}} закрыт {{time}} назад пользователем {{user}}',
-      issueActions: 'Issue Actions',
+      issueActions: 'Действия с задачей',
     },
     newIssue: {
       title: 'Новая задача',
