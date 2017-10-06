@@ -76,12 +76,13 @@ export class IssueEventListItem extends Component {
         return <ReviewRequested event={event} />;
       case 'labeled':
         return <Labeled event={event} />;
+      case 'unlabeled':
+        return <Labeled unlabeled event={event} />;
       case 'closed':
         return <Closed event={event} />;
       // case 'reopened':
       // case 'merged':
       // case 'referenced':
-      // case 'unlabeled':
       // case 'renamed':
       // case 'assigned':
       // case 'unassigned':
@@ -136,6 +137,7 @@ class ReviewRequested extends Component {
 class LabeledComponent extends Component {
   props: {
     event: Object,
+    unlabeled: boolean,
     // authUser: Object,
   };
 
@@ -147,6 +149,8 @@ class LabeledComponent extends Component {
       // navigation,
       // authUser,
     } = this.props.event;
+
+    const action = this.props.unlabeled ? 'removed' : 'added';
 
     return (
       <View style={[styles.container, styles.header]}>
@@ -161,7 +165,7 @@ class LabeledComponent extends Component {
                 paddingLeft: 0,
               }}
             >
-              added
+              {action}
             </Text>
             <LabelButton label={label} />
           </View>
