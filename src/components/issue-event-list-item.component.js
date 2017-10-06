@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { connect } from 'react-redux';
 import moment from 'moment/min/moment-with-locales.min';
 import { colors, fonts, normalize } from 'config';
 import { LabelButton } from 'components';
@@ -95,7 +94,6 @@ export class IssueEventListItem extends Component {
         return <Assigned unassigned event={event} />;
       // case 'review_dismissed':
       // case 'review_request_removed':
-      // case 'dismissed_review':
       case 'milestoned':
         return <Milestoned event={event} />;
       case 'demilestoned':
@@ -148,21 +146,14 @@ class ReviewRequested extends Component {
   }
 }
 
-class LabeledComponent extends Component {
+class Labeled extends Component {
   props: {
     event: Object,
     unlabeled: boolean,
-    // authUser: Object,
   };
 
   render() {
-    const {
-      actor,
-      label,
-      created_at: createdAt,
-      // navigation,
-      // authUser,
-    } = this.props.event;
+    const { actor, label, created_at: createdAt } = this.props.event;
 
     const action = this.props.unlabeled ? 'removed' : 'added';
 
@@ -512,9 +503,3 @@ class Bold extends Component {
     );
   }
 }
-
-const mapStateToProps = state => ({
-  authUser: state.auth.user,
-});
-
-const Labeled = connect(mapStateToProps)(LabeledComponent);
