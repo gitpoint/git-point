@@ -81,7 +81,8 @@ export class IssueEventListItem extends Component {
       case 'closed':
         return <Closed event={event} />;
       // case 'reopened':
-      // case 'merged':
+      case 'merged':
+        return <Merged event={event} />;
       // case 'referenced':
       // case 'renamed':
       // case 'assigned':
@@ -186,11 +187,48 @@ class Closed extends Component {
 
     return (
       <View style={[styles.container, styles.header]}>
-        <EventIcon name="circle-slash" />
+        <EventIcon
+          name="circle-slash"
+          backgroundColor={colors.darkerRed}
+          iconColor={colors.white}
+        />
         <View style={styles.contentContainer}>
           <View style={styles.eventTextContainer}>
             <ActorLink actor={actor} />
             <Text style={{ padding: 3 }}>closed this</Text>
+          </View>
+          <Date date={createdAt} />
+        </View>
+      </View>
+    );
+  }
+}
+
+class Merged extends Component {
+  props: {
+    event: Object,
+  };
+
+  render() {
+    const {
+      actor,
+      commit_id: commitId,
+      created_at: createdAt,
+    } = this.props.event;
+
+    return (
+      <View style={[styles.container, styles.header]}>
+        <EventIcon
+          name="git-merge"
+          backgroundColor={colors.purple}
+          iconColor={colors.white}
+        />
+        <View style={styles.contentContainer}>
+          <View style={styles.eventTextContainer}>
+            <ActorLink actor={actor} />
+            <Text style={{ padding: 3 }}>
+              merged {commitId.slice(0, 7)}
+            </Text>
           </View>
           <Date date={createdAt} />
         </View>
@@ -233,14 +271,25 @@ class ActorLink extends Component {
 class EventIcon extends Component {
   props: {
     name: String,
+    iconColor: String,
+    backgroundColor: String,
   };
 
   render() {
-    const { name } = this.props;
+    const {
+      name,
+      iconColor = 'black',
+      backgroundColor = colors.greyLight,
+    } = this.props;
 
     return (
       <Icon
-        containerStyle={styles.iconContainer}
+        iconStyle={{
+          marginLeft: 2,
+          marginTop: 1,
+          color: iconColor,
+        }}
+        containerStyle={[styles.iconContainer, { backgroundColor }]}
         name={name}
         type="octicon"
         size={16}
