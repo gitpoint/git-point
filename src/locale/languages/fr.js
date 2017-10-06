@@ -279,6 +279,7 @@ export const fr = {
       },
       openIssueSubTitle: '#{{number}} ouvert il y a {{time}} par {{user}}',
       closedIssueSubTitle: '#{{number}} par {{user}} fermé il y a {{time}}',
+      issueActions: 'Issue Actions',
     },
     newIssue: {
       title: 'Nouveau ticket',

@@ -279,6 +279,7 @@ export const ptBr = {
       },
       openIssueSubTitle: '#{{number}} opened {{time}} ago by {{user}}',
       closedIssueSubTitle: '#{{number}} by {{user}} was closed {{time}} ago',
+      issueActions: 'Ações da Issue',
     },
     newIssue: {
       title: 'Nova Issue',

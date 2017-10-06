@@ -10,6 +10,7 @@ import {
   Platform,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
+import ActionSheet from 'react-native-actionsheet';
 
 import {
   ViewContainer,
@@ -19,7 +20,7 @@ import {
   CommentInput,
 } from 'components';
 import { v3 } from 'api';
-import { translate } from 'utils';
+import { translate, openURLInView } from 'utils';
 import { colors } from 'config';
 import { getRepository, getContributors } from 'repository';
 import {
@@ -61,11 +62,11 @@ const mapDispatchToProps = dispatch =>
 
 class Issue extends Component {
   static navigationOptions = ({ navigation }) => {
-    const { state, navigate } = navigation;
+    const getHeaderIcon = () => {
+      const { state, navigate } = navigation;
 
-    if (state.params.userHasPushPermission) {
-      return {
-        headerRight: (
+      if (state.params.userHasPushPermission) {
+        return (
           <Icon
             name="gear"
             color={colors.primaryDark}
@@ -78,11 +79,22 @@ class Issue extends Component {
                 issue: state.params.issue,
               })}
           />
-        ),
-      };
-    }
+        );
+      }
 
-    return null;
+      return (
+        <Icon
+          name="ellipsis-h"
+          color={colors.primaryDark}
+          type="font-awesome"
+          containerStyle={{ marginRight: 10 }}
+          underlayColor={colors.transparent}
+          onPress={state.params.showActionSheet}
+        />
+      );
+    };
+
+    return { headerRight: getHeaderIcon() };
   };
 
   props: {
@@ -112,6 +124,8 @@ class Issue extends Component {
 
   componentDidMount() {
     this.getIssueInformation();
+
+    this.props.navigation.setParams({ showActionSheet: this.showActionSheet });
   }
 
   onLinkPress = node => {
@@ -196,6 +210,14 @@ class Issue extends Component {
       userHasPushPermission:
         repository.permissions.admin || repository.permissions.push,
     });
+  };
+
+  showActionSheet = () => this.ActionSheet.show();
+
+  handleActionSheetPress = index => {
+    if (index === 0) {
+      openURLInView(this.props.navigation.state.params.issue.html_url);
+    }
   };
 
   postComment = body => {
@@ -306,46 +328,60 @@ class Issue extends Component {
       ...new Set([...participantNames, ...contributorNames]),
     ].filter(item => !!item);
 
+    const issuesActions = [translate('common.openInBrowser', language)];
+
     return (
       <ViewContainer>
-        {isShowLoadingContainer &&
-          <LoadingContainer animating={isShowLoadingContainer} center />}
+        {isShowLoadingContainer && (
+          <LoadingContainer animating={isShowLoadingContainer} center />
+        )}
 
         {!isPendingComments &&
           !isPendingIssue &&
-          issue &&
-          <KeyboardAvoidingView
-            style={{ flex: 1 }}
-            behavior={'padding'}
-            keyboardVerticalOffset={Platform.select({
-              ios: 65,
-              android: -200,
-            })}
-          >
-            <FlatList
-              ref={ref => {
-                this.commentsList = ref;
-              }}
-              refreshing={isLoadingData}
-              onRefresh={this.getIssueInformation}
-              contentContainerStyle={{ flexGrow: 1 }}
-              ListHeaderComponent={this.renderHeader}
-              removeClippedSubviews={false}
-              data={fullComments}
-              keyExtractor={this.keyExtractor}
-              renderItem={this.renderItem}
-            />
+          issue && (
+            <KeyboardAvoidingView
+              style={{ flex: 1 }}
+              behavior={'padding'}
+              keyboardVerticalOffset={Platform.select({
+                ios: 65,
+                android: -200,
+              })}
+            >
+              <FlatList
+                ref={ref => {
+                  this.commentsList = ref;
+                }}
+                refreshing={isLoadingData}
+                onRefresh={this.getIssueInformation}
+                contentContainerStyle={{ flexGrow: 1 }}
+                ListHeaderComponent={this.renderHeader}
+                removeClippedSubviews={false}
+                data={fullComments}
+                keyExtractor={this.keyExtractor}
+                renderItem={this.renderItem}
+              />
 
-            <CommentInput
-              users={fullUsers}
-              userHasPushPermission={
-                navigation.state.params.userHasPushPermission
-              }
-              issueLocked={issue.locked}
-              language={language}
-              onSubmit={this.postComment}
-            />
-          </KeyboardAvoidingView>}
+              <CommentInput
+                users={fullUsers}
+                userHasPushPermission={
+                  navigation.state.params.userHasPushPermission
+                }
+                issueLocked={issue.locked}
+                language={language}
+                onSubmit={this.postComment}
+              />
+            </KeyboardAvoidingView>
+          )}
+
+        <ActionSheet
+          ref={o => {
+            this.ActionSheet = o;
+          }}
+          title={translate('issue.main.issueActions', language)}
+          options={[...issuesActions, translate('common.cancel', language)]}
+          cancelButtonIndex={1}
+          onPress={this.handleActionSheetPress}
+        />
       </ViewContainer>
     );
   }
