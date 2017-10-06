@@ -96,8 +96,10 @@ export class IssueEventListItem extends Component {
       // case 'review_dismissed':
       // case 'review_request_removed':
       // case 'dismissed_review':
-      // case 'milestoned':
-      // case 'demilestoned':
+      case 'milestoned':
+        return <Milestoned event={event} />;
+      case 'demilestoned':
+        return <Milestoned demilestoned event={event} />;
       case 'locked':
         return <Locked event={event} />;
       case 'unlocked':
@@ -321,6 +323,35 @@ class Assigned extends Component {
             <Text style={{ padding: 3 }}>
               <ActorLink actor={assigner} /> {action}{' '}
               <ActorLink actor={assignee} />
+            </Text>
+          </View>
+          <Date date={createdAt} />
+        </View>
+      </View>
+    );
+  }
+}
+
+class Milestoned extends Component {
+  props: {
+    event: Object,
+    demilestoned: boolean,
+  };
+
+  render() {
+    const { actor, milestone, created_at: createdAt } = this.props.event;
+    const action = this.props.demilestoned
+      ? 'removed this from'
+      : 'added this to';
+
+    return (
+      <View style={[styles.container, styles.header]}>
+        <EventIcon name="milestone" />
+        <View style={styles.contentContainer}>
+          <View style={styles.eventTextContainer}>
+            <Text style={{ padding: 3 }}>
+              <ActorLink actor={actor} /> {action} the{' '}
+              <Bold>{milestone.title}</Bold> milestone
             </Text>
           </View>
           <Date date={createdAt} />
