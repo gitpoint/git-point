@@ -289,7 +289,8 @@ class Renamed extends Component {
           <View style={styles.eventTextContainer}>
             <Text style={{ padding: 1 }}>
               <ActorLink actor={actor} /> changed the title from{' '}
-              <Bold>{rename.from}</Bold> to <Bold>{rename.to}</Bold>
+              <Bold>{rename.from.trim()}</Bold> to{' '}
+              <Bold>{rename.to.trim()}</Bold>
             </Text>
           </View>
           <Date date={createdAt} />
@@ -364,9 +365,9 @@ class ActorLink extends Component {
     const { actor } = this.props;
 
     return (
-      <Text style={styles.boldText}>
+      <Bold>
         {actor.login}
-      </Text>
+      </Bold>
     );
   }
 }
