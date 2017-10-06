@@ -94,8 +94,10 @@ export class IssueEventListItem extends Component {
       // case 'demilestoned':
       // case 'locked':
       // case 'unlocked':
-      // case 'head_ref_deleted':
-      // case 'head_ref_restored':
+      case 'head_ref_deleted':
+        return <HeadRef action="deleted" event={event} />;
+      case 'head_ref_restored':
+        return <HeadRef action="restored" event={event} />;
       default:
         // return null;
         return (
@@ -216,6 +218,7 @@ class Merged extends Component {
       created_at: createdAt,
     } = this.props.event;
 
+    // TODO: should be able to click commit and view changes
     return (
       <View style={[styles.container, styles.header]}>
         <EventIcon
@@ -228,6 +231,36 @@ class Merged extends Component {
             <ActorLink actor={actor} />
             <Text style={{ padding: 3 }}>
               merged {commitId.slice(0, 7)}
+            </Text>
+          </View>
+          <Date date={createdAt} />
+        </View>
+      </View>
+    );
+  }
+}
+
+class HeadRef extends Component {
+  props: {
+    event: Object,
+    action: String,
+  };
+
+  render() {
+    const { actor, created_at: createdAt } = this.props.event;
+
+    return (
+      <View style={[styles.container, styles.header]}>
+        <EventIcon
+          name="git-branch"
+          backgroundColor={colors.greyBlue}
+          iconColor={colors.white}
+        />
+        <View style={styles.contentContainer}>
+          <View style={styles.eventTextContainer}>
+            <ActorLink actor={actor} />
+            <Text style={{ padding: 3 }}>
+              {this.props.action} this branch
             </Text>
           </View>
           <Date date={createdAt} />
@@ -268,6 +301,16 @@ class ActorLink extends Component {
   }
 }
 
+const marginLeftForIconName = name => {
+  switch (name) {
+    case 'git-branch':
+    case 'git-merge':
+      return 8;
+    default:
+      return 2;
+  }
+};
+
 class EventIcon extends Component {
   props: {
     name: String,
@@ -285,7 +328,7 @@ class EventIcon extends Component {
     return (
       <Icon
         iconStyle={{
-          marginLeft: 2,
+          marginLeft: marginLeftForIconName(name),
           marginTop: 1,
           color: iconColor,
         }}
