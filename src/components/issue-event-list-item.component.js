@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import moment from 'moment/min/moment-with-locales.min';
 import { colors, fonts, normalize } from 'config';
@@ -13,11 +14,29 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'stretch',
   },
-  actorLink: {
-    padding: 1,
-    paddingRight: 4,
+  iconContainer: {
+    backgroundColor: colors.greyLight,
+    borderRadius: 13,
+    width: 26,
+    height: 26,
+    marginLeft: 14,
+    marginRight: 14,
+    flexGrow: 0,
+    flexShrink: 0,
+    flexBasis: 26,
+  },
+  contentContainer: {
+    flexDirection: 'row',
+    flexGrow: 1,
+    borderBottomColor: colors.greyLight,
+    borderBottomWidth: 1,
+  },
+  eventTextContainer: {
+    paddingBottom: 10,
+    flexDirection: 'row',
+    flexGrow: 1,
   },
   dateContainer: {
     flex: 1,
@@ -25,6 +44,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'flex-start',
     marginTop: 2,
+    flexGrow: 0,
+    flexShrink: 0,
+    flexBasis: 39,
+    width: 39,
+  },
+  actorLink: {
+    padding: 1,
+    paddingRight: 4,
   },
   linkDescription: {
     ...fonts.fontPrimaryBold,
@@ -33,13 +60,6 @@ const styles = StyleSheet.create({
   },
   date: {
     color: colors.greyDark,
-  },
-  textContainer: {
-    marginLeft: 54,
-    borderBottomColor: colors.greyLight,
-    borderBottomWidth: 1,
-    paddingBottom: 10,
-    flexDirection: 'row',
   },
 });
 
@@ -56,8 +76,12 @@ export class IssueEventListItem extends Component {
         return <ReviewRequested event={event} />;
       case 'labeled':
         return <Labeled event={event} />;
+      // case 'renamed':
+      // case 'assigned':
+      // case 'unassigned':
       default:
         return null;
+      // return <Text>{event.event}</Text>;
     }
   }
 }
@@ -98,49 +122,55 @@ class LabeledComponent extends Component {
 
     return (
       <View style={[styles.container, styles.header]}>
-        <View style={styles.textContainer}>
-          <TouchableOpacity
-            style={styles.actorLink}
-            onPress={() => {
-              // TODO: figure out navigation
-              // navigation.navigate(
-              //   authUser.login === actor.login
-              //     ? 'AuthProfile'
-              //     : 'Profile',
-              //   {
-              //     user: actor,
-              //   },
-              // )
-            }}
-          >
-            <Text style={styles.linkDescription}>
-              {actor.login}
+        <Icon
+          containerStyle={styles.iconContainer}
+          name="tag"
+          type="octicon"
+          size={16}
+        />
+        <View style={styles.contentContainer}>
+          <View style={styles.eventTextContainer}>
+            <TouchableOpacity
+              style={styles.actorLink}
+              onPress={() => {
+                // TODO: figure out navigation
+                // navigation.navigate(
+                //   authUser.login === actor.login
+                //     ? 'AuthProfile'
+                //     : 'Profile',
+                //   {
+                //     user: actor,
+                //   },
+                // )
+              }}
+            >
+              <Text style={styles.linkDescription}>
+                {actor.login}
+              </Text>
+            </TouchableOpacity>
+            <Text
+              style={{
+                padding: 3,
+                paddingRight: 6,
+                paddingLeft: 0,
+              }}
+            >
+              added
             </Text>
-          </TouchableOpacity>
-          <Text
-            style={{
-              padding: 3,
-              paddingRight: 6,
-              paddingLeft: 0,
-            }}
-          >
-            added the
-          </Text>
-          <LabelButton label={label} />
-          <Text
-            style={{
-              padding: 3,
-              paddingLeft: 6,
-              paddingRight: 0,
-            }}
-          >
-            label
-          </Text>
-        </View>
-        <View style={styles.dateContainer}>
-          <Text style={styles.date}>
-            {moment(created_at).fromNow()}
-          </Text>
+            <LabelButton label={label} />
+            <Text
+              style={{
+                padding: 3,
+                paddingLeft: 6,
+                paddingRight: 0,
+              }}
+            />
+          </View>
+          <View style={styles.dateContainer}>
+            <Text style={styles.date}>
+              {moment(created_at).fromNow()}
+            </Text>
+          </View>
         </View>
       </View>
     );
