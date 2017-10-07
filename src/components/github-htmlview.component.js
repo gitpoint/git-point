@@ -124,16 +124,19 @@ const cellForNode = node =>
     ? CellWithImage
     : Cell;
 
-const hasAncestor = (node, ancestorName) => {
+const hasAncestor = (node, candidates) => {
   if (node.parent === null) {
     return false;
   }
 
-  if (node.parent.type === 'tag' && node.parent.name === ancestorName) {
+  if (
+    node.parent.type === 'tag' &&
+    candidates.indexOf(node.parent.name) !== -1
+  ) {
     return true;
   }
 
-  return hasAncestor(node.parent, ancestorName);
+  return hasAncestor(node.parent, candidates);
 };
 
 const onlyTagsChildren = node =>
@@ -167,17 +170,18 @@ export class GithubHtmlView extends Component {
         // task list
         .replace(
           /<li class="task-list-item">(<span[^>]*>)?<input class="task-list-item-checkbox" disabled="" id="" type="checkbox"> ?\.? ?/g,
-          '$1⬜ ',
+          '$1⬜ '
         )
         .replace(
           /<li class="task-list-item">(<span[^>]*>)?<input checked="" class="task-list-item-checkbox" disabled="" id="" type="checkbox"> ?\.? ?/g,
-          '$1✅ ',
+          '$1✅ '
         )
         // Remove links & spans around images
         .replace(/<a[^>]+><img([^>]+)><\/a>/g, '<img$1>')
         .replace(/<span[^>]*><img([^>]+)><\/span>/g, '<img$1>')
         // Break images free from big spans
         .replace(/<br>\n<img([^>]+)>/g, '<br></span><img$1><span>')
+        .replace(/<span([^>]*)><img([^>]+)><br>\n/g, '<img$2><span$1><br>')
         // Code syntax
         .replace(/<div class="highlight[^"]*"><pre>/g, '<pre><code>')
         .replace('</pre></div>', '</code></pre>')
@@ -190,7 +194,7 @@ export class GithubHtmlView extends Component {
       _index,
       _siblings,
       _parent,
-      _defaultRenderer,
+      _defaultRenderer
     ) => {
       /* eslint-disable no-unused-vars */
       const onLinkPress = this.props.onLinkPress;
@@ -242,7 +246,7 @@ export class GithubHtmlView extends Component {
         hr: (node, index, siblings, parent, defaultRenderer) =>
           <View key={index} style={{ ...hrStyle }} />,
         img: (node, index, siblings, parent, defaultRenderer) => {
-          if (hasAncestor(node, 'li')) {
+          if (hasAncestor(node, ['ol', 'ul', 'span'])) {
             return (
               <Text
                 style={linkStyle}
@@ -255,7 +259,7 @@ export class GithubHtmlView extends Component {
             );
           }
 
-          const zoom = hasAncestor(node, 'table') ? 0.3 : 0.6;
+          const zoom = hasAncestor(node, ['table']) ? 0.3 : 0.6;
 
           return (
             <ImageZoom
@@ -344,7 +348,7 @@ export class GithubHtmlView extends Component {
           _index,
           _siblings,
           _parent,
-          _defaultRenderer,
+          _defaultRenderer
         );
       }
 
