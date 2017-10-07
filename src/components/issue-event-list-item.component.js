@@ -106,6 +106,10 @@ export class IssueEventListItem extends Component {
         return <HeadRef action="deleted" event={event} />;
       case 'head_ref_restored':
         return <HeadRef action="restored" event={event} />;
+      case 'marked_as_duplicate':
+        return <MarkedAsDuplicate event={event} />;
+      case 'unmarked_as_duplicate':
+        return <MarkedAsDuplicate unmarked event={event} />;
       default:
         // return null;
         return (
@@ -412,6 +416,37 @@ class HeadRef extends Component {
   }
 }
 
+class MarkedAsDuplicate extends Component {
+  props: {
+    event: Object,
+    unmarked: boolean,
+  };
+
+  render() {
+    // TODO: figure _which_ issue is the duplicate
+    const { actor, created_at: createdAt } = this.props.event;
+
+    return (
+      <View style={[styles.container, styles.header]}>
+        <EventIcon
+          name="bookmark"
+          backgroundColor={colors.greyBlue}
+          iconColor={colors.white}
+        />
+        <View style={styles.contentContainer}>
+          <View style={styles.eventTextContainer}>
+            <Text style={{ padding: 3 }}>
+              <ActorLink actor={actor} /> marked this as{' '}
+              {this.props.unmarked ? 'not ' : ''}a duplicate
+            </Text>
+          </View>
+          <Date date={createdAt} />
+        </View>
+      </View>
+    );
+  }
+}
+
 class ActorLink extends Component {
   props: {
     actor: Object,
@@ -434,6 +469,8 @@ const marginLeftForIconName = name => {
     case 'git-merge':
     case 'primitive-dot':
       return 8;
+    case 'bookmark':
+      return 6;
     case 'person':
     case 'lock':
       return 4;
