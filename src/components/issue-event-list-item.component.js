@@ -282,8 +282,7 @@ class LabelGroup extends Component {
     let textChildren = [<ActorLink actor={actor} />];
 
     if (labels.length) {
-      textChildren.push(<Text> added </Text>);
-      textChildren = textChildren.concat(labels);
+      textChildren = [...textChildren, <Text> added </Text>, ...labels];
     }
 
     if (labels.length && unlabels.length) {
@@ -291,8 +290,7 @@ class LabelGroup extends Component {
     }
 
     if (unlabels.length) {
-      textChildren.push(<Text> removed </Text>);
-      textChildren = textChildren.concat(unlabels);
+      textChildren = [...textChildren, <Text> removed </Text>, ...unlabels];
     }
 
     return (
