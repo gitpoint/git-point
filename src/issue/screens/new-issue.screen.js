@@ -19,6 +19,9 @@ import { colors, fonts, normalize } from 'config';
 import { submitNewIssue } from '../issue.action';
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   textInput: {
     fontSize: normalize(12),
     marginHorizontal: 15,
@@ -110,7 +113,7 @@ class NewIssue extends Component {
       <ViewContainer>
         {isPendingSubmitting && <LoadingModal />}
         <KeyboardAvoidingView
-          style={{ flex: 1 }}
+          style={styles.container}
           behavior={'padding'}
           keyboardVerticalOffset={Platform.select({
             ios: 65,
