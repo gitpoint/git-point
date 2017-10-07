@@ -79,7 +79,7 @@ Anyone can file an expense. If the expense makes sense for the development of th
 
 ### Contributors
 
-Checkout all the awesome people who have contributed [here](./CONTRIBUTORS.md) 
+Checkout all the awesome people who have contributed [here](./CONTRIBUTORS.md).
 
 ### Backers
 
