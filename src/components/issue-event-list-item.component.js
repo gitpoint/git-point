@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
 import moment from 'moment/min/moment-with-locales.min';
 import { colors, fonts, normalize } from 'config';
-import { LabelButton } from 'components';
+import { LabelButton, InlineLabel } from 'components';
 
 const styles = StyleSheet.create({
   container: {
@@ -36,8 +36,10 @@ const styles = StyleSheet.create({
   eventTextContainer: {
     paddingBottom: 10,
     flexDirection: 'row',
+    flexWrap: 'wrap',
     flexGrow: 1,
     flexShrink: 1,
+    alignItems: 'center',
   },
   dateContainer: {
     flex: 1,
@@ -90,6 +92,8 @@ export class IssueEventListItem extends Component {
         return <Labeled event={event} />;
       case 'unlabeled':
         return <Labeled unlabeled event={event} />;
+      case 'label-group':
+        return <LabelGroup group={event} />;
       case 'closed':
         return (
           <Event
@@ -247,6 +251,56 @@ class Labeled extends Component {
               <ActorLink actor={actor} /> {action}
             </Text>
             <LabelButton label={label} />
+          </View>
+          <Date date={createdAt} />
+        </View>
+      </View>
+    );
+  }
+}
+
+class LabelGroup extends Component {
+  props: {
+    group: Object,
+  };
+
+  render() {
+    const {
+      actor,
+      labeled,
+      unlabeled,
+      created_at: createdAt,
+    } = this.props.group;
+
+    const toInlineLabel = (type, { label }, index) =>
+      <InlineLabel key={type + index} label={label} />;
+
+    /* eslint-disable react/jsx-no-bind */
+    const labels = labeled.map(toInlineLabel.bind(null, 'added'));
+    const unlabels = unlabeled.map(toInlineLabel.bind(null, 'removed'));
+
+    let textChildren = [<ActorLink actor={actor} />];
+
+    if (labels.length) {
+      textChildren.push(<Text> added </Text>);
+      textChildren = textChildren.concat(labels);
+    }
+
+    if (labels.length && unlabels.length) {
+      textChildren.push(<Text> and</Text>);
+    }
+
+    if (unlabels.length) {
+      textChildren.push(<Text> removed </Text>);
+      textChildren = textChildren.concat(unlabels);
+    }
+
+    return (
+      <View style={[styles.container, styles.header]}>
+        <EventIcon name="tag" />
+        <View style={styles.contentContainer}>
+          <View style={styles.eventTextContainer}>
+            {textChildren}
           </View>
           <Date date={createdAt} />
         </View>

@@ -1,8 +1,8 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, Text } from 'react-native';
 import { Button } from 'react-native-elements';
 
-import { colors, fonts } from 'config';
+import { colors, fonts, normalize } from 'config';
 
 type Props = {
   label: Object,
@@ -37,6 +37,31 @@ const styles = StyleSheet.create({
     borderRadius: 3,
   },
 });
+
+export class InlineLabel extends Component {
+  props: {
+    label: Object,
+  };
+
+  render() {
+    const { color, name } = this.props.label;
+
+    return (
+      <Text
+        style={{
+          fontSize: normalize(10),
+          fontWeight: 'bold',
+          backgroundColor: `#${color}`,
+          color: getFontColorByBackground(color),
+          padding: 3,
+          margin: 2,
+        }}
+      >
+        {name}
+      </Text>
+    );
+  }
+}
 
 export const LabelButton = ({ label, largeWithTag }: Props) =>
   <Button
