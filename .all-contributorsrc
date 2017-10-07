@@ -2,7 +2,8 @@
   "projectName": "git-point",
   "projectOwner": "gitpoint",
   "files": [
-    "README.md"
+    "README.md",
+    "CONTRIBUTORS.md"
   ],
   "imageSize": 100,
   "contributorsPerLine": 6,
@@ -380,6 +381,15 @@
       "contributions": [
         "code",
         "bug"
+      ]
+    },
+    {
+      "login": "acurat",
+      "name": "Arjun Curat",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/10121964?v=4",
+      "profile": "https://github.com/acurat",
+      "contributions": [
+        "doc"
       ]
     }
   ]
