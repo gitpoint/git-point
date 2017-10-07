@@ -381,6 +381,13 @@
         "code",
         "bug"
       ]
+    },
+    {
+      "login": "brandly",
+      "name": "Matthew Brandly",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/820696?v=4",
+      "profile": "http://words.brandly.me/about/",
+      "contributions": []
     }
   ]
 }
