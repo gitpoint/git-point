@@ -74,20 +74,92 @@ export class IssueEventListItem extends Component {
 
     switch (event.event) {
       case 'review_requested':
-        return <ReviewRequested event={event} />;
+        return (
+          <Event
+            icon={<EventIcon name="eye" />}
+            text={
+              <Text style={{ padding: 3 }}>
+                <ActorLink actor={event.review_requester} /> requested review
+                from <ActorLink actor={event.requested_reviewer} />
+              </Text>
+            }
+            createdAt={event.created_at}
+          />
+        );
       case 'labeled':
         return <Labeled event={event} />;
       case 'unlabeled':
         return <Labeled unlabeled event={event} />;
       case 'closed':
-        return <Closed event={event} />;
+        return (
+          <Event
+            icon={
+              <EventIcon
+                name="circle-slash"
+                backgroundColor={colors.darkerRed}
+                iconColor={colors.white}
+              />
+            }
+            text={
+              <Text style={{ padding: 3 }}>
+                <ActorLink actor={event.actor} /> closed this
+              </Text>
+            }
+            createdAt={event.created_at}
+          />
+        );
       case 'reopened':
-        return <Reopened event={event} />;
+        return (
+          <Event
+            icon={
+              <EventIcon
+                name="primitive-dot"
+                backgroundColor={colors.green}
+                iconColor={colors.white}
+              />
+            }
+            text={
+              <Text style={{ padding: 3 }}>
+                <ActorLink actor={event.actor} /> reopened this
+              </Text>
+            }
+            createdAt={event.created_at}
+          />
+        );
       case 'merged':
-        return <Merged event={event} />;
+        return (
+          <Event
+            icon={
+              <EventIcon
+                name="git-merge"
+                backgroundColor={colors.purple}
+                iconColor={colors.white}
+              />
+            }
+            text={
+              <Text style={{ padding: 3 }}>
+                <ActorLink actor={event.actor} /> merged{' '}
+                <Bold>{event.commit_id.slice(0, 7)}</Bold>
+              </Text>
+            }
+            createdAt={event.created_at}
+          />
+        );
       // case 'referenced':
       case 'renamed':
-        return <Renamed event={event} />;
+        return (
+          <Event
+            icon={<EventIcon name="pencil" />}
+            text={
+              <Text style={{ padding: 1 }}>
+                <ActorLink actor={event.actor} /> changed the title from{' '}
+                <Bold>{event.rename.from.trim()}</Bold> to{' '}
+                <Bold>{event.rename.to.trim()}</Bold>
+              </Text>
+            }
+            createdAt={event.created_at}
+          />
+        );
       case 'assigned':
         return <Assigned event={event} />;
       case 'unassigned':
@@ -110,6 +182,10 @@ export class IssueEventListItem extends Component {
         return <MarkedAsDuplicate event={event} />;
       case 'unmarked_as_duplicate':
         return <MarkedAsDuplicate unmarked event={event} />;
+      // case 'added_to_project':
+      // case 'moved_columns_in_project':
+      // case 'removed_from_project':
+      // case 'converted_note_to_issue':
       default:
         // return null;
         return (
@@ -121,27 +197,22 @@ export class IssueEventListItem extends Component {
   }
 }
 
-class ReviewRequested extends Component {
+class Event extends Component {
   props: {
-    event: Object,
+    icon: Object, // TODO: enforce react instance
+    text: Object,
+    createdAt: String,
   };
 
   render() {
-    const {
-      review_requester: reviewRequester,
-      requested_reviewer: requestedReviewer,
-      created_at: createdAt,
-    } = this.props.event;
+    const { icon, text, createdAt } = this.props;
 
     return (
       <View style={[styles.container, styles.header]}>
-        <EventIcon name="eye" />
+        {icon}
         <View style={styles.contentContainer}>
           <View style={styles.eventTextContainer}>
-            <Text style={{ padding: 3 }}>
-              <ActorLink actor={reviewRequester} /> requested review from{' '}
-              <ActorLink actor={requestedReviewer} />
-            </Text>
+            {text}
           </View>
           <Date date={createdAt} />
         </View>
@@ -184,122 +255,6 @@ class Labeled extends Component {
   }
 }
 
-class Closed extends Component {
-  props: {
-    event: Object,
-  };
-
-  render() {
-    const { actor, created_at: createdAt } = this.props.event;
-
-    return (
-      <View style={[styles.container, styles.header]}>
-        <EventIcon
-          name="circle-slash"
-          backgroundColor={colors.darkerRed}
-          iconColor={colors.white}
-        />
-        <View style={styles.contentContainer}>
-          <View style={styles.eventTextContainer}>
-            <Text style={{ padding: 3 }}>
-              <ActorLink actor={actor} /> closed this
-            </Text>
-          </View>
-          <Date date={createdAt} />
-        </View>
-      </View>
-    );
-  }
-}
-
-class Reopened extends Component {
-  props: {
-    event: Object,
-  };
-
-  render() {
-    const { actor, created_at: createdAt } = this.props.event;
-
-    return (
-      <View style={[styles.container, styles.header]}>
-        <EventIcon
-          name="primitive-dot"
-          backgroundColor={colors.green}
-          iconColor={colors.white}
-        />
-        <View style={styles.contentContainer}>
-          <View style={styles.eventTextContainer}>
-            <Text style={{ padding: 3 }}>
-              <ActorLink actor={actor} /> reopened this
-            </Text>
-          </View>
-          <Date date={createdAt} />
-        </View>
-      </View>
-    );
-  }
-}
-
-class Merged extends Component {
-  props: {
-    event: Object,
-  };
-
-  render() {
-    const {
-      actor,
-      commit_id: commitId,
-      created_at: createdAt,
-    } = this.props.event;
-
-    // TODO: should be able to click commit and view changes
-    return (
-      <View style={[styles.container, styles.header]}>
-        <EventIcon
-          name="git-merge"
-          backgroundColor={colors.purple}
-          iconColor={colors.white}
-        />
-        <View style={styles.contentContainer}>
-          <View style={styles.eventTextContainer}>
-            <Text style={{ padding: 3 }}>
-              <ActorLink actor={actor} /> merged{' '}
-              <Bold>{commitId.slice(0, 7)}</Bold>
-            </Text>
-          </View>
-          <Date date={createdAt} />
-        </View>
-      </View>
-    );
-  }
-}
-
-class Renamed extends Component {
-  props: {
-    event: Object,
-  };
-
-  render() {
-    const { actor, rename, created_at: createdAt } = this.props.event;
-
-    return (
-      <View style={[styles.container, styles.header]}>
-        <EventIcon name="pencil" />
-        <View style={styles.contentContainer}>
-          <View style={styles.eventTextContainer}>
-            <Text style={{ padding: 1 }}>
-              <ActorLink actor={actor} /> changed the title from{' '}
-              <Bold>{rename.from.trim()}</Bold> to{' '}
-              <Bold>{rename.to.trim()}</Bold>
-            </Text>
-          </View>
-          <Date date={createdAt} />
-        </View>
-      </View>
-    );
-  }
-}
-
 class Assigned extends Component {
   props: {
     event: Object,
@@ -311,18 +266,16 @@ class Assigned extends Component {
     const action = this.props.unassigned ? 'unassigned' : 'assigned';
 
     return (
-      <View style={[styles.container, styles.header]}>
-        <EventIcon name="person" />
-        <View style={styles.contentContainer}>
-          <View style={styles.eventTextContainer}>
-            <Text style={{ padding: 3 }}>
-              <ActorLink actor={assigner} /> {action}{' '}
-              <ActorLink actor={assignee} />
-            </Text>
-          </View>
-          <Date date={createdAt} />
-        </View>
-      </View>
+      <Event
+        icon={<EventIcon name="person" />}
+        text={
+          <Text style={{ padding: 3 }}>
+            <ActorLink actor={assigner} /> {action}{' '}
+            <ActorLink actor={assignee} />
+          </Text>
+        }
+        createdAt={createdAt}
+      />
     );
   }
 }
@@ -340,18 +293,16 @@ class Milestoned extends Component {
       : 'added this to';
 
     return (
-      <View style={[styles.container, styles.header]}>
-        <EventIcon name="milestone" />
-        <View style={styles.contentContainer}>
-          <View style={styles.eventTextContainer}>
-            <Text style={{ padding: 3 }}>
-              <ActorLink actor={actor} /> {action} the{' '}
-              <Bold>{milestone.title}</Bold> milestone
-            </Text>
-          </View>
-          <Date date={createdAt} />
-        </View>
-      </View>
+      <Event
+        icon={<EventIcon name="milestone" />}
+        text={
+          <Text style={{ padding: 3 }}>
+            <ActorLink actor={actor} /> {action} the{' '}
+            <Bold>{milestone.title}</Bold> milestone
+          </Text>
+        }
+        createdAt={createdAt}
+      />
     );
   }
 }
@@ -368,21 +319,21 @@ class Locked extends Component {
     const action = unlocked ? 'unlocked' : 'locked';
 
     return (
-      <View style={[styles.container, styles.header]}>
-        <EventIcon
-          name={unlocked ? 'key' : 'lock'}
-          backgroundColor="black"
-          iconColor="white"
-        />
-        <View style={styles.contentContainer}>
-          <View style={styles.eventTextContainer}>
-            <Text style={{ padding: 3 }}>
-              <ActorLink actor={actor} /> {action} this conversation
-            </Text>
-          </View>
-          <Date date={createdAt} />
-        </View>
-      </View>
+      <Event
+        icon={
+          <EventIcon
+            name={unlocked ? 'key' : 'lock'}
+            backgroundColor="black"
+            iconColor="white"
+          />
+        }
+        text={
+          <Text style={{ padding: 3 }}>
+            <ActorLink actor={actor} /> {action} this conversation
+          </Text>
+        }
+        createdAt={createdAt}
+      />
     );
   }
 }
@@ -395,23 +346,25 @@ class HeadRef extends Component {
 
   render() {
     const { actor, created_at: createdAt } = this.props.event;
+    const { action } = this.props;
+    const isRestored = action === 'restored';
 
     return (
-      <View style={[styles.container, styles.header]}>
-        <EventIcon
-          name="git-branch"
-          backgroundColor={colors.greyBlue}
-          iconColor={colors.white}
-        />
-        <View style={styles.contentContainer}>
-          <View style={styles.eventTextContainer}>
-            <Text style={{ padding: 3 }}>
-              <ActorLink actor={actor} /> {this.props.action} this branch
-            </Text>
-          </View>
-          <Date date={createdAt} />
-        </View>
-      </View>
+      <Event
+        icon={
+          <EventIcon
+            name="git-branch"
+            backgroundColor={isRestored ? undefined : colors.greyBlue}
+            iconColor={isRestored ? undefined : colors.white}
+          />
+        }
+        text={
+          <Text style={{ padding: 3 }}>
+            <ActorLink actor={actor} /> {action} this branch
+          </Text>
+        }
+        createdAt={createdAt}
+      />
     );
   }
 }
@@ -427,22 +380,22 @@ class MarkedAsDuplicate extends Component {
     const { actor, created_at: createdAt } = this.props.event;
 
     return (
-      <View style={[styles.container, styles.header]}>
-        <EventIcon
-          name="bookmark"
-          backgroundColor={colors.greyBlue}
-          iconColor={colors.white}
-        />
-        <View style={styles.contentContainer}>
-          <View style={styles.eventTextContainer}>
-            <Text style={{ padding: 3 }}>
-              <ActorLink actor={actor} /> marked this as{' '}
-              {this.props.unmarked ? 'not ' : ''}a duplicate
-            </Text>
-          </View>
-          <Date date={createdAt} />
-        </View>
-      </View>
+      <Event
+        icon={
+          <EventIcon
+            name="bookmark"
+            backgroundColor={colors.greyBlue}
+            iconColor={colors.white}
+          />
+        }
+        text={
+          <Text style={{ padding: 3 }}>
+            <ActorLink actor={actor} /> marked this as{' '}
+            {this.props.unmarked ? 'not ' : ''}a duplicate
+          </Text>
+        }
+        createdAt={createdAt}
+      />
     );
   }
 }
