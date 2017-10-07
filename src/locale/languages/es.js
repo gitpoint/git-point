@@ -25,7 +25,7 @@ export const es = {
     },
     events: {
       welcomeMessage:
-        "Bienvenido! Este es tu hilo de noticias - te ayudará a mantenerte informado sobre la actividad de los respositorios y los usuarios que sigues.",
+        'Bienvenido! Este es tu hilo de noticias - te ayudará a mantenerte informado sobre la actividad de los respositorios y los usuarios que sigues.',
       commitCommentEvent: 'commit comentado',
       createEvent: '{{object}} creado',
       deleteEvent: '{{object}} eliminado',
@@ -83,7 +83,7 @@ export const es = {
       },
     },
     profile: {
-      orgsRequestApprovalTop: "¿No ves todas tus organizaciones?",
+      orgsRequestApprovalTop: '¿No ves todas tus organizaciones?',
       orgsRequestApprovalBottom: 'Quizá tengas que solicitar aprobación para verlas.',
       codePushCheck: 'Comprobar actualizaciones',
       codePushChecking: 'Comprobando actualizaciones...',
@@ -102,17 +102,17 @@ export const es = {
       title: 'Política de privacidad',
       effectiveDate: 'Última actualización: 15 de Julio, 2017',
       introduction:
-        "Estamos contentos de que hayas decidido usar GitPoint. Esta política de privacidad está aquí para informarte sobre lo que hacemos - y lo que no - con tus datos de usuario.",
+        'Estamos contentos de que hayas decidido usar GitPoint. Esta política de privacidad está aquí para informarte sobre lo que hacemos - y lo que no - con tus datos de usuario.',
       userDataTitle: 'DATOS DE USUARIO',
       userData1:
-        "No hacemos nada con tu información de GitHub. Tras la autenticación, el token OAuth del usuario se guarda directamente en el almacenamiento de su dispositivo. No es posible para nosotros recuperar esa información. Nunca vemos ni almacenamos el token de acceso de un usuario.",
+        'No hacemos nada con tu información de GitHub. Tras la autenticación, el token OAuth del usuario se guarda directamente en el almacenamiento de su dispositivo. No es posible para nosotros recuperar esa información. Nunca vemos ni almacenamos el token de acceso de un usuario.',
       userData2:
-        "Esto significa que de ninguna manera miramos, usamos o compartimos datos de GitHub de los usuarios. Si la información privada se volviera visible en algún momento, no la registraremos ni leeremos. Si se guardara accidentalmente, la borraremos inmediatamente usando métodos seguros de borrado. Sin embargo, hemos configurado la autenticación para que esto nunca suceda.",
+        'Esto significa que de ninguna manera miramos, usamos o compartimos datos de GitHub de los usuarios. Si la información privada se volviera visible en algún momento, no la registraremos ni leeremos. Si se guardara accidentalmente, la borraremos inmediatamente usando métodos seguros de borrado. Sin embargo, hemos configurado la autenticación para que esto nunca suceda.',
       analyticsInfoTitle: 'INFORMACIÓN ANALÍTICA',
       analyticsInfo1:
         'Actualmente usamos Google Analytics y iTunes App Analytics para ayudarnos a medir el tráfico y las tendencias de uso de GitPoint. Estas herramientas recogen información mandada por tu dispositivo, invluyendo la versión del dispositivo y la plataforma, zona geográfica y These tools collect information sent by your device including device and platform version, region and referente. Esta información no puede ser usada para identificar ningún usuario individual y no se extrae ninguna información personal.',
       analyticsInfo2:
-        "Si incluimos otras plataformas de terceros para analizar rastros, archivos de error o otra información analítica, nos aseguraremos de que los datos del usuario permanezcan anonimizados y encriptados.",
+        'Si incluimos otras plataformas de terceros para analizar rastros, archivos de error o otra información analítica, nos aseguraremos de que los datos del usuario permanezcan anonimizados y encriptados.',
       openSourceTitle: 'CÓDIGO ABIERTO',
       openSource1:
         'GitPoint es código abierto y el histórico de contribuciones a la plataforma será siempre visible al público.',
@@ -135,7 +135,7 @@ export const es = {
       participatingButton: 'Participando',
       allButton: 'Todas',
       retrievingMessage: 'Cargando notificaciones',
-      noneMessage: "No tienes ninguna notificación de este tipo",
+      noneMessage: 'No tienes ninguna notificación de este tipo',
       markAllAsRead: 'Marcar todo como leído',
     },
   },
