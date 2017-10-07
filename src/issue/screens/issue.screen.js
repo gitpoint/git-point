@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import moment from 'moment/min/moment-with-locales.min';
+
 import {
   ViewContainer,
   LoadingContainer,
