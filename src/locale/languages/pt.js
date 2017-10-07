@@ -1,4 +1,4 @@
-export const ptPT = {
+export const pt = {
   auth: {
     login: {
       connectingToGitHub: ' GitHub...',
@@ -36,7 +36,8 @@ export const ptPT = {
       pullRequestEvent: '{{action}} pull request',
       pullRequestReviewEvent: '{{action}} revisão de pull request',
       pullRequestReviewCommentEvent: '{{action}} no pull request',
-      pullRequestReviewEditedEvent: '{{action}} o seu comentário no pull request',
+      pullRequestReviewEditedEvent:
+        '{{action}} o seu comentário no pull request',
       pullRequestReviewDeletedEvent:
         '{{action}} no seu comentário no pull request',
       releaseEvent: '{{action}} release',
@@ -81,7 +82,8 @@ export const ptPT = {
     },
     profile: {
       orgsRequestApprovalTop: 'Não consegue ver todas as suas organizações?',
-      orgsRequestApprovalBottom: 'Talvez necessite solicitar aprovação dos Developers.',
+      orgsRequestApprovalBottom:
+        'Talvez necessite solicitar aprovação dos Developers.',
       codePushCheck: 'Procurar atualizações',
       codePushChecking: 'A procurar atualizações...',
       codePushUpdated: 'A aplicação está atualizada',
@@ -196,8 +198,8 @@ export const ptPT = {
       starsTitle: 'Favoritos',
       forksTitle: 'Forks',
       forkedFromMessage: 'é um fork de',
-      starred: 'Favoritado',
-      watching: 'Acompanha',
+      starred: 'Favoritos',
+      watching: 'A Acompanhar',
       watchers: 'Acompanhando',
     },
     codeList: {
@@ -255,7 +257,7 @@ export const ptPT = {
       commentActions: 'Ações do comentário',
       editCommentTitle: 'Editar Comentário',
       editAction: 'Editar',
-      deleteAction: 'Deletar',
+      deleteAction: 'Apagar',
     },
     main: {
       assignees: 'Atribuída a',
@@ -278,7 +280,7 @@ export const ptPT = {
     },
     newIssue: {
       title: 'Nova Issue',
-      missingTitleAlert: 'A issue precisa ter um título!',
+      missingTitleAlert: 'A issue precisa de ter um título!',
       issueTitle: 'Título da Issue',
       writeATitle: 'Escreva um título para a sua issue aqui',
       issueComment: 'Comentário da Issue',
