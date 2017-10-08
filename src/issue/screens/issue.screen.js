@@ -286,10 +286,10 @@ class Issue extends Component {
   };
 
   renderItem = ({ item }) => {
-    const { language } = this.props;
+    const { language, navigation } = this.props;
 
     if (item.event) {
-      return <IssueEventListItem event={item} />;
+      return <IssueEventListItem event={item} navigation={navigation} />;
     }
 
     return (
@@ -299,7 +299,7 @@ class Issue extends Component {
         onDeletePress={this.deleteComment}
         onEditPress={this.editComment}
         language={language}
-        navigation={this.props.navigation}
+        navigation={navigation}
       />
     );
   };

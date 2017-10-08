@@ -69,6 +69,11 @@ const styles = StyleSheet.create({
 export class IssueEventListItem extends Component {
   props: {
     event: Object,
+    navigation: Object,
+  };
+
+  onPressUser = user => {
+    this.props.navigation.navigate('Profile', { user });
   };
 
   render() {
@@ -81,19 +86,28 @@ export class IssueEventListItem extends Component {
             icon={<EventIcon name="eye" />}
             text={
               <Text style={{ padding: 3 }}>
-                <ActorLink actor={event.review_requester} /> requested review
-                from <ActorLink actor={event.requested_reviewer} />
+                <ActorLink
+                  actor={event.review_requester}
+                  onPress={this.onPressUser}
+                />{' '}
+                requested review from{' '}
+                <ActorLink
+                  actor={event.requested_reviewer}
+                  onPress={this.onPressUser}
+                />
               </Text>
             }
             createdAt={event.created_at}
           />
         );
       case 'labeled':
-        return <Labeled event={event} />;
+        return <Labeled event={event} onPressUser={this.onPressUser} />;
       case 'unlabeled':
-        return <Labeled unlabeled event={event} />;
+        return (
+          <Labeled unlabeled event={event} onPressUser={this.onPressUser} />
+        );
       case 'label-group':
-        return <LabelGroup group={event} />;
+        return <LabelGroup group={event} onPressUser={this.onPressUser} />;
       case 'closed':
         return (
           <Event
@@ -106,7 +120,11 @@ export class IssueEventListItem extends Component {
             }
             text={
               <Text style={{ padding: 3 }}>
-                <ActorLink actor={event.actor} /> closed this
+                <ActorLink
+                  actor={event.actor}
+                  onPress={this.onPressUser}
+                />{' '}
+                closed this
               </Text>
             }
             createdAt={event.created_at}
@@ -124,7 +142,11 @@ export class IssueEventListItem extends Component {
             }
             text={
               <Text style={{ padding: 3 }}>
-                <ActorLink actor={event.actor} /> reopened this
+                <ActorLink
+                  actor={event.actor}
+                  onPress={this.onPressUser}
+                />{' '}
+                reopened this
               </Text>
             }
             createdAt={event.created_at}
@@ -142,8 +164,11 @@ export class IssueEventListItem extends Component {
             }
             text={
               <Text style={{ padding: 3 }}>
-                <ActorLink actor={event.actor} /> merged{' '}
-                <Bold>{event.commit_id.slice(0, 7)}</Bold>
+                <ActorLink
+                  actor={event.actor}
+                  onPress={this.onPressUser}
+                />{' '}
+                merged <Bold>{event.commit_id.slice(0, 7)}</Bold>
               </Text>
             }
             createdAt={event.created_at}
@@ -156,47 +181,73 @@ export class IssueEventListItem extends Component {
             icon={<EventIcon name="pencil" />}
             text={
               <Text style={{ padding: 1 }}>
-                <ActorLink actor={event.actor} /> changed the title from{' '}
-                <Bold>{event.rename.from.trim()}</Bold> to{' '}
-                <Bold>{event.rename.to.trim()}</Bold>
+                <ActorLink
+                  actor={event.actor}
+                  onPress={this.onPressUser}
+                />{' '}
+                changed the title from <Bold>{event.rename.from.trim()}</Bold>{' '}
+                to <Bold>{event.rename.to.trim()}</Bold>
               </Text>
             }
             createdAt={event.created_at}
           />
         );
       case 'assigned':
-        return <Assigned event={event} />;
+        return <Assigned event={event} onPressUser={this.onPressUser} />;
       case 'unassigned':
-        return <Assigned unassigned event={event} />;
+        return (
+          <Assigned unassigned event={event} onPressUser={this.onPressUser} />
+        );
       // case 'review_dismissed':
       // case 'review_request_removed':
       case 'milestoned':
-        return <Milestoned event={event} />;
+        return <Milestoned event={event} onPressUser={this.onPressUser} />;
       case 'demilestoned':
-        return <Milestoned demilestoned event={event} />;
+        return (
+          <Milestoned
+            demilestoned
+            event={event}
+            onPressUser={this.onPressUser}
+          />
+        );
       case 'locked':
-        return <Locked event={event} />;
+        return <Locked event={event} onPressUser={this.onPressUser} />;
       case 'unlocked':
-        return <Locked unlocked event={event} />;
+        return <Locked unlocked event={event} onPressUser={this.onPressUser} />;
       case 'head_ref_deleted':
-        return <HeadRef action="deleted" event={event} />;
+        return (
+          <HeadRef
+            action="deleted"
+            event={event}
+            onPressUser={this.onPressUser}
+          />
+        );
       case 'head_ref_restored':
-        return <HeadRef action="restored" event={event} />;
+        return (
+          <HeadRef
+            action="restored"
+            event={event}
+            onPressUser={this.onPressUser}
+          />
+        );
       case 'marked_as_duplicate':
-        return <MarkedAsDuplicate event={event} />;
+        return (
+          <MarkedAsDuplicate event={event} onPressUser={this.onPressUser} />
+        );
       case 'unmarked_as_duplicate':
-        return <MarkedAsDuplicate unmarked event={event} />;
+        return (
+          <MarkedAsDuplicate
+            unmarked
+            event={event}
+            onPressUser={this.onPressUser}
+          />
+        );
       // case 'added_to_project':
       // case 'moved_columns_in_project':
       // case 'removed_from_project':
       // case 'converted_note_to_issue':
       default:
-        // return null;
-        return (
-          <Text>
-            {event.event}
-          </Text>
-        );
+        return null;
     }
   }
 }
@@ -229,6 +280,7 @@ class Labeled extends Component {
   props: {
     event: Object,
     unlabeled: boolean,
+    onPressUser: Function,
   };
 
   render() {
@@ -248,7 +300,8 @@ class Labeled extends Component {
                 paddingLeft: 0,
               }}
             >
-              <ActorLink actor={actor} /> {action}
+              <ActorLink actor={actor} onPress={this.props.onPressUser} />{' '}
+              {action}
             </Text>
             <LabelButton label={label} />
           </View>
@@ -262,6 +315,7 @@ class Labeled extends Component {
 class LabelGroup extends Component {
   props: {
     group: Object,
+    onPressUser: Function,
   };
 
   render() {
@@ -279,7 +333,9 @@ class LabelGroup extends Component {
     const labels = labeled.map(toInlineLabel.bind(null, 'added'));
     const unlabels = unlabeled.map(toInlineLabel.bind(null, 'removed'));
 
-    let textChildren = [<ActorLink actor={actor} />];
+    let textChildren = [
+      <ActorLink actor={actor} onPress={this.props.onPressUser} />,
+    ];
 
     if (labels.length) {
       textChildren = [...textChildren, <Text> added </Text>, ...labels];
@@ -311,6 +367,7 @@ class Assigned extends Component {
   props: {
     event: Object,
     unassigned: boolean,
+    onPressUser: Function,
   };
 
   render() {
@@ -322,8 +379,9 @@ class Assigned extends Component {
         icon={<EventIcon name="person" />}
         text={
           <Text style={{ padding: 3 }}>
-            <ActorLink actor={assigner} /> {action}{' '}
-            <ActorLink actor={assignee} />
+            <ActorLink actor={assigner} onPress={this.props.onPressUser} />{' '}
+            {action}{' '}
+            <ActorLink actor={assignee} onPress={this.props.onPressUser} />
           </Text>
         }
         createdAt={createdAt}
@@ -336,6 +394,7 @@ class Milestoned extends Component {
   props: {
     event: Object,
     demilestoned: boolean,
+    onPressUser: Function,
   };
 
   render() {
@@ -349,8 +408,8 @@ class Milestoned extends Component {
         icon={<EventIcon name="milestone" />}
         text={
           <Text style={{ padding: 3 }}>
-            <ActorLink actor={actor} /> {action} the{' '}
-            <Bold>{milestone.title}</Bold> milestone
+            <ActorLink actor={actor} onPress={this.props.onPressUser} />{' '}
+            {action} the <Bold>{milestone.title}</Bold> milestone
           </Text>
         }
         createdAt={createdAt}
@@ -363,11 +422,12 @@ class Locked extends Component {
   props: {
     event: Object,
     unlocked: boolean,
+    onPressUser: Function,
   };
 
   render() {
     const { actor, created_at: createdAt } = this.props.event;
-    const { unlocked = false } = this.props;
+    const { unlocked = false, onPressUser } = this.props;
     const action = unlocked ? 'unlocked' : 'locked';
 
     return (
@@ -381,7 +441,8 @@ class Locked extends Component {
         }
         text={
           <Text style={{ padding: 3 }}>
-            <ActorLink actor={actor} /> {action} this conversation
+            <ActorLink actor={actor} onPress={onPressUser} /> {action} this
+            conversation
           </Text>
         }
         createdAt={createdAt}
@@ -394,11 +455,12 @@ class HeadRef extends Component {
   props: {
     event: Object,
     action: String,
+    onPressUser: Function,
   };
 
   render() {
     const { actor, created_at: createdAt } = this.props.event;
-    const { action } = this.props;
+    const { action, onPressUser } = this.props;
     const isRestored = action === 'restored';
 
     return (
@@ -412,7 +474,8 @@ class HeadRef extends Component {
         }
         text={
           <Text style={{ padding: 3 }}>
-            <ActorLink actor={actor} /> {action} this branch
+            <ActorLink actor={actor} onPress={onPressUser} /> {action} this
+            branch
           </Text>
         }
         createdAt={createdAt}
@@ -425,6 +488,7 @@ class MarkedAsDuplicate extends Component {
   props: {
     event: Object,
     unmarked: boolean,
+    onPressUser: Function,
   };
 
   render() {
@@ -442,8 +506,8 @@ class MarkedAsDuplicate extends Component {
         }
         text={
           <Text style={{ padding: 3 }}>
-            <ActorLink actor={actor} /> marked this as{' '}
-            {this.props.unmarked ? 'not ' : ''}a duplicate
+            <ActorLink actor={actor} onPress={this.props.onPressUser} /> marked
+            this as {this.props.unmarked ? 'not ' : ''}a duplicate
           </Text>
         }
         createdAt={createdAt}
@@ -455,15 +519,21 @@ class MarkedAsDuplicate extends Component {
 class ActorLink extends Component {
   props: {
     actor: Object,
+    onPress: Function,
   };
 
   render() {
-    const { actor } = this.props;
+    const { actor, onPress } = this.props;
 
     return (
-      <Bold>
+      <Text
+        style={styles.boldText}
+        onPress={() => {
+          onPress(actor);
+        }}
+      >
         {actor.login}
-      </Bold>
+      </Text>
     );
   }
 }
