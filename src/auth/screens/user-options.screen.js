@@ -29,6 +29,7 @@ import languages from './language-settings';
 
 const mapStateToProps = state => ({
   language: state.auth.language,
+  user: state.auth.user,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -37,7 +38,7 @@ const mapDispatchToProps = dispatch =>
       signOut,
       changeLanguage,
     },
-    dispatch,
+    dispatch
   );
 
 const styles = StyleSheet.create({
@@ -95,6 +96,7 @@ class UserOptions extends Component {
     changeLanguage: () => void,
     signOut: () => void,
     navigation: Object,
+    user: Object,
   };
 
   constructor(props) {
@@ -171,9 +173,7 @@ class UserOptions extends Component {
                         <Text style={styles.flag}>
                           {emojifyText(item.emojiCode)}
                         </Text>
-                        <Text style={styles.listTitle}>
-                          {item.name}
-                        </Text>
+                        <Text style={styles.listTitle}>{item.name}</Text>
                       </View>
                     }
                     titleStyle={styles.listTitle}
@@ -191,6 +191,13 @@ class UserOptions extends Component {
           </SectionList>
 
           <SectionList>
+            <ListItem
+              title={translate('common.openInBrowser', language)}
+              titleStyle={styles.listTitle}
+              onPress={() => openURLInView(this.props.user.html_url)}
+              underlayColor={colors.greyLight}
+            />
+
             <ListItem
               title={translate('auth.userOptions.privacyPolicy', language)}
               titleStyle={styles.listTitle}
@@ -218,9 +225,7 @@ class UserOptions extends Component {
           </SectionList>
 
           <TouchableOpacity style={styles.update} onPress={this.checkForUpdate}>
-            <Text style={styles.updateText}>
-              GitPoint v{version}
-            </Text>
+            <Text style={styles.updateText}>GitPoint v{version}</Text>
             <Text style={[styles.updateText, styles.updateTextSub]}>
               {this.state.updateText}
             </Text>
@@ -232,5 +237,5 @@ class UserOptions extends Component {
 }
 
 export const UserOptionsScreen = connect(mapStateToProps, mapDispatchToProps)(
-  UserOptions,
+  UserOptions
 );

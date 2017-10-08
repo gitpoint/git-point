@@ -222,12 +222,16 @@ export const nl = {
       deleted: 'VERWIJDERD',
       fileRenamed: 'Bestand hernoemd zonder veranderingen',
     },
+    readMe: {
+      readMeActions: 'README Actions',
+    },
   },
   organization: {
     main: {
       membersTitle: 'LEDEN',
       descriptionTitle: 'BESCHRIJVING',
     },
+    organizationActions: 'Organization Actions',
   },
   issue: {
     settings: {
@@ -271,6 +275,7 @@ export const nl = {
       },
       openIssueSubTitle: '#{{number}} opened {{time}} ago by {{user}}',
       closedIssueSubTitle: '#{{number}} by {{user}} was closed {{time}} ago',
+      issueActions: 'Issue Actions',
     },
     newIssue: {
       title: 'Niew Issue',
@@ -327,5 +332,6 @@ export const nl = {
     abbreviations: {
       thousand: 'k',
     },
+    openInBrowser: 'Open in Browser',
   },
 };

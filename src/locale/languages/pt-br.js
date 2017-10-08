@@ -226,12 +226,16 @@ export const ptBr = {
       deleted: 'REMOVIDO',
       fileRenamed: 'Arquivo renomeado sem qualquer alteração',
     },
+    readMe: {
+      readMeActions: 'Ações do README',
+    },
   },
   organization: {
     main: {
       membersTitle: 'MEMBROS',
       descriptionTitle: 'DESCRIÇÃO',
     },
+    organizationActions: 'Ações da organização',
   },
   issue: {
     settings: {
@@ -275,6 +279,7 @@ export const ptBr = {
       },
       openIssueSubTitle: '#{{number}} opened {{time}} ago by {{user}}',
       closedIssueSubTitle: '#{{number}} by {{user}} was closed {{time}} ago',
+      issueActions: 'Ações da Issue',
     },
     newIssue: {
       title: 'Nova Issue',
@@ -328,5 +333,6 @@ export const ptBr = {
       y: '%dy',
       yy: '%dy',
     },
+    openInBrowser: 'Abrir no Navegador.',
   },
 };
