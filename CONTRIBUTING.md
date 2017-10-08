@@ -44,7 +44,7 @@ If you experience a problem at any point, please don't hesitate to file an issue
 
 ## Translations
 
-Translation contributions are always welcome! Please don't hesitate to open an issue to suggest including a new language and/or submitting a PR to include it. Here's how to add a new language:
+Translation contributions are always welcome! If you happen to speak/read any language fluently and feel comfortable translating all the strings, please don't hesitate to open an issue to suggest including it and/or submitting a PR to include it. Here's how to add a new language:
 
 1. In the `locales` directory we just need to add a new file for a new language. We can just copy the `en.js` file (to _es.js_ for Spanish for example) and swap out all the English text for that specific language.
 2. We'll need to then export that newly added file as well [here](https://github.com/gitpoint/git-point/blob/master/src/locale/languages/index.js).
