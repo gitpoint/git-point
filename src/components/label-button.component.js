@@ -1,21 +1,13 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import React from 'react';
+import { StyleSheet } from 'react-native';
 import { Button } from 'react-native-elements';
 
-import { colors, fonts, normalize } from 'config';
+import { fonts } from 'config';
+import { getFontColorByBackground } from 'utils';
 
 type Props = {
   label: Object,
   largeWithTag: boolean,
-};
-
-const getFontColorByBackground = bgColor => {
-  const r = parseInt(bgColor.substr(0, 2), 16);
-  const g = parseInt(bgColor.substr(2, 2), 16);
-  const b = parseInt(bgColor.substr(4, 2), 16);
-  const yiq = (r * 299 + g * 587 + b * 114) / 1000;
-
-  return yiq >= 128 ? colors.black : colors.white;
 };
 
 const styles = StyleSheet.create({
@@ -37,39 +29,6 @@ const styles = StyleSheet.create({
     borderRadius: 3,
   },
 });
-
-export class InlineLabel extends Component {
-  props: {
-    label: Object,
-  };
-
-  render() {
-    const { color, name } = this.props.label;
-
-    return (
-      <Text
-        style={{
-          fontSize: normalize(10),
-          fontWeight: 'bold',
-          backgroundColor: `#${color}`,
-          color: getFontColorByBackground(color),
-          padding: 3,
-          paddingLeft: 5,
-          paddingRight: 5,
-          margin: 2,
-          borderWidth: 1,
-          borderColor: `#${color}`,
-          overflow: 'hidden',
-          borderRadius: 2,
-          minWidth: 50,
-          textAlign: 'center',
-        }}
-      >
-        {name}
-      </Text>
-    );
-  }
-}
 
 export const LabelButton = ({ label, largeWithTag }: Props) =>
   <Button
