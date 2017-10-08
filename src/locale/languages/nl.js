@@ -8,20 +8,20 @@ export const nl = {
       welcomeMessage: 'De meest complete GitHub client die geen geld kost',
       notificationsTitle: 'Beheer notificaties',
       notificationsMessage:
-        'Bekijk en beheer al je ongelezen en deelnemende notificaties',
+        'Bekijk en beheer al uw ongelezen en deelnemende notificaties',
       reposTitle: 'Repositories en Gebruikers',
       reposMessage:
-        'Verkrijg snel repoisitory, gebruiker en organisatie informatie',
+        'Verkrijg snel de informatie van uw repositories, gebruikers en organisaties',
       issuesTitle: 'Issues en Pull Requests',
       issuesMessage: 'Neem deel aan conversaties, merge pull requests en meer',
       signInButton: 'AANMELDEN',
     },
     welcome: {
-      welcomeTitle: 'Welbij bij GitPoint',
+      welcomeTitle: 'Welkom bij GitPoint',
     },
     events: {
       welcomeMessage:
-        'Welkom! Dit is je nieuws tijdlijn - dit helpt je up to date te blijven bij repositories en gebruikers die je volgt.',
+        'Welkom! Dit is uw nieuwe tijdlijn - dit helpt u up to date te blijven bij repositories en gebruikers die je volgt.',
       commitCommentEvent: 'heeft een reactie geplaatst op commit',
       createEvent: '{{object}} aangemaakt',
       deleteEvent: '{{object}} verwijderd',
@@ -71,8 +71,8 @@ export const nl = {
         submitted: 'ingediend',
         dismissed: 'ontslagen',
         published: 'gepubliceerd',
-        publicized: 'publicized',
-        privatized: 'privatized',
+        publicized: 'publiek gemaakt',
+        privatized: 'prive gemaakt',
         starred: 'heeft een ster gegeven aan',
         pushedTo: 'pushed to',
         forked: 'forked',
@@ -81,16 +81,16 @@ export const nl = {
       },
     },
     profile: {
-      orgsRequestApprovalTop: 'Kan je niet al je organisaites zien?',
-      orgsRequestApprovalBottom: 'Je moet misschien om toestemming vragen.',
+      orgsRequestApprovalTop: 'Kunt u niet al uw organisaites zien?',
+      orgsRequestApprovalBottom: 'U moet misschien om toestemming vragen.',
       codePushCheck: 'Controleer op updates',
-      codePushChecking: 'Controleren als er updates zijn...',
+      codePushChecking: 'Controleren op updates...',
       codePushUpdated: 'App is bijgewerkt',
       codePushAvailable: 'Update beschikbaar!',
-      codePushNotApplicable: 'Niet beschikbaar in debug mode',
+      codePushNotApplicable: 'Niet beschikbaar in debug',
     },
     userOptions: {
-      donate: 'Doe een donatie',
+      donate: 'Doneren',
       title: 'Opties',
       language: 'Taal',
       privacyPolicy: 'Privacybeleid',
@@ -98,17 +98,17 @@ export const nl = {
     },
     privacyPolicy: {
       title: 'Privacybeleid',
-      effectiveDate: 'Laats ge-updated op: July 15, 2017',
+      effectiveDate: 'Laatst ge-updated op: 15 Juli 2017',
       introduction:
-        'We zijn blij dat je voor GitPoint hebt gekozen. Dit privacybeleid is hier om u te informeren over wat wij doen - en niet doen - met de gegevens van onze gebruikers.',
+        'We zijn blij dat u voor GitPoint heeft gekozen. Dit privacybeleid is hier om u te informeren over wat wij doen - en niet doen - met de gegevens van onze gebruikers.',
       userDataTitle: 'GEBRUIKERS INFORMATIE',
       userData1:
-        'We doen niets met uw GitHub informatie. Na de authenticatie wordt de OAuth-token van de gebruiker rechtstreeks op hun apparaatopslag opgeslagen. Het is niet mogelijk voor ons om die informatie te verkrijgen. Wij zien nooit de toegangscode van een gebruiker en slaan het ook niet op.',
+        'We doen niets met uw GitHub informatie. Na de authenticatie wordt uw OAuth-token rechtstreeks op uw apparaatopslag opgeslagen. Het is niet mogelijk voor ons om die informatie te verkrijgen. Wij zien nooit de toegangscode van een gebruiker en slaan het ook niet op.',
       userData2:
-        'Dit betekent dat wij op geen enkele wijze de GitHub-gegevens van een gebruiker ooit kunnen inzien, gebruiken of delen. Als privégegevens ooit zichtbaar worden, zullen we het niet opnemen of bekijken. Als het per ongeluk wordt opgenomen, zullen wij het onmiddellijk verwijderen met veilige verwijderingsmethoden. Nogmaals, wij hebben authentificatie speciaal ingesteld zodat dit nooit gebeurt.',
+        'Dit betekent dat wij op geen enkele wijze de GitHub-gegevens van een gebruiker kunnen inzien, gebruiken of delen. Als privégegevens ooit zichtbaar worden, zullen we het niet opnemen of bekijken. Als het per ongeluk wordt opgenomen, zullen wij het onmiddellijk verwijderen met veilige verwijderingsmethoden. Nogmaals, wij hebben authentificatie speciaal ingesteld zodat dit nooit zou gebeuren.',
       analyticsInfoTitle: 'ANALYTICS INFORMATIE',
       analyticsInfo1:
-        'We gebruiken op dit moment Google Analytics en iTunes App Analytics om ons te helpen met het meten van verkeer en gebruikstendensen voor het GitPoint. Deze tools verzamelen informatie die door uw apparaat wordt verzonden, inclusief apparaat- en platformversie, regio en verwijzer. Deze informatie kan niet worden gebruikt om een bepaalde individuele gebruiker te identificeren en er worden geen persoonlijke gegevens geëxtraheerd.',
+        'We gebruiken op dit moment Google Analytics en iTunes App Analytics om ons te helpen met het meten van verkeer en gebruikstendensen van GitPoint. Deze tools verzamelen informatie die door uw apparaat wordt verzonden, inclusief apparaat- en platformversie, regio en verwijzer. Deze informatie kan niet worden gebruikt om een bepaalde individuele gebruiker te identificeren en er worden geen persoonlijke gegevens geëxtraheerd.',
       analyticsInfo2:
         'Als wij een ander platform van derden opnemen om problemen, fouten of meer analytische informatie te verzamelen, zullen wij ervoor zorgen dat de gebruikersgegevens geanonimiseerd en gecodeerd zijn.',
       openSourceTitle: 'OPEN SOURCE',
@@ -121,7 +121,7 @@ export const nl = {
         'Bedankt voor het lezen van ons privacybeleid. Wij hopen dat u het leuk vindt om GitPoint te gebruiken net zoals wij het leuk vinden om het te bouwen.',
       contact2:
         'Als u vragen heeft over dit Privacybeleid of GitPoint in het algemeen, gelieve een probleem in de',
-      contactLink: 'GitPoint repository',
+      contactLink: 'GitPoint repository ',
     },
   },
   notifications: {
@@ -133,8 +133,8 @@ export const nl = {
       participatingButton: 'Deelnemend',
       allButton: 'Alles',
       retrievingMessage: 'Notificaties ophalen',
-      noneMessage: 'Je hebt geen notificaties met dit type',
-      markAllAsRead: 'Alles als gelezen markeren', // google translate
+      noneMessage: 'Je hebt geen notificaties van dit type',
+      markAllAsRead: 'Alles markeren als gelezen',
     },
   },
   search: {
@@ -159,7 +159,7 @@ export const nl = {
     followers: {
       title: 'Volgers',
       text: 'Volgers',
-      followsYou: 'Volgt jou',
+      followsYou: 'Volgt u',
     },
     following: {
       title: 'Volgen',
@@ -169,18 +169,18 @@ export const nl = {
   },
   repository: {
     main: {
-      shareRepositoryTitle: 'Delen {{repoName}}',
+      shareRepositoryTitle: 'Deel {{repoName}}',
       shareRepositoryMessage: 'Bekijk {{repoName}} op GitHub. {{repoUrl}}',
       repoActions: 'Repository Acties',
       forkAction: 'Fork',
-      starAction: 'Star',
-      unstarAction: 'Unstar',
+      starAction: 'Ster',
+      unstarAction: 'Ster verwijderen',
       shareAction: 'Delen',
       unwatchAction: 'Unwatch',
-      watchAction: 'Watch',
+      watchAction: 'Bekijken',
       ownerTitle: 'EIGENAAR',
       contributorsTitle: 'MEDEWERKERS',
-      noContributorsMessage: 'Geen medewerkers gevonden',
+      noContributorsMessage: 'Geen medewerkers',
       sourceTitle: 'BRON',
       readMe: 'README',
       viewSource: 'Bekijk Code',
@@ -192,7 +192,7 @@ export const nl = {
       pullRequestTitle: 'PULL REQUESTS',
       noPullRequestsMessage: 'Geen pull requests',
       noOpenPullRequestsMessage: 'Geen open pull requests',
-      starsTitle: 'Stars',
+      starsTitle: 'Sterren',
       forksTitle: 'Forks',
       forkedFromMessage: 'forked from',
     },
@@ -205,7 +205,7 @@ export const nl = {
       closedButton: 'Gesloten',
       searchingMessage: 'Zoeken naar {{query}}',
       noOpenIssues: 'Geen open issues gevonden!',
-      noClosedIssues: 'Geen gesloten issues gevonden!',
+      noClosedIssues: 'Geen gesloten issues!',
     },
     pullList: {
       title: 'Pull Requests',
@@ -217,13 +217,13 @@ export const nl = {
     },
     pullDiff: {
       title: 'Diff',
-      numFilesChanged: '{{numFilesChanged}} files',
-      new: 'NIEW',
+      numFilesChanged: '{{numFilesChanged}} bestanden',
+      new: 'NIEUW',
       deleted: 'VERWIJDERD',
       fileRenamed: 'Bestand hernoemd zonder veranderingen',
     },
     readMe: {
-      readMeActions: 'README Actions',
+      readMeActions: 'README Acties',
     },
   },
   organization: {
@@ -231,7 +231,7 @@ export const nl = {
       membersTitle: 'LEDEN',
       descriptionTitle: 'BESCHRIJVING',
     },
-    organizationActions: 'Organization Actions',
+    organizationActions: 'Organisatie Actions',
   },
   issue: {
     settings: {
@@ -248,20 +248,20 @@ export const nl = {
       lockIssue: 'Vergrendel {{issueType}}',
       closeIssue: 'Sluit {{issueType}}',
       reopenIssue: 'Heropen {{issueType}}',
-      areYouSurePrompt: 'Weet je het zeker?',
+      areYouSurePrompt: 'Weet u het zeker?',
       applyLabelTitle: 'Voeg een label toe aan deze issue',
     },
     comment: {
-      commentActions: 'Commentaaracties', // google translate
-      editCommentTitle: 'Bewerk commentaar', // google translate
-      editAction: 'Bewerk', // google translate
-      deleteAction: 'Verwijder', // google translate
+      commentActions: 'Acties voor commentaar',
+      editCommentTitle: 'Bewerk commentaar',
+      editAction: 'Bewerk',
+      deleteAction: 'Verwijder',
     },
     main: {
       assignees: 'Assignees',
       mergeButton: 'Merge Pull Request',
       noDescription: 'Niet voorzien van een beschrijving.',
-      lockedCommentInput: 'Gesloten maar je kan nog opmerkingen maken...',
+      lockedCommentInput: 'Gesloten maar u kan nog een opmerkingen maken...',
       commentInput: 'Plaats opmerking...',
       lockedIssue: 'Issue is gesloten',
       states: {
@@ -273,17 +273,17 @@ export const nl = {
         issue: 'Issue',
         pullRequest: 'Pull Request',
       },
-      openIssueSubTitle: '#{{number}} opened {{time}} ago by {{user}}',
-      closedIssueSubTitle: '#{{number}} by {{user}} was closed {{time}} ago',
-      issueActions: 'Issue Actions',
+      openIssueSubTitle: '#{{number}} geopend {{time}} geleden door {{user}}',
+      closedIssueSubTitle: '#{{number}} door {{user}} was gesloten, {{time}} geleden',
+      issueActions: 'Issue Acties',
     },
     newIssue: {
-      title: 'Niew Issue',
-      missingTitleAlert: 'Een titel is verplicht!',
+      title: 'Nieuw Issue',
+      missingTitleAlert: 'Titel is verplicht!',
       issueTitle: 'Issue title',
-      writeATitle: 'Schrijf een titel voor je issue hier',
+      writeATitle: 'Schrijf de titel voor uw issue hier',
       issueComment: 'Issue omschrijving',
-      writeAComment: 'Schrijf een omschrijving voor je issue hier',
+      writeAComment: 'Schrijf de omschrijving van uw issue hier',
     },
     pullMerge: {
       title: 'Merge Pull Request',
@@ -293,9 +293,9 @@ export const nl = {
       squash: 'squash',
       missingTitleAlert: 'Een commit titel is verplicht!',
       commitTitle: 'Commit Title',
-      writeATitle: 'Schrijf een titel voor je commit hier',
+      writeATitle: 'Schrijf een titel voor uw commit hier',
       commitMessage: 'Commit samenvatting',
-      writeAMessage: 'Schrijf een samenvatting voor je commit hier',
+      writeAMessage: 'Schrijf een samenvatting voor uw commit hier',
       mergeType: 'Merge Type',
       changeMergeType: 'Verander Merge Type',
     },
@@ -304,7 +304,7 @@ export const nl = {
     bio: 'BIO',
     stars: 'Sterren',
     orgs: 'ORGANISATIES',
-    noOrgsMessage: 'Geen organizations',
+    noOrgsMessage: 'Geen organisaties',
     info: 'INFO',
     company: 'Bedrijf',
     location: 'Locatie',
