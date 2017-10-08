@@ -74,7 +74,7 @@
     "react-native-safari-view": "^2.0.0",
     "react-native-search-bar": "https://github.com/andrewda/react-native-search-bar/tarball/master",
     "react-native-syntax-highlighter": "^1.2.1",
-    "react-native-table-component": "https://github.com/jaynakus/react-native-table-component/tarball/master",
+    "react-native-table-component": "^1.1.0",
     "react-native-vector-icons": "^4.4.0",
     "react-navigation": "^1.0.0-beta.11",
     "react-redux": "^5.0.2",
