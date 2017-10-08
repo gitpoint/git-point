@@ -20,6 +20,11 @@ export default [
     name: 'Türkçe',
   },
   {
+    code: 'pt',
+    emojiCode: ':flag-pt:',
+    name: 'Português de Portugal',
+  },
+  {
     code: 'pt-br',
     emojiCode: ':flag-br:',
     name: 'Português do Brasil',

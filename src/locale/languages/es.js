@@ -199,9 +199,9 @@ export const es = {
       starsTitle: 'Stars',
       forksTitle: 'Forks',
       forkedFromMessage: 'forked from',
-      starred: 'Starred',
-      watching: 'Watching',
-      watchers: 'Watchers',
+      starred: 'Favoritos',
+      watching: 'Siguiendo',
+      watchers: 'Seguidores',
     },
     codeList: {
       title: 'Código',
