@@ -15,6 +15,7 @@ import {
   GET_REPOSITORY_CONTENTS,
   GET_REPOSITORY_FILE,
   GET_REPOSITORY_ISSUES,
+  GET_REPOSITORY_PULL_REQUESTS,
   GET_REPO_README_STATUS,
   GET_REPO_STARRED_STATUS,
   FORK_REPO_STATUS,
@@ -115,6 +116,57 @@ export const getRepositoryFile = url => {
       .catch(error => {
         dispatch({
           type: GET_REPOSITORY_FILE.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+export const getPullRequests = repoFullName => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+    const [owner, name] = repoFullName.split('/');
+
+    const body = {
+      query: `query {
+        repository(owner: "${owner}", name: "${name}") {
+          pullRequests(first: 100, states: [OPEN, CLOSED, MERGED], orderBy: { field: CREATED_AT, direction: DESC }) {
+            nodes {
+              id
+              state
+              title
+              createdAt
+              lastEditedAt
+              number
+              locked
+              repository {
+                nameWithOwner
+              }
+              author {
+                login
+              }
+              comments(first: 0) {
+                totalCount
+              }
+            }
+          }
+        }
+      }`,
+    };
+
+    dispatch({ type: GET_REPOSITORY_PULL_REQUESTS.PENDING });
+
+    v4
+      .post(accessToken, body)
+      .then(data => {
+        dispatch({
+          type: GET_REPOSITORY_PULL_REQUESTS.SUCCESS,
+          payload: data.repository.pullRequests.nodes,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: GET_REPOSITORY_PULL_REQUESTS.ERROR,
           payload: error,
         });
       });
@@ -264,16 +316,12 @@ export const unSubscribeToRepo = (owner, repo) => (dispatch, getState) => {
 
 export const getRepositoryInfo = url => {
   return (dispatch, getState) => {
-    let repo = getState().repository.repository;
-
-    if (repo) {
-      dispatch(getIssues(repo.full_name));
-    }
-
     return dispatch(getRepository(url)).then(() => {
-      repo = getState().repository.repository;
+      const repo = getState().repository.repository;
       const contributorsUrl = repo.contributors_url;
 
+      dispatch(getIssues(repo.full_name));
+      dispatch(getPullRequests(repo.full_name));
       dispatch(getContributors(contributorsUrl));
       dispatch(
         checkReadMe(
