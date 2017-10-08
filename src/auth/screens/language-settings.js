@@ -34,4 +34,9 @@ export default [
     emojiCode: ':flag-ru:',
     name: 'Русский',
   },
+  {
+    code: 'gl',
+    emojiCode: ':waving_white_flag:',
+    name: 'Galego',
+  },
 ];
