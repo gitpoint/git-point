@@ -54,7 +54,15 @@ export class InlineLabel extends Component {
           backgroundColor: `#${color}`,
           color: getFontColorByBackground(color),
           padding: 3,
+          paddingLeft: 5,
+          paddingRight: 5,
           margin: 2,
+          borderWidth: 1,
+          borderColor: `#${color}`,
+          overflow: 'hidden',
+          borderRadius: 2,
+          minWidth: 50,
+          textAlign: 'center',
         }}
       >
         {name}
