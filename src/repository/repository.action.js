@@ -7,6 +7,7 @@ import {
   unWatchRepo,
   isWatchingRepo,
   v3,
+  v4,
 } from 'api';
 import {
   GET_REPOSITORY,
@@ -120,18 +121,46 @@ export const getRepositoryFile = url => {
   };
 };
 
-export const getIssues = url => {
+export const getIssues = repoFullName => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
+    const [owner, name] = repoFullName.split('/');
+
+    const body = {
+      query: `query {
+        repository(owner: "${owner}", name: "${name}") {
+          issues(first: 100, states: [OPEN, CLOSED], orderBy: { field: CREATED_AT, direction: DESC }) {
+            nodes {
+              id
+              state
+              title
+              createdAt
+              lastEditedAt
+              number
+              locked
+              repository {
+                nameWithOwner
+              }
+              author {
+                login
+              }
+              comments(first: 0) {
+                totalCount
+              }
+            }
+          }
+        }
+      }`,
+    };
 
     dispatch({ type: GET_REPOSITORY_ISSUES.PENDING });
 
-    v3
-      .getJson(url, accessToken)
+    v4
+      .post(accessToken, body)
       .then(data => {
         dispatch({
           type: GET_REPOSITORY_ISSUES.SUCCESS,
-          payload: data,
+          payload: data.repository.issues.nodes,
         });
       })
       .catch(error => {
@@ -235,16 +264,17 @@ export const unSubscribeToRepo = (owner, repo) => (dispatch, getState) => {
 
 export const getRepositoryInfo = url => {
   return (dispatch, getState) => {
+    let repo = getState().repository.repository;
+
+    if (repo) {
+      dispatch(getIssues(repo.full_name));
+    }
+
     return dispatch(getRepository(url)).then(() => {
-      const repo = getState().repository.repository;
-      const contributorsUrl = getState().repository.repository.contributors_url;
-      const issuesUrl = getState().repository.repository.issues_url.replace(
-        '{/number}',
-        '?state=all&per_page=100'
-      );
+      repo = getState().repository.repository;
+      const contributorsUrl = repo.contributors_url;
 
       dispatch(getContributors(contributorsUrl));
-      dispatch(getIssues(issuesUrl));
       dispatch(
         checkReadMe(
           `${v3.root}/repos/${repo.owner.login}/${repo.name}/readme?ref=master`

@@ -176,20 +176,25 @@ class Issue extends Component {
 
     const params = navigation.state.params;
     const issueURL = params.issueURL || params.issue.url;
-    const issueRepository = issueURL
-      .replace(`${v3.root}/repos/`, '')
-      .replace(/([^/]+\/[^/]+)\/issues\/\d+$/, '$1');
+    let issueRepository;
+
+    if (params.issueURL) {
+      issueRepository = issueURL
+        .replace(`${v3.root}/repos/`, '')
+        .replace(/([^/]+\/[^/]+)\/issues\/\d+$/, '$1');
+    } else if (params.issue) {
+      issueRepository = params.issue.repository.nameWithOwner;
+    }
+    const repositoryUrl = `https://api.github.com/repos/${issueRepository}`;
 
     Promise.all([
       getIssueFromUrl(issueURL),
       getIssueComments(`${issueURL}/comments`),
     ]).then(() => {
-      const issue = this.props.issue;
-
       if (repository.full_name !== issueRepository) {
         Promise.all([
-          getRepository(issue.repository_url),
-          getContributors(this.getContributorsLink(issue.repository_url)),
+          getRepository(repositoryUrl),
+          getContributors(this.getContributorsLink(repositoryUrl)),
         ]).then(() => {
           this.setNavigationParams();
         });
@@ -333,46 +338,44 @@ class Issue extends Component {
 
     return (
       <ViewContainer>
-        {isShowLoadingContainer && (
-          <LoadingContainer animating={isShowLoadingContainer} center />
-        )}
+        {isShowLoadingContainer &&
+          <LoadingContainer animating={isShowLoadingContainer} center />}
 
         {!isPendingComments &&
           !isPendingIssue &&
-          issue && (
-            <KeyboardAvoidingView
-              style={{ flex: 1 }}
-              behavior={'padding'}
-              keyboardVerticalOffset={Platform.select({
-                ios: 65,
-                android: -200,
-              })}
-            >
-              <FlatList
-                ref={ref => {
-                  this.commentsList = ref;
-                }}
-                refreshing={isLoadingData}
-                onRefresh={this.getIssueInformation}
-                contentContainerStyle={{ flexGrow: 1 }}
-                ListHeaderComponent={this.renderHeader}
-                removeClippedSubviews={false}
-                data={fullComments}
-                keyExtractor={this.keyExtractor}
-                renderItem={this.renderItem}
-              />
+          issue &&
+          <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior={'padding'}
+            keyboardVerticalOffset={Platform.select({
+              ios: 65,
+              android: -200,
+            })}
+          >
+            <FlatList
+              ref={ref => {
+                this.commentsList = ref;
+              }}
+              refreshing={isLoadingData}
+              onRefresh={this.getIssueInformation}
+              contentContainerStyle={{ flexGrow: 1 }}
+              ListHeaderComponent={this.renderHeader}
+              removeClippedSubviews={false}
+              data={fullComments}
+              keyExtractor={this.keyExtractor}
+              renderItem={this.renderItem}
+            />
 
-              <CommentInput
-                users={fullUsers}
-                userHasPushPermission={
-                  navigation.state.params.userHasPushPermission
-                }
-                issueLocked={issue.locked}
-                language={language}
-                onSubmit={this.postComment}
-              />
-            </KeyboardAvoidingView>
-          )}
+            <CommentInput
+              users={fullUsers}
+              userHasPushPermission={
+                navigation.state.params.userHasPushPermission
+              }
+              issueLocked={issue.locked}
+              language={language}
+              onSubmit={this.postComment}
+            />
+          </KeyboardAvoidingView>}
 
         <ActionSheet
           ref={o => {
