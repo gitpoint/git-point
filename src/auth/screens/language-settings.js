@@ -36,7 +36,7 @@ export default [
   },
   {
     code: 'gl',
-    emojiCode: ':flag_white:',
+    emojiCode: ':waving_white_flag:',
     name: 'Galego',
   },
 ];

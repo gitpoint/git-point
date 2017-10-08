@@ -67,6 +67,7 @@
 		<string>Nunito-Light.ttf</string>
 		<string>Nunito-Regular.ttf</string>
 		<string>Nunito-SemiBold.ttf</string>
+		<string>Feather.ttf</string>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
