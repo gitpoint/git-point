@@ -4,6 +4,7 @@ import {
   GET_REPOSITORY_CONTENTS,
   GET_REPOSITORY_FILE,
   GET_REPOSITORY_ISSUES,
+  GET_REPOSITORY_PULL_REQUESTS,
   GET_REPO_README_STATUS,
   GET_REPO_STARRED_STATUS,
   FORK_REPO_STATUS,
@@ -24,6 +25,7 @@ const initialState = {
   contents: {},
   fileContent: '',
   issues: [],
+  pullRequests: [],
   readMe: '',
   hasReadMe: false,
   starred: false,
@@ -127,6 +129,23 @@ export const repositoryReducer = (state = initialState, action = {}) => {
         ...state,
         error: action.payload,
         isPendingFile: false,
+      };
+    case GET_REPOSITORY_PULL_REQUESTS.PENDING:
+      return {
+        ...state,
+        isPendingPullRequests: true,
+      };
+    case GET_REPOSITORY_PULL_REQUESTS.SUCCESS:
+      return {
+        ...state,
+        pullRequests: action.payload,
+        isPendingPullRequests: false,
+      };
+    case GET_REPOSITORY_PULL_REQUESTS.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isPendingPullRequests: false,
       };
     case GET_REPOSITORY_ISSUES.PENDING:
       return {

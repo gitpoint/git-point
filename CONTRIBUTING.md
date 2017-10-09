@@ -17,7 +17,9 @@ If you want to open a PR that fixes a bug or adds a feature, then we can't thank
 
 ### Working on issues
 
-Please feel free to take on any issue that's currently open. Feel free to resolve any issue that you would enjoy working on even if it happens to be a low priority.
+Please feel free to take on any issue that's currently open. You could look at
+[issues labeled "high priority"](https://github.com/gitpoint/git-point/issues?q=is%3Aopen+is%3Aissue+label%3A%22high+priority%22),
+but feel free to resolve any issue that you would enjoy working on even if it happens to be a low priority.
 
 ## Setup
 

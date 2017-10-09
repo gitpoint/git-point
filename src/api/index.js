@@ -21,6 +21,36 @@ const METHOD = {
   POST: 'POST',
 };
 
+export const v4 = {
+  root: 'https://api.github.com/graphql',
+  call: async parameters => {
+    const response = await fetch(v4.root, parameters);
+    const json = JSON.parse(response._bodyText);
+
+    if (response.status >= 200 && response.status < 300) {
+      return json.data;
+    }
+    const error = new Error(json.message);
+
+    error.response = response;
+    throw error;
+  },
+  parameters: (accessToken, body = {}) => {
+    return {
+      method: METHOD.POST,
+      headers: {
+        Authorization: `token ${accessToken}`,
+      },
+      body: JSON.stringify(body),
+    };
+  },
+  post: async (accessToken, body) => {
+    const response = await v4.call(v4.parameters(accessToken, body));
+
+    return response;
+  },
+};
+
 export const v3 = {
   root: 'https://api.github.com',
   call: async (url, parameters) => {

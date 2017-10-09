@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
 
 const getIconName = (type, issue) => {
   if (type === 'issue') {
-    return issue.state === 'closed' ? 'issue-closed' : 'issue-opened';
+    return issue.state === 'CLOSED' ? 'issue-closed' : 'issue-opened';
   }
 
   return 'git-pull-request';
@@ -63,7 +63,7 @@ const getIconName = (type, issue) => {
 
 export const IssueListItem = ({ type, issue, navigation, language }: Props) =>
   <TouchableHighlight
-    style={issue.state === 'closed' && styles.closedIssue}
+    style={issue.state === 'CLOSED' && styles.closedIssue}
     onPress={() =>
       navigation.navigate('Issue', {
         issue,
@@ -77,22 +77,22 @@ export const IssueListItem = ({ type, issue, navigation, language }: Props) =>
         containerStyle={styles.listItemContainer}
         title={issue.title}
         subtitle={
-          issue.state === 'open'
+          issue.state === 'OPEN'
             ? translate('issue.main.openIssueSubTitle', language, {
                 number: issue.number,
-                user: issue.user.login,
-                time: moment(issue.created_at).fromNow(),
+                user: issue.author.login,
+                time: moment(issue.createdAt).fromNow(),
               })
             : translate('issue.main.closedIssueSubTitle', language, {
                 number: issue.number,
-                user: issue.user.login,
-                time: moment(issue.closed_at).fromNow(),
+                user: issue.author.login,
+                time: moment(issue.lastEditedAt).fromNow(),
               })
         }
         leftIcon={{
           name: getIconName(type, issue),
           size: 36,
-          color: issue.state === 'open' ? colors.green : colors.red,
+          color: issue.state === 'OPEN' ? colors.green : colors.red,
           type: 'octicon',
         }}
         hideChevron
@@ -102,7 +102,7 @@ export const IssueListItem = ({ type, issue, navigation, language }: Props) =>
       <View style={styles.commentsContainer}>
         <Icon name="comment" type="octicon" size={18} color={colors.grey} />
         <Text style={styles.comments}>
-          {issue.comments}
+          {issue.comments.totalCount}
         </Text>
       </View>
     </View>

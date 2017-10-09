@@ -7,6 +7,7 @@ import {
   unWatchRepo,
   isWatchingRepo,
   v3,
+  v4,
 } from 'api';
 import {
   GET_REPOSITORY,
@@ -14,6 +15,7 @@ import {
   GET_REPOSITORY_CONTENTS,
   GET_REPOSITORY_FILE,
   GET_REPOSITORY_ISSUES,
+  GET_REPOSITORY_PULL_REQUESTS,
   GET_REPO_README_STATUS,
   GET_REPO_STARRED_STATUS,
   FORK_REPO_STATUS,
@@ -26,6 +28,7 @@ import {
   SEARCH_CLOSED_PULLS,
   GET_REPOSITORY_SUBSCRIBED_STATUS,
 } from './repository.type';
+import { issuesQuery, pullRequestsQuery } from './repository.query';
 
 export const getRepository = url => {
   return (dispatch, getState) => {
@@ -120,18 +123,51 @@ export const getRepositoryFile = url => {
   };
 };
 
-export const getIssues = url => {
+export const getPullRequests = repoFullName => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
+    const [owner, name] = repoFullName.split('/');
+    const body = {
+      query: pullRequestsQuery(),
+      variables: { owner, name },
+    };
+
+    dispatch({ type: GET_REPOSITORY_PULL_REQUESTS.PENDING });
+
+    v4
+      .post(accessToken, body)
+      .then(data => {
+        dispatch({
+          type: GET_REPOSITORY_PULL_REQUESTS.SUCCESS,
+          payload: data.repository.pullRequests.nodes,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: GET_REPOSITORY_PULL_REQUESTS.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+export const getIssues = repoFullName => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+    const [owner, name] = repoFullName.split('/');
+    const body = {
+      query: issuesQuery(),
+      variables: { owner, name },
+    };
 
     dispatch({ type: GET_REPOSITORY_ISSUES.PENDING });
 
-    v3
-      .getJson(url, accessToken)
+    v4
+      .post(accessToken, body)
       .then(data => {
         dispatch({
           type: GET_REPOSITORY_ISSUES.SUCCESS,
-          payload: data,
+          payload: data.repository.issues.nodes,
         });
       })
       .catch(error => {
@@ -237,14 +273,11 @@ export const getRepositoryInfo = url => {
   return (dispatch, getState) => {
     return dispatch(getRepository(url)).then(() => {
       const repo = getState().repository.repository;
-      const contributorsUrl = getState().repository.repository.contributors_url;
-      const issuesUrl = getState().repository.repository.issues_url.replace(
-        '{/number}',
-        '?state=all&per_page=100'
-      );
+      const contributorsUrl = repo.contributors_url;
 
+      dispatch(getIssues(repo.full_name));
+      dispatch(getPullRequests(repo.full_name));
       dispatch(getContributors(contributorsUrl));
-      dispatch(getIssues(issuesUrl));
       dispatch(
         checkReadMe(
           `${v3.root}/repos/${repo.owner.login}/${repo.name}/readme?ref=master`
