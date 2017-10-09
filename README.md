@@ -76,6 +76,8 @@ A few of the things you can do with GitPoint:
 
 ## Feedback/Contributing
 
+This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification and is brought to you by these [awesome contributors](./CONTRIBUTORS.md).  
+
 Feel free to send us feedback on [Twitter](https://twitter.com/gitpointapp) or [file an issue](https://github.com/gitpoint/git-point/issues/new). Feature requests are always welcome. If you wish to contribute, please take a quick look at the [guidelines](./CONTRIBUTING.md)!
 
 Also, if there's anything you'd like to chat about, please feel free to join our [Gitter chat](https://gitter.im/git-point)!
