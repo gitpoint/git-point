@@ -228,6 +228,7 @@ export const fr = {
     },
     readMe: {
       readMeActions: 'Actions sur le README',
+      noReadMeFound: 'No README.md found',
     },
   },
   organization: {

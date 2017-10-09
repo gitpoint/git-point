@@ -221,6 +221,9 @@ export const erase = {
       deleted: 'DELETED',
       fileRenamed: 'File renamed without any changes',
     },
+    readMe: {
+      noReadMeFound: 'No README.md found',
+    },
   },
   organization: {
     main: {

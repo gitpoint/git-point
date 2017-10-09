@@ -228,6 +228,9 @@ export const pt = {
       deleted: 'REMOVIDO',
       fileRenamed: 'O ficheiro mudou de nome sem qualquer alteração',
     },
+    readMe: {
+      noReadMeFound: 'No README.md found',
+    },
   },
   organization: {
     main: {
