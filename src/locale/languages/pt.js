@@ -229,8 +229,8 @@ export const pt = {
       fileRenamed: 'O ficheiro mudou de nome sem qualquer alteração',
     },
     readMe: {
-      readMeActions: 'README Actions',
-      noReadMeFound: 'No README.md found',
+      readMeActions: 'Acções sobre o ficheiro README',
+      noReadMeFound: 'Não foi encontrado nenhum ficheiro README.md',
     },
   },
   organization: {
