@@ -230,6 +230,9 @@ export const de = {
       deleted: 'GELÖSCHT',
       fileRenamed: 'Datei ohne Änderungen umbenannt',
     },
+    readMe: {
+      noReadMeFound: 'Keine README.md Datei gefunden.',
+    },
   },
   organization: {
     main: {
