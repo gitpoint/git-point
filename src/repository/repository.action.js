@@ -127,7 +127,10 @@ export const getPullRequests = repoFullName => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
     const [owner, name] = repoFullName.split('/');
-    const body = { query: pullRequestsQuery(owner, name) };
+    const body = {
+      query: pullRequestsQuery(),
+      variables: { owner, name },
+    };
 
     dispatch({ type: GET_REPOSITORY_PULL_REQUESTS.PENDING });
 
@@ -152,7 +155,10 @@ export const getIssues = repoFullName => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
     const [owner, name] = repoFullName.split('/');
-    const body = { query: issuesQuery(owner, name) };
+    const body = {
+      query: issuesQuery(),
+      variables: { owner, name },
+    };
 
     dispatch({ type: GET_REPOSITORY_ISSUES.PENDING });
 

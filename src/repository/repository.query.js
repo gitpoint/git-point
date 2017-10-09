@@ -1,6 +1,6 @@
-export const issuesQuery = (owner, name) => {
-  return `query {
-    repository(owner: "${owner}", name: "${name}") {
+export const issuesQuery = () => {
+  return `query($owner: String!, $name: String!) {
+    repository(owner: $owner, name: $name) {
       issues(first: 100, states: [OPEN, CLOSED], orderBy: { field: CREATED_AT, direction: DESC }) {
         nodes {
           id
@@ -25,9 +25,9 @@ export const issuesQuery = (owner, name) => {
   }`;
 };
 
-export const pullRequestsQuery = (owner, name) => {
-  return `query {
-    repository(owner: "${owner}", name: "${name}") {
+export const pullRequestsQuery = () => {
+  return `query($owner: String!, $name: String!) {
+    repository(owner: $owner, name: $name) {
       pullRequests(first: 100, states: [OPEN, CLOSED, MERGED], orderBy: { field: CREATED_AT, direction: DESC }) {
         nodes {
           id
