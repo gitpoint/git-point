@@ -143,6 +143,22 @@ export const EntityInfo = ({ entity, orgs, language, navigation }: Props) => {
           onPress={() => Communications.web(getBlogLink(entity.blog))}
           underlayColor={colors.greyLight}
         />}
+
+      {!!entity.webSite &&
+        entity.webSite !== '' &&
+        <ListItem
+          title={translate('common.website', language)}
+          titleStyle={styles.listTitle}
+          leftIcon={{
+            name: 'link',
+            color: colors.grey,
+            type: 'octicon',
+          }}
+          subtitle={entity.webSite}
+          subtitleStyle={styles.listSubTitle}
+          onPress={() => Communications.web(getBlogLink(entity.webSite))}
+          underlayColor={colors.greyLight}
+        />}
     </SectionList>
   );
 };

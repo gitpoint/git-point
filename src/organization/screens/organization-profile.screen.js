@@ -1,55 +1,19 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { StyleSheet, RefreshControl } from 'react-native';
+import { StyleSheet, RefreshControl, Text } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import { createStructuredSelector } from 'reselect';
-import {
-  getAuthLanguage,
-} from 'auth';
 import {
   ViewContainer,
-  UserProfile,
-  LoadingMembersList,
-  MembersList,
+  OrgProfile,
   SectionList,
   ParallaxScroll,
+  LoadingMembersList,
   EntityInfo,
+  UsersAvatarList,
 } from 'components';
-import {
-  emojifyText,
-  translate,
-} from 'utils';
+import { emojifyText, translate } from 'utils';
 import { colors, fonts } from 'config';
-import {
-  // actions
-  fetchOrganizations,
-  fetchOrganizationMembers,
-  // Selectors
-  getOrganization,
-  getOrganizationRepositories,
-  getOrganizationMembers,
-  getOrganizationIsPendingOrg,
-  getOrganizationIsPendingRepos,
-  getOrganizationIsPendingMembers,
-} from '../index';
-
-const selectors = createStructuredSelector({
-  organization: getOrganization,
-  repositories: getOrganizationRepositories,
-  members: getOrganizationMembers,
-  isPendingOrg: getOrganizationIsPendingOrg,
-  isPendingRepos: getOrganizationIsPendingRepos,
-  isPendingMembers: getOrganizationIsPendingMembers,
-  language: getAuthLanguage,
-});
-
-const actionCreators = {
-  fetchOrganizations,
-  fetchOrganizationMembers,
-};
-
-const actions = dispatch => bindActionCreators(actionCreators, dispatch);
+import { getById, getMembers } from 'api/rest/providers/github/endpoints/orgs';
 
 const styles = StyleSheet.create({
   listTitle: {
@@ -62,19 +26,22 @@ const styles = StyleSheet.create({
   },
 });
 
+/* eslint-disable no-shadow */
+const loadData = ({ orgId, getById, getMembers }) => {
+  getById(orgId, { requiredFields: ['name'] });
+  getMembers(orgId);
+};
+
 class OrganizationProfile extends Component {
   props: {
-    fetchOrganizations: Function,
-    // getOrgReposByDispatch: Function,
-    fetchOrganizationMembers: Function,
-    organization: Object,
-    // repositories: Array,
+    orgId: String,
+    org: Object,
     members: Array,
-    isPendingOrg: boolean,
-    // isPendingRepos: boolean,
-    isPendingMembers: boolean,
+    membersPagination: Object,
     navigation: Object,
     language: string,
+    getMembers: Function,
+    getById: Function,
   };
 
   state: {
@@ -88,94 +55,132 @@ class OrganizationProfile extends Component {
     };
   }
 
-  componentDidMount() {
-    const organization = this.props.navigation.state.params.organization;
-
-    this.props.fetchOrganizations(organization.login);
-    this.props.fetchOrganizationMembers(organization.login);
+  componentWillMount() {
+    loadData(this.props);
   }
 
-  getOrgData = () => {
-    const organization = this.props.navigation.state.params.organization;
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.orgId !== this.props.orgId) {
+      loadData(nextProps);
+    }
+  }
 
-    this.setState({ refreshing: true });
-    Promise.all([
-      this.props.fetchOrganizations(organization.login),
-      this.props.fetchOrganizationMembers(organization.login),
-    ]).then(() => {
-      this.setState({ refreshing: false });
-    });
+  refreshData = () => {
+    const { navigation, getMembers, getById } = this.props;
+    const orgId = navigation.state.params.organization.login;
+
+    navigation.setParams({ refreshing: true });
+    getById(orgId, { forceRefresh: true });
+    getMembers(orgId, { forceRefresh: true });
+  };
+
+  loadMoreMembers = () => {
+    const { orgId, getMembers } = this.props;
+
+    getMembers(orgId, { loadMore: true });
   };
 
   render() {
     const {
-      organization,
+      orgId,
+      org,
       members,
-      isPendingOrg,
-      isPendingMembers,
+      membersPagination,
       navigation,
       language,
     } = this.props;
     const { refreshing } = this.state;
     const initialOrganization = this.props.navigation.state.params.organization;
 
+    if (!org) {
+      return (
+        <Text>
+          Loading organization {orgId} .. TODO: Make me look nicer
+        </Text>
+      );
+    }
+
     return (
       <ViewContainer>
         <ParallaxScroll
           renderContent={() =>
-            <UserProfile
-              type="org"
-              initialUser={initialOrganization}
-              user={
-                initialOrganization.login === organization.login
-                  ? organization
+            <OrgProfile
+              initialOrg={initialOrganization}
+              org={
+                initialOrganization.login === org.login
+                  ? org
                   : initialOrganization
               }
               navigation={navigation}
             />}
           refreshControl={
             <RefreshControl
-              onRefresh={this.getOrgData}
+              onRefresh={() => this.refreshData()}
               refreshing={refreshing}
             />
           }
-          stickyTitle={organization.name}
+          stickyTitle={orgId}
           navigateBack
           navigation={navigation}
         >
-          {isPendingMembers &&
+          {membersPagination.isFetching &&
+            !membersPagination.pageCount &&
             <LoadingMembersList
               title={translate('organization.main.membersTitle', language)}
             />}
 
-          {!isPendingMembers &&
-            <MembersList
+          {(!membersPagination.isFetching || membersPagination.pageCount > 0) &&
+            <UsersAvatarList
               title={translate('organization.main.membersTitle', language)}
               members={members}
+              loadMore={this.loadMoreMembers}
               navigation={navigation}
             />}
 
-          {!!organization.description &&
-            organization.description !== '' &&
+          {!!org.description &&
+            org.description !== '' &&
             <SectionList
               title={translate('organization.main.descriptionTitle', language)}
             >
               <ListItem
-                subtitle={emojifyText(organization.description)}
+                subtitle={emojifyText(org.description)}
                 subtitleStyle={styles.listSubTitle}
                 hideChevron
               />
             </SectionList>}
-
-          {!isPendingOrg &&
-            <EntityInfo entity={organization} navigation={navigation} />}
+          <EntityInfo entity={org} navigation={navigation} />
         </ParallaxScroll>
       </ViewContainer>
     );
   }
 }
 
-export const OrganizationProfileScreen = connect(
-  selectors,
-  actions
-)(OrganizationProfile);
+const mapStateToProps = (state, ownProps) => {
+  // TODO: This should be normalized to params.id
+  const orgId = ownProps.navigation.state.params.organization.login.toLowerCase();
+
+  const { pagination: { membersByOrg }, entities: { orgs, users } } = state;
+
+  const membersPagination = membersByOrg[orgId] || {
+    ids: [],
+    isFetching: true,
+  };
+  const members = membersPagination.ids.map(id => users[id]);
+
+  if (ownProps.navigation.state.params.refreshing) {
+    // We were asked to refresh and we're here, so we're done.
+    ownProps.navigation.setParams({ refreshing: false });
+  }
+
+  return {
+    orgId,
+    members,
+    membersPagination,
+    org: orgs[orgId],
+  };
+};
+
+export const OrganizationProfileScreen = connect(mapStateToProps, {
+  getById,
+  getMembers,
+})(OrganizationProfile);

@@ -6,9 +6,10 @@ import reduxThunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import 'config/reactotron';
 import { rootReducer } from './root.reducer';
+import restApi from './src/api/rest/middleware';
 
 const getMiddleware = () => {
-  const middlewares = [reduxThunk];
+  const middlewares = [reduxThunk, restApi];
 
   if (__DEV__) {
     if (process.env.LOGGER_ENABLED) {

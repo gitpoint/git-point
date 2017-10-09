@@ -32,7 +32,10 @@ import {
 } from 'user';
 
 // Organization
-import { OrganizationProfileScreen } from 'organization';
+import {
+  OrganizationProfileScreen,
+  OrgRepositoryListScreen,
+} from 'organization';
 
 // Search
 import { SearchScreen } from 'search';
@@ -61,6 +64,12 @@ import {
 } from 'issue';
 
 const sharedRoutes = {
+  OrgRepositoryList: {
+    screen: OrgRepositoryListScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    }),
+  },
   RepositoryList: {
     screen: RepositoryListScreen,
     navigationOptions: ({ navigation }) => ({
