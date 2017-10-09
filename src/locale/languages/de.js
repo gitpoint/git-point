@@ -25,7 +25,7 @@ export const de = {
     },
     events: {
       welcomeMessage:
-        "Welcome! This is your news feed - it'll help you keep up with recent activity on repositories you watch and people you follow.",
+        'Willkommen! Das ist dein News-Feed - er hälft dich auf dem neusten Stand zu den Benutzern und Repositorien denen du folgst.',
       commitCommentEvent: 'commented on commit',
       createEvent: 'hat {{object}} erstellt',
       deleteEvent: 'hat {{object}} gelöscht',
@@ -70,10 +70,10 @@ export const de = {
         demilestoned: 'einen Meilenstein entfernt',
         closed: 'geschlossen',
         reopened: 'erneut geöffnet',
-        review_requested: 'review requested',
-        review_request_removed: 'review request removed',
-        submitted: 'submitted',
-        dismissed: 'dismissed',
+        review_requested: 'Review angefragt',
+        review_request_removed: 'Review Anfrage entfernt',
+        submitted: 'bestätigt',
+        dismissed: 'abgelehnt',
         published: 'veröffentlicht',
         publicized: 'publiziert',
         privatized: 'privatisiert',
@@ -177,7 +177,8 @@ export const de = {
   repository: {
     main: {
       shareRepositoryTitle: 'Teile {{repoName}}',
-      shareRepositoryMessage: 'Check out {{repoName}} on GitHub. {{repoUrl}}',
+      shareRepositoryMessage:
+        'Schau mal bei {{repoName}} auf GitHub vorbei. {{repoUrl}}',
       repoActions: 'Repositorium Aktionen',
       forkAction: 'Fork',
       starAction: 'Star',
@@ -233,6 +234,7 @@ export const de = {
       fileRenamed: 'Datei ohne Änderungen umbenannt',
     },
     readMe: {
+      readMeActions: 'README Aktionen',
       noReadMeFound: 'Keine README.md Datei gefunden.',
     },
   },
