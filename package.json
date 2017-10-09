@@ -48,6 +48,7 @@
   "dependencies": {
     "entities": "^1.1.1",
     "fuzzy-search": "^1.4.0",
+    "lodash.has": "^4.5.2",
     "lodash.merge": "^4.6.0",
     "lodash.union": "^4.6.0",
     "lodash.uniqby": "^4.7.0",
