@@ -28,6 +28,7 @@ import {
   SEARCH_CLOSED_PULLS,
   GET_REPOSITORY_SUBSCRIBED_STATUS,
 } from './repository.type';
+import { issuesQuery, pullRequestsQuery } from './repository.query';
 
 export const getRepository = url => {
   return (dispatch, getState) => {
@@ -126,33 +127,7 @@ export const getPullRequests = repoFullName => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
     const [owner, name] = repoFullName.split('/');
-
-    const body = {
-      query: `query {
-        repository(owner: "${owner}", name: "${name}") {
-          pullRequests(first: 100, states: [OPEN, CLOSED, MERGED], orderBy: { field: CREATED_AT, direction: DESC }) {
-            nodes {
-              id
-              state
-              title
-              createdAt
-              lastEditedAt
-              number
-              locked
-              repository {
-                nameWithOwner
-              }
-              author {
-                login
-              }
-              comments(first: 0) {
-                totalCount
-              }
-            }
-          }
-        }
-      }`,
-    };
+    const body = { query: pullRequestsQuery(owner, name) };
 
     dispatch({ type: GET_REPOSITORY_PULL_REQUESTS.PENDING });
 
@@ -177,33 +152,7 @@ export const getIssues = repoFullName => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
     const [owner, name] = repoFullName.split('/');
-
-    const body = {
-      query: `query {
-        repository(owner: "${owner}", name: "${name}") {
-          issues(first: 100, states: [OPEN, CLOSED], orderBy: { field: CREATED_AT, direction: DESC }) {
-            nodes {
-              id
-              state
-              title
-              createdAt
-              lastEditedAt
-              number
-              locked
-              repository {
-                nameWithOwner
-              }
-              author {
-                login
-              }
-              comments(first: 0) {
-                totalCount
-              }
-            }
-          }
-        }
-      }`,
-    };
+    const body = { query: issuesQuery(owner, name) };
 
     dispatch({ type: GET_REPOSITORY_ISSUES.PENDING });
 
