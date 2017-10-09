@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, RefreshControl, Text } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import ActionSheet from 'react-native-actionsheet';
+import { getAuthLanguage } from 'auth';
 import {
   ViewContainer,
   OrgProfile,
@@ -12,6 +14,7 @@ import {
   UsersAvatarList,
 } from 'components';
 import { emojifyText, translate } from 'utils';
+import { emojifyText, translate, openURLInView } from 'utils';
 import { colors, fonts } from 'config';
 import { getById, getMembers } from 'api/rest/providers/github/endpoints/orgs';
 
@@ -80,6 +83,16 @@ class OrganizationProfile extends Component {
     getMembers(orgId, { loadMore: true });
   };
 
+  showMenuActionSheet = () => {
+    this.ActionSheet.show();
+  };
+
+  handleActionSheetPress = index => {
+    if (index === 0) {
+      openURLInView(this.props.org.html_url);
+    }
+  };
+
   render() {
     const {
       orgId,
@@ -91,6 +104,7 @@ class OrganizationProfile extends Component {
     } = this.props;
     const { refreshing } = this.state;
     const initialOrganization = this.props.navigation.state.params.organization;
+    const organizationActions = [translate('common.openInBrowser', language)];
 
     if (!org) {
       return (
@@ -112,7 +126,8 @@ class OrganizationProfile extends Component {
                   : initialOrganization
               }
               navigation={navigation}
-            />}
+            />
+          )}
           refreshControl={
             <RefreshControl
               onRefresh={() => this.refreshData()}
@@ -122,12 +137,16 @@ class OrganizationProfile extends Component {
           stickyTitle={orgId}
           navigateBack
           navigation={navigation}
+          showMenu
+          menuAction={() => this.showMenuActionSheet()}
         >
+
           {membersPagination.isFetching &&
             !membersPagination.pageCount &&
             <LoadingMembersList
               title={translate('organization.main.membersTitle', language)}
-            />}
+            />
+          )}
 
           {(!membersPagination.isFetching || membersPagination.pageCount > 0) &&
             <UsersAvatarList
@@ -135,7 +154,8 @@ class OrganizationProfile extends Component {
               members={members}
               loadMore={this.loadMoreMembers}
               navigation={navigation}
-            />}
+            />
+          )}
 
           {!!org.description &&
             org.description !== '' &&
@@ -149,7 +169,21 @@ class OrganizationProfile extends Component {
               />
             </SectionList>}
           <EntityInfo entity={org} navigation={navigation} />
+
         </ParallaxScroll>
+
+        <ActionSheet
+          ref={o => {
+            this.ActionSheet = o;
+          }}
+          title={translate('organization.organizationActions', language)}
+          options={[
+            ...organizationActions,
+            translate('common.cancel', language),
+          ]}
+          cancelButtonIndex={1}
+          onPress={this.handleActionSheetPress}
+        />
       </ViewContainer>
     );
   }
