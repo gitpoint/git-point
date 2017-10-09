@@ -39,4 +39,9 @@ export default [
     emojiCode: ':waving_white_flag:',
     name: 'Galego',
   },
+  {
+    code: 'de',
+    emojiCode: ':flag-de:',
+    name: 'Deutsch',
+  },
 ];

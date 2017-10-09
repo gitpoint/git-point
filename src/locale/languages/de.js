@@ -8,10 +8,10 @@ export const de = {
       preparingGitPoint: 'Bereite GitPoint vor...',
       cancel: 'ABBRECHEN',
       welcomeTitle: 'Willkommen bei GitPoint',
-      welcomeMessage: 'Der umfangreichste GitHub Client der zu 100% kostenlos ist',
+      welcomeMessage:
+        'Der umfangreichste GitHub Client der zu 100% kostenlos ist',
       notificationsTitle: 'Verwalte Benachrichtigungen',
-      notificationsMessage:
-        'Finde und Verwalte alle deine Benachrichtigungen',
+      notificationsMessage: 'Finde und Verwalte alle deine Benachrichtigungen',
       reposTitle: 'Repositorien und Benutzer',
       reposMessage:
         'Erhalte Information über Repositorien, Benutzer und Organisationen',
@@ -83,8 +83,9 @@ export const de = {
       },
     },
     profile: {
-      orgsRequestApprovalTop: "Du siehst nicht alle deine Organisationen?",
-      orgsRequestApprovalBottom: 'Vielleicht bist du noch nicht eingeladen worden.',
+      orgsRequestApprovalTop: 'Du siehst nicht alle deine Organisationen?',
+      orgsRequestApprovalBottom:
+        'Vielleicht bist du noch nicht eingeladen worden.',
       codePushCheck: 'Nach Updates suchen',
       codePushChecking: 'Suche nach Updates...',
       codePushUpdated: 'App ist aktuell!',
@@ -102,17 +103,17 @@ export const de = {
       title: 'Privacy Policy',
       effectiveDate: 'Zuletzt aktualisiert: 15. Juli 2017',
       introduction:
-        "Wir freuen uns das du dich für GitPoint entschieden hast. Diese Privacy Policy ist dafür da, dir zu erklären was wir mit den Daten unserer Nutzer tun und was wir nicht tun.",
+        'Wir freuen uns das du dich für GitPoint entschieden hast. Diese Privacy Policy ist dafür da, dir zu erklären was wir mit den Daten unserer Nutzer tun und was wir nicht tun.',
       userDataTitle: 'NUTZERDATEN',
       userData1:
-        "Wir verwenden in keinem Fall deine GitHub Daten. Nach der Autorisierung wird dein OAuth-Token direkt auf deinem Gerät gespeichert. Es ist uns nicht möglich diesen Token auszulesen. Desweiteren wird er in keinem Fall irgendwo anders gespeichert.",
+        'Wir verwenden in keinem Fall deine GitHub Daten. Nach der Autorisierung wird dein OAuth-Token direkt auf deinem Gerät gespeichert. Es ist uns nicht möglich diesen Token auszulesen. Desweiteren wird er in keinem Fall irgendwo anders gespeichert.',
       userData2:
-        "Das bedeutet das wir in keinem Fall deine GitHub Daten einsehen noch verwenden werden. Sollten private Daten sichtbar werden, werden wir diese nicht einsehen oder verarbeiten. Sollten sie versehentlich aufgenommen werden, werden sie unverzüglich durch sichere Methoden vernichtet. Wir haben unsere Authentifizierungsmethoden jedoch so spezialisert das dies nie passiert.",
+        'Das bedeutet das wir in keinem Fall deine GitHub Daten einsehen noch verwenden werden. Sollten private Daten sichtbar werden, werden wir diese nicht einsehen oder verarbeiten. Sollten sie versehentlich aufgenommen werden, werden sie unverzüglich durch sichere Methoden vernichtet. Wir haben unsere Authentifizierungsmethoden jedoch so spezialisert das dies nie passiert.',
       analyticsInfoTitle: 'ANALYTICS INFORMATIONEN',
       analyticsInfo1:
         'Wir verwenden Google Analytics und iTunes App Analytics um den Traffic und Benutzertrend von GitPoint zu untersuchen. Diese Programme sammeln Daten über dein Gerät, deine Betriebssystemversion, deinen Standoirt und Referrer. Anhand dieser Informationen kann kein Benutzer von GitPoint eindeutig identifiziert werden.',
       analyticsInfo2:
-        "Sollten wir in Zukunft andere 3rd-Party Programme einbinden um die Anlayse der Verwendung, sammeln von Fehlern und Logs zuverbessern, werden wir sicher stellen das Ihre Daten anonym und verschlüsselt bleiben.",
+        'Sollten wir in Zukunft andere 3rd-Party Programme einbinden um die Anlayse der Verwendung, sammeln von Fehlern und Logs zuverbessern, werden wir sicher stellen das Ihre Daten anonym und verschlüsselt bleiben.',
       openSourceTitle: 'QUELLOFFEN',
       openSource1:
         'GitPoint ist "Open-Soure" und alle teilhabenden Menschen werden immer öffentlich einsehbar sein.',
@@ -135,7 +136,7 @@ export const de = {
       participatingButton: 'Teilhabend',
       allButton: 'Alle',
       retrievingMessage: 'Hole Benachrichtigungen',
-      noneMessage: "Du hast keine Benachrichtungen von diesem Typ",
+      noneMessage: 'Du hast keine Benachrichtungen dieser Art',
       markAllAsRead: 'Alle als gelesen markieren',
     },
   },
@@ -277,7 +278,8 @@ export const de = {
         pullRequest: 'Pull Request',
       },
       openIssueSubTitle: '#{{number}} wude vor {{time}} von {{user}} geöffnet',
-      closedIssueSubTitle: '#{{number}} von {{user}} wurde vor {{time}} geschlossen',
+      closedIssueSubTitle:
+        '#{{number}} von {{user}} wurde vor {{time}} geschlossen',
     },
     newIssue: {
       title: 'Neues Issue',
