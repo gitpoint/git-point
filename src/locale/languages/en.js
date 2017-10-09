@@ -158,6 +158,9 @@ export const en = {
     repositoryList: {
       title: 'Repositories',
     },
+    starredRepositoryList: {
+      title: 'Stars',
+    },
     followerList: {
       title: 'Followers',
     },

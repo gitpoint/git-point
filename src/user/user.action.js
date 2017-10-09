@@ -204,7 +204,7 @@ export const getRepositories = user => {
 
 export const getStarredRepositories = user => {
   return (dispatch, getState) => {
-    const url = `/users/${user.login}/starred?&sort=updated&per_page=50`;
+    const url = `/users/${user.login}/starred?per_page=50`;
     const accessToken = getState().auth.accessToken;
 
     dispatch({ type: GET_STARRED_REPOSITORIES.PENDING });

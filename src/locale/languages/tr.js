@@ -154,6 +154,9 @@ export const tr = {
     repositoryList: {
       title: "Repository'ler",
     },
+    starredRepositoryList: {
+      title: 'Stars',
+    },
     followerList: {
       title: 'Takipçiler',
     },

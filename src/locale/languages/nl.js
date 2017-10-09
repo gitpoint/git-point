@@ -154,6 +154,9 @@ export const nl = {
     repositoryList: {
       title: 'Repositories',
     },
+    starredRepositoryList: {
+      title: 'Sterren',
+    },
     followerList: {
       title: 'Volgers',
     },

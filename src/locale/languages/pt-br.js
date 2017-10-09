@@ -155,6 +155,9 @@ export const ptBr = {
     repositoryList: {
       title: 'Repositórios',
     },
+    starredRepositoryList: {
+      title: 'Favoritos',
+    },
     followerList: {
       title: 'Seguidores',
     },

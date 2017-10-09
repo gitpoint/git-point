@@ -153,6 +153,9 @@ export const ru = {
     repositoryList: {
       title: 'Репозитории',
     },
+    starredRepositoryList: {
+      title: 'Звёзд',
+    },
     followerList: {
       title: 'Подписчики',
     },

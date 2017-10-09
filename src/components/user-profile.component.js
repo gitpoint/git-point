@@ -158,7 +158,7 @@ export const UserProfile = ({
           style={styles.unit}
           onPress={() =>
             navigation.navigate('StarredRepositoryList', {
-              title: translate('common.stars', language),
+              title: translate('user.starredRepositoryList.title', language),
               user,
               repoCount: Math.min(maxLoadingConstraints.maxStars, starCount),
             })}
@@ -167,7 +167,7 @@ export const UserProfile = ({
             {!isNaN(parseInt(starCount, 10)) ? starCount : ' '}
           </Text>
           <Text style={styles.unitText}>
-            {translate('common.stars', language)}
+            {translate('user.starredRepositoryList.title', language)}
           </Text>
         </TouchableOpacity>}
 

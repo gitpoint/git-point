@@ -158,6 +158,9 @@ export const fr = {
     repositoryList: {
       title: 'Dépôts',
     },
+    starredRepositoryList: {
+      title: 'Favoris',
+    },
     followerList: {
       title: 'Followers',
     },
