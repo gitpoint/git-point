@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { StyleSheet, RefreshControl, Text } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
-import { getAuthLanguage } from 'auth';
 import {
   ViewContainer,
   OrgProfile,
@@ -13,7 +12,6 @@ import {
   EntityInfo,
   UsersAvatarList,
 } from 'components';
-import { emojifyText, translate } from 'utils';
 import { emojifyText, translate, openURLInView } from 'utils';
 import { colors, fonts } from 'config';
 import { getById, getMembers } from 'api/rest/providers/github/endpoints/orgs';
@@ -89,7 +87,7 @@ class OrganizationProfile extends Component {
 
   handleActionSheetPress = index => {
     if (index === 0) {
-      openURLInView(this.props.org.html_url);
+      openURLInView(this.props.org._entityUrl);
     }
   };
 
@@ -126,8 +124,7 @@ class OrganizationProfile extends Component {
                   : initialOrganization
               }
               navigation={navigation}
-            />
-          )}
+            />}
           refreshControl={
             <RefreshControl
               onRefresh={() => this.refreshData()}
@@ -140,13 +137,11 @@ class OrganizationProfile extends Component {
           showMenu
           menuAction={() => this.showMenuActionSheet()}
         >
-
           {membersPagination.isFetching &&
             !membersPagination.pageCount &&
             <LoadingMembersList
               title={translate('organization.main.membersTitle', language)}
-            />
-          )}
+            />}
 
           {(!membersPagination.isFetching || membersPagination.pageCount > 0) &&
             <UsersAvatarList
@@ -154,8 +149,7 @@ class OrganizationProfile extends Component {
               members={members}
               loadMore={this.loadMoreMembers}
               navigation={navigation}
-            />
-          )}
+            />}
 
           {!!org.description &&
             org.description !== '' &&
@@ -169,7 +163,6 @@ class OrganizationProfile extends Component {
               />
             </SectionList>}
           <EntityInfo entity={org} navigation={navigation} />
-
         </ParallaxScroll>
 
         <ActionSheet
