@@ -35,6 +35,11 @@ export default [
     name: 'Русский',
   },
   {
+    code: 'gl',
+    emojiCode: ':waving_white_flag:',
+    name: 'Galego',
+  },
+  {
     code: 'es',
     emojiCode: ':flag-es:',
     name: 'Español',
