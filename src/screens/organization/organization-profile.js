@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, RefreshControl, Text } from 'react-native';
+import { StyleSheet, RefreshControl } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
 import {
@@ -129,14 +129,6 @@ class OrganizationProfile extends Component {
     const { refreshing } = this.state;
     const organizationActions = [translate('common.openInBrowser', language)];
 
-    if (!entity) {
-      return (
-        <Text>
-          Loading organization {orgId} .. TODO: Make me look nicer
-        </Text>
-      );
-    }
-
     return (
       <ViewContainer>
         <ParallaxScroll
@@ -168,7 +160,8 @@ class OrganizationProfile extends Component {
               navigation={navigation}
             />}
 
-          {!!entity.description &&
+          {entity &&
+            !!entity.description &&
             entity.description !== '' &&
             <SectionList
               title={translate('organization.main.descriptionTitle', language)}
@@ -179,7 +172,7 @@ class OrganizationProfile extends Component {
                 hideChevron
               />
             </SectionList>}
-          <EntityInfo entity={entity} navigation={navigation} />
+          {entity && <EntityInfo entity={entity} navigation={navigation} />}
         </ParallaxScroll>
 
         <ActionSheet

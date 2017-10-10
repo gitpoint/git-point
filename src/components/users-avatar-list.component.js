@@ -27,7 +27,7 @@ type Props = {
   loadMore: Function,
 };
 
-const size = 120;
+const size = 30;
 
 const styles = StyleSheet.create({
   container: {

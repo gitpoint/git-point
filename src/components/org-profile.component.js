@@ -1,6 +1,6 @@
 /* eslint-disable no-prototype-builtins */
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import { colors, fonts, normalize } from 'config';
 import { translate } from 'utils';
 import { ImageZoom } from 'components';
@@ -91,40 +91,56 @@ const styles = StyleSheet.create({
   },
 });
 
-export const OrgProfile = ({ org, language, navigation }: Props) =>
-  <View style={styles.container}>
-    <View style={styles.wrapperContainer}>
-      <View style={styles.profile}>
-        <ImageZoom
-          uri={{
-            uri: `${org.avatarUrl}`,
-          }}
-          style={[styles.avatar]}
-        />
-        <Text style={styles.title}>
-          {org.name || ' '}
-        </Text>
-        <Text style={styles.subtitle}>
-          {org.login || ' '}
-        </Text>
-      </View>
-      <View style={styles.details}>
-        <TouchableOpacity
-          style={styles.unit}
-          onPress={() =>
-            navigation.navigate('OrgRepositoryList', {
-              title: translate('user.repositoryList.title', language),
-              orgId: org.id,
-              repoCount: org.countRepos > 15 ? 15 : org.countRepos,
-            })}
-        >
-          <Text style={styles.unitNumber}>
-            {org.countRepos}
+const mockAttribute = (entity, attribute, replacement) => {
+  return entity && entity[attribute] ? entity[attribute] : replacement;
+};
+
+export const OrgProfile = ({ org, language, navigation }: Props) => {
+  const countRepos = mockAttribute(org, 'countRepos', 0);
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.wrapperContainer}>
+        <View style={styles.profile}>
+          {org &&
+            org.avatarUrl &&
+            <ImageZoom
+              uri={{
+                uri: org.avatarUrl,
+              }}
+              style={[styles.avatar]}
+            />}
+          {(!org || !org.avatarUrl) &&
+            <Image
+              source={require('../assets/images/loading.gif')}
+              style={[styles.avatar]}
+            />}
+          <Text style={styles.title}>
+            {mockAttribute(org, 'name', ' ')}
           </Text>
-          <Text style={styles.unitText}>
-            {translate('common.repositories', language)}
+          <Text style={styles.subtitle}>
+            {mockAttribute(org, 'login', ' ')}
           </Text>
-        </TouchableOpacity>
+        </View>
+        <View style={styles.details}>
+          <TouchableOpacity
+            style={styles.unit}
+            onPress={() =>
+              navigation.navigate('OrgRepositoryList', {
+                title: translate('user.repositoryList.title', language),
+                orgId: org.id,
+                repoCount: countRepos > 15 ? 15 : countRepos,
+              })}
+          >
+            <Text style={styles.unitNumber}>
+              {countRepos}
+            </Text>
+            <Text style={styles.unitText}>
+              {translate('common.repositories', language)}
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
-  </View>;
+  );
+};
