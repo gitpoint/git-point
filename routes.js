@@ -12,6 +12,8 @@ import { NotificationIcon } from 'components';
 import { colors } from 'config';
 import { translate } from 'utils';
 
+import screens from 'screens';
+
 // Auth
 import {
   SplashScreen,
@@ -30,12 +32,6 @@ import {
   FollowerListScreen,
   FollowingListScreen,
 } from 'user';
-
-// Organization
-import {
-  OrganizationProfileScreen,
-  OrgRepositoryListScreen,
-} from 'organization';
 
 // Search
 import { SearchScreen } from 'search';
@@ -65,7 +61,7 @@ import {
 
 const sharedRoutes = {
   OrgRepositoryList: {
-    screen: OrgRepositoryListScreen,
+    screen: screens.organization.OrgRepositoryListScreen,
     navigationOptions: ({ navigation }) => ({
       title: navigation.state.params.title,
     }),
@@ -101,7 +97,7 @@ const sharedRoutes = {
     },
   },
   Organization: {
-    screen: OrganizationProfileScreen,
+    screen: screens.organization.OrganizationProfileScreen,
     navigationOptions: {
       header: null,
     },
