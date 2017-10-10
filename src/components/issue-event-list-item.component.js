@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
 import moment from 'moment/min/moment-with-locales.min';
 import { colors, fonts, normalize } from 'config';
-import { LabelButton, InlineLabel } from 'components';
+import { InlineLabel } from 'components';
 
 const styles = StyleSheet.create({
   container: {
@@ -83,9 +83,9 @@ export class IssueEventListItem extends Component {
       case 'review_requested':
         return (
           <Event
-            icon={<EventIcon name="eye" />}
+            iconName="eye"
             text={
-              <Text style={{ padding: 3 }}>
+              <Text>
                 <ActorLink
                   actor={event.review_requester}
                   onPress={this.onPressUser}
@@ -101,25 +101,32 @@ export class IssueEventListItem extends Component {
           />
         );
       case 'labeled':
-        return <Labeled event={event} onPressUser={this.onPressUser} />;
       case 'unlabeled':
         return (
-          <Labeled unlabeled event={event} onPressUser={this.onPressUser} />
+          <Event
+            iconName="tag"
+            text={
+              <View style={styles.eventTextContainer}>
+                <ActorLink actor={event.actor} onPress={this.onPressUser} />
+                <Text>
+                  {' '}{event.event === 'unlabeled' ? 'removed' : 'added'}{' '}
+                </Text>
+                <InlineLabel label={event.label} />
+              </View>
+            }
+            createdAt={event.created_at}
+          />
         );
       case 'label-group':
         return <LabelGroup group={event} onPressUser={this.onPressUser} />;
       case 'closed':
         return (
           <Event
-            icon={
-              <EventIcon
-                name="circle-slash"
-                backgroundColor={colors.darkerRed}
-                iconColor={colors.white}
-              />
-            }
+            iconName="circle-slash"
+            iconColor={colors.white}
+            iconBackgroundColor={colors.darkerRed}
             text={
-              <Text style={{ padding: 3 }}>
+              <Text>
                 <ActorLink
                   actor={event.actor}
                   onPress={this.onPressUser}
@@ -133,15 +140,11 @@ export class IssueEventListItem extends Component {
       case 'reopened':
         return (
           <Event
-            icon={
-              <EventIcon
-                name="primitive-dot"
-                backgroundColor={colors.green}
-                iconColor={colors.white}
-              />
-            }
+            iconName="primitive-dot"
+            iconBackgroundColor={colors.green}
+            iconColor={colors.white}
             text={
-              <Text style={{ padding: 3 }}>
+              <Text>
                 <ActorLink
                   actor={event.actor}
                   onPress={this.onPressUser}
@@ -155,15 +158,11 @@ export class IssueEventListItem extends Component {
       case 'merged':
         return (
           <Event
-            icon={
-              <EventIcon
-                name="git-merge"
-                backgroundColor={colors.purple}
-                iconColor={colors.white}
-              />
-            }
+            iconName="git-merge"
+            iconColor={colors.white}
+            iconBackgroundColor={colors.purple}
             text={
-              <Text style={{ padding: 3 }}>
+              <Text>
                 <ActorLink
                   actor={event.actor}
                   onPress={this.onPressUser}
@@ -178,9 +177,9 @@ export class IssueEventListItem extends Component {
       case 'renamed':
         return (
           <Event
-            icon={<EventIcon name="pencil" />}
+            iconName="pencil"
             text={
-              <Text style={{ padding: 1 }}>
+              <Text>
                 <ActorLink
                   actor={event.actor}
                   onPress={this.onPressUser}
@@ -193,53 +192,110 @@ export class IssueEventListItem extends Component {
           />
         );
       case 'assigned':
-        return <Assigned event={event} onPressUser={this.onPressUser} />;
       case 'unassigned':
         return (
-          <Assigned unassigned event={event} onPressUser={this.onPressUser} />
+          <Event
+            iconName="person"
+            text={
+              <Text>
+                <ActorLink
+                  actor={event.assigner}
+                  onPress={this.onPressUser}
+                />{' '}
+                {event.event}{' '}
+                <ActorLink actor={event.assignee} onPress={this.onPressUser} />
+              </Text>
+            }
+            createdAt={event.created_at}
+          />
         );
       // case 'review_dismissed':
       // case 'review_request_removed':
       case 'milestoned':
-        return <Milestoned event={event} onPressUser={this.onPressUser} />;
-      case 'demilestoned':
+      case 'demilestoned': {
+        const milestoneAction =
+          event.event === 'demilestoned'
+            ? 'removed this from'
+            : 'added this to';
+
         return (
-          <Milestoned
-            demilestoned
-            event={event}
-            onPressUser={this.onPressUser}
+          <Event
+            iconName="milestone"
+            text={
+              <Text>
+                <ActorLink
+                  actor={event.actor}
+                  onPress={this.onPressUser}
+                />{' '}
+                {milestoneAction} the <Bold>{event.milestone.title}</Bold>{' '}
+                milestone
+              </Text>
+            }
+            createdAt={event.created_at}
           />
         );
+      }
       case 'locked':
-        return <Locked event={event} onPressUser={this.onPressUser} />;
       case 'unlocked':
-        return <Locked unlocked event={event} onPressUser={this.onPressUser} />;
+        return (
+          <Event
+            iconName={event.event === 'unlocked' ? 'key' : 'lock'}
+            iconColor="white"
+            iconBackgroundColor="black"
+            text={
+              <Text>
+                <ActorLink
+                  actor={event.actor}
+                  onPress={this.onPressUser}
+                />{' '}
+                {event.event} this conversation
+              </Text>
+            }
+            createdAt={event.created_at}
+          />
+        );
       case 'head_ref_deleted':
+      case 'head_ref_restored': {
+        const isRestored = event.event === 'head_ref_restored';
+        const headRefAction = isRestored ? 'deleted' : 'restored';
+
         return (
-          <HeadRef
-            action="deleted"
-            event={event}
-            onPressUser={this.onPressUser}
+          <Event
+            iconName="git-branch"
+            iconColor={isRestored ? undefined : colors.white}
+            iconBackgroundColor={isRestored ? undefined : colors.greyBlue}
+            text={
+              <Text>
+                <ActorLink
+                  actor={event.actor}
+                  onPress={this.onPressUser}
+                />{' '}
+                {headRefAction} this branch
+              </Text>
+            }
+            createdAt={event.created_at}
           />
         );
-      case 'head_ref_restored':
-        return (
-          <HeadRef
-            action="restored"
-            event={event}
-            onPressUser={this.onPressUser}
-          />
-        );
+      }
       case 'marked_as_duplicate':
-        return (
-          <MarkedAsDuplicate event={event} onPressUser={this.onPressUser} />
-        );
       case 'unmarked_as_duplicate':
         return (
-          <MarkedAsDuplicate
-            unmarked
-            event={event}
-            onPressUser={this.onPressUser}
+          <Event
+            iconName="bookmark"
+            iconColor={colors.white}
+            iconBackgroundColor={colors.greyBlue}
+            text={
+              <Text>
+                <ActorLink
+                  actor={event.actor}
+                  onPress={this.onPressUser}
+                />{' '}
+                marked this as{' '}
+                {event.event === 'unmarked_as_duplicate' ? 'not ' : ''}a
+                duplicate
+              </Text>
+            }
+            createdAt={event.created_at}
           />
         );
       // case 'added_to_project':
@@ -252,58 +308,59 @@ export class IssueEventListItem extends Component {
   }
 }
 
+const marginLeftForIconName = name => {
+  switch (name) {
+    case 'git-branch':
+    case 'git-merge':
+    case 'primitive-dot':
+      return 8;
+    case 'bookmark':
+      return 6;
+    case 'person':
+    case 'lock':
+      return 4;
+    default:
+      return 2;
+  }
+};
+
 class Event extends Component {
   props: {
-    icon: Object, // TODO: enforce react instance
-    text: Object,
+    iconName: String,
+    iconColor: String,
+    iconBackgroundColor: String,
+    text: React.Element<*>,
     createdAt: String,
   };
 
   render() {
-    const { icon, text, createdAt } = this.props;
+    const {
+      text,
+      createdAt,
+      iconName,
+      iconColor = '#586069',
+      iconBackgroundColor = '#E6EBF1',
+    } = this.props;
 
     return (
       <View style={[styles.container, styles.header]}>
-        {icon}
+        <Icon
+          iconStyle={{
+            marginLeft: marginLeftForIconName(iconName),
+            marginTop: 1,
+            color: iconColor,
+          }}
+          containerStyle={[
+            styles.iconContainer,
+            { backgroundColor: iconBackgroundColor },
+          ]}
+          name={iconName}
+          type="octicon"
+          size={16}
+        />
         <View style={styles.contentContainer}>
           <View style={styles.eventTextContainer}>
             {text}
-          </View>
-          <Date date={createdAt} />
-        </View>
-      </View>
-    );
-  }
-}
-
-class Labeled extends Component {
-  props: {
-    event: Object,
-    unlabeled: boolean,
-    onPressUser: Function,
-  };
-
-  render() {
-    const { actor, label, created_at: createdAt } = this.props.event;
-
-    const action = this.props.unlabeled ? 'removed' : 'added';
-
-    return (
-      <View style={[styles.container, styles.header]}>
-        <EventIcon name="tag" />
-        <View style={styles.contentContainer}>
-          <View style={styles.eventTextContainer}>
-            <Text
-              style={{
-                padding: 3,
-                paddingRight: 6,
-                paddingLeft: 0,
-              }}
-            >
-              <ActorLink actor={actor} onPress={this.props.onPressUser} />{' '}
-              {action}
-            </Text>
-            <LabelButton label={label} />
           </View>
           <Date date={createdAt} />
         </View>
@@ -338,181 +395,26 @@ class LabelGroup extends Component {
     ];
 
     if (labels.length) {
-      textChildren = [...textChildren, <Text> added </Text>, ...labels];
+      textChildren = [
+        ...textChildren,
+        <Text key="added"> added </Text>,
+        ...labels,
+      ];
     }
 
     if (labels.length && unlabels.length) {
-      textChildren.push(<Text> and</Text>);
+      textChildren.push(<Text key="and"> and</Text>);
     }
 
     if (unlabels.length) {
-      textChildren = [...textChildren, <Text> removed </Text>, ...unlabels];
+      textChildren = [
+        ...textChildren,
+        <Text key="removed"> removed </Text>,
+        ...unlabels,
+      ];
     }
 
-    return (
-      <View style={[styles.container, styles.header]}>
-        <EventIcon name="tag" />
-        <View style={styles.contentContainer}>
-          <View style={styles.eventTextContainer}>
-            {textChildren}
-          </View>
-          <Date date={createdAt} />
-        </View>
-      </View>
-    );
-  }
-}
-
-class Assigned extends Component {
-  props: {
-    event: Object,
-    unassigned: boolean,
-    onPressUser: Function,
-  };
-
-  render() {
-    const { assigner, assignee, created_at: createdAt } = this.props.event;
-    const action = this.props.unassigned ? 'unassigned' : 'assigned';
-
-    return (
-      <Event
-        icon={<EventIcon name="person" />}
-        text={
-          <Text style={{ padding: 3 }}>
-            <ActorLink actor={assigner} onPress={this.props.onPressUser} />{' '}
-            {action}{' '}
-            <ActorLink actor={assignee} onPress={this.props.onPressUser} />
-          </Text>
-        }
-        createdAt={createdAt}
-      />
-    );
-  }
-}
-
-class Milestoned extends Component {
-  props: {
-    event: Object,
-    demilestoned: boolean,
-    onPressUser: Function,
-  };
-
-  render() {
-    const { actor, milestone, created_at: createdAt } = this.props.event;
-    const action = this.props.demilestoned
-      ? 'removed this from'
-      : 'added this to';
-
-    return (
-      <Event
-        icon={<EventIcon name="milestone" />}
-        text={
-          <Text style={{ padding: 3 }}>
-            <ActorLink actor={actor} onPress={this.props.onPressUser} />{' '}
-            {action} the <Bold>{milestone.title}</Bold> milestone
-          </Text>
-        }
-        createdAt={createdAt}
-      />
-    );
-  }
-}
-
-class Locked extends Component {
-  props: {
-    event: Object,
-    unlocked: boolean,
-    onPressUser: Function,
-  };
-
-  render() {
-    const { actor, created_at: createdAt } = this.props.event;
-    const { unlocked = false, onPressUser } = this.props;
-    const action = unlocked ? 'unlocked' : 'locked';
-
-    return (
-      <Event
-        icon={
-          <EventIcon
-            name={unlocked ? 'key' : 'lock'}
-            backgroundColor="black"
-            iconColor="white"
-          />
-        }
-        text={
-          <Text style={{ padding: 3 }}>
-            <ActorLink actor={actor} onPress={onPressUser} /> {action} this
-            conversation
-          </Text>
-        }
-        createdAt={createdAt}
-      />
-    );
-  }
-}
-
-class HeadRef extends Component {
-  props: {
-    event: Object,
-    action: String,
-    onPressUser: Function,
-  };
-
-  render() {
-    const { actor, created_at: createdAt } = this.props.event;
-    const { action, onPressUser } = this.props;
-    const isRestored = action === 'restored';
-
-    return (
-      <Event
-        icon={
-          <EventIcon
-            name="git-branch"
-            backgroundColor={isRestored ? undefined : colors.greyBlue}
-            iconColor={isRestored ? undefined : colors.white}
-          />
-        }
-        text={
-          <Text style={{ padding: 3 }}>
-            <ActorLink actor={actor} onPress={onPressUser} /> {action} this
-            branch
-          </Text>
-        }
-        createdAt={createdAt}
-      />
-    );
-  }
-}
-
-class MarkedAsDuplicate extends Component {
-  props: {
-    event: Object,
-    unmarked: boolean,
-    onPressUser: Function,
-  };
-
-  render() {
-    // TODO: figure _which_ issue is the duplicate
-    const { actor, created_at: createdAt } = this.props.event;
-
-    return (
-      <Event
-        icon={
-          <EventIcon
-            name="bookmark"
-            backgroundColor={colors.greyBlue}
-            iconColor={colors.white}
-          />
-        }
-        text={
-          <Text style={{ padding: 3 }}>
-            <ActorLink actor={actor} onPress={this.props.onPressUser} /> marked
-            this as {this.props.unmarked ? 'not ' : ''}a duplicate
-          </Text>
-        }
-        createdAt={createdAt}
-      />
-    );
+    return <Event iconName="tag" text={textChildren} createdAt={createdAt} />;
   }
 }
 
@@ -534,52 +436,6 @@ class ActorLink extends Component {
       >
         {actor.login}
       </Text>
-    );
-  }
-}
-
-const marginLeftForIconName = name => {
-  switch (name) {
-    case 'git-branch':
-    case 'git-merge':
-    case 'primitive-dot':
-      return 8;
-    case 'bookmark':
-      return 6;
-    case 'person':
-    case 'lock':
-      return 4;
-    default:
-      return 2;
-  }
-};
-
-class EventIcon extends Component {
-  props: {
-    name: String,
-    iconColor: String,
-    backgroundColor: String,
-  };
-
-  render() {
-    const {
-      name,
-      iconColor = '#586069',
-      backgroundColor = '#E6EBF1',
-    } = this.props;
-
-    return (
-      <Icon
-        iconStyle={{
-          marginLeft: marginLeftForIconName(name),
-          marginTop: 1,
-          color: iconColor,
-        }}
-        containerStyle={[styles.iconContainer, { backgroundColor }]}
-        name={name}
-        type="octicon"
-        size={16}
-      />
     );
   }
 }
