@@ -6,7 +6,6 @@ import { translate } from 'utils';
 import { ImageZoom } from 'components';
 
 type Props = {
-  initialOrg: Object,
   org: Object,
   language: string,
   navigation: Object,
@@ -92,15 +91,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export const OrgProfile = ({ initialOrg, org, language, navigation }: Props) =>
+export const OrgProfile = ({ org, language, navigation }: Props) =>
   <View style={styles.container}>
     <View style={styles.wrapperContainer}>
       <View style={styles.profile}>
         <ImageZoom
           uri={{
-            uri: initialOrg.avatarUrl
-              ? `${initialOrg.avatarUrl}`
-              : `${org.avatarUrl}`,
+            uri: `${org.avatarUrl}`,
           }}
           style={[styles.avatar]}
         />
@@ -108,7 +105,7 @@ export const OrgProfile = ({ initialOrg, org, language, navigation }: Props) =>
           {org.name || ' '}
         </Text>
         <Text style={styles.subtitle}>
-          {initialOrg.login || ' '}
+          {org.login || ' '}
         </Text>
       </View>
       <View style={styles.details}>

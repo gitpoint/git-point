@@ -33,10 +33,36 @@ const loadData = ({ orgId, getById, getMembers }) => {
   getMembers(orgId);
 };
 
+const mapStateToProps = (state, ownProps) => {
+  // TODO: This should be normalized to params.id
+  const orgId = ownProps.navigation.state.params.organization.login.toLowerCase();
+
+  const { pagination: { membersByOrg }, entities: { orgs, users } } = state;
+
+  const membersPagination = membersByOrg[orgId] || {
+    ids: [],
+    isFetching: true,
+  };
+  const members = membersPagination.ids.map(id => users[id]);
+
+  if (ownProps.navigation.state.params.refreshing) {
+    // We were asked to refresh and we're here, so we're done.
+    ownProps.navigation.setParams({ refreshing: false });
+  }
+
+  return {
+    orgId,
+    members,
+    membersPagination,
+    // normalized attribute
+    entity: orgs[orgId],
+  };
+};
+
 class OrganizationProfile extends Component {
   props: {
     orgId: String,
-    org: Object,
+    entity: Object,
     members: Array,
     membersPagination: Object,
     navigation: Object,
@@ -87,24 +113,23 @@ class OrganizationProfile extends Component {
 
   handleActionSheetPress = index => {
     if (index === 0) {
-      openURLInView(this.props.org._entityUrl);
+      openURLInView(this.props.entity._entityUrl);
     }
   };
 
   render() {
     const {
       orgId,
-      org,
+      entity,
       members,
       membersPagination,
       navigation,
       language,
     } = this.props;
     const { refreshing } = this.state;
-    const initialOrganization = this.props.navigation.state.params.organization;
     const organizationActions = [translate('common.openInBrowser', language)];
 
-    if (!org) {
+    if (!entity) {
       return (
         <Text>
           Loading organization {orgId} .. TODO: Make me look nicer
@@ -116,15 +141,7 @@ class OrganizationProfile extends Component {
       <ViewContainer>
         <ParallaxScroll
           renderContent={() =>
-            <OrgProfile
-              initialOrg={initialOrganization}
-              org={
-                initialOrganization.login === org.login
-                  ? org
-                  : initialOrganization
-              }
-              navigation={navigation}
-            />}
+            <OrgProfile org={entity} navigation={navigation} />}
           refreshControl={
             <RefreshControl
               onRefresh={() => this.refreshData()}
@@ -151,18 +168,18 @@ class OrganizationProfile extends Component {
               navigation={navigation}
             />}
 
-          {!!org.description &&
-            org.description !== '' &&
+          {!!entity.description &&
+            entity.description !== '' &&
             <SectionList
               title={translate('organization.main.descriptionTitle', language)}
             >
               <ListItem
-                subtitle={emojifyText(org.description)}
+                subtitle={emojifyText(entity.description)}
                 subtitleStyle={styles.listSubTitle}
                 hideChevron
               />
             </SectionList>}
-          <EntityInfo entity={org} navigation={navigation} />
+          <EntityInfo entity={entity} navigation={navigation} />
         </ParallaxScroll>
 
         <ActionSheet
@@ -181,31 +198,6 @@ class OrganizationProfile extends Component {
     );
   }
 }
-
-const mapStateToProps = (state, ownProps) => {
-  // TODO: This should be normalized to params.id
-  const orgId = ownProps.navigation.state.params.organization.login.toLowerCase();
-
-  const { pagination: { membersByOrg }, entities: { orgs, users } } = state;
-
-  const membersPagination = membersByOrg[orgId] || {
-    ids: [],
-    isFetching: true,
-  };
-  const members = membersPagination.ids.map(id => users[id]);
-
-  if (ownProps.navigation.state.params.refreshing) {
-    // We were asked to refresh and we're here, so we're done.
-    ownProps.navigation.setParams({ refreshing: false });
-  }
-
-  return {
-    orgId,
-    members,
-    membersPagination,
-    org: orgs[orgId],
-  };
-};
 
 export const OrganizationProfileScreen = connect(mapStateToProps, {
   getById,
