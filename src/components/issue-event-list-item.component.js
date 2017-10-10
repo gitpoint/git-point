@@ -362,7 +362,11 @@ class Event extends Component {
           <View style={styles.eventTextContainer}>
             {text}
           </View>
-          <Date date={createdAt} />
+          <View style={styles.dateContainer}>
+            <Text style={styles.date}>
+              {moment(createdAt).fromNow()}
+            </Text>
+          </View>
         </View>
       </View>
     );
@@ -436,24 +440,6 @@ class ActorLink extends Component {
       >
         {actor.login}
       </Text>
-    );
-  }
-}
-
-class Date extends Component {
-  props: {
-    date: String,
-  };
-
-  render() {
-    const { date } = this.props;
-
-    return (
-      <View style={styles.dateContainer}>
-        <Text style={styles.date}>
-          {moment(date).fromNow()}
-        </Text>
-      </View>
     );
   }
 }
