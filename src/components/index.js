@@ -17,6 +17,7 @@ export * from './mention-area.component';
 export * from './notification-list-item.component';
 export * from './parallax-scroll.component';
 export * from './repo-list-item.component';
+export * from './repository-list.component';
 export * from './repository-list-item.component';
 export * from './repository-profile.component';
 export * from './repository-section-title.component';
