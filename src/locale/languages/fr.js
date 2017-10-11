@@ -162,6 +162,7 @@ export const fr = {
     },
     starredRepositoryList: {
       title: 'Favoris',
+      text: 'Favoris',
     },
     followers: {
       title: 'Followers',

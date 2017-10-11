@@ -159,6 +159,7 @@ export const ptBr = {
     },
     starredRepositoryList: {
       title: 'Favoritos',
+      text: 'Favoritos',
     },
     followers: {
       title: 'Seguidores',

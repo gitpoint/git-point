@@ -159,6 +159,10 @@ export const pt = {
     repositoryList: {
       title: 'Repositórios',
     },
+    starredRepositoryList: {
+      title: 'Favoritos',
+      text: 'Favoritos',
+    },
     followers: {
       title: 'Seguidores',
       text: 'Seguidores',

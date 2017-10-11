@@ -158,6 +158,7 @@ export const nl = {
     },
     starredRepositoryList: {
       title: 'Sterren',
+      text: 'Sterren',
     },
     followers: {
       title: 'Volgers',
@@ -277,7 +278,8 @@ export const nl = {
         pullRequest: 'Pull Request',
       },
       openIssueSubTitle: '#{{number}} geopend {{time}} geleden door {{user}}',
-      closedIssueSubTitle: '#{{number}} door {{user}} was gesloten, {{time}} geleden',
+      closedIssueSubTitle:
+        '#{{number}} door {{user}} was gesloten, {{time}} geleden',
       issueActions: 'Issue Acties',
     },
     newIssue: {

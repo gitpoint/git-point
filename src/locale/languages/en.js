@@ -162,6 +162,7 @@ export const en = {
     },
     starredRepositoryList: {
       title: 'Stars',
+      text: 'Stars',
     },
     followers: {
       title: 'Followers',

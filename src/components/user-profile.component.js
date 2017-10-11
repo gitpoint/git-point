@@ -2,7 +2,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { colors, fonts, normalize } from 'config';
-import { translate, abbreviateNumber } from 'utils';
+import { translate } from 'utils';
 import { ImageZoom } from 'components';
 
 type Props = {
@@ -166,16 +166,22 @@ export const UserProfile = ({
               style={styles.unit}
               onPress={() =>
                 navigation.navigate('StarredRepositoryList', {
-                  title: translate('user.starredRepositoryList.title', language),
+                  title: translate(
+                    'user.starredRepositoryList.title',
+                    language
+                  ),
                   user,
-                  repoCount: Math.min(maxLoadingConstraints.maxStars, starCount),
+                  repoCount: Math.min(
+                    maxLoadingConstraints.maxStars,
+                    starCount
+                  ),
                 })}
             >
               <Text style={styles.unitNumber}>
                 {!isNaN(parseInt(starCount, 10)) ? starCount : ' '}
               </Text>
               <Text style={styles.unitText}>
-                {translate('user.starredRepositoryList.title', language)}
+                {translate('user.starredRepositoryList.text', language)}
               </Text>
             </TouchableOpacity>}
 

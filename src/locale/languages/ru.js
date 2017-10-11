@@ -160,6 +160,7 @@ export const ru = {
     },
     starredRepositoryList: {
       title: 'Звёзд',
+      text: 'Звёзд',
     },
     followers: {
       title: 'Подписчики',

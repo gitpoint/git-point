@@ -154,6 +154,10 @@ export const erase = {
     repositoryList: {
       title: 'Repositories',
     },
+    starredRepositoryList: {
+      title: 'Stars',
+      text: 'Stars',
+    },
     followerList: {
       title: 'Followers',
     },
