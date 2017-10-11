@@ -3,3 +3,4 @@ export * from './loading-animation';
 export * from './text-helper';
 export * from './method-helpers';
 export * from './color-helpers';
+export * from './event-helpers';

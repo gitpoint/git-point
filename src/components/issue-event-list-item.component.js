@@ -395,7 +395,7 @@ class LabelGroup extends Component {
     const unlabels = unlabeled.map(toInlineLabel.bind(null, 'removed'));
 
     let textChildren = [
-      <ActorLink actor={actor} onPress={this.props.onPressUser} />,
+      <ActorLink key="actor" actor={actor} onPress={this.props.onPressUser} />,
     ];
 
     if (labels.length) {

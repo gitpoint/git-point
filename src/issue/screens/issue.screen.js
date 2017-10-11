@@ -10,7 +10,6 @@ import {
   Platform,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
-import moment from 'moment/min/moment-with-locales.min';
 
 import {
   ViewContainer,
@@ -21,7 +20,7 @@ import {
   IssueEventListItem,
 } from 'components';
 import { v3 } from 'api';
-import { translate } from 'utils';
+import { translate, formatEventsToRender } from 'utils';
 import { colors } from 'config';
 import { getRepository, getContributors } from 'repository';
 import {
@@ -308,7 +307,6 @@ class Issue extends Component {
     const {
       issue,
       comments,
-      events,
       contributors,
       isPendingComments,
       isPendingEvents,
@@ -326,12 +324,13 @@ class Issue extends Component {
     );
     const isShowLoadingContainer =
       isPendingComments || isPendingIssue || isPendingEvents;
-    const fullEvents = !isPendingComments
+    const events = formatEventsToRender([...this.props.events]);
+    const conversation = !isPendingComments
       ? [issue, ...comments, ...events].sort(compareCreatedAt)
       : [];
 
     const participantNames = !isPendingComments
-      ? fullEvents.map(item => item && item.user && item.user.login)
+      ? conversation.map(item => item && item.user && item.user.login)
       : [];
     const contributorNames = !isPendingContributors
       ? contributors.map(item => item && item.login)
@@ -339,63 +338,6 @@ class Issue extends Component {
     const fullUsers = [
       ...new Set([...participantNames, ...contributorNames]),
     ].filter(item => !!item);
-
-    const eventsToRender = fullEvents
-      .filter(({ event }) => event !== 'mentioned' && event !== 'subscribed')
-      .filter(({ event }, index, list) => {
-        if (index === 0) {
-          return true;
-        }
-
-        // Merge events are always followed by a closed event, but we don't
-        // want to render them.
-        if (event === 'closed' && list[index - 1].event === 'merged') {
-          return false;
-        }
-
-        return true;
-      })
-      .reduce((results, event, index, list) => {
-        // Label events are recorded individually, but we want to group them for display
-        const labelEvents = ['labeled', 'unlabeled'];
-        const prevEvent = index > 0 ? list[index - 1] : {};
-
-        if (
-          index > 0 &&
-          labelEvents.includes(event.event) &&
-          labelEvents.includes(prevEvent.event) &&
-          moment(event.created_at).diff(prevEvent.created_at) < 10000 &&
-          event.actor.login === prevEvent.actor.login
-        ) {
-          const labelGroup = results[results.length - 1];
-
-          if (event.event === 'labeled') {
-            labelGroup.labeled.push(event);
-          } else {
-            labelGroup.unlabeled.push(event);
-          }
-        } else if (labelEvents.includes(event.event)) {
-          const labelGroup = {
-            event: 'label-group',
-            labeled: [],
-            unlabeled: [],
-            created_at: event.created_at,
-            actor: event.actor,
-          };
-
-          if (event.event === 'labeled') {
-            labelGroup.labeled.push(event);
-          } else {
-            labelGroup.unlabeled.push(event);
-          }
-
-          results.push(labelGroup);
-        } else {
-          results.push(event);
-        }
-
-        return results;
-      }, []);
 
     return (
       <ViewContainer>
@@ -422,7 +364,7 @@ class Issue extends Component {
               contentContainerStyle={{ flexGrow: 1 }}
               ListHeaderComponent={this.renderHeader}
               removeClippedSubviews={false}
-              data={eventsToRender}
+              data={conversation}
               keyExtractor={this.keyExtractor}
               renderItem={this.renderItem}
             />
