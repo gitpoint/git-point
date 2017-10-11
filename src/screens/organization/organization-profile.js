@@ -14,7 +14,7 @@ import {
 } from 'components';
 import { emojifyText, translate, openURLInView } from 'utils';
 import { colors, fonts } from 'config';
-import { getById, getMembers } from 'api/rest/providers/github/endpoints/orgs';
+import client from 'api/rest/providers/github';
 
 const styles = StyleSheet.create({
   listTitle: {
@@ -28,9 +28,9 @@ const styles = StyleSheet.create({
 });
 
 /* eslint-disable no-shadow */
-const loadData = ({ orgId, getById, getMembers }) => {
-  getById(orgId, { requiredFields: ['name'] });
-  getMembers(orgId);
+const loadData = ({ orgId, getOrgById, getOrgMembers }) => {
+  getOrgById(orgId, { requiredFields: ['name'] });
+  getOrgMembers(orgId);
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -67,8 +67,8 @@ class OrganizationProfile extends Component {
     membersPagination: Object,
     navigation: Object,
     language: string,
-    getMembers: Function,
-    getById: Function,
+    getOrgMembers: Function,
+    getOrgById: Function,
   };
 
   state: {
@@ -93,18 +93,18 @@ class OrganizationProfile extends Component {
   }
 
   refreshData = () => {
-    const { navigation, getMembers, getById } = this.props;
+    const { navigation, getOrgMembers, getOrgById } = this.props;
     const orgId = navigation.state.params.organization.login;
 
     navigation.setParams({ refreshing: true });
-    getById(orgId, { forceRefresh: true });
-    getMembers(orgId, { forceRefresh: true });
+    getOrgById(orgId, { forceRefresh: true });
+    getOrgMembers(orgId, { forceRefresh: true });
   };
 
   loadMoreMembers = () => {
-    const { orgId, getMembers } = this.props;
+    const { orgId, getOrgMembers } = this.props;
 
-    getMembers(orgId, { loadMore: true });
+    getOrgMembers(orgId, { loadMore: true });
   };
 
   showMenuActionSheet = () => {
@@ -193,6 +193,6 @@ class OrganizationProfile extends Component {
 }
 
 export const OrganizationProfileScreen = connect(mapStateToProps, {
-  getById,
-  getMembers,
+  getOrgById: client.orgs.getById,
+  getOrgMembers: client.orgs.getMembers,
 })(OrganizationProfile);

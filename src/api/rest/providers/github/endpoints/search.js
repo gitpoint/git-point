@@ -1,8 +1,8 @@
 import { CALL_API } from 'api/rest/middleware';
 import { REPOS_BY_SEARCH } from 'api/rest/actions/search';
-import { handlePaginatedApi } from 'api/rest/providers/github';
 
 import Schemas from '../schemas';
+import { handlePaginatedApi } from '../client';
 
 const _searchRepos = (query, nextPageUrl) => ({
   id: query,

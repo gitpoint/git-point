@@ -5,8 +5,8 @@ import {
   REPOS_BY_ORG,
   MEMBERS_BY_ORG,
 } from 'api/rest/actions/orgs';
-import { handlePaginatedApi } from 'api/rest/providers/github';
 
+import { handlePaginatedApi } from '../client';
 import Schemas from '../schemas';
 
 const _getById = orgId => ({

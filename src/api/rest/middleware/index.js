@@ -1,4 +1,4 @@
-import { performApiCall } from '../providers/github';
+import { performApiCall } from '../providers/github/client';
 
 // Action key that carries API call info interpreted by this Redux middleware.
 export const CALL_API = 'CALL_THIS_MIDDLEWARE';

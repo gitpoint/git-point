@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 
 import { RepositoryList } from 'components';
 
-import { getRepos } from 'api/rest/providers/github/endpoints/orgs';
-import { searchRepos } from 'api/rest/providers/github/endpoints/search';
+import client from 'api/rest/providers/github';
 
 const getQueryString = (keyword, orgId) =>
   `q=${keyword}+user:${orgId}+fork:true&per_page=8`;
@@ -13,7 +12,7 @@ const getQueryString = (keyword, orgId) =>
 class OrgRepositoryList extends Component {
   props: {
     searchRepos: Function,
-    getRepos: Function,
+    getOrgRepos: Function,
     orgId: String,
 
     searchedResults: Array,
@@ -32,7 +31,7 @@ class OrgRepositoryList extends Component {
       orgId,
       authUser,
       navigation,
-      getRepos,
+      getOrgRepos,
       searchRepos,
       repositories,
       repositoriesPagination,
@@ -44,7 +43,8 @@ class OrgRepositoryList extends Component {
       <RepositoryList
         authUser={authUser}
         navigation={navigation}
-        loadRepositories={(loadMore = false) => getRepos(orgId, { loadMore })}
+        loadRepositories={(loadMore = false) =>
+          getOrgRepos(orgId, { loadMore })}
         loadSearchResults={(keyword, loadMore = false) => {
           navigation.setParams({ searchedKeyword: keyword });
 
@@ -92,6 +92,6 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 export const OrgRepositoryListScreen = connect(mapStateToProps, {
-  getRepos,
-  searchRepos,
+  getOrgRepos: client.orgs.getRepos,
+  searchRepos: client.search.searchRepos,
 })(OrgRepositoryList);
