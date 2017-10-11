@@ -94,6 +94,7 @@ export const fr = {
       codePushNotApplicable: 'Non applicable en mode débogage',
     },
     userOptions: {
+      donate: 'Faire un don',
       title: 'Options',
       language: 'Langue',
       privacyPolicy: 'Politique de confidentialité',
@@ -137,6 +138,7 @@ export const fr = {
       allButton: 'Tous',
       retrievingMessage: 'Récupération des notifications',
       noneMessage: "Vous n'avez aucune notification de ce type",
+      markAllAsRead: 'Marquer tous comme lus',
     },
   },
   search: {
@@ -161,14 +163,15 @@ export const fr = {
     starredRepositoryList: {
       title: 'Favoris',
     },
-    followerList: {
+    followers: {
       title: 'Followers',
+      text: 'Followers',
+      followsYou: 'Vous suit',
     },
-    followingList: {
+    following: {
       title: 'Following',
-    },
-    followYou: {
-      title: 'Vous suit',
+      text: 'Following',
+      followingYou: 'Following',
     },
   },
   repository: {
@@ -226,12 +229,16 @@ export const fr = {
       deleted: 'SUPPRIMÉ',
       fileRenamed: 'Fichier renommé sans aucune modification',
     },
+    readMe: {
+      readMeActions: 'Actions sur le README',
+    },
   },
   organization: {
     main: {
       membersTitle: 'MEMBRES',
       descriptionTitle: 'DESCRIPTION',
     },
+    organizationActions: "Actions sur l'organization",
   },
   issue: {
     settings: {
@@ -251,6 +258,12 @@ export const fr = {
       areYouSurePrompt: 'Êtes-vous certain ?',
       applyLabelTitle: 'Appliquer un libellé à ce ticket',
     },
+    comment: {
+      commentActions: 'Actions sur le commentaire',
+      editCommentTitle: 'Editer le commentaire',
+      editAction: 'Editer',
+      deleteAction: 'Supprimer',
+    },
     main: {
       assignees: 'Assignés',
       mergeButton: 'Fusionner la pull request',
@@ -267,6 +280,9 @@ export const fr = {
         issue: 'Ticket',
         pullRequest: 'Pull Request',
       },
+      openIssueSubTitle: '#{{number}} ouvert il y a {{time}} par {{user}}',
+      closedIssueSubTitle: '#{{number}} par {{user}} fermé il y a {{time}}',
+      issueActions: 'Issue Actions',
     },
     newIssue: {
       title: 'Nouveau ticket',
@@ -302,8 +318,6 @@ export const fr = {
     email: 'Email',
     website: 'Site web',
     repositories: 'Dépôts',
-    followers: 'Followers',
-    following: 'Following',
     cancel: 'Annuler',
     yes: 'Oui',
     ok: 'OK',
@@ -325,5 +339,6 @@ export const fr = {
     abbreviations: {
       thousand: 'k',
     },
+    openInBrowser: 'Ouvrir dans le navigateur',
   },
 };

@@ -92,6 +92,7 @@ export const en = {
       codePushNotApplicable: 'Not applicable in debug mode',
     },
     userOptions: {
+      donate: 'Make a donation',
       title: 'Options',
       language: 'Language',
       privacyPolicy: 'Privacy Policy',
@@ -135,6 +136,7 @@ export const en = {
       allButton: 'All',
       retrievingMessage: 'Retrieving notifications',
       noneMessage: "You don't have any notifications of this type",
+      markAllAsRead: 'Mark all as read',
     },
   },
   search: {
@@ -161,14 +163,15 @@ export const en = {
     starredRepositoryList: {
       title: 'Stars',
     },
-    followerList: {
+    followers: {
       title: 'Followers',
+      text: 'Followers',
+      followsYou: 'Follows you',
     },
-    followingList: {
+    following: {
       title: 'Following',
-    },
-    followYou: {
-      title: 'Follows you',
+      text: 'Following',
+      followingYou: 'Following',
     },
   },
   repository: {
@@ -229,12 +232,16 @@ export const en = {
       deleted: 'DELETED',
       fileRenamed: 'File renamed without any changes',
     },
+    readMe: {
+      readMeActions: 'README Actions',
+    },
   },
   organization: {
     main: {
       membersTitle: 'MEMBERS',
       descriptionTitle: 'DESCRIPTION',
     },
+    organizationActions: 'Organization Actions',
   },
   issue: {
     settings: {
@@ -254,6 +261,12 @@ export const en = {
       areYouSurePrompt: 'Are you sure?',
       applyLabelTitle: 'Apply a label to this issue',
     },
+    comment: {
+      commentActions: 'Comment Actions',
+      editCommentTitle: 'Edit Comment',
+      editAction: 'Edit',
+      deleteAction: 'Delete',
+    },
     main: {
       assignees: 'Assignees',
       mergeButton: 'Merge Pull Request',
@@ -270,6 +283,9 @@ export const en = {
         issue: 'Issue',
         pullRequest: 'Pull Request',
       },
+      openIssueSubTitle: '#{{number}} opened {{time}} ago by {{user}}',
+      closedIssueSubTitle: '#{{number}} by {{user}} was closed {{time}} ago',
+      issueActions: 'Issue Actions',
     },
     newIssue: {
       title: 'New Issue',
@@ -305,8 +321,6 @@ export const en = {
     email: 'Email',
     website: 'Website',
     repositories: 'Repositories',
-    followers: 'Followers',
-    following: 'Following',
     cancel: 'Cancel',
     yes: 'Yes',
     ok: 'OK',
@@ -328,5 +342,6 @@ export const en = {
     abbreviations: {
       thousand: 'k',
     },
+    openInBrowser: 'Open in Browser',
   },
 };

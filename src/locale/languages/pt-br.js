@@ -1,9 +1,9 @@
 export const ptBr = {
   auth: {
     login: {
-      connectingToGitHub: 'Connecting to GitHub...',
-      preparingGitPoint: 'Preparing GitPoint...',
-      cancel: 'CANCEL',
+      connectingToGitHub: 'Conectando ao GitHub...',
+      preparingGitPoint: 'Preparando GitPoint...',
+      cancel: 'CANCELAR',
       welcomeTitle: 'Bem-vindo ao GitPoint',
       welcomeMessage:
         'O GitHub client com a maior quantidade de funcionalidades que é 100% grátis',
@@ -52,27 +52,27 @@ export const ptBr = {
         tag: 'tag',
       },
       actions: {
-        added: 'adicionou',
-        created: 'criou',
-        edited: 'editou',
-        deleted: 'removeu',
-        assigned: 'atribuiu',
-        unassigned: 'retirou',
-        labeled: 'adicionou label',
-        unlabeled: 'removeu label',
+        added: 'adicionado',
+        created: 'criado',
+        edited: 'editado',
+        deleted: 'removido',
+        assigned: 'atribuído',
+        unassigned: 'retirado',
+        labeled: 'label adicionado',
+        unlabeled: 'label removido',
         opened: 'aberto',
-        milestoned: 'marcou',
-        demilestoned: 'desmarcou',
+        milestoned: 'marcado',
+        demilestoned: 'desmarcado',
         closed: 'fechado',
         reopened: 'reaberto',
         review_requested: 'revisão solicitada',
         review_request_removed: 'soliticação de revisão removida',
-        submitted: 'submeteu',
+        submitted: 'submetido',
         dismissed: 'rejeitado',
         published: 'publicado',
         publicized: 'tornou-se público',
         privatized: 'tornou-se privado',
-        starred: 'favoritou',
+        starred: 'favoritado',
         pushedTo: 'deu push em',
         forked: 'fez fork de',
         commented: 'comentou',
@@ -89,6 +89,7 @@ export const ptBr = {
       codePushNotApplicable: 'Não aplicável em modo de depuração',
     },
     userOptions: {
+      donate: 'Faça uma doação',
       title: 'Opções',
       language: 'Idioma',
       privacyPolicy: 'Política de Privacidade',
@@ -132,6 +133,7 @@ export const ptBr = {
       allButton: 'Todas',
       retrievingMessage: 'Buscando notificações',
       noneMessage: 'Você não tem notificações deste tipo',
+      markAllAsRead: 'Marcar todos como lido',
     },
   },
   search: {
@@ -158,14 +160,15 @@ export const ptBr = {
     starredRepositoryList: {
       title: 'Favoritos',
     },
-    followerList: {
+    followers: {
       title: 'Seguidores',
+      text: 'Seguidores',
+      followsYou: 'Segue você',
     },
-    followingList: {
+    following: {
       title: 'Seguindo',
-    },
-    followYou: {
-      title: 'Segue você',
+      text: 'Seguindo',
+      followingYou: 'Seguindo você',
     },
   },
   repository: {
@@ -197,8 +200,8 @@ export const ptBr = {
       forksTitle: 'Forks',
       forkedFromMessage: 'é um fork de',
       starred: 'Favoritado',
-      watching: 'Acompanha',
-      watchers: 'Acompanhando',
+      watching: 'Observando',
+      watchers: 'Observador',
     },
     codeList: {
       title: 'Código',
@@ -226,12 +229,16 @@ export const ptBr = {
       deleted: 'REMOVIDO',
       fileRenamed: 'Arquivo renomeado sem qualquer alteração',
     },
+    readMe: {
+      readMeActions: 'Ações do README',
+    },
   },
   organization: {
     main: {
       membersTitle: 'MEMBROS',
       descriptionTitle: 'DESCRIÇÃO',
     },
+    organizationActions: 'Ações da organização',
   },
   issue: {
     settings: {
@@ -251,6 +258,12 @@ export const ptBr = {
       areYouSurePrompt: 'Tem certeza?',
       applyLabelTitle: 'Aplicar um label a esta issue',
     },
+    comment: {
+      commentActions: 'Ações do comentário',
+      editCommentTitle: 'Editar Comentário',
+      editAction: 'Editar',
+      deleteAction: 'Deletar',
+    },
     main: {
       assignees: 'Atribuída a',
       mergeButton: 'Merge Pull Request',
@@ -267,6 +280,9 @@ export const ptBr = {
         issue: 'Issue',
         pullRequest: 'Pull Request',
       },
+      openIssueSubTitle: '#{{number}} opened {{time}} ago by {{user}}',
+      closedIssueSubTitle: '#{{number}} by {{user}} was closed {{time}} ago',
+      issueActions: 'Ações da Issue',
     },
     newIssue: {
       title: 'Nova Issue',
@@ -285,7 +301,7 @@ export const ptBr = {
       missingTitleAlert: 'O commit precisa ter um título!',
       commitTitle: 'Título do Commit',
       writeATitle: 'Escreva um título para seu commit aqui',
-      commitMessage: 'Messagem do Commit',
+      commitMessage: 'Mensagem do Commit',
       writeAMessage: 'Escreva uma mensagem para seu commit aqui',
       mergeType: 'Tipo de Merge',
       changeMergeType: 'Trocar Tipo de Merge',
@@ -302,8 +318,6 @@ export const ptBr = {
     email: 'E-mail',
     website: 'Website',
     repositories: 'Repositórios',
-    followers: 'Seguidores',
-    following: 'Seguindo',
     cancel: 'Cancelar',
     yes: 'Sim',
     ok: 'OK',
@@ -322,5 +336,6 @@ export const ptBr = {
       y: '%dy',
       yy: '%dy',
     },
+    openInBrowser: 'Abrir no Navegador.',
   },
 };

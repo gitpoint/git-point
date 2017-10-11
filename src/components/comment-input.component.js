@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginRight: 5,
     color: colors.black,
-    ...fonts.fontPrimaryLight,
+    ...fonts.fontPrimary,
   },
   postButtonContainer: {
     flex: 0.15,

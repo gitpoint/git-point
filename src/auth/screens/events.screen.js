@@ -9,21 +9,25 @@ import moment from 'moment/min/moment-with-locales.min';
 import { LoadingUserListItem, UserListItem, ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { emojifyText, translate } from 'utils';
-import { getUserEvents } from '../auth.action';
+import { getUserEvents, getUser } from 'auth';
+import { getNotificationsCount } from 'notifications';
 
 const mapStateToProps = state => ({
   user: state.auth.user,
   userEvents: state.auth.events,
   language: state.auth.language,
   isPendingEvents: state.auth.isPendingEvents,
+  accessToken: state.auth.accessToken,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getUserEvents,
+      getNotificationsCount,
+      getUser,
     },
-    dispatch
+    dispatch,
   );
 
 const styles = StyleSheet.create({
@@ -75,19 +79,24 @@ const styles = StyleSheet.create({
 
 class Events extends Component {
   componentDidMount() {
-    if (this.props.user.login) {
-      this.getUserEvents(this.props.user);
+    const { user: { login }, getUser } = this.props;
+
+    if (login) {
+      this.getUserEvents();
+    } else {
+      getUser();
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.user.login && !this.props.user.login) {
-      this.getUserEvents(nextProps.user);
+      this.getUserEvents(nextProps);
     }
   }
 
-  getUserEvents = (user = this.props.user) => {
+  getUserEvents = ({ user, accessToken } = this.props) => {
     this.props.getUserEvents(user.login);
+    this.props.getNotificationsCount(accessToken);
   };
 
   getAction = userEvent => {
@@ -161,7 +170,7 @@ class Events extends Component {
             language,
             {
               action: translate('auth.events.actions.commented', language),
-            }
+            },
           );
         } else if (action === 'edited') {
           return translate(
@@ -169,7 +178,7 @@ class Events extends Component {
             language,
             {
               action: translate(`auth.events.actions.${action}`, language),
-            }
+            },
           );
         } else if (action === 'deleted') {
           return translate(
@@ -177,7 +186,7 @@ class Events extends Component {
             language,
             {
               action: translate(`auth.events.actions.${action}`, language),
-            }
+            },
           );
         }
 
@@ -457,7 +466,7 @@ class Events extends Component {
         ? {
             ...userEvent.repo,
             name: userEvent.repo.name.substring(
-              userEvent.repo.name.indexOf('/') + 1
+              userEvent.repo.name.indexOf('/') + 1,
             ),
           }
         : userEvent.payload.forkee,
@@ -555,11 +564,12 @@ class Events extends Component {
                 <View style={styles.subtitleContainer}>
                   <Text numberOfLines={3} style={styles.subtitle}>
                     {emojifyText(
-                      item.payload.comment.body.replace(linebreaksPattern, ' ')
+                      item.payload.comment.body.replace(linebreaksPattern, ' '),
                     )}
                   </Text>
                 </View>}
             </View>}
+          extraData={this.props.language}
         />
       );
     }
@@ -573,5 +583,5 @@ class Events extends Component {
 }
 
 export const EventsScreen = connect(mapStateToProps, mapDispatchToProps)(
-  Events
+  Events,
 );

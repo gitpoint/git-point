@@ -10,6 +10,7 @@ import {
   Platform,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
+import ActionSheet from 'react-native-actionsheet';
 
 import {
   ViewContainer,
@@ -19,13 +20,14 @@ import {
   CommentInput,
 } from 'components';
 import { v3 } from 'api';
-import { translate } from 'utils';
+import { translate, openURLInView } from 'utils';
 import { colors } from 'config';
 import { getRepository, getContributors } from 'repository';
 import {
   getIssueComments,
   postIssueComment,
   getIssueFromUrl,
+  deleteIssueComment,
 } from '../issue.action';
 
 const mapStateToProps = state => ({
@@ -35,6 +37,7 @@ const mapStateToProps = state => ({
   contributors: state.repository.contributors,
   issue: state.issue.issue,
   diff: state.issue.diff,
+  pr: state.issue.pr,
   isMerged: state.issue.isMerged,
   comments: state.issue.comments,
   isPendingDiff: state.issue.isPendingDiff,
@@ -42,6 +45,7 @@ const mapStateToProps = state => ({
   isPendingComments: state.issue.isPendingComments,
   isPostingComment: state.issue.isPostingComment,
   isPendingContributors: state.repository.isPendingContributors,
+  isDeletingComment: state.issue.isDeletingComment,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -52,17 +56,18 @@ const mapDispatchToProps = dispatch =>
       getContributors,
       postIssueComment,
       getIssueFromUrl,
+      deleteIssueComment,
     },
     dispatch
   );
 
 class Issue extends Component {
   static navigationOptions = ({ navigation }) => {
-    const { state, navigate } = navigation;
+    const getHeaderIcon = () => {
+      const { state, navigate } = navigation;
 
-    if (state.params.userHasPushPermission) {
-      return {
-        headerRight: (
+      if (state.params.userHasPushPermission) {
+        return (
           <Icon
             name="gear"
             color={colors.primaryDark}
@@ -75,11 +80,22 @@ class Issue extends Component {
                 issue: state.params.issue,
               })}
           />
-        ),
-      };
-    }
+        );
+      }
 
-    return null;
+      return (
+        <Icon
+          name="ellipsis-h"
+          color={colors.primaryDark}
+          type="font-awesome"
+          containerStyle={{ marginRight: 10 }}
+          underlayColor={colors.transparent}
+          onPress={state.params.showActionSheet}
+        />
+      );
+    };
+
+    return { headerRight: getHeaderIcon() };
   };
 
   props: {
@@ -88,8 +104,10 @@ class Issue extends Component {
     getContributors: Function,
     postIssueComment: Function,
     getIssueFromUrl: Function,
+    deleteIssueComment: Function,
     diff: string,
     issue: Object,
+    pr: Object,
     isMerged: boolean,
     authUser: Object,
     repository: Object,
@@ -99,6 +117,7 @@ class Issue extends Component {
     isPendingDiff: boolean,
     isPendingCheckMerge: boolean,
     isPendingComments: boolean,
+    isDeletingComment: boolean,
     isPendingContributors: boolean,
     // isPostingComment: boolean,
     language: string,
@@ -107,6 +126,8 @@ class Issue extends Component {
 
   componentDidMount() {
     this.getIssueInformation();
+
+    this.props.navigation.setParams({ showActionSheet: this.showActionSheet });
   }
 
   onLinkPress = node => {
@@ -126,7 +147,9 @@ class Issue extends Component {
       node.attribs.class.includes('issue-link')
     ) {
       navigation.navigate('Issue', {
-        issueURL: this.getIssueUrlFromNode(node, navigation.state.params),
+        issueURL: node.attribs.href
+          .replace('https://github.com', `${v3.root}/repos`)
+          .replace(/pull\/([0-9]+)$/, 'issues/$1'),
       });
     } else {
       Linking.openURL(node.attribs.href);
@@ -141,22 +164,8 @@ class Issue extends Component {
     });
   };
 
-  getIssueUrlFromNode = (node, params) => {
-    if (node.attribs['data-id']) {
-      return params.issue
-        ? `${params.issue.repository_url}/issues/${node.attribs['data-id']}`
-        : params.issueURL.replace(/\d+$/, node.attribs['data-id']);
-    }
-
-    return node.attribs['data-url'].replace(
-      'https://github.com',
-      `${v3.root}/repos`
-    );
-  };
-
   getIssueInformation = () => {
     const {
-      issue,
       navigation,
       repository,
       getIssueComments,
@@ -165,21 +174,19 @@ class Issue extends Component {
       getIssueFromUrl,
     } = this.props;
 
-    const issueParam = navigation.state.params.issue;
-    const issueURLParam = navigation.state.params.issueURL;
-    const issueCommentsURL = `${navigation.state.params.issueURL}/comments`;
+    const params = navigation.state.params;
+    const issueURL = params.issueURL || params.issue.url;
+    const issueRepository = issueURL
+      .replace(`${v3.root}/repos/`, '')
+      .replace(/([^/]+\/[^/]+)\/issues\/\d+$/, '$1');
 
     Promise.all([
-      getIssueFromUrl(issueURLParam || issueParam.url),
-      getIssueComments(
-        issueURLParam ? issueCommentsURL : issueParam.comments_url
-      ),
+      getIssueFromUrl(issueURL),
+      getIssueComments(`${issueURL}/comments`),
     ]).then(() => {
-      if (
-        issueParam &&
-        repository.full_name !==
-          issueParam.repository_url.replace(`${v3.root}/repos/`, '')
-      ) {
+      const issue = this.props.issue;
+
+      if (repository.full_name !== issueRepository) {
         Promise.all([
           getRepository(issue.repository_url),
           getContributors(this.getContributorsLink(issue.repository_url)),
@@ -204,6 +211,14 @@ class Issue extends Component {
     });
   };
 
+  showActionSheet = () => this.ActionSheet.show();
+
+  handleActionSheetPress = index => {
+    if (index === 0) {
+      openURLInView(this.props.navigation.state.params.issue.html_url);
+    }
+  };
+
   postComment = body => {
     const { repository, navigation } = this.props;
 
@@ -216,6 +231,25 @@ class Issue extends Component {
     this.commentsList.scrollToEnd();
   };
 
+  deleteComment = comment => {
+    const { repository } = this.props;
+    const repoName = repository.name;
+    const owner = repository.owner.login;
+
+    this.props.deleteIssueComment(comment.id, owner, repoName);
+  };
+
+  editComment = comment => {
+    const { state, navigate } = this.props.navigation;
+    const { repository } = this.props;
+
+    navigate('EditIssueComment', {
+      title: translate('issue.comment.editCommentTitle', state.params.language),
+      comment,
+      repository,
+    });
+  };
+
   keyExtractor = item => {
     return item.id;
   };
@@ -223,6 +257,7 @@ class Issue extends Component {
   renderHeader = () => {
     const {
       issue,
+      pr,
       diff,
       isMerged,
       isPendingDiff,
@@ -235,6 +270,7 @@ class Issue extends Component {
       <IssueDescription
         issue={issue}
         diff={diff}
+        isMergeable={pr.mergeable}
         isMerged={isMerged}
         isPendingDiff={isPendingDiff}
         isPendingCheckMerge={isPendingCheckMerge}
@@ -254,6 +290,8 @@ class Issue extends Component {
       <CommentListItem
         comment={item}
         onLinkPress={node => this.onLinkPress(node)}
+        onDeletePress={this.deleteComment}
+        onEditPress={this.editComment}
         language={language}
         navigation={this.props.navigation}
       />
@@ -268,12 +306,19 @@ class Issue extends Component {
       isPendingComments,
       isPendingContributors,
       isPendingIssue,
+      isDeletingComment,
       language,
       navigation,
     } = this.props;
 
-    const isLoadingData = !!(isPendingComments || isPendingIssue);
+    const isLoadingData = !!(
+      isPendingComments ||
+      isPendingIssue ||
+      isDeletingComment
+    );
+    const isShowLoadingContainer = isPendingComments || isPendingIssue;
     const fullComments = !isPendingComments ? [issue, ...comments] : [];
+
     const participantNames = !isPendingComments
       ? fullComments.map(item => item && item.user && item.user.login)
       : [];
@@ -284,49 +329,60 @@ class Issue extends Component {
       ...new Set([...participantNames, ...contributorNames]),
     ].filter(item => !!item);
 
+    const issuesActions = [translate('common.openInBrowser', language)];
+
     return (
       <ViewContainer>
-        {isLoadingData &&
-          <LoadingContainer
-            animating={isPendingComments || isPendingIssue}
-            center
-          />}
+        {isShowLoadingContainer && (
+          <LoadingContainer animating={isShowLoadingContainer} center />
+        )}
 
         {!isPendingComments &&
           !isPendingIssue &&
-          issue &&
-          <KeyboardAvoidingView
-            style={{ flex: 1 }}
-            behavior={'padding'}
-            keyboardVerticalOffset={Platform.select({
-              ios: 65,
-              android: -200,
-            })}
-          >
-            <FlatList
-              ref={ref => {
-                this.commentsList = ref;
-              }}
-              refreshing={isLoadingData}
-              onRefresh={this.getIssueInformation}
-              contentContainerStyle={{ flexGrow: 1 }}
-              ListHeaderComponent={this.renderHeader}
-              removeClippedSubviews={false}
-              data={fullComments}
-              keyExtractor={this.keyExtractor}
-              renderItem={this.renderItem}
-            />
+          issue && (
+            <KeyboardAvoidingView
+              style={{ flex: 1 }}
+              behavior={'padding'}
+              keyboardVerticalOffset={Platform.select({
+                ios: 65,
+                android: -200,
+              })}
+            >
+              <FlatList
+                ref={ref => {
+                  this.commentsList = ref;
+                }}
+                refreshing={isLoadingData}
+                onRefresh={this.getIssueInformation}
+                contentContainerStyle={{ flexGrow: 1 }}
+                ListHeaderComponent={this.renderHeader}
+                removeClippedSubviews={false}
+                data={fullComments}
+                keyExtractor={this.keyExtractor}
+                renderItem={this.renderItem}
+              />
 
-            <CommentInput
-              users={fullUsers}
-              userHasPushPermission={
-                navigation.state.params.userHasPushPermission
-              }
-              issueLocked={issue.locked}
-              language={language}
-              onSubmit={this.postComment}
-            />
-          </KeyboardAvoidingView>}
+              <CommentInput
+                users={fullUsers}
+                userHasPushPermission={
+                  navigation.state.params.userHasPushPermission
+                }
+                issueLocked={issue.locked}
+                language={language}
+                onSubmit={this.postComment}
+              />
+            </KeyboardAvoidingView>
+          )}
+
+        <ActionSheet
+          ref={o => {
+            this.ActionSheet = o;
+          }}
+          title={translate('issue.main.issueActions', language)}
+          options={[...issuesActions, translate('common.cancel', language)]}
+          cancelButtonIndex={1}
+          onPress={this.handleActionSheetPress}
+        />
       </ViewContainer>
     );
   }

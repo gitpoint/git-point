@@ -1,10 +1,14 @@
 import {
   GET_ISSUE_COMMENTS,
   POST_ISSUE_COMMENT,
+  DELETE_ISSUE_COMMENT,
+  EDIT_ISSUE_COMMENT,
   EDIT_ISSUE,
+  EDIT_ISSUE_BODY,
   CHANGE_LOCK_STATUS,
   GET_ISSUE_DIFF,
   GET_ISSUE_MERGE_STATUS,
+  GET_PULL_REQUEST_FROM_URL,
   MERGE_PULL_REQUEST,
   GET_ISSUE_FROM_URL,
   SUBMIT_NEW_ISSUE,
@@ -13,10 +17,13 @@ import {
 const initialState = {
   issue: {},
   comments: [],
+  pr: {},
   diff: '',
   isMerged: false,
   isPendingComments: false,
   isPostingComment: false,
+  isDeletingComment: false,
+  isEditingComment: false,
   isEditingIssue: false,
   isChangingLockStatus: false,
   isPendingDiff: false,
@@ -63,6 +70,51 @@ export const issueReducer = (state = initialState, action = {}) => {
         error: action.payload,
         isPostingComment: false,
       };
+    case DELETE_ISSUE_COMMENT.PENDING:
+      return {
+        ...state,
+        isDeletingComment: true,
+      };
+    case DELETE_ISSUE_COMMENT.SUCCESS:
+      return {
+        ...state,
+        comments: state.comments.filter(
+          comment => comment.id !== action.payload
+        ),
+        isDeletingComment: false,
+      };
+    case DELETE_ISSUE_COMMENT.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isDeletingComment: false,
+      };
+    case EDIT_ISSUE_COMMENT.PENDING:
+      return {
+        ...state,
+        isEditingComment: true,
+      };
+    case EDIT_ISSUE_COMMENT.SUCCESS:
+      return {
+        ...state,
+        comments: state.comments.map(
+          comment =>
+            comment.id === action.payload.id
+              ? {
+                  ...comment,
+                  body: action.payload.body,
+                  body_html: action.payload.body_html,
+                }
+              : comment
+        ),
+        isEditingComment: false,
+      };
+    case EDIT_ISSUE_COMMENT.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isEditingComment: false,
+      };
     case EDIT_ISSUE.PENDING:
       return {
         ...state,
@@ -80,6 +132,28 @@ export const issueReducer = (state = initialState, action = {}) => {
         ...state,
         error: action.payload,
         isEditingIssue: false,
+      };
+    case EDIT_ISSUE_BODY.PENDING:
+      return {
+        ...state,
+        isEditingComment: true,
+      };
+    case EDIT_ISSUE_BODY.SUCCESS: {
+      return {
+        ...state,
+        issue: {
+          ...state.issue,
+          body: action.payload.body,
+          body_html: action.payload.body_html,
+        },
+        isEditingComment: false,
+      };
+    }
+    case EDIT_ISSUE_BODY.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isEditingComment: false,
       };
     case CHANGE_LOCK_STATUS.PENDING:
       return {
@@ -149,6 +223,23 @@ export const issueReducer = (state = initialState, action = {}) => {
         ...state,
         error: action.payload,
         isPendingMerging: false,
+      };
+    case GET_PULL_REQUEST_FROM_URL.PENDING:
+      return {
+        ...state,
+        isPendingPR: true,
+      };
+    case GET_PULL_REQUEST_FROM_URL.SUCCESS:
+      return {
+        ...state,
+        pr: action.payload,
+        isPendingPR: false,
+      };
+    case GET_PULL_REQUEST_FROM_URL.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isPendingPR: false,
       };
     case GET_ISSUE_FROM_URL.PENDING:
       return {

@@ -1,8 +1,11 @@
 export const ru = {
   auth: {
     login: {
+      connectingToGitHub: 'Подключение к GitHub...',
+      preparingGitPoint: 'Подготовка GitPoint...',
+      cancel: 'ОТМЕНА',
       welcomeTitle: 'Добро пожаловать в GitPoint',
-      welcomeMessage: 'Самый многофункциональный бесплатный GitHub клиент',
+      welcomeMessage: 'Самый многофункциональный бесплатный GitHub-клиент',
       notificationsTitle: 'Управление уведомлениями',
       notificationsMessage:
         'Просматривайте и управляйте всеми вашими непрочитанными и активными уведомлениями',
@@ -19,7 +22,7 @@ export const ru = {
     },
     events: {
       welcomeMessage:
-        'Добро пожаловать! Это ваша лента новостей - она поможет следить вам за последней активностью в репозиториях, которые вы отслеживаете, и за людьми, на которых вы подписаны.',
+        'Добро пожаловать! Это ваша лента новостей - она поможет следить вам за последней активностью в репозиториях, которые вы отслеживаете, и за пользователями, на которых вы подписаны.',
       commitCommentEvent: 'прокомментировал коммит',
       createEvent: 'создал {{object}}',
       deleteEvent: 'удалил {{object}}',
@@ -89,6 +92,7 @@ export const ru = {
       codePushNotApplicable: 'Не поддерживается в режиме отладки',
     },
     userOptions: {
+      donate: 'Сделать пожертвование',
       title: 'Настройки',
       language: 'Язык',
       privacyPolicy: 'Политика конфиденциальности',
@@ -132,6 +136,7 @@ export const ru = {
       allButton: 'Все',
       retrievingMessage: 'Получение уведомлений',
       noneMessage: 'У вас нет уведомлений по этому типу',
+      markAllAsRead: 'Отметить все как прочитанные',
     },
   },
   search: {
@@ -156,14 +161,15 @@ export const ru = {
     starredRepositoryList: {
       title: 'Звёзд',
     },
-    followerList: {
+    followers: {
       title: 'Подписчики',
+      text: 'Подписчиков',
+      followsYou: 'Подписан на вас',
     },
-    followingList: {
+    following: {
       title: 'Подписки',
-    },
-    followYou: {
-      title: 'Подписан на вас',
+      text: 'Подписок',
+      followingYou: 'Подписан',
     },
   },
   repository: {
@@ -224,12 +230,16 @@ export const ru = {
       deleted: 'УДАЛЕННЫЙ',
       fileRenamed: 'Файл переименован без каких-либо изменений',
     },
+    readMe: {
+      readMeActions: 'Действия с README',
+    },
   },
   organization: {
     main: {
       membersTitle: 'УЧАСТНИКИ',
       descriptionTitle: 'ОПИСАНИЕ',
     },
+    organizationActions: 'Действия с организацией',
   },
   issue: {
     settings: {
@@ -267,6 +277,11 @@ export const ru = {
         issue: 'Задача',
         pullRequest: 'Pull-запрос',
       },
+      openIssueSubTitle:
+        '#{{number}} открыт {{time}} назад пользователем {{user}}',
+      closedIssueSubTitle:
+        '#{{number}} закрыт {{time}} назад пользователем {{user}}',
+      issueActions: 'Действия с задачей',
     },
     newIssue: {
       title: 'Новая задача',
@@ -302,8 +317,6 @@ export const ru = {
     email: 'Электронная почта',
     website: 'Сайт',
     repositories: 'Репозиториев',
-    followers: 'Подписчиков',
-    following: 'Подписан',
     pullRequest: 'pull-запрос',
     issue: 'задача',
     cancel: 'Отменить',
@@ -327,5 +340,6 @@ export const ru = {
     abbreviations: {
       thousand: ' тыс.',
     },
+    openInBrowser: 'Открыть в браузере',
   },
 };

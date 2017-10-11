@@ -5,18 +5,24 @@ import {
   fetchChangeIssueLockStatus,
   fetchMergePullRequest,
   fetchSubmitNewIssue,
+  fetchDeleteIssueComment,
+  fetchEditIssueComment,
   v3,
 } from 'api';
 import {
   GET_ISSUE_COMMENTS,
   POST_ISSUE_COMMENT,
   EDIT_ISSUE,
+  EDIT_ISSUE_BODY,
   CHANGE_LOCK_STATUS,
   GET_ISSUE_DIFF,
   GET_ISSUE_MERGE_STATUS,
+  GET_PULL_REQUEST_FROM_URL,
   MERGE_PULL_REQUEST,
   GET_ISSUE_FROM_URL,
   SUBMIT_NEW_ISSUE,
+  DELETE_ISSUE_COMMENT,
+  EDIT_ISSUE_COMMENT,
 } from './issue.type';
 
 const getDiff = url => {
@@ -64,11 +70,35 @@ const getMergeStatus = (repo, issueNum) => {
   };
 };
 
+const getPullRequest = url => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: GET_PULL_REQUEST_FROM_URL.PENDING });
+
+    return v3
+      .getJson(url, accessToken)
+      .then(pr => {
+        dispatch({
+          type: GET_PULL_REQUEST_FROM_URL.SUCCESS,
+          payload: pr,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: GET_PULL_REQUEST_FROM_URL.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
 const getPullRequestDetails = issue => {
   return (dispatch, getState) => {
     const repoFullName = getState().repository.repository.full_name;
 
-    dispatch(getDiff(issue.pull_request.diff_url));
+    dispatch(getPullRequest(issue.pull_request.url));
+    dispatch(getDiff(issue.pull_request.url));
     dispatch(getMergeStatus(repoFullName, issue.number));
   };
 };
@@ -80,7 +110,7 @@ export const getIssueComments = issueCommentsURL => {
     dispatch({ type: GET_ISSUE_COMMENTS.PENDING });
 
     return v3
-      .getJson(`${issueCommentsURL}?per_page=100`, accessToken)
+      .getFull(`${issueCommentsURL}?per_page=100`, accessToken)
       .then(data => {
         dispatch({
           type: GET_ISSUE_COMMENTS.SUCCESS,
@@ -118,6 +148,78 @@ export const postIssueComment = (body, owner, repoName, issueNum) => {
   };
 };
 
+export const deleteIssueComment = (issueCommentId, owner, repoName) => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: DELETE_ISSUE_COMMENT.PENDING });
+
+    return fetchDeleteIssueComment(issueCommentId, owner, repoName, accessToken)
+      .then(() => {
+        dispatch({
+          type: DELETE_ISSUE_COMMENT.SUCCESS,
+          payload: issueCommentId,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: DELETE_ISSUE_COMMENT.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+export const editIssueComment = (issueCommentId, owner, repoName, body) => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: EDIT_ISSUE_COMMENT.PENDING });
+
+    return fetchEditIssueComment(
+      issueCommentId,
+      owner,
+      repoName,
+      { body },
+      accessToken
+    )
+      .then(data => {
+        dispatch({
+          type: EDIT_ISSUE_COMMENT.SUCCESS,
+          payload: data,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: EDIT_ISSUE_COMMENT.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+export const editIssueBody = (owner, repoName, issueNum, body) => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: EDIT_ISSUE_BODY.PENDING });
+
+    return fetchEditIssue(owner, repoName, issueNum, { body }, accessToken)
+      .then(data => {
+        dispatch({
+          type: EDIT_ISSUE_BODY.SUCCESS,
+          payload: data,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: EDIT_ISSUE_BODY.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
 export const editIssue = (
   owner,
   repoName,
@@ -130,14 +232,7 @@ export const editIssue = (
 
     dispatch({ type: EDIT_ISSUE.PENDING });
 
-    return fetchEditIssue(
-      owner,
-      repoName,
-      issueNum,
-      editParams,
-      updateParams,
-      accessToken
-    )
+    return fetchEditIssue(owner, repoName, issueNum, editParams, accessToken)
       .then(() => {
         dispatch({
           type: EDIT_ISSUE.SUCCESS,
@@ -192,7 +287,7 @@ export const getIssueFromUrl = url => {
     dispatch({ type: GET_ISSUE_FROM_URL.PENDING });
 
     return v3
-      .getJson(url, accessToken)
+      .getFull(url, accessToken)
       .then(issue => {
         dispatch({
           type: GET_ISSUE_FROM_URL.SUCCESS,

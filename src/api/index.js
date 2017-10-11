@@ -1,5 +1,3 @@
-import { abbreviateNumber } from 'utils';
-
 // These keys are for development purposes and do not represent the actual application keys.
 // Feel free to use them or use a new set of keys by creating an OAuth application of your own.
 // https://github.com/settings/applications/new
@@ -11,6 +9,7 @@ const ACCEPT = {
   HTML: 'application/vnd.github.v3.html+json',
   DIFF: 'application/vnd.github.v3.diff+json',
   RAW: 'application/vnd.github.v3.raw+json',
+  FULL: 'application/vnd.github.v3.full+json',
 };
 
 const METHOD = {
@@ -65,14 +64,18 @@ export const v3 = {
     }
 
     let linkHeader = response.headers.get('Link');
-    let number = 1;
+    let number;
 
     if (linkHeader !== null) {
       linkHeader = linkHeader.match(/page=(\d)+/g).pop();
       number = linkHeader.split('=').pop();
+    } else {
+      number = await response.json().then(data => {
+        return data.length;
+      });
     }
 
-    return abbreviateNumber(number);
+    return number;
   },
   delete: async (url, accessToken) => {
     const response = await v3.call(
@@ -103,6 +106,14 @@ export const v3 = {
 
     return response.text();
   },
+  getFull: async (url, accessToken) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.GET, ACCEPT.FULL)
+    );
+
+    return response.json();
+  },
   getJson: async (url, accessToken) => {
     const response = await v3.call(url, v3.parameters(accessToken));
 
@@ -132,10 +143,34 @@ export const v3 = {
 
     return response;
   },
+  patchFull: async (url, accessToken, body = {}) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.PATCH, ACCEPT.FULL, body)
+    );
+
+    return response.json();
+  },
   postJson: async (url, accessToken, body = {}) => {
     const response = await v3.call(
       url,
       v3.parameters(accessToken, METHOD.POST, ACCEPT.JSON, body)
+    );
+
+    return response.json();
+  },
+  postHtml: async (url, accessToken, body = {}) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.POST, ACCEPT.HTML, body)
+    );
+
+    return response.text();
+  },
+  postFull: async (url, accessToken, body = {}) => {
+    const response = await v3.call(
+      url,
+      v3.parameters(accessToken, METHOD.POST, ACCEPT.FULL, body)
     );
 
     return response.json();
@@ -188,10 +223,34 @@ export const fetchPostIssueComment = (
   issueNum,
   accessToken
 ) =>
-  v3.postJson(
+  v3.postFull(
     `/repos/${owner}/${repoName}/issues/${issueNum}/comments`,
     accessToken,
     { body }
+  );
+
+export const fetchDeleteIssueComment = (
+  issueCommentId,
+  owner,
+  repoName,
+  accessToken
+) =>
+  v3.delete(
+    `/repos/${owner}/${repoName}/issues/comments/${issueCommentId}`,
+    accessToken
+  );
+
+export const fetchEditIssueComment = (
+  issueCommentId: number,
+  owner: string,
+  repoName: string,
+  editParams: any,
+  accessToken: string
+) =>
+  v3.patchFull(
+    `/repos/${owner}/${repoName}/issues/comments/${issueCommentId}`,
+    accessToken,
+    editParams
   );
 
 export const fetchEditIssue = (
@@ -199,10 +258,9 @@ export const fetchEditIssue = (
   repoName,
   issueNum,
   editParams,
-  updateParams,
   accessToken
 ) =>
-  v3.patch(
+  v3.patchFull(
     `/repos/${owner}/${repoName}/issues/${issueNum}`,
     accessToken,
     editParams
@@ -234,6 +292,9 @@ export const fetchMarkNotificationAsRead = (notificationID, accessToken) =>
 
 export const fetchMarkRepoNotificationAsRead = (repoFullName, accessToken) =>
   v3.put(`/repos/${repoFullName}/notifications`, accessToken);
+
+export const fetchMarkAllNotificationsAsRead = accessToken =>
+  v3.put('/notifications', accessToken);
 
 export const fetchChangeStarStatusRepo = (owner, repo, starred, accessToken) =>
   v3[starred ? 'delete' : 'put'](`/user/starred/${owner}/${repo}`, accessToken);
@@ -312,3 +373,9 @@ export async function fetchAccessToken(code, state) {
 
   return response.json();
 }
+
+export const fetchNotificationsCount = accessToken =>
+  v3.count('/notifications?per_page=1', accessToken);
+
+export const fetchRepoNotificationsCount = (owner, repoName, accessToken) =>
+  v3.count(`/repos/${owner}/${repoName}/notifications?per_page=1`, accessToken);
