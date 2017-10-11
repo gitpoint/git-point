@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     color: colors.black,
   },
   listContainer: {
-    marginBottom: 90,
+    marginBottom: 57,
   },
 });
 
@@ -74,7 +74,7 @@ export class RepositoryList extends Component {
     const { searchResults, repositories } = this.props;
     const { searchMode } = this.state;
 
-    return searchMode ? searchResults : repositories;
+    return [...(searchMode ? searchResults : repositories), { id: 'fake' }];
   };
 
   loadMore = () => {
@@ -117,6 +117,10 @@ export class RepositoryList extends Component {
         !searchResultsPagination.pageCount) ||
       (repositoriesPagination.isFetching && !repositoriesPagination.pageCount);
 
+    const noMoreElements = searchMode
+      ? searchResultsPagination.nextPageUrl === null
+      : repositoriesPagination.nextPageUrl === null;
+
     return (
       <ViewContainer>
         <View>
@@ -145,20 +149,30 @@ export class RepositoryList extends Component {
             )}
 
           {!loading &&
-            <View style={styles.listContainer}>
-              <FlatList
-                data={this.getList()}
-                keyExtractor={this.keyExtractor}
-                onEndReached={this.loadMore}
-                onEndReachedThreshold={0.5}
-                renderItem={({ item }) =>
+            <FlatList
+              style={styles.listContainer}
+              data={this.getList()}
+              keyExtractor={this.keyExtractor}
+              onEndReached={this.loadMore}
+              onEndReachedThreshold={0.5}
+              renderItem={({ item }) => {
+                if (item.id === 'fake') {
+                  if (noMoreElements) {
+                    return <View />;
+                  }
+
+                  return <LoadingRepositoryListItem />;
+                }
+
+                return (
                   <RepoListItem
                     repository={item}
                     showFullName={true || authUser.login !== item.owner.login}
                     navigation={navigation}
-                  />}
-              />
-            </View>}
+                  />
+                );
+              }}
+            />}
         </View>
       </ViewContainer>
     );
