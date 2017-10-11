@@ -319,13 +319,18 @@ export class GithubHtmlView extends Component {
           );
         },
         a: (node, index, siblings, parent, defaultRenderer) => {
+          if (typeof node.children[0] === 'undefined') {
+            // Probably a named anchor, ignore it for now & avoid extra space.
+            return null;
+          }
+
           return (
             <Text
               key={index}
               style={styles.strong}
               onPress={() => onLinkPress(node)}
             >
-              {node.children[0].data}
+              {defaultRenderer(node.children, node)}
             </Text>
           );
         },
