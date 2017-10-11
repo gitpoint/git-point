@@ -23,9 +23,9 @@ export const handlePaginatedApi = (
   { name, key, call },
   { loadMore = false, forceRefresh = false } = {}
 ) => (dispatch, getState) => {
-  let { nextPageUrl = firstPageUrl } = getState().pagination[name][key] || {};
-  const { pageCount = 0, isFetching = false } =
-    getState().pagination[name][key] || {};
+  const paginator = getState().pagination[name][key];
+  let { nextPageUrl = firstPageUrl } = paginator || {};
+  const { pageCount = 0, isFetching = false } = paginator || {};
 
   if (forceRefresh) {
     // TODO: how to reset the state ? dispatch(clearPagination('paginationId')) ?

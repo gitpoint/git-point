@@ -463,12 +463,7 @@ class Events extends Component {
     const repo = this.props.repos[userEvent.repo];
 
     this.props.navigation.navigate('Repository', {
-      repository: !isForkEvent
-        ? {
-            ...repo,
-            name: repo.id.substring(repo.id.indexOf('/') + 1),
-          }
-        : userEvent.payload.forkee,
+      repository: !isForkEvent ? repo : userEvent.payload.forkee,
     });
   };
 

@@ -27,14 +27,14 @@ export default store => next => action => {
     throw new Error('Specify one of the exported Schemas.');
   }
 
-  if (typeof types !== 'object') {
+  if (typeof types !== 'object' || Object.keys(types).length !== 3) {
     throw new Error('Expected an object containing the three action types.');
   }
 
   const accessToken = store.getState().auth.accessToken;
 
   const actionWith = data => {
-    const finalAction = Object.assign({}, action, data);
+    const finalAction = { ...action, ...data };
 
     delete finalAction[CALL_API];
 

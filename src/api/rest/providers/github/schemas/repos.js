@@ -28,6 +28,10 @@ export const repoSchema = new schema.Entity(
       if (isInMinimalisticForm(entity)) {
         processed.id = entity.name.toLowerCase();
         processed.fullName = entity.name;
+        processed.shortName = entity.name.substring(
+          entity.name.indexOf('/') + 1
+        );
+
         processed._entityUrl = `https://github.com/${entity.name}`;
 
         return processed;

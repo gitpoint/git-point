@@ -61,8 +61,8 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
   },
   flatList: {
-    paddingLeft: 15,
-    paddingRight: 15,
+    marginLeft: 15,
+    marginRight: 15,
   },
 });
 

@@ -1,7 +1,7 @@
-import { OrganizationProfileScreen } from './organization-profile';
-import { OrgRepositoryListScreen } from './repository-list';
+import { OrganizationProfileScreen } from './organization-profile.screen';
+import { OrganizationRepositoryListScreen } from './organization-repository-list.screen';
 
 export default {
   OrganizationProfileScreen,
-  OrgRepositoryListScreen,
+  OrganizationRepositoryListScreen,
 };

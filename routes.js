@@ -60,7 +60,7 @@ import {
 
 const sharedRoutes = {
   OrgRepositoryList: {
-    screen: screens.organization.OrgRepositoryListScreen,
+    screen: screens.organization.OrganizationRepositoryListScreen,
     navigationOptions: ({ navigation }) => ({
       title: navigation.state.params.title,
     }),

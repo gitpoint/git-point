@@ -8,7 +8,7 @@ import { ACTIVITY_GET_EVENTS } from '../actions/activity';
 // Creates a reducer managing pagination, given the action types to handle,
 // and a function telling how to extract the key from an action.
 const paginate = types => {
-  if (typeof types !== 'object') {
+  if (typeof types !== 'object' || Object.keys(types).length !== 3) {
     throw new Error('Expected types to be an object of three props.');
   }
 

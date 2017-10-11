@@ -1,6 +1,12 @@
 /* eslint-disable no-prototype-builtins */
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import { colors, fonts, normalize } from 'config';
 import { translate } from 'utils';
 import { ImageZoom } from 'components';
@@ -111,10 +117,7 @@ export const OrgProfile = ({ org, language, navigation }: Props) => {
               style={[styles.avatar]}
             />}
           {(!org || !org.avatarUrl) &&
-            <Image
-              source={require('../assets/images/loading.gif')}
-              style={[styles.avatar]}
-            />}
+            <ActivityIndicator color={colors.white} size="large" />}
           <Text style={styles.title}>
             {mockAttribute(org, 'name', ' ')}
           </Text>

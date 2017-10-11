@@ -8,7 +8,7 @@ import client from 'api/rest/providers/github';
 const getQueryString = (keyword, orgId) =>
   `q=${keyword}+user:${orgId}+fork:true&per_page=8`;
 
-class OrgRepositoryList extends Component {
+class OrganizationRepositoryList extends Component {
   props: {
     searchRepos: Function,
     getOrgRepos: Function,
@@ -90,7 +90,7 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export const OrgRepositoryListScreen = connect(mapStateToProps, {
+export const OrganizationRepositoryListScreen = connect(mapStateToProps, {
   getOrgRepos: client.orgs.getRepos,
   searchRepos: client.search.searchRepos,
-})(OrgRepositoryList);
+})(OrganizationRepositoryList);
