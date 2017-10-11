@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
   },
 });
 
-/* eslint-disable no-shadow */
 const loadData = ({ orgId, getOrgById, getOrgMembers }) => {
   getOrgById(orgId, { requiredFields: ['name'] });
   getOrgMembers(orgId);
