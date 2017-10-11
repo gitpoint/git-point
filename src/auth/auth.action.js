@@ -9,7 +9,6 @@ import {
   fetchAuthUser,
   fetchAuthUserOrgs,
   fetchUserOrgs,
-  fetchUserEvents,
   fetchStarCount,
 } from 'api';
 import {
@@ -17,7 +16,6 @@ import {
   LOGOUT,
   GET_AUTH_USER,
   GET_AUTH_ORGS,
-  GET_EVENTS,
   CHANGE_LANGUAGE,
   GET_AUTH_STAR_COUNT,
 } from './auth.type';
@@ -132,28 +130,6 @@ export const getOrgs = () => {
       .catch(error => {
         dispatch({
           type: GET_AUTH_ORGS.ERROR,
-          payload: error,
-        });
-      });
-  };
-};
-
-export const getUserEvents = user => {
-  return (dispatch, getState) => {
-    const accessToken = getState().auth.accessToken;
-
-    dispatch({ type: GET_EVENTS.PENDING });
-
-    fetchUserEvents(user, accessToken)
-      .then(data => {
-        dispatch({
-          type: GET_EVENTS.SUCCESS,
-          payload: data,
-        });
-      })
-      .catch(error => {
-        dispatch({
-          type: GET_EVENTS.ERROR,
           payload: error,
         });
       });

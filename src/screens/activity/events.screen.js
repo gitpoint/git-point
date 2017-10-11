@@ -2,33 +2,34 @@
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { StyleSheet, Text, FlatList, View } from 'react-native';
 import moment from 'moment/min/moment-with-locales.min';
-
+import client from 'api/rest/providers/github';
 import { LoadingUserListItem, UserListItem, ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { emojifyText, translate } from 'utils';
-import { getUserEvents, getUser } from 'auth';
-import { getNotificationsCount } from 'notifications';
 
-const mapStateToProps = state => ({
-  user: state.auth.user,
-  userEvents: state.auth.events,
-  language: state.auth.language,
-  isPendingEvents: state.auth.isPendingEvents,
-  accessToken: state.auth.accessToken,
-});
+const mapStateToProps = state => {
+  const {
+    auth: { user },
+    pagination: { eventsByUser },
+    entities: { repos, users, events },
+  } = state;
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      getUserEvents,
-      getNotificationsCount,
-      getUser,
-    },
-    dispatch,
-  );
+  const userEventsPagination = eventsByUser[user.login] || { ids: [] };
+  const userEvents = userEventsPagination.ids.map(id => events[id]);
+
+  return {
+    repos,
+    users,
+    userEvents,
+    userEventsPagination,
+    user: state.auth.user,
+    language: state.auth.language,
+    isPendingEvents: state.auth.isPendingEvents,
+    accessToken: state.auth.accessToken,
+  };
+};
 
 const styles = StyleSheet.create({
   descriptionContainer: {
@@ -79,25 +80,23 @@ const styles = StyleSheet.create({
 
 class Events extends Component {
   componentDidMount() {
-    const { user: { login }, getUser } = this.props;
+    const { getEvents, user: { login } } = this.props;
 
-    if (login) {
-      this.getUserEvents();
-    } else {
-      getUser();
-    }
+    getEvents(login);
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.user.login && !this.props.user.login) {
-      this.getUserEvents(nextProps);
+      this.nextProps.getUserEvents();
     }
   }
 
+  /*
+  // TODO: Put back getNotificationsCount && getUser
   getUserEvents = ({ user, accessToken } = this.props) => {
-    this.props.getUserEvents(user.login);
-    this.props.getNotificationsCount(accessToken);
-  };
+    //    this.props.getUserEvents(user.login);
+    //    this.props.getNotificationsCount(accessToken);
+  }; */
 
   getAction = userEvent => {
     const { language } = this.props;
@@ -170,7 +169,7 @@ class Events extends Component {
             language,
             {
               action: translate('auth.events.actions.commented', language),
-            },
+            }
           );
         } else if (action === 'edited') {
           return translate(
@@ -178,7 +177,7 @@ class Events extends Component {
             language,
             {
               action: translate(`auth.events.actions.${action}`, language),
-            },
+            }
           );
         } else if (action === 'deleted') {
           return translate(
@@ -186,7 +185,7 @@ class Events extends Component {
             language,
             {
               action: translate(`auth.events.actions.${action}`, language),
-            },
+            }
           );
         }
 
@@ -227,7 +226,7 @@ class Events extends Component {
               style={styles.linkDescription}
               onPress={() => this.navigateToRepository(userEvent)}
             >
-              {userEvent.repo.name}
+              {userEvent.repo}
             </Text>
           );
         }
@@ -248,7 +247,7 @@ class Events extends Component {
             style={styles.linkDescription}
             onPress={() => this.navigateToRepository(userEvent)}
           >
-            {userEvent.repo.name}
+            {userEvent.repo}
           </Text>
         );
       case 'GollumEvent':
@@ -259,7 +258,7 @@ class Events extends Component {
               style={styles.linkDescription}
               onPress={() => this.navigateToRepository(userEvent)}
             >
-              {userEvent.repo.name}
+              {userEvent.repo}
             </Text>{' '}
             wiki
           </Text>
@@ -312,7 +311,7 @@ class Events extends Component {
               }
             }}
           >
-            {userEvent.repo.name}
+            {userEvent.repo}
           </Text>
         );
       default:
@@ -385,7 +384,7 @@ class Events extends Component {
             style={styles.linkDescription}
             onPress={() => this.navigateToRepository(userEvent)}
           >
-            {userEvent.repo.name}
+            {userEvent.repo}
           </Text>
         );
       case 'ForkEvent':
@@ -461,13 +460,13 @@ class Events extends Component {
   });
 
   navigateToRepository = (userEvent, isForkEvent) => {
+    const repo = this.props.repos[userEvent.repo];
+
     this.props.navigation.navigate('Repository', {
       repository: !isForkEvent
         ? {
-            ...userEvent.repo,
-            name: userEvent.repo.name.substring(
-              userEvent.repo.name.indexOf('/') + 1,
-            ),
+            ...repo,
+            name: repo.id.substring(repo.id.indexOf('/') + 1),
           }
         : userEvent.payload.forkee,
     });
@@ -500,7 +499,7 @@ class Events extends Component {
           style={styles.linkDescription}
           onPress={() => this.navigateToProfile(userEvent, true)}
         >
-          {userEvent.actor.login}{' '}
+          {userEvent.actor}{' '}
         </Text>
         <Text>
           {this.getAction(userEvent)}{' '}
@@ -512,14 +511,20 @@ class Events extends Component {
         {this.getSecondItem(userEvent)}
         {this.getItem(userEvent) && this.getConnector(userEvent) && ' '}
         <Text style={styles.date}>
-          {moment(userEvent.created_at).fromNow()}
+          {moment.unix(userEvent.createdAt).fromNow()}
         </Text>
       </Text>
     );
   }
 
   render() {
-    const { isPendingEvents, userEvents, language, navigation } = this.props;
+    const {
+      users,
+      isPendingEvents,
+      userEvents,
+      language,
+      navigation,
+    } = this.props;
     const linebreaksPattern = /(\r\n|\n|\r)/gm;
     let content;
 
@@ -544,10 +549,13 @@ class Events extends Component {
           onRefresh={this.getUserEvents}
           refreshing={isPendingEvents}
           keyExtractor={this.keyExtractor}
+          onEndReached={() =>
+            this.props.getEvents(this.props.user.login, { loadMore: true })}
+          onEndReachedThreshold={0.5}
           renderItem={({ item }) =>
             <View>
               <UserListItem
-                user={item.actor}
+                user={users[item.actor]}
                 title={this.renderDescription(item)}
                 titleStyle={{ fontSize: normalize(12) }}
                 navigation={navigation}
@@ -564,7 +572,7 @@ class Events extends Component {
                 <View style={styles.subtitleContainer}>
                   <Text numberOfLines={3} style={styles.subtitle}>
                     {emojifyText(
-                      item.payload.comment.body.replace(linebreaksPattern, ' '),
+                      item.payload.comment.body.replace(linebreaksPattern, ' ')
                     )}
                   </Text>
                 </View>}
@@ -582,6 +590,6 @@ class Events extends Component {
   }
 }
 
-export const EventsScreen = connect(mapStateToProps, mapDispatchToProps)(
-  Events,
-);
+export const EventsScreen = connect(mapStateToProps, {
+  getEvents: client.activity.getEventsReceived,
+})(Events);

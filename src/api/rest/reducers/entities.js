@@ -6,6 +6,7 @@ export const entities = (
     users: {},
     orgs: {},
     repos: {},
+    events: {},
   },
   action
 ) => {

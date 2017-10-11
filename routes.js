@@ -20,7 +20,6 @@ import {
   LoginScreen,
   WelcomeScreen,
   AuthProfileScreen,
-  EventsScreen,
   PrivacyPolicyScreen,
   UserOptionsScreen,
 } from 'auth';
@@ -206,7 +205,7 @@ const sharedRoutes = {
 const HomeStackNavigator = StackNavigator(
   {
     Events: {
-      screen: EventsScreen,
+      screen: screens.activity.EventsScreen,
       navigationOptions: {
         headerTitle: 'GitPoint',
       },

@@ -1,6 +1,7 @@
 import { orgSchema } from './orgs';
 import { userSchema } from './users';
 import { repoSchema } from './repos';
+import { eventSchema } from './events';
 
 export default {
   USER: userSchema,
@@ -9,4 +10,6 @@ export default {
   ORG_ARRAY: [orgSchema],
   REPO: repoSchema,
   REPO_ARRAY: [repoSchema],
+  EVENT: eventSchema,
+  EVENT_ARRAY: [eventSchema],
 };

@@ -4,6 +4,8 @@ import moment from 'moment/min/moment.min';
 import { userSchema } from './users';
 import { orgSchema } from './orgs';
 
+const isInMinimalisticForm = entity => typeof entity.full_name === 'undefined';
+
 export const repoSchema = new schema.Entity(
   'repos',
   {
@@ -11,7 +13,8 @@ export const repoSchema = new schema.Entity(
     orgOwner: orgSchema,
   },
   {
-    idAttribute: repo => repo.full_name.toLowerCase(),
+    idAttribute: repo =>
+      (isInMinimalisticForm(repo) ? repo.name : repo.full_name).toLowerCase(),
     processStrategy: entity => {
       const processed = {};
 
@@ -20,6 +23,15 @@ export const repoSchema = new schema.Entity(
       processed._isAuth = false; // entity doesn't belong to the auth user
       processed._entityUrl = entity.html_url; // The github url for the entity. To be used in openInBrowser()
       processed._fetchedAt = moment().format('X');
+
+      // Repo received from events
+      if (isInMinimalisticForm(entity)) {
+        processed.id = entity.name.toLowerCase();
+        processed.fullName = entity.name;
+        processed._entityUrl = `https://github.com/${entity.name}`;
+
+        return processed;
+      }
 
       processed.id = entity.full_name;
       processed.fullName = entity.full_name;

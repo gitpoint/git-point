@@ -3,6 +3,7 @@ import union from 'lodash.union';
 
 import { REPOS_BY_ORG, MEMBERS_BY_ORG } from '../actions/orgs';
 import { REPOS_BY_SEARCH } from '../actions/search';
+import { ACTIVITY_GET_EVENTS } from '../actions/activity';
 
 // Creates a reducer managing pagination, given the action types to handle,
 // and a function telling how to extract the key from an action.
@@ -69,6 +70,7 @@ const paginate = types => {
 
 // Updates the pagination data for different actions.
 export const pagination = combineReducers({
+  eventsByUser: paginate(ACTIVITY_GET_EVENTS),
   reposByOrg: paginate(REPOS_BY_ORG),
   reposBySearch: paginate(REPOS_BY_SEARCH),
   membersByOrg: paginate(MEMBERS_BY_ORG),
