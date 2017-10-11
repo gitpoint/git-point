@@ -1,5 +1,5 @@
 import { CALL_API } from 'api/rest/middleware';
-import { REPOS_BY_SEARCH } from 'api/rest/actions/search';
+import * as Actions from 'api/rest/actions/search';
 
 import Schemas from '../schemas';
 import { handlePaginatedApi } from '../client';
@@ -7,7 +7,7 @@ import { handlePaginatedApi } from '../client';
 const _searchRepos = (query, nextPageUrl) => ({
   id: query,
   [CALL_API]: {
-    types: REPOS_BY_SEARCH,
+    types: Actions.REPOS_BY_SEARCH,
     endpoint: nextPageUrl,
     schema: Schemas.REPO_ARRAY,
     normalizrKey: 'items',

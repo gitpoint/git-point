@@ -1,17 +1,13 @@
 import has from 'lodash.has';
 import { CALL_API } from 'api/rest/middleware';
-import {
-  ORGS_GET_BY_ID,
-  REPOS_BY_ORG,
-  MEMBERS_BY_ORG,
-} from 'api/rest/actions/orgs';
+import * as Actions from 'api/rest/actions/orgs';
 
 import { handlePaginatedApi } from '../client';
 import Schemas from '../schemas';
 
 const _getById = orgId => ({
   [CALL_API]: {
-    types: ORGS_GET_BY_ID,
+    types: Actions.ORGS_GET_BY_ID,
     endpoint: `orgs/${orgId}`,
     schema: Schemas.ORG,
   },
@@ -33,7 +29,7 @@ export const getById = (
 const _getRepos = (orgId, nextPageUrl) => ({
   id: orgId,
   [CALL_API]: {
-    types: REPOS_BY_ORG,
+    types: Actions.REPOS_BY_ORG,
     endpoint: nextPageUrl,
     schema: Schemas.REPO_ARRAY,
   },
@@ -50,7 +46,7 @@ export const getRepos = (orgId, options) => {
 const _getMembers = (orgId, nextPageUrl) => ({
   id: orgId,
   [CALL_API]: {
-    types: MEMBERS_BY_ORG,
+    types: Actions.MEMBERS_BY_ORG,
     endpoint: nextPageUrl,
     schema: Schemas.USER_ARRAY,
   },
