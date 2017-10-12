@@ -12,8 +12,6 @@ import { NotificationIcon } from 'components';
 import { colors } from 'config';
 import { translate } from 'utils';
 
-import screens from 'screens';
-
 // Auth
 import {
   SplashScreen,
@@ -22,6 +20,7 @@ import {
   AuthProfileScreen,
   PrivacyPolicyScreen,
   UserOptionsScreen,
+  EventsScreen,
 } from 'auth';
 
 // User
@@ -31,6 +30,11 @@ import {
   FollowerListScreen,
   FollowingListScreen,
 } from 'user';
+
+import {
+  OrganizationRepositoryListScreen,
+  OrganizationProfileScreen,
+} from 'organization';
 
 // Search
 import { SearchScreen } from 'search';
@@ -60,7 +64,7 @@ import {
 
 const sharedRoutes = {
   OrgRepositoryList: {
-    screen: screens.organization.OrganizationRepositoryListScreen,
+    screen: OrganizationRepositoryListScreen,
     navigationOptions: ({ navigation }) => ({
       title: navigation.state.params.title,
     }),
@@ -96,7 +100,7 @@ const sharedRoutes = {
     },
   },
   Organization: {
-    screen: screens.organization.OrganizationProfileScreen,
+    screen: OrganizationProfileScreen,
     navigationOptions: {
       header: null,
     },
@@ -205,7 +209,7 @@ const sharedRoutes = {
 const HomeStackNavigator = StackNavigator(
   {
     Events: {
-      screen: screens.activity.EventsScreen,
+      screen: EventsScreen,
       navigationOptions: {
         headerTitle: 'GitPoint',
       },

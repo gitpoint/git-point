@@ -1,3 +1,3 @@
 import { createActionSet } from 'utils';
 
-export const REPOS_BY_SEARCH = createActionSet('REPOS_BY_SEARCH');
+export const SEARCH_GET_REPOS = createActionSet('SEARCH_GET_REPOS');

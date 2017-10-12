@@ -5,11 +5,10 @@ import createLogger from 'redux-logger';
 import reduxThunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import 'config/reactotron';
-import restApi from 'api/rest/middleware';
 import { rootReducer } from './root.reducer';
 
 const getMiddleware = () => {
-  const middlewares = [reduxThunk, restApi];
+  const middlewares = [reduxThunk];
 
   if (__DEV__) {
     if (process.env.LOGGER_ENABLED) {

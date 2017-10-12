@@ -10,19 +10,25 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import moment from 'moment/min/moment-with-locales.min';
-import client from 'api/rest/providers/github';
 import { LoadingUserListItem, UserListItem, ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { emojifyText, translate } from 'utils';
 
+import { Github } from 'api/rest/providers/github';
+import { withReducers } from 'api/rest/decorators';
+
+const client = withReducers(Github);
+
 const mapStateToProps = state => {
   const {
     auth: { user },
-    pagination: { eventsByUser },
+    pagination: { ACTIVITY_GET_EVENTS_RECEIVED },
     entities: { repos, users, events },
   } = state;
 
-  const userEventsPagination = eventsByUser[user.login] || { ids: [] };
+  const userEventsPagination = ACTIVITY_GET_EVENTS_RECEIVED[user.login] || {
+    ids: [],
+  };
   const userEvents = userEventsPagination.ids.map(id => events[id]);
 
   return {

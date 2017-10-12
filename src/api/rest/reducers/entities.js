@@ -10,8 +10,8 @@ export const entities = (
   },
   action
 ) => {
-  if (action.response && action.response.entities) {
-    return merge({}, state, action.response.entities);
+  if (action && action.entities) {
+    return merge({}, state, action.entities);
   }
 
   return state;

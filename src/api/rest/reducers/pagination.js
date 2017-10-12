@@ -1,9 +1,7 @@
 import { combineReducers } from 'redux';
 import union from 'lodash.union';
 
-import { REPOS_BY_ORG, MEMBERS_BY_ORG } from '../actions/orgs';
-import { REPOS_BY_SEARCH } from '../actions/search';
-import { ACTIVITY_GET_EVENTS } from '../actions/activity';
+import * as Actions from '../actions';
 
 // Creates a reducer managing pagination, given the action types to handle,
 // and a function telling how to extract the key from an action.
@@ -31,8 +29,8 @@ const paginate = types => {
         return {
           ...state,
           isFetching: false,
-          ids: union(state.ids, action.response.result),
-          nextPageUrl: action.response.nextPageUrl,
+          ids: union(state.ids, action.pagination.ids),
+          nextPageUrl: action.pagination.nextPageUrl,
           pageCount: state.pageCount + 1,
         };
       case types.ERROR:
@@ -54,6 +52,7 @@ const paginate = types => {
       case types.ERROR:
         const key = action.id;
 
+        //  console.log("PAGINATE", action);
         if (typeof key !== 'string') {
           throw new Error('Expected key to be a string.');
         }
@@ -70,8 +69,8 @@ const paginate = types => {
 
 // Updates the pagination data for different actions.
 export const pagination = combineReducers({
-  eventsByUser: paginate(ACTIVITY_GET_EVENTS),
-  reposByOrg: paginate(REPOS_BY_ORG),
-  reposBySearch: paginate(REPOS_BY_SEARCH),
-  membersByOrg: paginate(MEMBERS_BY_ORG),
+  ACTIVITY_GET_EVENTS_RECEIVED: paginate(Actions.ACTIVITY_GET_EVENTS_RECEIVED),
+  ORGS_GET_REPOS: paginate(Actions.ORGS_GET_REPOS),
+  ORGS_GET_MEMBERS: paginate(Actions.ORGS_GET_MEMBERS),
+  SEARCH_GET_REPOS: paginate(Actions.SEARCH_GET_REPOS),
 });

@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 
 import { RepositoryList } from 'components';
 
-import client from 'api/rest/providers/github';
+import { Github } from 'api/rest/providers/github';
+import { withReducers } from 'api/rest/decorators';
+
+const client = withReducers(Github);
 
 const getQueryString = (keyword, orgId) =>
   `q=${keyword}+user:${orgId}+fork:true&per_page=8`;
@@ -63,19 +66,19 @@ const mapStateToProps = (state, ownProps) => {
 
   const {
     auth: { user },
-    pagination: { reposByOrg, reposBySearch },
+    pagination: { ORGS_GET_REPOS, SEARCH_GET_REPOS },
     entities: { orgs, repos },
   } = state;
 
-  const repositoriesPagination = reposByOrg[orgId] || { ids: [] };
+  const repositoriesPagination = ORGS_GET_REPOS[orgId] || { ids: [] };
   const repositories = repositoriesPagination.ids.map(id => repos[id]);
 
   const searchedKeyword = ownProps.navigation.state.params.searchedKeyword;
   const queryString = getQueryString(searchedKeyword, orgId);
 
   const searchedResultsPagination =
-    searchedKeyword && reposBySearch[queryString]
-      ? reposBySearch[queryString]
+    searchedKeyword && SEARCH_GET_REPOS[queryString]
+      ? SEARCH_GET_REPOS[queryString]
       : { ids: [] };
   const searchedResults = searchedResultsPagination.ids.map(id => repos[id]);
 
@@ -92,5 +95,5 @@ const mapStateToProps = (state, ownProps) => {
 
 export const OrganizationRepositoryListScreen = connect(mapStateToProps, {
   getOrgRepos: client.orgs.getRepos,
-  searchRepos: client.search.searchRepos,
+  searchRepos: client.search.getRepos,
 })(OrganizationRepositoryList);

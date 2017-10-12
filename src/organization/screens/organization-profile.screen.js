@@ -14,7 +14,10 @@ import {
 } from 'components';
 import { emojifyText, translate, openURLInView } from 'utils';
 import { colors, fonts } from 'config';
-import client from 'api/rest/providers/github';
+import { Github } from 'api/rest/providers/github';
+import { withReducers } from 'api/rest/decorators';
+
+const client = withReducers(Github);
 
 const styles = StyleSheet.create({
   listTitle: {
@@ -36,9 +39,9 @@ const mapStateToProps = (state, ownProps) => {
   // TODO: This should be normalized to params.id
   const orgId = ownProps.navigation.state.params.organization.login.toLowerCase();
 
-  const { pagination: { membersByOrg }, entities: { orgs, users } } = state;
+  const { pagination: { ORGS_GET_MEMBERS }, entities: { orgs, users } } = state;
 
-  const membersPagination = membersByOrg[orgId] || {
+  const membersPagination = ORGS_GET_MEMBERS[orgId] || {
     ids: [],
     isFetching: true,
   };
