@@ -26,7 +26,7 @@ export const es = {
     },
     events: {
       welcomeMessage:
-        "¡Bienvenido! Este es tu feed de noticias: te ayudará a mantenerte al día con las actividades recientes en los repositorios que ves y las personas que sigues."
+        "¡Bienvenido! Este es tu feed de noticias: te ayudará a mantenerte al día con las actividades recientes en los repositorios que ves y las personas que sigues.",
       commitCommentEvent: "comentado en commit",
       createEvent: "creado {{object}}",
       deleteEvent: "borrado {{object}}",
