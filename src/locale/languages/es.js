@@ -102,7 +102,6 @@ export const erase = {
       title: "Política de Privacidad",
       effectiveDate: "Última actualización: 15 de Julio de 2017",
       introduction:
-        "We"re glad you decided to use GitPoint. This Privacy Policy is here to inform you about what we do — and do not do — with our user"s data.",
         "Estamos felices que hayas decidido utilizar GitPoint. Esta Política de Privacidad es informar que hacemos - y que no - con la información de nuestros usuarios",
       userDataTitle: "DATOS DEL USUARIO",
       userData1:
