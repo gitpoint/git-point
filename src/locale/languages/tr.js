@@ -228,7 +228,7 @@ export const tr = {
     },
     readMe: {
       readMeActions: 'README Actions',
-      noReadMeFound: 'No README.md found',
+      noReadMeFound: 'README.md bulunamadı',
     },
   },
   organization: {
