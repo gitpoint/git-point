@@ -40,6 +40,11 @@ export default [
     name: 'Galego',
   },
   {
+    code: 'pl',
+    emojiCode: ':flag-pl:',
+    name: 'Polski',
+  },
+  {
     code: 'de',
     emojiCode: ':flag-de:',
     name: 'Deutsch',
