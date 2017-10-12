@@ -224,7 +224,7 @@ export const nl = {
     },
     readMe: {
       readMeActions: 'README Acties',
-      noReadMeFound: 'No README.md found',
+      noReadMeFound: 'Geen README.md gevonden',
     },
   },
   organization: {
