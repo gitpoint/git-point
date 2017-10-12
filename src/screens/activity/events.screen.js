@@ -2,7 +2,13 @@
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, FlatList, View } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  FlatList,
+  View,
+  ActivityIndicator,
+} from 'react-native';
 import moment from 'moment/min/moment-with-locales.min';
 import client from 'api/rest/providers/github';
 import { LoadingUserListItem, UserListItem, ViewContainer } from 'components';
@@ -512,6 +518,22 @@ class Events extends Component {
     );
   }
 
+  renderFooter = () => {
+    if (this.props.userEventsPagination.nextPageUrl === null) {
+      return null;
+    }
+
+    return (
+      <View
+        style={{
+          paddingVertical: 20,
+        }}
+      >
+        <ActivityIndicator animating size="large" />
+      </View>
+    );
+  };
+
   render() {
     const {
       users,
@@ -547,6 +569,7 @@ class Events extends Component {
           onEndReached={() =>
             this.props.getEvents(this.props.user.login, { loadMore: true })}
           onEndReachedThreshold={0.5}
+          ListFooterComponent={this.renderFooter}
           renderItem={({ item }) =>
             <View>
               <UserListItem

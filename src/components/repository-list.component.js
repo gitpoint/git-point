@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
-import { FlatList, View, Dimensions, StyleSheet } from 'react-native';
+import { View, Dimensions, StyleSheet, FlatList } from 'react-native';
 
 import {
   ViewContainer,
@@ -74,7 +74,14 @@ export class RepositoryList extends Component {
     const { searchResults, repositories } = this.props;
     const { searchMode } = this.state;
 
-    return [...(searchMode ? searchResults : repositories), { id: 'fake' }];
+    return searchMode ? searchResults : repositories;
+  };
+
+  getPagination = () => {
+    const { searchResultsPagination, repositoriesPagination } = this.props;
+    const { searchMode } = this.state;
+
+    return searchMode ? searchResultsPagination : repositoriesPagination;
   };
 
   loadMore = () => {
@@ -103,6 +110,14 @@ export class RepositoryList extends Component {
     return item.id;
   };
 
+  renderFooter = () => {
+    if (this.getPagination().nextPageUrl === null) {
+      return null;
+    }
+
+    return <LoadingRepositoryListItem />;
+  };
+
   render() {
     const {
       authUser,
@@ -116,10 +131,6 @@ export class RepositoryList extends Component {
       (searchResultsPagination.isFetching &&
         !searchResultsPagination.pageCount) ||
       (repositoriesPagination.isFetching && !repositoriesPagination.pageCount);
-
-    const noMoreElements = searchMode
-      ? searchResultsPagination.nextPageUrl === null
-      : repositoriesPagination.nextPageUrl === null;
 
     return (
       <ViewContainer>
@@ -154,16 +165,8 @@ export class RepositoryList extends Component {
               data={this.getList()}
               keyExtractor={this.keyExtractor}
               onEndReached={this.loadMore}
-              onEndReachedThreshold={0.5}
+              ListFooterComponent={this.renderFooter}
               renderItem={({ item }) => {
-                if (item.id === 'fake') {
-                  if (noMoreElements) {
-                    return <View />;
-                  }
-
-                  return <LoadingRepositoryListItem />;
-                }
-
                 return (
                   <RepoListItem
                     repository={item}
