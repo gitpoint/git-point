@@ -11,13 +11,13 @@ export const de = {
       welcomeMessage:
         'Der umfangreichste GitHub Client der zu 100% kostenlos ist',
       notificationsTitle: 'Verwalte Benachrichtigungen',
-      notificationsMessage: 'Finde und Verwalte alle deine Benachrichtigungen',
-      reposTitle: 'Repositorien und Benutzer',
+      notificationsMessage: 'Finde und verwalte alle deine Benachrichtigungen',
+      reposTitle: 'Repositories und Benutzer',
       reposMessage:
-        'Erhalte Information über Repositorien, Benutzer und Organisationen',
+        'Erhalte Information über Repositories, Benutzer und Organisationen',
       issuesTitle: 'Issues und Pull Requests',
       issuesMessage:
-        'Unterhalte dich in Konversationen, Merge Pull Requests und vieles mehr',
+        'Unterhalte dich in Konversationen, merge Pull Requests und vieles mehr',
       signInButton: 'EINLOGGEN',
     },
     welcome: {
@@ -25,20 +25,20 @@ export const de = {
     },
     events: {
       welcomeMessage:
-        'Willkommen! Das ist dein News-Feed - er hälft dich auf dem neusten Stand zu den Benutzern und Repositorien denen du folgst.',
-      commitCommentEvent: 'commented on commit',
+        'Willkommen! Das ist dein News-Feed - er hälft dich auf dem neusten Stand zu den Benutzern und Repositories denen du folgst.',
+      commitCommentEvent: 'kommentierte den Commit',
       createEvent: 'hat {{object}} erstellt',
       deleteEvent: 'hat {{object}} gelöscht',
       issueCommentEvent: '{{action}} on {{type}}',
-      issueEditedEvent: '{{action}} sein Kommentar bei {{type}}',
-      issueRemovedEvent: '{{action}} sein Kommentar bei {{type}}',
+      issueEditedEvent: '{{action}} den Kommentar bei {{type}}',
+      issueRemovedEvent: '{{action}} den Kommentar bei {{type}}',
       issuesEvent: '{{action}} Issue',
       publicEvent: {
         action: 'hat',
         connector: 'veröffentlicht',
       },
       pullRequestEvent: '{{action}} Pull Request',
-      pullRequestReviewEvent: '{{action}} pull request review',
+      pullRequestReviewEvent: '{{action}} Pull Request review',
       pullRequestReviewCommentEvent: 'hat eine Pull Request {{action}}',
       pullRequestReviewEditedEvent:
         '{{action}} sein Kommentar bei einer Pull Request',
@@ -52,12 +52,12 @@ export const de = {
         issue: 'Issue',
       },
       objects: {
-        repository: 'Repositorium',
+        repository: 'Repository',
         branch: 'Branch',
         tag: 'Tag',
       },
       actions: {
-        added: 'added',
+        added: 'hinzugefügt',
         created: 'erstellt',
         edited: 'bearbeitet',
         deleted: 'gelöscht',
@@ -98,14 +98,14 @@ export const de = {
       donate: 'Spenden',
       title: 'Optionen',
       language: 'Sprache',
-      privacyPolicy: 'Privacy Policy',
+      privacyPolicy: 'Datenschutzerklärung',
       signOut: 'Ausloggen',
     },
     privacyPolicy: {
-      title: 'Privacy Policy',
+      title: 'Datenschutzerklärung',
       effectiveDate: 'Zuletzt aktualisiert: 15. Juli 2017',
       introduction:
-        'Wir freuen uns das du dich für GitPoint entschieden hast. Diese Privacy Policy ist dafür da, dir zu erklären was wir mit den Daten unserer Nutzer tun und was wir nicht tun.',
+        'Wir freuen uns das du dich für GitPoint entschieden hast. Diese Datenschutzerklärung ist dafür da, dir zu erklären was wir mit den Daten unserer Nutzer tun und was wir nicht tun.',
       userDataTitle: 'NUTZERDATEN',
       userData1:
         'Wir verwenden in keinem Fall deine GitHub Daten. Nach der Autorisierung wird dein OAuth-Token direkt auf deinem Gerät gespeichert. Es ist uns nicht möglich diesen Token auszulesen. Desweiteren wird er in keinem Fall irgendwo anders gespeichert.',
@@ -123,10 +123,10 @@ export const de = {
         'Jeder Beitrag zu unserer App wird von uns sorgfältig überprüft um das Einbinden von gefährlichen Programmen zu verhindern.',
       contactTitle: 'KONTAKT',
       contact1:
-        'Danke das Sie die Privacy Policy von GitPoint durchgelesen haben. Wir hoffen Sie haben genauso viel Spaß an der Verwendung wie wir ihn bei der Entwicklung haben.',
+        'Danke das Sie die Datenschutzerklärung von GitPoint durchgelesen haben. Wir hoffen Sie haben genauso viel Spaß an der Verwendung wie wir ihn bei der Entwicklung haben.',
       contact2:
-        'Sollten Sie irgendwelche Fragen über diese Privacy Policy oder GitPoint im allgemeinen. Bitte eröffnen Sie ein Issue im',
-      contactLink: 'GitPoint Repositorium',
+        'Sollten Sie irgendwelche Fragen über diese Datenschutzerklärung oder GitPoint im allgemeinen. Bitte eröffnen Sie ein Issue im',
+      contactLink: 'GitPoint Repository',
     },
   },
   notifications: {
@@ -144,14 +144,14 @@ export const de = {
   },
   search: {
     main: {
-      repositoryButton: 'Repositorien',
+      repositoryButton: 'Repositories',
       userButton: 'Benutzer',
       searchingMessage: 'Suche nach {{query}}',
       searchMessage: 'Suche nach allen {{type}}',
-      repository: 'repositorium',
+      repository: 'repository',
       user: 'benutzer',
       noUsersFound: 'Keine Benutzer gefunden :(',
-      noRepositoriesFound: 'Keine Repositorien gefunden :(',
+      noRepositoriesFound: 'Keine Repositories gefunden :(',
     },
   },
   user: {
@@ -161,7 +161,7 @@ export const de = {
       follow: 'Folgen',
     },
     repositoryList: {
-      title: 'Repositorien',
+      title: 'Repositories',
     },
     followers: {
       title: 'Follower',
@@ -179,7 +179,7 @@ export const de = {
       shareRepositoryTitle: 'Teile {{repoName}}',
       shareRepositoryMessage:
         'Schau mal bei {{repoName}} auf GitHub vorbei. {{repoUrl}}',
-      repoActions: 'Repositorium Aktionen',
+      repoActions: 'Repository Aktionen',
       forkAction: 'Fork',
       starAction: 'Star',
       unstarAction: 'Unstart',
@@ -321,7 +321,7 @@ export const de = {
     location: 'Standort',
     email: 'Email',
     website: 'Website',
-    repositories: 'Repositorien',
+    repositories: 'Repositories',
     cancel: 'Abbrechen',
     yes: 'Ja',
     ok: 'OK',
@@ -341,7 +341,7 @@ export const de = {
       yy: '%dy',
     },
     abbreviations: {
-      thousand: 'k',
+      thousand: 't',
     },
   },
 };

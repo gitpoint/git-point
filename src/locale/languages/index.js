@@ -7,5 +7,4 @@ export * from './pt-br.js';
 export * from './tr.js';
 export * from './ru.js';
 export * from './gl.js';
-export * from './pl.js';
 export * from './de.js';
