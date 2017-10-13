@@ -4,9 +4,8 @@ import { connect } from 'react-redux';
 import { StyleSheet, RefreshControl } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { createStructuredSelector } from 'reselect';
-import {
-  getAuthLanguage,
-} from 'auth';
+import ActionSheet from 'react-native-actionsheet';
+import { getAuthLanguage } from 'auth';
 import {
   ViewContainer,
   UserProfile,
@@ -16,10 +15,7 @@ import {
   ParallaxScroll,
   EntityInfo,
 } from 'components';
-import {
-  emojifyText,
-  translate,
-} from 'utils';
+import { emojifyText, translate, openURLInView } from 'utils';
 import { colors, fonts } from 'config';
 import {
   // actions
@@ -107,6 +103,16 @@ class OrganizationProfile extends Component {
     });
   };
 
+  showMenuActionSheet = () => {
+    this.ActionSheet.show();
+  };
+
+  handleActionSheetPress = index => {
+    if (index === 0) {
+      openURLInView(this.props.organization.html_url);
+    }
+  };
+
   render() {
     const {
       organization,
@@ -118,11 +124,12 @@ class OrganizationProfile extends Component {
     } = this.props;
     const { refreshing } = this.state;
     const initialOrganization = this.props.navigation.state.params.organization;
+    const organizationActions = [translate('common.openInBrowser', language)];
 
     return (
       <ViewContainer>
         <ParallaxScroll
-          renderContent={() =>
+          renderContent={() => (
             <UserProfile
               type="org"
               initialUser={initialOrganization}
@@ -132,7 +139,8 @@ class OrganizationProfile extends Component {
                   : initialOrganization
               }
               navigation={navigation}
-            />}
+            />
+          )}
           refreshControl={
             <RefreshControl
               onRefresh={this.getOrgData}
@@ -142,40 +150,61 @@ class OrganizationProfile extends Component {
           stickyTitle={organization.name}
           navigateBack
           navigation={navigation}
+          showMenu
+          menuAction={() => this.showMenuActionSheet()}
         >
-          {isPendingMembers &&
+          {isPendingMembers && (
             <LoadingMembersList
               title={translate('organization.main.membersTitle', language)}
-            />}
+            />
+          )}
 
-          {!isPendingMembers &&
+          {!isPendingMembers && (
             <MembersList
               title={translate('organization.main.membersTitle', language)}
               members={members}
               navigation={navigation}
-            />}
+            />
+          )}
 
           {!!organization.description &&
-            organization.description !== '' &&
-            <SectionList
-              title={translate('organization.main.descriptionTitle', language)}
-            >
-              <ListItem
-                subtitle={emojifyText(organization.description)}
-                subtitleStyle={styles.listSubTitle}
-                hideChevron
-              />
-            </SectionList>}
+            organization.description !== '' && (
+              <SectionList
+                title={translate(
+                  'organization.main.descriptionTitle',
+                  language
+                )}
+              >
+                <ListItem
+                  subtitle={emojifyText(organization.description)}
+                  subtitleStyle={styles.listSubTitle}
+                  hideChevron
+                />
+              </SectionList>
+            )}
 
-          {!isPendingOrg &&
-            <EntityInfo entity={organization} navigation={navigation} />}
+          {!isPendingOrg && (
+            <EntityInfo entity={organization} navigation={navigation} />
+          )}
         </ParallaxScroll>
+
+        <ActionSheet
+          ref={o => {
+            this.ActionSheet = o;
+          }}
+          title={translate('organization.organizationActions', language)}
+          options={[
+            ...organizationActions,
+            translate('common.cancel', language),
+          ]}
+          cancelButtonIndex={1}
+          onPress={this.handleActionSheetPress}
+        />
       </ViewContainer>
     );
   }
 }
 
-export const OrganizationProfileScreen = connect(
-  selectors,
-  actions
-)(OrganizationProfile);
+export const OrganizationProfileScreen = connect(selectors, actions)(
+  OrganizationProfile
+);

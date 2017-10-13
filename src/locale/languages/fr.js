@@ -226,12 +226,16 @@ export const fr = {
       deleted: 'SUPPRIMÉ',
       fileRenamed: 'Fichier renommé sans aucune modification',
     },
+    readMe: {
+      readMeActions: 'Actions sur le README',
+    },
   },
   organization: {
     main: {
       membersTitle: 'MEMBRES',
       descriptionTitle: 'DESCRIPTION',
     },
+    organizationActions: "Actions sur l'organization",
   },
   issue: {
     settings: {
@@ -275,6 +279,7 @@ export const fr = {
       },
       openIssueSubTitle: '#{{number}} ouvert il y a {{time}} par {{user}}',
       closedIssueSubTitle: '#{{number}} par {{user}} fermé il y a {{time}}',
+      issueActions: 'Issue Actions',
     },
     newIssue: {
       title: 'Nouveau ticket',
@@ -331,5 +336,6 @@ export const fr = {
     abbreviations: {
       thousand: 'k',
     },
+    openInBrowser: 'Ouvrir dans le navigateur',
   },
 };

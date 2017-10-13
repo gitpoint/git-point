@@ -384,12 +384,30 @@
       ]
     },
     {
+      "login": "Jpfonseca",
+      "name": "João Fonseca",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/11836470?v=4",
+      "profile": "https://github.com/Jpfonseca",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
       "login": "acurat",
       "name": "Arjun Curat",
       "avatar_url": "https://avatars3.githubusercontent.com/u/10121964?v=4",
       "profile": "https://github.com/acurat",
       "contributions": [
         "doc"
+      ]
+    },
+    {
+      "login": "siderio2",
+      "name": "siderio2",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/16878891?v=4",
+      "profile": "https://github.com/siderio2",
+      "contributions": [
+        "translation"
       ]
     }
   ]
