@@ -36,7 +36,7 @@ export default [
   },
   {
     code: 'eo',
-    emojiCode: ':star:',
+    emojiCode: ':waving_white_flag:',
     name: 'Esperanto',
   },
     code: 'gl',
