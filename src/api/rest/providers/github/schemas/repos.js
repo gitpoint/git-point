@@ -1,5 +1,5 @@
 import { schema } from 'normalizr';
-import moment from 'moment/min/moment.min';
+import { initSchema } from 'utils';
 
 import { userSchema } from './users';
 import { orgSchema } from './orgs';
@@ -16,13 +16,7 @@ export const repoSchema = new schema.Entity(
     idAttribute: repo =>
       (isInMinimalisticForm(repo) ? repo.name : repo.full_name).toLowerCase(),
     processStrategy: entity => {
-      const processed = {};
-
-      // These flags should be in all our schemas.
-      processed._isComplete = false; // entity not fully fetched yet
-      processed._isAuth = false; // entity doesn't belong to the auth user
-      processed._entityUrl = entity.html_url; // The github url for the entity. To be used in openInBrowser()
-      processed._fetchedAt = moment().format('X');
+      const processed = initSchema();
 
       // Repo received from events
       if (isInMinimalisticForm(entity)) {
@@ -31,13 +25,12 @@ export const repoSchema = new schema.Entity(
         processed.shortName = entity.name.substring(
           entity.name.indexOf('/') + 1
         );
-
         processed._entityUrl = `https://github.com/${entity.name}`;
 
         return processed;
       }
 
-      processed.id = entity.full_name;
+      processed.id = entity.full_name.toLowerCase();
       processed.fullName = entity.full_name;
       processed.shortName = entity.name;
       processed.description = entity.description;
@@ -61,46 +54,6 @@ export const repoSchema = new schema.Entity(
       processed.hasIssues = entity.has_issues;
 
       processed._entityUrl = entity.html_url;
-
-      /*
-      // These are provided in both mini & full modes
-      processed.id = entity.login; // id should be always used for navigation
-      processed.login = entity.login;
-      processed.avatarUrl = entity.avatar_url;
-      processed.description = entity.description;
-
-      // These flags should be in all our schemas.
-      processed._isComplete = false; // entity not fully fetched yet
-      processed._isAuth = false; // entity doesn't belong to the auth user
-      processed._entityUrl = false; // The github url for the entity. To be used in openInBrowser()
-
-      // name is only present in full mode, we base our full parsing on its presence
-      if (typeof entity.name !== 'undefined') {
-        processed.name = entity.name;
-        processed.webSite = entity.blog;
-        processed.location = entity.location;
-
-        processed.countPublicRepos = entity.public_repos;
-        processed.countPrivateRepos = 0;
-        processed.countRepos = entity.public_repos;
-
-        processed._entityUrl = entity.html_url;
-
-        processed.since = moment(entity.created_at).format('X'); // as unix timestamp
-
-        // The entity is to be considered complete.
-        processed._isComplete = true;
-
-        if (typeof entity.total_private_repos !== 'undefined') {
-          // This org belongs to the authenticated user, update some props
-          processed._isAuth = true;
-          processed.countPrivateRepos = entity.total_private_repos;
-          processed.countRepos += entity.total_private_repos;
-        }
-      } else {
-        // We can try our best to fill in some props on our own:
-        processed._entityUrl = `https://github.com/${processed.id}`;
-      } */
 
       return processed;
     },

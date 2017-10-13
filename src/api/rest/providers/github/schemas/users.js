@@ -1,5 +1,5 @@
 import { schema } from 'normalizr';
-import moment from 'moment/min/moment.min';
+import { initSchema, toTimestamp } from 'utils';
 
 export const userSchema = new schema.Entity(
   'users',
@@ -7,18 +7,12 @@ export const userSchema = new schema.Entity(
   {
     idAttribute: user => user.login.toLowerCase(),
     processStrategy: entity => {
-      const processed = {};
+      const processed = initSchema();
 
       // These are provided in both mini & full modes
       processed.id = entity.login.toLowerCase(); // id should be always used for navigation
       processed.login = entity.login;
       processed.avatarUrl = entity.avatar_url;
-
-      // These flags should be in all our schemas.
-      processed._isComplete = false; // entity not fully fetched yet
-      processed._isAuth = false; // entity doesn't belong to the auth user
-      processed._entityUrl = false; // The github url for the entity. To be used in openInBrowser()
-      processed._fetchedAt = moment().format('X');
 
       // name is only present in full mode, we base our full parsing on its presence
       if (typeof entity.name !== 'undefined') {
@@ -34,8 +28,8 @@ export const userSchema = new schema.Entity(
         processed.countFollowers = entity.followers;
         processed.countFollowing = entity.following;
 
-        processed.createdAt = moment(entity.created_at).format('X'); // as unix timestamp
-        processed.updatedAt = moment(entity.updated_at).format('X'); // as unix timestamp
+        processed.createdAt = toTimestamp(entity.created_at); // as unix timestamp
+        processed.updatedAt = toTimestamp(entity.updated_at); // as unix timestamp
 
         // Clear avatar cached URL to make sure picture is refetched on profile change
         processed.avatarUrl += `&updatedAt=${processed.updatedAt}`;

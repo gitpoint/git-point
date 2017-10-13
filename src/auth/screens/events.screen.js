@@ -518,7 +518,7 @@ class Events extends Component {
         {this.getSecondItem(userEvent)}
         {this.getItem(userEvent) && this.getConnector(userEvent) && ' '}
         <Text style={styles.date}>
-          {moment.unix(userEvent.createdAt).fromNow()}
+          {moment(userEvent.createdAt).fromNow()}
         </Text>
       </Text>
     );

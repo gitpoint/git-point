@@ -1,5 +1,5 @@
 import { schema } from 'normalizr';
-import moment from 'moment/min/moment.min';
+import { initSchema, toTimestamp } from 'utils';
 
 export const orgSchema = new schema.Entity(
   'orgs',
@@ -7,19 +7,13 @@ export const orgSchema = new schema.Entity(
   {
     idAttribute: org => org.login.toLowerCase(),
     processStrategy: entity => {
-      const processed = {};
+      const processed = initSchema();
 
       // These are provided in both mini & full modes
       processed.id = entity.login.toLowerCase(); // id should be always used for navigation
       processed.login = entity.login;
       processed.avatarUrl = entity.avatar_url;
       processed.description = entity.description;
-
-      // These flags should be in all our schemas.
-      processed._isComplete = false; // entity not fully fetched yet
-      processed._isAuth = false; // entity doesn't belong to the auth user
-      processed._entityUrl = false; // The github url for the entity. To be used in openInBrowser()
-      processed._fetchedAt = moment().format('X');
 
       // name is only present in full mode, we base our full parsing on its presence
       if (typeof entity.name !== 'undefined') {
@@ -33,8 +27,8 @@ export const orgSchema = new schema.Entity(
 
         processed._entityUrl = entity.html_url;
 
-        processed.createdAt = moment(entity.created_at).format('X'); // as unix timestamp
-        processed.updatedAt = moment(entity.updated_at).format('X'); // as unix timestamp
+        processed.createdAt = toTimestamp(entity.created_at);
+        processed.updatedAt = toTimestamp(entity.updated_at);
 
         // Clear avatar cached URL to make sure picture is refetched on profile change
         processed.avatarUrl += `&updatedAt=${processed.updatedAt}`;
