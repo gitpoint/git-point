@@ -26,6 +26,12 @@ export const withReducers = Provider => {
             );
           }
 
+          if (!endpoint[call]) {
+            return displayError(
+              `Unknown API call. Did you implement client.${namespace}.${call}()?`
+            );
+          }
+
           // Identify if we have our magical last argument
           const declaredArgsNumber = endpoint[call].length;
           const isMagicArgAvailable = args.length === declaredArgsNumber;
@@ -36,6 +42,7 @@ export const withReducers = Provider => {
           const magicArg = isMagicArgAvailable ? args[args.length - 1] : {};
 
           const paginator = getState().pagination[actionName];
+          const actionKey = pureArgs.join('-');
 
           // pagination or entity ? <-
 
@@ -47,7 +54,7 @@ export const withReducers = Provider => {
           if (paginator) {
             const { loadMore = false } = magicArg;
             const { pageCount = 0, isFetching = false, nextPageUrl } =
-              paginator[pureArgs.join('-')] || {};
+              paginator[actionKey] || {};
 
             if (
               isFetching || // Already fetching, don't retrigger a call
@@ -66,7 +73,7 @@ export const withReducers = Provider => {
           }
 
           dispatch({
-            id: args[0],
+            id: actionKey,
             type: Actions[actionName].PENDING,
           });
 
@@ -94,7 +101,7 @@ export const withReducers = Provider => {
                 if (paginator) {
                   normalized.pagination = {
                     name: actionName,
-                    key: args[0],
+                    key: actionKey,
                     ids: normalized.result,
                     nextPageUrl: struct.nextPageUrl,
                   };
@@ -104,7 +111,7 @@ export const withReducers = Provider => {
                 // Success, let's dispatch it
                 dispatch({
                   ...normalized,
-                  id: args[0],
+                  id: actionKey,
                   type: Actions[actionName].SUCCESS,
                 });
 
@@ -115,7 +122,7 @@ export const withReducers = Provider => {
               displayError(error.toString());
 
               dispatch({
-                id: args[0],
+                id: actionKey,
                 type: Actions[actionName].ERROR,
               });
 
