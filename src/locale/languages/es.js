@@ -110,7 +110,7 @@ export const es = {
         'Esto significa que de ninguna manera miramos, usamos o compartimos datos de GitHub de los usuarios. Si la información privada se volviera visible en algún momento, no la registraremos ni leeremos. Si se guardara accidentalmente, la borraremos inmediatamente usando métodos seguros de borrado. Sin embargo, hemos configurado la autenticación para que esto nunca suceda.',
       analyticsInfoTitle: 'INFORMACIÓN ANALÍTICA',
       analyticsInfo1:
-        'Actualmente usamos Google Analytics y iTunes App Analytics para ayudarnos a medir el tráfico y las tendencias de uso de GitPoint. Estas herramientas recogen información mandada por tu dispositivo, invluyendo la versión del dispositivo y la plataforma, zona geográfica y These tools collect information sent by your device including device and platform version, region and referente. Esta información no puede ser usada para identificar ningún usuario individual y no se extrae ninguna información personal.',
+        'Actualmente usamos Google Analytics y iTunes App Analytics para ayudarnos a medir el tráfico y las tendencias de uso de GitPoint. Estas herramientas recogen información mandada por tu dispositivo, invluyendo la versión del dispositivo y la plataforma y la zona geográfica. Esta información no puede ser usada para identificar ningún usuario individual y no se extrae ninguna información personal.',
       analyticsInfo2:
         'Si incluimos otras plataformas de terceros para analizar rastros, archivos de error o otra información analítica, nos aseguraremos de que los datos del usuario permanezcan anonimizados y encriptados.',
       openSourceTitle: 'CÓDIGO ABIERTO',
