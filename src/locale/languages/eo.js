@@ -70,7 +70,7 @@ export const eo = {
         submitted: 'sendita',
         dismissed: 'eksigita',
         published: 'publikigita',
-        publicized: 'publikigita', , , , , , , 
+        publicized: 'publikigita',
         privatized: 'privatigita',
         starred: 'frakasita',
         pushedTo: 'puŝita al',
