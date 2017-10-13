@@ -122,7 +122,6 @@ export const es = {
       contact1:
         "Gracias por leer nuestra Política de Privacidad. Esperamos que te guste usar GitPoint, tanto como te gusta desarrollarlo",
       contact2:
-        "If you have any questions about this Privacy Policy or GitPoint in general, please file an issue in the",
         "Si tienes alguna duda sobre esta Política de Privacidad o sobre GitPoint en general, por favor, abre un issue",
       contactLink: "Repositorio de GitPoint",
     },
