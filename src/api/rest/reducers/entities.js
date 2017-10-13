@@ -1,4 +1,4 @@
-import merge from 'lodash.merge';
+import { merge } from 'lodash';
 
 // Updates an entity cache in response to any action with response.entities.
 export const entities = (

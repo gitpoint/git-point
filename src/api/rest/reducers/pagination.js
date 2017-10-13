@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import union from 'lodash.union';
+import { union } from 'lodash';
 
 import * as Actions from '../actions';
 
