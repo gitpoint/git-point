@@ -137,5 +137,9 @@
     "type": "opencollective",
     "url": "https://opencollective.com/git-point",
     "logo": "https://opencollective.com/opencollective/logo.txt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gitpoint/git-point"
   }
 }
