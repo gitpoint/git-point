@@ -20,7 +20,7 @@ export const withReducers = Provider => {
 
           const action = Actions[actionName];
 
-          if (typeof action === 'undefined') {
+          if (!action) {
             return displayError(
               `Unknown action. Did you forget to define Actions.${actionName}?`
             );
@@ -44,17 +44,17 @@ export const withReducers = Provider => {
 
           let finalArgs = args;
 
-          if (typeof paginator !== 'undefined') {
+          if (paginator) {
             const { loadMore = false } = magicArg;
             const { pageCount = 0, isFetching = false, nextPageUrl } =
               paginator[pureArgs.join('-')] || {};
 
             if (
-              isFetching ||
-              (pageCount > 0 && !loadMore) ||
-              (loadMore && !nextPageUrl)
+              isFetching || // Already fetching, don't retrigger a call
+              (pageCount > 0 && !loadMore) || // We already have the first page of data
+              (loadMore && !nextPageUrl) // We've already fetched the last page
             ) {
-              return Promise.resolve(); // Already fetching, don't retrigger a call
+              return Promise.resolve();
             }
 
             if (loadMore) {
@@ -91,8 +91,7 @@ export const withReducers = Provider => {
                   struct.schema
                 );
 
-                // TODO: only for paginated
-                if (typeof paginator !== 'undefined') {
+                if (paginator) {
                   normalized.pagination = {
                     name: actionName,
                     key: args[0],
