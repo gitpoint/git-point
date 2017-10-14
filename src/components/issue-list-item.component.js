@@ -61,49 +61,52 @@ const getIconName = (type, issue) => {
   return 'git-pull-request';
 };
 
-export const IssueListItem = ({ type, issue, navigation, language }: Props) =>
-  <TouchableHighlight
-    style={issue.state === 'CLOSED' && styles.closedIssue}
-    onPress={() =>
-      navigation.navigate('Issue', {
-        issue,
-        isPR: !!issue.pull_request,
-        language,
-      })}
-    underlayColor={colors.greyLight}
-  >
-    <View style={styles.container}>
-      <ListItem
-        containerStyle={styles.listItemContainer}
-        title={issue.title}
-        subtitle={
-          issue.state === 'OPEN'
-            ? translate('issue.main.openIssueSubTitle', language, {
-                number: issue.number,
-                user: issue.author.login,
-                time: moment(issue.createdAt).fromNow(),
-              })
-            : translate('issue.main.closedIssueSubTitle', language, {
-                number: issue.number,
-                user: issue.author.login,
-                time: moment(issue.lastEditedAt).fromNow(),
-              })
-        }
-        leftIcon={{
-          name: getIconName(type, issue),
-          size: 36,
-          color: issue.state === 'OPEN' ? colors.green : colors.red,
-          type: 'octicon',
-        }}
-        hideChevron
-        titleStyle={styles.title}
-        subtitleStyle={styles.subtitle}
-      />
-      <View style={styles.commentsContainer}>
-        <Icon name="comment" type="octicon" size={18} color={colors.grey} />
-        <Text style={styles.comments}>
-          {issue.comments.totalCount}
-        </Text>
+export const IssueListItem = ({ type, issue, navigation, language }: Props) => {
+  return (
+    <TouchableHighlight
+      style={issue.state === 'CLOSED' && styles.closedIssue}
+      onPress={() =>
+        navigation.navigate('Issue', {
+          issue,
+          isPR: type !== 'issue',
+          language,
+        })}
+      underlayColor={colors.greyLight}
+    >
+      <View style={styles.container}>
+        <ListItem
+          containerStyle={styles.listItemContainer}
+          title={issue.title}
+          subtitle={
+            issue.state === 'OPEN'
+              ? translate('issue.main.openIssueSubTitle', language, {
+                  number: issue.number,
+                  user: issue.author.login,
+                  time: moment(issue.createdAt).fromNow(),
+                })
+              : translate('issue.main.closedIssueSubTitle', language, {
+                  number: issue.number,
+                  user: issue.author.login,
+                  time: moment(issue.lastEditedAt).fromNow(),
+                })
+          }
+          leftIcon={{
+            name: getIconName(type, issue),
+            size: 36,
+            color: issue.state === 'OPEN' ? colors.green : colors.red,
+            type: 'octicon',
+          }}
+          hideChevron
+          titleStyle={styles.title}
+          subtitleStyle={styles.subtitle}
+        />
+        <View style={styles.commentsContainer}>
+          <Icon name="comment" type="octicon" size={18} color={colors.grey} />
+          <Text style={styles.comments}>
+            {issue.comments.totalCount}
+          </Text>
+        </View>
       </View>
-    </View>
-  </TouchableHighlight>;
+    </TouchableHighlight>
+  );
+};
