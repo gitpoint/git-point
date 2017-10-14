@@ -35,7 +35,7 @@ const mapStateToProps = state => ({
   authUser: state.auth.user,
   repository: state.repository.repository,
   contributors: state.repository.contributors,
-  issue: state.issue.issue,
+  issue: state.issue,
   diff: state.issue.diff,
   pr: state.issue.pr,
   isMerged: state.issue.isMerged,
@@ -175,7 +175,7 @@ class Issue extends Component {
     } = this.props;
 
     const params = navigation.state.params;
-    const issueURL = params.issueURL || params.issue.url;
+    let issueURL = params.issueURL || params.issue.url;
     let issueRepository;
 
     if (params.issueURL) {
@@ -186,6 +186,10 @@ class Issue extends Component {
       issueRepository = params.issue.repository.nameWithOwner;
     }
     const repositoryUrl = `${v3.root}/repos/${issueRepository}`;
+
+    if (!issueURL) {
+      issueURL = `${repositoryUrl}/issues/${params.issue.number}`;
+    }
 
     Promise.all([
       getIssueFromUrl(issueURL),
