@@ -185,7 +185,7 @@ class Issue extends Component {
     } else if (params.issue) {
       issueRepository = params.issue.repository.nameWithOwner;
     }
-    const repositoryUrl = `https://api.github.com/repos/${issueRepository}`;
+    const repositoryUrl = `${v3.root}/repos/${issueRepository}`;
 
     Promise.all([
       getIssueFromUrl(issueURL),
