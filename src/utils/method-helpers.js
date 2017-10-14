@@ -35,11 +35,13 @@ export const delay = (delayed, ms) =>
 export const translate = (key, lang, interpolation = null) =>
   I18n.t(key, { locale: lang, ...interpolation });
 
-export const configureLocale = language => {
-  I18n.locale = language;
+export const configureLocale = locale => {
+  const validLocale = moment.locales().indexOf(locale) < 0 ? 'en' : locale;
+
+  I18n.locale = validLocale;
   I18n.fallbacks = true;
 
-  moment.updateLocale(language, {
-    relativeTime: translate('common.relativeTime', language),
+  moment.updateLocale(validLocale, {
+    relativeTime: translate('common.relativeTime', validLocale),
   });
 };
