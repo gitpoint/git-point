@@ -128,7 +128,7 @@ export const getPullRequests = repoFullName => {
     const accessToken = getState().auth.accessToken;
     const [owner, name] = repoFullName.split('/');
     const body = {
-      query: pullRequestsQuery(),
+      query: pullRequestsQuery,
       variables: { owner, name },
     };
 
@@ -156,7 +156,7 @@ export const getIssues = repoFullName => {
     const accessToken = getState().auth.accessToken;
     const [owner, name] = repoFullName.split('/');
     const body = {
-      query: issuesQuery(),
+      query: issuesQuery,
       variables: { owner, name },
     };
 
