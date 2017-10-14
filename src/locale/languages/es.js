@@ -108,7 +108,7 @@ export const es = {
         'No hacemos nada con tu información de GitHub. Tras la autenticación, el token OAuth del usuario se guarda directamente en el almacenamiento de su dispositivo. No es posible para nosotros recuperar esa información. Nunca vemos ni almacenamos el token de acceso de un usuario.',
       userData2:
         'Esto significa que de ninguna manera miramos, usamos o compartimos datos de GitHub de los usuarios. Si la información privada se volviera visible en algún momento, no la registraremos ni leeremos. Si se guardara accidentalmente, la borraremos inmediatamente usando métodos seguros de borrado. Sin embargo, hemos configurado la autenticación para que esto nunca suceda.',
-      analyticsInfoTitle: 'INFORMACIÓN ANALÍTICA',
+      analyticsInfoTitle: 'INFORMACIÓN DE ANALYTICS',
       analyticsInfo1:
         'Actualmente usamos Google Analytics y iTunes App Analytics para ayudarnos a medir el tráfico y las tendencias de uso de GitPoint. Estas herramientas recogen información mandada por tu dispositivo, invluyendo la versión del dispositivo y la plataforma y la zona geográfica. Esta información no puede ser usada para identificar ningún usuario individual y no se extrae ninguna información personal.',
       analyticsInfo2:
