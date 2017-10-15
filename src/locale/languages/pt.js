@@ -238,7 +238,7 @@ export const pt = {
       membersTitle: 'MEMBROS',
       descriptionTitle: 'DESCRIÇÃO',
     },
-    organizationActions: 'Organization Actions',
+    organizationActions: 'Opções de Entidade',
   },
   issue: {
     settings: {
@@ -282,7 +282,7 @@ export const pt = {
       },
       openIssueSubTitle: '#{{number}} aberta em {{time}} por {{user}}',
       closedIssueSubTitle: '#{{number}} de {{user}} foi  fechada em {{time}} ',
-      issueActions: 'Issue Actions',
+      issueActions: 'Acções sobre Issues',
     },
     newIssue: {
       title: 'Nova Issue',
@@ -339,6 +339,6 @@ export const pt = {
     abbreviations: {
       thousand: 'k',
     },
-    openInBrowser: 'Open in Browser',
+    openInBrowser: 'Abrir no Browser',
   },
 };
