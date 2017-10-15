@@ -228,6 +228,7 @@ export const ptBr = {
     },
     readMe: {
       readMeActions: 'Ações do README',
+      noReadMeFound: 'Nenhum README.md foi encontrado',
     },
   },
   organization: {
