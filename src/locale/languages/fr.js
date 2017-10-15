@@ -149,8 +149,8 @@ export const fr = {
       searchMessage: 'Recherche de tout {{type}}',
       repository: 'dépôt',
       user: 'utilisateur',
-      noUsersFound: 'No users found :(',
-      noRepositoriesFound: 'No repositories found :(',
+      noUsersFound: 'Aucun utilisateur trouvé :(',
+      noRepositoriesFound: 'Aucun dépôt trouvé :(',
     },
   },
   user: {
@@ -201,9 +201,9 @@ export const fr = {
       starsTitle: 'Favoris',
       forksTitle: 'Forks',
       forkedFromMessage: 'forké depuis',
-      starred: 'Starred',
-      watching: 'Watching',
-      watchers: 'Watchers',
+      starred: 'Favoris',
+      watching: 'Abonné',
+      watchers: 'Abonnés',
     },
     codeList: {
       title: 'Code',
