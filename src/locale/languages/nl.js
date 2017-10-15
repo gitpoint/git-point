@@ -224,6 +224,7 @@ export const nl = {
     },
     readMe: {
       readMeActions: 'README Acties',
+      noReadMeFound: 'Geen README.md gevonden',
     },
   },
   organization: {
@@ -274,7 +275,8 @@ export const nl = {
         pullRequest: 'Pull Request',
       },
       openIssueSubTitle: '#{{number}} geopend {{time}} geleden door {{user}}',
-      closedIssueSubTitle: '#{{number}} door {{user}} was gesloten, {{time}} geleden',
+      closedIssueSubTitle:
+        '#{{number}} door {{user}} was gesloten, {{time}} geleden',
       issueActions: 'Issue Acties',
     },
     newIssue: {

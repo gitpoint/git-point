@@ -231,6 +231,7 @@ export const gl = {
     },
     readMe: {
       readMeActions: 'Accións do README',
+      noReadMeFound: 'Non se atopou o README.md',
     },
   },
   organization: {

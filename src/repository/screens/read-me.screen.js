@@ -112,7 +112,9 @@ class ReadMe extends Component {
         {!isPendingReadMe &&
           noReadMe &&
           <View style={styles.textContainer}>
-            <Text style={styles.noReadMeTitle}>No README.md found</Text>
+            <Text style={styles.noReadMeTitle}>
+              {translate('repository.readMe.noReadMeFound', locale)}
+            </Text>
           </View>}
 
         <ActionSheet
