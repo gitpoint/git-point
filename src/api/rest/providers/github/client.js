@@ -1,11 +1,11 @@
 import { Client } from '../base';
 import Schemas from './schemas';
 
-export class Github extends Client {
+export class GitHub extends Client {
   API_ROOT = 'https://api.github.com/';
 
-  setAccessToken = accessToken => {
-    this.authHeaders = { Authorization: `token ${accessToken}` };
+  setAuthHeaders = token => {
+    this.authHeaders = { Authorization: `token ${token}` };
   };
 
   getNextPageUrl = response => {

@@ -9,12 +9,12 @@ export const actionNameForCall = (namespace, method, prefix = '') => {
 };
 
 export const splitArgs = (fn, args) => {
-  const declaredArgsNumber = fn.length;
-  const isMagicArgAvailable = args.length === declaredArgsNumber;
+  const declaredArgsCount = fn.length;
+  const isExtraArgAvailable = args.length === declaredArgsCount;
 
   return {
-    pureArgs: isMagicArgAvailable ? args.slice(0, args.length - 1) : args,
-    magicArg: isMagicArgAvailable ? args[args.length - 1] : {},
+    pureArgs: isExtraArgAvailable ? args.slice(0, -1) : args,
+    extraArg: isExtraArgAvailable ? args[args.length - 1] : {},
   };
 };
 

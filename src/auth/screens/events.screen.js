@@ -14,11 +14,11 @@ import { LoadingUserListItem, UserListItem, ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { emojifyText, translate } from 'utils';
 
-import { Github } from 'api/rest/providers/github';
+import { GitHub } from 'api/rest/providers/github';
 import { withReducers, withCounter } from 'api/rest/decorators';
 
-const client = withReducers(Github);
-const countingClient = withCounter(Github);
+const client = withReducers(GitHub);
+const countingClient = withCounter(GitHub);
 
 const mapStateToProps = state => {
   const {

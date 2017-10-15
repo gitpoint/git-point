@@ -4,12 +4,11 @@ export const withAuth = Provider => {
   return new Proxy(withAuth, {
     get: (c, namespace) => {
       return new Proxy(client[namespace], {
-        get: (endpoint, call) => (...args) => (dispatch, getState) => {
+        get: (endpoint, method) => (...args) => (dispatch, getState) => {
           // Get accessToken from state
-          client.setAccessToken(getState().auth.accessToken);
+          client.setAuthHeaders(getState().auth.accessToken);
 
-          /* eslint-disable no-unexpected-multiline */
-          return endpoint[call](...args);
+          return endpoint[method](...args);
         },
       });
     },

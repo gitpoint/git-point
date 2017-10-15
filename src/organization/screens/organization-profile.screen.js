@@ -14,10 +14,10 @@ import {
 } from 'components';
 import { emojifyText, translate, openURLInView } from 'utils';
 import { colors, fonts } from 'config';
-import { Github } from 'api/rest/providers/github';
+import { GitHub } from 'api/rest/providers/github';
 import { withReducers } from 'api/rest/decorators';
 
-const client = withReducers(Github);
+const client = withReducers(GitHub);
 
 const styles = StyleSheet.create({
   listTitle: {

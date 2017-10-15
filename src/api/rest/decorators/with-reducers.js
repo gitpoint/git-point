@@ -13,15 +13,15 @@ export const withReducers = Provider => {
   return new Proxy(withReducers, {
     get: (c, namespace) => {
       return new Proxy(client[namespace], {
-        get: (endpoint, call) => (...args) => (dispatch, getState) => {
-          if (!endpoint[call]) {
+        get: (endpoint, method) => (...args) => (dispatch, getState) => {
+          if (!endpoint[method]) {
             return displayError(
-              `Unknown API call. Did you implement client.${namespace}.${call}()?`
+              `Unknown API method. Did you implement client.${namespace}.${method}()?`
             );
           }
 
           // Used as a key for state.pagination
-          const actionName = actionNameForCall(namespace, call);
+          const actionName = actionNameForCall(namespace, method);
           const action = Actions[actionName];
 
           if (!action) {
@@ -30,14 +30,14 @@ export const withReducers = Provider => {
             );
           }
 
-          const { pureArgs, magicArg } = splitArgs(endpoint[call], args);
+          const { pureArgs, extraArg } = splitArgs(endpoint[method], args);
           const paginator = getState().pagination[actionName];
           const actionKey = pureArgs.join('-');
 
           let finalArgs = args;
 
           if (paginator) {
-            const { loadMore = false, forceRefresh = false } = magicArg;
+            const { loadMore = false, forceRefresh = false } = extraArg;
             const { pageCount = 0, isFetching = false, nextPageUrl } =
               paginator[actionKey] || {};
 
@@ -52,17 +52,17 @@ export const withReducers = Provider => {
 
             if (loadMore) {
               // next page explicitely requested
-              magicArg.url = nextPageUrl;
+              extraArg.url = nextPageUrl;
             } else if (forceRefresh) {
               // TODO: reset pagination state properly via an action
               // console.log('TODO: reset pagination');
             }
 
-            finalArgs = [...pureArgs, magicArg];
+            finalArgs = [...pureArgs, extraArg];
           }
 
           // Get accessToken from state
-          client.setAccessToken(getState().auth.accessToken);
+          client.setAuthHeaders(getState().auth.accessToken);
 
           dispatch({
             id: actionKey,
@@ -71,14 +71,16 @@ export const withReducers = Provider => {
 
           /* eslint-disable no-unexpected-multiline */
           return endpoint
-            [call](...finalArgs)
+            [method](...finalArgs)
             .then(struct => {
               if (!struct.response.ok) {
                 return struct.response.json().then(error => {
                   return Promise.reject(
-                    `Call: client.${namespace}.call()\nUrl: ${struct.response
-                      .url}\nError: [${struct.response
-                      .status}] ${error.message}`
+                    [
+                      `Call: client.${namespace}.${method}()`,
+                      `Url: ${struct.response.url}`,
+                      `Error: [${struct.response.status}] ${error.message}`,
+                    ].join('\n')
                   );
                 });
               }
@@ -108,6 +110,7 @@ export const withReducers = Provider => {
                     ids: normalized.result,
                     nextPageUrl: struct.nextPageUrl,
                   };
+
                   delete normalized.result;
                 }
 

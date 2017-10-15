@@ -12,21 +12,21 @@ export const withCounter = Provider => {
   return new Proxy(withCounter, {
     get: (c, namespace) => {
       return new Proxy(client[namespace], {
-        get: (endpoint, call) => (...args) => (dispatch, getState) => {
-          if (!endpoint[call]) {
+        get: (endpoint, method) => (...args) => (dispatch, getState) => {
+          if (!endpoint[method]) {
             return displayError(
-              `Unknown API call. Did you implement client.${namespace}.${call}()?`
+              `Unknown API method. Did you implement client.${namespace}.${method}()?`
             );
           }
 
           // Used as a key for state.pagination
-          const actionName = actionNameForCall(namespace, call, 'COUNT_');
+          const actionName = actionNameForCall(namespace, method, 'COUNT_');
 
-          const { pureArgs, magicArg } = splitArgs(endpoint[call], args);
+          const { pureArgs, extraArg } = splitArgs(endpoint[method], args);
 
-          magicArg.per_page = 1;
+          extraArg.per_page = 1;
 
-          const finalArgs = [...pureArgs, magicArg];
+          const finalArgs = [...pureArgs, extraArg];
           const actionKey = pureArgs.join('-');
 
           dispatch({
@@ -34,11 +34,11 @@ export const withCounter = Provider => {
             type: Actions[actionName].PENDING,
           });
 
-          client.setAccessToken(getState().auth.accessToken);
+          client.setAuthHeaders(getState().auth.accessToken);
 
           /* eslint-disable no-unexpected-multiline */
           return endpoint
-            [call](...finalArgs)
+            [method](...finalArgs)
             .then(struct => {
               if (struct.response.status === 404) {
                 return 0;

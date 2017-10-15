@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 
 import { RepositoryList } from 'components';
 
-import { Github } from 'api/rest/providers/github';
+import { GitHub } from 'api/rest/providers/github';
 import { withReducers } from 'api/rest/decorators';
 
-const client = withReducers(Github);
+const client = withReducers(GitHub);
 
 const getQueryString = (keyword, orgId) =>
   `q=${keyword}+user:${orgId}+fork:true&per_page=8`;
