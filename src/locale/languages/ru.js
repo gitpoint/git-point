@@ -147,8 +147,8 @@ export const ru = {
       searchMessage: 'Поиск {{type}}',
       repository: 'репозиториев',
       user: 'пользователей',
-      noUsersFound: 'No users found :(',
-      noRepositoriesFound: 'No repositories found :(',
+      noUsersFound: 'Пользователи не найдены :(',
+      noRepositoriesFound: 'Репозитории не найдены :(',
     },
   },
   user: {
@@ -260,10 +260,10 @@ export const ru = {
       applyLabelTitle: 'Добавить ярлык к этой задаче',
     },
     comment: {
-      commentActions: 'Comment Actions',
-      editCommentTitle: 'Edit Comment',
-      editAction: 'Edit',
-      deleteAction: 'Delete',
+      commentActions: 'Действия с комментарием',
+      editCommentTitle: 'Редактирование комментария',
+      editAction: 'Редактировать',
+      deleteAction: 'Удалить',
     },
     main: {
       assignees: 'Ответственные',
