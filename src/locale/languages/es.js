@@ -115,7 +115,7 @@ export const es = {
         'Si incluimos otras plataformas de terceros para analizar rastros, archivos de error o otra información analítica, nos aseguraremos de que los datos del usuario permanezcan anonimizados y encriptados.',
       openSourceTitle: 'CÓDIGO ABIERTO',
       openSource1:
-        'GitPoint es código abierto y el histórico de contribuciones a la plataforma será siempre visible al público.',
+        'GitPoint es de código abierto y el histórico de contribuciones a la plataforma será siempre visible al público.',
       openSource2:
         'Con cada contribución a la aplicación, se realiza una revisión de código para evitar que nadie incluya código malicioso de cualquier tipo.',
       contactTitle: 'CONTACTO',
@@ -229,12 +229,17 @@ export const es = {
       deleted: 'ELIMINADOS',
       fileRenamed: 'Archivo renombrado sin cambios',
     },
+	readMe: {
+      readMeActions: 'Acciones de README',
+	  noReadMeFound: 'No se ha encontrado README.md',
+    },
   },
   organization: {
     main: {
       membersTitle: 'MIEMBROS',
       descriptionTitle: 'DESCRIPCIÓN',
     },
+	organizationActions: 'Organization Actions',
   },
   issue: {
     settings: {
@@ -278,9 +283,10 @@ export const es = {
       },
       openIssueSubTitle: '#{{number}} abiertas hace {{time}} por {{user}}',
       closedIssueSubTitle: '#{{number}} por {{user}} fue cerrada hace {{time}}',
-    },
+	  issueActions: 'Acciones de la Issue',
+	},
     newIssue: {
-      title: 'Nueva issue',
+      title: 'Nueva Issue',
       missingTitleAlert: '¡Debes especificar un título para la issue!',
       issueTitle: 'Título de la issue',
       writeATitle: 'Escribe un título para la issue aquí',
@@ -294,7 +300,7 @@ export const es = {
       merge: 'merge',
       squash: 'squash',
       missingTitleAlert: '¡Debes especificar un título para el commit!',
-      commitTitle: 'Título del Commit',
+      commitTitle: 'Título del commit',
       writeATitle: 'Escribe aquí un título para tu commit',
       commitMessage: 'Mensaje del commit',
       writeAMessage: 'Escribe aquí un mensaje para tu commit',
@@ -334,5 +340,6 @@ export const es = {
     abbreviations: {
       thousand: 'k',
     },
+	openInBrowser: 'Abrir en el navegador',
   },
 };
