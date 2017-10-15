@@ -1,11 +1,11 @@
-import { getLanguage } from 'locale';
+import { getLocale } from 'utils';
 import {
   LOGIN,
   LOGOUT,
   GET_AUTH_USER,
   GET_AUTH_ORGS,
   GET_EVENTS,
-  CHANGE_LANGUAGE,
+  CHANGE_LOCALE,
   GET_AUTH_STAR_COUNT,
 } from './auth.type';
 
@@ -18,7 +18,7 @@ const initialState = {
   hasInitialUser: false,
   orgs: [],
   events: [],
-  language: getLanguage(),
+  locale: getLocale(),
   isPendingUser: false,
   isPendingOrgs: false,
   isPendingEvents: false,
@@ -132,10 +132,10 @@ export const authReducer = (state = initialState, action = {}) => {
         error: action.payload,
         isPendingEvents: false,
       };
-    case CHANGE_LANGUAGE.SUCCESS:
+    case CHANGE_LOCALE.SUCCESS:
       return {
         ...state,
-        language: action.payload,
+        locale: action.payload,
       };
     default:
       return state;
