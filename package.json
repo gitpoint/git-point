@@ -20,6 +20,7 @@
     "commitmsg": "minicat $GIT_PARAMS | commitlint",
     "precommit": "lint-staged",
     "eslint": "eslint .",
+    "prettier": "prettier --single-quote --trailing-comma es5 --write \"**/*.js\"",
     "test": "jest",
     "flow-start": "flow start",
     "flow-stop": "flow stop",

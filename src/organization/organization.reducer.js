@@ -24,60 +24,62 @@ const initialState = {
   organizationMembersError: '',
 };
 
-export const organizationReducer = handleActions({
-  [GET_ORG]: (state, { payload }) => {
-    return {
-      ...state,
-      organization: payload,
-    };
+export const organizationReducer = handleActions(
+  {
+    [GET_ORG]: (state, { payload }) => {
+      return {
+        ...state,
+        organization: payload,
+      };
+    },
+    [GET_ORG_LOADING]: (state, { payload }) => {
+      return {
+        ...state,
+        isPendingOrg: payload,
+      };
+    },
+    [GET_ORG_ERROR]: (state, { payload }) => {
+      return {
+        ...state,
+        organizationError: payload,
+      };
+    },
+    [GET_ORG_REPOS]: (state, { payload }) => {
+      return {
+        ...state,
+        repositories: payload,
+      };
+    },
+    [GET_ORG_REPOS_LOADING]: (state, { payload }) => {
+      return {
+        ...state,
+        isPendingRepos: payload,
+      };
+    },
+    [GET_ORG_REPOS_ERROR]: (state, { payload }) => {
+      return {
+        ...state,
+        organizationRepositoriesError: payload,
+      };
+    },
+    [GET_ORG_MEMBERS]: (state, { payload }) => {
+      return {
+        ...state,
+        members: payload,
+      };
+    },
+    [GET_ORG_MEMBERS_LOADING]: (state, { payload }) => {
+      return {
+        ...state,
+        isPendingMembers: payload,
+      };
+    },
+    [GET_ORG_MEMBERS_ERROR]: (state, { payload }) => {
+      return {
+        ...state,
+        organizationMembersError: payload,
+      };
+    },
   },
-  [GET_ORG_LOADING]: (state, { payload }) => {
-    return {
-      ...state,
-      isPendingOrg: payload,
-    };
-  },
-  [GET_ORG_ERROR]: (state, { payload }) => {
-    return {
-      ...state,
-      organizationError: payload,
-    };
-  },
-  [GET_ORG_REPOS]: (state, { payload }) => {
-    return {
-      ...state,
-      repositories: payload,
-    };
-  },
-  [GET_ORG_REPOS_LOADING]: (state, { payload }) => {
-    return {
-      ...state,
-      isPendingRepos: payload,
-    };
-  },
-  [GET_ORG_REPOS_ERROR]: (state, { payload }) => {
-    return {
-      ...state,
-      organizationRepositoriesError: payload,
-    };
-  },
-  [GET_ORG_MEMBERS]: (state, { payload }) => {
-    return {
-      ...state,
-      members: payload,
-    };
-  },
-  [GET_ORG_MEMBERS_LOADING]: (state, { payload }) => {
-    return {
-      ...state,
-      isPendingMembers: payload,
-    };
-  },
-  [GET_ORG_MEMBERS_ERROR]: (state, { payload }) => {
-    return {
-      ...state,
-      organizationMembersError: payload,
-    };
-  },
-}, initialState);
-
+  initialState
+);
