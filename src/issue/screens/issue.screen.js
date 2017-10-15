@@ -333,44 +333,46 @@ class Issue extends Component {
 
     return (
       <ViewContainer>
-        {isShowLoadingContainer &&
-          <LoadingContainer animating={isShowLoadingContainer} center />}
+        {isShowLoadingContainer && (
+          <LoadingContainer animating={isShowLoadingContainer} center />
+        )}
 
         {!isPendingComments &&
           !isPendingIssue &&
-          issue &&
-          <KeyboardAvoidingView
-            style={{ flex: 1 }}
-            behavior={'padding'}
-            keyboardVerticalOffset={Platform.select({
-              ios: 65,
-              android: -200,
-            })}
-          >
-            <FlatList
-              ref={ref => {
-                this.commentsList = ref;
-              }}
-              refreshing={isLoadingData}
-              onRefresh={this.getIssueInformation}
-              contentContainerStyle={{ flexGrow: 1 }}
-              ListHeaderComponent={this.renderHeader}
-              removeClippedSubviews={false}
-              data={fullComments}
-              keyExtractor={this.keyExtractor}
-              renderItem={this.renderItem}
-            />
+          issue && (
+            <KeyboardAvoidingView
+              style={{ flex: 1 }}
+              behavior={'padding'}
+              keyboardVerticalOffset={Platform.select({
+                ios: 65,
+                android: -200,
+              })}
+            >
+              <FlatList
+                ref={ref => {
+                  this.commentsList = ref;
+                }}
+                refreshing={isLoadingData}
+                onRefresh={this.getIssueInformation}
+                contentContainerStyle={{ flexGrow: 1 }}
+                ListHeaderComponent={this.renderHeader}
+                removeClippedSubviews={false}
+                data={fullComments}
+                keyExtractor={this.keyExtractor}
+                renderItem={this.renderItem}
+              />
 
-            <CommentInput
-              users={fullUsers}
-              userHasPushPermission={
-                navigation.state.params.userHasPushPermission
-              }
-              issueLocked={issue.locked}
-              language={language}
-              onSubmit={this.postComment}
-            />
-          </KeyboardAvoidingView>}
+              <CommentInput
+                users={fullUsers}
+                userHasPushPermission={
+                  navigation.state.params.userHasPushPermission
+                }
+                issueLocked={issue.locked}
+                language={language}
+                onSubmit={this.postComment}
+              />
+            </KeyboardAvoidingView>
+          )}
 
         <ActionSheet
           ref={o => {

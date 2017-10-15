@@ -61,7 +61,7 @@ const getIconName = (type, issue) => {
   return 'git-pull-request';
 };
 
-export const IssueListItem = ({ type, issue, navigation, language }: Props) =>
+export const IssueListItem = ({ type, issue, navigation, language }: Props) => (
   <TouchableHighlight
     style={issue.state === 'closed' && styles.closedIssue}
     onPress={() =>
@@ -101,9 +101,8 @@ export const IssueListItem = ({ type, issue, navigation, language }: Props) =>
       />
       <View style={styles.commentsContainer}>
         <Icon name="comment" type="octicon" size={18} color={colors.grey} />
-        <Text style={styles.comments}>
-          {issue.comments}
-        </Text>
+        <Text style={styles.comments}>{issue.comments}</Text>
       </View>
     </View>
-  </TouchableHighlight>;
+  </TouchableHighlight>
+);

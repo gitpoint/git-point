@@ -135,7 +135,7 @@ class CommentListItemComponent extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          {comment.user &&
+          {comment.user && (
             <TouchableOpacity
               style={styles.avatarContainer}
               onPress={() =>
@@ -154,9 +154,10 @@ class CommentListItemComponent extends Component {
                   uri: comment.user.avatar_url,
                 }}
               />
-            </TouchableOpacity>}
+            </TouchableOpacity>
+          )}
 
-          {comment.user &&
+          {comment.user && (
             <TouchableOpacity
               style={styles.titleSubtitleContainer}
               onPress={() =>
@@ -173,7 +174,8 @@ class CommentListItemComponent extends Component {
                 {comment.user.login}
                 {'  '}
               </Text>
-            </TouchableOpacity>}
+            </TouchableOpacity>
+          )}
 
           <View style={styles.dateContainer}>
             <Text style={styles.date}>
@@ -188,16 +190,18 @@ class CommentListItemComponent extends Component {
             !isActionMenuEnabled && styles.commentBottomPadding,
           ]}
         >
-          {commentPresent
-            ? <GithubHtmlView
-                source={comment.body_html}
-                onLinkPress={onLinkPress}
-              />
-            : <Text style={styles.commentTextNone}>
-                {translate('issue.main.noDescription', language)}
-              </Text>}
+          {commentPresent ? (
+            <GithubHtmlView
+              source={comment.body_html}
+              onLinkPress={onLinkPress}
+            />
+          ) : (
+            <Text style={styles.commentTextNone}>
+              {translate('issue.main.noDescription', language)}
+            </Text>
+          )}
 
-          {isActionMenuEnabled &&
+          {isActionMenuEnabled && (
             <View style={styles.actionButtonIconContainer}>
               <Icon
                 color={colors.grey}
@@ -206,7 +210,8 @@ class CommentListItemComponent extends Component {
                 type={'font-awesome'}
                 onPress={this.showMenu}
               />
-            </View>}
+            </View>
+          )}
         </View>
 
         <ActionSheet

@@ -173,9 +173,7 @@ class UserOptions extends Component {
                         <Text style={styles.flag}>
                           {emojifyText(item.emojiCode)}
                         </Text>
-                        <Text style={styles.listTitle}>
-                          {item.name}
-                        </Text>
+                        <Text style={styles.listTitle}>{item.name}</Text>
                       </View>
                     }
                     titleStyle={styles.listTitle}
@@ -227,9 +225,7 @@ class UserOptions extends Component {
           </SectionList>
 
           <TouchableOpacity style={styles.update} onPress={this.checkForUpdate}>
-            <Text style={styles.updateText}>
-              GitPoint v{version}
-            </Text>
+            <Text style={styles.updateText}>GitPoint v{version}</Text>
             <Text style={[styles.updateText, styles.updateTextSub]}>
               {this.state.updateText}
             </Text>

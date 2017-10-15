@@ -199,7 +199,7 @@ export class GithubHtmlView extends Component {
       /* eslint-disable no-unused-vars */
       const onLinkPress = this.props.onLinkPress;
       const renderers = {
-        blockquote: (node, index, siblings, parent, defaultRenderer) =>
+        blockquote: (node, index, siblings, parent, defaultRenderer) => (
           <View
             key={index}
             style={{
@@ -216,11 +216,11 @@ export class GithubHtmlView extends Component {
             >
               {defaultRenderer(node.children, parent)}
             </Text>
-          </View>,
-        pre: (node, index, siblings, parent, defaultRenderer) =>
-          <View key={index}>
-            {defaultRenderer(node.children, node)}
-          </View>,
+          </View>
+        ),
+        pre: (node, index, siblings, parent, defaultRenderer) => (
+          <View key={index}>{defaultRenderer(node.children, node)}</View>
+        ),
         code: (node, index, siblings, parent, defaultRenderer) => {
           if (parent.name === 'pre') {
             return (
@@ -243,8 +243,9 @@ export class GithubHtmlView extends Component {
         h4: headingRenderer,
         h5: headingRenderer,
         h6: headingRenderer,
-        hr: (node, index, siblings, parent, defaultRenderer) =>
-          <View key={index} style={{ ...hrStyle }} />,
+        hr: (node, index, siblings, parent, defaultRenderer) => (
+          <View key={index} style={{ ...hrStyle }} />
+        ),
         img: (node, index, siblings, parent, defaultRenderer) => {
           if (hasAncestor(node, ['ol', 'ul', 'span'])) {
             return (
@@ -273,21 +274,23 @@ export class GithubHtmlView extends Component {
             />
           );
         },
-        table: (node, index, siblings, parent, defaultRenderer) =>
+        table: (node, index, siblings, parent, defaultRenderer) => (
           <Table key={index} style={{ width: width * 0.8 }}>
             {defaultRenderer(onlyTagsChildren(node), node)}
-          </Table>,
+          </Table>
+        ),
         thead: (node, index, siblings, parent, defaultRenderer) =>
           defaultRenderer(onlyTagsChildren(node), node),
         tbody: (node, index, siblings, parent, defaultRenderer) =>
           defaultRenderer(onlyTagsChildren(node), node),
-        tr: (node, index, siblings, parent, defaultRenderer) =>
+        tr: (node, index, siblings, parent, defaultRenderer) => (
           <TableWrapper
             key={index}
             style={{ width: width * 0.8, flexDirection: 'row' }}
           >
             {defaultRenderer(onlyTagsChildren(node), node)}
-          </TableWrapper>,
+          </TableWrapper>
+        ),
         td: (node, index, siblings, parent, defaultRenderer) => {
           const Component = cellForNode(node);
           const styleText = {

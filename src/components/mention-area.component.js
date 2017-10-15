@@ -144,20 +144,18 @@ export class MentionArea extends Component {
   }
 
   renderSuggestionsRow(users) {
-    return users.map(user =>
+    return users.map(user => (
       <TouchableOpacity
         key={user}
         onPress={() => this.onSuggestionTap(user, true)}
       >
         <View style={styles.suggestionsRowContainer}>
           <View style={styles.userDetailsBox}>
-            <Text style={styles.displayNameText}>
-              @{user}
-            </Text>
+            <Text style={styles.displayNameText}>@{user}</Text>
           </View>
         </View>
       </TouchableOpacity>
-    );
+    ));
   }
 
   render() {

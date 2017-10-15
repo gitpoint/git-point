@@ -118,12 +118,13 @@ export class CodeLine extends Component {
               change.type === 'del' && styles.delLine,
             ]}
           >
-            {(newChunk || !this.isKnownType(language)) &&
+            {(newChunk || !this.isKnownType(language)) && (
               <Text style={[styles.codeLine, newChunk && styles.newChunkLine]}>
                 {change.content}
-              </Text>}
+              </Text>
+            )}
 
-            {this.isKnownType(language) &&
+            {this.isKnownType(language) && (
               <SyntaxHighlighter
                 language={language}
                 style={GithubStyle}
@@ -134,7 +135,8 @@ export class CodeLine extends Component {
                 fontSize={styles.codeLine.fontSize}
               >
                 {change.content}
-              </SyntaxHighlighter>}
+              </SyntaxHighlighter>
+            )}
           </View>
         </View>
       </View>

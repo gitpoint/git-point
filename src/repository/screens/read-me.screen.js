@@ -100,22 +100,25 @@ class ReadMe extends Component {
 
     return (
       <ViewContainer>
-        {isPendingReadMe &&
-          <LoadingContainer animating={isPendingReadMe} center />}
+        {isPendingReadMe && (
+          <LoadingContainer animating={isPendingReadMe} center />
+        )}
         {!isPendingReadMe &&
-          !noReadMe &&
-          <MarkdownWebView
-            html={readMe}
-            baseUrl={`${this.props.navigation.state.params.repository
-              .html_url}/raw/master/`}
-          />}
+          !noReadMe && (
+            <MarkdownWebView
+              html={readMe}
+              baseUrl={`${this.props.navigation.state.params.repository
+                .html_url}/raw/master/`}
+            />
+          )}
         {!isPendingReadMe &&
-          noReadMe &&
-          <View style={styles.textContainer}>
-            <Text style={styles.noReadMeTitle}>
-              {translate('repository.readMe.noReadMeFound', language)}
-            </Text>
-          </View>}
+          noReadMe && (
+            <View style={styles.textContainer}>
+              <Text style={styles.noReadMeTitle}>
+                {translate('repository.readMe.noReadMeFound', language)}
+              </Text>
+            </View>
+          )}
 
         <ActionSheet
           ref={o => {

@@ -19,7 +19,7 @@ export const SearchBar = ({
   onFocus,
   onCancelButtonPress,
   onSearchButtonPress,
-}: Props) =>
+}: Props) => (
   <RNSearchBar
     ref={ref => {
       this.searchBar = ref;
@@ -42,7 +42,8 @@ export const SearchBar = ({
       this.searchBar.unFocus();
     }}
     hideBackground
-  />;
+  />
+);
 
 SearchBar.defaultProps = {
   textColor: '',

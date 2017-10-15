@@ -369,14 +369,15 @@ class Notifications extends Component {
     return (
       <View>
         {isFirstItem &&
-          isFirstTab &&
-          <View style={styles.markAllAsReadButtonContainer}>
-            <Button
-              icon={{ name: 'check', type: 'octicon' }}
-              onPress={() => markAllNotificationsAsRead()}
-              title={translate('notifications.main.markAllAsRead')}
-            />
-          </View>}
+          isFirstTab && (
+            <View style={styles.markAllAsReadButtonContainer}>
+              <Button
+                icon={{ name: 'check', type: 'octicon' }}
+                onPress={() => markAllNotificationsAsRead()}
+                title={translate('notifications.main.markAllAsRead')}
+              />
+            </View>
+          )}
 
         <Card containerStyle={styles.repositoryContainer}>
           <View style={styles.headerContainer}>
@@ -408,7 +409,7 @@ class Notifications extends Component {
           </View>
 
           <ScrollView>
-            {notifications.map(notification =>
+            {notifications.map(notification => (
               <NotificationListItem
                 key={notification.id}
                 notification={notification}
@@ -416,7 +417,7 @@ class Notifications extends Component {
                 navigationAction={notify => this.navigateToThread(notify)}
                 navigation={this.props.navigation}
               />
-            )}
+            ))}
           </ScrollView>
         </Card>
       </View>
@@ -455,7 +456,7 @@ class Notifications extends Component {
             onLayout={this.saveContentBlockHeight}
             style={styles.contentBlock}
           >
-            {isRetrievingNotifications &&
+            {isRetrievingNotifications && (
               <View
                 style={[styles.textContainer, { height: contentBlockHeight }]}
               >
@@ -468,9 +469,10 @@ class Notifications extends Component {
                   style={styles.marginSpacing}
                   center
                 />
-              </View>}
+              </View>
+            )}
 
-            {!isRetrievingNotifications &&
+            {!isRetrievingNotifications && (
               <FlatList
                 ref={ref => {
                   this.notificationsList = ref;
@@ -482,19 +484,21 @@ class Notifications extends Component {
                 keyExtractor={this.keyExtractor}
                 renderItem={this.renderItem}
                 ListEmptyComponent={
-                  !isLoadingNewNotifications &&
-                  <View
-                    style={[
-                      styles.textContainer,
-                      { height: contentBlockHeight },
-                    ]}
-                  >
-                    <Text style={styles.noneTitle}>
-                      {translate('notifications.main.noneMessage', language)}
-                    </Text>
-                  </View>
+                  !isLoadingNewNotifications && (
+                    <View
+                      style={[
+                        styles.textContainer,
+                        { height: contentBlockHeight },
+                      ]}
+                    >
+                      <Text style={styles.noneTitle}>
+                        {translate('notifications.main.noneMessage', language)}
+                      </Text>
+                    </View>
+                  )
                 }
-              />}
+              />
+            )}
           </View>
         </View>
       </ViewContainer>
