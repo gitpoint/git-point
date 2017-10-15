@@ -229,12 +229,17 @@ export const pl = {
       deleted: 'USUNIĘTY',
       fileRenamed: 'Nazwa pliku zmieniona bez innych zmian',
     },
+    readMe: {
+      readMeActions: 'README Dostępne Akcje',
+      noReadMeFound: 'Brak README.md',
+    },
   },
   organization: {
     main: {
       membersTitle: 'CZŁONKOWIE',
       descriptionTitle: 'OPIS',
     },
+    organizationActions: 'Organizacja Dostępne Akcje',
   },
   issue: {
     settings: {
@@ -279,6 +284,7 @@ export const pl = {
       openIssueSubTitle: '#{{number}} utworzony {{time}} temu przez {{user}}',
       closedIssueSubTitle:
         '#{{number}} użytkownika {{user}} został zamknięty {{time}} temu',
+      issueActions: 'Problemy Dostępne Akcje',
     },
     newIssue: {
       title: 'Nowy Problem',
@@ -335,5 +341,6 @@ export const pl = {
     abbreviations: {
       thousand: 'ts',
     },
+    openInBrowser: 'Otwórz W Przeglądarce',
   },
 };
