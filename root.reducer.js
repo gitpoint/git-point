@@ -6,10 +6,16 @@ import { issueReducer } from 'issue';
 import { searchReducer } from 'search';
 import { notificationsReducer } from 'notifications';
 
-import { entities, pagination, errorMessage } from 'api/rest/reducers';
+import {
+  entities,
+  counters,
+  pagination,
+  errorMessage,
+} from 'api/rest/reducers';
 
 export const rootReducer = combineReducers({
   entities,
+  counters,
   pagination,
   errorMessage,
   auth: authReducer,
