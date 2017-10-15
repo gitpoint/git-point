@@ -243,6 +243,7 @@ export const de = {
       membersTitle: 'MITGLIEDER',
       descriptionTitle: 'BESCHREIBUNG',
     },
+    organizationActions: 'Organization Actions',
   },
   issue: {
     settings: {
@@ -287,6 +288,7 @@ export const de = {
       openIssueSubTitle: '#{{number}} wude vor {{time}} von {{user}} geöffnet',
       closedIssueSubTitle:
         '#{{number}} von {{user}} wurde vor {{time}} geschlossen',
+      issueActions: 'Issue Actions',
     },
     newIssue: {
       title: 'Neues Issue',
@@ -343,5 +345,6 @@ export const de = {
     abbreviations: {
       thousand: 't',
     },
+    openInBrowser: 'Open in Browser',
   },
 };

@@ -229,12 +229,17 @@ export const pl = {
       deleted: 'USUNIĘTY',
       fileRenamed: 'Nazwa pliku zmieniona bez innych zmian',
     },
+    readMe: {
+      readMeActions: 'README Actions',
+      noReadMeFound: 'No README.md found',
+    },
   },
   organization: {
     main: {
       membersTitle: 'CZŁONKOWIE',
       descriptionTitle: 'OPIS',
     },
+    organizationActions: 'Organization Actions',
   },
   issue: {
     settings: {
@@ -279,6 +284,7 @@ export const pl = {
       openIssueSubTitle: '#{{number}} otworzony {{time}} temu przez {{user}}',
       closedIssueSubTitle:
         '#{{number}} użytkownika {{user}} został zamknięty {{time}} temu',
+      issueActions: 'Issue Actions',
     },
     newIssue: {
       title: 'Nowy Problem',
@@ -335,5 +341,6 @@ export const pl = {
     abbreviations: {
       thousand: 'ts',
     },
+    openInBrowser: 'Open in Browser',
   },
 };

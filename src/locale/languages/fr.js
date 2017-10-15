@@ -149,6 +149,8 @@ export const fr = {
       searchMessage: 'Recherche de tout {{type}}',
       repository: 'dépôt',
       user: 'utilisateur',
+      noUsersFound: 'No users found :(',
+      noRepositoriesFound: 'No repositories found :(',
     },
   },
   user: {
@@ -199,6 +201,9 @@ export const fr = {
       starsTitle: 'Favoris',
       forksTitle: 'Forks',
       forkedFromMessage: 'forké depuis',
+      starred: 'Starred',
+      watching: 'Watching',
+      watchers: 'Watchers',
     },
     codeList: {
       title: 'Code',
@@ -216,8 +221,8 @@ export const fr = {
       openButton: 'Ouvert',
       closedButton: 'Fermé',
       searchingMessage: 'Recherche de {{query}}',
-      noOpenIssues: 'Aucun pull request ouvert trouvé !',
-      noClosedIssues: 'Aucun pull request fermé trouvé !',
+      noOpenPulls: 'Aucun pull request ouvert trouvé !',
+      noClosedPulls: 'Aucun pull request fermé trouvé !',
     },
     pullDiff: {
       title: 'Diff',
