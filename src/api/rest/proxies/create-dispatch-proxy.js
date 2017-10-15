@@ -7,10 +7,10 @@ import {
   actionNameForCall,
 } from 'utils/decorator-helpers';
 
-export const withReducers = Provider => {
+export const createDispatchProxy = Provider => {
   const client = new Provider();
 
-  return new Proxy(withReducers, {
+  return new Proxy(createDispatchProxy, {
     get: (c, namespace) => {
       return new Proxy(client[namespace], {
         get: (endpoint, method) => (...args) => (dispatch, getState) => {
@@ -86,7 +86,7 @@ export const withReducers = Provider => {
               }
 
               // Successful PUT or PATCH request, there will be no JSON, simply dispatch success
-              // TODO: withReducers() is not an accurate name anymore here.
+              // TODO: We need a better test here
               if (struct.response.status === 205) {
                 dispatch({
                   id: actionKey,

@@ -15,7 +15,7 @@ import {
 import { ButtonGroup, Card, Icon } from 'react-native-elements';
 
 import { GitHub } from 'api/rest/providers/github';
-import { withReducers, withCounter } from 'api/rest/decorators';
+import { createDispatchProxy, createCountProxy } from 'api/rest/proxies';
 
 import { v3 } from 'api';
 import {
@@ -567,8 +567,8 @@ class Notifications extends Component {
   }
 }
 
-const client = withReducers(GitHub);
-const countingClient = withCounter(GitHub);
+const client = createDispatchProxy(GitHub);
+const countingClient = createCountProxy(GitHub);
 
 export const NotificationsScreen = connect(mapStateToProps, {
   getNotifications: client.activity.getNotifications,

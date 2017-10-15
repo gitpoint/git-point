@@ -6,10 +6,11 @@ import {
   actionNameForCall,
 } from 'utils/decorator-helpers';
 
-export const withCounter = Provider => {
+// TODO: Merge this into createDispatchProxy
+export const createCountProxy = Provider => {
   const client = new Provider();
 
-  return new Proxy(withCounter, {
+  return new Proxy(createCountProxy, {
     get: (c, namespace) => {
       return new Proxy(client[namespace], {
         get: (endpoint, method) => (...args) => (dispatch, getState) => {

@@ -15,9 +15,9 @@ import {
 import { emojifyText, translate, openURLInView } from 'utils';
 import { colors, fonts } from 'config';
 import { GitHub } from 'api/rest/providers/github';
-import { withReducers } from 'api/rest/decorators';
+import { createDispatchProxy } from 'api/rest/proxies';
 
-const client = withReducers(GitHub);
+const client = createDispatchProxy(GitHub);
 
 const styles = StyleSheet.create({
   listTitle: {

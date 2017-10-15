@@ -15,10 +15,10 @@ import { colors, fonts, normalize } from 'config';
 import { emojifyText, translate } from 'utils';
 
 import { GitHub } from 'api/rest/providers/github';
-import { withReducers, withCounter } from 'api/rest/decorators';
+import { createDispatchProxy, createCountProxy } from 'api/rest/proxies';
 
-const client = withReducers(GitHub);
-const countingClient = withCounter(GitHub);
+const client = createDispatchProxy(GitHub);
+const countingClient = createCountProxy(GitHub);
 
 const mapStateToProps = state => {
   const {

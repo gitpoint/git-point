@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { RepositoryList } from 'components';
 
 import { GitHub } from 'api/rest/providers/github';
-import { withReducers } from 'api/rest/decorators';
+import { createDispatchProxy } from 'api/rest/proxies';
 
-const client = withReducers(GitHub);
+const client = createDispatchProxy(GitHub);
 
 const getQueryString = (keyword, orgId) =>
   `q=${keyword}+user:${orgId}+fork:true&per_page=8`;
