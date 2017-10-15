@@ -18,7 +18,20 @@ export class Client {
     },
     params = {}
   ) => {
-    let finalUrl = params.url || url;
+    let finalUrl;
+
+    if (params.url) {
+      // a different url was provided, use it instead (paginated)
+      finalUrl = params.url;
+    } else {
+      finalUrl = url;
+      // add explicitely specified parameters
+      if (params.per_page) {
+        finalUrl = `${finalUrl}${finalUrl.indexOf('?') !== -1
+          ? '&'
+          : '?'}per_page=${params.per_page}`;
+      }
+    }
 
     if (finalUrl.indexOf(this.API_ROOT) === -1) {
       finalUrl = `${this.API_ROOT}${finalUrl}`;

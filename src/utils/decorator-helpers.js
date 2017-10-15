@@ -25,3 +25,13 @@ export const displayError = error => {
 
 export const getCountFromState = (state, name, key) =>
   state.counters[name] ? state.counters[name][key] : 0;
+
+export const getPaginationFromState = (
+  state,
+  name,
+  key,
+  initialValue = { ids: [] }
+) =>
+  state.pagination[name] && state.pagination[name][key]
+    ? state.pagination[name][key]
+    : initialValue;

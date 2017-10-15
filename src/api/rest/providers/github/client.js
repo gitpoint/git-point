@@ -105,6 +105,44 @@ export class Github extends Client {
         };
       });
     },
+    /**
+     * Get all notifications for the current user
+     *
+     * @param {boolean} all If true, show notifications marked as read.
+     * @param {boolean} participating If true, in which the user is directly participating or mentioned.
+     */
+    getNotifications: async (all, participating, params) => {
+      const finalParams = {
+        per_page: 100,
+        ...params,
+      };
+
+      return this.fetch(
+        `notifications?all=${all}&participating=${participating}`,
+        {
+          schema: Schemas.NOTIFICATION_ARRAY,
+        },
+        finalParams
+      ).then(struct => {
+        return {
+          ...struct,
+          nextPageUrl: this.getNextPageUrl(struct.response),
+        };
+      });
+    },
+    markNotificationThreadAsRead: async (id, params) => {
+      return this.fetch(
+        `notifications/threads/${id}`,
+        {
+          method: this.Method.PATCH,
+        },
+        params
+      ).then(struct => {
+        return {
+          ...struct,
+        };
+      });
+    },
   };
 
   search = {

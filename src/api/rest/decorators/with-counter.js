@@ -45,19 +45,17 @@ export const withCounter = Provider => {
               }
 
               let linkHeader = struct.response.headers.get('Link');
-              let number;
 
               if (linkHeader !== null) {
                 linkHeader = linkHeader.match(/page=(\d)+/g).pop();
-                number = linkHeader.split('=').pop();
                 dispatch({
-                  counters: number,
+                  counters: linkHeader.split('=').pop(),
                   key: actionKey,
                   name: actionName,
                   type: Actions[actionName].SUCCESS,
                 });
               } else {
-                number = struct.response.json().then(data => {
+                struct.response.json().then(data => {
                   dispatch({
                     counters: data.length,
                     key: actionKey,
@@ -67,7 +65,7 @@ export const withCounter = Provider => {
                 });
               }
 
-              return number;
+              return Promise.resolve();
             })
             .catch(error => {
               displayError(error.toString());

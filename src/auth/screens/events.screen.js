@@ -15,9 +15,10 @@ import { colors, fonts, normalize } from 'config';
 import { emojifyText, translate } from 'utils';
 
 import { Github } from 'api/rest/providers/github';
-import { withReducers } from 'api/rest/decorators';
+import { withReducers, withCounter } from 'api/rest/decorators';
 
 const client = withReducers(Github);
+const countingClient = withCounter(Github);
 
 const mapStateToProps = state => {
   const {
@@ -92,23 +93,22 @@ const styles = StyleSheet.create({
 
 class Events extends Component {
   componentDidMount() {
-    const { getEvents, user: { login } } = this.props;
+    const { getEvents, getNotificationsCount, user: { login } } = this.props;
 
     getEvents(login);
+    getNotificationsCount(false, false);
   }
 
   componentWillReceiveProps(nextProps) {
+    // TODO: not sure if needed
     if (nextProps.user.login && !this.props.user.login) {
-      this.nextProps.getUserEvents();
+      this.nextProps.getEvents(nextProps.user.login);
     }
   }
 
   /*
-  // TODO: Put back getNotificationsCount && getUser
-  getUserEvents = ({ user, accessToken } = this.props) => {
-    //    this.props.getUserEvents(user.login);
-    //    this.props.getNotificationsCount(accessToken);
-  }; */
+  // TODO: getUser() should be called and waited for in the auth process
+  */
 
   getAction = userEvent => {
     const { language } = this.props;
@@ -616,4 +616,5 @@ class Events extends Component {
 
 export const EventsScreen = connect(mapStateToProps, {
   getEvents: client.activity.getEventsReceived,
+  getNotificationsCount: countingClient.activity.getNotifications,
 })(Events);

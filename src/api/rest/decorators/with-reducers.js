@@ -37,14 +37,15 @@ export const withReducers = Provider => {
           let finalArgs = args;
 
           if (paginator) {
-            const { loadMore = false } = magicArg;
+            const { loadMore = false, forceRefresh = false } = magicArg;
             const { pageCount = 0, isFetching = false, nextPageUrl } =
               paginator[actionKey] || {};
 
             if (
-              isFetching || // Already fetching, don't retrigger a call
+              !forceRefresh &&
+              (isFetching || // Already fetching, don't retrigger a call
               (pageCount > 0 && !loadMore) || // We already have the first page of data
-              (loadMore && !nextPageUrl) // We've already fetched the last page
+                (loadMore && !nextPageUrl)) // We've already fetched the last page
             ) {
               return Promise.resolve();
             }
@@ -52,6 +53,9 @@ export const withReducers = Provider => {
             if (loadMore) {
               // next page explicitely requested
               magicArg.url = nextPageUrl;
+            } else if (forceRefresh) {
+              // TODO: reset pagination state properly via an action
+              // console.log('TODO: reset pagination');
             }
 
             finalArgs = [...pureArgs, magicArg];
@@ -77,6 +81,17 @@ export const withReducers = Provider => {
                       .status}] ${error.message}`
                   );
                 });
+              }
+
+              // Successful PUT or PATCH request, there will be no JSON, simply dispatch success
+              // TODO: withReducers() is not an accurate name anymore here.
+              if (struct.response.status === 205) {
+                dispatch({
+                  id: actionKey,
+                  type: Actions[actionName].SUCCESS,
+                });
+
+                return Promise.resolve();
               }
 
               return struct.response.json().then(json => {

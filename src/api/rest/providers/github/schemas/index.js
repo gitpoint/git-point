@@ -2,6 +2,7 @@ import { orgSchema } from './orgs';
 import { userSchema } from './users';
 import { repoSchema } from './repos';
 import { eventSchema } from './events';
+import { notificationSchema } from './notifications';
 
 export default {
   USER: userSchema,
@@ -12,4 +13,6 @@ export default {
   REPO_ARRAY: [repoSchema],
   EVENT: eventSchema,
   EVENT_ARRAY: [eventSchema],
+  NOTIFICATION: notificationSchema,
+  NOTIFICATION_ARRAY: [notificationSchema],
 };

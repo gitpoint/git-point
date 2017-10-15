@@ -54,7 +54,7 @@ export const NotificationListItem = ({
   navigationAction,
 }: Props) => {
   const TitleComponent =
-    notification.subject.type === 'Commit' ? View : TouchableOpacity;
+    notification.type === 'Commit' ? View : TouchableOpacity;
 
   return (
     <View style={styles.container}>
@@ -67,9 +67,9 @@ export const NotificationListItem = ({
             color={colors.grey}
             size={22}
             name={
-              notification.subject.type === 'Commit'
+              notification.type === 'Commit'
                 ? 'git-commit'
-                : notification.subject.type === 'PullRequest'
+                : notification.type === 'PullRequest'
                   ? 'git-pull-request'
                   : 'issue-opened'
             }
@@ -78,7 +78,7 @@ export const NotificationListItem = ({
 
           <View style={styles.titleContainer}>
             <Text style={styles.title}>
-              {notification.subject.title}
+              {notification.title}
             </Text>
           </View>
         </TitleComponent>
