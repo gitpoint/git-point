@@ -12,6 +12,7 @@ import {
   GET_IS_FOLLOWING,
   GET_IS_FOLLOWER,
   GET_REPOSITORIES,
+  GET_MORE_REPOSITORIES,
   GET_FOLLOWERS,
   GET_FOLLOWING,
   SEARCH_USER_REPOS,
@@ -179,22 +180,65 @@ export const getRepositories = user => {
     const isAuthUser = user.login === authUser.login;
 
     dispatch({ type: GET_REPOSITORIES.PENDING });
-
+    
     const url = isAuthUser
-      ? '/user/repos?affiliation=owner&sort=updated&per_page=50'
-      : `/users/${user.login}/repos?sort=updated&per_page=50`;
+      ? `/user/repos?affiliation=owner&sort=updated&per_page=50&page=1`
+      : `/users/${user.login}/repos?sort=updated&per_page=50&page=1`;
 
-    v3
-      .getJson(url, accessToken)
-      .then(data => {
+    let lastPage = null;
+
+    v3.get(url, accessToken)
+      .then(response => {
+        lastPage = +response.headers
+          .get('Link')
+          .match(/<.*[&?]page=(\d+).*>;\s+rel="last"/)[1];
+
+        return response.json();
+      })
+      .then(result => {
         dispatch({
           type: GET_REPOSITORIES.SUCCESS,
-          payload: data,
+          payload: result,
+          lastPage,
+          hasMoreRepositories: lastPage > 1,
         });
       })
       .catch(error => {
         dispatch({
           type: GET_REPOSITORIES.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+export const getMoreRepositories = (user, page) => {
+  return (dispatch, getState) => {
+    const {
+      auth: { accessToken, user: authUser },
+      user: { lastPage },
+    } = getState();
+    const isAuthUser = user.login === authUser.login;
+
+    dispatch({ type: GET_MORE_REPOSITORIES.PENDING });
+
+    const url = isAuthUser
+      ? '/user/repos?affiliation=owner&sort=updated&per_page=50&page=${page}'
+      : `/users/${user.login}/repos?sort=updated&per_page=50&page=${page}`;
+
+    v3
+      .getJson(url, accessToken)
+      .then(data => {
+        dispatch({
+          type: GET_MORE_REPOSITORIES.SUCCESS,
+          payload: data,
+          hasMoreRepositories: lastPage > page,
+          page,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: GET_MORE_REPOSITORIES.ERROR,
           payload: error,
         });
       });

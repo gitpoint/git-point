@@ -11,7 +11,7 @@ import {
   SearchBar,
 } from 'components';
 import { colors } from 'config';
-import { getRepositories, searchUserRepos } from 'user';
+import { getRepositories, getMoreRepositories, searchUserRepos } from 'user';
 
 const mapStateToProps = state => ({
   authUser: state.auth.user,
@@ -20,6 +20,8 @@ const mapStateToProps = state => ({
   searchedUserRepos: state.user.searchedUserRepos,
   isPendingRepositories: state.user.isPendingRepositories,
   isPendingSearchUserRepos: state.user.isPendingSearchUserRepos,
+  page: state.user.page,
+  hasMoreRepositories: state.user.hasMoreRepositories,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -27,6 +29,7 @@ const mapDispatchToProps = dispatch =>
     {
       getRepositories,
       searchUserRepos,
+      getMoreRepositories,
     },
     dispatch
   );
@@ -54,6 +57,7 @@ const styles = StyleSheet.create({
 
 class RepositoryList extends Component {
   props: {
+    getMoreRepositories: Function,
     getRepositories: Function,
     searchUserRepos: Function,
     authUser: Object,
@@ -63,6 +67,8 @@ class RepositoryList extends Component {
     isPendingRepositories: boolean,
     isPendingSearchUserRepos: boolean,
     navigation: Object,
+    page: number,
+    hasMoreRepositories: boolean,
   };
 
   state: {
@@ -121,8 +127,12 @@ class RepositoryList extends Component {
       isPendingRepositories,
       isPendingSearchUserRepos,
       navigation,
+      getMoreRepositoriesByDispatch,
+      hasMoreRepositories,
+      page,
     } = this.props;
     const repoCount = navigation.state.params.repoCount;
+    const user = navigation.state.params.user;
     const { searchStart, searchFocus } = this.state;
     const loading =
       (isPendingRepositories && !searchStart) ||
@@ -167,6 +177,11 @@ class RepositoryList extends Component {
                     showFullName={authUser.login !== item.owner.login}
                     navigation={navigation}
                   />}
+                onEndReached={
+                  !hasMoreRepositories
+                    ? () => null
+                    : () => getMoreRepositoriesByDispatch(user, page + 1)
+                }
               />
             </View>}
         </View>
