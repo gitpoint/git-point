@@ -229,9 +229,9 @@ export const es = {
       deleted: 'ELIMINADOS',
       fileRenamed: 'Archivo renombrado sin cambios',
     },
-	readMe: {
-      readMeActions: 'Acciones de README',
-	  noReadMeFound: 'No se ha encontrado README.md',
+    readMe: {
+      readMeActions: 'Acciones README',
+      noReadMeFound: 'No se ha encontrado README.md',
     },
   },
   organization: {

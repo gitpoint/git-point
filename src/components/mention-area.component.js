@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import fuzzysort from 'fuzzysort';
 import {
   Text,
   View,
@@ -7,7 +8,6 @@ import {
   ScrollView,
   StyleSheet,
 } from 'react-native';
-import FuzzySearch from 'fuzzy-search';
 
 import { animations, fonts, normalize } from 'config';
 
@@ -89,11 +89,16 @@ export class MentionArea extends Component {
   }
 
   getSearchedUsers() {
-    const { users, text, trigger } = this.props;
+    const { users, text, trigger = '@' } = this.props;
+    const searchableText = text.slice(text.lastIndexOf(trigger) + 1);
+    const results = fuzzysort
+      .go(searchableText, users, {
+        highlightMatches: false,
+        threshold: -200,
+      })
+      .map(user => user.target);
 
-    const base = new FuzzySearch(users, [], { sort: true });
-
-    return base.search(text.slice(text.lastIndexOf(trigger) + 1, text.length));
+    return results;
   }
 
   startTracking() {

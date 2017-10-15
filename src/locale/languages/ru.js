@@ -229,6 +229,7 @@ export const ru = {
     },
     readMe: {
       readMeActions: 'Действия с README',
+      noReadMeFound: 'He yдалось найти README.md',
     },
   },
   organization: {
