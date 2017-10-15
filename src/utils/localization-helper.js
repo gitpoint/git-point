@@ -34,10 +34,14 @@ export async function getCurrentLocale() {
 export const configureLocale = locale => {
   I18n.locale = locale;
 
-  const momentLocale =
-    moment.locales().indexOf(locale) !== -1 ? locale : common.defaultLocale;
+  const checkLocales = [locale, locale.substr(0, 2)];
+  const localeForMoment =
+    moment
+      .locales()
+      .filter(momentLocale => checkLocales.includes(momentLocale))[0] ||
+    common.defaultLocale;
 
-  moment.updateLocale(momentLocale, {
+  moment.updateLocale(localeForMoment, {
     relativeTime: translate('common.relativeTime', locale),
   });
 };
