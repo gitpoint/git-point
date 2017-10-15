@@ -2798,9 +2798,9 @@ function-bind@^1.0.2, function-bind@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.0.tgz#16176714c801798e4e8f2cf7f7529467bb4a5771"
 
-fuzzy-search@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/fuzzy-search/-/fuzzy-search-1.4.0.tgz#563ea255ee5f1677e7e98d8e370e3320c1d950b4"
+fuzzysort@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/fuzzysort/-/fuzzysort-1.0.1.tgz#43c568e89f4049b96bba2715a8732bd8457e8777"
 
 gauge@~1.2.5:
   version "1.2.7"
