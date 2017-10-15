@@ -13,10 +13,11 @@ import {
   Image,
   Platform,
 } from 'react-native';
-import { ButtonGroup, Card, Icon, Button } from 'react-native-elements';
+import { ButtonGroup, Card, Icon } from 'react-native-elements';
 
 import { v3 } from 'api';
 import {
+  Button,
   ViewContainer,
   LoadingContainer,
   NotificationListItem,
@@ -118,18 +119,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   noneTitle: {
+    paddingHorizontal: 15,
     fontSize: normalize(16),
     textAlign: 'center',
     ...fonts.fontPrimary,
   },
-  markAllAsReadButton: {
-    marginVertical: 15,
+  markAllAsReadButtonContainer: {
     marginTop: 0,
     marginBottom: 20,
-    paddingVertical: 3,
-    borderColor: colors.greyMid,
-    borderWidth: 1,
-    borderRadius: 3,
+    marginHorizontal: 10,
   },
   contentBlock: {
     flex: 1,
@@ -341,7 +339,7 @@ class Notifications extends Component {
 
     markAsRead(notification.id);
     navigation.navigate('Issue', {
-      issueURL: notification.subject.url.replace('pulls', 'issues'),
+      issueURL: notification.subject.url.replace(/pulls\/(\d+)$/, 'issues/$1'),
       isPR: notification.subject.type === 'PullRequest',
       language: this.props.language,
     });
@@ -371,21 +369,15 @@ class Notifications extends Component {
     return (
       <View>
         {isFirstItem &&
-          isFirstTab &&
-          <Button
-            icon={{
-              name: 'check',
-              size: 20,
-              type: 'octicon',
-              color: colors.black,
-            }}
-            title={translate('notifications.main.markAllAsRead')}
-            buttonStyle={styles.markAllAsReadButton}
-            color={colors.black}
-            backgroundColor={colors.white}
-            textStyle={styles.buttonGroupText}
-            onPress={() => markAllNotificationsAsRead()}
-          />}
+          isFirstTab && (
+            <View style={styles.markAllAsReadButtonContainer}>
+              <Button
+                icon={{ name: 'check', type: 'octicon' }}
+                onPress={() => markAllNotificationsAsRead()}
+                title={translate('notifications.main.markAllAsRead')}
+              />
+            </View>
+          )}
 
         <Card containerStyle={styles.repositoryContainer}>
           <View style={styles.headerContainer}>
@@ -417,7 +409,7 @@ class Notifications extends Component {
           </View>
 
           <ScrollView>
-            {notifications.map(notification =>
+            {notifications.map(notification => (
               <NotificationListItem
                 key={notification.id}
                 notification={notification}
@@ -425,7 +417,7 @@ class Notifications extends Component {
                 navigationAction={notify => this.navigateToThread(notify)}
                 navigation={this.props.navigation}
               />
-            )}
+            ))}
           </ScrollView>
         </Card>
       </View>
@@ -464,7 +456,7 @@ class Notifications extends Component {
             onLayout={this.saveContentBlockHeight}
             style={styles.contentBlock}
           >
-            {isRetrievingNotifications &&
+            {isRetrievingNotifications && (
               <View
                 style={[styles.textContainer, { height: contentBlockHeight }]}
               >
@@ -477,9 +469,10 @@ class Notifications extends Component {
                   style={styles.marginSpacing}
                   center
                 />
-              </View>}
+              </View>
+            )}
 
-            {!isRetrievingNotifications &&
+            {!isRetrievingNotifications && (
               <FlatList
                 ref={ref => {
                   this.notificationsList = ref;
@@ -491,19 +484,21 @@ class Notifications extends Component {
                 keyExtractor={this.keyExtractor}
                 renderItem={this.renderItem}
                 ListEmptyComponent={
-                  !isLoadingNewNotifications &&
-                  <View
-                    style={[
-                      styles.textContainer,
-                      { height: contentBlockHeight },
-                    ]}
-                  >
-                    <Text style={styles.noneTitle}>
-                      {translate('notifications.main.noneMessage', language)}
-                    </Text>
-                  </View>
+                  !isLoadingNewNotifications && (
+                    <View
+                      style={[
+                        styles.textContainer,
+                        { height: contentBlockHeight },
+                      ]}
+                    >
+                      <Text style={styles.noneTitle}>
+                        {translate('notifications.main.noneMessage', language)}
+                      </Text>
+                    </View>
+                  )
                 }
-              />}
+              />
+            )}
           </View>
         </View>
       </ViewContainer>

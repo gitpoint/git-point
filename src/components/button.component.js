@@ -9,6 +9,9 @@ const types = {
       borderColor: '#adadad',
       backgroundColor: '#e6e6e6',
     },
+    iconStyle: {
+      color: '#333333',
+    },
     textStyle: {
       color: '#333333',
     },
@@ -188,7 +191,12 @@ export class Button extends Component {
         }}
         disabledStyle={disabledStyle}
         icon={
-          icon && { ...defaultIconStyle, ...sizes[size].iconStyle, ...icon }
+          icon && {
+            ...defaultIconStyle,
+            ...types[type].iconStyle,
+            ...sizes[size].iconStyle,
+            ...icon,
+          }
         }
       />
     );

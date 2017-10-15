@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const LabelButton = ({ label, largeWithTag }: Props) =>
+export const LabelButton = ({ label, largeWithTag }: Props) => (
   <Button
     title={label.name}
     textStyle={fonts.fontPrimarySemiBold}
@@ -55,4 +55,5 @@ export const LabelButton = ({ label, largeWithTag }: Props) =>
         color: getFontColorByBackground(label.color),
       }
     }
-  />;
+  />
+);

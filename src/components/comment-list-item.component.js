@@ -3,14 +3,7 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  Platform,
-} from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import { GithubHtmlView } from 'components';
 import { Icon } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
@@ -20,19 +13,10 @@ import moment from 'moment/min/moment-with-locales.min';
 import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
 
-const lightFont = {
-  ...fonts.fontPrimaryLight,
-};
-
-const regularFont = {
-  ...fonts.fontPrimary,
-};
-
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 10,
     paddingRight: 10,
-    paddingBottom: 10,
+    paddingTop: 10,
     backgroundColor: 'transparent',
   },
   header: {
@@ -62,35 +46,34 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   linkDescription: {
-    ...fonts.fontPrimarySemiBold,
+    ...fonts.fontPrimaryBold,
+    fontSize: normalize(13),
     color: colors.primaryDark,
   },
   date: {
     color: colors.greyDark,
   },
   commentContainer: {
-    paddingTop: 4,
-    paddingBottom: 2,
+    paddingTop: 5,
     marginLeft: 54,
     borderBottomColor: colors.greyLight,
     borderBottomWidth: 1,
   },
+  commentBottomPadding: {
+    paddingBottom: 15,
+  },
   commentText: {
-    fontSize: Platform.OS === 'ios' ? normalize(11) : normalize(12),
+    fontSize: normalize(12),
     color: colors.primaryDark,
   },
   commentTextNone: {
+    ...fonts.fontPrimary,
     color: colors.primaryDark,
     fontStyle: 'italic',
   },
-  commentLight: {
-    ...lightFont,
-  },
-  commentRegular: {
-    ...regularFont,
-  },
   actionButtonIconContainer: {
-    padding: 5,
+    paddingTop: 5,
+    paddingBottom: 10,
     alignItems: 'flex-end',
     justifyContent: 'center',
   },
@@ -130,20 +113,24 @@ class CommentListItemComponent extends Component {
   isIssueDescription = () =>
     Object.prototype.hasOwnProperty.call(this.props.comment, 'repository_url');
 
+  commentActionSheetOptions = comment => {
+    const { language } = this.props;
+    const actions = [translate('issue.comment.editAction', language)];
+
+    if (!comment.repository_url) {
+      actions.push(translate('issue.comment.deleteAction', language));
+    }
+
+    return actions;
+  };
+
   render() {
     const { comment, language, navigation, authUser, onLinkPress } = this.props;
 
     const commentPresent = comment.body_html && comment.body_html !== '';
 
-    const commentActionSheetOptions = [
-      translate('issue.comment.editAction', language),
-      translate('issue.comment.deleteAction', language),
-    ];
-
     const isActionMenuEnabled =
-      comment.user &&
-      authUser.login === comment.user.login &&
-      !this.isIssueDescription();
+      comment.user && authUser.login === comment.user.login;
 
     return (
       <View style={styles.container}>
@@ -197,41 +184,35 @@ class CommentListItemComponent extends Component {
           </View>
         </View>
 
-        {!!commentPresent && (
-          <View style={styles.commentContainer}>
+        <View
+          style={[
+            styles.commentContainer,
+            !isActionMenuEnabled && styles.commentBottomPadding,
+          ]}
+        >
+          {commentPresent ? (
             <GithubHtmlView
               source={comment.body_html}
               onLinkPress={onLinkPress}
             />
-
-            {isActionMenuEnabled && (
-              <View style={styles.actionButtonIconContainer}>
-                <Icon
-                  color={colors.grey}
-                  size={20}
-                  name={'ellipsis-h'}
-                  type={'font-awesome'}
-                  onPress={this.showMenu}
-                />
-              </View>
-            )}
-          </View>
-        )}
-
-        {!commentPresent && (
-          <View style={styles.commentContainer}>
-            <Text
-              style={[
-                styles.commentTextNone,
-                Platform.OS === 'ios'
-                  ? styles.commentLight
-                  : styles.commentRegular,
-              ]}
-            >
+          ) : (
+            <Text style={styles.commentTextNone}>
               {translate('issue.main.noDescription', language)}
             </Text>
-          </View>
-        )}
+          )}
+
+          {isActionMenuEnabled && (
+            <View style={styles.actionButtonIconContainer}>
+              <Icon
+                color={colors.grey}
+                size={20}
+                name={'ellipsis-h'}
+                type={'font-awesome'}
+                onPress={this.showMenu}
+              />
+            </View>
+          )}
+        </View>
 
         <ActionSheet
           ref={o => {
@@ -239,10 +220,10 @@ class CommentListItemComponent extends Component {
           }}
           title={translate('issue.comment.commentActions', language)}
           options={[
-            ...commentActionSheetOptions,
+            ...this.commentActionSheetOptions(comment),
             translate('common.cancel', language),
           ]}
-          cancelButtonIndex={commentActionSheetOptions.length}
+          cancelButtonIndex={this.commentActionSheetOptions(comment).length}
           onPress={this.handlePress}
         />
       </View>

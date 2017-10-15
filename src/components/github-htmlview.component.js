@@ -9,22 +9,14 @@ import entities from 'entities';
 import { ImageZoom } from 'components';
 import { colors, fonts, normalize } from 'config';
 
-const lightFont = {
-  ...fonts.fontPrimaryLight,
-};
-
-const regularFont = {
-  ...fonts.fontPrimary,
-};
-
 const textStyle = Platform.select({
   ios: {
-    ...lightFont,
-    fontSize: normalize(11),
+    ...fonts.fontPrimary,
+    fontSize: normalize(12),
     color: colors.primaryDark,
   },
   android: {
-    ...regularFont,
+    ...fonts.fontPrimary,
     fontSize: normalize(12),
     color: colors.primaryDark,
   },
@@ -132,16 +124,19 @@ const cellForNode = node =>
     ? CellWithImage
     : Cell;
 
-const hasAncestor = (node, ancestorName) => {
+const hasAncestor = (node, candidates) => {
   if (node.parent === null) {
     return false;
   }
 
-  if (node.parent.type === 'tag' && node.parent.name === ancestorName) {
+  if (
+    node.parent.type === 'tag' &&
+    candidates.indexOf(node.parent.name) !== -1
+  ) {
     return true;
   }
 
-  return hasAncestor(node.parent, ancestorName);
+  return hasAncestor(node.parent, candidates);
 };
 
 const onlyTagsChildren = node =>
@@ -186,6 +181,7 @@ export class GithubHtmlView extends Component {
         .replace(/<span[^>]*><img([^>]+)><\/span>/g, '<img$1>')
         // Break images free from big spans
         .replace(/<br>\n<img([^>]+)>/g, '<br></span><img$1><span>')
+        .replace(/<span([^>]*)><img([^>]+)><br>\n/g, '<img$2><span$1><br>')
         // Code syntax
         .replace(/<div class="highlight[^"]*"><pre>/g, '<pre><code>')
         .replace('</pre></div>', '</code></pre>')
@@ -203,7 +199,7 @@ export class GithubHtmlView extends Component {
       /* eslint-disable no-unused-vars */
       const onLinkPress = this.props.onLinkPress;
       const renderers = {
-        blockquote: (node, index, siblings, parent, defaultRenderer) =>
+        blockquote: (node, index, siblings, parent, defaultRenderer) => (
           <View
             key={index}
             style={{
@@ -220,11 +216,11 @@ export class GithubHtmlView extends Component {
             >
               {defaultRenderer(node.children, parent)}
             </Text>
-          </View>,
-        pre: (node, index, siblings, parent, defaultRenderer) =>
-          <View key={index}>
-            {defaultRenderer(node.children, node)}
-          </View>,
+          </View>
+        ),
+        pre: (node, index, siblings, parent, defaultRenderer) => (
+          <View key={index}>{defaultRenderer(node.children, node)}</View>
+        ),
         code: (node, index, siblings, parent, defaultRenderer) => {
           if (parent.name === 'pre') {
             return (
@@ -247,10 +243,11 @@ export class GithubHtmlView extends Component {
         h4: headingRenderer,
         h5: headingRenderer,
         h6: headingRenderer,
-        hr: (node, index, siblings, parent, defaultRenderer) =>
-          <View key={index} style={{ ...hrStyle }} />,
+        hr: (node, index, siblings, parent, defaultRenderer) => (
+          <View key={index} style={{ ...hrStyle }} />
+        ),
         img: (node, index, siblings, parent, defaultRenderer) => {
-          if (hasAncestor(node, 'li')) {
+          if (hasAncestor(node, ['ol', 'ul', 'span'])) {
             return (
               <Text
                 style={linkStyle}
@@ -263,7 +260,7 @@ export class GithubHtmlView extends Component {
             );
           }
 
-          const zoom = hasAncestor(node, 'table') ? 0.3 : 0.6;
+          const zoom = hasAncestor(node, ['table']) ? 0.3 : 0.6;
 
           return (
             <ImageZoom
@@ -277,21 +274,23 @@ export class GithubHtmlView extends Component {
             />
           );
         },
-        table: (node, index, siblings, parent, defaultRenderer) =>
+        table: (node, index, siblings, parent, defaultRenderer) => (
           <Table key={index} style={{ width: width * 0.8 }}>
             {defaultRenderer(onlyTagsChildren(node), node)}
-          </Table>,
+          </Table>
+        ),
         thead: (node, index, siblings, parent, defaultRenderer) =>
           defaultRenderer(onlyTagsChildren(node), node),
         tbody: (node, index, siblings, parent, defaultRenderer) =>
           defaultRenderer(onlyTagsChildren(node), node),
-        tr: (node, index, siblings, parent, defaultRenderer) =>
+        tr: (node, index, siblings, parent, defaultRenderer) => (
           <TableWrapper
             key={index}
             style={{ width: width * 0.8, flexDirection: 'row' }}
           >
             {defaultRenderer(onlyTagsChildren(node), node)}
-          </TableWrapper>,
+          </TableWrapper>
+        ),
         td: (node, index, siblings, parent, defaultRenderer) => {
           const Component = cellForNode(node);
           const styleText = {
@@ -323,13 +322,18 @@ export class GithubHtmlView extends Component {
           );
         },
         a: (node, index, siblings, parent, defaultRenderer) => {
+          if (typeof node.children[0] === 'undefined') {
+            // Probably a named anchor, ignore it for now & avoid extra space.
+            return null;
+          }
+
           return (
             <Text
               key={index}
               style={styles.strong}
               onPress={() => onLinkPress(node)}
             >
-              {node.children[0].data}
+              {defaultRenderer(node.children, node)}
             </Text>
           );
         },

@@ -7,6 +7,7 @@ import { colors, languageColors, fonts, normalize } from 'config';
 
 type Props = {
   repository: Object,
+  showFullName: boolean,
   navigation: Object,
 };
 
@@ -18,22 +19,14 @@ const styles = StyleSheet.create({
   },
   titleWrapper: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   title: {
     color: colors.primaryDark,
     ...fonts.fontPrimarySemiBold,
   },
-  private: {
-    borderColor: 'rgba(27, 31, 35, 0.15)',
-    borderRadius: 2,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    color: colors.greyDark,
-    fontSize: normalize(10),
-    marginLeft: 8,
-    paddingLeft: 4,
-    paddingRight: 2,
-    paddingTop: 2,
+  privateIconContainer: {
+    marginLeft: 6,
   },
   description: {
     color: colors.primaryDark,
@@ -58,14 +51,23 @@ const styles = StyleSheet.create({
   },
 });
 
-const renderTitle = repository =>
+const renderTitle = (repository, showFullName) => (
   <View style={styles.wrapper}>
     <View style={styles.repositoryContainer}>
       <View style={styles.titleWrapper}>
         <Text style={styles.title}>
-          {repository.full_name}
+          {showFullName ? repository.full_name : repository.name}
         </Text>
-        {repository.private && <Text style={styles.private}>Private</Text>}
+        {repository.private && (
+          <View style={styles.privateIconContainer}>
+            <Icon
+              size={16}
+              name="lock"
+              type="octicon"
+              color={colors.greyDarkest}
+            />
+          </View>
+        )}
       </View>
       <Text style={styles.description}>
         {emojifyText(repository.description)}
@@ -98,24 +100,28 @@ const renderTitle = repository =>
         {abbreviateNumber(repository.forks_count)}
       </Text>
 
-      {repository.language !== null &&
+      {repository.language !== null && (
         <Icon
           containerStyle={styles.extraInfoIcon}
           name="fiber-manual-record"
           size={15}
           color={languageColors[repository.language]}
-        />}
+        />
+      )}
 
-      <Text style={styles.extraInfoSubject}>
-        {repository.language}
-      </Text>
+      <Text style={styles.extraInfoSubject}>{repository.language}</Text>
     </View>
-  </View>;
+  </View>
+);
 
-export const RepositoryListItem = ({ repository, navigation }: Props) =>
+export const RepositoryListItem = ({
+  repository,
+  showFullName,
+  navigation,
+}: Props) => (
   <ListItem
     key={repository.id}
-    title={renderTitle(repository)}
+    title={renderTitle(repository, showFullName)}
     titleStyle={styles.title}
     rightIcon={{
       name: repository.fork ? 'repo-forked' : 'repo',
@@ -124,4 +130,9 @@ export const RepositoryListItem = ({ repository, navigation }: Props) =>
     }}
     underlayColor={colors.greyLight}
     onPress={() => navigation.navigate('Repository', { repository })}
-  />;
+  />
+);
+
+RepositoryListItem.defaultProps = {
+  showFullName: true,
+};

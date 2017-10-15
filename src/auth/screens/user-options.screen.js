@@ -16,7 +16,12 @@ import CookieManager from 'react-native-cookies';
 
 import { ViewContainer, SectionList } from 'components';
 import { colors, fonts, normalize } from 'config';
-import { resetNavigationTo, translate, emojifyText } from 'utils';
+import {
+  resetNavigationTo,
+  openURLInView,
+  translate,
+  emojifyText,
+} from 'utils';
 import { version } from 'package.json';
 import codePush from 'react-native-code-push';
 import { signOut, changeLanguage } from 'auth';
@@ -24,6 +29,7 @@ import languages from './language-settings';
 
 const mapStateToProps = state => ({
   language: state.auth.language,
+  user: state.auth.user,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -90,6 +96,7 @@ class UserOptions extends Component {
     changeLanguage: () => void,
     signOut: () => void,
     navigation: Object,
+    user: Object,
   };
 
   constructor(props) {
@@ -166,9 +173,7 @@ class UserOptions extends Component {
                         <Text style={styles.flag}>
                           {emojifyText(item.emojiCode)}
                         </Text>
-                        <Text style={styles.listTitle}>
-                          {item.name}
-                        </Text>
+                        <Text style={styles.listTitle}>{item.name}</Text>
                       </View>
                     }
                     titleStyle={styles.listTitle}
@@ -187,6 +192,13 @@ class UserOptions extends Component {
 
           <SectionList>
             <ListItem
+              title={translate('common.openInBrowser', language)}
+              titleStyle={styles.listTitle}
+              onPress={() => openURLInView(this.props.user.html_url)}
+              underlayColor={colors.greyLight}
+            />
+
+            <ListItem
               title={translate('auth.userOptions.privacyPolicy', language)}
               titleStyle={styles.listTitle}
               onPress={() =>
@@ -196,7 +208,13 @@ class UserOptions extends Component {
                 })}
               underlayColor={colors.greyLight}
             />
-
+            <ListItem
+              title={translate('auth.userOptions.donate', language)}
+              titleStyle={styles.listTitle}
+              onPress={() =>
+                openURLInView('https://opencollective.com/git-point')}
+              underlayColor={colors.greyLight}
+            />
             <ListItem
               title={translate('auth.userOptions.signOut', language)}
               titleStyle={styles.logoutTitle}
@@ -207,9 +225,7 @@ class UserOptions extends Component {
           </SectionList>
 
           <TouchableOpacity style={styles.update} onPress={this.checkForUpdate}>
-            <Text style={styles.updateText}>
-              GitPoint v{version}
-            </Text>
+            <Text style={styles.updateText}>GitPoint v{version}</Text>
             <Text style={[styles.updateText, styles.updateTextSub]}>
               {this.state.updateText}
             </Text>

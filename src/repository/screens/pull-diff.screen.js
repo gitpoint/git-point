@@ -129,13 +129,13 @@ class PullDiff extends Component {
               filename={filename}
             />
 
-            {chunk.changes.map((change, changesIndex) =>
+            {chunk.changes.map((change, changesIndex) => (
               <CodeLine
                 key={changesIndex}
                 change={change}
                 filename={filename}
               />
-            )}
+            ))}
           </View>
         </ScrollView>
       );
@@ -159,7 +159,7 @@ class PullDiff extends Component {
             <DiffBlocks additions={item.additions} deletions={item.deletions} />
           </View>
 
-          {item.new &&
+          {item.new && (
             <Text style={styles.fileTitle}>
               <Text style={styles.newIndicator}>
                 {translate('repository.pullDiff.new', language)}
@@ -168,9 +168,10 @@ class PullDiff extends Component {
               <Text style={[styles.fileTitle, styles.codeStyle]}>
                 {item.to}
               </Text>
-            </Text>}
+            </Text>
+          )}
 
-          {item.deleted &&
+          {item.deleted && (
             <Text style={styles.fileTitle}>
               <Text style={styles.deletedIndicator}>
                 {translate('repository.pullDiff.deleted', language)}
@@ -179,13 +180,17 @@ class PullDiff extends Component {
               <Text style={[styles.fileTitle, styles.codeStyle]}>
                 {item.from}
               </Text>
-            </Text>}
+            </Text>
+          )}
 
           {!item.new &&
-            !item.deleted &&
-            <Text style={[styles.fileTitle, styles.codeStyle]}>
-              {item.from === item.to ? item.to : `${item.from} \n → ${item.to}`}
-            </Text>}
+            !item.deleted && (
+              <Text style={[styles.fileTitle, styles.codeStyle]}>
+                {item.from === item.to
+                  ? item.to
+                  : `${item.from} \n → ${item.to}`}
+              </Text>
+            )}
         </ScrollView>
 
         {item.chunks.length > 0 && chunks}
@@ -193,10 +198,11 @@ class PullDiff extends Component {
         {item.chunks.length === 0 &&
           !item.new &&
           !item.deleted &&
-          item.from !== item.to &&
-          <Text style={styles.noChangesMessage}>
-            {translate('repository.pullDiff.fileRenamed', language)}
-          </Text>}
+          item.from !== item.to && (
+            <Text style={styles.noChangesMessage}>
+              {translate('repository.pullDiff.fileRenamed', language)}
+            </Text>
+          )}
       </Card>
     );
   };

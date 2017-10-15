@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const Badge = ({ color, backgroundColor, text, largeText }: Props) =>
+export const Badge = ({ color, backgroundColor, text, largeText }: Props) => (
   <View style={StyleSheet.flatten([styles.badge, { backgroundColor }])}>
     <Text
       style={[
@@ -44,4 +44,5 @@ export const Badge = ({ color, backgroundColor, text, largeText }: Props) =>
     >
       {text}
     </Text>
-  </View>;
+  </View>
+);

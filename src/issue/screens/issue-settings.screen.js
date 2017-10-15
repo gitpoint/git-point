@@ -11,7 +11,7 @@ import {
   UserListItem,
   LabelListItem,
 } from 'components';
-import { translate } from 'utils';
+import { translate, openURLInView } from 'utils';
 import { colors, fonts } from 'config';
 import { getLabels } from 'repository';
 import { editIssue, changeIssueLockStatus } from '../issue.action';
@@ -149,6 +149,8 @@ class IssueSettings extends Component {
     );
   };
 
+  openURLInBrowser = () => openURLInView(this.props.issue.html_url);
+
   render() {
     const { issue, isMerged, language, authUser, navigation } = this.props;
     const issueType = issue.pull_request
@@ -170,7 +172,7 @@ class IssueSettings extends Component {
             noItemsMessage={translate('issue.settings.noneMessage', language)}
             title={translate('issue.settings.labelsTitle', language)}
           >
-            {issue.labels.map(item =>
+            {issue.labels.map(item => (
               <LabelListItem
                 label={item}
                 key={item.id}
@@ -192,7 +194,7 @@ class IssueSettings extends Component {
                     }
                   )}
               />
-            )}
+            ))}
           </SectionList>
 
           <SectionList
@@ -219,7 +221,7 @@ class IssueSettings extends Component {
             noItemsMessage={translate('issue.settings.noneMessage', language)}
             title={translate('issue.settings.assigneesTitle', language)}
           >
-            {issue.assignees.map(item =>
+            {issue.assignees.map(item => (
               <UserListItem
                 user={item}
                 key={item.id}
@@ -241,7 +243,7 @@ class IssueSettings extends Component {
                     }
                   )}
               />
-            )}
+            ))}
           </SectionList>
 
           <SectionList
@@ -263,7 +265,7 @@ class IssueSettings extends Component {
               onPress={this.showLockIssueActionSheet}
             />
 
-            {!isMerged &&
+            {!isMerged && (
               <ListItem
                 title={
                   issue.state === 'open'
@@ -282,7 +284,18 @@ class IssueSettings extends Component {
                     : styles.openActionTitle
                 }
                 onPress={this.showChangeIssueStateActionSheet}
-              />}
+              />
+            )}
+          </SectionList>
+
+          <SectionList>
+            <ListItem
+              title={translate('common.openInBrowser', language)}
+              hideChevron
+              underlayColor={colors.greyLight}
+              titleStyle={styles.listItemTitle}
+              onPress={this.openURLInBrowser}
+            />
           </SectionList>
         </ScrollView>
 

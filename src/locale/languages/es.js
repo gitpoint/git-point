@@ -1,41 +1,39 @@
 // Hash: 01ae4880b9b4296907d680e9b909713c36c42491
 // Link: https://github.com/gitpoint/git-point/pull/260
 
-export const en = {
+export const erase = {
   auth: {
     login: {
-      connectingToGitHub: 'Connecting to GitHub...',
-      preparingGitPoint: 'Preparing GitPoint...',
-      cancel: 'CANCEL',
-      welcomeTitle: 'Welcome to GitPoint',
-      welcomeMessage: 'The most feature-rich GitHub client that is 100% free',
+      welcomeTitle: 'Bienvenido a GitPoint',
+      welcomeMessage:
+        'El cliente GitHub más rico en funciones que es 100% gratuito',
       notificationsTitle: 'Control notifications',
       notificationsMessage:
         'View and control all of your unread and participating notifications',
-      reposTitle: 'Repositories and Users',
+      reposTitle: 'Repositorios y Usuarios',
       reposMessage:
         'Easily obtain repository, user and organization information',
-      issuesTitle: 'Issues and Pull Requests',
+      issuesTitle: 'Issues y Pull Requests',
       issuesMessage:
         'Communicate on conversations, merge pull requests and more',
       signInButton: 'SIGN IN',
     },
     welcome: {
-      welcomeTitle: 'Welcome to GitPoint',
+      welcomeTitle: 'Bienvenido a GitPoint',
     },
     events: {
       welcomeMessage:
         "Welcome! This is your news feed - it'll help you keep up with recent activity on repositories you watch and people you follow.",
       commitCommentEvent: 'commented on commit',
-      createEvent: 'created {{object}}',
-      deleteEvent: 'deleted {{object}}',
-      issueCommentEvent: '{{action}} on {{type}}',
-      issueEditedEvent: '{{action}} their comment on {{type}}',
-      issueRemovedEvent: '{{action}} their comment on {{type}}',
+      createEvent: 'creado {{object}}',
+      deleteEvent: 'borrado {{object}}',
+      issueCommentEvent: '{{action}} en {{type}}',
+      issueEditedEvent: '{{action}} tu comentario en {{type}}',
+      issueRemovedEvent: '{{action}} to comentario en {{type}}',
       issuesEvent: '{{action}} issue',
       publicEvent: {
-        action: 'made',
-        connector: 'public',
+        action: 'hizo',
+        connector: 'publico',
       },
       pullRequestEvent: '{{action}} pull request',
       pullRequestReviewEvent: '{{action}} pull request review',
@@ -50,20 +48,20 @@ export const en = {
         issue: 'issue',
       },
       objects: {
-        repository: 'repository',
+        repository: 'repositorio',
         branch: 'branch',
         tag: 'tag',
       },
       actions: {
-        added: 'added',
-        created: 'created',
-        edited: 'edited',
-        deleted: 'deleted',
+        added: 'agregó',
+        created: 'creó',
+        edited: 'editó',
+        deleted: 'borró',
         assigned: 'assigned',
         unassigned: 'unassigned',
         labeled: 'labeled',
         unlabeled: 'unlabeled',
-        opened: 'opened',
+        opened: 'abrió',
         milestoned: 'milestoned',
         demilestoned: 'demilestoned',
         closed: 'closed',
@@ -83,7 +81,7 @@ export const en = {
       },
     },
     profile: {
-      orgsRequestApprovalTop: "Can't see all your organizations?",
+      orgsRequestApprovalTop: 'No puedes ver todas tus organizaciones?',
       orgsRequestApprovalBottom: 'You may have to request approval for them.',
       codePushCheck: 'Check for update',
       codePushChecking: 'Checking for update...',
@@ -92,14 +90,13 @@ export const en = {
       codePushNotApplicable: 'Not applicable in debug mode',
     },
     userOptions: {
-      donate: 'Make a donation',
-      title: 'Options',
-      language: 'Language',
-      privacyPolicy: 'Privacy Policy',
+      title: 'Opciones',
+      language: 'Lenguaje',
+      privacyPolicy: 'Política de privacidad',
       signOut: 'Sign Out',
     },
     privacyPolicy: {
-      title: 'Privacy Policy',
+      title: 'Política de Privacidad',
       effectiveDate: 'Last updated: July 15, 2017',
       introduction:
         "We're glad you decided to use GitPoint. This Privacy Policy is here to inform you about what we do — and do not do — with our user's data.",
@@ -136,7 +133,6 @@ export const en = {
       allButton: 'All',
       retrievingMessage: 'Retrieving notifications',
       noneMessage: "You don't have any notifications of this type",
-      markAllAsRead: 'Mark all as read',
     },
   },
   search: {
@@ -147,8 +143,6 @@ export const en = {
       searchMessage: 'Search for any {{type}}',
       repository: 'repository',
       user: 'user',
-      noUsersFound: 'No users found :(',
-      noRepositoriesFound: 'No repositories found :(',
     },
   },
   user: {
@@ -160,15 +154,14 @@ export const en = {
     repositoryList: {
       title: 'Repositories',
     },
-    followers: {
+    followerList: {
       title: 'Followers',
-      text: 'Followers',
-      followsYou: 'Follows you',
     },
-    following: {
+    followingList: {
       title: 'Following',
-      text: 'Following',
-      followingYou: 'Following',
+    },
+    followYou: {
+      title: 'Follows you',
     },
   },
   repository: {
@@ -201,7 +194,6 @@ export const en = {
       forkedFromMessage: 'forked from',
       starred: 'Starred',
       watching: 'Watching',
-      watchers: 'Watchers',
     },
     codeList: {
       title: 'Code',
@@ -230,8 +222,8 @@ export const en = {
       fileRenamed: 'File renamed without any changes',
     },
     readMe: {
-      readMeActions: 'README Actions',
-      noReadMeFound: 'No README.md found',
+      readMeActions: 'Acciones README',
+      noReadMeFound: 'No se ha encontrado README.md',
     },
   },
   organization: {
@@ -239,7 +231,6 @@ export const en = {
       membersTitle: 'MEMBERS',
       descriptionTitle: 'DESCRIPTION',
     },
-    organizationActions: 'Organization Actions',
   },
   issue: {
     settings: {
@@ -259,18 +250,13 @@ export const en = {
       areYouSurePrompt: 'Are you sure?',
       applyLabelTitle: 'Apply a label to this issue',
     },
-    comment: {
-      commentActions: 'Comment Actions',
-      editCommentTitle: 'Edit Comment',
-      editAction: 'Edit',
-      deleteAction: 'Delete',
-    },
     main: {
       assignees: 'Assignees',
       mergeButton: 'Merge Pull Request',
       noDescription: 'No description provided.',
       lockedCommentInput: 'Locked, but you can still comment...',
       commentInput: 'Add a comment...',
+      commentButton: 'Post',
       lockedIssue: 'Issue is locked',
       states: {
         open: 'Open',
@@ -281,9 +267,6 @@ export const en = {
         issue: 'Issue',
         pullRequest: 'Pull Request',
       },
-      openIssueSubTitle: '#{{number}} opened {{time}} ago by {{user}}',
-      closedIssueSubTitle: '#{{number}} by {{user}} was closed {{time}} ago',
-      issueActions: 'Issue Actions',
     },
     newIssue: {
       title: 'New Issue',
@@ -319,6 +302,8 @@ export const en = {
     email: 'Email',
     website: 'Website',
     repositories: 'Repositories',
+    followers: 'Followers',
+    following: 'Following',
     cancel: 'Cancel',
     yes: 'Yes',
     ok: 'OK',
@@ -337,9 +322,5 @@ export const en = {
       y: '%dy',
       yy: '%dy',
     },
-    abbreviations: {
-      thousand: 'k',
-    },
-    openInBrowser: 'Open in Browser',
   },
 };
