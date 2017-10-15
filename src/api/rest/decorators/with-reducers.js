@@ -1,10 +1,11 @@
 import * as Actions from 'api/rest/actions';
 import { normalize } from 'normalizr';
-import { Alert } from 'react-native';
 
-const displayError = error => {
-  Alert.alert('API Error', error);
-};
+import {
+  splitArgs,
+  displayError,
+  actionNameForCall,
+} from 'utils/decorator-helpers';
 
 export const withReducers = Provider => {
   const client = new Provider();
@@ -13,11 +14,14 @@ export const withReducers = Provider => {
     get: (c, namespace) => {
       return new Proxy(client[namespace], {
         get: (endpoint, call) => (...args) => (dispatch, getState) => {
-          // Used as a key for state.pagination
-          const actionName = `${namespace}_${call}`
-            .replace(/([A-Z])/g, '_$1')
-            .toUpperCase();
+          if (!endpoint[call]) {
+            return displayError(
+              `Unknown API call. Did you implement client.${namespace}.${call}()?`
+            );
+          }
 
+          // Used as a key for state.pagination
+          const actionName = actionNameForCall(namespace, call);
           const action = Actions[actionName];
 
           if (!action) {
@@ -26,28 +30,9 @@ export const withReducers = Provider => {
             );
           }
 
-          if (!endpoint[call]) {
-            return displayError(
-              `Unknown API call. Did you implement client.${namespace}.${call}()?`
-            );
-          }
-
-          // Identify if we have our magical last argument
-          const declaredArgsNumber = endpoint[call].length;
-          const isMagicArgAvailable = args.length === declaredArgsNumber;
-
-          const pureArgs = isMagicArgAvailable
-            ? args.slice(0, args.length - 1)
-            : args;
-          const magicArg = isMagicArgAvailable ? args[args.length - 1] : {};
-
+          const { pureArgs, magicArg } = splitArgs(endpoint[call], args);
           const paginator = getState().pagination[actionName];
           const actionKey = pureArgs.join('-');
-
-          // pagination or entity ? <-
-
-          // Get accessToken from state
-          client.setAccessToken(getState().auth.accessToken);
 
           let finalArgs = args;
 
@@ -71,6 +56,9 @@ export const withReducers = Provider => {
 
             finalArgs = [...pureArgs, magicArg];
           }
+
+          // Get accessToken from state
+          client.setAccessToken(getState().auth.accessToken);
 
           dispatch({
             id: actionKey,
