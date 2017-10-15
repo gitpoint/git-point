@@ -145,7 +145,7 @@ class CommentListItemComponent extends Component {
                     : 'Profile',
                   {
                     user: comment.user,
-                  },
+                  }
                 )}
             >
               <Image
@@ -166,7 +166,7 @@ class CommentListItemComponent extends Component {
                     : 'Profile',
                   {
                     user: comment.user,
-                  },
+                  }
                 )}
             >
               <Text style={styles.linkDescription}>
@@ -227,5 +227,5 @@ class CommentListItemComponent extends Component {
 }
 
 export const CommentListItem = connect(mapStateToProps)(
-  CommentListItemComponent,
+  CommentListItemComponent
 );
