@@ -89,7 +89,7 @@ class CommentListItemComponent extends Component {
     onLinkPress: Function,
     onEditPress: Function,
     onDeletePress: Function,
-    language: string,
+    locale: string,
     navigation: Object,
     authUser: Object,
   };
@@ -114,18 +114,18 @@ class CommentListItemComponent extends Component {
     Object.prototype.hasOwnProperty.call(this.props.comment, 'repository_url');
 
   commentActionSheetOptions = comment => {
-    const { language } = this.props;
-    const actions = [translate('issue.comment.editAction', language)];
+    const { locale } = this.props;
+    const actions = [translate('issue.comment.editAction', locale)];
 
     if (!comment.repository_url) {
-      actions.push(translate('issue.comment.deleteAction', language));
+      actions.push(translate('issue.comment.deleteAction', locale));
     }
 
     return actions;
   };
 
   render() {
-    const { comment, language, navigation, authUser, onLinkPress } = this.props;
+    const { comment, locale, navigation, authUser, onLinkPress } = this.props;
 
     const commentPresent = comment.body_html && comment.body_html !== '';
 
@@ -145,7 +145,7 @@ class CommentListItemComponent extends Component {
                     : 'Profile',
                   {
                     user: comment.user,
-                  },
+                  }
                 )}
             >
               <Image
@@ -166,7 +166,7 @@ class CommentListItemComponent extends Component {
                     : 'Profile',
                   {
                     user: comment.user,
-                  },
+                  }
                 )}
             >
               <Text style={styles.linkDescription}>
@@ -194,7 +194,7 @@ class CommentListItemComponent extends Component {
                 onLinkPress={onLinkPress}
               />
             : <Text style={styles.commentTextNone}>
-                {translate('issue.main.noDescription', language)}
+                {translate('issue.main.noDescription', locale)}
               </Text>}
 
           {isActionMenuEnabled &&
@@ -213,10 +213,10 @@ class CommentListItemComponent extends Component {
           ref={o => {
             this.ActionSheet = o;
           }}
-          title={translate('issue.comment.commentActions', language)}
+          title={translate('issue.comment.commentActions', locale)}
           options={[
             ...this.commentActionSheetOptions(comment),
-            translate('common.cancel', language),
+            translate('common.cancel', locale),
           ]}
           cancelButtonIndex={this.commentActionSheetOptions(comment).length}
           onPress={this.handlePress}
@@ -227,5 +227,5 @@ class CommentListItemComponent extends Component {
 }
 
 export const CommentListItem = connect(mapStateToProps)(
-  CommentListItemComponent,
+  CommentListItemComponent
 );

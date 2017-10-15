@@ -26,7 +26,7 @@ import {
 } from '../repository.action';
 
 const mapStateToProps = state => ({
-  language: state.auth.language,
+  locale: state.auth.locale,
   repository: state.repository.repository,
   searchedOpenPulls: state.repository.searchedOpenPulls,
   searchedClosedPulls: state.repository.searchedClosedPulls,
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
 
 class PullList extends Component {
   props: {
-    language: string,
+    locale: string,
     repository: Object,
     searchedOpenPulls: Array,
     searchedClosedPulls: Array,
@@ -193,12 +193,12 @@ class PullList extends Component {
       type={this.props.navigation.state.params.type}
       issue={item}
       navigation={this.props.navigation}
-      language={this.props.language}
+      locale={this.props.locale}
     />;
 
   render() {
     const {
-      language,
+      locale,
       searchedOpenPulls,
       searchedClosedPulls,
       isPendingSearchOpenPulls,
@@ -230,8 +230,8 @@ class PullList extends Component {
             onPress={this.switchQueryType}
             selectedIndex={searchType}
             buttons={[
-              translate('repository.pullList.openButton', language),
-              translate('repository.pullList.closedButton', language),
+              translate('repository.pullList.openButton', locale),
+              translate('repository.pullList.closedButton', locale),
             ]}
             textStyle={styles.buttonGroupText}
             selectedTextStyle={styles.buttonGroupTextSelected}
@@ -243,7 +243,7 @@ class PullList extends Component {
           searchType === 0 &&
           <LoadingContainer
             animating={isPendingSearchOpenPulls && searchType === 0}
-            text={translate('repository.pullList.searchingMessage', language, {
+            text={translate('repository.pullList.searchingMessage', locale, {
               query,
             })}
             style={styles.marginSpacing}
@@ -253,7 +253,7 @@ class PullList extends Component {
           searchType === 1 &&
           <LoadingContainer
             animating={isPendingSearchClosedPulls && searchType === 1}
-            text={translate('repository.pullList.searchingMessage', language, {
+            text={translate('repository.pullList.searchingMessage', {
               query,
             })}
             style={styles.marginSpacing}
@@ -276,7 +276,7 @@ class PullList extends Component {
           searchType === 0 &&
           <View style={styles.marginSpacing}>
             <Text style={styles.searchTitle}>
-              {translate('repository.pullList.noOpenPulls', language)}
+              {translate('repository.pullList.noOpenPulls', locale)}
             </Text>
           </View>}
 
@@ -286,7 +286,7 @@ class PullList extends Component {
           searchType === 1 &&
           <View style={styles.marginSpacing}>
             <Text style={styles.searchTitle}>
-              {translate('repository.pullList.noOpenPulls', language)}
+              {translate('repository.pullList.noOpenPulls', locale)}
             </Text>
           </View>}
       </ViewContainer>

@@ -31,7 +31,7 @@ import {
 } from '../issue.action';
 
 const mapStateToProps = state => ({
-  language: state.auth.language,
+  locale: state.auth.locale,
   authUser: state.auth.user,
   repository: state.repository.repository,
   contributors: state.repository.contributors,
@@ -76,7 +76,7 @@ class Issue extends Component {
             underlayColor={colors.transparent}
             onPress={() =>
               navigate('IssueSettings', {
-                title: translate('issue.settings.title', state.params.language),
+                title: translate('issue.settings.title', state.params.locale),
                 issue: state.params.issue,
               })}
           />
@@ -120,7 +120,7 @@ class Issue extends Component {
     isDeletingComment: boolean,
     isPendingContributors: boolean,
     // isPostingComment: boolean,
-    language: string,
+    locale: string,
     navigation: Object,
   };
 
@@ -202,10 +202,10 @@ class Issue extends Component {
   getContributorsLink = repository => `${repository}/contributors`;
 
   setNavigationParams = () => {
-    const { navigation, language, repository } = this.props;
+    const { navigation, locale, repository } = this.props;
 
     navigation.setParams({
-      language,
+      locale,
       userHasPushPermission:
         repository.permissions.admin || repository.permissions.push,
     });
@@ -244,7 +244,7 @@ class Issue extends Component {
     const { repository } = this.props;
 
     navigate('EditIssueComment', {
-      title: translate('issue.comment.editCommentTitle', state.params.language),
+      title: translate('issue.comment.editCommentTitle', state.params.locale),
       comment,
       repository,
     });
@@ -262,7 +262,7 @@ class Issue extends Component {
       isMerged,
       isPendingDiff,
       isPendingCheckMerge,
-      language,
+      locale,
       navigation,
     } = this.props;
 
@@ -277,14 +277,14 @@ class Issue extends Component {
         onRepositoryPress={url => this.onRepositoryPress(url)}
         onLinkPress={node => this.onLinkPress(node)}
         userHasPushPermission={navigation.state.params.userHasPushPermission}
-        language={language}
+        locale={locale}
         navigation={navigation}
       />
     );
   };
 
   renderItem = ({ item }) => {
-    const { language } = this.props;
+    const { locale } = this.props;
 
     return (
       <CommentListItem
@@ -292,7 +292,7 @@ class Issue extends Component {
         onLinkPress={node => this.onLinkPress(node)}
         onDeletePress={this.deleteComment}
         onEditPress={this.editComment}
-        language={language}
+        locale={locale}
         navigation={this.props.navigation}
       />
     );
@@ -307,7 +307,7 @@ class Issue extends Component {
       isPendingContributors,
       isPendingIssue,
       isDeletingComment,
-      language,
+      locale,
       navigation,
     } = this.props;
 
@@ -329,57 +329,55 @@ class Issue extends Component {
       ...new Set([...participantNames, ...contributorNames]),
     ].filter(item => !!item);
 
-    const issuesActions = [translate('common.openInBrowser', language)];
+    const issuesActions = [translate('common.openInBrowser', locale)];
 
     return (
       <ViewContainer>
-        {isShowLoadingContainer && (
-          <LoadingContainer animating={isShowLoadingContainer} center />
-        )}
+        {isShowLoadingContainer &&
+          <LoadingContainer animating={isShowLoadingContainer} center />}
 
         {!isPendingComments &&
           !isPendingIssue &&
-          issue && (
-            <KeyboardAvoidingView
-              style={{ flex: 1 }}
-              behavior={'padding'}
-              keyboardVerticalOffset={Platform.select({
-                ios: 65,
-                android: -200,
-              })}
-            >
-              <FlatList
-                ref={ref => {
-                  this.commentsList = ref;
-                }}
-                refreshing={isLoadingData}
-                onRefresh={this.getIssueInformation}
-                contentContainerStyle={{ flexGrow: 1 }}
-                ListHeaderComponent={this.renderHeader}
-                removeClippedSubviews={false}
-                data={fullComments}
-                keyExtractor={this.keyExtractor}
-                renderItem={this.renderItem}
-              />
+          issue &&
+          <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior={'padding'}
+            keyboardVerticalOffset={Platform.select({
+              ios: 65,
+              android: -200,
+            })}
+          >
+            <FlatList
+              ref={ref => {
+                this.commentsList = ref;
+              }}
+              refreshing={isLoadingData}
+              onRefresh={this.getIssueInformation}
+              contentContainerStyle={{ flexGrow: 1 }}
+              ListHeaderComponent={this.renderHeader}
+              removeClippedSubviews={false}
+              data={fullComments}
+              keyExtractor={this.keyExtractor}
+              renderItem={this.renderItem}
+            />
 
-              <CommentInput
-                users={fullUsers}
-                userHasPushPermission={
-                  navigation.state.params.userHasPushPermission
-                }
-                issueLocked={issue.locked}
-                language={language}
-                onSubmit={this.postComment}
-              />
-            </KeyboardAvoidingView>
-          )}
+            <CommentInput
+              users={fullUsers}
+              userHasPushPermission={
+                navigation.state.params.userHasPushPermission
+              }
+              issueLocked={issue.locked}
+              locale={locale}
+              onSubmit={this.postComment}
+            />
+          </KeyboardAvoidingView>}
 
         <ActionSheet
           ref={o => {
             this.ActionSheet = o;
           }}
-          title={translate('issue.main.issueActions', language)}
-          options={[...issuesActions, translate('common.cancel', language)]}
+          title={translate('issue.main.issueActions', locale)}
+          options={[...issuesActions, translate('common.cancel', locale)]}
           cancelButtonIndex={1}
           onPress={this.handleActionSheetPress}
         />
