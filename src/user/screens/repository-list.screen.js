@@ -28,7 +28,7 @@ const mapDispatchToProps = dispatch =>
       getRepositories,
       searchUserRepos,
     },
-    dispatch,
+    dispatch
   );
 
 const styles = StyleSheet.create({
@@ -152,7 +152,7 @@ class RepositoryList extends Component {
 
           {loading &&
             [...Array(searchStart ? repoCount : 10)].map(
-              (item, index) => <LoadingRepositoryListItem key={index} />, // eslint-disable-line react/no-array-index-key
+              (item, index) => <LoadingRepositoryListItem key={index} /> // eslint-disable-line react/no-array-index-key
             )}
 
           {!loading &&
@@ -177,5 +177,5 @@ class RepositoryList extends Component {
 
 export const RepositoryListScreen = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(RepositoryList);

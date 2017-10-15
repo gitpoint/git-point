@@ -52,7 +52,7 @@ const mapDispatchToProps = dispatch =>
       editIssueBody,
       editIssueComment,
     },
-    dispatch,
+    dispatch
   );
 
 class EditIssueComment extends Component {
@@ -145,5 +145,5 @@ class EditIssueComment extends Component {
 
 export const EditIssueCommentScreen = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(EditIssueComment);
