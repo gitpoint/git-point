@@ -191,7 +191,7 @@ export const pl = {
       issuesTitle: 'PROBLEMY',
       noIssuesMessage: 'Brak problemów',
       noOpenIssuesMessage: 'Brak otwartych problemów',
-      viewAllButton: 'Zobasz Wszystko',
+      viewAllButton: 'Zobacz Wszystko',
       newIssueButton: 'Nowy Problem',
       pullRequestTitle: 'PULL REQUESTY',
       noPullRequestsMessage: 'Brak pull requestów',
@@ -208,8 +208,8 @@ export const pl = {
     },
     issueList: {
       title: 'Problemy',
-      openButton: 'Otwarty',
-      closedButton: 'Zamknięty',
+      openButton: 'Otwarte',
+      closedButton: 'Zamknięte',
       searchingMessage: 'Szukanie {{query}}',
       noOpenIssues: 'Brak otwartych problemów!',
       noClosedIssues: 'Brak zamkniętych problemów!',
@@ -229,12 +229,17 @@ export const pl = {
       deleted: 'USUNIĘTY',
       fileRenamed: 'Nazwa pliku zmieniona bez innych zmian',
     },
+    readMe: {
+      readMeActions: 'README Dostępne Akcje',
+      noReadMeFound: 'Brak README.md',
+    },
   },
   organization: {
     main: {
       membersTitle: 'CZŁONKOWIE',
       descriptionTitle: 'OPIS',
     },
+    organizationActions: 'Organizacja Dostępne Akcje',
   },
   issue: {
     settings: {
@@ -276,13 +281,14 @@ export const pl = {
         issue: 'Problem',
         pullRequest: 'Pull Request',
       },
-      openIssueSubTitle: '#{{number}} otworzony {{time}} temu przez {{user}}',
+      openIssueSubTitle: '#{{number}} utworzony {{time}} temu przez {{user}}',
       closedIssueSubTitle:
         '#{{number}} użytkownika {{user}} został zamknięty {{time}} temu',
+      issueActions: 'Problemy Dostępne Akcje',
     },
     newIssue: {
       title: 'Nowy Problem',
-      missingTitleAlert: 'Musisz nadać tytuł problemowi!',
+      missingTitleAlert: 'Musisz zmienić tytuł problemu!',
       issueTitle: 'Tytuł Problemu',
       writeATitle: 'Tutaj wpisz tytuł Twojego problemu',
       issueComment: 'Komentarz do problemu',
@@ -335,5 +341,6 @@ export const pl = {
     abbreviations: {
       thousand: 'ts',
     },
+    openInBrowser: 'Otwórz W Przeglądarce',
   },
 };

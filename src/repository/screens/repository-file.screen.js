@@ -157,7 +157,7 @@ class RepositoryFile extends Component {
       <ViewContainer>
         {isPendingFile && <LoadingContainer animating={isPendingFile} center />}
 
-        {!isPendingFile &&
+        {!isPendingFile && (
           <ScrollView>
             <View style={styles.header}>
               <Icon
@@ -169,20 +169,19 @@ class RepositoryFile extends Component {
               <Text style={styles.headerText}>master</Text>
             </View>
 
-            {isUnknownType &&
+            {isUnknownType && (
               <View style={styles.content}>
                 <ScrollView
                   automaticallyAdjustContentInsets={false}
                   showsHorizontalScrollIndicator={false}
                   horizontal
                 >
-                  <Text style={styles.contentText}>
-                    {fileContent}
-                  </Text>
+                  <Text style={styles.contentText}>{fileContent}</Text>
                 </ScrollView>
-              </View>}
+              </View>
+            )}
 
-            {this.isKnownType(fileType) &&
+            {this.isKnownType(fileType) && (
               <View style={styles.codeContainer}>
                 <SyntaxHighlighter
                   language={fileType}
@@ -194,9 +193,10 @@ class RepositoryFile extends Component {
                 >
                   {fileContent}
                 </SyntaxHighlighter>
-              </View>}
+              </View>
+            )}
 
-            {this.isImage(fileType) &&
+            {this.isImage(fileType) && (
               <View style={styles.imageContainer}>
                 <ImageBackground
                   style={{
@@ -219,8 +219,10 @@ class RepositoryFile extends Component {
                     }}
                   />
                 </ImageBackground>
-              </View>}
-          </ScrollView>}
+              </View>
+            )}
+          </ScrollView>
+        )}
       </ViewContainer>
     );
   }

@@ -13,7 +13,7 @@ import { getReadMe } from '../repository.action';
 const mapStateToProps = state => ({
   readMe: state.repository.readMe,
   isPendingReadMe: state.repository.isPendingReadMe,
-  language: state.auth.language,
+  locale: state.auth.locale,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -59,7 +59,7 @@ class ReadMe extends Component {
     readMe: string,
     isPendingReadMe: boolean,
     navigation: Object,
-    language: string,
+    locale: string,
   };
 
   componentDidMount() {
@@ -90,42 +90,39 @@ class ReadMe extends Component {
   };
 
   render() {
-    const { readMe, isPendingReadMe, language } = this.props;
+    const { readMe, isPendingReadMe, locale } = this.props;
     let noReadMe = null;
 
     if (this.isJsonString(readMe)) {
       noReadMe = JSON.parse(readMe).message;
     }
-    const readmeActions = [translate('common.openInBrowser', language)];
+    const readmeActions = [translate('common.openInBrowser', locale)];
 
     return (
       <ViewContainer>
-        {isPendingReadMe && (
-          <LoadingContainer animating={isPendingReadMe} center />
-        )}
+        {isPendingReadMe &&
+          <LoadingContainer animating={isPendingReadMe} center />}
         {!isPendingReadMe &&
-          !noReadMe && (
-            <MarkdownWebView
-              html={readMe}
-              baseUrl={`${this.props.navigation.state.params.repository
-                .html_url}/raw/master/`}
-            />
-          )}
+          !noReadMe &&
+          <MarkdownWebView
+            html={readMe}
+            baseUrl={`${this.props.navigation.state.params.repository
+              .html_url}/raw/master/`}
+          />}
         {!isPendingReadMe &&
-          noReadMe && (
-            <View style={styles.textContainer}>
-              <Text style={styles.noReadMeTitle}>
-                {translate('repository.readMe.noReadMeFound', language)}
-              </Text>
-            </View>
-          )}
+          noReadMe &&
+          <View style={styles.textContainer}>
+            <Text style={styles.noReadMeTitle}>
+              {translate('repository.readMe.noReadMeFound', locale)}
+            </Text>
+          </View>}
 
         <ActionSheet
           ref={o => {
             this.ActionSheet = o;
           }}
-          title={translate('repository.readMe.readMeActions', language)}
-          options={[...readmeActions, translate('common.cancel', language)]}
+          title={translate('repository.readMe.readMeActions', locale)}
+          options={[...readmeActions, translate('common.cancel', locale)]}
           cancelButtonIndex={1}
           onPress={this.handleActionSheetPress}
         />

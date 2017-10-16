@@ -70,27 +70,28 @@ const MembersListComponent = ({
   smallTitle,
   navigation,
   authUser,
-}: Props) =>
+}: Props) => (
   <View style={[styles.container, containerStyle && containerStyle]}>
     <Text style={smallTitle ? styles.sectionTitleSmall : styles.sectionTitle}>
       {title}
     </Text>
 
     {noMembersMessage &&
-      !members.length &&
-      <List containerStyle={styles.list}>
-        <ListItem
-          title={noMembersMessage}
-          titleStyle={styles.listTitle}
-          hideChevron
-        />
-      </List>}
+      !members.length && (
+        <List containerStyle={styles.list}>
+          <ListItem
+            title={noMembersMessage}
+            titleStyle={styles.listTitle}
+            hideChevron
+          />
+        </List>
+      )}
 
     <FlatList
       style={styles.flatList}
       data={members}
       showsHorizontalScrollIndicator={false}
-      renderItem={({ item }) =>
+      renderItem={({ item }) => (
         <TouchableHighlight
           onPress={() => {
             navigation.navigate(
@@ -109,10 +110,12 @@ const MembersListComponent = ({
               uri: item.avatar_url,
             }}
           />
-        </TouchableHighlight>}
+        </TouchableHighlight>
+      )}
       keyExtractor={item => item.id}
       horizontal
     />
-  </View>;
+  </View>
+);
 
 export const MembersList = connect(mapStateToProps)(MembersListComponent);

@@ -77,19 +77,18 @@ export const NotificationListItem = ({
           />
 
           <View style={styles.titleContainer}>
-            <Text style={styles.title}>
-              {notification.subject.title}
-            </Text>
+            <Text style={styles.title}>{notification.subject.title}</Text>
           </View>
         </TitleComponent>
 
-        {notification.unread &&
+        {notification.unread && (
           <TouchableOpacity
             style={styles.iconContainer}
             onPress={() => iconAction(notification.id)}
           >
             <Icon color={colors.grey} size={22} name="check" type="octicon" />
-          </TouchableOpacity>}
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );

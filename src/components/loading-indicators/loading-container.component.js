@@ -24,11 +24,9 @@ const styles = StyleSheet.create({
   },
 });
 
-export const LoadingContainer = ({ animating, text, center }: Props) =>
+export const LoadingContainer = ({ animating, text, center }: Props) => (
   <View style={[styles.loadingContainer, center && styles.center]}>
     <ActivityIndicator animating={animating} size="large" />
-    {text &&
-      <Text style={styles.text}>
-        {text}
-      </Text>}
-  </View>;
+    {text && <Text style={styles.text}>{text}</Text>}
+  </View>
+);

@@ -112,7 +112,7 @@ export class ParallaxScroll extends Component {
         stickyHeaderHeight={STICKY_HEADER_HEIGHT}
         parallaxHeaderHeight={this.state.parallaxHeaderHeight}
         backgroundSpeed={10}
-        renderBackground={() =>
+        renderBackground={() => (
           <View key="background">
             <View
               style={[
@@ -120,17 +120,17 @@ export class ParallaxScroll extends Component {
                 { height: this.state.parallaxHeaderHeight },
               ]}
             />
-          </View>}
+          </View>
+        )}
         renderForeground={renderContent}
-        renderStickyHeader={() =>
+        renderStickyHeader={() => (
           <View key="sticky-header" style={styles.stickySection}>
-            <Text style={styles.stickySectionText}>
-              {stickyTitle}
-            </Text>
-          </View>}
-        renderFixedHeader={() =>
+            <Text style={styles.stickySectionText}>{stickyTitle}</Text>
+          </View>
+        )}
+        renderFixedHeader={() => (
           <View key="fixed-header">
-            {navigateBack &&
+            {navigateBack && (
               <View style={styles.fixedSectionLeft}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                   <Icon
@@ -140,9 +140,10 @@ export class ParallaxScroll extends Component {
                     underlayColor="transparent"
                   />
                 </TouchableOpacity>
-              </View>}
+              </View>
+            )}
 
-            {showMenu &&
+            {showMenu && (
               <View style={styles.fixedSectionRight}>
                 <TouchableOpacity onPress={menuAction}>
                   <Icon
@@ -152,8 +153,10 @@ export class ParallaxScroll extends Component {
                     underlayColor="transparent"
                   />
                 </TouchableOpacity>
-              </View>}
-          </View>}
+              </View>
+            )}
+          </View>
+        )}
         refreshControl={refreshControl}
       >
         {children}

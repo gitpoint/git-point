@@ -39,7 +39,7 @@ const mapStateToProps = state => ({
   participating: state.notifications.participating,
   all: state.notifications.all,
   issue: state.issue.issue,
-  language: state.auth.language,
+  locale: state.auth.locale,
   isPendingUnread: state.notifications.isPendingUnread,
   isPendingParticipating: state.notifications.isPendingParticipating,
   isPendingAll: state.notifications.isPendingAll,
@@ -58,7 +58,7 @@ const mapDispatchToProps = dispatch =>
       getNotificationsCount,
       markAllNotificationsAsRead,
     },
-    dispatch,
+    dispatch
   );
 
 const styles = StyleSheet.create({
@@ -146,7 +146,7 @@ class Notifications extends Component {
     unread: Array,
     participating: Array,
     all: Array,
-    language: string,
+    locale: string,
     isPendingUnread: boolean,
     isPendingParticipating: boolean,
     isPendingAll: boolean,
@@ -189,7 +189,7 @@ class Notifications extends Component {
 
   getImage(repoName) {
     const notificationForRepo = this.notifications().find(
-      notification => notification.repository.full_name === repoName,
+      notification => notification.repository.full_name === repoName
     );
 
     return notificationForRepo.repository.owner.avatar_url;
@@ -226,8 +226,8 @@ class Notifications extends Component {
     const repositories = [
       ...new Set(
         this.notifications().map(
-          notification => notification.repository.full_name,
-        ),
+          notification => notification.repository.full_name
+        )
       ),
     ];
 
@@ -341,7 +341,7 @@ class Notifications extends Component {
     navigation.navigate('Issue', {
       issueURL: notification.subject.url.replace(/pulls\/(\d+)$/, 'issues/$1'),
       isPR: notification.subject.type === 'PullRequest',
-      language: this.props.language,
+      locale: this.props.locale,
     });
   }
 
@@ -361,7 +361,7 @@ class Notifications extends Component {
     } = this.props;
     const { type } = this.state;
     const notifications = this.notifications().filter(
-      notification => notification.repository.full_name === item,
+      notification => notification.repository.full_name === item
     );
     const isFirstItem = this.getSortedRepos().indexOf(item) === 0;
     const isFirstTab = type === 0;
@@ -369,14 +369,15 @@ class Notifications extends Component {
     return (
       <View>
         {isFirstItem &&
-          isFirstTab &&
-          <View style={styles.markAllAsReadButtonContainer}>
-            <Button
-              icon={{ name: 'check', type: 'octicon' }}
-              onPress={() => markAllNotificationsAsRead()}
-              title={translate('notifications.main.markAllAsRead')}
-            />
-          </View>}
+          isFirstTab && (
+            <View style={styles.markAllAsReadButtonContainer}>
+              <Button
+                icon={{ name: 'check', type: 'octicon' }}
+                onPress={() => markAllNotificationsAsRead()}
+                title={translate('notifications.main.markAllAsRead')}
+              />
+            </View>
+          )}
 
         <Card containerStyle={styles.repositoryContainer}>
           <View style={styles.headerContainer}>
@@ -408,15 +409,15 @@ class Notifications extends Component {
           </View>
 
           <ScrollView>
-            {notifications.map(notification =>
+            {notifications.map(notification => (
               <NotificationListItem
                 key={notification.id}
                 notification={notification}
                 iconAction={notificationID => markAsRead(notificationID)}
                 navigationAction={notify => this.navigateToThread(notify)}
                 navigation={this.props.navigation}
-              />,
-            )}
+              />
+            ))}
           </ScrollView>
         </Card>
       </View>
@@ -425,7 +426,7 @@ class Notifications extends Component {
 
   render() {
     const { type, contentBlockHeight } = this.state;
-    const { language } = this.props;
+    const { locale } = this.props;
     const sortedRepos = this.getSortedRepos();
 
     const isRetrievingNotifications =
@@ -441,9 +442,9 @@ class Notifications extends Component {
               onPress={this.switchType}
               selectedIndex={type}
               buttons={[
-                translate('notifications.main.unreadButton', language),
-                translate('notifications.main.participatingButton', language),
-                translate('notifications.main.allButton', language),
+                translate('notifications.main.unreadButton', locale),
+                translate('notifications.main.participatingButton', locale),
+                translate('notifications.main.allButton', locale),
               ]}
               textStyle={styles.buttonGroupText}
               selectedTextStyle={styles.buttonGroupTextSelected}
@@ -455,7 +456,7 @@ class Notifications extends Component {
             onLayout={this.saveContentBlockHeight}
             style={styles.contentBlock}
           >
-            {isRetrievingNotifications &&
+            {isRetrievingNotifications && (
               <View
                 style={[styles.textContainer, { height: contentBlockHeight }]}
               >
@@ -463,14 +464,15 @@ class Notifications extends Component {
                   animating={isRetrievingNotifications}
                   text={translate(
                     'notifications.main.retrievingMessage',
-                    language,
+                    locale
                   )}
                   style={styles.marginSpacing}
                   center
                 />
-              </View>}
+              </View>
+            )}
 
-            {!isRetrievingNotifications &&
+            {!isRetrievingNotifications && (
               <FlatList
                 ref={ref => {
                   this.notificationsList = ref;
@@ -482,19 +484,21 @@ class Notifications extends Component {
                 keyExtractor={this.keyExtractor}
                 renderItem={this.renderItem}
                 ListEmptyComponent={
-                  !isLoadingNewNotifications &&
-                  <View
-                    style={[
-                      styles.textContainer,
-                      { height: contentBlockHeight },
-                    ]}
-                  >
-                    <Text style={styles.noneTitle}>
-                      {translate('notifications.main.noneMessage', language)}
-                    </Text>
-                  </View>
+                  !isLoadingNewNotifications && (
+                    <View
+                      style={[
+                        styles.textContainer,
+                        { height: contentBlockHeight },
+                      ]}
+                    >
+                      <Text style={styles.noneTitle}>
+                        {translate('notifications.main.noneMessage', locale)}
+                      </Text>
+                    </View>
+                  )
                 }
-              />}
+              />
+            )}
           </View>
         </View>
       </ViewContainer>
@@ -503,5 +507,5 @@ class Notifications extends Component {
 }
 
 export const NotificationsScreen = connect(mapStateToProps, mapDispatchToProps)(
-  Notifications,
+  Notifications
 );

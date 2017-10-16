@@ -10,7 +10,7 @@ import { translate } from 'utils';
 type Props = {
   entity: Object,
   orgs: Array,
-  language: string,
+  locale: string,
   navigation: Object,
 };
 
@@ -67,7 +67,7 @@ const navigateToCompany = (company, orgs, navigation) => {
   }
 };
 
-export const EntityInfo = ({ entity, orgs, language, navigation }: Props) => {
+export const EntityInfo = ({ entity, orgs, locale, navigation }: Props) => {
   const checksKeys = ['company', 'location', 'email', 'blog'];
 
   if (!checksKeys.filter(key => !!entity[key]).length) {
@@ -75,74 +75,78 @@ export const EntityInfo = ({ entity, orgs, language, navigation }: Props) => {
   }
 
   return (
-    <SectionList title={translate('common.info', language)}>
+    <SectionList title={translate('common.info', locale)}>
       {!!entity.company &&
-        entity.company !== '' &&
-        <ListItem
-          title={translate('common.company', language)}
-          titleStyle={styles.listTitle}
-          leftIcon={{
-            name: 'organization',
-            color: colors.grey,
-            type: 'octicon',
-          }}
-          subtitle={entity.company}
-          subtitleStyle={styles.listSubTitle}
-          onPress={() => navigateToCompany(entity.company, orgs, navigation)}
-          underlayColor={
-            companyInOrgs(entity.company, orgs) ? colors.greyLight : null
-          }
-          hideChevron={!companyInOrgs(entity.company, orgs)}
-        />}
+        entity.company !== '' && (
+          <ListItem
+            title={translate('common.company', locale)}
+            titleStyle={styles.listTitle}
+            leftIcon={{
+              name: 'organization',
+              color: colors.grey,
+              type: 'octicon',
+            }}
+            subtitle={entity.company}
+            subtitleStyle={styles.listSubTitle}
+            onPress={() => navigateToCompany(entity.company, orgs, navigation)}
+            underlayColor={
+              companyInOrgs(entity.company, orgs) ? colors.greyLight : null
+            }
+            hideChevron={!companyInOrgs(entity.company, orgs)}
+          />
+        )}
 
       {!!entity.location &&
-        entity.location !== '' &&
-        <ListItem
-          title={translate('common.location', language)}
-          titleStyle={styles.listTitle}
-          leftIcon={{
-            name: 'location',
-            color: colors.grey,
-            type: 'octicon',
-          }}
-          subtitle={entity.location}
-          subtitleStyle={styles.listSubTitle}
-          onPress={() => Communications.web(getLocationLink(entity.location))}
-          underlayColor={colors.greyLight}
-        />}
+        entity.location !== '' && (
+          <ListItem
+            title={translate('common.location', locale)}
+            titleStyle={styles.listTitle}
+            leftIcon={{
+              name: 'location',
+              color: colors.grey,
+              type: 'octicon',
+            }}
+            subtitle={entity.location}
+            subtitleStyle={styles.listSubTitle}
+            onPress={() => Communications.web(getLocationLink(entity.location))}
+            underlayColor={colors.greyLight}
+          />
+        )}
 
       {!!entity.email &&
-        entity.email !== '' &&
-        <ListItem
-          title={translate('common.email', language)}
-          titleStyle={styles.listTitle}
-          leftIcon={{
-            name: 'mail',
-            color: colors.grey,
-            type: 'octicon',
-          }}
-          subtitle={entity.email}
-          subtitleStyle={styles.listSubTitle}
-          onPress={() =>
-            Communications.email([entity.email], null, null, null, null)}
-          underlayColor={colors.greyLight}
-        />}
+        entity.email !== '' && (
+          <ListItem
+            title={translate('common.email', locale)}
+            titleStyle={styles.listTitle}
+            leftIcon={{
+              name: 'mail',
+              color: colors.grey,
+              type: 'octicon',
+            }}
+            subtitle={entity.email}
+            subtitleStyle={styles.listSubTitle}
+            onPress={() =>
+              Communications.email([entity.email], null, null, null, null)}
+            underlayColor={colors.greyLight}
+          />
+        )}
 
       {!!entity.blog &&
-        entity.blog !== '' &&
-        <ListItem
-          title={translate('common.website', language)}
-          titleStyle={styles.listTitle}
-          leftIcon={{
-            name: 'link',
-            color: colors.grey,
-            type: 'octicon',
-          }}
-          subtitle={entity.blog}
-          subtitleStyle={styles.listSubTitle}
-          onPress={() => Communications.web(getBlogLink(entity.blog))}
-          underlayColor={colors.greyLight}
-        />}
+        entity.blog !== '' && (
+          <ListItem
+            title={translate('common.website', locale)}
+            titleStyle={styles.listTitle}
+            leftIcon={{
+              name: 'link',
+              color: colors.grey,
+              type: 'octicon',
+            }}
+            subtitle={entity.blog}
+            subtitleStyle={styles.listSubTitle}
+            onPress={() => Communications.web(getBlogLink(entity.blog))}
+            underlayColor={colors.greyLight}
+          />
+        )}
     </SectionList>
   );
 };
