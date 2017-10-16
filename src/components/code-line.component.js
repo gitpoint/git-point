@@ -76,7 +76,7 @@ export class CodeLine extends Component {
 
   render() {
     const { newChunk, change, filename } = this.props;
-    const language = (filename || []).split('.').pop();
+    const language = (filename || '').split('.').pop();
     // SyntaxHighlighter doesn't allow Stylesheet class style
     const customStyle = {
       backgroundColor: 'transparent',
