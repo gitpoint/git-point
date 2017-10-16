@@ -37,7 +37,7 @@ class NotificationIconComponent extends Component {
       <View>
         <Icon color={iconColor} name="notifications" size={33} />
 
-        {!!notificationsCount &&
+        {!!notificationsCount && (
           <View style={styles.badgeContainer}>
             <Badge
               color={colors.white}
@@ -45,7 +45,8 @@ class NotificationIconComponent extends Component {
               text={notificationsCount > 99 ? '99+' : notificationsCount}
               largeText={notificationsCount <= 99}
             />
-          </View>}
+          </View>
+        )}
       </View>
     );
   }

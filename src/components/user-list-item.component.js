@@ -141,10 +141,7 @@ class UserListItemComponent extends Component {
                 {title || user.login}
               </Text>
 
-              {subtitle &&
-                <Text style={styles.subtitle}>
-                  {subtitle}
-                </Text>}
+              {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
             </View>
           </UserComponent>
 

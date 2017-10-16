@@ -1,8 +1,6 @@
 import { AsyncStorage } from 'react-native';
-
 import { uniqby } from 'lodash';
-import { delay, resetNavigationTo, configureLocale } from 'utils';
-import { saveLanguage } from 'locale';
+import { delay, resetNavigationTo, configureLocale, saveLocale } from 'utils';
 
 import {
   fetchAccessToken,
@@ -16,7 +14,7 @@ import {
   LOGOUT,
   GET_AUTH_USER,
   GET_AUTH_ORGS,
-  CHANGE_LANGUAGE,
+  CHANGE_LOCALE,
   GET_AUTH_STAR_COUNT,
 } from './auth.type';
 
@@ -136,11 +134,11 @@ export const getOrgs = () => {
   };
 };
 
-export const changeLanguage = lang => {
+export const changeLocale = locale => {
   return dispatch => {
-    dispatch({ type: CHANGE_LANGUAGE.SUCCESS, payload: lang });
+    dispatch({ type: CHANGE_LOCALE.SUCCESS, payload: locale });
 
-    saveLanguage(lang);
-    configureLocale(lang);
+    saveLocale(locale);
+    configureLocale(locale);
   };
 };

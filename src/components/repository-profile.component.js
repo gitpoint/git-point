@@ -11,7 +11,7 @@ type Props = {
   navigation: Object,
   loading: boolean,
   subscribed: boolean,
-  language: string,
+  locale: string,
 };
 
 const styles = StyleSheet.create({
@@ -119,17 +119,18 @@ export const RepositoryProfile = ({
   navigation,
   loading,
   subscribed,
-  language,
-}: Props) =>
+  locale,
+}: Props) => (
   <View style={styles.container}>
     <View style={styles.languageInfo}>
       {!loading &&
-        repository.language !== null &&
-        <Icon
-          name="fiber-manual-record"
-          size={15}
-          color={languageColors[repository.language]}
-        />}
+        repository.language !== null && (
+          <Icon
+            name="fiber-manual-record"
+            size={15}
+            color={languageColors[repository.language]}
+          />
+        )}
 
       <Text style={[styles.languageInfoTitle]}>
         {repository.language || ' '}
@@ -148,9 +149,7 @@ export const RepositoryProfile = ({
         color={colors.greyLight}
       />
 
-      <Text style={styles.title}>
-        {repository.name || ' '}
-      </Text>
+      <Text style={styles.title}>{repository.name || ' '}</Text>
 
       <Text
         numberOfLines={repository.fork ? 1 : 3}
@@ -164,12 +163,12 @@ export const RepositoryProfile = ({
         {emojifyText(repository.description) || ' '}
       </Text>
 
-      {repository.fork &&
+      {repository.fork && (
         <Text style={[styles.subtitle, styles.subtitleFork]}>
-          {repository.parent &&
+          {repository.parent && (
             <Text>
               <Text>
-                {translate('repository.main.forkedFromMessage', language)}
+                {translate('repository.main.forkedFromMessage', locale)}
               </Text>
               <Text
                 style={{ ...fonts.fontPrimaryBold }}
@@ -178,10 +177,13 @@ export const RepositoryProfile = ({
                     repository: repository.parent,
                   })}
               >
-                {' '}{repository.parent.full_name}
+                {' '}
+                {repository.parent.full_name}
               </Text>
-            </Text>}
-        </Text>}
+            </Text>
+          )}
+        </Text>
+      )}
     </View>
 
     <View style={styles.details}>
@@ -192,12 +194,13 @@ export const RepositoryProfile = ({
             : ' '}
         </Text>
         <Text style={styles.unitText}>
-          {translate('repository.main.starsTitle', language)}
+          {translate('repository.main.starsTitle', locale)}
         </Text>
-        {starred &&
+        {starred && (
           <Text style={[styles.unitStatus, styles.badge]}>
-            {translate('repository.main.starred', language)}
-          </Text>}
+            {translate('repository.main.starred', locale)}
+          </Text>
+        )}
       </View>
 
       <View style={styles.unit}>
@@ -207,12 +210,13 @@ export const RepositoryProfile = ({
             : ' '}
         </Text>
         <Text style={styles.unitText}>
-          {translate('repository.main.watchers', language)}
+          {translate('repository.main.watchers', locale)}
         </Text>
-        {subscribed &&
+        {subscribed && (
           <Text style={[styles.unitStatus, styles.badge]}>
-            {translate('repository.main.watching', language)}
-          </Text>}
+            {translate('repository.main.watching', locale)}
+          </Text>
+        )}
       </View>
 
       <View style={styles.unit}>
@@ -222,8 +226,9 @@ export const RepositoryProfile = ({
             : ' '}
         </Text>
         <Text style={styles.unitText}>
-          {translate('repository.main.forksTitle', language)}
+          {translate('repository.main.forksTitle', locale)}
         </Text>
       </View>
     </View>
-  </View>;
+  </View>
+);

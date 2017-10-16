@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { StyleSheet, RefreshControl } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
+import { getAuthLocale } from 'auth';
 import {
   ViewContainer,
   OrgProfile,
@@ -58,6 +59,7 @@ const mapStateToProps = (state, ownProps) => {
     membersPagination,
     // normalized attribute
     entity: orgs[orgId],
+    locale: getAuthLocale,
   };
 };
 
@@ -68,7 +70,7 @@ class OrganizationProfile extends Component {
     members: Array,
     membersPagination: Object,
     navigation: Object,
-    language: string,
+    locale: string,
     getOrgMembers: Function,
     getOrgById: Function,
   };
@@ -126,16 +128,17 @@ class OrganizationProfile extends Component {
       members,
       membersPagination,
       navigation,
-      language,
+      locale,
     } = this.props;
     const { refreshing } = this.state;
-    const organizationActions = [translate('common.openInBrowser', language)];
+    const organizationActions = [translate('common.openInBrowser', locale)];
 
     return (
       <ViewContainer>
         <ParallaxScroll
-          renderContent={() =>
-            <OrgProfile org={entity} navigation={navigation} />}
+          renderContent={() => (
+            <OrgProfile org={entity} navigation={navigation} />
+          )}
           refreshControl={
             <RefreshControl
               onRefresh={() => this.refreshData()}
@@ -149,43 +152,50 @@ class OrganizationProfile extends Component {
           menuAction={() => this.showMenuActionSheet()}
         >
           {membersPagination.isFetching &&
-            !membersPagination.pageCount &&
-            <LoadingMembersList
-              title={translate('organization.main.membersTitle', language)}
-            />}
+            !membersPagination.pageCount && (
+              <LoadingMembersList
+                title={translate('organization.main.membersTitle', locale)}
+              />
+            )}
 
-          {(!membersPagination.isFetching || membersPagination.pageCount > 0) &&
+          {(!membersPagination.isFetching ||
+            membersPagination.pageCount > 0) && (
             <UsersAvatarList
-              title={translate('organization.main.membersTitle', language)}
+              title={translate('organization.main.membersTitle', locale)}
               members={members}
               loadMore={this.loadMoreMembers}
               navigation={navigation}
-            />}
+            />
+          )}
 
           {entity &&
             !!entity.description &&
-            entity.description !== '' &&
-            <SectionList
-              title={translate('organization.main.descriptionTitle', language)}
-            >
-              <ListItem
-                subtitle={emojifyText(entity.description)}
-                subtitleStyle={styles.listSubTitle}
-                hideChevron
-              />
-            </SectionList>}
-          {entity && <EntityInfo entity={entity} navigation={navigation} />}
+            entity.description !== '' && (
+              <SectionList
+                title={translate('organization.main.descriptionTitle', locale)}
+              >
+                <ListItem
+                  subtitle={emojifyText(entity.description)}
+                  subtitleStyle={styles.listSubTitle}
+                  hideChevron
+                />
+              </SectionList>
+            )}
+          {entity && (
+            <EntityInfo
+              entity={entity}
+              navigation={navigation}
+              locale={locale}
+            />
+          )}
         </ParallaxScroll>
 
         <ActionSheet
           ref={o => {
             this.ActionSheet = o;
           }}
-          title={translate('organization.organizationActions', language)}
-          options={[
-            ...organizationActions,
-            translate('common.cancel', language),
-          ]}
+          title={translate('organization.organizationActions', locale)}
+          options={[...organizationActions, translate('common.cancel', locale)]}
           cancelButtonIndex={1}
           onPress={this.handleActionSheetPress}
         />
