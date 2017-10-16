@@ -239,7 +239,7 @@ export const es = {
       membersTitle: 'MIEMBROS',
       descriptionTitle: 'DESCRIPCIÓN',
     },
-	organizationActions: 'Organization Actions',
+    organizationActions: 'Organization Actions',
   },
   issue: {
     settings: {
@@ -283,8 +283,8 @@ export const es = {
       },
       openIssueSubTitle: '#{{number}} abiertas hace {{time}} por {{user}}',
       closedIssueSubTitle: '#{{number}} por {{user}} fue cerrada hace {{time}}',
-	  issueActions: 'Acciones de la Issue',
-	},
+      issueActions: 'Acciones de la Issue',
+    },
     newIssue: {
       title: 'Nueva Issue',
       missingTitleAlert: '¡Debes especificar un título para la issue!',
@@ -340,6 +340,6 @@ export const es = {
     abbreviations: {
       thousand: 'k',
     },
-	openInBrowser: 'Abrir en el navegador',
+    openInBrowser: 'Abrir en el navegador',
   },
 };
