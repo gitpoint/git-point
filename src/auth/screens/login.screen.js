@@ -26,7 +26,7 @@ import { translate } from 'utils';
 const stateRandom = Math.random().toString();
 
 const mapStateToProps = state => ({
-  language: state.auth.language,
+  locale: state.auth.locale,
   isLoggingIn: state.auth.isLoggingIn,
   isAuthenticated: state.auth.isAuthenticated,
 });
@@ -140,7 +140,7 @@ class Login extends Component {
   props: {
     isAuthenticated: boolean,
     isLoggingIn: boolean,
-    language: string,
+    locale: string,
     auth: Function,
     navigation: Object,
   };
@@ -153,7 +153,7 @@ class Login extends Component {
       modalVisible: false,
       cancelDisabled: false,
       showLoader: true,
-      loaderText: translate('auth.login.connectingToGitHub', this.language),
+      loaderText: translate('auth.login.connectingToGitHub', this.locale),
       asyncStorageChecked: false,
     };
   }
@@ -211,7 +211,7 @@ class Login extends Component {
         this.setState({
           code,
           showLoader: true,
-          loaderText: translate('auth.login.preparingGitPoint', this.language),
+          loaderText: translate('auth.login.preparingGitPoint', this.locale),
         });
 
         auth(code, state, navigation);
@@ -229,7 +229,7 @@ class Login extends Component {
   }
 
   render() {
-    const { language, isLoggingIn, isAuthenticated } = this.props;
+    const { locale, isLoggingIn, isAuthenticated } = this.props;
 
     return (
       <ViewContainer barColor="light">
@@ -259,7 +259,7 @@ class Login extends Component {
                   </View>
                   <View style={styles.miniSection}>
                     <Button
-                      title={translate('auth.login.cancel', language)}
+                      title={translate('auth.login.cancel', locale)}
                       buttonStyle={styles.button}
                       disabled={this.state.cancelDisabled}
                       textStyle={styles.buttonText}
@@ -287,10 +287,10 @@ class Login extends Component {
                       source={require('../../assets/logo.png')}
                     />
                     <Text style={styles.title}>
-                      {translate('auth.login.welcomeTitle', language)}
+                      {translate('auth.login.welcomeTitle', locale)}
                     </Text>
                     <Text style={styles.message}>
-                      {translate('auth.login.welcomeMessage', language)}
+                      {translate('auth.login.welcomeMessage', locale)}
                     </Text>
                   </View>
                   <View style={[styles.slide, styles.slide2]}>
@@ -302,10 +302,10 @@ class Login extends Component {
                       type="octicon"
                     />
                     <Text style={styles.title}>
-                      {translate('auth.login.notificationsTitle', language)}
+                      {translate('auth.login.notificationsTitle', locale)}
                     </Text>
                     <Text style={styles.message}>
-                      {translate('auth.login.notificationsMessage', language)}
+                      {translate('auth.login.notificationsMessage', locale)}
                     </Text>
                   </View>
                   <View style={[styles.slide, styles.slide3]}>
@@ -318,10 +318,10 @@ class Login extends Component {
                       type="octicon"
                     />
                     <Text style={styles.title}>
-                      {translate('auth.login.reposTitle', language)}
+                      {translate('auth.login.reposTitle', locale)}
                     </Text>
                     <Text style={styles.message}>
-                      {translate('auth.login.reposMessage', language)}
+                      {translate('auth.login.reposMessage', locale)}
                     </Text>
                   </View>
                   <View style={[styles.slide, styles.slide4]}>
@@ -334,10 +334,10 @@ class Login extends Component {
                       type="octicon"
                     />
                     <Text style={styles.title}>
-                      {translate('auth.login.issuesTitle', language)}
+                      {translate('auth.login.issuesTitle', locale)}
                     </Text>
                     <Text style={styles.message}>
-                      {translate('auth.login.issuesMessage', language)}
+                      {translate('auth.login.issuesMessage', locale)}
                     </Text>
                   </View>
                 </AppIntro>
@@ -345,7 +345,7 @@ class Login extends Component {
               <View style={styles.miniSection}>
                 <Button
                   raised
-                  title={translate('auth.login.signInButton', language)}
+                  title={translate('auth.login.signInButton', locale)}
                   buttonStyle={styles.button}
                   textStyle={styles.buttonText}
                   onPress={() => this.setModalVisible(true)}

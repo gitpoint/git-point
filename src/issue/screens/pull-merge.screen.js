@@ -12,7 +12,7 @@ import { colors, fonts, normalize } from 'config';
 import { mergePullRequest } from '../issue.action';
 
 const mapStateToProps = state => ({
-  language: state.auth.language,
+  locale: state.auth.locale,
   repository: state.repository.repository,
   issue: state.issue.issue,
   isPendingMerging: state.repository.isPendingMerging,
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
 class PullMerge extends Component {
   props: {
     mergePullRequest: Function,
-    language: string,
+    locale: string,
     repository: Object,
     issue: Object,
     // isPendingMerging: boolean,
@@ -87,11 +87,11 @@ class PullMerge extends Component {
   }
 
   mergeMethodMessages = () => {
-    const { language } = this.props;
+    const { locale } = this.props;
 
     return [
-      translate('issue.pullMerge.createMergeCommit', language),
-      translate('issue.pullMerge.squashAndMerge', language),
+      translate('issue.pullMerge.createMergeCommit', locale),
+      translate('issue.pullMerge.squashAndMerge', locale),
     ];
   };
 
@@ -112,20 +112,20 @@ class PullMerge extends Component {
       repository,
       issue,
       mergePullRequest,
-      language,
+      locale,
       navigation,
     } = this.props;
     const { mergeMethod, commitTitle, commitMessage } = this.state;
     const mergeMethodTypes = [
-      translate('issue.pullMerge.merge', language),
-      translate('issue.pullMerge.squash', language),
+      translate('issue.pullMerge.merge', locale),
+      translate('issue.pullMerge.squash', locale),
     ];
 
     if (commitTitle === '') {
       Alert.alert(
-        translate('issue.pullMerge.missingTitleAlert', language),
+        translate('issue.pullMerge.missingTitleAlert', locale),
         null,
-        [{ text: translate('common.ok', language) }]
+        [{ text: translate('common.ok', locale) }]
       );
     } else {
       mergePullRequest(
@@ -141,18 +141,16 @@ class PullMerge extends Component {
   };
 
   render() {
-    const { language } = this.props;
+    const { locale } = this.props;
     const { mergeMethod, commitTitle, commitMessage } = this.state;
 
     return (
       <ViewContainer>
         <ScrollView>
-          <SectionList
-            title={translate('issue.pullMerge.commitTitle', language)}
-          >
+          <SectionList title={translate('issue.pullMerge.commitTitle', locale)}>
             <TextInput
               underlineColorAndroid={'transparent'}
-              placeholder={translate('issue.pullMerge.writeATitle', language)}
+              placeholder={translate('issue.pullMerge.writeATitle', locale)}
               blurOnSubmit
               multiline
               onContentSizeChange={event =>
@@ -170,11 +168,11 @@ class PullMerge extends Component {
           </SectionList>
 
           <SectionList
-            title={translate('issue.pullMerge.commitMessage', language)}
+            title={translate('issue.pullMerge.commitMessage', locale)}
           >
             <TextInput
               underlineColorAndroid={'transparent'}
-              placeholder={translate('issue.pullMerge.writeAMessage', language)}
+              placeholder={translate('issue.pullMerge.writeAMessage', locale)}
               blurOnSubmit
               multiline
               onChangeText={text => this.setState({ commitMessage: text })}
@@ -191,7 +189,7 @@ class PullMerge extends Component {
             />
           </SectionList>
 
-          <SectionList title={translate('issue.pullMerge.mergeType', language)}>
+          <SectionList title={translate('issue.pullMerge.mergeType', locale)}>
             <View style={styles.mergeListItemContainer}>
               <View style={styles.listItemContainer}>
                 <ListItem
@@ -220,10 +218,10 @@ class PullMerge extends Component {
           ref={o => {
             this.ActionSheet = o;
           }}
-          title={translate('issue.pullMerge.changeMergeType', language)}
+          title={translate('issue.pullMerge.changeMergeType', locale)}
           options={[
             ...this.mergeMethodMessages(),
-            translate('common.cancel', language),
+            translate('common.cancel', locale),
           ]}
           cancelButtonIndex={this.mergeMethodMessages().length}
           onPress={this.handlePress}

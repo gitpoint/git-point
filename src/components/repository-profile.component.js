@@ -11,7 +11,7 @@ type Props = {
   navigation: Object,
   loading: boolean,
   subscribed: boolean,
-  language: string,
+  locale: string,
 };
 
 const styles = StyleSheet.create({
@@ -119,7 +119,7 @@ export const RepositoryProfile = ({
   navigation,
   loading,
   subscribed,
-  language,
+  locale,
 }: Props) => (
   <View style={styles.container}>
     <View style={styles.languageInfo}>
@@ -168,7 +168,7 @@ export const RepositoryProfile = ({
           {repository.parent && (
             <Text>
               <Text>
-                {translate('repository.main.forkedFromMessage', language)}
+                {translate('repository.main.forkedFromMessage', locale)}
               </Text>
               <Text
                 style={{ ...fonts.fontPrimaryBold }}
@@ -194,11 +194,11 @@ export const RepositoryProfile = ({
             : ' '}
         </Text>
         <Text style={styles.unitText}>
-          {translate('repository.main.starsTitle', language)}
+          {translate('repository.main.starsTitle', locale)}
         </Text>
         {starred && (
           <Text style={[styles.unitStatus, styles.badge]}>
-            {translate('repository.main.starred', language)}
+            {translate('repository.main.starred', locale)}
           </Text>
         )}
       </View>
@@ -210,11 +210,11 @@ export const RepositoryProfile = ({
             : ' '}
         </Text>
         <Text style={styles.unitText}>
-          {translate('repository.main.watchers', language)}
+          {translate('repository.main.watchers', locale)}
         </Text>
         {subscribed && (
           <Text style={[styles.unitStatus, styles.badge]}>
-            {translate('repository.main.watching', language)}
+            {translate('repository.main.watching', locale)}
           </Text>
         )}
       </View>
@@ -226,7 +226,7 @@ export const RepositoryProfile = ({
             : ' '}
         </Text>
         <Text style={styles.unitText}>
-          {translate('repository.main.forksTitle', language)}
+          {translate('repository.main.forksTitle', locale)}
         </Text>
       </View>
     </View>

@@ -5,7 +5,7 @@ import { StyleSheet, RefreshControl } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { createStructuredSelector } from 'reselect';
 import ActionSheet from 'react-native-actionsheet';
-import { getAuthLanguage } from 'auth';
+import { getAuthLocale } from 'auth';
 import {
   ViewContainer,
   UserProfile,
@@ -37,7 +37,7 @@ const selectors = createStructuredSelector({
   isPendingOrg: getOrganizationIsPendingOrg,
   isPendingRepos: getOrganizationIsPendingRepos,
   isPendingMembers: getOrganizationIsPendingMembers,
-  language: getAuthLanguage,
+  locale: getAuthLocale,
 });
 
 const actionCreators = {
@@ -70,7 +70,7 @@ class OrganizationProfile extends Component {
     // isPendingRepos: boolean,
     isPendingMembers: boolean,
     navigation: Object,
-    language: string,
+    locale: string,
   };
 
   state: {
@@ -120,16 +120,16 @@ class OrganizationProfile extends Component {
       isPendingOrg,
       isPendingMembers,
       navigation,
-      language,
+      locale,
     } = this.props;
     const { refreshing } = this.state;
     const initialOrganization = this.props.navigation.state.params.organization;
-    const organizationActions = [translate('common.openInBrowser', language)];
+    const organizationActions = [translate('common.openInBrowser', locale)];
 
     return (
       <ViewContainer>
         <ParallaxScroll
-          renderContent={() => (
+          renderContent={() =>
             <UserProfile
               type="org"
               initialUser={initialOrganization}
@@ -139,8 +139,7 @@ class OrganizationProfile extends Component {
                   : initialOrganization
               }
               navigation={navigation}
-            />
-          )}
+            />}
           refreshControl={
             <RefreshControl
               onRefresh={this.getOrgData}
@@ -153,50 +152,44 @@ class OrganizationProfile extends Component {
           showMenu
           menuAction={() => this.showMenuActionSheet()}
         >
-          {isPendingMembers && (
+          {isPendingMembers &&
             <LoadingMembersList
-              title={translate('organization.main.membersTitle', language)}
-            />
-          )}
+              title={translate('organization.main.membersTitle', locale)}
+            />}
 
-          {!isPendingMembers && (
+          {!isPendingMembers &&
             <MembersList
-              title={translate('organization.main.membersTitle', language)}
+              title={translate('organization.main.membersTitle', locale)}
               members={members}
               navigation={navigation}
-            />
-          )}
+            />}
 
           {!!organization.description &&
-            organization.description !== '' && (
-              <SectionList
-                title={translate(
-                  'organization.main.descriptionTitle',
-                  language
-                )}
-              >
-                <ListItem
-                  subtitle={emojifyText(organization.description)}
-                  subtitleStyle={styles.listSubTitle}
-                  hideChevron
-                />
-              </SectionList>
-            )}
+            organization.description !== '' &&
+            <SectionList
+              title={translate('organization.main.descriptionTitle', locale)}
+            >
+              <ListItem
+                subtitle={emojifyText(organization.description)}
+                subtitleStyle={styles.listSubTitle}
+                hideChevron
+              />
+            </SectionList>}
 
-          {!isPendingOrg && (
-            <EntityInfo entity={organization} navigation={navigation} />
-          )}
+          {!isPendingOrg &&
+            <EntityInfo
+              entity={organization}
+              navigation={navigation}
+              locale={locale}
+            />}
         </ParallaxScroll>
 
         <ActionSheet
           ref={o => {
             this.ActionSheet = o;
           }}
-          title={translate('organization.organizationActions', language)}
-          options={[
-            ...organizationActions,
-            translate('common.cancel', language),
-          ]}
+          title={translate('organization.organizationActions', locale)}
+          options={[...organizationActions, translate('common.cancel', locale)]}
           cancelButtonIndex={1}
           onPress={this.handleActionSheetPress}
         />

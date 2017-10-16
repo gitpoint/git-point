@@ -26,7 +26,7 @@ import { searchRepos, searchUsers } from '../index';
 const mapStateToProps = state => ({
   users: state.search.users,
   repos: state.search.repos,
-  language: state.auth.language,
+  locale: state.auth.locale,
   isPendingSearchUsers: state.search.isPendingSearchUsers,
   isPendingSearchRepos: state.search.isPendingSearchRepos,
 });
@@ -107,7 +107,7 @@ class Search extends Component {
     searchUsers: Function,
     users: Array,
     repos: Array,
-    language: string,
+    locale: string,
     isPendingSearchUsers: boolean,
     isPendingSearchRepos: boolean,
     navigation: Object,
@@ -186,7 +186,7 @@ class Search extends Component {
     const {
       users,
       repos,
-      language,
+      locale,
       isPendingSearchUsers,
       isPendingSearchRepos,
     } = this.props;
@@ -230,8 +230,8 @@ class Search extends Component {
             onPress={this.switchQueryType}
             selectedIndex={this.state.searchType}
             buttons={[
-              translate('search.main.repositoryButton', language),
-              translate('search.main.userButton', language),
+              translate('search.main.repositoryButton', locale),
+              translate('search.main.userButton', locale),
             ]}
             textStyle={styles.buttonGroupText}
             selectedTextStyle={styles.buttonGroupTextSelected}
@@ -243,7 +243,7 @@ class Search extends Component {
           searchType === 0 && (
             <LoadingContainer
               animating={isPendingSearchRepos && searchType === 0}
-              text={translate('search.main.searchingMessage', language, {
+              text={translate('search.main.searchingMessage', locale, {
                 query,
               })}
               style={styles.marginSpacing}
@@ -254,7 +254,7 @@ class Search extends Component {
           searchType === 1 && (
             <LoadingContainer
               animating={isPendingSearchUsers && searchType === 1}
-              text={translate('search.main.searchingMessage', language, {
+              text={translate('search.main.searchingMessage', locale, {
                 query,
               })}
               style={styles.marginSpacing}
@@ -280,11 +280,11 @@ class Search extends Component {
         {!searchStart && (
           <View style={styles.textContainer}>
             <Text style={styles.searchTitle}>
-              {translate('search.main.searchMessage', language, {
+              {translate('search.main.searchMessage', locale, {
                 type:
                   searchType === 0
-                    ? translate('search.main.repository', language)
-                    : translate('search.main.user', language),
+                    ? translate('search.main.repository', locale)
+                    : translate('search.main.user', locale),
               })}
             </Text>
           </View>
@@ -296,7 +296,7 @@ class Search extends Component {
           searchType === 0 && (
             <View style={styles.textContainer}>
               <Text style={styles.searchTitle}>
-                {translate('search.main.noRepositoriesFound', language)}
+                {translate('search.main.noRepositoriesFound', locale)}
               </Text>
             </View>
           )}
@@ -307,7 +307,7 @@ class Search extends Component {
           searchType === 1 && (
             <View style={styles.textContainer}>
               <Text style={styles.searchTitle}>
-                {translate('search.main.noUsersFound', language)}
+                {translate('search.main.noUsersFound', locale)}
               </Text>
             </View>
           )}

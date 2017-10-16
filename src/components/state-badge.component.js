@@ -10,7 +10,7 @@ type Props = {
   text: string,
   type: string,
   style: Object,
-  language: string,
+  locale: string,
 };
 
 const styles = StyleSheet.create({
@@ -42,20 +42,20 @@ export const StateBadge = ({
   text,
   type,
   style,
-  language,
+  locale,
 }: Props) => {
   let issueState = type;
   let issueText = text;
 
   if (isMerged) {
     issueState = 'merged';
-    issueText = translate('issue.main.states.merged', language);
+    issueText = translate('issue.main.states.merged', locale);
   } else if (issue && issue.state === 'open') {
     issueState = 'open';
-    issueText = translate('issue.main.states.open', language);
+    issueText = translate('issue.main.states.open', locale);
   } else if (issue && issue.state === 'closed') {
     issueState = 'closed';
-    issueText = translate('issue.main.states.closed', language);
+    issueText = translate('issue.main.states.closed', locale);
   }
 
   return (

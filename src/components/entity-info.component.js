@@ -10,7 +10,7 @@ import { translate } from 'utils';
 type Props = {
   entity: Object,
   orgs: Array,
-  language: string,
+  locale: string,
   navigation: Object,
 };
 
@@ -67,7 +67,7 @@ const navigateToCompany = (company, orgs, navigation) => {
   }
 };
 
-export const EntityInfo = ({ entity, orgs, language, navigation }: Props) => {
+export const EntityInfo = ({ entity, orgs, locale, navigation }: Props) => {
   const checksKeys = ['company', 'location', 'email', 'blog'];
 
   if (!checksKeys.filter(key => !!entity[key]).length) {
@@ -75,11 +75,11 @@ export const EntityInfo = ({ entity, orgs, language, navigation }: Props) => {
   }
 
   return (
-    <SectionList title={translate('common.info', language)}>
+    <SectionList title={translate('common.info', locale)}>
       {!!entity.company &&
         entity.company !== '' && (
           <ListItem
-            title={translate('common.company', language)}
+            title={translate('common.company', locale)}
             titleStyle={styles.listTitle}
             leftIcon={{
               name: 'organization',
@@ -99,7 +99,7 @@ export const EntityInfo = ({ entity, orgs, language, navigation }: Props) => {
       {!!entity.location &&
         entity.location !== '' && (
           <ListItem
-            title={translate('common.location', language)}
+            title={translate('common.location', locale)}
             titleStyle={styles.listTitle}
             leftIcon={{
               name: 'location',
@@ -116,7 +116,7 @@ export const EntityInfo = ({ entity, orgs, language, navigation }: Props) => {
       {!!entity.email &&
         entity.email !== '' && (
           <ListItem
-            title={translate('common.email', language)}
+            title={translate('common.email', locale)}
             titleStyle={styles.listTitle}
             leftIcon={{
               name: 'mail',
@@ -134,7 +134,7 @@ export const EntityInfo = ({ entity, orgs, language, navigation }: Props) => {
       {!!entity.blog &&
         entity.blog !== '' && (
           <ListItem
-            title={translate('common.website', language)}
+            title={translate('common.website', locale)}
             titleStyle={styles.listTitle}
             leftIcon={{
               name: 'link',

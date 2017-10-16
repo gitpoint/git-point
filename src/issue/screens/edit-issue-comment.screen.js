@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  language: state.auth.language,
+  locale: state.auth.locale,
   issue: state.issue.issue,
   repository: state.repository.repository,
   isEditingComment: state.issue.isEditingComment,
@@ -59,7 +59,7 @@ class EditIssueComment extends Component {
   props: {
     editIssueBody: Function,
     editIssueComment: Function,
-    language: string,
+    locale: string,
     repository: Object,
     navigation: Object,
     issue: Object,
@@ -95,19 +95,17 @@ class EditIssueComment extends Component {
   };
 
   render() {
-    const { language, isEditingComment } = this.props;
+    const { locale, isEditingComment } = this.props;
     const { issueComment } = this.state;
 
     return (
       <ViewContainer>
         {isEditingComment && <LoadingModal />}
         <ScrollView>
-          <SectionList
-            title={translate('issue.newIssue.issueComment', language)}
-          >
+          <SectionList title={translate('issue.newIssue.issueComment', locale)}>
             <TextInput
               underlineColorAndroid={'transparent'}
-              placeholder={translate('issue.newIssue.writeAComment', language)}
+              placeholder={translate('issue.newIssue.writeAComment', locale)}
               multiline
               onChangeText={text => this.setState({ issueComment: text })}
               onContentSizeChange={event =>
@@ -129,7 +127,7 @@ class EditIssueComment extends Component {
           <SectionList>
             <View style={styles.listItemContainer}>
               <ListItem
-                title={translate('common.submit', language)}
+                title={translate('common.submit', locale)}
                 hideChevron
                 underlayColor={colors.greyLight}
                 titleStyle={styles.submitTitle}

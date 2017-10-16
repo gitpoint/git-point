@@ -10,7 +10,7 @@ type Props = {
   type: string,
   issue: Object,
   navigation: Object,
-  language: string,
+  locale: string,
 };
 
 const styles = StyleSheet.create({
@@ -61,14 +61,14 @@ const getIconName = (type, issue) => {
   return 'git-pull-request';
 };
 
-export const IssueListItem = ({ type, issue, navigation, language }: Props) => (
+export const IssueListItem = ({ type, issue, navigation, locale }: Props) => (
   <TouchableHighlight
     style={issue.state === 'closed' && styles.closedIssue}
     onPress={() =>
       navigation.navigate('Issue', {
         issue,
         isPR: !!issue.pull_request,
-        language,
+        locale,
       })}
     underlayColor={colors.greyLight}
   >
@@ -78,12 +78,12 @@ export const IssueListItem = ({ type, issue, navigation, language }: Props) => (
         title={issue.title}
         subtitle={
           issue.state === 'open'
-            ? translate('issue.main.openIssueSubTitle', language, {
+            ? translate('issue.main.openIssueSubTitle', locale, {
                 number: issue.number,
                 user: issue.user.login,
                 time: moment(issue.created_at).fromNow(),
               })
-            : translate('issue.main.closedIssueSubTitle', language, {
+            : translate('issue.main.closedIssueSubTitle', locale, {
                 number: issue.number,
                 user: issue.user.login,
                 time: moment(issue.closed_at).fromNow(),

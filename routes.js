@@ -133,12 +133,12 @@ const sharedRoutes = {
     screen: IssueScreen,
     navigationOptions: ({ navigation }) => {
       const issueNumberRegex = /issues\/([0-9]+)(#|$)/;
-      const { issue, issueURL, isPR, language } = navigation.state.params;
+      const { issue, issueURL, isPR, locale } = navigation.state.params;
       const number = issue ? issue.number : issueURL.match(issueNumberRegex)[1];
       const langKey = isPR ? 'pullRequest' : 'issue';
       const langTitle = translate(
         `issue.main.screenTitles.${langKey}`,
-        language
+        locale
       );
 
       return {
