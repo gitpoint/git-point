@@ -17,13 +17,8 @@ export class Client {
 
   fetch = async (
     url,
-    {
-      method = this.Method.GET,
-      schema = null,
-      normalizrKey = null,
-      headers = {},
-    },
-    params = {}
+    params = {},
+    { method = this.Method.GET, headers = {} } = {}
   ) => {
     let finalUrl;
 
@@ -54,11 +49,7 @@ export class Client {
     };
 
     return fetch(finalUrl, parameters)
-      .then(response => ({
-        response,
-        schema,
-        normalizrKey,
-      }))
+      .then(response => response)
       .catch(error => error);
   };
 

@@ -59,13 +59,10 @@ export class GitHub extends Client {
      * @param {string} orgId
      */
     getById: async (orgId, params) => {
-      return this.fetch(
-        `orgs/${orgId}`,
-        {
-          schema: Schemas.ORG,
-        },
-        params
-      ).then(struct => struct);
+      return this.fetch(`orgs/${orgId}`, params).then(response => ({
+        response,
+        schema: Schemas.ORG,
+      }));
     },
     /**
      * Gets organization members
@@ -73,15 +70,10 @@ export class GitHub extends Client {
      * @param {string} orgId
      */
     getMembers: async (orgId, params) => {
-      return this.fetch(
-        `orgs/${orgId}/members`,
-        {
-          schema: Schemas.USER_ARRAY,
-        },
-        params
-      ).then(struct => ({
-        ...struct,
-        nextPageUrl: this.getNextPageUrl(struct.response),
+      return this.fetch(`orgs/${orgId}/members`, params).then(response => ({
+        response,
+        nextPageUrl: this.getNextPageUrl(response),
+        schema: Schemas.USER_ARRAY,
       }));
     },
     /**
@@ -90,15 +82,10 @@ export class GitHub extends Client {
      * @param {string} orgId
      */
     getRepos: async (orgId, params) => {
-      return this.fetch(
-        `orgs/${orgId}/repos`,
-        {
-          schema: Schemas.REPO_ARRAY,
-        },
-        params
-      ).then(struct => ({
-        ...struct,
-        nextPageUrl: this.getNextPageUrl(struct.response),
+      return this.fetch(`orgs/${orgId}/repos`, params).then(response => ({
+        response,
+        nextPageUrl: this.getNextPageUrl(response),
+        schema: Schemas.REPO_ARRAY,
       }));
     },
   };
@@ -115,13 +102,11 @@ export class GitHub extends Client {
     getEventsReceived: async (userId, params) => {
       return this.fetch(
         `users/${userId}/received_events`,
-        {
-          schema: Schemas.EVENT_ARRAY,
-        },
         params
-      ).then(struct => ({
-        ...struct,
-        nextPageUrl: this.getNextPageUrl(struct.response),
+      ).then(response => ({
+        response,
+        nextPageUrl: this.getNextPageUrl(response),
+        schema: Schemas.EVENT_ARRAY,
       }));
     },
     /**
@@ -138,23 +123,18 @@ export class GitHub extends Client {
 
       return this.fetch(
         `notifications?all=${all}&participating=${participating}`,
-        {
-          schema: Schemas.NOTIFICATION_ARRAY,
-        },
-        finalParams
-      ).then(struct => ({
-        ...struct,
-        nextPageUrl: this.getNextPageUrl(struct.response),
+        finalParams,
+        {}
+      ).then(response => ({
+        response,
+        nextPageUrl: this.getNextPageUrl(response),
+        schema: Schemas.NOTIFICATION_ARRAY,
       }));
     },
     markNotificationThreadAsRead: async (id, params) => {
-      return this.fetch(
-        `notifications/threads/${id}`,
-        {
-          method: this.Method.PATCH,
-        },
-        params
-      ).then(struct => struct);
+      return this.fetch(`notifications/threads/${id}`, params, {
+        method: this.Method.PATCH,
+      }).then(response => ({ response }));
     },
   };
 
@@ -167,14 +147,12 @@ export class GitHub extends Client {
     getRepos: async (query, params) => {
       return this.fetch(
         `search/repositories?${query}`,
-        {
-          schema: Schemas.REPO_ARRAY,
-          normalizrKey: 'items',
-        },
         params
-      ).then(struct => ({
-        ...struct,
-        nextPageUrl: this.getNextPageUrl(struct.response),
+      ).then(response => ({
+        response,
+        nextPageUrl: this.getNextPageUrl(response),
+        schema: Schemas.REPO_ARRAY,
+        normalizrKey: 'items',
       }));
     },
   };
