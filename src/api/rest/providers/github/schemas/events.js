@@ -22,8 +22,8 @@ export const eventSchema = new schema.Entity(
       processed.payload = entity.payload; // TODO: needs to be inspected for more nested entities (forkee)
       processed.createdAt = toTimestamp(entity.created_at);
 
-      processed.actor = entity.actor;
-      processed.org = entity.org;
+      processed.actor = entity.actor ? entity.actor : null;
+      processed.org = entity.org ? entity.org : null;
       processed.repo = entity.repo;
 
       return processed;

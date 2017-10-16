@@ -34,6 +34,8 @@ export const userSchema = new schema.Entity(
         // Clear avatar cached URL to make sure picture is refetched on profile change
         processed.avatarUrl += `&updatedAt=${processed.updatedAt}`;
 
+        processed._entityUrl = `https://github.com/${entity.login}`;
+
         // The entity is to be considered complete.
         processed._isComplete = true;
       }
@@ -42,42 +44,3 @@ export const userSchema = new schema.Entity(
     },
   }
 );
-
-/**
-
-const userFull = {
-  "login": "machour",
-  "id": 304450,
-  "avatar_url": "https://avatars2.githubusercontent.com/u/304450?v=4",
-  "gravatar_id": "",
-  "url": "https://api.github.com/users/machour",
-  "html_url": "https://github.com/machour",
-  "followers_url": "https://api.github.com/users/machour/followers",
-  "following_url": "https://api.github.com/users/machour/following{/other_user}",
-  "gists_url": "https://api.github.com/users/machour/gists{/gist_id}",
-  "starred_url": "https://api.github.com/users/machour/starred{/owner}{/repo}",
-  "subscriptions_url": "https://api.github.com/users/machour/subscriptions",
-  "organizations_url": "https://api.github.com/users/machour/orgs",
-  "repos_url": "https://api.github.com/users/machour/repos",
-  "events_url": "https://api.github.com/users/machour/events{/privacy}",
-  "received_events_url": "https://api.github.com/users/machour/received_events",
-  "type": "User",
-  "site_admin": false,
-
-
-  "name": "Mehdi Achour",
-  "company": "IDK",
-  "blog": "https://machour.idk.tn/",
-  "location": "Tunis",
-  "email": null,
-  "hireable": true,
-  "bio": null,
-  "public_repos": 55,
-  "public_gists": 4,
-  "followers": 61,
-  "following": 42,
-  "created_at": "2010-06-14T01:09:25Z",
-  "updated_at": "2017-10-04T06:11:32Z"
-}
-
- */
