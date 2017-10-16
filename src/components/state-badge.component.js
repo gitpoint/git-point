@@ -68,9 +68,7 @@ export const StateBadge = ({
         issueState === 'closed' && styles.closedIssue,
       ]}
     >
-      <Text style={styles.text}>
-        {issueText}
-      </Text>
+      <Text style={styles.text}>{issueText}</Text>
     </View>
   );
 };

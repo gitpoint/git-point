@@ -118,7 +118,7 @@ class AuthProfile extends Component {
     return (
       <ViewContainer>
         <ParallaxScroll
-          renderContent={() =>
+          renderContent={() => (
             <UserProfile
               type="user"
               initialUser={hasInitialUser ? user : {}}
@@ -126,7 +126,8 @@ class AuthProfile extends Component {
               starCount={hasInitialUser ? starCount : ''}
               locale={locale}
               navigation={navigation}
-            />}
+            />
+          )}
           refreshControl={
             <RefreshControl
               refreshing={isPendingUser}
@@ -141,46 +142,44 @@ class AuthProfile extends Component {
               title: translate('auth.userOptions.title', locale),
             })}
         >
-          {isPending &&
+          {isPending && (
             <ActivityIndicator
               animating={isPending}
               style={{ height: Dimensions.get('window').height / 3 }}
               size="large"
-            />}
+            />
+          )}
 
           {hasInitialUser &&
             user.bio &&
-            user.bio !== '' &&
-            <SectionList title={translate('common.bio', locale)}>
-              <ListItem
-                subtitle={emojifyText(user.bio)}
-                subtitleStyle={styles.listSubTitle}
-                hideChevron
-              />
-            </SectionList>}
+            user.bio !== '' && (
+              <SectionList title={translate('common.bio', locale)}>
+                <ListItem
+                  subtitle={emojifyText(user.bio)}
+                  subtitleStyle={styles.listSubTitle}
+                  hideChevron
+                />
+              </SectionList>
+            )}
 
-          {!isPending &&
-            <EntityInfo
-              entity={user}
-              orgs={orgs}
-              navigation={navigation}
-              locale={locale}
-            />}
+          {!isPending && (
+            <EntityInfo entity={user} orgs={orgs} navigation={navigation} locale={locale} />
+          )}
 
-          {!isPending &&
+          {!isPending && (
             <View>
               <SectionList
                 title={translate('common.orgs', locale)}
                 noItems={orgs.length === 0}
                 noItemsMessage={translate('common.noOrgsMessage', locale)}
               >
-                {orgs.map(item =>
+                {orgs.map(item => (
                   <UserListItem
                     key={item.id}
                     user={item}
                     navigation={navigation}
                   />
-                )}
+                ))}
                 <Text style={styles.note}>
                   {translate('auth.profile.orgsRequestApprovalTop', locale)}
                   {'\n'}
@@ -196,7 +195,8 @@ class AuthProfile extends Component {
                   </Text>
                 </Text>
               </SectionList>
-            </View>}
+            </View>
+          )}
         </ParallaxScroll>
       </ViewContainer>
     );

@@ -28,7 +28,7 @@ export const SearchBar = ({
   onFocus,
   onCancelButtonPress,
   onSearchButtonPress,
-}: Props) =>
+}: Props) => (
   <MDSearchBar
     textStyle={textColor ? { color: textColor } : null}
     inputStyle={{
@@ -50,7 +50,8 @@ export const SearchBar = ({
     height={40}
     autoCorrect={false}
     returnKeyType="search"
-  />;
+  />
+);
 
 SearchBar.defaultProps = {
   textColor: undefined,

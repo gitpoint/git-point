@@ -36,14 +36,13 @@ export const RepositorySectionTitle = ({
 }: Props) => {
   return (
     <View style={styles.title}>
-      <Text style={styles.titleText}>
-        {text}
-      </Text>
-      {!loading &&
+      <Text style={styles.titleText}>{text}</Text>
+      {!loading && (
         <View style={styles.badgeContainer}>
           <StateBadge type="open" text={openCount} style={styles.badge} />
           <StateBadge type="closed" text={closedCount} style={styles.badge} />
-        </View>}
+        </View>
+      )}
     </View>
   );
 };

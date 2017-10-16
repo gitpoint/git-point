@@ -262,6 +262,7 @@ class Repository extends Component {
                 loading={isPendingRepository}
                 navigation={navigation}
                 subscribed={isSubscribed}
+                locale={locale}
               />
             );
           }}
@@ -306,10 +307,11 @@ class Repository extends Component {
               />
             </SectionList>}
 
-          {(isPendingRepository || isPendingContributors) &&
+          {(isPendingRepository || isPendingContributors) && (
             <LoadingMembersList
               title={translate('repository.main.contributorsTitle', locale)}
-            />}
+            />
+          )}
 
           {!isPendingContributors &&
             <MembersList
@@ -418,14 +420,15 @@ class Repository extends Component {
           >
             {openPulls
               .slice(0, 3)
-              .map(item =>
+              .map(item => (
                 <IssueListItem
                   key={item.id}
                   type="pull"
                   issue={item}
                   navigation={navigation}
+                  locale={locale}
                 />
-              )}
+              ))}
           </SectionList>
         </ParallaxScroll>
 

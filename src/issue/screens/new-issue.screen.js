@@ -78,9 +78,11 @@ class NewIssue extends Component {
     const owner = repository.owner.login;
 
     if (issueTitle === '') {
-      Alert.alert(translate('issue.newIssue.missingTitleAlert', locale), null, [
-        { text: translate('common.ok', locale) },
-      ]);
+      Alert.alert(
+        translate('issue.newIssue.missingTitleAlert', locale),
+        null,
+        [{ text: translate('common.ok', locale) }]
+      );
     } else {
       submitNewIssue(owner, repoName, issueTitle, issueComment).then(issue => {
         navigation.navigate('Issue', {
@@ -100,7 +102,7 @@ class NewIssue extends Component {
       <ViewContainer>
         {isPendingSubmitting && <LoadingModal />}
         <ScrollView>
-          {repository.full_name &&
+          {repository.full_name && (
             <ListItem
               title={repository.full_name}
               titleStyle={styles.titleSmall}
@@ -111,7 +113,8 @@ class NewIssue extends Component {
                 type: 'octicon',
               }}
               hideChevron
-            />}
+            />
+          )}
           <SectionList title={translate('issue.newIssue.issueTitle', locale)}>
             <TextInput
               underlineColorAndroid={'transparent'}
@@ -132,7 +135,9 @@ class NewIssue extends Component {
             />
           </SectionList>
 
-          <SectionList title={translate('issue.newIssue.issueComment', locale)}>
+          <SectionList
+            title={translate('issue.newIssue.issueComment', locale)}
+          >
             <TextInput
               underlineColorAndroid={'transparent'}
               placeholder={translate('issue.newIssue.writeAComment', locale)}

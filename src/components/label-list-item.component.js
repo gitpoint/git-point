@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const LabelListItem = ({ label, removeLabel }: Props) =>
+export const LabelListItem = ({ label, removeLabel }: Props) => (
   <View style={styles.container}>
     <View style={styles.wrapper}>
       <View style={styles.labelInfo}>
@@ -46,4 +46,5 @@ export const LabelListItem = ({ label, removeLabel }: Props) =>
         <Icon color={colors.grey} name="x" type="octicon" />
       </TouchableOpacity>
     </View>
-  </View>;
+  </View>
+);

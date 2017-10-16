@@ -173,9 +173,13 @@ class Events extends Component {
             }
           );
         } else if (action === 'edited') {
-          return translate('auth.events.pullRequestReviewEditedEvent', locale, {
-            action: translate(`auth.events.actions.${action}`, locale),
-          });
+          return translate(
+            'auth.events.pullRequestReviewEditedEvent',
+            locale,
+            {
+              action: translate(`auth.events.actions.${action}`, locale),
+            }
+          );
         } else if (action === 'deleted') {
           return translate(
             'auth.events.pullRequestReviewDeletedEvent',
@@ -498,9 +502,7 @@ class Events extends Component {
         >
           {userEvent.actor.login}{' '}
         </Text>
-        <Text>
-          {this.getAction(userEvent)}{' '}
-        </Text>
+        <Text>{this.getAction(userEvent)} </Text>
         {this.getItem(userEvent)}
         {this.getAction(userEvent) && ' '}
         {this.getConnector(userEvent)}
@@ -540,7 +542,7 @@ class Events extends Component {
           onRefresh={this.getUserEvents}
           refreshing={isPendingEvents}
           keyExtractor={this.keyExtractor}
-          renderItem={({ item }) =>
+          renderItem={({ item }) => (
             <View>
               <UserListItem
                 user={item.actor}
@@ -556,25 +558,23 @@ class Events extends Component {
               />
 
               {(item.type === 'IssueCommentEvent' ||
-                item.type === 'PullRequestReviewCommentEvent') &&
+                item.type === 'PullRequestReviewCommentEvent') && (
                 <View style={styles.subtitleContainer}>
                   <Text numberOfLines={3} style={styles.subtitle}>
                     {emojifyText(
                       item.payload.comment.body.replace(linebreaksPattern, ' ')
                     )}
                   </Text>
-                </View>}
-            </View>}
-          extraData={locale}
+                </View>
+              )}
+            </View>
+          )}
+          extraData={this.props.locale}
         />
       );
     }
 
-    return (
-      <ViewContainer>
-        {content}
-      </ViewContainer>
-    );
+    return <ViewContainer>{content}</ViewContainer>;
   }
 }
 
