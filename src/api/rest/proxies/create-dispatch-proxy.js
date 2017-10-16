@@ -2,10 +2,11 @@ import * as Actions from 'api/rest/actions';
 import { normalize } from 'normalizr';
 
 import {
+  getActionKeyFromArgs,
   splitArgs,
   displayError,
   actionNameForCall,
-} from 'utils/decorator-helpers';
+} from 'utils/api-helpers';
 
 const handleCountOperation = (
   client,
@@ -17,17 +18,24 @@ const handleCountOperation = (
 ) => {
   // Used as a key for state.pagination
   const actionName = actionNameForCall(namespace, method, 'COUNT_');
+  const action = Actions[actionName];
+
+  if (!action) {
+    return displayError(
+      `Unknown action. Did you forget to define Actions.${actionName}?`
+    );
+  }
 
   const { pureArgs, extraArg } = splitArgs(client[namespace][method], args);
 
   extraArg.per_page = 1;
 
   const finalArgs = [...pureArgs, extraArg];
-  const actionKey = pureArgs.join('-');
+  const actionKey = getActionKeyFromArgs(pureArgs);
 
   dispatch({
     key: actionKey,
-    type: Actions[actionName].PENDING,
+    type: action.PENDING,
   });
 
   client.setAuthHeaders(getState().auth.accessToken);
@@ -41,14 +49,14 @@ const handleCountOperation = (
           counters: count,
           key: actionKey,
           name: actionName,
-          type: Actions[actionName].SUCCESS,
+          type: action.SUCCESS,
         });
       })
       .catch(error => {
         displayError(error.toString());
         dispatch({
           key: actionKey,
-          type: Actions[actionName].ERROR,
+          type: action.ERROR,
         });
 
         return error;
@@ -97,7 +105,7 @@ export const createDispatchProxy = Provider => {
 
           const { pureArgs, extraArg } = splitArgs(endpoint[method], args);
           const paginator = getState().pagination[actionName];
-          const actionKey = pureArgs.join('-');
+          const actionKey = getActionKeyFromArgs(pureArgs);
 
           let finalArgs = args;
 
@@ -131,7 +139,7 @@ export const createDispatchProxy = Provider => {
 
           dispatch({
             id: actionKey,
-            type: Actions[actionName].PENDING,
+            type: action.PENDING,
           });
 
           return endpoint[method](...finalArgs)
@@ -153,7 +161,7 @@ export const createDispatchProxy = Provider => {
               if (struct.response.status === 205) {
                 dispatch({
                   id: actionKey,
-                  type: Actions[actionName].SUCCESS,
+                  type: action.SUCCESS,
                 });
 
                 return Promise.resolve();
@@ -161,27 +169,27 @@ export const createDispatchProxy = Provider => {
 
               return struct.response.json().then(json => {
                 // Treat the JSON & normalize it
-                const normalized = normalize(
+                const normalizedJson = normalize(
                   struct.normalizrKey ? json[struct.normalizrKey] : json,
                   struct.schema
                 );
 
                 if (paginator) {
-                  normalized.pagination = {
+                  normalizedJson.pagination = {
                     name: actionName,
                     key: actionKey,
-                    ids: normalized.result,
+                    ids: normalizedJson.result,
                     nextPageUrl: struct.nextPageUrl,
                   };
 
-                  delete normalized.result;
+                  delete normalizedJson.result;
                 }
 
                 // Success, let's dispatch it
                 dispatch({
-                  ...normalized,
+                  ...normalizedJson,
                   id: actionKey,
-                  type: Actions[actionName].SUCCESS,
+                  type: action.SUCCESS,
                 });
 
                 return Promise.resolve();
@@ -192,7 +200,7 @@ export const createDispatchProxy = Provider => {
 
               dispatch({
                 id: actionKey,
-                type: Actions[actionName].ERROR,
+                type: action.ERROR,
               });
 
               return error;

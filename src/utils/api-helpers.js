@@ -1,5 +1,7 @@
 import { Alert } from 'react-native';
 
+export const getActionKeyFromArgs = args => args.join('-');
+
 export const actionNameForCall = (namespace, method, prefix = '') => {
   const upperCased = `${namespace}_${method}`
     .replace(/([A-Z])/g, '_$1')
