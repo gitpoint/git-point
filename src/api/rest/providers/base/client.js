@@ -1,4 +1,9 @@
 export class Client {
+  /**
+   * Enum for HTTP methods.
+   *
+   * @enum {string}
+   */
   Method = {
     GET: 'GET',
     HEAD: 'HEAD',
@@ -56,5 +61,28 @@ export class Client {
         };
       })
       .catch(error => error);
+  };
+
+  /* eslint-disable no-unused-vars */
+
+  /**
+   * Sets the authorization headers given an access token.
+   *
+   * @abstract
+   * @param {string} token The oAuth access token
+   */
+  setAuthHeaders = token => {
+    throw new Error('Not implemented');
+  };
+
+  /**
+   * Counts the entities available by analysing the Response object
+   *
+   * @abstract
+   * @async
+   * @param {Response} response
+   */
+  getCount = async response => {
+    throw new Error('Not implemented');
   };
 }

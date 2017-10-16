@@ -38,46 +38,27 @@ export const createCountProxy = Provider => {
           client.setAuthHeaders(getState().auth.accessToken);
 
           /* eslint-disable no-unexpected-multiline */
-          return endpoint
-            [method](...finalArgs)
-            .then(struct => {
-              if (struct.response.status === 404) {
-                return 0;
-              }
-
-              let linkHeader = struct.response.headers.get('Link');
-
-              if (linkHeader !== null) {
-                linkHeader = linkHeader.match(/page=(\d)+/g).pop();
+          return endpoint[method](...finalArgs).then(struct => {
+            client
+              .getCount(struct.response)
+              .then(count => {
                 dispatch({
-                  counters: linkHeader.split('=').pop(),
+                  counters: count,
                   key: actionKey,
                   name: actionName,
                   type: Actions[actionName].SUCCESS,
                 });
-              } else {
-                struct.response.json().then(data => {
-                  dispatch({
-                    counters: data.length,
-                    key: actionKey,
-                    name: actionName,
-                    type: Actions[actionName].SUCCESS,
-                  });
+              })
+              .catch(error => {
+                displayError(error.toString());
+                dispatch({
+                  key: actionKey,
+                  type: Actions[actionName].ERROR,
                 });
-              }
 
-              return Promise.resolve();
-            })
-            .catch(error => {
-              displayError(error.toString());
-
-              dispatch({
-                key: actionKey,
-                type: Actions[actionName].ERROR,
+                return error;
               });
-
-              return error;
-            });
+          });
         },
       });
     },

@@ -25,6 +25,28 @@ export class GitHub extends Client {
   };
 
   /**
+   * Counts the entities available by analysing the Response object
+   *
+   * @async
+   * @param {Response} response
+   */
+  getCount = async response => {
+    if (!response.ok) {
+      return 0;
+    }
+
+    let linkHeader = response.headers.get('Link');
+
+    if (linkHeader !== null) {
+      linkHeader = linkHeader.match(/page=(\d)+/g).pop();
+
+      return linkHeader.split('=').pop();
+    }
+
+    return response.json().then(data => data.length).catch(() => 0);
+  };
+
+  /**
    * The organizations endpoint
    */
   orgs = {
