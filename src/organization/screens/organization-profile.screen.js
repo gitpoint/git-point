@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { StyleSheet, RefreshControl } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
-import { getAuthLocale } from 'auth';
 import {
   ViewContainer,
   OrgProfile,
@@ -15,10 +14,7 @@ import {
 } from 'components';
 import { emojifyText, translate, openURLInView } from 'utils';
 import { colors, fonts } from 'config';
-import { GitHub } from 'api/rest/providers/github';
-import { createDispatchProxy } from 'api/rest/proxies';
-
-const client = createDispatchProxy(GitHub);
+import { client } from 'api/rest';
 
 const styles = StyleSheet.create({
   listTitle: {
@@ -40,7 +36,11 @@ const mapStateToProps = (state, ownProps) => {
   // TODO: This should be normalized to params.id
   const orgId = ownProps.navigation.state.params.organization.login.toLowerCase();
 
-  const { pagination: { ORGS_GET_MEMBERS }, entities: { orgs, users } } = state;
+  const {
+    auth: { locale },
+    pagination: { ORGS_GET_MEMBERS },
+    entities: { orgs, users },
+  } = state;
 
   const membersPagination = ORGS_GET_MEMBERS[orgId] || {
     ids: [],
@@ -59,7 +59,7 @@ const mapStateToProps = (state, ownProps) => {
     membersPagination,
     // normalized attribute
     entity: orgs[orgId],
-    locale: getAuthLocale,
+    locale,
   };
 };
 

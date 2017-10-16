@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { RepositoryList } from 'components';
-
-import { GitHub } from 'api/rest/providers/github';
-import { createDispatchProxy } from 'api/rest/proxies';
-
-const client = createDispatchProxy(GitHub);
+import { client } from 'api/rest';
 
 const getQueryString = (keyword, orgId) =>
   `q=${keyword}+user:${orgId}+fork:true&per_page=8`;

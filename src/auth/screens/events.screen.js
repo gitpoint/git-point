@@ -13,10 +13,7 @@ import moment from 'moment/min/moment-with-locales.min';
 import { LoadingUserListItem, UserListItem, ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { emojifyText, translate } from 'utils';
-import { GitHub } from 'api/rest/providers/github';
-import { createDispatchProxy } from 'api/rest/proxies';
-
-const client = createDispatchProxy(GitHub);
+import { client } from 'api/rest';
 
 const mapStateToProps = state => {
   const {

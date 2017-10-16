@@ -13,10 +13,7 @@ import {
   Platform,
 } from 'react-native';
 import { ButtonGroup, Card, Icon } from 'react-native-elements';
-
-import { GitHub } from 'api/rest/providers/github';
-import { createDispatchProxy } from 'api/rest/proxies';
-
+import { client } from 'api/rest';
 import { v3 } from 'api';
 import {
   Button,
@@ -570,8 +567,6 @@ class Notifications extends Component {
     );
   }
 }
-
-const client = createDispatchProxy(GitHub);
 
 export const NotificationsScreen = connect(mapStateToProps, {
   getNotifications: client.activity.getNotifications,
