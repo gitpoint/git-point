@@ -5,7 +5,8 @@ export const eo = {
       preparingGitPoint: 'Prepari GitPoint...',
       cancel: 'CANCELO',
       welcomeTitle: 'Bonvenon al GitPoint',
-      welcomeMessage: 'La plej karakterizaĵo riĉa GitHub-kliento, kiu estas 100% libera',
+      welcomeMessage:
+        'La plej karakterizaĵo riĉa GitHub-kliento, kiu estas 100% libera',
       notificationsTitle: 'Kontroli sciigojn',
       notificationsMessage:
         'Vidi kaj kontroli ĉiujn viajn nelegitajn kaj partoprenajn sciigojn',
@@ -13,8 +14,7 @@ export const eo = {
       reposMessage:
         'Facile akiri dosierujon, uzantojn kaj organizajn informojn',
       issuesTitle: 'Problemoj kaj Petitaj Petoj',
-      issuesMessage:
-        'Komuniki sur konversacioj, kunfandi tiri petojn kaj pli',
+      issuesMessage: 'Komuniki sur konversacioj, kunfandi tiri petojn kaj pli',
       signInButton: 'ENSALUTI',
     },
     welcome: {
@@ -279,7 +279,8 @@ export const eo = {
         pullRequest: 'Peti Petojn',
       },
       openIssueSubTitle: '# {{number}} malfermis {{time}} ago per {{user}}',
-      closedIssueSubTitle: '# {{number}} per {{user}} estis fermita {{time}} ago',
+      closedIssueSubTitle:
+        '# {{number}} per {{user}} estis fermita {{time}} ago',
       issueActions: 'Issue Actions',
     },
     newIssue: {

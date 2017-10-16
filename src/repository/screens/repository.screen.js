@@ -311,10 +311,10 @@ class Repository extends Component {
             )}
 
           {(isPendingRepository || isPendingContributors) && (
-              <LoadingMembersList
-                title={translate('repository.main.contributorsTitle', language)}
-              />
-            )}
+            <LoadingMembersList
+              title={translate('repository.main.contributorsTitle', language)}
+            />
+          )}
 
           {!isPendingContributors && (
             <MembersList

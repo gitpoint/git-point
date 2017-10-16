@@ -409,6 +409,60 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "kodisto",
+      "name": "Kodo Verkisto",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/32579769?v=4",
+      "profile": "https://github.com/kodisto",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "cheshire137",
+      "name": "Sarah Vessels",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/82317?v=4",
+      "profile": "http://sarahvessels.com/",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "tminussi",
+      "name": "Thales Sousa",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/3764756?v=4",
+      "profile": "https://github.com/tminussi",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "asood123",
+      "name": "Aseem Sood",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/6106941?v=4",
+      "profile": "https://github.com/asood123",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "Eliottiosdevs",
+      "name": "Eliott hauteclair",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/7842156?v=4",
+      "profile": "https://eliott.be",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "peterblazejewicz",
+      "name": "Peter Blazejewicz",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/14539?v=4",
+      "profile": "http://www.linkedin.com/in/peterblazejewicz",
+      "contributions": [
+        "translation"
+      ]
     }
   ]
 }

@@ -105,11 +105,11 @@ export const UserProfile = ({
   isFollower,
   language,
   navigation,
-}: Props) =>
+}: Props) => (
   <View style={styles.container}>
     {((user.hasOwnProperty('public_repos') &&
       !isNaN(parseInt(starCount, 10))) ||
-      type === 'org') &&
+      type === 'org') && (
       <View style={styles.wrapperContainer}>
         <View style={styles.profile}>
           <ImageZoom
@@ -124,12 +124,8 @@ export const UserProfile = ({
                 styles.userAvatar,
             ]}
           />
-          <Text style={styles.title}>
-            {user.name || ' '}
-          </Text>
-          <Text style={styles.subtitle}>
-            {initialUser.login || ' '}
-          </Text>
+          <Text style={styles.title}>{user.name || ' '}</Text>
+          <Text style={styles.subtitle}>{initialUser.login || ' '}</Text>
         </View>
         <View style={styles.details}>
           <TouchableOpacity
@@ -151,7 +147,7 @@ export const UserProfile = ({
             </Text>
           </TouchableOpacity>
 
-          {type !== 'org' &&
+          {type !== 'org' && (
             <TouchableOpacity style={styles.unit}>
               <Text style={styles.unitNumber}>
                 {abbreviateNumber(starCount)}
@@ -159,9 +155,10 @@ export const UserProfile = ({
               <Text style={styles.unitText}>
                 {translate('common.stars', language)}
               </Text>
-            </TouchableOpacity>}
+            </TouchableOpacity>
+          )}
 
-          {type !== 'org' &&
+          {type !== 'org' && (
             <TouchableOpacity
               style={styles.unit}
               onPress={() =>
@@ -177,13 +174,15 @@ export const UserProfile = ({
               <Text style={styles.unitText}>
                 {translate('user.followers.text', language)}
               </Text>
-              {isFollowing &&
+              {isFollowing && (
                 <Text style={[styles.unitStatus, styles.badge]}>
                   {translate('user.following.followingYou', language)}
-                </Text>}
-            </TouchableOpacity>}
+                </Text>
+              )}
+            </TouchableOpacity>
+          )}
 
-          {type !== 'org' &&
+          {type !== 'org' && (
             <TouchableOpacity
               style={styles.unit}
               onPress={() =>
@@ -199,11 +198,15 @@ export const UserProfile = ({
               <Text style={styles.unitText}>
                 {translate('user.following.text', language)}
               </Text>
-              {isFollower &&
+              {isFollower && (
                 <Text style={[styles.unitStatus, styles.badge]}>
                   {translate('user.followers.followsYou')}
-                </Text>}
-            </TouchableOpacity>}
+                </Text>
+              )}
+            </TouchableOpacity>
+          )}
         </View>
-      </View>}
-  </View>;
+      </View>
+    )}
+  </View>
+);

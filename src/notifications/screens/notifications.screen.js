@@ -58,7 +58,7 @@ const mapDispatchToProps = dispatch =>
       getNotificationsCount,
       markAllNotificationsAsRead,
     },
-    dispatch,
+    dispatch
   );
 
 const styles = StyleSheet.create({
@@ -189,7 +189,7 @@ class Notifications extends Component {
 
   getImage(repoName) {
     const notificationForRepo = this.notifications().find(
-      notification => notification.repository.full_name === repoName,
+      notification => notification.repository.full_name === repoName
     );
 
     return notificationForRepo.repository.owner.avatar_url;
@@ -226,8 +226,8 @@ class Notifications extends Component {
     const repositories = [
       ...new Set(
         this.notifications().map(
-          notification => notification.repository.full_name,
-        ),
+          notification => notification.repository.full_name
+        )
       ),
     ];
 
@@ -361,7 +361,7 @@ class Notifications extends Component {
     } = this.props;
     const { type } = this.state;
     const notifications = this.notifications().filter(
-      notification => notification.repository.full_name === item,
+      notification => notification.repository.full_name === item
     );
     const isFirstItem = this.getSortedRepos().indexOf(item) === 0;
     const isFirstTab = type === 0;
@@ -369,14 +369,15 @@ class Notifications extends Component {
     return (
       <View>
         {isFirstItem &&
-          isFirstTab &&
-          <View style={styles.markAllAsReadButtonContainer}>
-            <Button
-              icon={{ name: 'check', type: 'octicon' }}
-              onPress={() => markAllNotificationsAsRead()}
-              title={translate('notifications.main.markAllAsRead')}
-            />
-          </View>}
+          isFirstTab && (
+            <View style={styles.markAllAsReadButtonContainer}>
+              <Button
+                icon={{ name: 'check', type: 'octicon' }}
+                onPress={() => markAllNotificationsAsRead()}
+                title={translate('notifications.main.markAllAsRead')}
+              />
+            </View>
+          )}
 
         <Card containerStyle={styles.repositoryContainer}>
           <View style={styles.headerContainer}>
@@ -408,15 +409,15 @@ class Notifications extends Component {
           </View>
 
           <ScrollView>
-            {notifications.map(notification =>
+            {notifications.map(notification => (
               <NotificationListItem
                 key={notification.id}
                 notification={notification}
                 iconAction={notificationID => markAsRead(notificationID)}
                 navigationAction={notify => this.navigateToThread(notify)}
                 navigation={this.props.navigation}
-              />,
-            )}
+              />
+            ))}
           </ScrollView>
         </Card>
       </View>
@@ -455,7 +456,7 @@ class Notifications extends Component {
             onLayout={this.saveContentBlockHeight}
             style={styles.contentBlock}
           >
-            {isRetrievingNotifications &&
+            {isRetrievingNotifications && (
               <View
                 style={[styles.textContainer, { height: contentBlockHeight }]}
               >
@@ -463,14 +464,15 @@ class Notifications extends Component {
                   animating={isRetrievingNotifications}
                   text={translate(
                     'notifications.main.retrievingMessage',
-                    language,
+                    language
                   )}
                   style={styles.marginSpacing}
                   center
                 />
-              </View>}
+              </View>
+            )}
 
-            {!isRetrievingNotifications &&
+            {!isRetrievingNotifications && (
               <FlatList
                 ref={ref => {
                   this.notificationsList = ref;
@@ -482,19 +484,21 @@ class Notifications extends Component {
                 keyExtractor={this.keyExtractor}
                 renderItem={this.renderItem}
                 ListEmptyComponent={
-                  !isLoadingNewNotifications &&
-                  <View
-                    style={[
-                      styles.textContainer,
-                      { height: contentBlockHeight },
-                    ]}
-                  >
-                    <Text style={styles.noneTitle}>
-                      {translate('notifications.main.noneMessage', language)}
-                    </Text>
-                  </View>
+                  !isLoadingNewNotifications && (
+                    <View
+                      style={[
+                        styles.textContainer,
+                        { height: contentBlockHeight },
+                      ]}
+                    >
+                      <Text style={styles.noneTitle}>
+                        {translate('notifications.main.noneMessage', language)}
+                      </Text>
+                    </View>
+                  )
                 }
-              />}
+              />
+            )}
           </View>
         </View>
       </ViewContainer>
@@ -503,5 +507,5 @@ class Notifications extends Component {
 }
 
 export const NotificationsScreen = connect(mapStateToProps, mapDispatchToProps)(
-  Notifications,
+  Notifications
 );

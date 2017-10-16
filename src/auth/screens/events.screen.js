@@ -27,7 +27,7 @@ const mapDispatchToProps = dispatch =>
       getNotificationsCount,
       getUser,
     },
-    dispatch,
+    dispatch
   );
 
 const styles = StyleSheet.create({
@@ -170,7 +170,7 @@ class Events extends Component {
             language,
             {
               action: translate('auth.events.actions.commented', language),
-            },
+            }
           );
         } else if (action === 'edited') {
           return translate(
@@ -178,7 +178,7 @@ class Events extends Component {
             language,
             {
               action: translate(`auth.events.actions.${action}`, language),
-            },
+            }
           );
         } else if (action === 'deleted') {
           return translate(
@@ -186,7 +186,7 @@ class Events extends Component {
             language,
             {
               action: translate(`auth.events.actions.${action}`, language),
-            },
+            }
           );
         }
 
@@ -466,7 +466,7 @@ class Events extends Component {
         ? {
             ...userEvent.repo,
             name: userEvent.repo.name.substring(
-              userEvent.repo.name.indexOf('/') + 1,
+              userEvent.repo.name.indexOf('/') + 1
             ),
           }
         : userEvent.payload.forkee,
@@ -502,9 +502,7 @@ class Events extends Component {
         >
           {userEvent.actor.login}{' '}
         </Text>
-        <Text>
-          {this.getAction(userEvent)}{' '}
-        </Text>
+        <Text>{this.getAction(userEvent)} </Text>
         {this.getItem(userEvent)}
         {this.getAction(userEvent) && ' '}
         {this.getConnector(userEvent)}
@@ -544,7 +542,7 @@ class Events extends Component {
           onRefresh={this.getUserEvents}
           refreshing={isPendingEvents}
           keyExtractor={this.keyExtractor}
-          renderItem={({ item }) =>
+          renderItem={({ item }) => (
             <View>
               <UserListItem
                 user={item.actor}
@@ -560,28 +558,26 @@ class Events extends Component {
               />
 
               {(item.type === 'IssueCommentEvent' ||
-                item.type === 'PullRequestReviewCommentEvent') &&
+                item.type === 'PullRequestReviewCommentEvent') && (
                 <View style={styles.subtitleContainer}>
                   <Text numberOfLines={3} style={styles.subtitle}>
                     {emojifyText(
-                      item.payload.comment.body.replace(linebreaksPattern, ' '),
+                      item.payload.comment.body.replace(linebreaksPattern, ' ')
                     )}
                   </Text>
-                </View>}
-            </View>}
+                </View>
+              )}
+            </View>
+          )}
           extraData={this.props.language}
         />
       );
     }
 
-    return (
-      <ViewContainer>
-        {content}
-      </ViewContainer>
-    );
+    return <ViewContainer>{content}</ViewContainer>;
   }
 }
 
 export const EventsScreen = connect(mapStateToProps, mapDispatchToProps)(
-  Events,
+  Events
 );

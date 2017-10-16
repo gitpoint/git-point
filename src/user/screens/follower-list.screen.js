@@ -50,19 +50,21 @@ class FollowerList extends Component {
             return <LoadingUserListItem key={index} />;
           })}
 
-        {!isPendingFollowers &&
+        {!isPendingFollowers && (
           <View>
             <FlatList
               data={followers}
               keyExtractor={this.keyExtractor}
-              renderItem={({ item }) =>
+              renderItem={({ item }) => (
                 <UserListItem
                   user={item}
                   navigation={navigation}
                   showFullName
-                />}
+                />
+              )}
             />
-          </View>}
+          </View>
+        )}
       </ViewContainer>
     );
   }

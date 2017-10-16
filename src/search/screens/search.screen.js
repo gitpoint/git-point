@@ -240,38 +240,44 @@ class Search extends Component {
         </View>
 
         {isPendingSearchRepos &&
-          searchType === 0 &&
-          <LoadingContainer
-            animating={isPendingSearchRepos && searchType === 0}
-            text={translate('search.main.searchingMessage', language, {
-              query,
-            })}
-            style={styles.marginSpacing}
-          />}
+          searchType === 0 && (
+            <LoadingContainer
+              animating={isPendingSearchRepos && searchType === 0}
+              text={translate('search.main.searchingMessage', language, {
+                query,
+              })}
+              style={styles.marginSpacing}
+            />
+          )}
 
         {isPendingSearchUsers &&
-          searchType === 1 &&
-          <LoadingContainer
-            animating={isPendingSearchUsers && searchType === 1}
-            text={translate('search.main.searchingMessage', language, {
-              query,
-            })}
-            style={styles.marginSpacing}
-          />}
+          searchType === 1 && (
+            <LoadingContainer
+              animating={isPendingSearchUsers && searchType === 1}
+              text={translate('search.main.searchingMessage', language, {
+                query,
+              })}
+              style={styles.marginSpacing}
+            />
+          )}
 
         {searchStart &&
-          noResults &&
-          <View
-            style={[styles.listContainer, isPending && styles.noBorderTopWidth]}
-          >
-            <FlatList
-              data={searchType === 0 ? repos : users}
-              keyExtractor={this.keyExtractor}
-              renderItem={this.renderItem}
-            />
-          </View>}
+          noResults && (
+            <View
+              style={[
+                styles.listContainer,
+                isPending && styles.noBorderTopWidth,
+              ]}
+            >
+              <FlatList
+                data={searchType === 0 ? repos : users}
+                keyExtractor={this.keyExtractor}
+                renderItem={this.renderItem}
+              />
+            </View>
+          )}
 
-        {!searchStart &&
+        {!searchStart && (
           <View style={styles.textContainer}>
             <Text style={styles.searchTitle}>
               {translate('search.main.searchMessage', language, {
@@ -281,27 +287,30 @@ class Search extends Component {
                     : translate('search.main.user', language),
               })}
             </Text>
-          </View>}
+          </View>
+        )}
 
         {searchStart &&
           !isPendingSearchRepos &&
           repos.length === 0 &&
-          searchType === 0 &&
-          <View style={styles.textContainer}>
-            <Text style={styles.searchTitle}>
-              {translate('search.main.noRepositoriesFound', language)}
-            </Text>
-          </View>}
+          searchType === 0 && (
+            <View style={styles.textContainer}>
+              <Text style={styles.searchTitle}>
+                {translate('search.main.noRepositoriesFound', language)}
+              </Text>
+            </View>
+          )}
 
         {searchStart &&
           !isPendingSearchUsers &&
           users.length === 0 &&
-          searchType === 1 &&
-          <View style={styles.textContainer}>
-            <Text style={styles.searchTitle}>
-              {translate('search.main.noUsersFound', language)}
-            </Text>
-          </View>}
+          searchType === 1 && (
+            <View style={styles.textContainer}>
+              <Text style={styles.searchTitle}>
+                {translate('search.main.noUsersFound', language)}
+              </Text>
+            </View>
+          )}
       </ViewContainer>
     );
   }

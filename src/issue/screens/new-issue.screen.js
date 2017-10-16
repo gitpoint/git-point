@@ -43,7 +43,7 @@ const mapDispatchToProps = dispatch =>
     {
       submitNewIssue,
     },
-    dispatch,
+    dispatch
   );
 
 class NewIssue extends Component {
@@ -81,7 +81,7 @@ class NewIssue extends Component {
       Alert.alert(
         translate('issue.newIssue.missingTitleAlert', language),
         null,
-        [{ text: translate('common.ok', language) }],
+        [{ text: translate('common.ok', language) }]
       );
     } else {
       submitNewIssue(owner, repoName, issueTitle, issueComment).then(issue => {
@@ -102,7 +102,7 @@ class NewIssue extends Component {
       <ViewContainer>
         {isPendingSubmitting && <LoadingModal />}
         <ScrollView>
-          {repository.full_name &&
+          {repository.full_name && (
             <ListItem
               title={repository.full_name}
               titleStyle={styles.titleSmall}
@@ -113,7 +113,8 @@ class NewIssue extends Component {
                 type: 'octicon',
               }}
               hideChevron
-            />}
+            />
+          )}
           <SectionList title={translate('issue.newIssue.issueTitle', language)}>
             <TextInput
               underlineColorAndroid={'transparent'}
@@ -173,5 +174,5 @@ class NewIssue extends Component {
 }
 
 export const NewIssueScreen = connect(mapStateToProps, mapDispatchToProps)(
-  NewIssue,
+  NewIssue
 );
