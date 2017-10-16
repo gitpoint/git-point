@@ -79,12 +79,10 @@ export class GitHub extends Client {
           schema: Schemas.USER_ARRAY,
         },
         params
-      ).then(struct => {
-        return {
-          ...struct,
-          nextPageUrl: this.getNextPageUrl(struct.response),
-        };
-      });
+      ).then(struct => ({
+        ...struct,
+        nextPageUrl: this.getNextPageUrl(struct.response),
+      }));
     },
     /**
      * Gets organization members
@@ -98,12 +96,10 @@ export class GitHub extends Client {
           schema: Schemas.REPO_ARRAY,
         },
         params
-      ).then(struct => {
-        return {
-          ...struct,
-          nextPageUrl: this.getNextPageUrl(struct.response),
-        };
-      });
+      ).then(struct => ({
+        ...struct,
+        nextPageUrl: this.getNextPageUrl(struct.response),
+      }));
     },
   };
 
@@ -123,12 +119,10 @@ export class GitHub extends Client {
           schema: Schemas.EVENT_ARRAY,
         },
         params
-      ).then(struct => {
-        return {
-          ...struct,
-          nextPageUrl: this.getNextPageUrl(struct.response),
-        };
-      });
+      ).then(struct => ({
+        ...struct,
+        nextPageUrl: this.getNextPageUrl(struct.response),
+      }));
     },
     /**
      * Get all notifications for the current user
@@ -148,12 +142,10 @@ export class GitHub extends Client {
           schema: Schemas.NOTIFICATION_ARRAY,
         },
         finalParams
-      ).then(struct => {
-        return {
-          ...struct,
-          nextPageUrl: this.getNextPageUrl(struct.response),
-        };
-      });
+      ).then(struct => ({
+        ...struct,
+        nextPageUrl: this.getNextPageUrl(struct.response),
+      }));
     },
     markNotificationThreadAsRead: async (id, params) => {
       return this.fetch(
@@ -162,11 +154,7 @@ export class GitHub extends Client {
           method: this.Method.PATCH,
         },
         params
-      ).then(struct => {
-        return {
-          ...struct,
-        };
-      });
+      ).then(struct => struct);
     },
   };
 
@@ -184,12 +172,10 @@ export class GitHub extends Client {
           normalizrKey: 'items',
         },
         params
-      ).then(struct => {
-        return {
-          ...struct,
-          nextPageUrl: this.getNextPageUrl(struct.response),
-        };
-      });
+      ).then(struct => ({
+        ...struct,
+        nextPageUrl: this.getNextPageUrl(struct.response),
+      }));
     },
   };
 }

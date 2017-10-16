@@ -13,6 +13,8 @@ export class Client {
     POST: 'POST',
   };
 
+  authHeaders = {};
+
   fetch = async (
     url,
     {
@@ -32,13 +34,13 @@ export class Client {
       finalUrl = url;
       // add explicitely specified parameters
       if (params.per_page) {
-        finalUrl = `${finalUrl}${finalUrl.indexOf('?') !== -1
+        finalUrl = `${finalUrl}${finalUrl.includes('?')
           ? '&'
           : '?'}per_page=${params.per_page}`;
       }
     }
 
-    if (finalUrl.indexOf(this.API_ROOT) === -1) {
+    if (!finalUrl.includes(this.API_ROOT)) {
       finalUrl = `${this.API_ROOT}${finalUrl}`;
     }
 
@@ -52,14 +54,11 @@ export class Client {
     };
 
     return fetch(finalUrl, parameters)
-      .then(response => {
-        // analyze headers for pagination, rates, etc
-        return {
-          response,
-          schema,
-          normalizrKey,
-        };
-      })
+      .then(response => ({
+        response,
+        schema,
+        normalizrKey,
+      }))
       .catch(error => error);
   };
 
