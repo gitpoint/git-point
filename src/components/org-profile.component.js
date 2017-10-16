@@ -13,7 +13,7 @@ import { ImageZoom } from 'components';
 
 type Props = {
   org: Object,
-  language: string,
+  locale: string,
   navigation: Object,
 };
 
@@ -101,7 +101,7 @@ const mockAttribute = (entity, attribute, replacement) => {
   return entity && entity[attribute] ? entity[attribute] : replacement;
 };
 
-export const OrgProfile = ({ org, language, navigation }: Props) => {
+export const OrgProfile = ({ org, locale, navigation }: Props) => {
   const countRepos = mockAttribute(org, 'countRepos', 0);
 
   return (
@@ -109,18 +109,18 @@ export const OrgProfile = ({ org, language, navigation }: Props) => {
       <View style={styles.wrapperContainer}>
         <View style={styles.profile}>
           {org &&
-            org.avatarUrl &&
-            <ImageZoom
-              uri={{
-                uri: org.avatarUrl,
-              }}
-              style={[styles.avatar]}
-            />}
-          {(!org || !org.avatarUrl) &&
-            <ActivityIndicator color={colors.white} size="large" />}
-          <Text style={styles.title}>
-            {mockAttribute(org, 'name', ' ')}
-          </Text>
+            org.avatarUrl && (
+              <ImageZoom
+                uri={{
+                  uri: org.avatarUrl,
+                }}
+                style={[styles.avatar]}
+              />
+            )}
+          {(!org || !org.avatarUrl) && (
+            <ActivityIndicator color={colors.white} size="large" />
+          )}
+          <Text style={styles.title}>{mockAttribute(org, 'name', ' ')}</Text>
           <Text style={styles.subtitle}>
             {mockAttribute(org, 'login', ' ')}
           </Text>
@@ -130,16 +130,14 @@ export const OrgProfile = ({ org, language, navigation }: Props) => {
             style={styles.unit}
             onPress={() =>
               navigation.navigate('OrgRepositoryList', {
-                title: translate('user.repositoryList.title', language),
+                title: translate('user.repositoryList.title', locale),
                 orgId: org.id,
                 repoCount: countRepos > 15 ? 15 : countRepos,
               })}
           >
-            <Text style={styles.unitNumber}>
-              {countRepos}
-            </Text>
+            <Text style={styles.unitNumber}>{countRepos}</Text>
             <Text style={styles.unitText}>
-              {translate('common.repositories', language)}
+              {translate('common.repositories', locale)}
             </Text>
           </TouchableOpacity>
         </View>

@@ -43,7 +43,10 @@ export class GitHub extends Client {
       return linkHeader.split('=').pop();
     }
 
-    return response.json().then(data => data.length).catch(() => 0);
+    return response
+      .json()
+      .then(data => data.length)
+      .catch(() => 0);
   };
 
   /**

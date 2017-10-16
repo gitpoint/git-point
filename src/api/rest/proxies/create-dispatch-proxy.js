@@ -134,9 +134,7 @@ export const createDispatchProxy = Provider => {
             type: Actions[actionName].PENDING,
           });
 
-          /* eslint-disable no-unexpected-multiline */
-          return endpoint
-            [method](...finalArgs)
+          return endpoint[method](...finalArgs)
             .then(struct => {
               if (!struct.response.ok) {
                 return struct.response.json().then(error => {

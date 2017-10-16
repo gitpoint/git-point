@@ -51,14 +51,14 @@ const styles = StyleSheet.create({
   },
 });
 
-const renderTitle = (repository, showFullName) =>
+const renderTitle = (repository, showFullName) => (
   <View style={styles.wrapper}>
     <View style={styles.repositoryContainer}>
       <View style={styles.titleWrapper}>
         <Text style={styles.title}>
           {showFullName ? repository.fullName : repository.shortName}
         </Text>
-        {repository.private &&
+        {repository.private && (
           <View style={styles.privateIconContainer}>
             <Icon
               size={16}
@@ -66,7 +66,8 @@ const renderTitle = (repository, showFullName) =>
               type="octicon"
               color={colors.greyDarkest}
             />
-          </View>}
+          </View>
+        )}
       </View>
       <Text style={styles.description}>
         {emojifyText(repository.description)}
@@ -99,21 +100,25 @@ const renderTitle = (repository, showFullName) =>
         {abbreviateNumber(repository.countForks)}
       </Text>
 
-      {repository.language !== null &&
+      {repository.language !== null && (
         <Icon
           containerStyle={styles.extraInfoIcon}
           name="fiber-manual-record"
           size={15}
           color={languageColors[repository.language]}
-        />}
+        />
+      )}
 
-      <Text style={styles.extraInfoSubject}>
-        {repository.language}
-      </Text>
+      <Text style={styles.extraInfoSubject}>{repository.language}</Text>
     </View>
-  </View>;
+  </View>
+);
 
-export const RepoListItem = ({ repository, showFullName, navigation }: Props) =>
+export const RepoListItem = ({
+  repository,
+  showFullName,
+  navigation,
+}: Props) => (
   <ListItem
     key={repository.id}
     title={renderTitle(repository, showFullName)}
@@ -125,7 +130,8 @@ export const RepoListItem = ({ repository, showFullName, navigation }: Props) =>
     }}
     underlayColor={colors.greyLight}
     onPress={() => navigation.navigate('Repository', { repository })}
-  />;
+  />
+);
 
 RepoListItem.defaultProps = {
   showFullName: true,

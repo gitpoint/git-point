@@ -159,7 +159,7 @@ export class RepositoryList extends Component {
               (item, index) => <LoadingRepositoryListItem key={index} /> // eslint-disable-line react/no-array-index-key
             )}
 
-          {!loading &&
+          {!loading && (
             <FlatList
               style={styles.listContainer}
               data={this.getList()}
@@ -175,7 +175,8 @@ export class RepositoryList extends Component {
                   />
                 );
               }}
-            />}
+            />
+          )}
         </View>
       </ViewContainer>
     );

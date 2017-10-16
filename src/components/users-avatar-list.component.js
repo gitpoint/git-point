@@ -75,21 +75,22 @@ const UsersAvatarListComponent = ({
   navigation,
   loadMore,
   authUser,
-}: Props) =>
+}: Props) => (
   <View style={[styles.container, containerStyle && containerStyle]}>
     <Text style={smallTitle ? styles.sectionTitleSmall : styles.sectionTitle}>
       {title}
     </Text>
 
     {noMembersMessage &&
-      !members.length &&
-      <List containerStyle={styles.list}>
-        <ListItem
-          title={noMembersMessage}
-          titleStyle={styles.listTitle}
-          hideChevron
-        />
-      </List>}
+      !members.length && (
+        <List containerStyle={styles.list}>
+          <ListItem
+            title={noMembersMessage}
+            titleStyle={styles.listTitle}
+            hideChevron
+          />
+        </List>
+      )}
 
     <FlatList
       style={styles.flatList}
@@ -97,7 +98,7 @@ const UsersAvatarListComponent = ({
       showsHorizontalScrollIndicator={false}
       onEndReached={() => loadMore()}
       onEndReachedThreshold={0.4}
-      renderItem={({ item }) =>
+      renderItem={({ item }) => (
         <TouchableHighlight
           onPress={() => {
             navigation.navigate(
@@ -116,11 +117,13 @@ const UsersAvatarListComponent = ({
               uri: item.avatarUrl,
             }}
           />
-        </TouchableHighlight>}
+        </TouchableHighlight>
+      )}
       keyExtractor={item => item.id}
       horizontal
     />
-  </View>;
+  </View>
+);
 
 export const UsersAvatarList = connect(mapStateToProps)(
   UsersAvatarListComponent

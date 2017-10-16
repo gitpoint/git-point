@@ -137,7 +137,7 @@ class OrganizationProfile extends Component {
       <ViewContainer>
         <ParallaxScroll
           renderContent={() => (
-            <OrgProfile org={entity} navigation={navigation} />
+            <OrgProfile org={entity} navigation={navigation} locale={locale} />
           )}
           refreshControl={
             <RefreshControl
