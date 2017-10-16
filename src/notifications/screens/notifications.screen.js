@@ -15,7 +15,7 @@ import {
 import { ButtonGroup, Card, Icon } from 'react-native-elements';
 
 import { GitHub } from 'api/rest/providers/github';
-import { createDispatchProxy, createCountProxy } from 'api/rest/proxies';
+import { createDispatchProxy } from 'api/rest/proxies';
 
 import { v3 } from 'api';
 import {
@@ -568,10 +568,9 @@ class Notifications extends Component {
 }
 
 const client = createDispatchProxy(GitHub);
-const countingClient = createCountProxy(GitHub);
 
 export const NotificationsScreen = connect(mapStateToProps, {
   getNotifications: client.activity.getNotifications,
   markThreadAsRead: client.activity.markNotificationThreadAsRead,
-  getNotificationsCount: countingClient.activity.getNotifications,
+  getNotificationsCount: client.activity.getNotificationsCount,
 })(Notifications);

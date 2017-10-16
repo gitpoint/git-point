@@ -7,6 +7,55 @@ import {
   actionNameForCall,
 } from 'utils/decorator-helpers';
 
+const handleCountOperation = (
+  client,
+  namespace,
+  method,
+  args,
+  dispatch,
+  getState
+) => {
+  // Used as a key for state.pagination
+  const actionName = actionNameForCall(namespace, method, 'COUNT_');
+
+  const { pureArgs, extraArg } = splitArgs(client[namespace][method], args);
+
+  extraArg.per_page = 1;
+
+  const finalArgs = [...pureArgs, extraArg];
+  const actionKey = pureArgs.join('-');
+
+  dispatch({
+    key: actionKey,
+    type: Actions[actionName].PENDING,
+  });
+
+  client.setAuthHeaders(getState().auth.accessToken);
+
+  /* eslint-disable no-unexpected-multiline */
+  return client[namespace][method](...finalArgs).then(struct => {
+    client
+      .getCount(struct.response)
+      .then(count => {
+        dispatch({
+          counters: count,
+          key: actionKey,
+          name: actionName,
+          type: Actions[actionName].SUCCESS,
+        });
+      })
+      .catch(error => {
+        displayError(error.toString());
+        dispatch({
+          key: actionKey,
+          type: Actions[actionName].ERROR,
+        });
+
+        return error;
+      });
+  });
+};
+
 export const createDispatchProxy = Provider => {
   const client = new Provider();
 
@@ -15,6 +64,22 @@ export const createDispatchProxy = Provider => {
       return new Proxy(client[namespace], {
         get: (endpoint, method) => (...args) => (dispatch, getState) => {
           if (!endpoint[method]) {
+            // Non existant method.. is the user asking for a count?
+            if (method.match(/Count$/)) {
+              const actualMethod = method.slice(0, -5);
+
+              if (endpoint[actualMethod]) {
+                return handleCountOperation(
+                  client,
+                  namespace,
+                  actualMethod,
+                  args,
+                  dispatch,
+                  getState
+                );
+              }
+            }
+
             return displayError(
               `Unknown API method. Did you implement client.${namespace}.${method}()?`
             );

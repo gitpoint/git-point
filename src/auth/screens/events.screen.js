@@ -15,10 +15,9 @@ import { colors, fonts, normalize } from 'config';
 import { emojifyText, translate } from 'utils';
 
 import { GitHub } from 'api/rest/providers/github';
-import { createDispatchProxy, createCountProxy } from 'api/rest/proxies';
+import { createDispatchProxy } from 'api/rest/proxies';
 
 const client = createDispatchProxy(GitHub);
-const countingClient = createCountProxy(GitHub);
 
 const mapStateToProps = state => {
   const {
@@ -616,5 +615,5 @@ class Events extends Component {
 
 export const EventsScreen = connect(mapStateToProps, {
   getEvents: client.activity.getEventsReceived,
-  getNotificationsCount: countingClient.activity.getNotifications,
+  getNotificationsCount: client.activity.getNotificationsCount,
 })(Events);
