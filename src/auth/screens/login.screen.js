@@ -14,7 +14,7 @@ import {
   Modal,
 } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
-import AppIntro from 'rn-app-intro';
+import Swiper from 'react-native-swiper';
 import queryString from 'query-string';
 
 import { ViewContainer } from 'components';
@@ -98,6 +98,10 @@ const styles = StyleSheet.create({
     flex: 2,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  signInContainer: {
+    position: 'absolute',
+    bottom: 80,
   },
   slide: {
     flex: 1,
@@ -269,17 +273,11 @@ class Login extends Component {
                   </View>
                 </View>
               </Modal>
-              <View style={styles.miniSection}>
-                <Image
-                  style={styles.logo}
-                  source={require('../../assets/logo.png')}
-                />
-              </View>
               <View style={styles.contentSection}>
-                <AppIntro
+                <Swiper
+                  loop={false}
+                  dotColor="#FFFFFF55"
                   activeDotColor={colors.white}
-                  showSkipButton={false}
-                  showDoneButton={false}
                 >
                   <View style={[styles.slide, styles.slide1]}>
                     <Image
@@ -340,9 +338,9 @@ class Login extends Component {
                       {translate('auth.login.issuesMessage', locale)}
                     </Text>
                   </View>
-                </AppIntro>
+                </Swiper>
               </View>
-              <View style={styles.miniSection}>
+              <View style={styles.signInContainer}>
                 <Button
                   raised
                   title={translate('auth.login.signInButton', locale)}
