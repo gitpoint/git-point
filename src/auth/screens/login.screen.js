@@ -16,6 +16,7 @@ import {
 import { Button, Icon } from 'react-native-elements';
 import AppIntro from 'rn-app-intro';
 import queryString from 'query-string';
+import CookieManager from 'react-native-cookies';
 
 import { ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
@@ -23,7 +24,7 @@ import { CLIENT_ID } from 'api';
 import { auth } from 'auth';
 import { translate } from 'utils';
 
-const stateRandom = Math.random().toString();
+let stateRandom = Math.random().toString();
 
 const mapStateToProps = state => ({
   locale: state.auth.locale,
@@ -214,7 +215,11 @@ class Login extends Component {
           loaderText: translate('auth.login.preparingGitPoint', this.locale),
         });
 
-        auth(code, state, navigation);
+        stateRandom = Math.random().toString();
+
+        CookieManager.clearAll().then(() => {
+          auth(code, state, navigation);
+        });
       }
     }
   };
