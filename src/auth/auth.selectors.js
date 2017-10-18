@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 
 export const getAuthFromStore = state => state.auth;
 
-export const getAuthLanguage = createSelector(
+export const getAuthLocale = createSelector(
   getAuthFromStore,
-  auth => auth.getAuthLanguage
+  auth => auth.locale
 );

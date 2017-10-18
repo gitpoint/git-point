@@ -463,6 +463,24 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "ericadamski",
+      "name": "Eric Adamski",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/6516758?v=4",
+      "profile": "https://github.com/ericadamski",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "jouderianjr",
+      "name": "Jouderian Nobre Junior",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/1559013?v=4",
+      "profile": "https://github.com/jouderianjr",
+      "contributions": [
+        "code"
+      ]
     }
   ]
 }

@@ -52,7 +52,7 @@ export class CommentInput extends Component {
     users: Array,
     userHasPushPermission: boolean,
     issueLocked: boolean,
-    language: string,
+    locale: string,
     onSubmit: Function,
   };
 
@@ -82,7 +82,7 @@ export class CommentInput extends Component {
   };
 
   render() {
-    const { userHasPushPermission, issueLocked, language, users } = this.props;
+    const { userHasPushPermission, issueLocked, locale, users } = this.props;
 
     let userCanPost = null;
 
@@ -107,8 +107,8 @@ export class CommentInput extends Component {
               underlineColorAndroid={'transparent'}
               placeholder={
                 issueLocked && userHasPushPermission
-                  ? translate('issue.main.lockedCommentInput', language)
-                  : translate('issue.main.commentInput', language)
+                  ? translate('issue.main.lockedCommentInput', locale)
+                  : translate('issue.main.commentInput', locale)
               }
               multiline
               blurOnSubmit={false}
@@ -128,7 +128,7 @@ export class CommentInput extends Component {
 
           {!userCanPost && (
             <Text style={[styles.textInput, { color: colors.grey }]}>
-              {translate('issue.main.lockedIssue', language)}
+              {translate('issue.main.lockedIssue', locale)}
             </Text>
           )}
 

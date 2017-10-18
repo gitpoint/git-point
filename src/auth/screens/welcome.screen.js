@@ -7,7 +7,7 @@ import { colors, fonts, normalize } from 'config';
 import { translate } from 'utils';
 
 const mapStateToProps = state => ({
-  language: state.auth.language,
+  locale: state.auth.locale,
   isLoggingIn: state.auth.isLoggingIn,
 });
 
@@ -28,18 +28,18 @@ const styles = StyleSheet.create({
 
 class Welcome extends Component {
   props: {
-    language: string,
+    locale: string,
     isLoggingIn: boolean,
   };
 
   render() {
-    const { language, isLoggingIn } = this.props;
+    const { locale, isLoggingIn } = this.props;
 
     return (
       <ViewContainer>
         <View style={styles.container}>
           <Text style={styles.welcomeMessage}>
-            {translate('auth.welcome.welcomeTitle', language)}
+            {translate('auth.welcome.welcomeTitle', locale)}
           </Text>
           <ActivityIndicator animating={isLoggingIn} color={colors.white} />
         </View>

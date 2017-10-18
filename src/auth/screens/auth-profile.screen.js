@@ -26,7 +26,7 @@ import { emojifyText, openURLInView, translate } from 'utils';
 const mapStateToProps = state => ({
   user: state.auth.user,
   orgs: state.auth.orgs,
-  language: state.auth.language,
+  locale: state.auth.locale,
   starCount: state.auth.starCount,
   isPendingUser: state.auth.isPendingUser,
   isPendingOrgs: state.auth.isPendingOrgs,
@@ -83,7 +83,7 @@ class AuthProfile extends Component {
     getStarCount: Function,
     user: Object,
     orgs: Array,
-    language: string,
+    locale: string,
     starCount: string,
     isPendingUser: boolean,
     isPendingOrgs: boolean,
@@ -107,7 +107,7 @@ class AuthProfile extends Component {
       orgs,
       isPendingUser,
       isPendingOrgs,
-      language,
+      locale,
       starCount,
       navigation,
       hasInitialUser,
@@ -124,7 +124,7 @@ class AuthProfile extends Component {
               initialUser={hasInitialUser ? user : {}}
               user={hasInitialUser ? user : {}}
               starCount={hasInitialUser ? starCount : ''}
-              language={language}
+              locale={locale}
               navigation={navigation}
             />
           )}
@@ -139,7 +139,7 @@ class AuthProfile extends Component {
           menuIcon="gear"
           menuAction={() =>
             navigation.navigate('UserOptions', {
-              title: translate('auth.userOptions.title', language),
+              title: translate('auth.userOptions.title', locale),
             })}
         >
           {isPending && (
@@ -153,7 +153,7 @@ class AuthProfile extends Component {
           {hasInitialUser &&
             user.bio &&
             user.bio !== '' && (
-              <SectionList title={translate('common.bio', language)}>
+              <SectionList title={translate('common.bio', locale)}>
                 <ListItem
                   subtitle={emojifyText(user.bio)}
                   subtitleStyle={styles.listSubTitle}
@@ -163,15 +163,15 @@ class AuthProfile extends Component {
             )}
 
           {!isPending && (
-            <EntityInfo entity={user} orgs={orgs} navigation={navigation} />
+            <EntityInfo entity={user} orgs={orgs} navigation={navigation} locale={locale} />
           )}
 
           {!isPending && (
             <View>
               <SectionList
-                title={translate('common.orgs', language)}
+                title={translate('common.orgs', locale)}
                 noItems={orgs.length === 0}
-                noItemsMessage={translate('common.noOrgsMessage', language)}
+                noItemsMessage={translate('common.noOrgsMessage', locale)}
               >
                 {orgs.map(item => (
                   <UserListItem
@@ -181,7 +181,7 @@ class AuthProfile extends Component {
                   />
                 ))}
                 <Text style={styles.note}>
-                  {translate('auth.profile.orgsRequestApprovalTop', language)}
+                  {translate('auth.profile.orgsRequestApprovalTop', locale)}
                   {'\n'}
                   <Text
                     style={styles.noteLink}
@@ -190,7 +190,7 @@ class AuthProfile extends Component {
                   >
                     {translate(
                       'auth.profile.orgsRequestApprovalBottom',
-                      language
+                      locale
                     )}
                   </Text>
                 </Text>

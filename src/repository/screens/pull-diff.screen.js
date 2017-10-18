@@ -80,7 +80,7 @@ class PullDiff extends Component {
 
   renderHeader = () => {
     const { navigation } = this.props;
-    const { language, diff } = navigation.state.params;
+    const { locale, diff } = navigation.state.params;
 
     const filesChanged = Parse(diff);
 
@@ -95,7 +95,7 @@ class PullDiff extends Component {
     return (
       <View style={styles.header}>
         <Text style={[styles.headerItem, styles.headerText]}>
-          {translate('repository.pullDiff.numFilesChanged', language, {
+          {translate('repository.pullDiff.numFilesChanged', locale, {
             numFilesChanged: filesChanged.length,
           })}
         </Text>
@@ -112,7 +112,7 @@ class PullDiff extends Component {
 
   renderItem = ({ item }) => {
     const { navigation } = this.props;
-    const { language } = navigation.state.params;
+    const { locale } = navigation.state.params;
     const filename = item.deleted ? item.from : item.to;
     const chunks = item.chunks.map((chunk, index) => {
       return (
@@ -162,7 +162,7 @@ class PullDiff extends Component {
           {item.new && (
             <Text style={styles.fileTitle}>
               <Text style={styles.newIndicator}>
-                {translate('repository.pullDiff.new', language)}
+                {translate('repository.pullDiff.new', locale)}
                 {'\n'}
               </Text>
               <Text style={[styles.fileTitle, styles.codeStyle]}>
@@ -174,7 +174,7 @@ class PullDiff extends Component {
           {item.deleted && (
             <Text style={styles.fileTitle}>
               <Text style={styles.deletedIndicator}>
-                {translate('repository.pullDiff.deleted', language)}
+                {translate('repository.pullDiff.deleted', locale)}
                 {'\n'}
               </Text>
               <Text style={[styles.fileTitle, styles.codeStyle]}>
@@ -200,7 +200,7 @@ class PullDiff extends Component {
           !item.deleted &&
           item.from !== item.to && (
             <Text style={styles.noChangesMessage}>
-              {translate('repository.pullDiff.fileRenamed', language)}
+              {translate('repository.pullDiff.fileRenamed', locale)}
             </Text>
           )}
       </Card>

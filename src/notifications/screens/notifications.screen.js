@@ -39,7 +39,7 @@ const mapStateToProps = state => ({
   participating: state.notifications.participating,
   all: state.notifications.all,
   issue: state.issue.issue,
-  language: state.auth.language,
+  locale: state.auth.locale,
   isPendingUnread: state.notifications.isPendingUnread,
   isPendingParticipating: state.notifications.isPendingParticipating,
   isPendingAll: state.notifications.isPendingAll,
@@ -146,7 +146,7 @@ class Notifications extends Component {
     unread: Array,
     participating: Array,
     all: Array,
-    language: string,
+    locale: string,
     isPendingUnread: boolean,
     isPendingParticipating: boolean,
     isPendingAll: boolean,
@@ -341,7 +341,7 @@ class Notifications extends Component {
     navigation.navigate('Issue', {
       issueURL: notification.subject.url.replace(/pulls\/(\d+)$/, 'issues/$1'),
       isPR: notification.subject.type === 'PullRequest',
-      language: this.props.language,
+      locale: this.props.locale,
     });
   }
 
@@ -426,7 +426,7 @@ class Notifications extends Component {
 
   render() {
     const { type, contentBlockHeight } = this.state;
-    const { language } = this.props;
+    const { locale } = this.props;
     const sortedRepos = this.getSortedRepos();
 
     const isRetrievingNotifications =
@@ -442,9 +442,9 @@ class Notifications extends Component {
               onPress={this.switchType}
               selectedIndex={type}
               buttons={[
-                translate('notifications.main.unreadButton', language),
-                translate('notifications.main.participatingButton', language),
-                translate('notifications.main.allButton', language),
+                translate('notifications.main.unreadButton', locale),
+                translate('notifications.main.participatingButton', locale),
+                translate('notifications.main.allButton', locale),
               ]}
               textStyle={styles.buttonGroupText}
               selectedTextStyle={styles.buttonGroupTextSelected}
@@ -464,7 +464,7 @@ class Notifications extends Component {
                   animating={isRetrievingNotifications}
                   text={translate(
                     'notifications.main.retrievingMessage',
-                    language
+                    locale
                   )}
                   style={styles.marginSpacing}
                   center
@@ -492,7 +492,7 @@ class Notifications extends Component {
                       ]}
                     >
                       <Text style={styles.noneTitle}>
-                        {translate('notifications.main.noneMessage', language)}
+                        {translate('notifications.main.noneMessage', locale)}
                       </Text>
                     </View>
                   )

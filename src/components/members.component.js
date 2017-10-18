@@ -26,21 +26,23 @@ type Props = {
   authUser: Object,
 };
 
+const avatarSize = 30;
+
 const styles = StyleSheet.create({
   container: {
     marginTop: 30,
   },
   avatarContainer: {
     backgroundColor: colors.greyLight,
-    borderRadius: 15,
-    width: 30,
-    height: 30,
+    borderRadius: avatarSize / 2,
+    width: avatarSize,
+    height: avatarSize,
     marginRight: 5,
   },
   avatar: {
-    borderRadius: 15,
-    height: 30,
-    width: 30,
+    borderRadius: avatarSize / 2,
+    height: avatarSize,
+    width: avatarSize,
   },
   list: {
     marginTop: 0,
@@ -58,7 +60,8 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
   },
   flatList: {
-    paddingLeft: 15,
+    marginLeft: 15,
+    marginRight: 15,
   },
 });
 
