@@ -52,6 +52,9 @@ Translation contributions are always welcome! If you happen to speak/read any la
 4. And lastly, in order for the language to be displayed in the options screen, we'll need to add a [two-letter code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements) in lowercase (for example: _es_ for Spanish) and the native language name (for example: _España_ for Spanish) to the [language-settings.js](https://github.com/gitpoint/git-point/blob/master/src/auth/screens/language-settings.js) file. Please make sure the two-letter code matches the code used for the `moment` library to allow for date/time compatibility (you can view the list [here](https://github.com/moment/moment/tree/develop/locale)).
 5. Test out selecting your new translation and if it all looks good, submit that PR in! :smile:
 
+## Styled Components
+We're moving from React Native's styles implementation and we are start using [Styled Components](https://www.styled-components.com/) This will let us write the styles for the app in a more _css way_. If you like to know why we're taking this decision you can read [This issue](https://github.com/gitpoint/git-point/issues/480)
+
 ## Troubleshooting
 
 If you happen to see an error like below when you try to run the application:
