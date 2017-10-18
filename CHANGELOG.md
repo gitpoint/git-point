@@ -12,10 +12,14 @@
 * Added Galician translations (#452)
 * Fixed animated gif display on Android (#446)
 * Added portuguese translations (#440)
-* Fixed README file display on Android (#427)
 * Added check for PR mergeable status and disabled button accordingly (#425)
 * Added "Open in browser" functionality in various screens (#424)
 * Added spanish translations (#282)
+
+## Version 1.3.1 (2017-10-04)
+
+* Fixed test input height rendering in comments for Android (#428)
+* Fixed README file display on Android (#427)
 
 ## Version 1.3.0 (2017-10-04)
 
