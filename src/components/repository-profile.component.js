@@ -111,6 +111,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
   },
+  languageBar: {
+    backgroundColor: 'yellow',
+    marginBottom: 30,
+    flexDirection: 'row',
+    minWidth: 400,
+    height: 7,
+  },
 });
 
 export const RepositoryProfile = ({
@@ -230,5 +237,7 @@ export const RepositoryProfile = ({
         </Text>
       </View>
     </View>
+    {!loading &&
+      repository.language !== null && <View style={styles.languageBar} />}
   </View>
 );
