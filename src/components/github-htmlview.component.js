@@ -67,8 +67,7 @@ const styles = {
 
 const quotedEmailToggleStyle = {
   backgroundColor: colors.greyMid,
-  paddingLeft: 4,
-  paddingRight: 4,
+  paddingHorizontal: 4,
   alignSelf: 'flex-start',
   height: 15,
   lineHeight: 12,
