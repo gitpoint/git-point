@@ -18,9 +18,9 @@ import {
   LoginScreen,
   WelcomeScreen,
   AuthProfileScreen,
-  EventsScreen,
   PrivacyPolicyScreen,
   UserOptionsScreen,
+  EventsScreen,
 } from 'auth';
 
 // User
@@ -31,8 +31,10 @@ import {
   FollowingListScreen,
 } from 'user';
 
-// Organization
-import { OrganizationProfileScreen } from 'organization';
+import {
+  OrganizationRepositoryListScreen,
+  OrganizationProfileScreen,
+} from 'organization';
 
 // Search
 import { SearchScreen } from 'search';
@@ -61,6 +63,12 @@ import {
 } from 'issue';
 
 const sharedRoutes = {
+  OrgRepositoryList: {
+    screen: OrganizationRepositoryListScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    }),
+  },
   RepositoryList: {
     screen: RepositoryListScreen,
     navigationOptions: ({ navigation }) => ({
@@ -136,10 +144,7 @@ const sharedRoutes = {
       const { issue, issueURL, isPR, locale } = navigation.state.params;
       const number = issue ? issue.number : issueURL.match(issueNumberRegex)[1];
       const langKey = isPR ? 'pullRequest' : 'issue';
-      const langTitle = translate(
-        `issue.main.screenTitles.${langKey}`,
-        locale
-      );
+      const langTitle = translate(`issue.main.screenTitles.${langKey}`, locale);
 
       return {
         title: `${langTitle} #${number}`,

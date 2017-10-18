@@ -2,7 +2,6 @@
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import {
   StyleSheet,
   FlatList,
@@ -14,7 +13,7 @@ import {
   Platform,
 } from 'react-native';
 import { ButtonGroup, Card, Icon } from 'react-native-elements';
-
+import { client } from 'api/rest';
 import { v3 } from 'api';
 import {
   Button,
@@ -23,43 +22,68 @@ import {
   NotificationListItem,
 } from 'components';
 import { colors, fonts, normalize } from 'config';
-import { translate } from 'utils';
-import {
-  getUnreadNotifications,
-  getParticipatingNotifications,
-  getAllNotifications,
+import { translate, getPaginationFromState } from 'utils';
+/* import {
   markAsRead,
   markRepoAsRead,
-  getNotificationsCount,
   markAllNotificationsAsRead,
-} from '../index';
+} from '../index'; */
 
-const mapStateToProps = state => ({
-  unread: state.notifications.unread,
-  participating: state.notifications.participating,
-  all: state.notifications.all,
-  issue: state.issue.issue,
-  locale: state.auth.locale,
-  isPendingUnread: state.notifications.isPendingUnread,
-  isPendingParticipating: state.notifications.isPendingParticipating,
-  isPendingAll: state.notifications.isPendingAll,
-  isPendingMarkAllNotificationsAsRead:
-    state.notifications.isPendingMarkAllNotificationsAsRead,
-});
+const mapStateToProps = state => {
+  const { entities: { orgs, repos, users, notifications } } = state;
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
+  const unreadPagination = getPaginationFromState(
+    state,
+    'ACTIVITY_GET_NOTIFICATIONS',
+    'false-false',
     {
-      getUnreadNotifications,
-      getParticipatingNotifications,
-      getAllNotifications,
-      markAsRead,
-      markRepoAsRead,
-      getNotificationsCount,
-      markAllNotificationsAsRead,
-    },
-    dispatch
+      ids: [],
+      isFetching: true,
+    }
   );
+  const unread = unreadPagination.ids.map(id => notifications[id]);
+
+  const participatingPagination = getPaginationFromState(
+    state,
+    'ACTIVITY_GET_NOTIFICATIONS',
+    'true-false',
+    {
+      ids: [],
+      isFetching: true,
+    }
+  );
+  const participating = participatingPagination.ids.map(
+    id => notifications[id]
+  );
+
+  const allPagination = getPaginationFromState(
+    state,
+    'ACTIVITY_GET_NOTIFICATIONS',
+    'false-true',
+    {
+      ids: [],
+      isFetching: true,
+    }
+  );
+  const all = allPagination.ids.map(id => notifications[id]);
+
+  return {
+    unread,
+    unreadPagination,
+    participating,
+    participatingPagination,
+    all,
+    allPagination,
+    issue: state.issue.issue, // ?
+    locale: state.auth.locale,
+    repos,
+    users,
+    orgs,
+    // TODO: Remove me
+    isPendingMarkAllNotificationsAsRead:
+      state.notifications.isPendingMarkAllNotificationsAsRead,
+  };
+};
 
 const styles = StyleSheet.create({
   buttonGroupWrapper: {
@@ -134,24 +158,36 @@ const styles = StyleSheet.create({
   },
 });
 
+const NotificationsType = {
+  UNREAD: 0,
+  PARTICIPATING: 1,
+  ALL: 2,
+};
+
 class Notifications extends Component {
   props: {
-    getUnreadNotifications: Function,
-    getParticipatingNotifications: Function,
-    getAllNotifications: Function,
-    markAsRead: Function,
-    markRepoAsRead: Function,
+    getNotifications: Function,
     getNotificationsCount: Function,
+    markThreadAsRead: Function,
+    markRepoAsRead: Function,
     markAllNotificationsAsRead: Function,
+    // Arrays holding notifications
     unread: Array,
     participating: Array,
     all: Array,
+    // Their paginations
+    unreadPagination: Array,
+    participatingPagination: Array,
+    allPagination: Array,
+
     locale: string,
-    isPendingUnread: boolean,
-    isPendingParticipating: boolean,
-    isPendingAll: boolean,
-    isPendingMarkAllNotificationsAsRead: boolean,
     navigation: Object,
+    repos: Array,
+    users: Array,
+    orgs: Array,
+
+    // TODO: get rid of those
+    isPendingMarkAllNotificationsAsRead: boolean,
   };
 
   constructor() {
@@ -171,8 +207,9 @@ class Notifications extends Component {
     this.getNotifications();
   }
 
+  // TODO: clean me
   componentWillReceiveProps(nextProps) {
-    const pendingType = this.getPendingType();
+    const paginationName = this.getPaginationName();
 
     if (
       !nextProps.isPendingMarkAllNotificationsAsRead &&
@@ -182,53 +219,65 @@ class Notifications extends Component {
       this.getNotificationsForCurrentType()();
     }
 
-    if (!nextProps[pendingType] && this.props[pendingType]) {
-      this.props.getNotificationsCount();
+    if (
+      !nextProps[paginationName].isFetching &&
+      this.props[paginationName].isFetching
+    ) {
+      this.props.getNotificationsCount(false, false);
     }
   }
 
+  // OK
   getImage(repoName) {
+    const { repos, users, orgs } = this.props;
     const notificationForRepo = this.notifications().find(
-      notification => notification.repository.full_name === repoName
+      notification => notification.repo === repoName
     );
 
-    return notificationForRepo.repository.owner.avatar_url;
+    const repository = repos[notificationForRepo.repo];
+
+    return repository.userOwner
+      ? users[repository.userOwner].avatarUrl
+      : orgs[repository.orgOwner].avatarUrl;
   }
 
+  // OK
   getNotifications() {
-    this.props.getUnreadNotifications();
-    this.props.getParticipatingNotifications();
-    this.props.getAllNotifications();
-    this.props.getNotificationsCount();
+    this.props.getNotifications(false, false); // unread
+    this.props.getNotifications(true, false); // participating
+    this.props.getNotifications(false, true); // all
   }
 
+  // OK
   getNotificationsForCurrentType() {
-    const {
-      getUnreadNotifications,
-      getParticipatingNotifications,
-      getAllNotifications,
-    } = this.props;
     const { type } = this.state;
+    const { getNotifications } = this.props;
 
     switch (type) {
-      case 0:
-        return getUnreadNotifications;
-      case 1:
-        return getParticipatingNotifications;
-      case 2:
-        return getAllNotifications;
+      case NotificationsType.UNREAD:
+        return () =>
+          getNotifications(false, false, {
+            forceRefresh: true,
+          });
+      case NotificationsType.PARTICIPATING:
+        return () =>
+          getNotifications(true, false, {
+            forceRefresh: true,
+          });
+      case NotificationsType.ALL:
+        return () =>
+          getNotifications(false, true, {
+            forceRefresh: true,
+          });
       default:
         return null;
     }
   }
 
+  // OK
   getSortedRepos = () => {
     const repositories = [
-      ...new Set(
-        this.notifications().map(
-          notification => notification.repository.full_name
-        )
-      ),
+      ...new Set(this.notifications().map(notification => notification.repo)),
     ];
 
     return repositories.sort((a, b) => {
@@ -236,21 +285,23 @@ class Notifications extends Component {
     });
   };
 
-  getPendingType = () => {
+  // OK
+  getPaginationName = () => {
     const { type } = this.state;
 
     switch (type) {
-      case 0:
-        return 'isPendingUnread';
-      case 1:
-        return 'isPendingParticipating';
-      case 2:
-        return 'isPendingAll';
+      case NotificationsType.UNREAD:
+        return 'unreadPagination';
+      case NotificationsType.PARTICIPATING:
+        return 'participatingPagination';
+      case NotificationsType.ALL:
+        return 'allPagination';
       default:
         return null;
     }
   };
 
+  // OK
   navigateToRepo = fullName => {
     const { navigation } = this.props;
 
@@ -259,57 +310,62 @@ class Notifications extends Component {
     });
   };
 
+  // OK
   saveContentBlockHeight = e => {
     const { height } = e.nativeEvent.layout;
 
     this.setState({ contentBlockHeight: height });
   };
 
+  // OK
   keyExtractor = (item, index) => {
     return index;
   };
 
+  // TODO: clean me
   isLoading() {
     const {
       unread,
+      unreadPagination,
       participating,
+      participatingPagination,
       all,
-      isPendingUnread,
-      isPendingParticipating,
-      isPendingAll,
+      allPagination,
     } = this.props;
     const { type } = this.state;
 
     switch (type) {
-      case 0:
-        return unread && isPendingUnread;
-      case 1:
-        return participating && isPendingParticipating;
-      case 2:
-        return all && isPendingAll;
+      case NotificationsType.UNREAD:
+        return unread && unreadPagination.isFetching;
+      case NotificationsType.PARTICIPATING:
+        return participating && participatingPagination.isFetching;
+      case NotificationsType.ALL:
+        return all && allPagination.isFetching;
       default:
         return false;
     }
   }
 
+  // OK
   notifications() {
     const { unread, participating, all } = this.props;
     const { type } = this.state;
 
     switch (type) {
-      case 0:
+      case NotificationsType.UNREAD:
         return unread;
-      case 1:
+      case NotificationsType.PARTICIPATING:
         return participating;
-      case 2:
+      case NotificationsType.ALL:
         return all;
       default:
         return [];
     }
   }
 
+  // OK
   switchType(selectedType) {
-    const { unread, participating, all } = this.props;
+    const { unread, participating, all, getNotifications } = this.props;
 
     if (this.state.type !== selectedType) {
       this.setState({
@@ -317,12 +373,15 @@ class Notifications extends Component {
       });
     }
 
-    if (selectedType === 0 && unread.length === 0) {
-      this.props.getUnreadNotifications();
-    } else if (selectedType === 1 && participating.length === 0) {
-      this.props.getParticipatingNotifications();
-    } else if (selectedType === 2 && all.length === 0) {
-      this.props.getAllNotifications();
+    if (selectedType === NotificationsType.UNREAD && unread.length === 0) {
+      getNotifications(false, false);
+    } else if (
+      selectedType === NotificationsType.PARTICIPATING &&
+      participating.length === 0
+    ) {
+      getNotifications(true, false);
+    } else if (selectedType === NotificationsType.ALL && all.length === 0) {
+      getNotifications(false, true);
     }
 
     if (this.notifications().length > 0) {
@@ -334,17 +393,19 @@ class Notifications extends Component {
     }
   }
 
+  // OK
   navigateToThread(notification) {
-    const { markAsRead, navigation } = this.props;
+    const { markThreadAsRead, navigation } = this.props;
 
-    markAsRead(notification.id);
+    markThreadAsRead(notification.id);
     navigation.navigate('Issue', {
-      issueURL: notification.subject.url.replace(/pulls\/(\d+)$/, 'issues/$1'),
-      isPR: notification.subject.type === 'PullRequest',
+      issueURL: notification.link.replace(/pulls\/(\d+)$/, 'issues/$1'),
+      isPR: notification.type === 'PullRequest',
       locale: this.props.locale,
     });
   }
 
+  // OK
   navigateToRepo = fullName => {
     const { navigation } = this.props;
 
@@ -353,15 +414,16 @@ class Notifications extends Component {
     });
   };
 
+  // TODO: Implement & use new api calls
   renderItem = ({ item }) => {
     const {
-      markAsRead,
+      markThreadAsRead,
       markRepoAsRead,
       markAllNotificationsAsRead,
     } = this.props;
     const { type } = this.state;
     const notifications = this.notifications().filter(
-      notification => notification.repository.full_name === item
+      notification => notification.repo === item
     );
     const isFirstItem = this.getSortedRepos().indexOf(item) === 0;
     const isFirstTab = type === 0;
@@ -413,7 +475,7 @@ class Notifications extends Component {
               <NotificationListItem
                 key={notification.id}
                 notification={notification}
-                iconAction={notificationID => markAsRead(notificationID)}
+                iconAction={notificationID => markThreadAsRead(notificationID)}
                 navigationAction={notify => this.navigateToThread(notify)}
                 navigation={this.props.navigation}
               />
@@ -506,6 +568,8 @@ class Notifications extends Component {
   }
 }
 
-export const NotificationsScreen = connect(mapStateToProps, mapDispatchToProps)(
-  Notifications
-);
+export const NotificationsScreen = connect(mapStateToProps, {
+  getNotifications: client.activity.getNotifications,
+  markThreadAsRead: client.activity.markNotificationThreadAsRead,
+  getNotificationsCount: client.activity.getNotificationsCount,
+})(Notifications);

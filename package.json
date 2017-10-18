@@ -49,11 +49,12 @@
   "dependencies": {
     "entities": "^1.1.1",
     "fuzzysort": "^1.0.1",
-    "lodash.uniqby": "^4.7.0",
+    "lodash": "^4.17.4",
     "lowlight": "^1.5.0",
     "md5": "^2.2.1",
     "moment": "^2.17.1",
     "node-emoji": "^1.7.0",
+    "normalizr": "^3.2.3",
     "opencollective": "^1.0.3",
     "parse-diff": "^0.4.0",
     "query-string": "^4.3.1",
@@ -118,12 +119,17 @@
     "minicat": "^1.0.0",
     "prettier": "^1.7.4",
     "react-native-cli": "^2.0.1",
-    "react-test-renderer": "16.0.0-alpha.6",
+    "react-test-renderer": "16.0.0-alpha.12",
     "reactotron-react-native": "^1.12.2",
     "reactotron-redux": "^1.12.2"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "<rootDir>/node_modules/",
+      "/mocks/"
+    ]
   },
   "rnpm": {
     "assets": [

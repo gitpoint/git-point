@@ -5,8 +5,8 @@ import { View, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 import { Badge } from 'components';
-
 import { colors } from 'config';
+import { getCountFromState } from 'utils';
 
 const styles = StyleSheet.create({
   badgeContainer: {
@@ -17,7 +17,11 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  notificationsCount: state.notifications.notificationsCount,
+  notificationsCount: getCountFromState(
+    state,
+    'COUNT_ACTIVITY_GET_NOTIFICATIONS',
+    'false-false'
+  ),
 });
 
 class NotificationIconComponent extends Component {

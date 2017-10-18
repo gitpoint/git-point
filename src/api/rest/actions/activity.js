@@ -1,0 +1,15 @@
+import { createActionSet } from 'utils';
+
+export const ACTIVITY_GET_EVENTS_RECEIVED = createActionSet(
+  'ACTIVITY_GET_EVENTS_RECEIVED'
+);
+export const ACTIVITY_GET_NOTIFICATIONS = createActionSet(
+  'ACTIVITY_GET_NOTIFICATIONS'
+);
+
+export const COUNT_ACTIVITY_GET_NOTIFICATIONS = createActionSet(
+  'COUNT_ACTIVITY_GET_NOTIFICATIONS'
+);
+export const ACTIVITY_MARK_NOTIFICATION_THREAD_AS_READ = createActionSet(
+  'ACTIVITY_MARK_NOTIFICATION_THREAD_AS_READ'
+);

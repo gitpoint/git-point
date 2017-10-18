@@ -131,7 +131,7 @@ class UserListItemComponent extends Component {
               <Image
                 style={styles.avatar}
                 source={{
-                  uri: user.avatar_url,
+                  uri: user.avatarUrl ? user.avatarUrl : user.avatar_url, // FIXME: only avatarUrl should remain
                 }}
               />
             </ImageContainerComponent>

@@ -163,7 +163,12 @@ class AuthProfile extends Component {
             )}
 
           {!isPending && (
-            <EntityInfo entity={user} orgs={orgs} navigation={navigation} locale={locale} />
+            <EntityInfo
+              entity={user}
+              orgs={orgs}
+              navigation={navigation}
+              locale={locale}
+            />
           )}
 
           {!isPending && (
