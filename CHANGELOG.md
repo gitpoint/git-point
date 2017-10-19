@@ -14,6 +14,7 @@
 * Added Galician translations (#452)
 * Fixed animated gif display on Android (#446)
 * Added portuguese translations (#440)
+* Added support for issues events (#438)
 * Added check for PR mergeable status and disabled button accordingly (#425)
 * Added "Open in browser" functionality in various screens (#424)
 * Added spanish translations (#282)
