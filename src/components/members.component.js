@@ -93,7 +93,19 @@ const MembersListComponent = ({
     <FlatList
       style={styles.flatList}
       data={members}
-      showsHorizontalScrollIndicator={false}
+      ref={ref => {
+        this.listRef = ref;
+      }}
+      showsHorizontalScrollIndicator
+      onContentSizeChange={() => {
+        const list = this.listRef;
+
+        list.flashScrollIndicators();
+        setTimeout(
+          () => list.setNativeProps({ showsHorizontalScrollIndicator: false }),
+          1000
+        );
+      }}
       renderItem={({ item }) => (
         <TouchableHighlight
           onPress={() => {
