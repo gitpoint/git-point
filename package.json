@@ -14,7 +14,7 @@
     "start:ios:tron": "TRON_ENABLED=true concurrently -r 'react-native start --reset-cache' 'react-native run-ios'",
     "clean": "rm -rf node_modules",
     "clean:android": "cd android && ./gradlew clean && cd -",
-    "link": "react-native link",
+    "link": "react-native link react-native-code-push && react-native link react-native-config && react-native link react-native-cookies && react-native link react-native-device-info && react-native link react-native-i18n && react-native link react-native-photo-view && react-native link react-native-safari-view && react-native link react-native-search-bar",
     "ios": "react-native run-ios",
     "android": "react-native run-android",
     "commitmsg": "minicat $GIT_PARAMS | commitlint",
