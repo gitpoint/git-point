@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, StatusBar, View } from 'react-native';
+import { StatusBar } from 'react-native';
+import styled from 'styled-components/native';
 
 import { colors } from 'config';
 
@@ -8,23 +9,21 @@ type Props = {
   children?: React.Element<*>,
 };
 
-const styles = StyleSheet.create({
-  viewContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'stretch',
-    backgroundColor: colors.white,
-  },
-});
+const Container = styled.View`
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  background-color: ${colors.white};
+`;
 
 export const ViewContainer = ({ barColor, children }: Props) => (
-  <View style={styles.viewContainer}>
+  <Container>
     <StatusBar
       barStyle={barColor === 'light' ? 'light-content' : 'dark-content'}
     />
     {children}
-  </View>
+  </Container>
 );
 
 ViewContainer.defaultProps = {
