@@ -134,6 +134,12 @@ const styles = StyleSheet.create({
   },
 });
 
+const NotificationsType = {
+  UNREAD: 0,
+  PARTICIPATING: 1,
+  ALL: 2,
+};
+
 class Notifications extends Component {
   props: {
     getUnreadNotifications: Function,
@@ -158,7 +164,7 @@ class Notifications extends Component {
     super();
 
     this.state = {
-      type: 0,
+      type: NotificationsType.UNREAD,
       contentBlockHeight: null,
     };
 
@@ -211,11 +217,11 @@ class Notifications extends Component {
     const { type } = this.state;
 
     switch (type) {
-      case 0:
+      case NotificationsType.UNREAD:
         return getUnreadNotifications;
-      case 1:
+      case NotificationsType.PARTICIPATING:
         return getParticipatingNotifications;
-      case 2:
+      case NotificationsType.ALL:
         return getAllNotifications;
       default:
         return null;
@@ -240,11 +246,11 @@ class Notifications extends Component {
     const { type } = this.state;
 
     switch (type) {
-      case 0:
+      case NotificationsType.UNREAD:
         return 'isPendingUnread';
-      case 1:
+      case NotificationsType.PARTICIPATING:
         return 'isPendingParticipating';
-      case 2:
+      case NotificationsType.ALL:
         return 'isPendingAll';
       default:
         return null;
@@ -281,11 +287,11 @@ class Notifications extends Component {
     const { type } = this.state;
 
     switch (type) {
-      case 0:
+      case NotificationsType.UNREAD:
         return unread && isPendingUnread;
-      case 1:
+      case NotificationsType.PARTICIPATING:
         return participating && isPendingParticipating;
-      case 2:
+      case NotificationsType.ALL:
         return all && isPendingAll;
       default:
         return false;
@@ -297,11 +303,11 @@ class Notifications extends Component {
     const { type } = this.state;
 
     switch (type) {
-      case 0:
+      case NotificationsType.UNREAD:
         return unread;
-      case 1:
+      case NotificationsType.PARTICIPATING:
         return participating;
-      case 2:
+      case NotificationsType.ALL:
         return all;
       default:
         return [];
@@ -317,11 +323,14 @@ class Notifications extends Component {
       });
     }
 
-    if (selectedType === 0 && unread.length === 0) {
+    if (selectedType === NotificationsType.UNREAD && unread.length === 0) {
       this.props.getUnreadNotifications();
-    } else if (selectedType === 1 && participating.length === 0) {
+    } else if (
+      selectedType === NotificationsType.PARTICIPATING &&
+      participating.length === 0
+    ) {
       this.props.getParticipatingNotifications();
-    } else if (selectedType === 2 && all.length === 0) {
+    } else if (selectedType === NotificationsType.ALL && all.length === 0) {
       this.props.getAllNotifications();
     }
 

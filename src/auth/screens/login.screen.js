@@ -14,8 +14,9 @@ import {
   Modal,
 } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
-import AppIntro from 'rn-app-intro';
+import Swiper from 'react-native-swiper';
 import queryString from 'query-string';
+import CookieManager from 'react-native-cookies';
 
 import { ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
@@ -23,7 +24,7 @@ import { CLIENT_ID } from 'api';
 import { auth } from 'auth';
 import { translate } from 'utils';
 
-const stateRandom = Math.random().toString();
+let stateRandom = Math.random().toString();
 
 const mapStateToProps = state => ({
   locale: state.auth.locale,
@@ -96,6 +97,14 @@ const styles = StyleSheet.create({
   },
   contentSection: {
     flex: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  signInContainer: {
+    position: 'absolute',
+    right: 0,
+    left: 0,
+    bottom: 80,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -214,10 +223,20 @@ class Login extends Component {
           loaderText: translate('auth.login.preparingGitPoint', this.locale),
         });
 
-        auth(code, state, navigation);
+        stateRandom = Math.random().toString();
+
+        CookieManager.clearAll().then(() => {
+          auth(code, state, navigation);
+        });
       }
     }
   };
+
+  shouldDisplayIntro() {
+    const { isLoggingIn, isAuthenticated } = this.props;
+
+    return !isAuthenticated && !isLoggingIn && this.state.asyncStorageChecked;
+  }
 
   renderLoading() {
     return (
@@ -229,130 +248,120 @@ class Login extends Component {
   }
 
   render() {
-    const { locale, isLoggingIn, isAuthenticated } = this.props;
+    const { locale, isLoggingIn } = this.props;
 
     return (
       <ViewContainer barColor="light">
-        {!isAuthenticated &&
-          !isLoggingIn &&
-          this.state.asyncStorageChecked && (
-            <View style={styles.container}>
-              <Modal
-                animationType="slide"
-                onRequestClose={() => null}
-                visible={this.state.modalVisible}
-                style={styles.container}
-              >
-                <View style={styles.modalContainer}>
-                  <View style={styles.browserSection}>
-                    <WebView
-                      source={{
-                        uri: `https://github.com/login/oauth/authorize?response_type=token&client_id=${CLIENT_ID}&redirect_uri=gitpoint://welcome&scope=user%20repo&state=${stateRandom}`,
-                      }}
-                      onLoadStart={e => this.toggleCancelButton(e, true)}
-                      onLoadEnd={e => this.toggleCancelButton(e, false)}
-                      onNavigationStateChange={e =>
-                        this.onNavigationStateChange(e)}
-                      renderLoading={() => this.renderLoading()}
-                      startInLoadingState
-                    />
-                  </View>
-                  <View style={styles.miniSection}>
-                    <Button
-                      title={translate('auth.login.cancel', locale)}
-                      buttonStyle={styles.button}
-                      disabled={this.state.cancelDisabled}
-                      textStyle={styles.buttonText}
-                      onPress={() =>
-                        this.setModalVisible(!this.state.modalVisible)}
-                    />
-                  </View>
-                </View>
-              </Modal>
-              <View style={styles.miniSection}>
-                <Image
-                  style={styles.logo}
-                  source={require('../../assets/logo.png')}
+        {this.shouldDisplayIntro() && (
+          <Swiper
+            loop={false}
+            dotColor="#FFFFFF55"
+            activeDotColor={colors.white}
+          >
+            <View style={[styles.slide, styles.slide1]}>
+              <Image
+                style={styles.logo}
+                source={require('../../assets/logo.png')}
+              />
+              <Text style={styles.title}>
+                {translate('auth.login.welcomeTitle', locale)}
+              </Text>
+              <Text style={styles.message}>
+                {translate('auth.login.welcomeMessage', locale)}
+              </Text>
+            </View>
+            <View style={[styles.slide, styles.slide2]}>
+              <Icon
+                style={styles.icon}
+                color={colors.white}
+                size={85}
+                name="bell"
+                type="octicon"
+              />
+              <Text style={styles.title}>
+                {translate('auth.login.notificationsTitle', locale)}
+              </Text>
+              <Text style={styles.message}>
+                {translate('auth.login.notificationsMessage', locale)}
+              </Text>
+            </View>
+            <View style={[styles.slide, styles.slide3]}>
+              <Icon
+                containerStyle={styles.iconMargin}
+                style={styles.icon}
+                color={colors.white}
+                size={85}
+                name="repo"
+                type="octicon"
+              />
+              <Text style={styles.title}>
+                {translate('auth.login.reposTitle', locale)}
+              </Text>
+              <Text style={styles.message}>
+                {translate('auth.login.reposMessage', locale)}
+              </Text>
+            </View>
+            <View style={[styles.slide, styles.slide4]}>
+              <Icon
+                containerStyle={styles.iconMargin}
+                style={styles.icon}
+                color={colors.white}
+                size={85}
+                name="git-pull-request"
+                type="octicon"
+              />
+              <Text style={styles.title}>
+                {translate('auth.login.issuesTitle', locale)}
+              </Text>
+              <Text style={styles.message}>
+                {translate('auth.login.issuesMessage', locale)}
+              </Text>
+            </View>
+          </Swiper>
+        )}
+        {this.shouldDisplayIntro() && (
+          <View style={styles.signInContainer}>
+            <Button
+              raised
+              title={translate('auth.login.signInButton', locale)}
+              buttonStyle={styles.button}
+              textStyle={styles.buttonText}
+              onPress={() => this.setModalVisible(true)}
+            />
+          </View>
+        )}
+        {this.shouldDisplayIntro() && (
+          <Modal
+            animationType="slide"
+            onRequestClose={() => null}
+            visible={this.state.modalVisible}
+            style={styles.container}
+          >
+            <View style={styles.modalContainer}>
+              <View style={styles.browserSection}>
+                <WebView
+                  source={{
+                    uri: `https://github.com/login/oauth/authorize?response_type=token&client_id=${CLIENT_ID}&redirect_uri=gitpoint://welcome&scope=user%20repo&state=${stateRandom}`,
+                  }}
+                  onLoadStart={e => this.toggleCancelButton(e, true)}
+                  onLoadEnd={e => this.toggleCancelButton(e, false)}
+                  onNavigationStateChange={e => this.onNavigationStateChange(e)}
+                  renderLoading={() => this.renderLoading()}
+                  startInLoadingState
                 />
-              </View>
-              <View style={styles.contentSection}>
-                <AppIntro
-                  activeDotColor={colors.white}
-                  showSkipButton={false}
-                  showDoneButton={false}
-                >
-                  <View style={[styles.slide, styles.slide1]}>
-                    <Image
-                      style={styles.logo}
-                      source={require('../../assets/logo.png')}
-                    />
-                    <Text style={styles.title}>
-                      {translate('auth.login.welcomeTitle', locale)}
-                    </Text>
-                    <Text style={styles.message}>
-                      {translate('auth.login.welcomeMessage', locale)}
-                    </Text>
-                  </View>
-                  <View style={[styles.slide, styles.slide2]}>
-                    <Icon
-                      style={styles.icon}
-                      color={colors.white}
-                      size={85}
-                      name="bell"
-                      type="octicon"
-                    />
-                    <Text style={styles.title}>
-                      {translate('auth.login.notificationsTitle', locale)}
-                    </Text>
-                    <Text style={styles.message}>
-                      {translate('auth.login.notificationsMessage', locale)}
-                    </Text>
-                  </View>
-                  <View style={[styles.slide, styles.slide3]}>
-                    <Icon
-                      containerStyle={styles.iconMargin}
-                      style={styles.icon}
-                      color={colors.white}
-                      size={85}
-                      name="repo"
-                      type="octicon"
-                    />
-                    <Text style={styles.title}>
-                      {translate('auth.login.reposTitle', locale)}
-                    </Text>
-                    <Text style={styles.message}>
-                      {translate('auth.login.reposMessage', locale)}
-                    </Text>
-                  </View>
-                  <View style={[styles.slide, styles.slide4]}>
-                    <Icon
-                      containerStyle={styles.iconMargin}
-                      style={styles.icon}
-                      color={colors.white}
-                      size={85}
-                      name="git-pull-request"
-                      type="octicon"
-                    />
-                    <Text style={styles.title}>
-                      {translate('auth.login.issuesTitle', locale)}
-                    </Text>
-                    <Text style={styles.message}>
-                      {translate('auth.login.issuesMessage', locale)}
-                    </Text>
-                  </View>
-                </AppIntro>
               </View>
               <View style={styles.miniSection}>
                 <Button
-                  raised
-                  title={translate('auth.login.signInButton', locale)}
+                  title={translate('auth.login.cancel', locale)}
                   buttonStyle={styles.button}
+                  disabled={this.state.cancelDisabled}
                   textStyle={styles.buttonText}
-                  onPress={() => this.setModalVisible(true)}
+                  onPress={() => this.setModalVisible(!this.state.modalVisible)}
                 />
               </View>
             </View>
-          )}
+          </Modal>
+        )}
         {isLoggingIn && (
           <View style={styles.browserLoader}>
             <Text style={styles.browserLoadingLabel}>
