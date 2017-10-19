@@ -113,6 +113,8 @@ class AuthProfile extends Component {
       hasInitialUser,
     } = this.props;
 
+    const hasBackButton = navigation.state.routeName === 'AuthProfile';
+
     const isPending = isPendingUser || isPendingOrgs;
 
     return (
@@ -135,6 +137,8 @@ class AuthProfile extends Component {
             />
           }
           stickyTitle={user.login}
+          navigateBack={hasBackButton}
+          navigation={navigation}
           showMenu
           menuIcon="gear"
           menuAction={() =>
@@ -163,7 +167,12 @@ class AuthProfile extends Component {
             )}
 
           {!isPending && (
-            <EntityInfo entity={user} orgs={orgs} navigation={navigation} locale={locale} />
+            <EntityInfo
+              entity={user}
+              orgs={orgs}
+              navigation={navigation}
+              locale={locale}
+            />
           )}
 
           {!isPending && (
