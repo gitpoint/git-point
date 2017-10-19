@@ -6,7 +6,7 @@ import SyntaxHighlighter from 'react-native-syntax-highlighter';
 import { github as GithubStyle } from 'react-syntax-highlighter/dist/styles';
 import entities from 'entities';
 
-import { ImageZoom } from 'components';
+import { ImageZoom, ToggleView } from 'components';
 import { colors, fonts, normalize } from 'config';
 
 const textStyle = Platform.select({
@@ -63,6 +63,16 @@ const styles = {
   hr: { ...hrStyle },
   li: textStyle,
   a: linkStyle,
+};
+
+const quotedEmailToggleStyle = {
+  backgroundColor: colors.greyMid,
+  paddingHorizontal: 4,
+  alignSelf: 'flex-start',
+  height: 15,
+  lineHeight: 12,
+  marginBottom: 6,
+  marginTop: 3,
 };
 
 const styleSheet = StyleSheet.create(styles);
@@ -176,6 +186,11 @@ export class GithubHtmlView extends Component {
           /<li class="task-list-item">(<span[^>]*>)?<input checked="" class="task-list-item-checkbox" disabled="" id="" type="checkbox"> ?\.? ?/g,
           '$1✅ '
         )
+        // Quoted email reply
+        .replace(
+          /<span class="email-hidden-toggle"><a href="#">…<\/a><\/span>/g,
+          ''
+        )
         // Remove links & spans around images
         .replace(/<a[^>]+><img([^>]+)><\/a>/g, '<img$1>')
         .replace(/<span[^>]*><img([^>]+)><\/span>/g, '<img$1>')
@@ -246,6 +261,33 @@ export class GithubHtmlView extends Component {
         hr: (node, index, siblings, parent, defaultRenderer) => (
           <View key={index} style={{ ...hrStyle }} />
         ),
+        div: (node, index, siblings, parent, defaultRenderer) => {
+          if (node.attribs.class) {
+            const className = node.attribs.class;
+
+            if (className.includes('email-hidden-reply')) {
+              return defaultRenderer(onlyTagsChildren(node), node);
+            }
+
+            if (className.includes('email-quoted-reply')) {
+              return (
+                <ToggleView
+                  TouchableView={<Text style={quotedEmailToggleStyle}>…</Text>}
+                >
+                  {renderers.blockquote(
+                    node,
+                    index,
+                    siblings,
+                    parent,
+                    defaultRenderer
+                  )}
+                </ToggleView>
+              );
+            }
+          }
+
+          return undefined;
+        },
         img: (node, index, siblings, parent, defaultRenderer) => {
           if (hasAncestor(node, ['ol', 'ul', 'span'])) {
             return (

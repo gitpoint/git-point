@@ -61,6 +61,7 @@
     "react-native": "0.48.1",
     "react-native-actionsheet": "^2.2.0",
     "react-native-code-push": "^5.0.0-beta",
+    "react-native-collapsible": "^0.9.0",
     "react-native-communications": "^2.2.1",
     "react-native-config": "^0.6.0",
     "react-native-cookies": "^3.2.0",
@@ -73,6 +74,7 @@
     "react-native-photo-view": "^1.5.2",
     "react-native-safari-view": "^2.0.0",
     "react-native-search-bar": "^3.0.0",
+    "react-native-swiper": "^1.5.13",
     "react-native-syntax-highlighter": "^1.2.1",
     "react-native-table-component": "^1.0.5",
     "react-native-vector-icons": "^4.4.0",
@@ -87,7 +89,6 @@
     "redux-persist-transform-encrypt": "^1.0.2",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
-    "rn-app-intro": "^0.0.4",
     "styled-components": "^2.2.1"
   },
   "devDependencies": {

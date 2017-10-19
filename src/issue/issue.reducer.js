@@ -12,15 +12,18 @@ import {
   MERGE_PULL_REQUEST,
   GET_ISSUE_FROM_URL,
   SUBMIT_NEW_ISSUE,
+  GET_ISSUE_EVENTS,
 } from './issue.type';
 
 const initialState = {
   issue: {},
   comments: [],
+  events: [],
   pr: {},
   diff: '',
   isMerged: false,
   isPendingComments: false,
+  isPendingEvents: false,
   isPostingComment: false,
   isDeletingComment: false,
   isEditingComment: false,
@@ -52,6 +55,23 @@ export const issueReducer = (state = initialState, action = {}) => {
         ...state,
         error: action.payload,
         isPendingComments: false,
+      };
+    case GET_ISSUE_EVENTS.PENDING:
+      return {
+        ...state,
+        isPendingEvents: true,
+      };
+    case GET_ISSUE_EVENTS.SUCCESS:
+      return {
+        ...state,
+        events: action.payload,
+        isPendingEvents: false,
+      };
+    case GET_ISSUE_EVENTS.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isPendingEvents: false,
       };
     case POST_ISSUE_COMMENT.PENDING:
       return {
