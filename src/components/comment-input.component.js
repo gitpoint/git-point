@@ -52,7 +52,7 @@ export class CommentInput extends Component {
     users: Array,
     userHasPushPermission: boolean,
     issueLocked: boolean,
-    language: string,
+    locale: string,
     onSubmit: Function,
   };
 
@@ -82,7 +82,7 @@ export class CommentInput extends Component {
   };
 
   render() {
-    const { userHasPushPermission, issueLocked, language, users } = this.props;
+    const { userHasPushPermission, issueLocked, locale, users } = this.props;
 
     let userCanPost = null;
 
@@ -102,13 +102,13 @@ export class CommentInput extends Component {
           users={users}
         />
         <View style={styles.wrapper}>
-          {userCanPost &&
+          {userCanPost && (
             <TextInput
               underlineColorAndroid={'transparent'}
               placeholder={
                 issueLocked && userHasPushPermission
-                  ? translate('issue.main.lockedCommentInput', language)
-                  : translate('issue.main.commentInput', language)
+                  ? translate('issue.main.lockedCommentInput', locale)
+                  : translate('issue.main.commentInput', locale)
               }
               multiline
               blurOnSubmit={false}
@@ -123,14 +123,16 @@ export class CommentInput extends Component {
                 { height: Math.max(30, this.state.height) },
               ]}
               value={this.state.text}
-            />}
+            />
+          )}
 
-          {!userCanPost &&
+          {!userCanPost && (
             <Text style={[styles.textInput, { color: colors.grey }]}>
-              {translate('issue.main.lockedIssue', language)}
-            </Text>}
+              {translate('issue.main.lockedIssue', locale)}
+            </Text>
+          )}
 
-          {userCanPost &&
+          {userCanPost && (
             <TouchableOpacity
               disabled={this.state.text === ''}
               style={styles.postButtonContainer}
@@ -144,13 +146,15 @@ export class CommentInput extends Component {
                     : styles.postButtonEnabled
                 }
               />
-            </TouchableOpacity>}
+            </TouchableOpacity>
+          )}
 
           {!userCanPost &&
-            this.props.issueLocked &&
-            <View style={styles.postButtonContainer}>
-              <Icon name="lock" type="octicon" color={colors.grey} />
-            </View>}
+            this.props.issueLocked && (
+              <View style={styles.postButtonContainer}>
+                <Icon name="lock" type="octicon" color={colors.grey} />
+              </View>
+            )}
         </View>
       </View>
     );

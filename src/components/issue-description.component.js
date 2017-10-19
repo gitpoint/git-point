@@ -73,12 +73,13 @@ export class IssueDescription extends Component {
   props: {
     issue: Object,
     diff: string,
+    isMergeable: boolean,
     isMerged: boolean,
     isPendingDiff: boolean,
     isPendingCheckMerge: boolean,
     onRepositoryPress: Function,
     userHasPushPermission: boolean,
-    language: string,
+    locale: string,
     navigation: Object,
   };
 
@@ -92,12 +93,13 @@ export class IssueDescription extends Component {
     const {
       diff,
       issue,
+      isMergeable,
       isMerged,
       isPendingDiff,
       isPendingCheckMerge,
       onRepositoryPress,
       userHasPushPermission,
-      language,
+      locale,
       navigation,
     } = this.props;
 
@@ -149,7 +151,7 @@ export class IssueDescription extends Component {
                 style={styles.badge}
                 issue={issue}
                 isMerged={isMerged && issue.pull_request}
-                language={language}
+                locale={locale}
               />)}
         </View>
 
@@ -166,8 +168,8 @@ export class IssueDescription extends Component {
                 showNumbers
                 onPress={() =>
                   navigation.navigate('PullDiff', {
-                    title: translate('repository.pullDiff.title', language),
-                    language,
+                    title: translate('repository.pullDiff.title', locale),
+                    locale,
                     diff,
                   })}
               />}
@@ -182,7 +184,7 @@ export class IssueDescription extends Component {
           issue.assignees.length > 0 &&
           <View style={styles.assigneesSection}>
             <MembersList
-              title={translate('issue.main.assignees', language)}
+              title={translate('issue.main.assignees', locale)}
               members={issue.assignees}
               containerStyle={{ marginTop: 0, paddingTop: 0, paddingLeft: 0 }}
               smallTitle
@@ -196,13 +198,14 @@ export class IssueDescription extends Component {
           userHasPushPermission &&
           <View style={styles.mergeButtonContainer}>
             <Button
-              type="success"
+              type={isMergeable ? 'success' : 'default'}
               icon={{ name: 'git-merge', type: 'octicon' }}
+              disabled={!isMergeable}
               onPress={() =>
                 navigation.navigate('PullMerge', {
-                  title: translate('issue.pullMerge.title', language),
+                  title: translate('issue.pullMerge.title', locale),
                 })}
-              title={translate('issue.main.mergeButton', language)}
+              title={translate('issue.main.mergeButton', locale)}
             />
           </View>}
       </View>

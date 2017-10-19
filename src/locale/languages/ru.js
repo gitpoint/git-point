@@ -227,12 +227,17 @@ export const ru = {
       deleted: 'УДАЛЕННЫЙ',
       fileRenamed: 'Файл переименован без каких-либо изменений',
     },
+    readMe: {
+      readMeActions: 'Действия с README',
+      noReadMeFound: 'He yдалось найти README.md',
+    },
   },
   organization: {
     main: {
       membersTitle: 'УЧАСТНИКИ',
       descriptionTitle: 'ОПИСАНИЕ',
     },
+    organizationActions: 'Действия с организацией',
   },
   issue: {
     settings: {
@@ -274,6 +279,7 @@ export const ru = {
         '#{{number}} открыт {{time}} назад пользователем {{user}}',
       closedIssueSubTitle:
         '#{{number}} закрыт {{time}} назад пользователем {{user}}',
+      issueActions: 'Действия с задачей',
     },
     newIssue: {
       title: 'Новая задача',
@@ -332,5 +338,6 @@ export const ru = {
     abbreviations: {
       thousand: ' тыс.',
     },
+    openInBrowser: 'Открыть в браузере',
   },
 };

@@ -10,6 +10,7 @@ import {
   Platform,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
+import ActionSheet from 'react-native-actionsheet';
 
 import {
   ViewContainer,
@@ -20,7 +21,7 @@ import {
   IssueEventListItem,
 } from 'components';
 import { v3 } from 'api';
-import { translate, formatEventsToRender } from 'utils';
+import { translate, formatEventsToRender, openURLInView } from 'utils';
 import { colors } from 'config';
 import { getRepository, getContributors } from 'repository';
 import {
@@ -32,12 +33,13 @@ import {
 } from '../issue.action';
 
 const mapStateToProps = state => ({
-  language: state.auth.language,
+  locale: state.auth.locale,
   authUser: state.auth.user,
   repository: state.repository.repository,
   contributors: state.repository.contributors,
   issue: state.issue.issue,
   diff: state.issue.diff,
+  pr: state.issue.pr,
   isMerged: state.issue.isMerged,
   comments: state.issue.comments,
   events: state.issue.events,
@@ -76,11 +78,11 @@ const compareCreatedAt = (a, b) => {
 
 class Issue extends Component {
   static navigationOptions = ({ navigation }) => {
-    const { state, navigate } = navigation;
+    const getHeaderIcon = () => {
+      const { state, navigate } = navigation;
 
-    if (state.params.userHasPushPermission) {
-      return {
-        headerRight: (
+      if (state.params.userHasPushPermission) {
+        return (
           <Icon
             name="gear"
             color={colors.primaryDark}
@@ -89,15 +91,26 @@ class Issue extends Component {
             underlayColor={colors.transparent}
             onPress={() =>
               navigate('IssueSettings', {
-                title: translate('issue.settings.title', state.params.language),
+                title: translate('issue.settings.title', state.params.locale),
                 issue: state.params.issue,
               })}
           />
-        ),
-      };
-    }
+        );
+      }
 
-    return null;
+      return (
+        <Icon
+          name="ellipsis-h"
+          color={colors.primaryDark}
+          type="font-awesome"
+          containerStyle={{ marginRight: 10 }}
+          underlayColor={colors.transparent}
+          onPress={state.params.showActionSheet}
+        />
+      );
+    };
+
+    return { headerRight: getHeaderIcon() };
   };
 
   props: {
@@ -110,6 +123,7 @@ class Issue extends Component {
     deleteIssueComment: Function,
     diff: string,
     issue: Object,
+    pr: Object,
     isMerged: boolean,
     authUser: Object,
     repository: Object,
@@ -124,12 +138,14 @@ class Issue extends Component {
     isDeletingComment: boolean,
     isPendingContributors: boolean,
     // isPostingComment: boolean,
-    language: string,
+    locale: string,
     navigation: Object,
   };
 
   componentDidMount() {
     this.getIssueInformation();
+
+    this.props.navigation.setParams({ showActionSheet: this.showActionSheet });
   }
 
   onLinkPress = node => {
@@ -177,25 +193,22 @@ class Issue extends Component {
       getIssueEvents,
     } = this.props;
 
-    const issueParam = navigation.state.params.issue;
-    const issueURLParam = navigation.state.params.issueURL;
-    const issueCommentsURL = `${navigation.state.params.issueURL}/comments`;
+    const params = navigation.state.params;
+    const issueURL = params.issueURL || params.issue.url;
+    const issueRepository = issueURL
+      .replace(`${v3.root}/repos/`, '')
+      .replace(/([^/]+\/[^/]+)\/issues\/\d+$/, '$1');
 
     const repoName = repository.name;
     const owner = repository.owner.login;
 
     Promise.all([
-      getIssueFromUrl(issueURLParam || issueParam.url),
-      getIssueComments(
-        issueURLParam ? issueCommentsURL : issueParam.comments_url
-      ),
+      getIssueFromUrl(issueURL),
+      getIssueComments(`${issueURL}/comments`),
     ]).then(() => {
       const issue = this.props.issue;
 
-      if (
-        repository.full_name !==
-        issue.repository_url.replace(`${v3.root}/repos/`, '')
-      ) {
+      if (repository.full_name !== issueRepository) {
         Promise.all([
           getRepository(issue.repository_url),
           getContributors(this.getContributorsLink(issue.repository_url)),
@@ -213,13 +226,21 @@ class Issue extends Component {
   getContributorsLink = repository => `${repository}/contributors`;
 
   setNavigationParams = () => {
-    const { navigation, language, repository } = this.props;
+    const { navigation, locale, repository } = this.props;
 
     navigation.setParams({
-      language,
+      locale,
       userHasPushPermission:
         repository.permissions.admin || repository.permissions.push,
     });
+  };
+
+  showActionSheet = () => this.ActionSheet.show();
+
+  handleActionSheetPress = index => {
+    if (index === 0) {
+      openURLInView(this.props.navigation.state.params.issue.html_url);
+    }
   };
 
   postComment = body => {
@@ -247,7 +268,7 @@ class Issue extends Component {
     const { repository } = this.props;
 
     navigate('EditIssueComment', {
-      title: translate('issue.comment.editCommentTitle', state.params.language),
+      title: translate('issue.comment.editCommentTitle', state.params.locale),
       comment,
       repository,
     });
@@ -260,11 +281,12 @@ class Issue extends Component {
   renderHeader = () => {
     const {
       issue,
+      pr,
       diff,
       isMerged,
       isPendingDiff,
       isPendingCheckMerge,
-      language,
+      locale,
       navigation,
     } = this.props;
 
@@ -272,20 +294,21 @@ class Issue extends Component {
       <IssueDescription
         issue={issue}
         diff={diff}
+        isMergeable={pr.mergeable}
         isMerged={isMerged}
         isPendingDiff={isPendingDiff}
         isPendingCheckMerge={isPendingCheckMerge}
         onRepositoryPress={url => this.onRepositoryPress(url)}
         onLinkPress={node => this.onLinkPress(node)}
         userHasPushPermission={navigation.state.params.userHasPushPermission}
-        language={language}
+        locale={locale}
         navigation={navigation}
       />
     );
   };
 
   renderItem = ({ item }) => {
-    const { language, navigation } = this.props;
+    const { locale, navigation } = this.props;
 
     if (item.event) {
       return <IssueEventListItem event={item} navigation={navigation} />;
@@ -297,7 +320,7 @@ class Issue extends Component {
         onLinkPress={node => this.onLinkPress(node)}
         onDeletePress={this.deleteComment}
         onEditPress={this.editComment}
-        language={language}
+        locale={locale}
         navigation={navigation}
       />
     );
@@ -313,7 +336,7 @@ class Issue extends Component {
       isPendingContributors,
       isPendingIssue,
       isDeletingComment,
-      language,
+      locale,
       navigation,
     } = this.props;
 
@@ -338,6 +361,8 @@ class Issue extends Component {
     const fullUsers = [
       ...new Set([...participantNames, ...contributorNames]),
     ].filter(item => !!item);
+
+    const issuesActions = [translate('common.openInBrowser', locale)];
 
     return (
       <ViewContainer>
@@ -375,10 +400,20 @@ class Issue extends Component {
                 navigation.state.params.userHasPushPermission
               }
               issueLocked={issue.locked}
-              language={language}
+              locale={locale}
               onSubmit={this.postComment}
             />
           </KeyboardAvoidingView>}
+
+        <ActionSheet
+          ref={o => {
+            this.ActionSheet = o;
+          }}
+          title={translate('issue.main.issueActions', locale)}
+          options={[...issuesActions, translate('common.cancel', locale)]}
+          cancelButtonIndex={1}
+          onPress={this.handleActionSheetPress}
+        />
       </ViewContainer>
     );
   }

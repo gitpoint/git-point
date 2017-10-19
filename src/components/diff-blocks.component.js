@@ -75,11 +75,12 @@ export const DiffBlocks = ({
 
   return (
     <Component style={styles.container} onPress={onPress}>
-      {showNumbers &&
+      {showNumbers && (
         <View style={styles.linesChanged}>
           <Text style={styles.numAdditions}>{`+${additions}`}</Text>
           <Text style={styles.numDeletions}>{`-${deletions}`}</Text>
-        </View>}
+        </View>
+      )}
 
       {[...Array(greenBlocks)].map((item, index) => {
         return <View key={index} style={[styles.block, styles.greenBlock]} />; // eslint-disable-line react/no-array-index-key
