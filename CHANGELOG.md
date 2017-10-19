@@ -2,6 +2,8 @@
 
 ## master
 
+* Added support for quoted emails in markdown display (#501)
+* Fixed an issue with logout on Android (#494)
 * Fixed crash in CodeLine component (#483)
 * Fixed locale detection (#479)
 * Added esperanto translations (#471)
@@ -16,12 +18,15 @@
 * Added "Open in browser" functionality in various screens (#424)
 * Added spanish translations (#282)
 
-## Version 1.3.1 (2017-10-04)
+## Version 1.3.1
+[2017-10-04](https://github.com/gitpoint/git-point/releases/tag/1.3.1)
 
 * Fixed test input height rendering in comments for Android (#428)
 * Fixed README file display on Android (#427)
 
-## Version 1.3.0 (2017-10-04)
+## Version 1.3.0
+[2017-10-04](https://github.com/gitpoint/git-point/releases/tag/1.3.0)
+
 
 * Added the ability to edit an issue body (#409)
 * Added Nunito font, now used on Android and iOS (#397)
@@ -54,7 +59,8 @@
 * Added a label to show watch status for a repository (#227)
 * Fixed newlines in comments for Android (#207)
 
-## Version 1.2.0 (2017-08-03)
+## Version 1.2.0
+[2017-08-03](#)
 
 * Added the ability to watch a repository (#56)
 * Added the intro screen (#174)
@@ -85,6 +91,7 @@
 * Upgraded React Native to 0.46.2 (#43)
 * Added iPad support (#39)
 
-## Version 1.0.0 (2017-07-11)
+## Version 1.0.0
+[2017-07-11](https://github.com/gitpoint/git-point/releases/tag/1.1.0)
 
 * Initial version with iOS support
