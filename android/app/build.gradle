@@ -76,6 +76,7 @@ import com.android.build.OutputFile
     // Name of the font files you want to copy
     iconFontNames: [
       'FontAwesome.ttf',
+      'MaterialIcons.ttf',
       'Octicons.ttf']
   ]
 
