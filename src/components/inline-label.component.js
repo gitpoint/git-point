@@ -1,20 +1,18 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text } from 'react-native';
 
-import { normalize } from 'config';
+import { fonts, normalize } from 'config';
 import { getFontColorByBackground } from 'utils';
 
 const styles = StyleSheet.create({
   inlineLabel: {
     fontSize: normalize(10),
-    fontWeight: 'bold',
-    padding: 3,
-    paddingLeft: 5,
-    paddingRight: 5,
+    ...fonts.fontPrimarySemiBold,
+    paddingHorizontal: 5,
     margin: 2,
     borderWidth: 1,
     overflow: 'hidden',
-    borderRadius: 2,
+    borderRadius: 3,
     minWidth: 50,
     textAlign: 'center',
   },

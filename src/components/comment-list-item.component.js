@@ -158,23 +158,22 @@ class CommentListItemComponent extends Component {
           )}
 
           {comment.user && (
-            <TouchableOpacity
-              style={styles.titleSubtitleContainer}
-              onPress={() =>
-                navigation.navigate(
-                  authUser.login === comment.user.login
-                    ? 'AuthProfile'
-                    : 'Profile',
-                  {
-                    user: comment.user,
-                  }
-                )}
-            >
-              <Text style={styles.linkDescription}>
+            <View style={styles.titleSubtitleContainer}>
+              <Text
+                style={styles.linkDescription}
+                onPress={() =>
+                  navigation.navigate(
+                    authUser.login === comment.user.login
+                      ? 'AuthProfile'
+                      : 'Profile',
+                    {
+                      user: comment.user,
+                    }
+                  )}
+              >
                 {comment.user.login}
-                {'  '}
               </Text>
-            </TouchableOpacity>
+            </View>
           )}
 
           <View style={styles.dateContainer}>
