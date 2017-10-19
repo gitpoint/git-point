@@ -1,7 +1,6 @@
 import React from 'react';
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import styled from 'styled-components/native';
 import { Icon } from 'react-native-elements';
-
 import { LabelButton } from 'components';
 import { colors } from 'config';
 
@@ -10,41 +9,39 @@ type Props = {
   removeLabel: Function,
 };
 
-const styles = StyleSheet.create({
-  container: {
-    borderBottomColor: colors.greyLight,
-    borderBottomWidth: 1,
-  },
-  wrapper: {
-    padding: 10,
-    marginLeft: 5,
-    flexDirection: 'row',
-  },
-  labelInfo: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  iconContainer: {
-    flex: 0.15,
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-  },
-});
+const LabelListItemContainer = styled.View`
+  border-bottom-color: ${colors.greyLight};
+  border-bottom-width: 1;
+`;
+
+const Wrapper = styled.View`
+  padding: 10;
+  margin-left: 5;
+  flex-direction: row;
+`;
+
+const LabelInfo = styled.View`
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const IconContainer = styled.TouchableOpacity`
+  flex: 0.15;
+  align-items: flex-end;
+  justify-content: center;
+`;
 
 export const LabelListItem = ({ label, removeLabel }: Props) => (
-  <View style={styles.container}>
-    <View style={styles.wrapper}>
-      <View style={styles.labelInfo}>
+  <LabelListItemContainer>
+    <Wrapper>
+      <LabelInfo>
         <LabelButton label={label} largeWithTag />
-      </View>
+      </LabelInfo>
 
-      <TouchableOpacity
-        style={styles.iconContainer}
-        onPress={() => removeLabel(label)}
-      >
+      <IconContainer onPress={() => removeLabel(label)}>
         <Icon color={colors.grey} name="x" type="octicon" />
-      </TouchableOpacity>
-    </View>
-  </View>
+      </IconContainer>
+    </Wrapper>
+  </LabelListItemContainer>
 );
