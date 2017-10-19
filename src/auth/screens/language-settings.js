@@ -54,4 +54,9 @@ export default [
     emojiCode: ':flag-de:',
     name: 'Deutsch',
   },
+  {
+    code: 'es',
+    emojiCode: ':flag-es:',
+    name: 'Español',
+  },
 ];
