@@ -31,3 +31,4 @@ export * from './button.component';
 export * from './notification-icon.component';
 export * from './badge.component';
 export * from './toggle-view.component';
+export * from './back-to-top.component';

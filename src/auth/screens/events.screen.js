@@ -6,7 +6,12 @@ import { bindActionCreators } from 'redux';
 import { StyleSheet, Text, FlatList, View } from 'react-native';
 import moment from 'moment/min/moment-with-locales.min';
 
-import { LoadingUserListItem, UserListItem, ViewContainer } from 'components';
+import {
+  LoadingUserListItem,
+  UserListItem,
+  ViewContainer,
+  BackToTop,
+} from 'components';
 import { colors, fonts, normalize } from 'config';
 import { emojifyText, translate } from 'utils';
 import { getUserEvents } from 'auth';
@@ -77,6 +82,14 @@ const styles = StyleSheet.create({
 });
 
 class Events extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      offsetY: null,
+    };
+  }
+
   componentDidMount() {
     this.getUserEvents();
   }
@@ -482,6 +495,14 @@ class Events extends Component {
     return item.id;
   };
 
+  scrollTop = () => {
+    this.eventsList.scrollToOffset({
+      x: 0,
+      y: 0,
+      animated: true,
+    });
+  };
+
   renderDescription(userEvent) {
     return (
       <Text style={styles.descriptionContainer}>
@@ -526,6 +547,9 @@ class Events extends Component {
     } else {
       content = (
         <FlatList
+          ref={ref => {
+            this.eventsList = ref;
+          }}
           removeClippedSubviews={false}
           data={userEvents}
           onRefresh={this.getUserEvents}
@@ -559,11 +583,22 @@ class Events extends Component {
             </View>
           )}
           extraData={this.props.locale}
+          onScroll={e => {
+            this.setState({ offsetY: e.nativeEvent.contentOffset.y });
+          }}
         />
       );
     }
 
-    return <ViewContainer>{content}</ViewContainer>;
+    return (
+      <ViewContainer>
+        {content}
+        <BackToTop
+          onPress={() => this.scrollTop()}
+          offsetY={this.state.offsetY}
+        />
+      </ViewContainer>
+    );
   }
 }
 
