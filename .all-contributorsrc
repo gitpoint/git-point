@@ -497,6 +497,15 @@
       "avatar_url": "https://avatars2.githubusercontent.com/u/5158502?v=4",
       "profile": "http://www.phidong.com",
       "contributions": []
+    },
+    {
+      "login": "ocarreterom",
+      "name": "Óscar Carretero",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/11599942?v=4",
+      "profile": "https://github.com/ocarreterom",
+      "contributions": [
+        "code"
+      ]
     }
   ]
 }
