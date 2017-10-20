@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -51,6 +50,7 @@
 		B58367881AB44EC4944D4698 /* Nunito-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E37A1EB69E2D4FD7B138343D /* Nunito-Italic.ttf */; };
 		B66611A59CDF49A19C845B57 /* Nunito-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78A9FAE6B34B4FAC9F27CBC3 /* Nunito-Regular.ttf */; };
 		B8D599F61D2A4797A2F71CAA /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AFDBB5669CAB4C5C8215B571 /* libRNVectorIcons.a */; };
+		D2C2FCD70676466EA8E466D6 /* Menlo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18487F5E165143648CF0950E /* Menlo.ttf */; };
 		DC5C35E71E37AD1800F3F526 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DC5C35DD1E37AD1800F3F526 /* FontAwesome.ttf */; };
 		EB0F176BE52B4561B9FF07AB /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D7043BDB577E427391ECFBB0 /* libReactNativeConfig.a */; };
 /* End PBXBuildFile section */
@@ -343,6 +343,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = GitPoint/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = GitPoint/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		18487F5E165143648CF0950E /* Menlo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Menlo.ttf; path = ../src/assets/fonts/Menlo.ttf; sourceTree = "<group>"; };
 		1ABB0D8AB2424B1595DABB16 /* libRNPhotoView.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNPhotoView.a; sourceTree = "<group>"; };
 		24C757CE6CB049658C31ED0E /* Nunito-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Nunito-Bold.ttf"; path = "../src/assets/fonts/Nunito-Bold.ttf"; sourceTree = "<group>"; };
 		27CFE4061F920B7700951EF2 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
@@ -557,6 +558,7 @@
 				ED1B22A89E134AA89E251577 /* Nunito-Light.ttf */,
 				78A9FAE6B34B4FAC9F27CBC3 /* Nunito-Regular.ttf */,
 				FBD0F4CBD299403498005E08 /* Nunito-SemiBold.ttf */,
+				18487F5E165143648CF0950E /* Menlo.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1233,6 +1235,7 @@
 				5DC6C311356B4973AE2599BF /* Nunito-Light.ttf in Resources */,
 				B66611A59CDF49A19C845B57 /* Nunito-Regular.ttf in Resources */,
 				4A0E0CE9909244398A873436 /* Nunito-SemiBold.ttf in Resources */,
+				D2C2FCD70676466EA8E466D6 /* Menlo.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
