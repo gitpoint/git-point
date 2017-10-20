@@ -22,6 +22,7 @@
     "eslint": "eslint .",
     "prettier": "prettier --write \"**/*.js\"",
     "test": "jest",
+    "test:watch": "jest --watch",
     "flow-start": "flow start",
     "flow-stop": "flow stop",
     "flow-status": "flow status",
