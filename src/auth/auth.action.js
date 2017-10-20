@@ -1,7 +1,7 @@
 import { AsyncStorage } from 'react-native';
 
 import uniqby from 'lodash.uniqby';
-import { delay, resetNavigationTo, configureLocale, saveLocale } from 'utils';
+import { delay, configureLocale, saveLocale } from 'utils';
 
 import {
   fetchAccessToken,
@@ -21,18 +21,16 @@ import {
   GET_AUTH_STAR_COUNT,
 } from './auth.type';
 
-export const auth = (code, state, navigation) => {
+export const auth = (code, state) => {
   return dispatch => {
     dispatch({ type: LOGIN.PENDING });
 
-    delay(fetchAccessToken(code, state), 2000)
+    return delay(fetchAccessToken(code, state), 2000)
       .then(data => {
         dispatch({
           type: LOGIN.SUCCESS,
           payload: data.access_token,
         });
-
-        resetNavigationTo('Main', navigation);
       })
       .catch(error => {
         dispatch({
@@ -68,7 +66,7 @@ export const getUser = () => {
 
     dispatch({ type: GET_AUTH_USER.PENDING });
 
-    fetchAuthUser(accessToken)
+    return fetchAuthUser(accessToken)
       .then(data => {
         dispatch({
           type: GET_AUTH_USER.SUCCESS,
