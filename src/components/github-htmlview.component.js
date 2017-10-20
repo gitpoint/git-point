@@ -27,6 +27,7 @@ const boldStyle = {
   ...fonts.fontPrimarySemiBold,
 };
 const italicStyle = { ...textStyle, ...fonts.fontPrimaryItalic };
+const delStyle = { ...textStyle, textDecorationLine: 'line-through' };
 const hrStyle = { borderBottomWidth: 2, borderBottomColor: colors.greyDark };
 const underlineStyle = { textDecorationLine: 'underline' };
 const codeStyle = {
@@ -42,6 +43,7 @@ const styles = {
   i: italicStyle,
   em: italicStyle,
   u: underlineStyle,
+  del: delStyle,
   pre: { ...codeStyle, padding: 5, marginBottom: 10 },
   code: codeStyle,
   span: textStyle,
@@ -232,6 +234,11 @@ export class GithubHtmlView extends Component {
               {defaultRenderer(node.children, parent)}
             </Text>
           </View>
+        ),
+        del: (node, index, siblings, parent, defaultRenderer) => (
+          <Text key={index} style={styles.del}>
+            {defaultRenderer(node.children, node)}
+          </Text>
         ),
         pre: (node, index, siblings, parent, defaultRenderer) => (
           <View key={index}>{defaultRenderer(node.children, node)}</View>
