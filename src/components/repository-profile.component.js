@@ -164,13 +164,17 @@ export const RepositoryProfile = ({
       </Text>
 
       {repository.fork && (
-        <Text style={[styles.subtitle, styles.subtitleFork]}>
+        <Text
+          nativeId="repository-fork-container"
+          style={[styles.subtitle, styles.subtitleFork]}
+        >
           {repository.parent && (
             <Text>
               <Text>
                 {translate('repository.main.forkedFromMessage', locale)}
               </Text>
               <Text
+                nativeId="repository-navigate-container"
                 style={{ ...fonts.fontPrimaryBold }}
                 onPress={() =>
                   navigation.navigate('Repository', {
