@@ -34,13 +34,11 @@ const styles = StyleSheet.create({
   background: {
     position: 'absolute',
     top: 0,
-    width: window.width,
     backgroundColor: colors.primaryDark,
   },
   stickySection: {
     height: STICKY_HEADER_HEIGHT,
     backgroundColor: colors.primaryDark,
-    width: window.width,
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
@@ -78,13 +76,13 @@ export class ParallaxScroll extends Component {
   }
 
   getParallaxHeaderHeight = (window = Dimensions.get('window')) => {
-    let devider = 2;
+    let divider = 2;
 
     if (window.width > window.height) {
-      devider = Platform.OS === 'ios' ? 1.2 : 1.4;
+      divider = Platform.OS === 'ios' ? 1.2 : 1.4;
     }
 
-    return window.height / devider;
+    return window.height / divider;
   };
 
   dimensionsDidChange = ({ window }) => {
