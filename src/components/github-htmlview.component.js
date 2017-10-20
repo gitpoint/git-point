@@ -235,11 +235,6 @@ export class GithubHtmlView extends Component {
             </Text>
           </View>
         ),
-        del: (node, index, siblings, parent, defaultRenderer) => (
-          <Text key={index} style={styles.del}>
-            {defaultRenderer(node.children, node)}
-          </Text>
-        ),
         pre: (node, index, siblings, parent, defaultRenderer) => (
           <View key={index}>{defaultRenderer(node.children, node)}</View>
         ),
