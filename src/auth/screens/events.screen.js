@@ -82,11 +82,11 @@ const styles = StyleSheet.create({
 });
 
 class Events extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
-      offsetY: null,
+      offsetY: 0,
     };
   }
 

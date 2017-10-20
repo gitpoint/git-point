@@ -10,10 +10,10 @@ const Container = styled(Animated.View)`
   right: 20;
   width: 40;
   height: 40;
-  borderRadius: 40;
-  backgroundColor: ${colors.greyDark};
-  alignItems: center;
-  justifyContent: center;
+  borderradius: 40;
+  backgroundcolor: ${colors.greyDark};
+  alignitems: center;
+  justifycontent: center;
 `;
 
 export class BackToTop extends Component {
@@ -55,7 +55,7 @@ export class BackToTop extends Component {
 
     return (
       <Container style={extraStyles}>
-        <TouchableOpacity onPress={() => onPress()}>
+        <TouchableOpacity onPress={onPress}>
           <Icon color={colors.white} size={32} name="expand-less" />
         </TouchableOpacity>
       </Container>
@@ -64,9 +64,9 @@ export class BackToTop extends Component {
 }
 
 BackToTop.defaultProps = {
-  offsetY: null,
+  offsetY: 0,
   opacity: 1,
   bottom: 10,
   distance: 200,
-  onPress: undefined,
+  onPress: null,
 };
