@@ -9,4 +9,3 @@ before_script:
   - 'yarn'
 script:
   - yarn run eslint
-  - node __tests__/locales.test.js
