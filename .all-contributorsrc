@@ -391,8 +391,8 @@
       "contributions": [
         "code"
       ]
-     },
-     {
+    },
+    {
       "login": "Jpfonseca",
       "name": "João Fonseca",
       "avatar_url": "https://avatars2.githubusercontent.com/u/11836470?v=4",
@@ -490,6 +490,13 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "pdong",
+      "name": "Phi Dong",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/5158502?v=4",
+      "profile": "http://www.phidong.com",
+      "contributions": []
     }
   ]
 }
