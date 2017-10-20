@@ -43,11 +43,13 @@
     "*.js": [
       "prettier --write",
       "git add",
-      "eslint --cache --max-warnings 0"
+      "eslint --cache"
     ]
   },
   "dependencies": {
     "entities": "^1.1.1",
+    "enzyme": "^3.0.0",
+    "enzyme-adapter-react-16": "^1.0.0",
     "fuzzysort": "^1.0.1",
     "lodash.uniqby": "^4.7.0",
     "lowlight": "^1.5.0",
@@ -57,8 +59,8 @@
     "opencollective": "^1.0.3",
     "parse-diff": "^0.4.0",
     "query-string": "^4.3.1",
-    "react": "16.0.0-alpha.12",
-    "react-native": "0.48.1",
+    "react": "^16.0.0",
+    "react-native": "^0.48.4",
     "react-native-actionsheet": "^2.2.0",
     "react-native-code-push": "^5.0.0-beta",
     "react-native-collapsible": "^0.9.0",
@@ -66,17 +68,18 @@
     "react-native-config": "^0.6.0",
     "react-native-cookies": "^3.2.0",
     "react-native-device-info": "^0.11.0",
-    "react-native-elements": "^0.9.3",
+    "react-native-elements": "^0.17.0",
     "react-native-htmlview": "^0.12.0",
     "react-native-i18n": "^2.0.4",
     "react-native-material-design-searchbar": "^1.1.4",
-    "react-native-parallax-scroll-view": "^0.19.0",
+    "react-native-mock": "https://github.com/shqld/react-native-mock/tarball/master",
+    "react-native-parallax-scroll-view": "https://github.com/mini-eggs/react-native-parallax-scroll-view/tarball/react16-support",
     "react-native-photo-view": "^1.5.2",
     "react-native-safari-view": "^2.0.0",
-    "react-native-search-bar": "^3.0.0",
+    "react-native-search-bar": "https://github.com/andrewda/react-native-search-bar/tarball/master",
     "react-native-swiper": "^1.5.13",
     "react-native-syntax-highlighter": "^1.2.1",
-    "react-native-table-component": "^1.0.5",
+    "react-native-table-component": "^1.1.0",
     "react-native-vector-icons": "^4.4.0",
     "react-navigation": "^1.0.0-beta.11",
     "react-redux": "^5.0.2",
@@ -95,7 +98,7 @@
     "@commitlint/cli": "^3.1.0",
     "all-contributors-cli": "^4.4.0",
     "babel-eslint": "^7.1.1",
-    "babel-jest": "18.0.0",
+    "babel-jest": "^21.2.0",
     "babel-plugin-module-resolver": "^2.7.1",
     "babel-plugin-transform-inline-environment-variables": "^6.8.0",
     "babel-preset-flow": "^6.23.0",
@@ -114,17 +117,28 @@
     "eslint-plugin-react-native": "^2.3.2",
     "flow-bin": "^0.47.0",
     "husky": "^0.14.3",
-    "jest": "18.1.0",
+    "jest": "^21.2.1",
     "lint-staged": "^3.2.6",
     "minicat": "^1.0.0",
     "prettier": "^1.7.4",
+    "react-dom": "^16.0.0",
     "react-native-cli": "^2.0.1",
-    "react-test-renderer": "16.0.0-alpha.6",
+    "react-test-renderer": "^16.0.0",
     "reactotron-react-native": "^1.12.2",
-    "reactotron-redux": "^1.12.2"
+    "reactotron-redux": "^1.12.2",
+    "sinon": "^4.0.0"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "testMatch": [
+      "**/__tests__/tests/**/*.js"
+    ],
+    "setupFiles": [
+      "./testenv.js"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|react-navigation)"
+    ]
   },
   "rnpm": {
     "assets": [

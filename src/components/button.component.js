@@ -205,7 +205,6 @@ export class Button extends Component {
 
 Button.defaultProps = {
   size: 'default',
-  icon: false,
   type: 'default',
   title: 'missing title!',
 };
