@@ -21,8 +21,8 @@ import CookieManager from 'react-native-cookies';
 import { ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { CLIENT_ID } from 'api';
-import { auth } from 'auth';
-import { translate } from 'utils';
+import { auth, getUser } from 'auth';
+import { translate, resetNavigationTo } from 'utils';
 
 let stateRandom = Math.random().toString();
 
@@ -30,12 +30,14 @@ const mapStateToProps = state => ({
   locale: state.auth.locale,
   isLoggingIn: state.auth.isLoggingIn,
   isAuthenticated: state.auth.isAuthenticated,
+  hasInitialUser: state.auth.hasInitialUser,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       auth,
+      getUser,
     },
     dispatch
   );
@@ -149,8 +151,10 @@ class Login extends Component {
   props: {
     isAuthenticated: boolean,
     isLoggingIn: boolean,
+    hasInitialUser: boolean,
     locale: string,
     auth: Function,
+    getUser: Function,
     navigation: Object,
   };
 
@@ -214,7 +218,7 @@ class Login extends Component {
     if (url && url.substring(0, 11) === 'gitpoint://') {
       const [, queryStringFromUrl] = url.match(/\?(.*)/);
       const { state, code } = queryString.parse(queryStringFromUrl);
-      const { auth, navigation } = this.props;
+      const { auth, getUser, navigation } = this.props;
 
       if (stateRandom === state) {
         this.setState({
@@ -226,7 +230,11 @@ class Login extends Component {
         stateRandom = Math.random().toString();
 
         CookieManager.clearAll().then(() => {
-          auth(code, state, navigation);
+          auth(code, state).then(() => {
+            getUser().then(() => {
+              resetNavigationTo('Main', navigation);
+            });
+          });
         });
       }
     }
@@ -248,7 +256,7 @@ class Login extends Component {
   }
 
   render() {
-    const { locale, isLoggingIn } = this.props;
+    const { locale, isLoggingIn, hasInitialUser } = this.props;
 
     return (
       <ViewContainer barColor="light">
@@ -362,18 +370,19 @@ class Login extends Component {
             </View>
           </Modal>
         )}
-        {isLoggingIn && (
-          <View style={styles.browserLoader}>
-            <Text style={styles.browserLoadingLabel}>
-              {this.state.loaderText}
-            </Text>
-            <ActivityIndicator
-              animating={isLoggingIn}
-              color={colors.white}
-              size="large"
-            />
-          </View>
-        )}
+        {isLoggingIn &&
+          !hasInitialUser && (
+            <View style={styles.browserLoader}>
+              <Text style={styles.browserLoadingLabel}>
+                {this.state.loaderText}
+              </Text>
+              <ActivityIndicator
+                animating={isLoggingIn}
+                color={colors.white}
+                size="large"
+              />
+            </View>
+          )}
       </ViewContainer>
     );
   }
