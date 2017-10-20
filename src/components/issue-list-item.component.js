@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, TouchableHighlight, View, Text } from 'react-native';
 import { ListItem, Icon } from 'react-native-elements';
-import moment from 'moment/min/moment-with-locales.min';
+import moment from 'moment/min/moment-with-locales';
 
 import { colors, fonts, normalize } from 'config';
 import { translate } from 'utils';
