@@ -1,0 +1,212 @@
+export const open = {
+  url: 'https://api.github.com/repos/gitpoint/git-point/issues/148',
+  repository_url: 'https://api.github.com/repos/gitpoint/git-point',
+  labels_url:
+    'https://api.github.com/repos/gitpoint/git-point/issues/148/labels{/name}',
+  comments_url:
+    'https://api.github.com/repos/gitpoint/git-point/issues/148/comments',
+  events_url:
+    'https://api.github.com/repos/gitpoint/git-point/issues/148/events',
+  html_url: 'https://github.com/gitpoint/git-point/pull/148',
+  id: 244885063,
+  number: 148,
+  title: 'test: begin implementing basic tests',
+  user: {
+    login: 'andrewda',
+    id: 10191084,
+    avatar_url: 'https://avatars1.githubusercontent.com/u/10191084?v=4',
+    gravatar_id: '',
+    url: 'https://api.github.com/users/andrewda',
+    html_url: 'https://github.com/andrewda',
+    followers_url: 'https://api.github.com/users/andrewda/followers',
+    following_url:
+      'https://api.github.com/users/andrewda/following{/other_user}',
+    gists_url: 'https://api.github.com/users/andrewda/gists{/gist_id}',
+    starred_url: 'https://api.github.com/users/andrewda/starred{/owner}{/repo}',
+    subscriptions_url: 'https://api.github.com/users/andrewda/subscriptions',
+    organizations_url: 'https://api.github.com/users/andrewda/orgs',
+    repos_url: 'https://api.github.com/users/andrewda/repos',
+    events_url: 'https://api.github.com/users/andrewda/events{/privacy}',
+    received_events_url:
+      'https://api.github.com/users/andrewda/received_events',
+    type: 'User',
+    site_admin: false,
+  },
+  labels: [
+    {
+      id: 649983803,
+      url: 'https://api.github.com/repos/gitpoint/git-point/labels/tests',
+      name: 'tests',
+      color: 'fef2c0',
+      default: false,
+    },
+    {
+      id: 650761287,
+      url:
+        'https://api.github.com/repos/gitpoint/git-point/labels/work%20in%20progress',
+      name: 'work in progress',
+      color: 'fbca04',
+      default: false,
+    },
+  ],
+  state: 'open',
+  locked: false,
+  assignee: null,
+  assignees: [],
+  milestone: null,
+  comments: 7,
+  created_at: '2017-07-23T02:58:07Z',
+  updated_at: '2017-10-01T17:40:47Z',
+  closed_at: null,
+  author_association: 'MEMBER',
+  pull_request: {
+    url: 'https://api.github.com/repos/gitpoint/git-point/pulls/148',
+    html_url: 'https://github.com/gitpoint/git-point/pull/148',
+    diff_url: 'https://github.com/gitpoint/git-point/pull/148.diff',
+    patch_url: 'https://github.com/gitpoint/git-point/pull/148.patch',
+  },
+  body: 'Fixes #112.',
+  closed_by: null,
+};
+
+export const closed = {
+  url: 'https://api.github.com/repos/gitpoint/git-point/issues/148',
+  repository_url: 'https://api.github.com/repos/gitpoint/git-point',
+  labels_url:
+    'https://api.github.com/repos/gitpoint/git-point/issues/148/labels{/name}',
+  comments_url:
+    'https://api.github.com/repos/gitpoint/git-point/issues/148/comments',
+  events_url:
+    'https://api.github.com/repos/gitpoint/git-point/issues/148/events',
+  html_url: 'https://github.com/gitpoint/git-point/pull/148',
+  id: 244885063,
+  number: 148,
+  title: 'test: begin implementing basic tests',
+  user: {
+    login: 'andrewda',
+    id: 10191084,
+    avatar_url: 'https://avatars1.githubusercontent.com/u/10191084?v=4',
+    gravatar_id: '',
+    url: 'https://api.github.com/users/andrewda',
+    html_url: 'https://github.com/andrewda',
+    followers_url: 'https://api.github.com/users/andrewda/followers',
+    following_url:
+      'https://api.github.com/users/andrewda/following{/other_user}',
+    gists_url: 'https://api.github.com/users/andrewda/gists{/gist_id}',
+    starred_url: 'https://api.github.com/users/andrewda/starred{/owner}{/repo}',
+    subscriptions_url: 'https://api.github.com/users/andrewda/subscriptions',
+    organizations_url: 'https://api.github.com/users/andrewda/orgs',
+    repos_url: 'https://api.github.com/users/andrewda/repos',
+    events_url: 'https://api.github.com/users/andrewda/events{/privacy}',
+    received_events_url:
+      'https://api.github.com/users/andrewda/received_events',
+    type: 'User',
+    site_admin: false,
+  },
+  labels: [
+    {
+      id: 649983803,
+      url: 'https://api.github.com/repos/gitpoint/git-point/labels/tests',
+      name: 'tests',
+      color: 'fef2c0',
+      default: false,
+    },
+    {
+      id: 650761287,
+      url:
+        'https://api.github.com/repos/gitpoint/git-point/labels/work%20in%20progress',
+      name: 'work in progress',
+      color: 'fbca04',
+      default: false,
+    },
+  ],
+  state: 'closed',
+  locked: false,
+  assignee: null,
+  assignees: [],
+  milestone: null,
+  comments: 7,
+  created_at: '2017-07-23T02:58:07Z',
+  updated_at: '2017-10-01T17:40:47Z',
+  closed_at: null,
+  author_association: 'MEMBER',
+  pull_request: {
+    url: 'https://api.github.com/repos/gitpoint/git-point/pulls/148',
+    html_url: 'https://github.com/gitpoint/git-point/pull/148',
+    diff_url: 'https://github.com/gitpoint/git-point/pull/148.diff',
+    patch_url: 'https://github.com/gitpoint/git-point/pull/148.patch',
+  },
+  body: 'Fixes #112.',
+  closed_by: null,
+};
+
+export const merged = {
+  url: 'https://api.github.com/repos/gitpoint/git-point/issues/148',
+  repository_url: 'https://api.github.com/repos/gitpoint/git-point',
+  labels_url:
+    'https://api.github.com/repos/gitpoint/git-point/issues/148/labels{/name}',
+  comments_url:
+    'https://api.github.com/repos/gitpoint/git-point/issues/148/comments',
+  events_url:
+    'https://api.github.com/repos/gitpoint/git-point/issues/148/events',
+  html_url: 'https://github.com/gitpoint/git-point/pull/148',
+  id: 244885063,
+  number: 148,
+  title: 'test: begin implementing basic tests',
+  user: {
+    login: 'andrewda',
+    id: 10191084,
+    avatar_url: 'https://avatars1.githubusercontent.com/u/10191084?v=4',
+    gravatar_id: '',
+    url: 'https://api.github.com/users/andrewda',
+    html_url: 'https://github.com/andrewda',
+    followers_url: 'https://api.github.com/users/andrewda/followers',
+    following_url:
+      'https://api.github.com/users/andrewda/following{/other_user}',
+    gists_url: 'https://api.github.com/users/andrewda/gists{/gist_id}',
+    starred_url: 'https://api.github.com/users/andrewda/starred{/owner}{/repo}',
+    subscriptions_url: 'https://api.github.com/users/andrewda/subscriptions',
+    organizations_url: 'https://api.github.com/users/andrewda/orgs',
+    repos_url: 'https://api.github.com/users/andrewda/repos',
+    events_url: 'https://api.github.com/users/andrewda/events{/privacy}',
+    received_events_url:
+      'https://api.github.com/users/andrewda/received_events',
+    type: 'User',
+    site_admin: false,
+  },
+  labels: [
+    {
+      id: 649983803,
+      url: 'https://api.github.com/repos/gitpoint/git-point/labels/tests',
+      name: 'tests',
+      color: 'fef2c0',
+      default: false,
+    },
+    {
+      id: 650761287,
+      url:
+        'https://api.github.com/repos/gitpoint/git-point/labels/work%20in%20progress',
+      name: 'work in progress',
+      color: 'fbca04',
+      default: false,
+    },
+  ],
+  state: 'merged',
+  locked: false,
+  assignee: null,
+  assignees: [],
+  milestone: null,
+  comments: 7,
+  created_at: '2017-07-23T02:58:07Z',
+  updated_at: '2017-10-01T17:40:47Z',
+  closed_at: null,
+  author_association: 'MEMBER',
+  pull_request: {
+    url: 'https://api.github.com/repos/gitpoint/git-point/pulls/148',
+    html_url: 'https://github.com/gitpoint/git-point/pull/148',
+    diff_url: 'https://github.com/gitpoint/git-point/pull/148.diff',
+    patch_url: 'https://github.com/gitpoint/git-point/pull/148.patch',
+  },
+  body: 'Fixes #112.',
+  closed_by: null,
+};
