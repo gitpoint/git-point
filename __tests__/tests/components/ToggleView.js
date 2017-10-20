@@ -9,7 +9,7 @@ describe('<ToggleView />', () => {
   it('correctly renders with default touchable view', () => {
     const wrapper = render(
       <ToggleView>
-        <Text>I'm hidden</Text>
+        <Text>I am hidden</Text>
       </ToggleView>
     );
 
@@ -24,7 +24,7 @@ describe('<ToggleView />', () => {
   it('correctly renders with a custom touchable view', () => {
     const wrapper = render(
       <ToggleView TouchableView={<Text>CUSTOM</Text>}>
-        <Text>I'm hidden</Text>
+        <Text>I am hidden</Text>
       </ToggleView>
     );
 
@@ -39,7 +39,7 @@ describe('<ToggleView />', () => {
   it('starts with the hidden element collapsed', () => {
     const wrapper = shallow(
       <ToggleView TouchableView={<Text>CUSTOM</Text>}>
-        <Text>I'm hidden</Text>
+        <Text>I am hidden</Text>
       </ToggleView>
     );
 
@@ -50,7 +50,7 @@ describe('<ToggleView />', () => {
     const onPress = sinon.spy();
     const wrapper = shallow(
       <ToggleView>
-        <Text>I'm hidden</Text>
+        <Text>I am hidden</Text>
       </ToggleView>
     );
 
@@ -63,7 +63,7 @@ describe('<ToggleView />', () => {
     const onPress = sinon.spy();
     const wrapper = shallow(
       <ToggleView>
-        <Text>I'm hidden</Text>
+        <Text>I am hidden</Text>
       </ToggleView>
     );
 
