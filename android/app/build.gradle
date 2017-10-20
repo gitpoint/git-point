@@ -135,6 +135,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-linear-gradient')
     compile project(':react-native-cookies')
     compile project(':react-native-i18n')
     compile project(':react-native-photo-view')
