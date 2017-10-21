@@ -110,7 +110,10 @@ export const UserProfile = ({
     {((user.hasOwnProperty('public_repos') &&
       !isNaN(parseInt(starCount, 10))) ||
       type === 'org') && (
-      <View style={styles.wrapperContainer}>
+      <View
+        nativeId="user-profile-container"
+        style={styles.wrapperContainer}
+      >
         <View style={styles.profile}>
           <ImageZoom
             uri={{
