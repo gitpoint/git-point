@@ -1,35 +1,28 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Image,
-  View,
-  Modal,
-  Dimensions,
-  TouchableOpacity,
-  TouchableHighlight,
-} from 'react-native';
+import styled from 'styled-components/native';
+import { Image, Modal, Dimensions } from 'react-native';
 import { Icon } from 'react-native-elements';
 import PhotoView from 'react-native-photo-view';
 
 import { colors } from 'config';
 
-const styles = StyleSheet.create({
-  touchable: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContainer: {
-    flex: 1,
-    backgroundColor: colors.black,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  closeButton: {
-    position: 'absolute',
-    top: 30,
-    right: 10,
-  },
-});
+const Touchable = styled.Text`
+  justify-content: center;
+  align-items: center;
+`;
+
+const ModalContainer = styled.Text`
+  flex: 1;
+  background-color: ${colors.black};
+  justify-content: center;
+  align-items: center;
+`;
+
+const CloseButton = styled.Text`
+  position: absolute;
+  top: 30;
+  right: 10;
+`;
 
 export class ImageZoom extends Component {
   props: {
@@ -59,7 +52,7 @@ export class ImageZoom extends Component {
     if (this.state.imgZoom) {
       return (
         <Modal animationType={'fade'} onRequestClose={() => null}>
-          <View style={styles.modalContainer}>
+          <ModalContainer>
             <PhotoView
               resizeMode={'contain'}
               onTap={() => this.closeModal()}
@@ -69,26 +62,18 @@ export class ImageZoom extends Component {
               style={{ width: window.width, height: window.height }}
             />
 
-            <TouchableOpacity
-              activeOpacity={0.5}
-              onPress={() => this.closeModal()}
-              style={styles.closeButton}
-            >
+            <CloseButton activeOpacity={0.5} onPress={() => this.closeModal()}>
               <Icon color={colors.white} size={28} name="x" type="octicon" />
-            </TouchableOpacity>
-          </View>
+            </CloseButton>
+          </ModalContainer>
         </Modal>
       );
     }
 
     return (
-      <TouchableHighlight
-        onPress={() => this.openModal()}
-        underlayColor="transparent"
-        style={styles.touchable}
-      >
+      <Touchable onPress={() => this.openModal()} underlayColor="transparent">
         <Image style={style} source={uri} />
-      </TouchableHighlight>
+      </Touchable>
     );
   }
 }

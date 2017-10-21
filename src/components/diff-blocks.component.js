@@ -1,7 +1,8 @@
 // @flow
 
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import styled from 'styled-components/native';
+// import { View, TouchableOpacity } from 'react-native';
 
 import { colors, fonts } from 'config';
 
@@ -12,42 +13,47 @@ type Props = {
   onPress: Function,
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  linesChanged: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  numAdditions: {
-    marginRight: 3,
-    ...fonts.fontPrimarySemiBold,
-    color: colors.green,
-    letterSpacing: 1,
-  },
-  numDeletions: {
-    marginRight: 2,
-    ...fonts.fontPrimarySemiBold,
-    color: colors.red,
-    letterSpacing: 1,
-  },
-  block: {
-    width: 7,
-    height: 7,
-    marginLeft: 1,
-  },
-  greenBlock: {
-    backgroundColor: colors.green,
-  },
-  redBlock: {
-    backgroundColor: colors.darkRed,
-  },
-  greyBlock: {
-    backgroundColor: colors.greyMid,
-  },
-});
+const Container = styled.Component`
+  flex-direction: 'row';
+  align-items: 'center';
+`;
+
+const LinesChanged = styled.View`
+  flex-direction: 'row';
+  align-items: 'center';
+`;
+
+const NumAdditions = styled.Text`
+  margin-right: 3;
+  color: colors.green;
+  letter-spacing: 1;
+  font-family: ${fonts.fontPrimarySemiBold};
+`;
+
+const NumDeletions = styled.Text`
+  margin-right: 2,
+  color: colors.red,
+  letter-spacing: 1,
+  font-family: ${fonts.fontPrimarySemiBold};
+`;
+
+const Block = styled.View`
+  width: 7;
+  height: 7;
+  margin-left: 1;
+`;
+
+const GreenBlock = Block.extend`
+  background-color: ${colors.green};
+`;
+
+const RedBlock = Block.extend`
+  background-color: ${colors.darkRed};
+`;
+
+const GreyBlock = Block.extend`
+  background-color: ${colors.greyMid};
+`;
 
 export const DiffBlocks = ({
   additions,
@@ -71,28 +77,28 @@ export const DiffBlocks = ({
     greyBlocks = 5 - (greenBlocks + redBlocks);
   }
 
-  const Component = onPress ? TouchableOpacity : View;
+  // const Container = onPress ? TouchableOpacity : View; TODO: Implement this conditional with styled components
 
   return (
-    <Component style={styles.container} onPress={onPress}>
+    <Container onPress={onPress}>
       {showNumbers && (
-        <View style={styles.linesChanged}>
-          <Text style={styles.numAdditions}>{`+${additions}`}</Text>
-          <Text style={styles.numDeletions}>{`-${deletions}`}</Text>
-        </View>
+        <LinesChanged>
+          <NumAdditions>{`+${additions}`}</NumAdditions>
+          <NumDeletions>{`-${deletions}`}</NumDeletions>
+        </LinesChanged>
       )}
 
       {[...Array(greenBlocks)].map((item, index) => {
-        return <View key={index} style={[styles.block, styles.greenBlock]} />; // eslint-disable-line react/no-array-index-key
+        return <GreenBlock key={index} />; // eslint-disable-line react/no-array-index-key
       })}
 
       {[...Array(redBlocks)].map((item, index) => {
-        return <View key={index} style={[styles.block, styles.redBlock]} />; // eslint-disable-line react/no-array-index-key
+        return <RedBlock key={index} />; // eslint-disable-line react/no-array-index-key
       })}
 
       {[...Array(greyBlocks)].map((item, index) => {
-        return <View key={index} style={[styles.block, styles.greyBlock]} />; // eslint-disable-line react/no-array-index-key
+        return <GreyBlock key={index} />; // eslint-disable-line react/no-array-index-key
       })}
-    </Component>
+    </Container>
   );
 };
