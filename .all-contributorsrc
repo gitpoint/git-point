@@ -496,7 +496,9 @@
       "name": "Phi Dong",
       "avatar_url": "https://avatars2.githubusercontent.com/u/5158502?v=4",
       "profile": "http://www.phidong.com",
-      "contributions": []
+      "contributions": [
+        "code"
+      ]
     },
     {
       "login": "ocarreterom",
@@ -506,6 +508,22 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "dyesseyumba",
+      "name": "Dyesse YUMBA",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/5528931?v=4",
+      "profile": "https://github.com/dyesseyumba",
+      "contributions": [
+        "tool"
+      ]
+    },
+    {
+      "login": "binkpitch",
+      "name": "Bink",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/20456165?v=4",
+      "profile": "https://binkpitch.me/",
+      "contributions": []
     }
   ]
 }
