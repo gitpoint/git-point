@@ -58,7 +58,7 @@ export class ImageZoom extends Component {
 
     if (this.state.imgZoom) {
       return (
-        <Modal animationType={'fade'} onRequestClose={() => null}>
+        <Modal animationType={'fade'} onRequestClose={() => this.closeModal()}>
           <View style={styles.modalContainer}>
             <PhotoView
               resizeMode={'contain'}
