@@ -55,7 +55,10 @@ const styles = StyleSheet.create({
     borderColor: colors.white,
     paddingVertical: 10,
     paddingHorizontal: 30,
-    shadowColor: 'transparent',
+    shadowColor: colors.transparent,
+  },
+  buttonContainer: {
+    backgroundColor: colors.transparent,
   },
   buttonText: {
     ...fonts.fontPrimaryBold,
@@ -332,6 +335,7 @@ class Login extends Component {
             <Button
               raised
               title={translate('auth.login.signInButton', locale)}
+              containerViewStyle={styles.buttonContainer}
               buttonStyle={styles.button}
               textStyle={styles.buttonText}
               onPress={() => this.setModalVisible(true)}
