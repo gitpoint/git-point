@@ -32,4 +32,4 @@ jest.mock('react-native-code-push', () => ({}));
 
 jest.mock('react-native-safari-view', () => ({}));
 
-// jest.mock('react-native-linear-gradient', () => ({}));
+jest.mock('react-native-linear-gradient', () => ({}));
