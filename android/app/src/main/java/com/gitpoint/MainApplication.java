@@ -3,6 +3,7 @@ package com.gitpoint;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.BV.LinearGradient.LinearGradientPackage;
 import com.psykar.cookiemanager.CookieManagerPackage;
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
 import com.reactnative.photoview.PhotoViewPackage;
@@ -36,6 +37,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new LinearGradientPackage(),
             new CookieManagerPackage(),
             new RNI18nPackage(),
             new PhotoViewPackage(),

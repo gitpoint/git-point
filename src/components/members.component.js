@@ -9,6 +9,7 @@ import {
   Image,
 } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
+import LinearGradient from 'react-native-linear-gradient';
 
 import { colors, fonts } from 'config';
 
@@ -37,7 +38,6 @@ const styles = StyleSheet.create({
     borderRadius: avatarSize / 2,
     width: avatarSize,
     height: avatarSize,
-    marginRight: 5,
   },
   avatar: {
     borderRadius: avatarSize / 2,
@@ -60,8 +60,12 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
   },
   flatList: {
-    marginLeft: 15,
-    marginRight: 15,
+    paddingHorizontal: 15,
+  },
+  scrollGradient: {
+    position: 'absolute',
+    width: 15,
+    height: avatarSize,
   },
 });
 
@@ -89,35 +93,53 @@ const MembersListComponent = ({
           />
         </List>
       )}
-
-    <FlatList
-      style={styles.flatList}
-      data={members}
-      showsHorizontalScrollIndicator={false}
-      renderItem={({ item }) => (
-        <TouchableHighlight
-          onPress={() => {
-            navigation.navigate(
-              authUser.login === item.login ? 'AuthProfile' : 'Profile',
-              {
-                user: item,
-              }
-            );
-          }}
-          underlayColor="transparent"
-          style={styles.avatarContainer}
-        >
-          <Image
-            style={styles.avatar}
-            source={{
-              uri: item.avatar_url,
+    <View>
+      <FlatList
+        contentContainerStyle={styles.flatList}
+        data={members}
+        showsHorizontalScrollIndicator={false}
+        renderItem={({ item, index }) => (
+          <TouchableHighlight
+            onPress={() => {
+              navigation.navigate(
+                authUser.login === item.login ? 'AuthProfile' : 'Profile',
+                {
+                  user: item,
+                }
+              );
             }}
-          />
-        </TouchableHighlight>
-      )}
-      keyExtractor={item => item.id}
-      horizontal
-    />
+            underlayColor="transparent"
+            style={[
+              styles.avatarContainer,
+              { marginRight: index < members.length - 1 ? 5 : 0 },
+            ]}
+          >
+            <Image
+              style={styles.avatar}
+              source={{
+                uri: item.avatar_url,
+              }}
+            />
+          </TouchableHighlight>
+        )}
+        keyExtractor={item => item.id}
+        horizontal
+      />
+
+      <LinearGradient
+        style={[styles.scrollGradient, { left: 0 }]}
+        colors={['white', 'rgba(255, 255, 255, 0)']}
+        start={{ x: 0, y: 0.5 }}
+        end={{ x: 1, y: 0.5 }}
+      />
+
+      <LinearGradient
+        style={[styles.scrollGradient, { right: 0 }]}
+        colors={['rgba(255, 255, 255, 0)', 'white']}
+        start={{ x: 0, y: 0.5 }}
+        end={{ x: 1, y: 0.5 }}
+      />
+    </View>
   </View>
 );
 
