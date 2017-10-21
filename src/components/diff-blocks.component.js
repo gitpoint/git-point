@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react';
+import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import { colors, fontsStyled } from 'config';
 
@@ -15,23 +16,23 @@ const DiffBlocksViewContainer = styled.View`
   flex-direction: row;
   align-items: center;
 `;
-const DiffBlocksTouchableContainer = styled.TouchableOpacity`
-  flex-direction: row;
-  align-items: center;
+const DiffBlocksTouchableContainer = DiffBlocksViewContainer.withComponent(
+  TouchableOpacity
+);
+
+const Num = styled.Text`
+  letter-spacing: 1;
+  ${fontsStyled.fontPrimarySemiBold};
 `;
 
-const NumAdditions = styled.Text`
+const NumAdditions = Num.extend`
   margin-right: 3;
   color: ${colors.green};
-  letter-spacing: 1;
-  ${fontsStyled.fontPrimarySemiBold};
 `;
 
-const NumDeletions = styled.Text`
+const NumDeletions = Num.extend`
   margin-right: 2;
   color: ${colors.red};
-  letter-spacing: 1;
-  ${fontsStyled.fontPrimarySemiBold};
 `;
 
 const LinesChanged = styled.View`
