@@ -109,7 +109,8 @@ export class IssueEventListItem extends Component {
               <View style={styles.eventTextContainer}>
                 <ActorLink actor={event.actor} onPress={this.onPressUser} />
                 <Text>
-                  {' '}{event.event === 'unlabeled' ? 'removed' : 'added'}{' '}
+                  {' '}
+                  {event.event === 'unlabeled' ? 'removed' : 'added'}{' '}
                 </Text>
                 <InlineLabel label={event.label} />
               </View>
@@ -257,7 +258,7 @@ export class IssueEventListItem extends Component {
       case 'head_ref_deleted':
       case 'head_ref_restored': {
         const isRestored = event.event === 'head_ref_restored';
-        const headRefAction = isRestored ? 'deleted' : 'restored';
+        const headRefAction = isRestored ? 'restored' : 'deleted';
 
         return (
           <Event
@@ -359,13 +360,9 @@ class Event extends Component {
           size={16}
         />
         <View style={styles.contentContainer}>
-          <View style={styles.eventTextContainer}>
-            {text}
-          </View>
+          <View style={styles.eventTextContainer}>{text}</View>
           <View style={styles.dateContainer}>
-            <Text style={styles.date}>
-              {moment(createdAt).fromNow()}
-            </Text>
+            <Text style={styles.date}>{moment(createdAt).fromNow()}</Text>
           </View>
         </View>
       </View>
@@ -387,8 +384,9 @@ class LabelGroup extends Component {
       created_at: createdAt,
     } = this.props.group;
 
-    const toInlineLabel = (type, { label }, index) =>
-      <InlineLabel key={type + index} label={label} />;
+    const toInlineLabel = (type, { label }, index) => (
+      <InlineLabel key={type + index} label={label} />
+    );
 
     /* eslint-disable react/jsx-no-bind */
     const labels = labeled.map(toInlineLabel.bind(null, 'added'));
@@ -450,10 +448,6 @@ class Bold extends Component {
   };
 
   render() {
-    return (
-      <Text style={styles.boldText}>
-        {this.props.children}
-      </Text>
-    );
+    return <Text style={styles.boldText}>{this.props.children}</Text>;
   }
 }
