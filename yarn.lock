@@ -5656,6 +5656,12 @@ react-native-i18n@^2.0.4:
   dependencies:
     i18n-js "github:fnando/i18n-js#v3.0.1"
 
+react-native-linear-gradient@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.3.0.tgz#757997197e35edf52e290891a11566e462845da1"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-material-design-searchbar@^1.1.4:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/react-native-material-design-searchbar/-/react-native-material-design-searchbar-1.1.7.tgz#a33f6a9142cbdb45d5d4ca377f6b22b9647a0d9a"
