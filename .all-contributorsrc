@@ -496,7 +496,9 @@
       "name": "Phi Dong",
       "avatar_url": "https://avatars2.githubusercontent.com/u/5158502?v=4",
       "profile": "http://www.phidong.com",
-      "contributions": []
+      "contributions": [
+        "code"
+      ]
     },
     {
       "login": "ocarreterom",
@@ -505,6 +507,15 @@
       "profile": "https://github.com/ocarreterom",
       "contributions": [
         "code"
+      ]
+    },
+    {
+      "login": "dyesseyumba",
+      "name": "Dyesse YUMBA",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/5528931?v=4",
+      "profile": "https://github.com/dyesseyumba",
+      "contributions": [
+        "tool"
       ]
     }
   ]
