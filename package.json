@@ -72,6 +72,7 @@
     "react-native-elements": "^0.17.0",
     "react-native-htmlview": "^0.12.0",
     "react-native-i18n": "^2.0.4",
+    "react-native-linear-gradient": "^2.3.0",
     "react-native-material-design-searchbar": "^1.1.4",
     "react-native-mock": "https://github.com/shqld/react-native-mock/tarball/master",
     "react-native-parallax-scroll-view": "https://github.com/mini-eggs/react-native-parallax-scroll-view/tarball/react16-support",
