@@ -7,3 +7,4 @@ export const GET_AUTH_ORGS = createActionSet('GET_AUTH_ORGS');
 export const GET_EVENTS = createActionSet('GET_EVENTS');
 export const CHANGE_LOCALE = createActionSet('CHANGE_LOCALE');
 export const GET_AUTH_STAR_COUNT = createActionSet('GET_AUTH_STAR_COUNT');
+export const SEARCH_USER_OPEN_PULL_REQUESTS = createActionSet('SEARCH_USER_OPEN_PULL_REQUESTS');

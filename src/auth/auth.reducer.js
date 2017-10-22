@@ -7,6 +7,7 @@ import {
   GET_EVENTS,
   CHANGE_LOCALE,
   GET_AUTH_STAR_COUNT,
+  SEARCH_USER_OPEN_PULL_REQUESTS
 } from './auth.type';
 
 const initialState = {
@@ -136,6 +137,23 @@ export const authReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         locale: action.payload,
+      };
+    case SEARCH_USER_OPEN_PULL_REQUESTS.PENDING:
+      return {
+        ...state,
+        isPendingSearchUserOpenPullRequests: true,
+      };
+    case SEARCH_USER_OPEN_PULL_REQUESTS.SUCCESS:
+      return {
+        ...state,
+        searchedUserOpenPullRequests: action.payload,
+        isPendingSearchUserOpenPullRequests: false,
+      };
+    case SEARCH_USER_OPEN_PULL_REQUESTS.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isPendingSearchUserOpenPullRequests: false,
       };
     default:
       return state;

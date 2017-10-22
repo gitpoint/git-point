@@ -19,6 +19,7 @@ import {
   ParallaxScroll,
   UserListItem,
   EntityInfo,
+  IssueListItem,
 } from 'components';
 import { emojifyText, translate, openURLInView } from 'utils';
 import { colors, fonts } from 'config';
@@ -28,6 +29,7 @@ import {
   getIsFollowing,
   getIsFollower,
   changeFollowStatus,
+  searchUserOpenPullRequests,
 } from '../user.action';
 
 const mapStateToProps = state => ({
@@ -36,6 +38,7 @@ const mapStateToProps = state => ({
   orgs: state.user.orgs,
   starCount: state.user.starCount,
   locale: state.auth.locale,
+  searchedUserOpenPullRequests: state.user.searchedUserOpenPullRequests,
   isFollowing: state.user.isFollowing,
   isFollower: state.user.isFollower,
   isPendingUser: state.user.isPendingUser,
@@ -43,6 +46,7 @@ const mapStateToProps = state => ({
   isPendingStarCount: state.user.isPendingStarCount,
   isPendingCheckFollowing: state.user.isPendingCheckFollowing,
   isPendingCheckFollower: state.user.isPendingCheckFollower,
+  isPendingSearchUserOpenPullRequests: state.user.isPendingSearchUserOpenPullRequests,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -53,6 +57,7 @@ const mapDispatchToProps = dispatch =>
       getIsFollowing,
       getIsFollower,
       changeFollowStatus,
+      searchUserOpenPullRequests,
     },
     dispatch
   );
@@ -75,9 +80,11 @@ class Profile extends Component {
     getIsFollowing: Function,
     getIsFollower: Function,
     changeFollowStatus: Function,
+    searchUserOpenPullRequests: Function,
     auth: Object,
     user: Object,
     orgs: Array,
+    searchedUserOpenPullRequests: Arrray,
     starCount: string,
     locale: string,
     isFollowing: boolean,
@@ -87,6 +94,7 @@ class Profile extends Component {
     isPendingStarCount: boolean,
     isPendingCheckFollowing: boolean,
     isPendingCheckFollower: boolean,
+    isPendingSearchUserOpenPullRequests: boolean,
     navigation: Object,
   };
 
@@ -116,6 +124,7 @@ class Profile extends Component {
       this.props.getStarCount(user.login),
       this.props.getIsFollowing(user.login, auth.login),
       this.props.getIsFollower(user.login, auth.login),
+      this.props.searchUserOpenPullRequests(user.login, auth.login),
     ]).then(() => {
       this.setState({ refreshing: false });
     });
@@ -139,6 +148,7 @@ class Profile extends Component {
     const {
       user,
       orgs,
+      searchedUserOpenPullRequests,
       starCount,
       locale,
       isFollowing,
@@ -148,6 +158,7 @@ class Profile extends Component {
       isPendingStarCount,
       isPendingCheckFollowing,
       isPendingCheckFollower,
+      isPendingSearchUserOpenPullRequests,
       navigation,
     } = this.props;
     const { refreshing } = this.state;
@@ -157,7 +168,8 @@ class Profile extends Component {
       isPendingOrgs ||
       isPendingStarCount ||
       isPendingCheckFollowing ||
-      isPendingCheckFollower;
+      isPendingCheckFollower ||
+      isPendingSearchUserOpenPullRequests;
     const userActions = [
       isFollowing
         ? translate('user.profile.unfollow', locale)
@@ -235,6 +247,22 @@ class Profile extends Component {
                   />
                 )}
               </SectionList>
+
+              <SectionList
+                title={translate('repository.main.pullRequestTitle', locale)}
+                noItems={searchedUserOpenPullRequests.length === 0}
+                noItemsMessage={translate('repository.main.noOpenPullRequestsMessage', locale)}
+              >
+                {searchedUserOpenPullRequests.map(item =>
+                  <IssueListItem
+                    type={'git-pull-request'}
+                    issue={item}
+                    navigation={this.props.navigation}
+                    locale={this.props.locale}
+                  />
+                )}
+            </SectionList>
+
             </View>}
         </ParallaxScroll>
 

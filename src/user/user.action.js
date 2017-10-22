@@ -15,6 +15,7 @@ import {
   GET_FOLLOWERS,
   GET_FOLLOWING,
   SEARCH_USER_REPOS,
+  SEARCH_USER_OPEN_PULL_REQUESTS,
   CHANGE_FOLLOW_STATUS,
   GET_STAR_COUNT,
 } from './user.type';
@@ -245,6 +246,33 @@ export const searchUserRepos = (query, user) => {
       .catch(error => {
         dispatch({
           type: SEARCH_USER_REPOS.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+export const searchUserOpenPullRequests = (query, user) => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: SEARCH_USER_OPEN_PULL_REQUESTS.PENDING });
+
+    return fetchSearch(
+      'issues',
+      '',
+      accessToken,
+      `author:${query}+state:open+type:pr`
+    )
+      .then(data => {
+        dispatch({
+          type: SEARCH_USER_OPEN_PULL_REQUESTS.SUCCESS,
+          payload: data.items,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: SEARCH_USER_OPEN_PULL_REQUESTS.ERROR,
           payload: error,
         });
       });
