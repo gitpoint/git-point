@@ -13,25 +13,26 @@ type Props = {
   locale: string,
 };
 
+const colorOfIssueState = issueState => {
+  switch (issueState) {
+    case 'merged':
+      return colors.purple;
+    case 'open':
+      return colors.green;
+    case 'closed':
+      return colors.red;
+    default:
+      return colors.black;
+  }
+};
+
 const Badge = styled.View`
-  padding: 12;
+  padding-left: 12;
+  padding-right: 12;
   padding-top: 3;
   padding-bottom: 3;
   border-radius: 20;
-  background-color: ${({ issueState }) => {
-    switch (issueState) {
-      case 'merged':
-        return colors.purple;
-      case 'open':
-        return colors.green;
-      case 'closed':
-        return colors.red;
-      default:
-        break;
-    }
-
-    return colors.black;
-  }};
+  background-color: ${({ issueState }) => colorOfIssueState(issueState)};
 `;
 
 const BadgeText = styled.Text`
