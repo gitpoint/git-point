@@ -517,6 +517,15 @@
       "contributions": [
         "tool"
       ]
+    },
+    {
+      "login": "binkpitch",
+      "name": "Bink",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/20456165?v=4",
+      "profile": "https://binkpitch.me/",
+      "contributions": [
+        "code"
+      ]
     }
   ]
 }
