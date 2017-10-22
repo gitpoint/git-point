@@ -252,7 +252,7 @@ export const searchUserRepos = (query, user) => {
   };
 };
 
-export const searchUserOpenPullRequests = (query, user) => {
+export const searchUserOpenPullRequests = query => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 

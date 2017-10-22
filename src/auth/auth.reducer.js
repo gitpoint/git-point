@@ -7,7 +7,7 @@ import {
   GET_EVENTS,
   CHANGE_LOCALE,
   GET_AUTH_STAR_COUNT,
-  SEARCH_USER_OPEN_PULL_REQUESTS
+  SEARCH_USER_OPEN_PULL_REQUESTS,
 } from './auth.type';
 
 const initialState = {

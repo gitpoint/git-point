@@ -10,7 +10,7 @@ import {
   fetchUserOrgs,
   fetchUserEvents,
   fetchStarCount,
-  fetchSearch
+  fetchSearch,
 } from 'api';
 import {
   LOGIN,

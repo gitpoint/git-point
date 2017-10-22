@@ -18,7 +18,7 @@ import {
   ParallaxScroll,
   UserListItem,
   EntityInfo,
-  IssueListItem
+  IssueListItem,
 } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { getUser, getOrgs, getStarCount, searchUserOpenPullRequests } from 'auth';
@@ -88,7 +88,7 @@ class AuthProfile extends Component {
     searchUserOpenPullRequests: Function,
     user: Object,
     orgs: Array,
-    searchedUserOpenPullRequests: Arrray,
+    searchedUserOpenPullRequests: Array,
     locale: string,
     starCount: string,
     isPendingUser: boolean,

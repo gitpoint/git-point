@@ -84,7 +84,7 @@ class Profile extends Component {
     auth: Object,
     user: Object,
     orgs: Array,
-    searchedUserOpenPullRequests: Arrray,
+    searchedUserOpenPullRequests: Array,
     starCount: string,
     locale: string,
     isFollowing: boolean,
@@ -124,7 +124,7 @@ class Profile extends Component {
       this.props.getStarCount(user.login),
       this.props.getIsFollowing(user.login, auth.login),
       this.props.getIsFollower(user.login, auth.login),
-      this.props.searchUserOpenPullRequests(user.login, auth.login),
+      this.props.searchUserOpenPullRequests(user.login),
     ]).then(() => {
       this.setState({ refreshing: false });
     });
