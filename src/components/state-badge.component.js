@@ -27,10 +27,7 @@ const colorOfIssueState = issueState => {
 };
 
 const Badge = styled.View`
-  padding-left: 12;
-  padding-right: 12;
-  padding-top: 3;
-  padding-bottom: 3;
+  padding: 3px 12px;
   border-radius: 20;
   background-color: ${({ issueState }) => colorOfIssueState(issueState)};
 `;
