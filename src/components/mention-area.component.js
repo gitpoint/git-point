@@ -22,8 +22,8 @@ const UserDetailsBox = styled.View`
 `;
 
 const DisplayNameText = styled.Text`
-  fontSize: ${normalize(12)};
-  ${fonts.fontPrimary}'
+  fontsize: ${normalize(12)};
+  ${fonts.fontPrimary};
 `;
 
 export class MentionArea extends Component {
