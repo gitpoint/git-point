@@ -166,7 +166,8 @@
         "code",
         "question",
         "bug",
-        "review"
+        "review",
+        "test"
       ]
     },
     {
@@ -310,7 +311,7 @@
       ]
     },
     {
-      "login": "FlorianTaut",
+      "login": "tautf",
       "name": "Florian Taut",
       "avatar_url": "https://avatars1.githubusercontent.com/u/18403881?v=4",
       "profile": "https://taut-fl.de",
@@ -509,6 +510,7 @@
         "code"
       ]
     },
+    {
       "login": "ocarreterom",
       "name": "Óscar Carretero",
       "avatar_url": "https://avatars2.githubusercontent.com/u/11599942?v=4",
@@ -531,6 +533,24 @@
       "name": "Bink",
       "avatar_url": "https://avatars0.githubusercontent.com/u/20456165?v=4",
       "profile": "https://binkpitch.me/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "khvilaboa",
+      "name": "khvilaboa",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/10085841?v=4",
+      "profile": "https://github.com/khvilaboa",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "jglover",
+      "name": "James Glover",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/40802?v=4",
+      "profile": "http://jamesmglover.com",
       "contributions": [
         "code"
       ]
