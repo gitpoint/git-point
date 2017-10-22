@@ -3,7 +3,7 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
+import styled from 'styled-components/native';
 import { GithubHtmlView } from 'components';
 import { Icon } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
@@ -13,71 +13,71 @@ import moment from 'moment/min/moment-with-locales.min';
 import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
 
-const styles = StyleSheet.create({
-  container: {
-    paddingRight: 10,
-    paddingTop: 10,
-    backgroundColor: 'transparent',
-  },
-  header: {
-    flexDirection: 'row',
-    marginLeft: 10,
-    alignItems: 'center',
-  },
-  avatarContainer: {
-    backgroundColor: colors.greyLight,
-    borderRadius: 17,
-    width: 34,
-    height: 34,
-  },
-  avatar: {
-    width: 34,
-    height: 34,
-    borderRadius: 17,
-  },
-  titleSubtitleContainer: {
-    justifyContent: 'center',
-    flex: 1,
-    marginLeft: 10,
-  },
-  dateContainer: {
-    flex: 0.15,
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-  },
-  linkDescription: {
-    ...fonts.fontPrimaryBold,
-    fontSize: normalize(13),
-    color: colors.primaryDark,
-  },
-  date: {
-    color: colors.greyDark,
-  },
-  commentContainer: {
-    paddingTop: 5,
-    marginLeft: 54,
-    borderBottomColor: colors.greyLight,
-    borderBottomWidth: 1,
-  },
-  commentBottomPadding: {
-    paddingBottom: 15,
-  },
-  commentText: {
-    fontSize: normalize(12),
-    color: colors.primaryDark,
-  },
-  commentTextNone: {
-    ...fonts.fontPrimary,
-    color: colors.primaryDark,
-    fontStyle: 'italic',
-  },
-  actionButtonIconContainer: {
-    paddingTop: 5,
-    paddingBottom: 10,
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-  },
-});
+const Container = styled.View`
+  padding: 10px 10px 0 0;
+  background-color: transparent;
+`;
+
+const Header = styled.View`
+  flex-direction: row;
+  margin-left: 10px;
+  align-items: center;
+`;
+
+const AvatarContainer = styled.TouchableOpacity`
+  background-color: ${colors.greyLight};
+  border-radius: 17px;
+  width: 34px;
+  height: 34px;
+`;
+
+const Avatar = styled.Image`
+  border-radius: 17px;
+  width: 34px;
+  height: 34px;
+`;
+
+const TitleSubtitleContainer = styled.View`
+  justify-content: center;
+  flex: 1;
+  margin-left: 10px;
+`;
+
+const DateContainer = styled.View`
+  flex: 0.1;
+  align-items: flex-end;
+  justify-content: center;
+`;
+
+const LinkDescription = styled.Text`
+  ${{ ...fonts.fontPrimaryBold }};
+  font-size: ${normalize(13)};
+  color: ${colors.primaryDark};
+`;
+
+const DateLabel = styled.Text`
+  color: ${colors.greyDark};
+`;
+
+const CommentContainer = styled.View`
+  padding-top: 5px;
+  margin-left: 54px;
+  border-bottom-color: ${colors.greyLight};
+  border-bottom-width: 1px;
+  padding-bottom: ${props => (props.bottomPadding ? 15 : 0)}px;
+`;
+
+const CommentTextNone = styled.Text`
+  ${{ ...fonts.fontPrimary }};
+  color: ${colors.primaryDark};
+  font-style: italic;
+`;
+
+const ActionButtonIconContainer = styled.View`
+  padding: 5px 0;
+  align-items: flex-end;
+  justify-content: center;
+`;
 
 const mapStateToProps = state => ({
   authUser: state.auth.user,
@@ -133,11 +133,10 @@ class CommentListItemComponent extends Component {
       comment.user && authUser.login === comment.user.login;
 
     return (
-      <View style={styles.container}>
-        <View style={styles.header}>
+      <Container>
+        <Header>
           {comment.user && (
-            <TouchableOpacity
-              style={styles.avatarContainer}
+            <AvatarContainer
               onPress={() =>
                 navigation.navigate(
                   authUser.login === comment.user.login
@@ -148,19 +147,17 @@ class CommentListItemComponent extends Component {
                   }
                 )}
             >
-              <Image
-                style={styles.avatar}
+              <Avatar
                 source={{
                   uri: comment.user.avatar_url,
                 }}
               />
-            </TouchableOpacity>
+            </AvatarContainer>
           )}
 
           {comment.user && (
-            <View style={styles.titleSubtitleContainer}>
-              <Text
-                style={styles.linkDescription}
+            <TitleSubtitleContainer>
+              <LinkDescription
                 onPress={() =>
                   navigation.navigate(
                     authUser.login === comment.user.login
@@ -172,36 +169,29 @@ class CommentListItemComponent extends Component {
                   )}
               >
                 {comment.user.login}
-              </Text>
-            </View>
+              </LinkDescription>
+            </TitleSubtitleContainer>
           )}
 
-          <View style={styles.dateContainer}>
-            <Text style={styles.date}>
-              {moment(comment.created_at).fromNow()}
-            </Text>
-          </View>
-        </View>
+          <DateContainer>
+            <DateLabel>{moment(comment.created_at).fromNow()}</DateLabel>
+          </DateContainer>
+        </Header>
 
-        <View
-          style={[
-            styles.commentContainer,
-            !isActionMenuEnabled && styles.commentBottomPadding,
-          ]}
-        >
+        <CommentContainer bottomPadding={!isActionMenuEnabled}>
           {commentPresent ? (
             <GithubHtmlView
               source={comment.body_html}
               onLinkPress={onLinkPress}
             />
           ) : (
-            <Text style={styles.commentTextNone}>
+            <CommentTextNone>
               {translate('issue.main.noDescription', locale)}
-            </Text>
+            </CommentTextNone>
           )}
 
           {isActionMenuEnabled && (
-            <View style={styles.actionButtonIconContainer}>
+            <ActionButtonIconContainer>
               <Icon
                 color={colors.grey}
                 size={20}
@@ -209,9 +199,9 @@ class CommentListItemComponent extends Component {
                 type={'font-awesome'}
                 onPress={this.showMenu}
               />
-            </View>
+            </ActionButtonIconContainer>
           )}
-        </View>
+        </CommentContainer>
 
         <ActionSheet
           ref={o => {
@@ -225,7 +215,7 @@ class CommentListItemComponent extends Component {
           cancelButtonIndex={this.commentActionSheetOptions(comment).length}
           onPress={this.handlePress}
         />
-      </View>
+      </Container>
     );
   }
 }
