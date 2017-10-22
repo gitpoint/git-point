@@ -24,18 +24,18 @@ describe('<RepositoryProfile />', () => {
     const wrapper = shallow(
       <RepositoryProfile {...defaultProps} language={false} />
     );
-    const theIcon = wrapper.find({ name: 'fiber-manual-record' });
+    const icon = wrapper.find({ name: 'fiber-manual-record' });
 
-    expect(theIcon.length).toBeTruthy();
+    expect(icon.length).toBeTruthy();
   });
 
   it('should not render the Icon component if loading is true', () => {
     const wrapper = shallow(
       <RepositoryProfile {...defaultProps} loading={true} />
     );
-    const theIcon = wrapper.find({ name: 'fiber-manual-record' });
+    const icon = wrapper.find({ name: 'fiber-manual-record' });
 
-    expect(theIcon.length).toBeFalsy();
+    expect(icon.length).toBeFalsy();
   });
 
   it('should not render the Icon component if repository language is null', () => {
@@ -48,9 +48,9 @@ describe('<RepositoryProfile />', () => {
         }}
       />
     );
-    const theIcon = wrapper.find({ name: 'fiber-manual-record' });
+    const icon = wrapper.find({ name: 'fiber-manual-record' });
 
-    expect(theIcon.length).toBeFalsy();
+    expect(icon.length).toBeFalsy();
   });
 
   it('should render repository fork text container if repository.fork is true', () => {
