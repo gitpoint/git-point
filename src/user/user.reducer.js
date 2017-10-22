@@ -7,6 +7,7 @@ import {
   GET_FOLLOWERS,
   GET_FOLLOWING,
   SEARCH_USER_REPOS,
+  SEARCH_USER_OPEN_PULL_REQUESTS,
   CHANGE_FOLLOW_STATUS,
   GET_STAR_COUNT,
 } from './user.type';
@@ -20,6 +21,7 @@ const initialState = {
   followers: [],
   following: [],
   searchedUserRepos: [],
+  searchedUserOpenPullRequests: [],
   isPendingUser: false,
   isPendingOrgs: false,
   isPendingStarCount: false,
@@ -29,6 +31,7 @@ const initialState = {
   isPendingFollowers: false,
   isPendingFollowing: false,
   isPendingSearchUserRepos: false,
+  isPendingSearchUserOpenPullRequests: false,
   error: '',
 };
 
@@ -212,6 +215,23 @@ export const userReducer = (state = initialState, action = {}) => {
         ...state,
         error: action.payload,
         isPendingSearchUserRepos: false,
+      };
+    case SEARCH_USER_OPEN_PULL_REQUESTS.PENDING:
+      return {
+        ...state,
+        isPendingSearchUserOpenPullRequests: true,
+      };
+    case SEARCH_USER_OPEN_PULL_REQUESTS.SUCCESS:
+      return {
+        ...state,
+        searchedUserOpenPullRequests: action.payload,
+        isPendingSearchUserOpenPullRequests: false,
+      };
+    case SEARCH_USER_OPEN_PULL_REQUESTS.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isPendingSearchUserOpenPullRequests: false,
       };
     default:
       return state;

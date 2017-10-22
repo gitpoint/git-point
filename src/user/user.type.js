@@ -8,5 +8,6 @@ export const GET_REPOSITORIES = createActionSet('GET_REPOSITORIES');
 export const GET_FOLLOWERS = createActionSet('GET_FOLLOWERS');
 export const GET_FOLLOWING = createActionSet('GET_FOLLOWING');
 export const SEARCH_USER_REPOS = createActionSet('SEARCH_USER_REPOS');
+export const SEARCH_USER_OPEN_PULL_REQUESTS = createActionSet('SEARCH_USER_OPEN_PULL_REQUESTS');
 export const CHANGE_FOLLOW_STATUS = createActionSet('CHANGE_FOLLOW_STATUS');
 export const GET_STAR_COUNT = createActionSet('GET_STAR_COUNT');

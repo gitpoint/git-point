@@ -10,6 +10,7 @@ import {
   fetchUserOrgs,
   fetchUserEvents,
   fetchStarCount,
+  fetchSearch,
 } from 'api';
 import {
   LOGIN,
@@ -19,6 +20,7 @@ import {
   GET_EVENTS,
   CHANGE_LOCALE,
   GET_AUTH_STAR_COUNT,
+  SEARCH_USER_OPEN_PULL_REQUESTS,
 } from './auth.type';
 
 export const auth = (code, state) => {
@@ -151,6 +153,34 @@ export const getUserEvents = user => {
       .catch(error => {
         dispatch({
           type: GET_EVENTS.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+export const searchUserOpenPullRequests = () => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+    const user = getState().auth.user.login;
+
+    dispatch({ type: SEARCH_USER_OPEN_PULL_REQUESTS.PENDING });
+
+    return fetchSearch(
+      'issues',
+      '',
+      accessToken,
+      `author:${user}+state:open+type:pr`
+    )
+      .then(data => {
+        dispatch({
+          type: SEARCH_USER_OPEN_PULL_REQUESTS.SUCCESS,
+          payload: data.items,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: SEARCH_USER_OPEN_PULL_REQUESTS.ERROR,
           payload: error,
         });
       });

@@ -18,19 +18,22 @@ import {
   ParallaxScroll,
   UserListItem,
   EntityInfo,
+  IssueListItem,
 } from 'components';
 import { colors, fonts, normalize } from 'config';
-import { getUser, getOrgs, getStarCount } from 'auth';
+import { getUser, getOrgs, getStarCount, searchUserOpenPullRequests } from 'auth';
 import { emojifyText, openURLInView, translate } from 'utils';
 
 const mapStateToProps = state => ({
   user: state.auth.user,
   orgs: state.auth.orgs,
+  searchedUserOpenPullRequests: state.user.searchedUserOpenPullRequests,
   locale: state.auth.locale,
   starCount: state.auth.starCount,
   isPendingUser: state.auth.isPendingUser,
   isPendingOrgs: state.auth.isPendingOrgs,
   hasInitialUser: state.auth.hasInitialUser,
+  isPendingSearchUserOpenPullRequests: state.user.isPendingSearchUserOpenPullRequests,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -39,6 +42,7 @@ const mapDispatchToProps = dispatch =>
       getUser,
       getOrgs,
       getStarCount,
+      searchUserOpenPullRequests,
     },
     dispatch
   );
@@ -81,12 +85,15 @@ class AuthProfile extends Component {
     getUser: Function,
     getOrgs: Function,
     getStarCount: Function,
+    searchUserOpenPullRequests: Function,
     user: Object,
     orgs: Array,
+    searchedUserOpenPullRequests: Array,
     locale: string,
     starCount: string,
     isPendingUser: boolean,
     isPendingOrgs: boolean,
+    isPendingSearchUserOpenPullRequests: boolean,
     hasInitialUser: boolean,
     navigation: Object,
   };
@@ -99,14 +106,17 @@ class AuthProfile extends Component {
     this.props.getUser();
     this.props.getOrgs();
     this.props.getStarCount();
+    this.props.searchUserOpenPullRequests();
   };
 
   render() {
     const {
       user,
       orgs,
+      searchedUserOpenPullRequests,
       isPendingUser,
       isPendingOrgs,
+      isPendingSearchUserOpenPullRequests,
       locale,
       starCount,
       navigation,
@@ -115,7 +125,7 @@ class AuthProfile extends Component {
 
     const hasBackButton = navigation.state.routeName === 'AuthProfile';
 
-    const isPending = isPendingUser || isPendingOrgs;
+    const isPending = isPendingUser || isPendingOrgs || isPendingSearchUserOpenPullRequests;
 
     return (
       <ViewContainer>
@@ -204,6 +214,22 @@ class AuthProfile extends Component {
                   </Text>
                 </Text>
               </SectionList>
+
+              <SectionList
+                title={translate('repository.main.pullRequestTitle', locale)}
+                noItems={searchedUserOpenPullRequests.length === 0}
+                noItemsMessage={translate('repository.main.noOpenPullRequestsMessage', locale)}
+              >
+              {searchedUserOpenPullRequests.map(item =>
+                <IssueListItem
+                  type={'git-pull-request'}
+                  issue={item}
+                  navigation={this.props.navigation}
+                  locale={this.props.locale}
+                  />
+              )}
+            </SectionList>
+
             </View>
           )}
         </ParallaxScroll>
