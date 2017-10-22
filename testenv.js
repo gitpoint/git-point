@@ -31,3 +31,5 @@ jest.mock('react-native-cookies', () => ({}));
 jest.mock('react-native-code-push', () => ({}));
 
 jest.mock('react-native-safari-view', () => ({}));
+
+jest.mock('react-native-linear-gradient', () => ({}));

@@ -1,22 +1,26 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import styled from 'styled-components/native';
 
 import { fonts, normalize } from 'config';
 import { getFontColorByBackground } from 'utils';
 
-const styles = StyleSheet.create({
-  inlineLabel: {
-    fontSize: normalize(10),
-    ...fonts.fontPrimarySemiBold,
-    paddingHorizontal: 5,
-    margin: 2,
-    borderWidth: 1,
-    overflow: 'hidden',
-    borderRadius: 3,
-    minWidth: 50,
-    textAlign: 'center',
-  },
-});
+const InlineLabelText = styled.Text`
+  font-size: ${normalize(10)};
+  ${{ ...fonts.fontPrimarySemiBold }};
+  padding-horizontal: 5;
+  margin-top: 2;
+  margin-left: 2;
+  margin-right: 2;
+  margin-bottom: 2;
+  border-width: 1;
+  overflow: hidden;
+  border-radius: 3;
+  min-width: 50;
+  text-align: center;
+  ${({ backgroundColor }) => `background-color: #${backgroundColor};`};
+  ${({ color }) => `color: ${getFontColorByBackground(color)};`};
+  ${({ borderColor }) => `border-color: #${borderColor};`};
+`;
 
 export class InlineLabel extends Component {
   props: {
@@ -27,18 +31,13 @@ export class InlineLabel extends Component {
     const { color, name } = this.props.label;
 
     return (
-      <Text
-        style={[
-          styles.inlineLabel,
-          {
-            backgroundColor: `#${color}`,
-            color: getFontColorByBackground(color),
-            borderColor: `#${color}`,
-          },
-        ]}
+      <InlineLabelText
+        backgroundColor={color}
+        color={color}
+        borderColor={color}
       >
         {name}
-      </Text>
+      </InlineLabelText>
     );
   }
 }
