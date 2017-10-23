@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import styled from 'styled-components/native';
 
 import { colors, fonts, normalize } from 'config';
 
@@ -10,39 +10,29 @@ type Props = {
   largeText: boolean,
 };
 
-const styles = StyleSheet.create({
-  badge: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 18,
-    width: 18,
-    height: 18,
-    borderColor: colors.alabaster,
-    borderWidth: 1,
-  },
-  badgeText: {
-    ...fonts.fontPrimaryBold,
-    backgroundColor: 'transparent',
-  },
-  textSmall: {
-    fontSize: normalize(7),
-  },
-  textLarge: {
-    fontSize: normalize(9.5),
-  },
-});
+const BadgeContainer = styled.View`
+  flex: 1;
+  align-items: 'center';
+  justify-content: 'center';
+  border-radius: 18;
+  width: 18;
+  height: 18;
+  border-color: ${colors.alabaster};
+  border-width: 1;
+  ${({ backgroundColor }) => `background-color: ${backgroundColor};`};
+`;
+
+const BadgeText = styled.Text`
+  ${{ ...fonts.fontPrimaryBold }};
+  background-color: 'transparent';
+  ${({ largeText }) =>
+    `font-size: ${largeText ? normalize(9.5) : normalize(7)};`};
+`;
 
 export const Badge = ({ color, backgroundColor, text, largeText }: Props) => (
-  <View style={StyleSheet.flatten([styles.badge, { backgroundColor }])}>
-    <Text
-      style={[
-        styles.badgeText,
-        largeText ? styles.textLarge : styles.textSmall,
-        { color },
-      ]}
-    >
+  <BadgeContainer backgroundColor={backgroundColor}>
+    <BadgeText largeText={largeText} color={color}>
       {text}
-    </Text>
-  </View>
+    </BadgeText>
+  </BadgeContainer>
 );
