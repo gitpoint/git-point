@@ -526,6 +526,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "jglover",
+      "name": "James Glover",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/40802?v=4",
+      "profile": "http://jamesmglover.com",
+      "contributions": [
+        "code",
+        "test"
+      ]
     }
   ]
 }
