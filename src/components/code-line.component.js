@@ -2,7 +2,7 @@
 /* eslint-disable no-nested-ternary */
 
 import React, { Component } from 'react';
-import { Dimensions } from 'react-native';
+import { Text, Dimensions } from 'react-native';
 import SyntaxHighlighter from 'react-native-syntax-highlighter';
 import { getLanguage } from 'lowlight';
 import { github as GithubStyle } from 'react-syntax-highlighter/dist/styles';
