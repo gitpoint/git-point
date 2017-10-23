@@ -23,10 +23,10 @@
       ]
     },
     {
-      "login": "gejose",
-      "name": "gejose",
-      "avatar_url": "https://avatars2.githubusercontent.com/u/16705071?v=3",
-      "profile": "https://github.com/gejose",
+      "login": "g2jose",
+      "name": "George Jose",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/6994514?s=460&v=4",
+      "profile": "https://github.com/g2jose",
       "contributions": [
         "code"
       ]
@@ -166,7 +166,8 @@
         "code",
         "question",
         "bug",
-        "review"
+        "review",
+        "test"
       ]
     },
     {
@@ -310,7 +311,7 @@
       ]
     },
     {
-      "login": "FlorianTaut",
+      "login": "tautf",
       "name": "Florian Taut",
       "avatar_url": "https://avatars1.githubusercontent.com/u/18403881?v=4",
       "profile": "https://taut-fl.de",
@@ -501,6 +502,15 @@
       ]
     },
     {
+      "login": "jpls93",
+      "name": "John Patrick Salcedo",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/17956698?v=4",
+      "profile": "https://github.com/jpls93",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
       "login": "ocarreterom",
       "name": "Óscar Carretero",
       "avatar_url": "https://avatars2.githubusercontent.com/u/11599942?v=4",
@@ -528,6 +538,15 @@
       ]
     },
     {
+      "login": "khvilaboa",
+      "name": "khvilaboa",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/10085841?v=4",
+      "profile": "https://github.com/khvilaboa",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
       "login": "jglover",
       "name": "James Glover",
       "avatar_url": "https://avatars1.githubusercontent.com/u/40802?v=4",
@@ -536,6 +555,13 @@
         "code",
         "test"
       ]
+    },
+    {
+      "login": "josenaranjo",
+      "name": "Jose Luis Naranjo",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/3025600?v=4",
+      "profile": "https://co.linkedin.com/in/josenaranjo/en",
+      "contributions": []
     }
   ]
 }

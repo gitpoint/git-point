@@ -2,66 +2,81 @@
 /* eslint-disable no-nested-ternary */
 
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { Text, Dimensions } from 'react-native';
 import SyntaxHighlighter from 'react-native-syntax-highlighter';
 import { getLanguage } from 'lowlight';
 import { github as GithubStyle } from 'react-syntax-highlighter/dist/styles';
-import { colors, fonts, normalize } from 'config';
+import { colors, normalize, styledFonts } from 'config';
+import styled, { css } from 'styled-components/native';
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-  },
-  wrapper: {
-    flexDirection: 'row',
-    flex: 1,
-  },
-  codeLineContainer: {
-    minWidth: Dimensions.get('window').width - 80,
-    flex: 0.85,
-  },
-  codeLine: {
-    ...fonts.fontCode,
-    fontSize: normalize(11),
-    paddingHorizontal: 10,
-    paddingVertical: 3,
-  },
-  newChunkLineNumbers: {
-    backgroundColor: colors.codeChunkLineNumberBlue,
-  },
-  newChunkLineContainer: {
-    backgroundColor: colors.codeChunkBlue,
-  },
-  newChunkLine: {
-    color: colors.grey,
-  },
-  addLine: {
-    backgroundColor: colors.addCodeGreen,
-  },
-  addLineNumbers: {
-    backgroundColor: colors.addCodeLineNumberGreen,
-  },
-  delLine: {
-    backgroundColor: colors.delCodeRed,
-  },
-  delLineNumbers: {
-    backgroundColor: colors.delCodeLineNumberRed,
-  },
-  lineNumbers: {
-    width: 80,
-    paddingLeft: 10,
-    paddingVertical: 3,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  codeLineNumber: {
-    ...fonts.fontCode,
-    fontSize: normalize(11),
-    flex: 1,
-    alignItems: 'center',
-    color: colors.grey,
-  },
-});
+function addOrDelLineColors(change) {
+  const lineColors = {
+    lineNumbers: '',
+    line: '',
+  };
+
+  if (change.type === 'add') {
+    lineColors.lineNumbers = colors.addCodeLineNumberGreen;
+    lineColors.line = colors.addCodeGreen;
+  } else if (change.type === 'del') {
+    lineColors.lineNumbers = colors.delCodeLineNumberRed;
+    lineColors.line = colors.delCodeRed;
+  }
+
+  return lineColors;
+}
+
+const Container = styled.View`
+  flex-direction: row;
+`;
+
+const Wrapper = styled.View`
+  flex-direction: row;
+  flex: 1;
+`;
+
+const CodeLineContainer = styled.View`
+  min-width: ${Dimensions.get('window').width - 80}
+  flex: 0.85;
+  background-color: ${props =>
+    props.newChunk
+      ? colors.codeChunkBlue
+      : addOrDelLineColors(props.change).line}
+  }
+`;
+
+const CodeLineStyled = styled.Text`
+  font-family: ${styledFonts.fontCode}
+  font-size: ${normalize(11)}
+  padding: 3 10;
+  ${props =>
+    props.newChunk &&
+    css`
+      color: ${colors.grey};
+    `}
+`;
+
+const LineNumbers = styled.View`
+  width: 80;
+  padding-left: 10;
+  padding: 3;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: ${props =>
+    props.newChunk
+      ? colors.codeChunkLineNumberBlue
+      : addOrDelLineColors(props.change).lineNumbers};
+`;
+
+const CodeLineNumber = styled.Text`
+  font-family: ${styledFonts.fontCode}
+  font-size: ${normalize(11)}
+  flex: 1;
+  align-items: center;
+  color: ${colors.grey}
+`;
+
+const SyntaxHighlighterStyled = CodeLineStyled.withComponent(SyntaxHighlighter);
 
 export class CodeLine extends Component {
   props: {
@@ -84,62 +99,45 @@ export class CodeLine extends Component {
     };
 
     return (
-      <View style={styles.container}>
-        <View style={styles.wrapper}>
-          <View
-            style={[
-              styles.lineNumbers,
-              newChunk && styles.newChunkLineNumbers,
-              change.type === 'add' && styles.addLineNumbers,
-              change.type === 'del' && styles.delLineNumbers,
-            ]}
-          >
-            <Text style={styles.codeLineNumber}>
+      <Container>
+        <Wrapper>
+          <LineNumbers newChunk change>
+            <CodeLineNumber>
               {change.type === 'del'
                 ? change.ln
                 : change.type === 'normal'
                   ? change.ln1
                   : change.type === 'add' ? '' : '...'}
-            </Text>
-            <Text style={styles.codeLineNumber}>
+            </CodeLineNumber>
+            <CodeLineNumber>
               {change.type === 'add'
                 ? change.ln
                 : change.type === 'normal'
                   ? change.ln2
                   : change.type === 'del' ? '' : '...'}
-            </Text>
-          </View>
+            </CodeLineNumber>
+          </LineNumbers>
 
-          <View
-            style={[
-              styles.codeLineContainer,
-              newChunk && styles.newChunkLineContainer,
-              change.type === 'add' && styles.addLine,
-              change.type === 'del' && styles.delLine,
-            ]}
-          >
+          <CodeLineContainer newChunk change>
             {(newChunk || !this.isKnownType(language)) && (
-              <Text style={[styles.codeLine, newChunk && styles.newChunkLine]}>
-                {change.content}
-              </Text>
+              <CodeLineStyled newChunk>{change.content}</CodeLineStyled>
             )}
 
             {this.isKnownType(language) && (
-              <SyntaxHighlighter
+              <SyntaxHighlighterStyled
                 language={language}
                 style={GithubStyle}
                 CodeTag={Text}
-                codeTagProps={{ style: styles.codeLine }}
                 customStyle={customStyle}
-                fontFamily={fonts.fontCode.fontFamily}
-                fontSize={styles.codeLine.fontSize}
+                fontFamily={styledFonts.fontCode}
+                fontSize={normalize(11)}
               >
                 {change.content}
-              </SyntaxHighlighter>
+              </SyntaxHighlighterStyled>
             )}
-          </View>
-        </View>
-      </View>
+          </CodeLineContainer>
+        </Wrapper>
+      </Container>
     );
   }
 }
