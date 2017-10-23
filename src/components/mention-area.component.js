@@ -5,6 +5,10 @@ import { TouchableOpacity, Animated, ScrollView } from 'react-native';
 
 import { animations, fonts, normalize } from 'config';
 
+const StyledAnimatedView = styled(Animated.View)`
+  ${({ style }) => style};
+`;
+
 const SuggestionsRowContainer = styled.View`
   flex-direction: row;
   padding-top: 5;
@@ -161,13 +165,13 @@ export class MentionArea extends Component {
     }
 
     return (
-      <Animated.View
-        style={[{ ...this.props.style }, { height: this.state.height }]}
+      <StyledAnimatedView
+        style={{ ...this.props.style, height: this.state.height }}
       >
         <ScrollView keyboardShouldPersistTaps="always">
           {this.state.tracking && this.renderSuggestionsRow(searched)}
         </ScrollView>
-      </Animated.View>
+      </StyledAnimatedView>
     );
   }
 }
