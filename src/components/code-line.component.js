@@ -31,7 +31,7 @@ const Container = styled.View`
 `;
 
 const Wrapper = styled.View`
-  flex-directino: row;
+  flex-direction: row;
   flex: 1;
 `;
 
