@@ -1,5 +1,5 @@
 import { AsyncStorage } from 'react-native';
-import moment from 'moment/min/moment-with-locales.min';
+import moment from 'moment/min/moment-with-locales';
 
 import { common } from 'config';
 import I18n from 'locale';

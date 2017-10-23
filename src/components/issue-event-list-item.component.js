@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
-import moment from 'moment/min/moment-with-locales.min';
+import moment from 'moment/min/moment-with-locales';
 import { colors, fonts, normalize } from 'config';
 import { InlineLabel } from 'components';
 

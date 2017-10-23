@@ -8,7 +8,7 @@ import { GithubHtmlView } from 'components';
 import { Icon } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
 
-import moment from 'moment/min/moment-with-locales.min';
+import moment from 'moment/min/moment-with-locales';
 
 import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';

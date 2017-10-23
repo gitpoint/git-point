@@ -1,4 +1,4 @@
-import moment from 'moment/min/moment-with-locales.min';
+import moment from 'moment/min/moment-with-locales';
 
 export function formatEventsToRender(events = []) {
   return events
