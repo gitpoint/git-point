@@ -1,70 +1,69 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { Text } from 'react-native';
 import { Icon } from 'react-native-elements';
 import moment from 'moment/min/moment-with-locales.min';
-import { colors, fonts, normalize } from 'config';
+import { colors, styledFonts, normalize } from 'config';
 import { InlineLabel } from 'components';
+import styled from 'styled-components/native';
 
-const styles = StyleSheet.create({
-  container: {
-    paddingRight: 10,
-    paddingTop: 10,
-    backgroundColor: 'transparent',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'stretch',
-  },
-  iconContainer: {
-    backgroundColor: colors.greyLight,
-    borderRadius: 13,
-    width: 26,
-    height: 26,
-    marginLeft: 14,
-    marginRight: 14,
-    flexGrow: 0,
-    flexShrink: 0,
-    flexBasis: 26,
-  },
-  contentContainer: {
-    flexDirection: 'row',
-    flexGrow: 1,
-    flexShrink: 1,
-    borderBottomColor: colors.greyLight,
-    borderBottomWidth: 1,
-  },
-  eventTextContainer: {
-    paddingBottom: 10,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    flexGrow: 1,
-    flexShrink: 1,
-    alignItems: 'center',
-  },
-  dateContainer: {
-    flex: 1,
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-    alignSelf: 'flex-start',
-    marginTop: 2,
-    flexGrow: 0,
-    flexShrink: 0,
-    flexBasis: 39,
-    width: 39,
-  },
-  actorLink: {
-    padding: 1,
-    paddingRight: 4,
-  },
-  boldText: {
-    ...fonts.fontPrimaryBold,
-    fontSize: normalize(13),
-    color: colors.primaryDark,
-  },
-  date: {
-    color: colors.greyDark,
-  },
-});
+const Header = styled.View`
+  padding-right: 10;
+  padding-top: 10;
+  background-color: transparent;
+  flex-direction: row;
+  align-items: stretch;
+`;
+
+const IconStyled = styled(Icon)`
+  background-color: ${colors.greyLight}
+  border-radius: 13;
+  width: 26;
+  height: 26;
+  margin-left: 14;
+  margin-right: 14;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 26;
+`;
+
+const ContentContainer = styled.View`
+  flex-direction: row;
+  flex-grow: 1;
+  flex-shrink: 1;
+  border-bottom-color: ${colors.greyLight}
+  border-bottom-width: 1;
+`;
+
+const EventTextContainer = styled.View`
+  padding-bottom: 10;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  flex-shrink: 1;
+  align-items: center;
+`;
+
+const DateContainer = styled.View`
+  flex: 1;
+  align-items: flex-end;
+  justify-content: center;
+  align-self: flex-start;
+  margin-top: 2;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 39;
+  width: 39;
+`;
+
+const BoldText = styled.Text`
+  font-family: ${styledFonts.fontPrimaryBold}
+  font-size: ${normalize(13)}
+  color: ${colors.primaryDark}
+`;
+
+const DateText = styled.Text`
+  color: ${colors.greyDark};
+`;
 
 export class IssueEventListItem extends Component {
   props: {
@@ -106,14 +105,14 @@ export class IssueEventListItem extends Component {
           <Event
             iconName="tag"
             text={
-              <View style={styles.eventTextContainer}>
+              <EventTextContainer>
                 <ActorLink actor={event.actor} onPress={this.onPressUser} />
                 <Text>
                   {' '}
                   {event.event === 'unlabeled' ? 'removed' : 'added'}{' '}
                 </Text>
                 <InlineLabel label={event.label} />
-              </View>
+              </EventTextContainer>
             }
             createdAt={event.created_at}
           />
@@ -344,28 +343,25 @@ class Event extends Component {
     } = this.props;
 
     return (
-      <View style={[styles.container, styles.header]}>
-        <Icon
+      <Header>
+        <IconStyled
           iconStyle={{
             marginLeft: marginLeftForIconName(iconName),
             marginTop: 1,
             color: iconColor,
           }}
-          containerStyle={[
-            styles.iconContainer,
-            { backgroundColor: iconBackgroundColor },
-          ]}
+          containerStyle={[{ backgroundColor: iconBackgroundColor }]}
           name={iconName}
           type="octicon"
           size={16}
         />
-        <View style={styles.contentContainer}>
-          <View style={styles.eventTextContainer}>{text}</View>
-          <View style={styles.dateContainer}>
-            <Text style={styles.date}>{moment(createdAt).fromNow()}</Text>
-          </View>
-        </View>
-      </View>
+        <ContentContainer>
+          <EventTextContainer>{text}</EventTextContainer>
+          <DateContainer>
+            <DateText>{moment(createdAt).fromNow()}</DateText>
+          </DateContainer>
+        </ContentContainer>
+      </Header>
     );
   }
 }
@@ -430,14 +426,13 @@ class ActorLink extends Component {
     const { actor, onPress } = this.props;
 
     return (
-      <Text
-        style={styles.boldText}
+      <BoldText
         onPress={() => {
           onPress(actor);
         }}
       >
         {actor.login}
-      </Text>
+      </BoldText>
     );
   }
 }
@@ -448,6 +443,6 @@ class Bold extends Component {
   };
 
   render() {
-    return <Text style={styles.boldText}>{this.props.children}</Text>;
+    return <BoldText>{this.props.children}</BoldText>;
   }
 }
