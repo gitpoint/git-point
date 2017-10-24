@@ -1,16 +1,18 @@
 import { emojifyText, abbreviateNumber } from 'utils';
-import sinon from 'sinon';
 import emoji from 'node-emoji';
 
 describe('Text Helper', () => {
   describe('emojifyText', () => {
     it('should call correcly with text params', () => {
-      const emojify = sinon.spy(emoji, 'emojify');
+      const emojify = jest.spyOn(emoji, 'emojify');
       const input = 'I need more :coffee';
 
       emojifyText(input);
 
-      expect(emojify.calledWith(input)).toEqual(true);
+      expect(emojify).toBeCalledWith(input);
+
+      emojify.mockReset();
+      emojify.mockRestore();
     });
   });
 
