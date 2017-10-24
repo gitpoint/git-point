@@ -1,9 +1,9 @@
 /* eslint-disable no-prototype-builtins */
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { colors, fonts, normalize } from 'config';
+import { colors, normalize, styledFonts } from 'config';
 import { translate, abbreviateNumber } from 'utils';
 import { ImageZoom } from 'components';
+import styled from 'styled-components/native';
 
 type Props = {
   type: string,
@@ -16,85 +16,68 @@ type Props = {
   navigation: Object,
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  wrapperContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  profile: {
-    flex: 3,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
-  avatar: {
-    width: 75,
-    height: 75,
-    marginBottom: 20,
-    borderRadius: 37.5,
-  },
-  userAvatar: {
-    borderColor: colors.white,
-    borderWidth: 2,
-  },
-  title: {
-    color: colors.white,
-    ...fonts.fontPrimaryBold,
-    fontSize: normalize(16),
-    marginBottom: 2,
-  },
-  subtitle: {
-    color: colors.white,
-    ...fonts.fontPrimary,
-    fontSize: normalize(12),
-    marginBottom: 50,
-    paddingLeft: 15,
-    paddingRight: 15,
-    textAlign: 'center',
-  },
-  details: {
-    flex: 1,
-    flexDirection: 'row',
-  },
-  unit: {
-    flex: 1,
-  },
-  unitNumber: {
-    textAlign: 'center',
-    color: colors.white,
-    ...fonts.fontPrimaryBold,
-    fontSize: normalize(16),
-  },
-  unitText: {
-    textAlign: 'center',
-    color: colors.white,
-    fontSize: normalize(10),
-    ...fonts.fontPrimary,
-  },
-  unitStatus: {
-    textAlign: 'center',
-    color: colors.lighterBoldGreen,
-    fontSize: normalize(8),
-    ...fonts.fontPrimary,
-  },
-  badge: {
-    paddingTop: 3,
-    paddingBottom: 3,
-    marginTop: 5,
-    marginLeft: 17,
-    marginRight: 17,
-    borderWidth: 0.5,
-    borderRadius: 5,
-    borderColor: colors.lighterBoldGreen,
-    justifyContent: 'center',
-  },
-  green: {
-    color: colors.lightGreen,
-  },
-});
+const Container = styled.View`
+  flex: 1;
+`;
+const Wrapper = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
+const Profile = styled.View`
+  flex: 3;
+  align-items: center;
+  justify-content: flex-end;
+`;
+const Title = styled.Text`
+  color: ${colors.white};
+  font-family: ${styledFonts.fontPrimaryBold};
+  font-size: ${normalize(16)};
+  margin-bottom: 2px;
+`;
+const SubTitle = styled.Text`
+  color: ${colors.white};
+  font-family: ${styledFonts.fontPrimary};
+  font-size: ${normalize(12)};
+  margin-bottom: 50px;
+  padding-left: 15px;
+  padding-right: 15px;
+  text-align: center;
+`;
+const Details = styled.View`
+  flex: 1;
+  flex-direction: row;
+`;
+const Unit = styled.TouchableOpacity`
+  flex: 1;
+`;
+const UnitNumber = styled.Text`
+  text-align: center;
+  color: ${colors.white};
+  font-family: ${styledFonts.fontPrimaryBold};
+  font-size: ${normalize(16)};
+`;
+const UnitText = styled.Text`
+  text-align: center;
+  color: ${colors.white};
+  font-size: ${normalize(10)};
+  font-family: ${styledFonts.fontPrimary};
+`;
+const UnitStatus = styled.Text`
+  text-align: center;
+  color: ${colors.lighterBoldGreen};
+  font-size: ${normalize(8)};
+  font-family: ${styledFonts.fontPrimary};
+  padding-top: 3px;
+  padding-bottom: 3px;
+  margin-top: 5px;
+  margin-left: 17px;
+  margin-right: 17px;
+  border-width: 0.5px;
+  border-radius: 5px;
+  border-color: ${colors.lighterBoldGreen};
+  justify-content: center;
+`;
 
 export class UserProfile extends Component {
   props: Props;
@@ -120,29 +103,32 @@ export class UserProfile extends Component {
     } = this.props;
 
     return (
-      <View style={styles.container}>
+      <Container>
         {((user.hasOwnProperty('public_repos') &&
           !isNaN(parseInt(starCount, 10))) ||
           type === 'org') && (
-          <View
-            nativeId="user-profile-container"
-            style={styles.wrapperContainer}
-          >
-            <View style={styles.profile}>
+          <Wrapper nativeId="user-profile-container">
+            <Profile>
               <ImageZoom
                 uri={this.getUserUri}
                 style={[
-                  styles.avatar,
-                  (initialUser.type === 'User' || user.type === 'User') &&
-                    styles.userAvatar,
+                  {
+                    width: 75,
+                    height: 75,
+                    marginBottom: 20,
+                    borderRadius: 37.5,
+                  },
+                  (initialUser.type === 'User' || user.type === 'User') && {
+                    borderColor: colors.white,
+                    borderWidth: 2,
+                  },
                 ]}
               />
-              <Text style={styles.title}>{user.name || ' '}</Text>
-              <Text style={styles.subtitle}>{initialUser.login || ' '}</Text>
-            </View>
-            <View style={styles.details}>
-              <TouchableOpacity
-                style={styles.unit}
+              <Title>{user.name || ' '}</Title>
+              <SubTitle>{initialUser.login || ' '}</SubTitle>
+            </Profile>
+            <Details>
+              <Unit
                 nativeId="touchable-repository-list"
                 onPress={() =>
                   navigation.navigate('RepositoryList', {
@@ -151,34 +137,24 @@ export class UserProfile extends Component {
                     repoCount: user.public_repos > 15 ? 15 : user.public_repos,
                   })}
               >
-                <Text style={styles.unitNumber}>
+                <UnitNumber>
                   {!isNaN(parseInt(user.public_repos, 10))
                     ? user.public_repos + (user.total_private_repos || 0)
                     : ' '}
-                </Text>
-                <Text style={styles.unitText}>
-                  {translate('common.repositories', locale)}
-                </Text>
-              </TouchableOpacity>
+                </UnitNumber>
+                <UnitText>{translate('common.repositories', locale)}</UnitText>
+              </Unit>
 
               {type !== 'org' && (
-                <TouchableOpacity
-                  nativeId="touchable-star-count-list"
-                  style={styles.unit}
-                >
-                  <Text style={styles.unitNumber}>
-                    {abbreviateNumber(starCount)}
-                  </Text>
-                  <Text style={styles.unitText}>
-                    {translate('common.stars', locale)}
-                  </Text>
-                </TouchableOpacity>
+                <Unit nativeId="touchable-star-count-list">
+                  <UnitNumber>{abbreviateNumber(starCount)}</UnitNumber>
+                  <UnitText>{translate('common.stars', locale)}</UnitText>
+                </Unit>
               )}
 
               {type !== 'org' && (
-                <TouchableOpacity
+                <Unit
                   nativeId="touchable-followers-list"
-                  style={styles.unit}
                   onPress={() =>
                     navigation.navigate('FollowerList', {
                       title: translate('user.followers.title', locale),
@@ -186,26 +162,25 @@ export class UserProfile extends Component {
                       followerCount: user.followers > 15 ? 15 : user.followers,
                     })}
                 >
-                  <Text style={styles.unitNumber}>
+                  <UnitNumber>
                     {!isNaN(parseInt(user.followers, 10))
                       ? user.followers
                       : ' '}
-                  </Text>
-                  <Text style={styles.unitText}>
+                  </UnitNumber>
+                  <UnitText>
                     {translate('user.followers.text', locale)}
-                  </Text>
+                  </UnitText>
                   {isFollowing && (
-                    <Text style={[styles.unitStatus, styles.badge]}>
+                    <UnitStatus>
                       {translate('user.following.followingYou', locale)}
-                    </Text>
+                    </UnitStatus>
                   )}
-                </TouchableOpacity>
+                </Unit>
               )}
 
               {type !== 'org' && (
-                <TouchableOpacity
+                <Unit
                   nativeId="touchable-following-list"
-                  style={styles.unit}
                   onPress={() =>
                     navigation.navigate('FollowingList', {
                       title: translate('user.following.title', locale),
@@ -213,25 +188,25 @@ export class UserProfile extends Component {
                       followingCount: user.following > 15 ? 15 : user.following,
                     })}
                 >
-                  <Text style={styles.unitNumber}>
+                  <UnitNumber>
                     {!isNaN(parseInt(user.following, 10))
                       ? user.following
                       : ' '}
-                  </Text>
-                  <Text style={styles.unitText}>
+                  </UnitNumber>
+                  <UnitText>
                     {translate('user.following.text', locale)}
-                  </Text>
+                  </UnitText>
                   {isFollower && (
-                    <Text style={[styles.unitStatus, styles.badge]}>
+                    <UnitStatus>
                       {translate('user.followers.followsYou')}
-                    </Text>
+                    </UnitStatus>
                   )}
-                </TouchableOpacity>
+                </Unit>
               )}
-            </View>
-          </View>
+            </Details>
+          </Wrapper>
         )}
-      </View>
+      </Container>
     );
   }
 }
