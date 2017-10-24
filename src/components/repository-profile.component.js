@@ -98,6 +98,10 @@ const styles = StyleSheet.create({
     fontSize: normalize(10),
     ...fonts.fontPrimary,
   },
+  topic: {
+    flexDirection: 'row',
+    color: colors.white,
+  },
   badge: {
     paddingTop: 3,
     paddingBottom: 3,

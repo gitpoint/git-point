@@ -202,6 +202,7 @@ export const en = {
       starred: 'Starred',
       watching: 'Watching',
       watchers: 'Watchers',
+      topicsTitle: 'TOPICS',
     },
     codeList: {
       title: 'Code',

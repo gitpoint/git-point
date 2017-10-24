@@ -379,3 +379,16 @@ export const fetchNotificationsCount = accessToken =>
 
 export const fetchRepoNotificationsCount = (owner, repoName, accessToken) =>
   v3.count(`/repos/${owner}/${repoName}/notifications?per_page=1`, accessToken);
+
+export const fetchRepoTopics = async (owner, repoName, accessToken) => {
+  const response = await v3.call(
+    `/repos/${owner}/${repoName}/topics`,
+    v3.parameters(
+      accessToken,
+      METHOD.GET,
+      'application/vnd.github.mercy-preview+json'
+    )
+  );
+
+  return response.json();
+};
