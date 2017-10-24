@@ -7,6 +7,7 @@ describe('Text Helper', () => {
     it('should call correcly with text params', () => {
       const emojify = sinon.spy(emoji, 'emojify');
       const input = 'I need more :coffee';
+
       emojifyText(input);
 
       expect(emojify.calledWith(input)).toEqual(true);
