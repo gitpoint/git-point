@@ -20,7 +20,7 @@ import {
   UserListItem,
   EntityInfo,
 } from 'components';
-import { emojifyText, translate } from 'utils';
+import { emojifyText, translate, openURLInView } from 'utils';
 import { colors, fonts } from 'config';
 import {
   getUserInfo,
@@ -35,7 +35,7 @@ const mapStateToProps = state => ({
   user: state.user.user,
   orgs: state.user.orgs,
   starCount: state.user.starCount,
-  language: state.auth.language,
+  locale: state.auth.locale,
   isFollowing: state.user.isFollowing,
   isFollower: state.user.isFollower,
   isPendingUser: state.user.isPendingUser,
@@ -79,7 +79,7 @@ class Profile extends Component {
     user: Object,
     orgs: Array,
     starCount: string,
-    language: string,
+    locale: string,
     isFollowing: boolean,
     isFollower: boolean,
     isPendingUser: boolean,
@@ -130,6 +130,8 @@ class Profile extends Component {
 
     if (index === 0) {
       changeFollowStatus(user.login, isFollowing);
+    } else if (index === 1) {
+      openURLInView(user.html_url);
     }
   };
 
@@ -138,7 +140,7 @@ class Profile extends Component {
       user,
       orgs,
       starCount,
-      language,
+      locale,
       isFollowing,
       isFollower,
       isPendingUser,
@@ -158,8 +160,9 @@ class Profile extends Component {
       isPendingCheckFollower;
     const userActions = [
       isFollowing
-        ? translate('user.profile.unfollow', language)
-        : translate('user.profile.follow', language),
+        ? translate('user.profile.unfollow', locale)
+        : translate('user.profile.follow', locale),
+      translate('common.openInBrowser', locale),
     ];
 
     return (
@@ -173,7 +176,7 @@ class Profile extends Component {
               isFollowing={!isPending ? isFollowing : false}
               isFollower={!isPending ? isFollower : false}
               user={!isPending ? user : {}}
-              language={language}
+              locale={locale}
               navigation={navigation}
             />}
           refreshControl={
@@ -204,7 +207,7 @@ class Profile extends Component {
             <View>
               {!!user.bio &&
                 user.bio !== '' &&
-                <SectionList title={translate('common.bio', language)}>
+                <SectionList title={translate('common.bio', locale)}>
                   <ListItem
                     subtitle={emojifyText(user.bio)}
                     subtitleStyle={styles.listSubTitle}
@@ -212,12 +215,17 @@ class Profile extends Component {
                   />
                 </SectionList>}
 
-              <EntityInfo entity={user} orgs={orgs} navigation={navigation} />
+              <EntityInfo
+                entity={user}
+                orgs={orgs}
+                navigation={navigation}
+                locale={locale}
+              />
 
               <SectionList
-                title={translate('common.orgs', language)}
+                title={translate('common.orgs', locale)}
                 noItems={orgs.length === 0}
-                noItemsMessage={translate('common.noOrgsMessage', language)}
+                noItemsMessage={translate('common.noOrgsMessage', locale)}
               >
                 {orgs.map(item =>
                   <UserListItem
@@ -234,9 +242,9 @@ class Profile extends Component {
           ref={o => {
             this.ActionSheet = o;
           }}
-          title={translate('user.profile.userActions', language)}
-          options={[...userActions, translate('common.cancel', language)]}
-          cancelButtonIndex={1}
+          title={translate('user.profile.userActions', locale)}
+          options={[...userActions, translate('common.cancel', locale)]}
+          cancelButtonIndex={2}
           onPress={this.handlePress}
         />
       </ViewContainer>

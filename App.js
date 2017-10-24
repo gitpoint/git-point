@@ -1,13 +1,7 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import {
-  AppRegistry,
-  AsyncStorage,
-  Image,
-  StyleSheet,
-  View,
-  LayoutAnimation,
-} from 'react-native';
+import styled from 'styled-components/native';
+import { AppRegistry, AsyncStorage, LayoutAnimation } from 'react-native';
 import { persistStore } from 'redux-persist';
 import createEncryptor from 'redux-persist-transform-encrypt';
 import DeviceInfo from 'react-native-device-info';
@@ -15,23 +9,21 @@ import md5 from 'md5';
 import codePush from 'react-native-code-push';
 
 import { colors } from 'config';
-import { configureLocale } from 'utils';
-import { determineLanguage } from 'locale';
+import { getCurrentLocale, configureLocale } from 'utils';
 import { GitPoint } from './routes';
 import { configureStore } from './root.store';
 
-const styles = StyleSheet.create({
-  logoContainer: {
-    backgroundColor: colors.white,
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  logo: {
-    width: 100,
-    height: 100,
-  },
-});
+const Container = styled.View`
+  align-items: center;
+  background-color: ${colors.white}
+  flex: 1;
+  justify-content: center;
+`;
+
+const Logo = styled.Image`
+  height: 100;
+  width: 100;
+`;
 
 if (console) {
   console.disableYellowBox = true; // eslint-disable-line no-console
@@ -39,9 +31,9 @@ if (console) {
 
 class App extends Component {
   static async initLocale() {
-    const language = await determineLanguage();
+    const locale = await getCurrentLocale();
 
-    configureLocale(language);
+    configureLocale(locale);
   }
 
   constructor() {
@@ -88,12 +80,9 @@ class App extends Component {
   render() {
     if (!this.state.rehydrated) {
       return (
-        <View style={styles.logoContainer}>
-          <Image
-            style={styles.logo}
-            source={require('./src/assets/logo-black.png')}
-          />
-        </View>
+        <Container>
+          <Logo source={require('./src/assets/logo-black.png')} />
+        </Container>
       );
     }
 

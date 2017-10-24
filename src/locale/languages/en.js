@@ -241,12 +241,17 @@ export const en = {
       deleted: 'DELETED',
       fileRenamed: 'File renamed without any changes',
     },
+    readMe: {
+      readMeActions: 'README Actions',
+      noReadMeFound: 'No README.md found',
+    },
   },
   organization: {
     main: {
       membersTitle: 'MEMBERS',
       descriptionTitle: 'DESCRIPTION',
     },
+    organizationActions: 'Organization Actions',
   },
   issue: {
     settings: {
@@ -290,6 +295,7 @@ export const en = {
       },
       openIssueSubTitle: '#{{number}} opened {{time}} ago by {{user}}',
       closedIssueSubTitle: '#{{number}} by {{user}} was closed {{time}} ago',
+      issueActions: 'Issue Actions',
     },
     newIssue: {
       title: 'New Issue',
@@ -346,5 +352,6 @@ export const en = {
     abbreviations: {
       thousand: 'k',
     },
+    openInBrowser: 'Open in Browser',
   },
 };

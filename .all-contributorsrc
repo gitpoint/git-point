@@ -2,7 +2,8 @@
   "projectName": "git-point",
   "projectOwner": "gitpoint",
   "files": [
-    "README.md"
+    "README.md",
+    "CONTRIBUTORS.md"
   ],
   "imageSize": 100,
   "contributorsPerLine": 6,
@@ -22,10 +23,10 @@
       ]
     },
     {
-      "login": "gejose",
-      "name": "gejose",
-      "avatar_url": "https://avatars2.githubusercontent.com/u/16705071?v=3",
-      "profile": "https://github.com/gejose",
+      "login": "g2jose",
+      "name": "George Jose",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/6994514?s=460&v=4",
+      "profile": "https://github.com/g2jose",
       "contributions": [
         "code"
       ]
@@ -165,7 +166,8 @@
         "code",
         "question",
         "bug",
-        "review"
+        "review",
+        "test"
       ]
     },
     {
@@ -309,7 +311,7 @@
       ]
     },
     {
-      "login": "FlorianTaut",
+      "login": "tautf",
       "name": "Florian Taut",
       "avatar_url": "https://avatars1.githubusercontent.com/u/18403881?v=4",
       "profile": "https://taut-fl.de",
@@ -381,6 +383,184 @@
         "code",
         "bug"
       ]
+    },
+    {
+      "login": "brandly",
+      "name": "Matthew Brandly",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/820696?v=4",
+      "profile": "http://words.brandly.me/about/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Jpfonseca",
+      "name": "João Fonseca",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/11836470?v=4",
+      "profile": "https://github.com/Jpfonseca",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "acurat",
+      "name": "Arjun Curat",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/10121964?v=4",
+      "profile": "https://github.com/acurat",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "siderio2",
+      "name": "siderio2",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/16878891?v=4",
+      "profile": "https://github.com/siderio2",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "kodisto",
+      "name": "Kodo Verkisto",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/32579769?v=4",
+      "profile": "https://github.com/kodisto",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "cheshire137",
+      "name": "Sarah Vessels",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/82317?v=4",
+      "profile": "http://sarahvessels.com/",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "tminussi",
+      "name": "Thales Sousa",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/3764756?v=4",
+      "profile": "https://github.com/tminussi",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "asood123",
+      "name": "Aseem Sood",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/6106941?v=4",
+      "profile": "https://github.com/asood123",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "Eliottiosdevs",
+      "name": "Eliott hauteclair",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/7842156?v=4",
+      "profile": "https://eliott.be",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "peterblazejewicz",
+      "name": "Peter Blazejewicz",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/14539?v=4",
+      "profile": "http://www.linkedin.com/in/peterblazejewicz",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "ericadamski",
+      "name": "Eric Adamski",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/6516758?v=4",
+      "profile": "https://github.com/ericadamski",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "jouderianjr",
+      "name": "Jouderian Nobre Junior",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/1559013?v=4",
+      "profile": "https://github.com/jouderianjr",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "pdong",
+      "name": "Phi Dong",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/5158502?v=4",
+      "profile": "http://www.phidong.com",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "jpls93",
+      "name": "John Patrick Salcedo",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/17956698?v=4",
+      "profile": "https://github.com/jpls93",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "ocarreterom",
+      "name": "Óscar Carretero",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/11599942?v=4",
+      "profile": "https://github.com/ocarreterom",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "dyesseyumba",
+      "name": "Dyesse YUMBA",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/5528931?v=4",
+      "profile": "https://github.com/dyesseyumba",
+      "contributions": [
+        "tool"
+      ]
+    },
+    {
+      "login": "binkpitch",
+      "name": "Bink",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/20456165?v=4",
+      "profile": "https://binkpitch.me/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "khvilaboa",
+      "name": "khvilaboa",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/10085841?v=4",
+      "profile": "https://github.com/khvilaboa",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "jglover",
+      "name": "James Glover",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/40802?v=4",
+      "profile": "http://jamesmglover.com",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "josenaranjo",
+      "name": "Jose Luis Naranjo",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/3025600?v=4",
+      "profile": "https://co.linkedin.com/in/josenaranjo/en",
+      "contributions": []
     }
   ]
 }

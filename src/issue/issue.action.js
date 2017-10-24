@@ -7,6 +7,7 @@ import {
   fetchSubmitNewIssue,
   fetchDeleteIssueComment,
   fetchEditIssueComment,
+  fetchIssueEvents,
   v3,
 } from 'api';
 import {
@@ -18,11 +19,13 @@ import {
   GET_ISSUE_DIFF,
   GET_ISSUE_COMMITS,
   GET_ISSUE_MERGE_STATUS,
+  GET_PULL_REQUEST_FROM_URL,
   MERGE_PULL_REQUEST,
   GET_ISSUE_FROM_URL,
   SUBMIT_NEW_ISSUE,
   DELETE_ISSUE_COMMENT,
   EDIT_ISSUE_COMMENT,
+  GET_ISSUE_EVENTS,
 } from './issue.type';
 
 const getDiff = url => {
@@ -70,10 +73,34 @@ const getMergeStatus = (repo, issueNum) => {
   };
 };
 
+const getPullRequest = url => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: GET_PULL_REQUEST_FROM_URL.PENDING });
+
+    return v3
+      .getJson(url, accessToken)
+      .then(pr => {
+        dispatch({
+          type: GET_PULL_REQUEST_FROM_URL.SUCCESS,
+          payload: pr,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: GET_PULL_REQUEST_FROM_URL.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
 const getPullRequestDetails = issue => {
   return (dispatch, getState) => {
     const repoFullName = getState().repository.repository.full_name;
 
+    dispatch(getPullRequest(issue.pull_request.url));
     dispatch(getDiff(issue.pull_request.url));
     dispatch(getMergeStatus(repoFullName, issue.number));
   };
@@ -365,6 +392,28 @@ export const submitNewIssue = (owner, repo, issueTitle, issueComment) => {
       .catch(error => {
         dispatch({
           type: SUBMIT_NEW_ISSUE.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+export const getIssueEvents = (owner, repoName, issueNum) => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: GET_ISSUE_EVENTS.PENDING });
+
+    return fetchIssueEvents(owner, repoName, issueNum, accessToken)
+      .then(events => {
+        dispatch({
+          type: GET_ISSUE_EVENTS.SUCCESS,
+          payload: events,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: GET_ISSUE_EVENTS.ERROR,
           payload: error,
         });
       });

@@ -26,7 +26,7 @@ import {
 } from '../repository.action';
 
 const mapStateToProps = state => ({
-  language: state.auth.language,
+  locale: state.auth.locale,
   repository: state.repository.repository,
   searchedOpenIssues: state.repository.searchedOpenIssues,
   searchedClosedIssues: state.repository.searchedClosedIssues,
@@ -109,7 +109,7 @@ class IssueList extends Component {
           underlayColor={colors.transparent}
           onPress={() =>
             navigate('NewIssue', {
-              title: translate('issue.newIssue.title', state.params.language),
+              title: translate('issue.newIssue.title', state.params.locale),
             })}
         />
       ),
@@ -117,7 +117,7 @@ class IssueList extends Component {
   };
 
   props: {
-    language: string,
+    locale: string,
     repository: Object,
     searchedOpenIssues: Array,
     searchedClosedIssues: Array,
@@ -147,10 +147,10 @@ class IssueList extends Component {
   }
 
   componentDidMount() {
-    const { language, navigation } = this.props;
+    const { locale, navigation } = this.props;
 
     navigation.setParams({
-      language,
+      locale,
     });
   }
 
@@ -213,17 +213,18 @@ class IssueList extends Component {
     return item.id;
   };
 
-  renderItem = ({ item }) =>
+  renderItem = ({ item }) => (
     <IssueListItem
       type={this.props.navigation.state.params.type}
       issue={item}
       navigation={this.props.navigation}
-      language={this.props.language}
-    />;
+      locale={this.props.locale}
+    />
+  );
 
   render() {
     const {
-      language,
+      locale,
       searchedOpenIssues,
       searchedClosedIssues,
       isPendingSearchOpenIssues,
@@ -255,8 +256,8 @@ class IssueList extends Component {
             onPress={this.switchQueryType}
             selectedIndex={searchType}
             buttons={[
-              translate('repository.issueList.openButton', language),
-              translate('repository.issueList.closedButton', language),
+              translate('repository.issueList.openButton', locale),
+              translate('repository.issueList.closedButton', locale),
             ]}
             textStyle={styles.buttonGroupText}
             selectedTextStyle={styles.buttonGroupTextSelected}
@@ -265,26 +266,36 @@ class IssueList extends Component {
         </View>
 
         {isPendingSearchOpenIssues &&
-          searchType === 0 &&
-          <LoadingContainer
-            animating={isPendingSearchOpenIssues && searchType === 0}
-            text={translate('repository.issueList.searchingMessage', language, {
-              query,
-            })}
-            style={styles.marginSpacing}
-          />}
+          searchType === 0 && (
+            <LoadingContainer
+              animating={isPendingSearchOpenIssues && searchType === 0}
+              text={translate(
+                'repository.issueList.searchingMessage',
+                locale,
+                {
+                  query,
+                }
+              )}
+              style={styles.marginSpacing}
+            />
+          )}
 
         {isPendingSearchClosedIssues &&
-          searchType === 1 &&
-          <LoadingContainer
-            animating={isPendingSearchClosedIssues && searchType === 1}
-            text={translate('repository.issueList.searchingMessage', language, {
-              query,
-            })}
-            style={styles.marginSpacing}
-          />}
+          searchType === 1 && (
+            <LoadingContainer
+              animating={isPendingSearchClosedIssues && searchType === 1}
+              text={translate(
+                'repository.issueList.searchingMessage',
+                locale,
+                {
+                  query,
+                }
+              )}
+              style={styles.marginSpacing}
+            />
+          )}
 
-        {this.getList().length > 0 &&
+        {this.getList().length > 0 && (
           <FlatList
             ref={ref => {
               this.issueList = ref;
@@ -293,27 +304,30 @@ class IssueList extends Component {
             data={this.getList()}
             keyExtractor={this.keyExtractor}
             renderItem={this.renderItem}
-          />}
+          />
+        )}
 
         {searchStart &&
           !isPendingSearchOpenIssues &&
           searchedOpenIssues.length === 0 &&
-          searchType === 0 &&
-          <View style={styles.marginSpacing}>
-            <Text style={styles.searchTitle}>
-              {translate('repository.issueList.noOpenIssues', language)}
-            </Text>
-          </View>}
+          searchType === 0 && (
+            <View style={styles.marginSpacing}>
+              <Text style={styles.searchTitle}>
+                {translate('repository.issueList.noOpenIssues', locale)}
+              </Text>
+            </View>
+          )}
 
         {searchStart &&
           !isPendingSearchClosedIssues &&
           searchedClosedIssues.length === 0 &&
-          searchType === 1 &&
-          <View style={styles.marginSpacing}>
-            <Text style={styles.searchTitle}>
-              {translate('repository.issueList.noClosedIssues', language)}
-            </Text>
-          </View>}
+          searchType === 1 && (
+            <View style={styles.marginSpacing}>
+              <Text style={styles.searchTitle}>
+                {translate('repository.issueList.noClosedIssues', locale)}
+              </Text>
+            </View>
+          )}
       </ViewContainer>
     );
   }

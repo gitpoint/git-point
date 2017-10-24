@@ -9,6 +9,7 @@ import {
   Image,
 } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
+import LinearGradient from 'react-native-linear-gradient';
 
 import { colors, fonts } from 'config';
 
@@ -26,21 +27,22 @@ type Props = {
   authUser: Object,
 };
 
+const avatarSize = 30;
+
 const styles = StyleSheet.create({
   container: {
     marginTop: 30,
   },
   avatarContainer: {
     backgroundColor: colors.greyLight,
-    borderRadius: 15,
-    width: 30,
-    height: 30,
-    marginRight: 5,
+    borderRadius: avatarSize / 2,
+    width: avatarSize,
+    height: avatarSize,
   },
   avatar: {
-    borderRadius: 15,
-    height: 30,
-    width: 30,
+    borderRadius: avatarSize / 2,
+    height: avatarSize,
+    width: avatarSize,
   },
   list: {
     marginTop: 0,
@@ -58,7 +60,12 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
   },
   flatList: {
-    paddingLeft: 15,
+    paddingHorizontal: 15,
+  },
+  scrollGradient: {
+    position: 'absolute',
+    width: 15,
+    height: avatarSize,
   },
 });
 
@@ -70,49 +77,70 @@ const MembersListComponent = ({
   smallTitle,
   navigation,
   authUser,
-}: Props) =>
+}: Props) => (
   <View style={[styles.container, containerStyle && containerStyle]}>
     <Text style={smallTitle ? styles.sectionTitleSmall : styles.sectionTitle}>
       {title}
     </Text>
 
     {noMembersMessage &&
-      !members.length &&
-      <List containerStyle={styles.list}>
-        <ListItem
-          title={noMembersMessage}
-          titleStyle={styles.listTitle}
-          hideChevron
-        />
-      </List>}
-
-    <FlatList
-      style={styles.flatList}
-      data={members}
-      showsHorizontalScrollIndicator={false}
-      renderItem={({ item }) =>
-        <TouchableHighlight
-          onPress={() => {
-            navigation.navigate(
-              authUser.login === item.login ? 'AuthProfile' : 'Profile',
-              {
-                user: item,
-              }
-            );
-          }}
-          underlayColor="transparent"
-          style={styles.avatarContainer}
-        >
-          <Image
-            style={styles.avatar}
-            source={{
-              uri: item.avatar_url,
-            }}
+      !members.length && (
+        <List containerStyle={styles.list}>
+          <ListItem
+            title={noMembersMessage}
+            titleStyle={styles.listTitle}
+            hideChevron
           />
-        </TouchableHighlight>}
-      keyExtractor={item => item.id}
-      horizontal
-    />
-  </View>;
+        </List>
+      )}
+    <View>
+      <FlatList
+        contentContainerStyle={styles.flatList}
+        data={members}
+        showsHorizontalScrollIndicator={false}
+        renderItem={({ item, index }) => (
+          <TouchableHighlight
+            onPress={() => {
+              navigation.navigate(
+                authUser.login === item.login ? 'AuthProfile' : 'Profile',
+                {
+                  user: item,
+                }
+              );
+            }}
+            underlayColor="transparent"
+            style={[
+              styles.avatarContainer,
+              { marginRight: index < members.length - 1 ? 5 : 0 },
+            ]}
+          >
+            <Image
+              style={styles.avatar}
+              source={{
+                uri: item.avatar_url,
+              }}
+            />
+          </TouchableHighlight>
+        )}
+        keyExtractor={item => item.id}
+        horizontal
+      />
+
+      <LinearGradient
+        style={[styles.scrollGradient, { left: 0 }]}
+        colors={['white', 'rgba(255, 255, 255, 0)']}
+        start={{ x: 0, y: 0.5 }}
+        end={{ x: 1, y: 0.5 }}
+      />
+
+      <LinearGradient
+        style={[styles.scrollGradient, { right: 0 }]}
+        colors={['rgba(255, 255, 255, 0)', 'white']}
+        start={{ x: 0, y: 0.5 }}
+        end={{ x: 1, y: 0.5 }}
+      />
+    </View>
+  </View>
+);
 
 export const MembersList = connect(mapStateToProps)(MembersListComponent);

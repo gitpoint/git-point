@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     paddingVertical: 5,
     paddingHorizontal: 10,
-    marginTop: -8,
   },
   list: {
     marginTop: 0,
@@ -88,17 +87,9 @@ export const SectionList = ({
   let sectionTitle = '';
 
   if (typeof title === 'string') {
-    sectionTitle = (
-      <Text style={styles.sectionTitle}>
-        {title}
-      </Text>
-    );
+    sectionTitle = <Text style={styles.sectionTitle}>{title}</Text>;
   } else {
-    sectionTitle = (
-      <View style={{ padding: 15 }}>
-        {title}
-      </View>
-    );
+    sectionTitle = <View style={{ padding: 15 }}>{title}</View>;
   }
 
   return (
@@ -107,15 +98,16 @@ export const SectionList = ({
         {sectionTitle}
 
         {showButton &&
-          !loading &&
-          <Button
-            title={buttonTitle}
-            textStyle={fonts.fontPrimarySemiBold}
-            fontSize={13}
-            color={showButton ? colors.primaryDark : colors.white}
-            buttonStyle={styles.button}
-            onPress={buttonAction}
-          />}
+          !loading && (
+            <Button
+              title={buttonTitle}
+              textStyle={fonts.fontPrimarySemiBold}
+              fontSize={13}
+              color={showButton ? colors.primaryDark : colors.white}
+              buttonStyle={styles.button}
+              onPress={buttonAction}
+            />
+          )}
       </View>
       <List
         containerStyle={[styles.list, noOuterBorders && styles.noOuterBorders]}
