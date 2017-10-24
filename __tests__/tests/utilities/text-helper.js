@@ -8,6 +8,7 @@ describe('Text Helper', () => {
       const emojify = sinon.spy(emoji, 'emojify');
       const input = 'I need more :coffee';
       emojifyText(input);
+
       expect(emojify.calledWith(input)).toEqual(true);
     });
   });
@@ -17,6 +18,7 @@ describe('Text Helper', () => {
       const input = 1;
       const expected = 1;
       const result = abbreviateNumber(input);
+
       expect(result).toEqual(expected);
     });
 
@@ -24,6 +26,7 @@ describe('Text Helper', () => {
       const input = 1000;
       const expected = '1k';
       const result = abbreviateNumber(input);
+
       expect(result).toEqual(expected);
     });
 
@@ -31,6 +34,7 @@ describe('Text Helper', () => {
       const input = 1100;
       const expected = '1.1k';
       const result = abbreviateNumber(input);
+
       expect(result).toEqual(expected);
     });
 
@@ -38,6 +42,7 @@ describe('Text Helper', () => {
       const input = 96234;
       const expected = '96.2k';
       const result = abbreviateNumber(input);
+
       expect(result).toEqual(expected);
     });
   });
