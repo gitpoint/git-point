@@ -12,8 +12,8 @@ type Props = {
 
 const BadgeContainer = styled.View`
   flex: 1;
-  align-items: 'center';
-  justify-content: 'center';
+  align-items: center;
+  justify-content: center;
   border-radius: 18;
   width: 18;
   height: 18;
@@ -24,7 +24,7 @@ const BadgeContainer = styled.View`
 
 const BadgeText = styled.Text`
   ${{ ...fonts.fontPrimaryBold }};
-  background-color: 'transparent';
+  background-color: transparent;
   ${({ largeText }) =>
     `font-size: ${largeText ? normalize(9.5) : normalize(7)};`};
 `;
