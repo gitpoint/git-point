@@ -24,7 +24,7 @@ const StyledListItem = styled(ListItem).attrs({
     ...fonts.fontPrimary,
   },
   underlayColor: props => (props.unknown ? null : colors.greyLight),
-  hideChevron: props => props.unkown,
+  hideChevron: props => props.unknown,
 })``;
 
 const getBlogLink = url =>
