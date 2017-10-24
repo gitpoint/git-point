@@ -26,18 +26,18 @@
           "./src"
         ],
         "alias": {
-          "components": "components",
-          "search": "search",
-          "notifications": "notifications",
+          "api": "api",
           "auth": "auth",
-          "user": "user",
+          "components": "components",
+          "config": "config",
+          "issue": "issue",
+          "locale": "locale",
+          "notifications": "notifications",
           "organization": "organization",
           "repository": "repository",
-          "issue": "issue",
-          "api": "api",
-          "config": "config",
-          "utils": "utils",
-          "locale": "locale"
+          "search": "search",
+          "testData": "./__tests__/data",
+          "utils": "utils"
         }
       }
     }
@@ -152,7 +152,7 @@
           "/^(get|set)(?!(InitialState$|DefaultProps$|ChildContext$)).+$/",
           "everything-else",
           "/^render.+$/",
-          "render",
+          "render"
         ],
         "groups": {
           "lifecycle": [
