@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActivityIndicator } from 'react-native';
+import { StyleSheet, ActivityIndicator } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Parse from 'parse-diff';
 import moment from 'moment/min/moment-with-locales.min';
@@ -15,6 +15,13 @@ import {
 import { translate } from 'utils';
 import { colors, styledFonts, normalize } from 'config';
 import { v3 } from 'api';
+
+const styles = StyleSheet.create({
+  badge: {
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+  },
+});
 
 const HeaderContainer = styled.View`
   flex-direction: row;
@@ -48,11 +55,6 @@ const DiffBlocksContainer = styled.View`
   justify-content: flex-end;
   padding-right: 10;
   padding-bottom: 10;
-`;
-
-const StateBadgeStyled = styled(StateBadge)`
-  align-items: flex-end;
-  justify-content: center;
 `;
 
 const LabelButtonGroup = styled.View`
@@ -151,7 +153,8 @@ export class IssueDescription extends Component {
           {!issue.pull_request ||
             (issue.pull_request &&
               !isPendingCheckMerge && (
-                <StateBadgeStyled
+                <StateBadge
+                  style={styles.badge}
                   issue={issue}
                   isMerged={isMerged && issue.pull_request}
                   locale={locale}
