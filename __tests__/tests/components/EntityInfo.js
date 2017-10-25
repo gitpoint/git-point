@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import organization from '../../data/organization';
-import user from '../../data/user';
+import organization from 'testData/api/organization';
+import user from 'testData/api/user';
 
 import { EntityInfo } from 'components';
 
