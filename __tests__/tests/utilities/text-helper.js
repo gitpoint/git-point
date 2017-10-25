@@ -17,7 +17,7 @@ describe('Text Helper', () => {
   });
 
   describe('abbreviateNumber', () => {
-    it('should get 1 when give 1', () => {
+    it('should return 1 when given 1', () => {
       const input = 1;
       const expected = 1;
       const result = abbreviateNumber(input);
@@ -25,7 +25,7 @@ describe('Text Helper', () => {
       expect(result).toEqual(expected);
     });
 
-    it('should get 1k when give 1000', () => {
+    it('should return 1k when given 1000', () => {
       const input = 1000;
       const expected = '1k';
       const result = abbreviateNumber(input);
@@ -33,7 +33,7 @@ describe('Text Helper', () => {
       expect(result).toEqual(expected);
     });
 
-    it('should get 1.1k when give 1100', () => {
+    it('should return 1.1k when given 1100', () => {
       const input = 1100;
       const expected = '1.1k';
       const result = abbreviateNumber(input);
@@ -41,7 +41,7 @@ describe('Text Helper', () => {
       expect(result).toEqual(expected);
     });
 
-    it('should get 96.2k when give 96234', () => {
+    it('should return 96.2k when given 96234', () => {
       const input = 96234;
       const expected = '96.2k';
       const result = abbreviateNumber(input);
