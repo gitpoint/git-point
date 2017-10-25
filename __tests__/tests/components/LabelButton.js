@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import label from '../../data/label';
+import label from 'testData/label';
 
 import { LabelButton } from 'components';
 
