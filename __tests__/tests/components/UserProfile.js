@@ -44,7 +44,9 @@ describe('<UserProfile />', () => {
     );
 
     const result = wrapper.instance().getUserUri();
-    const expectedResult = `${initialUser.avatar_url}&lastModified=${initialUser.updated_at}`;
+    const expectedResult = {
+      uri: `${initialUser.avatar_url}&lastModified=${initialUser.updated_at}`,
+    };
 
     expect(result).toEqual(expectedResult);
   });
@@ -62,7 +64,9 @@ describe('<UserProfile />', () => {
     );
 
     const result = wrapper.instance().getUserUri();
-    const expectedResult = `${user.avatar_url}&lastModified=${user.updated_at}`;
+    const expectedResult = {
+      uri: `${user.avatar_url}&lastModified=${user.updated_at}`,
+    };
 
     expect(result).toEqual(expectedResult);
   });
