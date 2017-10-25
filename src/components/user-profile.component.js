@@ -101,10 +101,11 @@ export class UserProfile extends Component {
 
   getUserUri = () => {
     const { initialUser, user } = this.props;
-
-    return initialUser.avatar_url
+    const image = initialUser.avatar_url
       ? `${initialUser.avatar_url}&lastModified=${initialUser.updated_at}`
       : `${user.avatar_url}&lastModified=${user.updated_at}`;
+
+    return { uri: image };
   };
 
   render() {
@@ -130,7 +131,7 @@ export class UserProfile extends Component {
           >
             <View style={styles.profile}>
               <ImageZoom
-                uri={this.getUserUri}
+                uri={this.getUserUri()}
                 style={[
                   styles.avatar,
                   (initialUser.type === 'User' || user.type === 'User') &&
