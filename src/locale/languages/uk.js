@@ -323,7 +323,6 @@ export const uk = {
     email: 'Електронна пошта',
     website: 'Сайт',
     repositories: 'Репозиторіїв',
-    issue: 'задача',
     cancel: 'Відминити',
     yes: 'Так',
     ok: 'OK',
