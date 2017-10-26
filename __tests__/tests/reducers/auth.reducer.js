@@ -10,9 +10,9 @@ import {
   LOGIN,
   LOGOUT,
 } from 'auth/auth.type';
-import { user } from 'testData/api/user.data';
-import { events } from 'testData/api/users.data';
-import { authError } from 'testData/api/error.data';
+import { user } from 'testData/api/user';
+import { events } from 'testData/api/users';
+import { authError } from 'testData/api/error';
 
 describe('Auth Reducer', () => {
   /**
