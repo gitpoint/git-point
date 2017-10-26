@@ -28,17 +28,5 @@ export const user = {
   followers: 20,
   following: 0,
   created_at: '2008-01-14T04:33:35Z',
-  updated_at: '2008-01-14T04:33:35Z',
-  total_private_repos: 100,
-  owned_private_repos: 100,
-  private_gists: 81,
-  disk_usage: 10000,
-  collaborators: 8,
-  two_factor_authentication: true,
-  plan: {
-    name: 'Medium',
-    space: 400,
-    private_repos: 20,
-    collaborators: 0,
-  },
+  updated_at: '2008-01-14T04:33:35Z'
 };
