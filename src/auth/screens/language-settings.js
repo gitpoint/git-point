@@ -59,4 +59,9 @@ export default [
     emojiCode: ':flag-es:',
     name: 'Español',
   },
+  {
+    code: 'ua',
+    emojiCode: ':flag-ua:',
+    name: 'Українська',
+  },
 ];
