@@ -1,4 +1,4 @@
-export const ptBr = {
+export const ptBR = {
   auth: {
     login: {
       connectingToGitHub: 'Conectando ao GitHub...',

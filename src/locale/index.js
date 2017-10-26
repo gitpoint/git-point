@@ -5,7 +5,7 @@ import {
   fr,
   nl,
   pt,
-  ptBr,
+  ptBR,
   tr,
   ru,
   eo,
@@ -13,7 +13,7 @@ import {
   pl,
   de,
   es,
-  zhCn,
+  zhCN,
 } from './languages';
 
 I18n.fallbacks = true;
@@ -25,14 +25,14 @@ I18n.translations = {
   nl,
   tr,
   pt,
-  'pt-br': ptBr,
+  'pt-br': ptBR,
   ru,
   es,
   eo,
   gl,
   pl,
   de,
-  'zh-cn': zhCn,
+  'zh-cn': zhCN,
 };
 
 export default I18n;
