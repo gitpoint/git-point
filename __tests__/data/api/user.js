@@ -1,4 +1,4 @@
-export const user = {
+export default {
   login: 'octocat',
   id: 1,
   avatar_url: 'https://github.com/images/error/octocat_happy.gif',
@@ -17,7 +17,7 @@ export const user = {
   type: 'User',
   site_admin: false,
   name: 'monalisa octocat',
-  company: 'GitHub',
+  company: '@GitHub',
   blog: 'https://github.com/blog',
   location: 'San Francisco',
   email: 'octocat@github.com',
@@ -28,5 +28,5 @@ export const user = {
   followers: 20,
   following: 0,
   created_at: '2008-01-14T04:33:35Z',
-  updated_at: '2008-01-14T04:33:35Z'
+  updated_at: '2008-01-14T04:33:35Z',
 };
