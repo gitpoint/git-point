@@ -38,7 +38,8 @@ Please feel free to take on any issue that's currently open. Feel free to resolv
     - [Commitizen](https://github.com/commitizen/cz-cli) works with this repo. You can install the CLI globally (`yarn global add commitizen`) where you can then create formatted commit messages with `git cz` by filling out a few required fields
 12. Push your branch to your fork
 13. Create a pull request from your branch on your fork to `master` on this repo
-14. Have your branch get merged in! :star2:
+14. If your PR changes any UI or styling, **add screenshots** of all the components and screens you've modified **before and after** your changes. We can't approve your PR unless you have those screenshots _and_ we've tested it locally on our simulators/device
+15. Have your branch get merged in! :star2:
 
 If you experience a problem at any point, please don't hesitate to file an issue or send me a message!
 
@@ -53,6 +54,7 @@ Translation contributions are always welcome! If you happen to speak/read any la
 5. Test out selecting your new translation and if it all looks good, submit that PR in! :smile:
 
 ## Styled Components
+
 We're moving from React Native's styles implementation and we are start using [Styled Components](https://www.styled-components.com/) This will let us write the styles for the app in a more _css way_. If you like to know why we're taking this decision you can read [This issue](https://github.com/gitpoint/git-point/issues/480)
 
 ## Troubleshooting
