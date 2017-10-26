@@ -147,6 +147,8 @@ export const uk = {
       searchMessage: 'Пошук {{type}}',
       repository: 'репозиторіїв',
       user: 'користувачів',
+      noUsersFound: 'Користувачів не знайдено :(',
+      noRepositoriesFound: 'Репозиторіїв не знайдено :(',
     },
   },
   user: {
@@ -217,8 +219,8 @@ export const uk = {
       openButton: 'Відкрито',
       closedButton: 'Закрито',
       searchingMessage: 'Пошук по {{query}}',
-      noOpenIssues: 'Не знайдено відкритих pull-запитів!',
-      noClosedIssues: 'Не знайдено закритих pull-запитів!',
+      noOpenPulls: 'Не знайдено відкритих pull-запитів!',
+      noClosedPulls: 'Не знайдено закритих pull-запитів!',
     },
     pullDiff: {
       title: 'Порівняти зміни',
@@ -256,6 +258,12 @@ export const uk = {
       reopenIssue: 'Відкрити знову {{issueType}}',
       areYouSurePrompt: 'Ви впевнені?',
       applyLabelTitle: 'Додати мітку до цієї задачі',
+    },
+    comment: {
+      commentActions: 'Дії З Коментарем',
+      editCommentTitle: 'Редагувати Коментар',
+      editAction: 'Редагувати',
+      deleteAction: 'Видалити',
     },
     main: {
       assignees: 'Відповідальні',
@@ -315,7 +323,6 @@ export const uk = {
     email: 'Електронна пошта',
     website: 'Сайт',
     repositories: 'Репозиторіїв',
-    pullRequest: 'pull-запит',
     issue: 'задача',
     cancel: 'Відминити',
     yes: 'Так',
