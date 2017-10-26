@@ -244,13 +244,9 @@ class PullList extends Component {
           searchType === 0 && (
             <LoadingContainer
               animating={isPendingSearchOpenPulls && searchType === 0}
-              text={translate(
-                'repository.pullList.searchingMessage',
-                locale,
-                {
-                  query,
-                }
-              )}
+              text={translate('repository.pullList.searchingMessage', locale, {
+                query,
+              })}
               style={styles.marginSpacing}
             />
           )}
@@ -259,13 +255,9 @@ class PullList extends Component {
           searchType === 1 && (
             <LoadingContainer
               animating={isPendingSearchClosedPulls && searchType === 1}
-              text={translate(
-                'repository.pullList.searchingMessage',
-                locale,
-                {
-                  query,
-                }
-              )}
+              text={translate('repository.pullList.searchingMessage', locale, {
+                query,
+              })}
               style={styles.marginSpacing}
             />
           )}

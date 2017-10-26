@@ -280,32 +280,35 @@ class Repository extends Component {
         >
           {initalRepository &&
             !initalRepository.owner &&
-            isPendingRepository &&
-            <SectionList
-              title={translate('repository.main.ownerTitle', locale)}
-            >
-              <LoadingUserListItem />
-            </SectionList>}
+            isPendingRepository && (
+              <SectionList
+                title={translate('repository.main.ownerTitle', locale)}
+              >
+                <LoadingUserListItem />
+              </SectionList>
+            )}
 
           {!(initalRepository && initalRepository.owner) &&
             (repository && repository.owner) &&
-            !isPendingRepository &&
-            <SectionList
-              title={translate('repository.main.ownerTitle', locale)}
-            >
-              <UserListItem user={repository.owner} navigation={navigation} />
-            </SectionList>}
+            !isPendingRepository && (
+              <SectionList
+                title={translate('repository.main.ownerTitle', locale)}
+              >
+                <UserListItem user={repository.owner} navigation={navigation} />
+              </SectionList>
+            )}
 
           {initalRepository &&
-            initalRepository.owner &&
-            <SectionList
-              title={translate('repository.main.ownerTitle', locale)}
-            >
-              <UserListItem
-                user={initalRepository.owner}
-                navigation={navigation}
-              />
-            </SectionList>}
+            initalRepository.owner && (
+              <SectionList
+                title={translate('repository.main.ownerTitle', locale)}
+              >
+                <UserListItem
+                  user={initalRepository.owner}
+                  navigation={navigation}
+                />
+              </SectionList>
+            )}
 
           {(isPendingRepository || isPendingContributors) && (
             <LoadingMembersList
@@ -313,7 +316,7 @@ class Repository extends Component {
             />
           )}
 
-          {!isPendingContributors &&
+          {!isPendingContributors && (
             <MembersList
               title={translate('repository.main.contributorsTitle', locale)}
               members={contributors}
@@ -322,10 +325,11 @@ class Repository extends Component {
                 locale
               )}
               navigation={navigation}
-            />}
+            />
+          )}
 
           <SectionList title={translate('repository.main.sourceTitle', locale)}>
-            {showReadMe &&
+            {showReadMe && (
               <ListItem
                 title={translate('repository.main.readMe', locale)}
                 leftIcon={{
@@ -339,7 +343,8 @@ class Repository extends Component {
                     repository,
                   })}
                 underlayColor={colors.greyLight}
-              />}
+              />
+            )}
             <ListItem
               title={translate('repository.main.viewSource', locale)}
               titleStyle={styles.listTitle}
@@ -358,47 +363,48 @@ class Repository extends Component {
           </SectionList>
 
           {!repository.fork &&
-            repository.has_issues &&
-            <SectionList
-              loading={isPendingIssues}
-              title={translate('repository.main.issuesTitle', locale)}
-              noItems={openIssues.length === 0}
-              noItemsMessage={
-                pureIssues.length === 0
-                  ? translate('repository.main.noIssuesMessage', locale)
-                  : translate('repository.main.noOpenIssuesMessage', locale)
-              }
-              showButton
-              buttonTitle={
-                pureIssues.length > 0
-                  ? translate('repository.main.viewAllButton', locale)
-                  : translate('repository.main.newIssueButton', locale)
-              }
-              buttonAction={() => {
-                if (pureIssues.length > 0) {
-                  navigation.navigate('IssueList', {
-                    title: translate('repository.issueList.title', locale),
-                    type: 'issue',
-                    issues: pureIssues,
-                  });
-                } else {
-                  navigation.navigate('NewIssue', {
-                    title: translate('issue.newIssue.title', locale),
-                  });
+            repository.has_issues && (
+              <SectionList
+                loading={isPendingIssues}
+                title={translate('repository.main.issuesTitle', locale)}
+                noItems={openIssues.length === 0}
+                noItemsMessage={
+                  pureIssues.length === 0
+                    ? translate('repository.main.noIssuesMessage', locale)
+                    : translate('repository.main.noOpenIssuesMessage', locale)
                 }
-              }}
-            >
-              {openIssues
-                .slice(0, 3)
-                .map(item =>
-                  <IssueListItem
-                    key={item.id}
-                    type="issue"
-                    issue={item}
-                    navigation={navigation}
-                  />
-                )}
-            </SectionList>}
+                showButton
+                buttonTitle={
+                  pureIssues.length > 0
+                    ? translate('repository.main.viewAllButton', locale)
+                    : translate('repository.main.newIssueButton', locale)
+                }
+                buttonAction={() => {
+                  if (pureIssues.length > 0) {
+                    navigation.navigate('IssueList', {
+                      title: translate('repository.issueList.title', locale),
+                      type: 'issue',
+                      issues: pureIssues,
+                    });
+                  } else {
+                    navigation.navigate('NewIssue', {
+                      title: translate('issue.newIssue.title', locale),
+                    });
+                  }
+                }}
+              >
+                {openIssues
+                  .slice(0, 3)
+                  .map(item => (
+                    <IssueListItem
+                      key={item.id}
+                      type="issue"
+                      issue={item}
+                      navigation={navigation}
+                    />
+                  ))}
+              </SectionList>
+            )}
 
           <SectionList
             loading={isPendingIssues}

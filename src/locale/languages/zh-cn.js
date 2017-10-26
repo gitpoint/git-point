@@ -1,7 +1,7 @@
 // Hash: 01ae4880b9b4296907d680e9b909713c36c42491
 // Link: https://github.com/gitpoint/git-point/pull/260
 
-export const zhCN = {
+export const zhCn = {
   auth: {
     login: {
       connectingToGitHub: '正在连接GitHub...',
@@ -10,22 +10,18 @@ export const zhCN = {
       welcomeTitle: '欢迎来到GitPoint',
       welcomeMessage: '完全免费，功能最强大的GitHub客户端!',
       notificationsTitle: '通知设定',
-      notificationsMessage:
-        '查看并设定你所有未读和参与的通知',
+      notificationsMessage: '查看并设定你所有未读和参与的通知',
       reposTitle: '仓库和用户',
-      reposMessage:
-        '便捷的获取仓库、用户、以及组织的信息',
+      reposMessage: '便捷的获取仓库、用户、以及组织的信息',
       issuesTitle: '问题和合并请求',
-      issuesMessage:
-        '查看问题、参与讨论、以及处理合并请求',
+      issuesMessage: '查看问题、参与讨论、以及处理合并请求',
       signInButton: '登录',
     },
     welcome: {
       welcomeTitle: '欢迎使用GitPoint',
     },
     events: {
-      welcomeMessage:
-        "欢迎！这是你的信息流，在这里你可以看到你关注的仓库和用户最近的活动",
+      welcomeMessage: '欢迎！这是你的信息流，在这里你可以看到你关注的仓库和用户最近的活动',
       commitCommentEvent: '评论提交',
       createEvent: '创建了 {{object}}',
       deleteEvent: '删除了 {{object}}',
@@ -83,7 +79,7 @@ export const zhCN = {
       },
     },
     profile: {
-      orgsRequestApprovalTop: "看不到你所有的组织?",
+      orgsRequestApprovalTop: '看不到你所有的组织?',
       orgsRequestApprovalBottom: '你可能需要请求他们的许可。',
       codePushCheck: '检查更新',
       codePushChecking: '检查更新中...',
@@ -101,28 +97,22 @@ export const zhCN = {
     privacyPolicy: {
       title: '隐私条款',
       effectiveDate: '最近更新: 2017年7月15日',
-      introduction:
-        "我们很高兴您选择使用GitPoint。您可以在本隐私条款中看到我们如何使用，以及不使用，我们用户数据的信息。",
+      introduction: '我们很高兴您选择使用GitPoint。您可以在本隐私条款中看到我们如何使用，以及不使用，我们用户数据的信息。',
       userDataTitle: '用户数据',
       userData1:
-        "我们不使用您任何GitHub的信息。在使用GitHub登录后，用户的OAuth令牌只保存在客户端。我们无法获取令牌信息。我们用户查看或者保存用户的访问令牌。",
+        '我们不使用您任何GitHub的信息。在使用GitHub登录后，用户的OAuth令牌只保存在客户端。我们无法获取令牌信息。我们用户查看或者保存用户的访问令牌。',
       userData2:
-        "这意味着，我们不可能查看、使用、或者分享用户的GitHub数据。即便隐私数据可以被查看，我们也不会查看或者保存它。如果它被意外的保存，我们会使用安全抹除的方案立刻删除它。再次重申，我们设计使用的登录方法可以保证这种情形不会发生。",
+        '这意味着，我们不可能查看、使用、或者分享用户的GitHub数据。即便隐私数据可以被查看，我们也不会查看或者保存它。如果它被意外的保存，我们会使用安全抹除的方案立刻删除它。再次重申，我们设计使用的登录方法可以保证这种情形不会发生。',
       analyticsInfoTitle: '分析数据',
       analyticsInfo1:
-        "目前我们使用Google Analytics和iTunes App Analytics来帮助我们分析GitPoint的流量和使用趋势。这些工具从您的设备上收集包含设备类型、版本、区域、来源等信息。这些信息并无法被用来识别单个用户或者获取任何个人信息。",
-      analyticsInfo2:
-        "如果我们使用第三方平台来收集追溯栈、错误报告、或者其他分析用信息，我们将保证用户的信息均为匿名并且加密。",
+        '目前我们使用Google Analytics和iTunes App Analytics来帮助我们分析GitPoint的流量和使用趋势。这些工具从您的设备上收集包含设备类型、版本、区域、来源等信息。这些信息并无法被用来识别单个用户或者获取任何个人信息。',
+      analyticsInfo2: '如果我们使用第三方平台来收集追溯栈、错误报告、或者其他分析用信息，我们将保证用户的信息均为匿名并且加密。',
       openSourceTitle: '开源',
-      openSource1:
-        'GitPoint是开源软件，所有对本软件的历史贡献信息都会一直向外界公开。',
-      openSource2:
-        '向本App提交的每次代码贡献都会经过我们的审查以防止任何人注入任何的恶意代码。',
+      openSource1: 'GitPoint是开源软件，所有对本软件的历史贡献信息都会一直向外界公开。',
+      openSource2: '向本App提交的每次代码贡献都会经过我们的审查以防止任何人注入任何的恶意代码。',
       contactTitle: '联系方式',
-      contact1:
-        '感谢阅读我们的隐私条款。我们希望您如同我们享受开发GitPoint的过程一般享受使用它！',
-      contact2:
-        '如果您对本条款或GitPoint有任何问题，请在我们的仓库页面提交：',
+      contact1: '感谢阅读我们的隐私条款。我们希望您如同我们享受开发GitPoint的过程一般享受使用它！',
+      contact2: '如果您对本条款或GitPoint有任何问题，请在我们的仓库页面提交：',
       contactLink: 'GitPoint仓库',
     },
   },
@@ -135,7 +125,7 @@ export const zhCN = {
       participatingButton: '查看参与中',
       allButton: '查看全部',
       retrievingMessage: '正在获取通知',
-      noneMessage: "您没有这个类型的通知",
+      noneMessage: '您没有这个类型的通知',
       markAllAsRead: '全部标记为已读',
     },
   },
