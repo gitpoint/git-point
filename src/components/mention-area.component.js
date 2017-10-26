@@ -1,36 +1,34 @@
 import React, { Component } from 'react';
 import fuzzysort from 'fuzzysort';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  Animated,
-  ScrollView,
-  StyleSheet,
-} from 'react-native';
+import styled from 'styled-components/native';
+import { TouchableOpacity, Animated, ScrollView } from 'react-native';
 
 import { animations, fonts, normalize } from 'config';
 
-const styles = StyleSheet.create({
-  suggestionsRowContainer: {
-    padding: 5,
-    flexDirection: 'row',
-    paddingRight: 15,
-    paddingBottom: 15,
-  },
-  userDetailsBox: {
-    flex: 1,
-    margin: 5,
-  },
-  displayNameText: {
-    fontSize: normalize(12),
-    ...fonts.fontPrimary,
-  },
-  realNameText: {
-    fontSize: normalize(12),
-    ...fonts.fontPrimarySemiBold,
-  },
-});
+const StyledAnimatedView = styled(Animated.View)`
+  ${({ style }) => style};
+`;
+
+const SuggestionsRowContainer = styled.View`
+  flex-direction: row;
+  padding-top: 5;
+  padding-left: 5;
+  padding-right: 15;
+  padding-bottom: 15;
+`;
+
+const UserDetailsBox = styled.View`
+  flex: 1;
+  margin-left: 5;
+  margin-right: 5;
+  margin-top: 5;
+  margin-bottom: 5;
+`;
+
+const DisplayNameText = styled.Text`
+  fontsize: ${normalize(12)};
+  ${fonts.fontPrimary};
+`;
 
 export class MentionArea extends Component {
   props: {
@@ -149,11 +147,11 @@ export class MentionArea extends Component {
         key={user}
         onPress={() => this.onSuggestionTap(user, true)}
       >
-        <View style={styles.suggestionsRowContainer}>
-          <View style={styles.userDetailsBox}>
-            <Text style={styles.displayNameText}>@{user}</Text>
-          </View>
-        </View>
+        <SuggestionsRowContainer>
+          <UserDetailsBox>
+            <DisplayNameText>@{user}</DisplayNameText>
+          </UserDetailsBox>
+        </SuggestionsRowContainer>
       </TouchableOpacity>
     ));
   }
@@ -167,13 +165,13 @@ export class MentionArea extends Component {
     }
 
     return (
-      <Animated.View
-        style={[{ ...this.props.style }, { height: this.state.height }]}
+      <StyledAnimatedView
+        style={{ ...this.props.style, height: this.state.height }}
       >
         <ScrollView keyboardShouldPersistTaps="always">
           {this.state.tracking && this.renderSuggestionsRow(searched)}
         </ScrollView>
-      </Animated.View>
+      </StyledAnimatedView>
     );
   }
 }

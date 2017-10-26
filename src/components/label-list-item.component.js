@@ -15,7 +15,7 @@ const LabelListItemContainer = styled.View`
 `;
 
 const Wrapper = styled.View`
-  padding: 10;
+  padding: 10px;
   margin-left: 5;
   flex-direction: row;
 `;

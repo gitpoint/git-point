@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import label from '../../data/label';
+import label from 'testData/label';
 
 import { LabelButton } from 'components';
 
@@ -9,7 +9,7 @@ describe('<LabelButton />', () => {
   it('correctly renders small style', () => {
     const wrapper = shallow(<LabelButton label={label} />);
 
-    expect(wrapper.prop('title')).toEqual('test tag');
+    expect(wrapper.prop('title')).toEqual(label.name);
     expect(wrapper.prop('fontSize')).toEqual(12);
     expect(wrapper.prop('color')).toEqual('#000000');
     expect(wrapper.prop('backgroundColor')).toEqual('#c3c3c3');
@@ -19,7 +19,7 @@ describe('<LabelButton />', () => {
   it('correctly renders large style', () => {
     const wrapper = shallow(<LabelButton label={label} largeWithTag />);
 
-    expect(wrapper.prop('title')).toEqual('test tag');
+    expect(wrapper.prop('title')).toEqual(label.name);
     expect(wrapper.prop('fontSize')).toEqual(13);
     expect(wrapper.prop('color')).toEqual('#000000');
     expect(wrapper.prop('backgroundColor')).toEqual('#c3c3c3');
