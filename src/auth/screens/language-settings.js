@@ -60,7 +60,7 @@ export default [
     name: 'Español',
   },
   {
-    code: 'ua',
+    code: 'uk',
     emojiCode: ':flag-ua:',
     name: 'Українська',
   },
