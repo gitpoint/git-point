@@ -1,6 +1,5 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import sinon from 'sinon';
 import {Platform} from 'react-native';
 
 import {CommentInput} from 'components';
@@ -63,7 +62,7 @@ describe('<CommentInput />', () => {
         issueLocked={false}/>
     );
 
-    const handleSubmitSpy = sinon.spy(wrapper.instance(), 'handleSubmit');
+    const handleSubmitSpy = jest.spyOn(wrapper.instance(), 'handleSubmit');
 
     wrapper
       .instance()
@@ -77,7 +76,7 @@ describe('<CommentInput />', () => {
       .find('TouchableOpacity')
       .simulate('press');
 
-    expect(handleSubmitSpy.calledOnce).toBe(true);
+    expect(handleSubmitSpy).toHaveBeenCalled();
   });
 
   it('should change the content size', () => {
@@ -109,7 +108,7 @@ describe('<CommentInput />', () => {
         issueLocked={false}/>
     );
 
-    const handleSubmitEditingSpy = sinon.spy(wrapper.instance(), 'handleSubmitEditing');
+    const handleSubmitEditingSpy = jest.spyOn(wrapper.instance(), 'handleSubmitEditing');
 
     wrapper
       .instance()
@@ -125,7 +124,7 @@ describe('<CommentInput />', () => {
         }
       });
 
-    expect(handleSubmitEditingSpy.calledOnce).toBe(true);
+    expect(handleSubmitEditingSpy).toHaveBeenCalled();
 
     expect(wrapper.state('text')).toEqual('Changed by submitEditing\n');
   });
