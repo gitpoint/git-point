@@ -42,13 +42,17 @@ const getCompanyFormatted = company => {
 };
 
 const companyInOrgs = (company, orgs) =>
-  orgs.some(org => org.login === getCompanyFormatted(company));
+  orgs.some(
+    org =>
+      org.login.toLowerCase() === getCompanyFormatted(company).toLowerCase()
+  );
 
 const navigateToCompany = (company, orgs, navigation) => {
   if (companyInOrgs(company, orgs)) {
     navigation.navigate('Organization', {
       organization: orgs.find(
-        org => org.login === getCompanyFormatted(company)
+        org =>
+          org.login.toLowerCase() === getCompanyFormatted(company).toLowerCase()
       ),
     });
   }

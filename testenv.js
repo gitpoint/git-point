@@ -26,6 +26,11 @@ jest.mock('react-native-i18n', () => {
   };
 });
 
+jest.mock('react-native-communications', () => ({
+  web: jest.fn(),
+  email: jest.fn(),
+}));
+
 jest.mock('react-native-cookies', () => ({}));
 
 jest.mock('react-native-code-push', () => ({}));
