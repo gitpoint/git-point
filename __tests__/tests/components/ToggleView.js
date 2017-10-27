@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text } from 'react-native';
-import sinon from 'sinon';
 import { shallow, render } from 'enzyme';
 
 import { ToggleView } from 'components';
@@ -47,7 +46,6 @@ describe('<ToggleView />', () => {
   });
 
   it('uncollapses the hidden element when touched', () => {
-    const onPress = sinon.spy();
     const wrapper = shallow(
       <ToggleView>
         <Text>I am hidden</Text>
@@ -60,7 +58,6 @@ describe('<ToggleView />', () => {
   });
 
   it('recollapses the hidden element when touched twice', () => {
-    const onPress = sinon.spy();
     const wrapper = shallow(
       <ToggleView>
         <Text>I am hidden</Text>
