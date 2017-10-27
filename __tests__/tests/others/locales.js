@@ -1,3 +1,4 @@
+import { common } from 'config';
 import * as languages from 'locale/languages';
 
 function createExpectedObject(object) {
@@ -13,14 +14,14 @@ function createExpectedObject(object) {
   return ret;
 }
 
-const baseLanguage = 'en';
+const baseLanguage = common.defaultLocale;
 const expectedObject = createExpectedObject(languages[baseLanguage]);
 
 describe('Locales', () => {
   Object.keys(languages).forEach(key => {
     if (key === baseLanguage) return;
 
-    it(`${baseLanguage} vs ${key}`, () => {
+    it(`${key} should contain same keys as ${baseLanguage}`, () => {
       expect(languages[key]).toMatchObject(expectedObject);
     });
   });
