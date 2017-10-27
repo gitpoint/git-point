@@ -145,6 +145,8 @@ export const tr = {
       searchMessage: 'Herhangi bir {{type}} ara',
       repository: 'repository',
       user: 'kullanıcı',
+      noUsersFound: 'Kullanıcı Bulunamadı :(',
+      noRepositoriesFound: 'Repository Bulunamadı :(',
     },
   },
   user: {
@@ -198,6 +200,7 @@ export const tr = {
       forkedFromMessage: 'buradan fork edildi:',
       starred: 'Starred',
       watching: 'İzleniyor',
+      watchers: 'İzleyenler',
     },
     codeList: {
       title: 'Code',
