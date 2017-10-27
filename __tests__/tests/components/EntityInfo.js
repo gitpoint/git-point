@@ -8,6 +8,7 @@ import user, {
   noTaggedCompany,
   noLocation,
   noEmail,
+  noHttpInBlog,
 } from 'testData/api/user';
 
 import { EntityInfo } from 'components';
@@ -266,6 +267,58 @@ describe('<EntityInfo />', () => {
 
     expect(wrapper.find({ title: 'Company' }).prop('subtitle')).toEqual(
       noEmail.company
+    );
+    wrapper.find({ title: 'Company' }).simulate('press');
+    expect(navigationMock.navigate).toBeCalledWith('Organization', {
+      organization,
+    });
+  });
+
+  it('should render user without a blog beginning with http', () => {
+    const navigationMock = {
+      navigate: jest.fn(),
+    };
+
+    const wrapper = shallow(
+      <EntityInfo
+        entity={noHttpInBlog}
+        orgs={[organization]}
+        language="en"
+        navigation={navigationMock}
+      />
+    );
+
+    expect(wrapper.find({ title: 'Location' }).prop('subtitle')).toEqual(
+      noHttpInBlog.location
+    );
+    wrapper.find({ title: 'Location' }).simulate('press');
+    expect(Communications.web).toBeCalledWith(
+      `https://www.google.com/maps/place/${noHttpInBlog.location.replace(
+        / /g,
+        '+'
+      )}`
+    );
+
+    expect(wrapper.find({ title: 'Email' }).prop('subtitle')).toEqual(
+      noHttpInBlog.email
+    );
+    wrapper.find({ title: 'Email' }).simulate('press');
+    expect(Communications.email).toBeCalledWith(
+      [noHttpInBlog.email],
+      null,
+      null,
+      null,
+      null
+    );
+
+    expect(wrapper.find({ title: 'Website' }).prop('subtitle')).toEqual(
+      noHttpInBlog.blog
+    );
+    wrapper.find({ title: 'Website' }).simulate('press');
+    expect(Communications.web).toBeCalledWith(`http://${noHttpInBlog.blog}`);
+
+    expect(wrapper.find({ title: 'Company' }).prop('subtitle')).toEqual(
+      noHttpInBlog.company
     );
     wrapper.find({ title: 'Company' }).simulate('press');
     expect(navigationMock.navigate).toBeCalledWith('Organization', {
