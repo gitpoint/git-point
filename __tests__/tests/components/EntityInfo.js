@@ -325,4 +325,16 @@ describe('<EntityInfo />', () => {
       organization,
     });
   });
+
+  it('should not render without required keys', () => {
+    const wrapper = shallow(
+      <EntityInfo
+        entity={{ name: 'John Doe' }}
+        orgs={[organization]}
+        language="en"
+      />
+    );
+
+    expect(wrapper.html()).toEqual(null);
+  });
 });
