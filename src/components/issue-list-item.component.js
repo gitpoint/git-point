@@ -19,7 +19,7 @@ const Container = styled.View`
   align-items: flex-start;
   justify-content: center;
   padding-right: 10;
-  padding: 5;
+  padding: 5px;
   border-bottom-width: 1;
   border-bottom-color: ${colors.greyLight};
 `;
