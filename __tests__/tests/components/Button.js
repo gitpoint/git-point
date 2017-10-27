@@ -1,17 +1,16 @@
 import React from 'react';
-import sinon from 'sinon';
 import { shallow, render } from 'enzyme';
 
 import { Button } from 'components';
 
 describe('<Button />', () => {
   it('correctly responds to presses', () => {
-    const onPress = sinon.spy();
+    const onPress = jest.fn();
     const wrapper = shallow(<Button title="test text" onPress={onPress} />);
 
     wrapper.simulate('press');
 
-    expect(onPress.calledOnce).toEqual(true);
+    expect(onPress.mock.calls.length).toEqual(1);
   });
 
   it('correctly renders with only title', () => {
