@@ -37,10 +37,8 @@ export const uk = {
       pullRequestEvent: '{{action}} pull-запит',
       pullRequestReviewEvent: '{{action}} перегляд коду pull-запиту',
       pullRequestReviewCommentEvent: '{{action}} pull-запит',
-      pullRequestReviewEditedEvent:
-        '{{action}} свій коментар в pull-запиті',
-      pullRequestReviewDeletedEvent:
-        '{{action}} свій комментар в pull-запиті',
+      pullRequestReviewEditedEvent: '{{action}} свій коментар в pull-запиті',
+      pullRequestReviewDeletedEvent: '{{action}} свій комментар в pull-запиті',
       releaseEvent: '{{action}} реліз',
       atConnector: 'на',
       toConnector: 'в',
@@ -269,10 +267,8 @@ export const uk = {
       assignees: 'Відповідальні',
       mergeButton: 'Приняти pull-запит',
       noDescription: 'Немає опису.',
-      lockedCommentInput:
-        'Заблоковано, але ви все ще можете прокоментувати...',
+      lockedCommentInput: 'Заблоковано, але ви все ще можете прокоментувати...',
       commentInput: 'Додати коментар...',
-      commentButton: 'Відправити',
       lockedIssue: 'Задача заблокована',
       states: {
         open: 'Відкрито',
