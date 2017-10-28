@@ -14,7 +14,7 @@ describe('<CommentInput />', () => {
     onSubmit: () => {},
   };
 
-  it('should render TextInput and TouchableOpacity if user can post', () => {
+  it('should render TextInput and TouchableOpacity if I can post', () => {
 
     const wrapper = shallow(
       <CommentInput {...defaultProps}/>
@@ -25,7 +25,7 @@ describe('<CommentInput />', () => {
     expect(wrapper.find('Text').length).toEqual(0);
   });
 
-  it("should not render TextInput and TouchableOpacity if user can't post", () => {
+  it("should not render TextInput and TouchableOpacity if I can't post", () => {
 
     const wrapper = shallow(
       <CommentInput
@@ -39,7 +39,7 @@ describe('<CommentInput />', () => {
     expect(wrapper.find('Text').length).toEqual(1);
   });
 
-  it('should update the state text if value change', () => {
+  it('should update the state text if value changed', () => {
     const wrapper = shallow(
       <CommentInput {...defaultProps}/>
     );
