@@ -334,6 +334,9 @@ export const ptBr = {
       y: '%dy',
       yy: '%dy',
     },
+    abbreviations: {
+      thousand: 'k',
+    },
     openInBrowser: 'Abrir no Navegador.',
   },
 };

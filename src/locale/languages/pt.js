@@ -238,6 +238,7 @@ export const pt = {
       membersTitle: 'MEMBROS',
       descriptionTitle: 'DESCRIÇÃO',
     },
+    organizationActions: 'Opções de Entidade',
   },
   issue: {
     settings: {
@@ -281,6 +282,7 @@ export const pt = {
       },
       openIssueSubTitle: '#{{number}} aberta em {{time}} por {{user}}',
       closedIssueSubTitle: '#{{number}} de {{user}} foi  fechada em {{time}} ',
+      issueActions: 'Acções sobre Issues',
     },
     newIssue: {
       title: 'Nova Issue',
@@ -334,5 +336,9 @@ export const pt = {
       y: '%dy',
       yy: '%dy',
     },
+    abbreviations: {
+      thousand: 'k',
+    },
+    openInBrowser: 'Abrir no Browser',
   },
 };
