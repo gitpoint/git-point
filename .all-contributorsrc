@@ -562,6 +562,43 @@
       "avatar_url": "https://avatars2.githubusercontent.com/u/3025600?v=4",
       "profile": "https://co.linkedin.com/in/josenaranjo/en",
       "contributions": []
+    },
+    {
+      "login": "MrLoh",
+      "name": "Tobias Lohse",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1285032?v=4",
+      "profile": "http://MrLoh.se",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "kenitive",
+      "name": "Serhii Baraniuk",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/5467717?v=4",
+      "profile": "https://www.facebook.com/serhii.baraniuk",
+      "contributions": [
+        "test"
+      ]
+    },
+    {
+      "login": "stupergenius",
+      "name": "Ben Snider",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/57701?v=4",
+      "profile": "http://www.bensnider.com/",
+      "contributions": [
+        "test"
+      ]
+    },
+    {
+      "login": "shmesa22",
+      "name": "Simon Hoyos",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/23706543?v=4",
+      "profile": "https://www.linkedin.com/in/simonhoyos/",
+      "contributions": [
+        "code",
+        "design"
+      ]
     }
   ]
 }
