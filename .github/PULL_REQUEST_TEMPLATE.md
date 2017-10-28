@@ -4,19 +4,24 @@
   We can't express how grateful we are that you're working on making GitPoint
   better! We're thrilled to take a look at the changes you've made and merge
   them in as soon as possible. Please fill out this template to make the
-  reviewal process as quick and smooth as possible!
+  reviewal process as quick and smooth as possible. In addition, please make
+  sure you remember to add yourself to the contributors list with the following
+  command:
+
+  $ yarn contributors:add
 
   Thanks again for your hard work!
 -->
 
-| Question         | Response |
-| ---------------- | -------- |
-| Version?         | v1.4.0   |
-| Bug fix?         | yes/no   |
-| New feature?     | yes/no   |
-| Includes tests?  | yes/no   |
-| All Tests pass?  | yes/no   |
-| Related ticket?  | #...     |
+| Question         | Response    |
+| ---------------- | ----------- |
+| Version?         | v1.4.0      |
+| Devices tested?  | iPhone 7... |
+| Bug fix?         | yes/no      |
+| New feature?     | yes/no      |
+| Includes tests?  | yes/no      |
+| All Tests pass?  | yes/no      |
+| Related ticket?  | #...        |
 
 ---
 
