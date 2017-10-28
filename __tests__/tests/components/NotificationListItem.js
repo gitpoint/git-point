@@ -38,7 +38,7 @@ describe('<NotificationListItem />', () => {
     expect(result).toBe(TouchableOpacity);
   });
 
-  it('should call navigation when user press TitleComponent', () => {
+  it('should call navigation when user presses TitleComponent', () => {
     const notification = {
       subject: {
         type: 'not a commit',
