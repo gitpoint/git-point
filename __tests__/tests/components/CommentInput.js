@@ -6,7 +6,7 @@ import {CommentInput} from 'components';
 
 describe('<CommentInput />', () => {
 
-  let defaultProps = {
+  const defaultProps = {
     users: [],
     userHasPushPermission: true,
     issueLocked: false,
@@ -14,7 +14,7 @@ describe('<CommentInput />', () => {
     onSubmit: () => {},
   };
 
-  it("should render 'TextInput' and TouchableOpacity if user can post", () => {
+  it('should render TextInput and TouchableOpacity if user can post', () => {
 
     const wrapper = shallow(
       <CommentInput {...defaultProps}/>
@@ -25,7 +25,7 @@ describe('<CommentInput />', () => {
     expect(wrapper.find('Text').length).toEqual(0);
   });
 
-  it("should not render 'TextInput' and TouchableOpacity if user can post", () => {
+  it("should not render TextInput and TouchableOpacity if user can't post", () => {
 
     const wrapper = shallow(
       <CommentInput
@@ -41,10 +41,7 @@ describe('<CommentInput />', () => {
 
   it('should update the state text if value change', () => {
     const wrapper = shallow(
-      <CommentInput
-        {...defaultProps}
-        userHasPushPermission={true}
-        issueLocked={false}/>
+      <CommentInput {...defaultProps}/>
     );
 
     const input = wrapper.find('TextInput');
@@ -56,10 +53,7 @@ describe('<CommentInput />', () => {
 
   it('should call handleSubmit methods when submitted', () => {
     const wrapper = shallow(
-      <CommentInput
-        {...defaultProps}
-        userHasPushPermission={true}
-        issueLocked={false}/>
+      <CommentInput {...defaultProps}/>
     );
 
     const handleSubmitSpy = jest.spyOn(wrapper.instance(), 'handleSubmit');
@@ -81,10 +75,7 @@ describe('<CommentInput />', () => {
 
   it('should change the content size', () => {
     const wrapper = shallow(
-      <CommentInput
-        {...defaultProps}
-        userHasPushPermission={true}
-        issueLocked={false}/>
+      <CommentInput {...defaultProps}/>
     );
 
     wrapper
@@ -102,10 +93,7 @@ describe('<CommentInput />', () => {
 
   it('should call handleSubmitEditing methods when onSubmitEditing event raised', () => {
     const wrapper = shallow(
-      <CommentInput
-        {...defaultProps}
-        userHasPushPermission={true}
-        issueLocked={false}/>
+      <CommentInput {...defaultProps}/>
     );
 
     const handleSubmitEditingSpy = jest.spyOn(wrapper.instance(), 'handleSubmitEditing');
