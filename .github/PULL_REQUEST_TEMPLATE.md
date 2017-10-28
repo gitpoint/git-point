@@ -9,6 +9,17 @@
   Thanks again for your hard work!
 -->
 
+| Question         | Response |
+| ---------------- | -------- |
+| Version?         | v1.4.0   |
+| Bug fix?         | yes/no   |
+| New feature?     | yes/no   |
+| Includes tests?  | yes/no   |
+| All Tests pass?  | yes/no   |
+| Related ticket?  | #...     |
+
+---
+
 ## Screenshots
 
 <!--
@@ -17,9 +28,9 @@
   free to delete this section.
 -->
 
-| Before | After |
-|--------|-------|
-| ![image](http://placekitten.com/700/1000) | ![image](http://placekitten.com/700/1001) |
+| Before   | After    |
+| -------- | -------- |
+| ![before](http://placekitten.com/700/1000) | ![after](http://placekitten.com/700/1001) |
 
 ## Description
 
