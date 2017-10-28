@@ -1,4 +1,4 @@
-# Guidelines about how to write your unit tests for Gitpoint
+# Test guidlines
 We're using [Jest](https://facebook.github.io/jest/) and [Enzyme](https://github.com/airbnb/enzyme) for our unit tests.
 
 First of all, what we want with our unit tests is to ensure that our components behave the way we want. We're testing each component as a single unit. You should test your components isolated from the rest of the application (no redux involved for example)
@@ -67,7 +67,7 @@ describe('<TheComponent />', () => { // Usually, is the name of the component.
 
   it('should not render the Bar component when isOpen is falsy', () => { ... });
 
-  it('should return 'the NAME' when foo received \'name\' as a param', () => { ... });
+  it('should return 'the NAME' when foo received "name" as a param', () => { ... });
 
   // ...add more tests accordingly
 
