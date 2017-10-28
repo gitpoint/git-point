@@ -40,7 +40,13 @@ const PostButtonContainerCantPost = PostButtonContainerCanPost.withComponent(
   View
 );
 
-const PostButtonIcon = ({ style }) => <Icon name="send" iconStyle={style} />;
+type PostButtonIconProps = {
+  style: Object,
+};
+
+const PostButtonIcon = ({ style }: PostButtonIconProps) => (
+  <Icon name="send" iconStyle={style} />
+);
 const StyledPostButtonIcon = styled(PostButtonIcon)`
   color: ${props => (props.disabled ? colors.grey : colors.primaryDark)};
 `;
