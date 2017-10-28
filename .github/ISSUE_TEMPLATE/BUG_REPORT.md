@@ -22,11 +22,23 @@
   Thanks!
 -->
 
-## Phone OS and Model
+| Question         | Response    |
+| ---------------- | ----------- |
+| Version?         | v1.4.0      |
+| Devices tested?  | iPhone 7... |
+
+---
+
+## What Currently Happens?
 
 <!--
-  Please specify the OS version and model of phones that this bug has been
-  tested on.
+  Describe what happens.
+-->
+
+## What Do You Expect To Happen?
+
+<!--
+  Describe what you expect to happen differently.
 -->
 
 ## My Reproduction Steps
@@ -40,13 +52,6 @@
 1. XXX
 1. XXX
 1. XXX
-
-## Actual vs. Expected
-
-<!--
-  Describe what happened. What did you expect to happen?
--->
-
 
 <!-- DO NOT MODIFY BELOW THIS LINE -->
 --------------------------------------

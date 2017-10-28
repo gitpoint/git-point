@@ -22,13 +22,13 @@
   Thanks!
 -->
 
-## What Currently Happens
+## What Currently Happens?
 
 <!--
   Describe the current behavior.
 -->
 
-## What Would You Like To Happen
+## What Would You Like To Happen?
 
 <!--
   Describe what you'd like to see added. Be as descriptive as possible so we can
