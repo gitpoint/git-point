@@ -80,6 +80,7 @@ export class NotificationListItem extends Component {
       <View style={styles.container}>
         <View style={styles.wrapper}>
           <TitleComponent
+            nativeId="TitleComponent"
             style={styles.notificationInfo}
             onPress={() => navigationAction(notification)}
           >
