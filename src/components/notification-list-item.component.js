@@ -57,10 +57,8 @@ export class NotificationListItem extends Component {
     return notification.subject.type === 'Commit' ? View : TouchableOpacity;
   };
 
-  getIconName = () => {
-    const { notification } = this.props;
-
-    switch (notification.subject.type) {
+  getIconName = type => {
+    switch (type) {
       case 'commit':
         return 'git-commit';
       case 'pullRequest':
@@ -74,7 +72,7 @@ export class NotificationListItem extends Component {
     const { notification, iconAction, navigationAction } = this.props;
 
     const TitleComponent = this.getComponentType();
-    const iconName = this.getIconName();
+    const iconName = this.getIconName(notification.subject.type);
 
     return (
       <View style={styles.container}>
@@ -98,6 +96,7 @@ export class NotificationListItem extends Component {
 
           {notification.unread && (
             <TouchableOpacity
+              nativeId="notification-unread"
               style={styles.iconContainer}
               onPress={() => iconAction(notification.id)}
             >

@@ -4,6 +4,7 @@ import { NotificationListItem } from 'components';
 import { View, TouchableOpacity } from 'react-native';
 
 const defaultProps = {
+  id: 1,
   notification: {
     subject: {
       type: 'Commit',
@@ -57,5 +58,38 @@ describe('<NotificationListItem />', () => {
     expect(navigationActionMock).toHaveBeenCalledWith(notification);
   });
 
-  it.skip('should return the correct icon name');
+  it('should return the correct icon name', () => {
+    const wrapper = shallow(<NotificationListItem {...defaultProps} />);
+
+    expect(wrapper.instance().getIconName('commit')).toEqual('git-commit');
+    expect(wrapper.instance().getIconName('pullRequest')).toEqual(
+      'git-pull-request'
+    );
+    expect(wrapper.instance().getIconName('wrong data')).toEqual(
+      'issue-opened'
+    );
+  });
+
+  it('should call iconAction on press and notification is unread', () => {
+    const notification = {
+      id: 1,
+      subject: {
+        type: 'Commit',
+      },
+      unread: true,
+    };
+    const iconActionMock = jest.fn();
+    const wrapper = shallow(
+      <NotificationListItem
+        {...defaultProps}
+        notification={notification}
+        iconAction={iconActionMock}
+      />
+    );
+
+    wrapper.find({ nativeId: 'notification-unread' }).simulate('press');
+
+    expect(iconActionMock).toHaveBeenCalledWith(1);
+    expect(iconActionMock).toHaveBeenCalledTimes(1);
+  });
 });
