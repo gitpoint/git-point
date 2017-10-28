@@ -11,22 +11,13 @@
 
 const React = require('react-native'); // eslint-disable-line no-undef
 
-const { PixelRatio, Dimensions } = React;
-
-const pixelRatio = PixelRatio.get();
-const deviceHeight = Dimensions.get('window').height;
-const deviceWidth = Dimensions.get('window').width;
-
-// -- Testing Only --
-// const fontScale = PixelRatio.getFontScale();
-// const layoutSize = PixelRatio.getPixelSizeForLayoutSize(14);
-// console.log('normalizeText getPR ->', pixelRatio);
-// console.log('normalizeText getFS ->', fontScale);
-// console.log('normalizeText getDH ->', deviceHeight);
-// console.log('normalizeText getDW ->', deviceWidth);
-// console.log('normalizeText getPSFLS ->', layoutSize);
-
 export const normalize = size => {
+  const { PixelRatio, Dimensions } = React;
+
+  const pixelRatio = PixelRatio.get();
+  const deviceHeight = Dimensions.get('window').height;
+  const deviceWidth = Dimensions.get('window').width;
+
   if (pixelRatio === 2) {
     // iphone 5s and older Androids
     if (deviceWidth < 360) {
