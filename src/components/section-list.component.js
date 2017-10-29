@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, ActivityIndicator } from 'react-native';
 import { List, ListItem, Button } from 'react-native-elements';
+import styled from 'styled-components/native';
 
 import { colors, fonts } from 'config';
 
@@ -16,32 +17,37 @@ type Props = {
   buttonAction: Function,
 };
 
+const Section = styled.View`
+  margin-top: 15px;
+`;
+const SectionTitle = styled.Text`
+  color: ${colors.black};
+  padding: 15px;
+  ${fonts.fontPrimaryBold};
+`;
+const StyledTitleView = styled.View`
+  padding: 15px;
+`;
+const LoadingIcon = styled(ActivityIndicator)`
+  margin: 20px 0px;
+`;
+const StyledButton = styled(Button)`
+  background-color: ${colors.white};
+  border-color: ${colors.primaryDark};
+  border-width: 1px;
+  border-radius: 3px;
+  padding: 5px 10px;
+`;
 const styles = StyleSheet.create({
-  section: {
-    marginTop: 15,
-  },
   topHeader: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  sectionTitle: {
-    color: colors.black,
-    padding: 15,
-    ...fonts.fontPrimaryBold,
-  },
   listTitle: {
     color: colors.black,
     ...fonts.fontPrimary,
-  },
-  button: {
-    backgroundColor: colors.white,
-    borderColor: colors.primaryDark,
-    borderWidth: 1,
-    borderRadius: 3,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
   },
   list: {
     marginTop: 0,
@@ -49,9 +55,6 @@ const styles = StyleSheet.create({
   noOuterBorders: {
     borderTopWidth: 0,
     borderBottomWidth: 0,
-  },
-  loadingIcon: {
-    marginVertical: 20,
   },
 });
 
@@ -69,9 +72,7 @@ export const SectionList = ({
   let listDisplay;
 
   if (loading) {
-    listDisplay = (
-      <ActivityIndicator animating={loading} style={styles.loadingIcon} />
-    );
+    listDisplay = <LoadingIcon animating={loading} />;
   } else if (noItems) {
     listDisplay = (
       <ListItem
@@ -87,24 +88,23 @@ export const SectionList = ({
   let sectionTitle = '';
 
   if (typeof title === 'string') {
-    sectionTitle = <Text style={styles.sectionTitle}>{title}</Text>;
+    sectionTitle = <SectionTitle>{title}</SectionTitle>;
   } else {
-    sectionTitle = <View style={{ padding: 15 }}>{title}</View>;
+    sectionTitle = <StyledTitleView>{title}</StyledTitleView>;
   }
 
   return (
-    <View style={styles.section}>
+    <Section>
       <View style={styles.topHeader}>
         {sectionTitle}
 
         {showButton &&
           !loading && (
-            <Button
+            <StyledButton
               title={buttonTitle}
               textStyle={fonts.fontPrimarySemiBold}
               fontSize={13}
               color={showButton ? colors.primaryDark : colors.white}
-              buttonStyle={styles.button}
               onPress={buttonAction}
             />
           )}
@@ -114,7 +114,7 @@ export const SectionList = ({
       >
         {listDisplay}
       </List>
-    </View>
+    </Section>
   );
 };
 
