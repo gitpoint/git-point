@@ -26,7 +26,7 @@ const UserDetailsBox = styled.View`
 `;
 
 const DisplayNameText = styled.Text`
-  fontsize: ${normalize(12)};
+  font-size: ${normalize(12)};
   ${fonts.fontPrimary};
 `;
 
