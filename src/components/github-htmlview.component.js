@@ -81,6 +81,13 @@ const quotedEmailToggleStyle = {
   marginTop: 3,
 };
 
+const detailsSummaryPrefixStyle = {
+  alignSelf: 'flex-start',
+  lineHeight: normalize(20),
+  fontSize: normalize(20),
+  marginRight: 3,
+};
+
 const styleSheet = StyleSheet.create(styles);
 
 const { width } = Dimensions.get('window');
@@ -197,6 +204,8 @@ export class GithubHtmlView extends Component {
           /<span class="email-hidden-toggle"><a href="#">…<\/a><\/span>/g,
           ''
         )
+        .replace(/<\/summary>/g, '</summary><hidden>')
+        .replace(/<\/details>/g, '</hidden></details>')
         // Remove links & spans around images
         .replace(/<a[^>]+><img([^>]+)><\/a>/g, '<img$1>')
         .replace(/<span[^>]*><img([^>]+)><\/span>/g, '<img$1>')
@@ -243,7 +252,7 @@ export class GithubHtmlView extends Component {
           <View key={index}>{defaultRenderer(node.children, node)}</View>
         ),
         code: (node, index, siblings, parent, defaultRenderer) => {
-          if (parent.name === 'pre') {
+          if (parent && parent.name === 'pre') {
             return (
               <SyntaxHighlighter
                 key={index}
@@ -293,6 +302,32 @@ export class GithubHtmlView extends Component {
           }
 
           return undefined;
+        },
+        details: (node, index, siblings, parent, defaultRenderer) => {
+          const tags = onlyTagsChildren(node);
+
+          return (
+            <ToggleView
+              TouchableView={collapse => {
+                const prefix = collapse ? '▸' : '▾';
+
+                return [
+                  <Text style={detailsSummaryPrefixStyle}> {prefix}</Text>,
+                  defaultRenderer([tags[0]], node),
+                ];
+              }}
+              TouchableStyle={{
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+              }}
+            >
+              {defaultRenderer([tags[1]], node)}
+            </ToggleView>
+          );
+        },
+        summary: (node, index, siblings, parent, defaultRenderer) => {
+          return <View>{defaultRenderer(node.children, parent)}</View>;
         },
         img: (node, index, siblings, parent, defaultRenderer) => {
           if (hasAncestor(node, ['ol', 'ul', 'span'])) {
@@ -385,7 +420,7 @@ export class GithubHtmlView extends Component {
             </Text>
           );
         },
-      };
+      }; // end of renders object
 
       if (_node.type === 'text') {
         if (_node.data === '\n') {
