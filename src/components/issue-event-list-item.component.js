@@ -21,37 +21,29 @@ const IconStyled = styled(Icon)`
   height: 26;
   margin-left: 14;
   margin-right: 14;
-  flex-grow: 0;
-  flex-shrink: 0;
-  flex-basis: 26;
+  flex: 0 0 26px;
 `;
 
 const ContentContainer = styled.View`
   flex-direction: row;
-  flex-grow: 1;
-  flex-shrink: 1;
+  flex: 1 1;
   border-bottom-color: ${colors.greyLight};
   border-bottom-width: 1;
 `;
 
 const EventTextContainer = styled.View`
   padding-bottom: 10;
-  flex-direction: row;
-  flex-wrap: wrap;
-  flex-grow: 1;
-  flex-shrink: 1;
+  flex-flow: row wrap;
+  flex: 1 1;
   align-items: center;
 `;
 
 const DateContainer = styled.View`
-  flex: 1;
   align-items: flex-end;
   justify-content: center;
   align-self: flex-start;
   margin-top: 2;
-  flex-grow: 0;
-  flex-shrink: 0;
-  flex-basis: 39;
+  flex: 0 0 39px;
   width: 39;
 `;
 

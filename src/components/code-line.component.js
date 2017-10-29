@@ -57,8 +57,7 @@ const CodeLineStyled = styled.Text`
 
 const LineNumbers = styled.View`
   width: 80;
-  padding-left: 10;
-  padding: 3;
+  padding: 3px;
   flex-direction: row;
   justify-content: space-between;
   background-color: ${props =>

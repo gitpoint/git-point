@@ -11,18 +11,12 @@ const StyledAnimatedView = styled(Animated.View)`
 
 const SuggestionsRowContainer = styled.View`
   flex-direction: row;
-  padding-top: 5;
-  padding-left: 5;
-  padding-right: 15;
-  padding-bottom: 15;
+  padding: 5px 15px;
 `;
 
 const UserDetailsBox = styled.View`
   flex: 1;
-  margin-left: 5;
-  margin-right: 5;
-  margin-top: 5;
-  margin-bottom: 5;
+  margin: 5px;
 `;
 
 const DisplayNameText = styled.Text`

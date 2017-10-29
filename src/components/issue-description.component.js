@@ -58,8 +58,7 @@ const DiffBlocksContainer = styled.View`
 `;
 
 const LabelButtonGroup = styled.View`
-  flex-wrap: wrap;
-  flex-direction: row;
+  flex-flow: row wrap;
   margin-left: 54;
   padding-bottom: 15;
 `;
@@ -74,7 +73,8 @@ const MergeButtonContainer = styled.View`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding-vertical: 15;
+  padding-top: 15;
+  padding-bottom: 15;
 `;
 
 export class IssueDescription extends Component {
