@@ -36,18 +36,18 @@ const Wrapper = styled.View`
 `;
 
 const CodeLineContainer = styled.View`
-  min-width: ${Dimensions.get('window').width - 80}
+  min-width: ${Dimensions.get('window').width - 80};
   flex: 0.85;
   background-color: ${props =>
     props.newChunk
       ? colors.codeChunkBlue
-      : addOrDelLineColors(props.change).line}
+      : addOrDelLineColors(props.change).line};
   }
 `;
 
 const CodeLineStyled = styled.Text`
-  font-family: ${styledFonts.fontCode}
-  font-size: ${normalize(11)}
+  font-family: ${styledFonts.fontCode};
+  font-size: ${normalize(11)};
   padding: 3 10;
   ${props =>
     props.newChunk &&
@@ -69,11 +69,11 @@ const LineNumbers = styled.View`
 `;
 
 const CodeLineNumber = styled.Text`
-  font-family: ${styledFonts.fontCode}
-  font-size: ${normalize(11)}
+  font-family: ${styledFonts.fontCode};
+  font-size: ${normalize(11)};
   flex: 1;
   align-items: center;
-  color: ${colors.grey}
+  color: ${colors.grey};
 `;
 
 const SyntaxHighlighterStyled = CodeLineStyled.withComponent(SyntaxHighlighter);

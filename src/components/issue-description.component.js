@@ -36,8 +36,8 @@ const ContainerBorderBottom = styled.View`
 `;
 
 const ListItemStyled = styled(ListItem)`
-  color: ${colors.primaryDark}
-  font-family: ${styledFonts.fontPrimarySemiBold}
+  color: ${colors.primaryDark};
+  font-family: ${styledFonts.fontPrimarySemiBold};
 `;
 
 const ListItemURL = ListItemStyled.extend`

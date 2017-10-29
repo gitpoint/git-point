@@ -15,7 +15,7 @@ const Header = styled.View`
 `;
 
 const IconStyled = styled(Icon)`
-  background-color: ${colors.greyLight}
+  background-color: ${colors.greyLight};
   border-radius: 13;
   width: 26;
   height: 26;
@@ -30,7 +30,7 @@ const ContentContainer = styled.View`
   flex-direction: row;
   flex-grow: 1;
   flex-shrink: 1;
-  border-bottom-color: ${colors.greyLight}
+  border-bottom-color: ${colors.greyLight};
   border-bottom-width: 1;
 `;
 
@@ -56,9 +56,9 @@ const DateContainer = styled.View`
 `;
 
 const BoldText = styled.Text`
-  font-family: ${styledFonts.fontPrimaryBold}
-  font-size: ${normalize(13)}
-  color: ${colors.primaryDark}
+  font-family: ${styledFonts.fontPrimaryBold};
+  font-size: ${normalize(13)};
+  color: ${colors.primaryDark};
 `;
 
 const DateText = styled.Text`
