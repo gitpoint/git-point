@@ -42,7 +42,6 @@ const CodeLineContainer = styled.View`
     props.newChunk
       ? colors.codeChunkBlue
       : addOrDelLineColors(props.change).line};
-  }
 `;
 
 const CodeLineStyled = styled.Text`
