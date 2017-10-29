@@ -15,6 +15,9 @@ If you notice any bugs in the app, see some code that can be improved, or have f
 
 If you want to open a PR that fixes a bug or adds a feature, then we can't thank you enough! It is definitely appreciated if an issue has been created before-hand so it can be discussed first.
 
+## Unit Tests
+Please refer to [Tests Guide](TESTS.md)
+
 ### Working on issues
 
 Please feel free to take on any issue that's currently open. Feel free to resolve any issue that you would enjoy working on even if it happens to be a low priority.

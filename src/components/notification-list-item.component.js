@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import { Icon } from 'react-native-elements';
 
@@ -48,48 +48,63 @@ const styles = StyleSheet.create({
   },
 });
 
-export const NotificationListItem = ({
-  notification,
-  iconAction,
-  navigationAction,
-}: Props) => {
-  const TitleComponent =
-    notification.subject.type === 'Commit' ? View : TouchableOpacity;
+export class NotificationListItem extends Component {
+  props: Props;
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.wrapper}>
-        <TitleComponent
-          style={styles.notificationInfo}
-          onPress={() => navigationAction(notification)}
-        >
-          <Icon
-            color={colors.grey}
-            size={22}
-            name={
-              notification.subject.type === 'Commit'
-                ? 'git-commit'
-                : notification.subject.type === 'PullRequest'
-                  ? 'git-pull-request'
-                  : 'issue-opened'
-            }
-            type="octicon"
-          />
+  getComponentType = () => {
+    const { notification } = this.props;
 
-          <View style={styles.titleContainer}>
-            <Text style={styles.title}>{notification.subject.title}</Text>
-          </View>
-        </TitleComponent>
+    return notification.subject.type === 'Commit' ? View : TouchableOpacity;
+  };
 
-        {notification.unread && (
-          <TouchableOpacity
-            style={styles.iconContainer}
-            onPress={() => iconAction(notification.id)}
+  getIconName = type => {
+    switch (type) {
+      case 'commit':
+        return 'git-commit';
+      case 'pullRequest':
+        return 'git-pull-request';
+      default:
+        return 'issue-opened';
+    }
+  };
+
+  render() {
+    const { notification, iconAction, navigationAction } = this.props;
+
+    const TitleComponent = this.getComponentType();
+    const iconName = this.getIconName(notification.subject.type);
+
+    return (
+      <View style={styles.container}>
+        <View style={styles.wrapper}>
+          <TitleComponent
+            nativeId="TitleComponent"
+            style={styles.notificationInfo}
+            onPress={() => navigationAction(notification)}
           >
-            <Icon color={colors.grey} size={22} name="check" type="octicon" />
-          </TouchableOpacity>
-        )}
+            <Icon
+              color={colors.grey}
+              size={22}
+              name={iconName}
+              type="octicon"
+            />
+
+            <View style={styles.titleContainer}>
+              <Text style={styles.title}>{notification.subject.title}</Text>
+            </View>
+          </TitleComponent>
+
+          {notification.unread && (
+            <TouchableOpacity
+              nativeId="notification-unread"
+              style={styles.iconContainer}
+              onPress={() => iconAction(notification.id)}
+            >
+              <Icon color={colors.grey} size={22} name="check" type="octicon" />
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
-    </View>
-  );
-};
+    );
+  }
+}

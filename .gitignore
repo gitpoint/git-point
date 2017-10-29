@@ -64,4 +64,4 @@ haste-map-react-native-packager*
 .vscode
 .idea
 
-coverage/
+coverage
