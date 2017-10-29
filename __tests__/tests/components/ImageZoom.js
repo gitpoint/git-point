@@ -17,7 +17,7 @@ describe('<ImageZoom />', () => {
     expect(clickableImg.length).toBe(1);
   });
 
-  it('should render Modal when the user presses Touchable', () => {
+  it('should render modal when the user presses Touchable', () => {
     const wrapper = shallow(<ImageZoom {...defaultProps} />);
 
     wrapper.simulate('press');
