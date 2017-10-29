@@ -7,8 +7,8 @@ import styled from 'styled-components/native';
 import { colors, fonts, normalize } from 'config';
 
 const ViewBorderContainer = styled.View`
-  border-bottom-color: ${props => props.noBorderBottom && colors.greyLight};
-  border-bottom-width: ${props => (props.noBorderBottom ? 1 : 0)};
+  border-bottom-color: ${props => props.hasBorderBottom && colors.greyLight};
+  border-bottom-width: ${props => (props.hasBorderBottom ? 1 : 0)};
 `;
 const TouchableBorderContainer = ViewBorderContainer.withComponent(
   TouchableHighlight
@@ -124,7 +124,7 @@ class UserListItemComponent extends Component {
             user.type === 'User' ? { user } : { organization: user }
           )}
         underlayColor={colors.greyLight}
-        noBorderBottom={!noBorderBottom}
+        hasBorderBottom={!noBorderBottom}
       >
         <Wrapper>
           <UserComponent
