@@ -20,8 +20,6 @@ describe('<CommentInput />', () => {
       <CommentInput {...defaultProps}/>
     );
 
-    console.log(wrapper.debug());
-
     expect(wrapper.find('Styled(TextInput)').length).toEqual(1);
     expect(wrapper.find('Styled(TouchableOpacity)').length).toEqual(1);
     expect(wrapper.find('Styled(PostButtonIcon)').length).toEqual(1);
@@ -40,6 +38,7 @@ describe('<CommentInput />', () => {
     expect(wrapper.find('Styled(TextInput)').length).toEqual(0);
     expect(wrapper.find('Styled(TouchableOpacity)').length).toEqual(0);
     expect(wrapper.find('Styled(Text)').length).toEqual(1);
+    expect(wrapper.find('Icon').length).toEqual(1);
   });
 
   it('should render styled TextInput and styled TouchableOpacity if user has post permissions and issue is locked', () => {
