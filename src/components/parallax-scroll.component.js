@@ -27,7 +27,7 @@ type State = {
 const Background = styled.View`
   position: absolute;
   top: 0;
-  background-color: red;
+  background-color: ${colors.primaryDark};
   ${props => props.style};
 `;
 
