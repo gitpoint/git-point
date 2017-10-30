@@ -61,8 +61,8 @@ describe('<NotificationListItem />', () => {
   it('should return the correct icon name', () => {
     const wrapper = shallow(<NotificationListItem {...defaultProps} />);
 
-    expect(wrapper.instance().getIconName('commit')).toEqual('git-commit');
-    expect(wrapper.instance().getIconName('pullRequest')).toEqual(
+    expect(wrapper.instance().getIconName('Commit')).toEqual('git-commit');
+    expect(wrapper.instance().getIconName('PullRequest')).toEqual(
       'git-pull-request'
     );
     expect(wrapper.instance().getIconName('wrong data')).toEqual(
