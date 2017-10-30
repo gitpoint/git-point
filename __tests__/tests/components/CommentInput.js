@@ -14,18 +14,21 @@ describe('<CommentInput />', () => {
     onSubmit: () => {},
   };
 
-  it('should render TextInput and TouchableOpacity if I can post', () => {
+  it('should render styled TextInput and styled TouchableOpacity if user has post permissions and issue is not locked', () => {
 
     const wrapper = shallow(
       <CommentInput {...defaultProps}/>
     );
 
-    expect(wrapper.find('TextInput').length).toEqual(1);
-    expect(wrapper.find('TouchableOpacity').length).toEqual(1);
-    expect(wrapper.find('Text').length).toEqual(0);
+    console.log(wrapper.debug());
+
+    expect(wrapper.find('Styled(TextInput)').length).toEqual(1);
+    expect(wrapper.find('Styled(TouchableOpacity)').length).toEqual(1);
+    expect(wrapper.find('Styled(PostButtonIcon)').length).toEqual(1);
+    expect(wrapper.find('Styled(Text)').length).toEqual(0);
   });
 
-  it("should not render TextInput and TouchableOpacity if I can't post", () => {
+  it('should not render styled TextInput and styled TouchableOpacity if user does not have post permissions and issue is locked', () => {
 
     const wrapper = shallow(
       <CommentInput
@@ -34,24 +37,54 @@ describe('<CommentInput />', () => {
         issueLocked={true}/>
     );
 
-    expect(wrapper.find('TextInput').length).toEqual(0);
-    expect(wrapper.find('TouchableOpacity').length).toEqual(0);
-    expect(wrapper.find('Text').length).toEqual(1);
+    expect(wrapper.find('Styled(TextInput)').length).toEqual(0);
+    expect(wrapper.find('Styled(TouchableOpacity)').length).toEqual(0);
+    expect(wrapper.find('Styled(Text)').length).toEqual(1);
   });
 
-  it('should update the state text if value changed', () => {
+  it('should render styled TextInput and styled TouchableOpacity if user has post permissions and issue is locked', () => {
+    const wrapper = shallow(
+      <CommentInput
+        {...defaultProps}
+        issueLocked={true}/>
+    );
+
+    console.log(wrapper.debug());
+
+    expect(wrapper.find('Styled(TextInput)').length).toEqual(1);
+    expect(wrapper.find('Styled(TouchableOpacity)').length).toEqual(1);
+    expect(wrapper.find('Styled(PostButtonIcon)').length).toEqual(1);
+    expect(wrapper.find('Styled(Text)').length).toEqual(0);
+  });
+
+  it('should render styled TextInput and styled TouchableOpacity if user has not post permissions and issue is not locked', () => {
+    const wrapper = shallow(
+      <CommentInput
+        {...defaultProps}
+        issueLocked={true}/>
+    );
+
+    console.log(wrapper.debug());
+
+    expect(wrapper.find('Styled(TextInput)').length).toEqual(1);
+    expect(wrapper.find('Styled(TouchableOpacity)').length).toEqual(1);
+    expect(wrapper.find('Styled(PostButtonIcon)').length).toEqual(1);
+    expect(wrapper.find('Styled(Text)').length).toEqual(0);
+  });
+
+  it('should update the state text if value is changed', () => {
     const wrapper = shallow(
       <CommentInput {...defaultProps}/>
     );
 
-    const input = wrapper.find('TextInput');
+    const input = wrapper.find('Styled(TextInput)');
 
     input.simulate('changeText', 'Changed text');
 
     expect(wrapper.state('text')).toEqual('Changed text');
   });
 
-  it('should call handleSubmit methods when submitted', () => {
+  it('should call handleSubmit method when submitted', () => {
     const wrapper = shallow(
       <CommentInput {...defaultProps}/>
     );
@@ -63,11 +96,11 @@ describe('<CommentInput />', () => {
       .forceUpdate();
 
     wrapper
-      .find('TextInput')
+      .find('Styled(TextInput)')
       .simulate('changeText', 'Changed text');
 
     wrapper
-      .find('TouchableOpacity')
+      .find('Styled(TouchableOpacity)')
       .simulate('press');
 
     expect(handleSubmitSpy).toHaveBeenCalled();
@@ -79,7 +112,7 @@ describe('<CommentInput />', () => {
     );
 
     wrapper
-      .find('TextInput')
+      .find('Styled(TextInput)')
       .simulate('contentSizeChange', {
         nativeEvent: {
           contentSize: {
@@ -91,7 +124,7 @@ describe('<CommentInput />', () => {
     expect(wrapper.state('height')).toBe(10);
   });
 
-  it('should call handleSubmitEditing methods when onSubmitEditing event raised', () => {
+  it('should call handleSubmitEditing method in Android when onSubmitEditing event is raised', () => {
     const wrapper = shallow(
       <CommentInput {...defaultProps}/>
     );
@@ -105,7 +138,7 @@ describe('<CommentInput />', () => {
     Platform.OS = 'android';
 
     wrapper
-      .find('TextInput')
+      .find('Styled(TextInput)')
       .simulate('submitEditing', {
         nativeEvent: {
           text: 'Changed by submitEditing'
