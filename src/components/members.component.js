@@ -50,6 +50,7 @@ type StyledListProps = {
 const StyledList = ({ style, children }: StyledListProps) => (
   <List containerStyle={style}>{children}</List>
 );
+
 const NoMembersList = styled(StyledList)`
   margin-top: 0;
 `;
@@ -84,6 +85,7 @@ const StyledFlatList = ({
     horizontal
   />
 );
+
 const MembersFlatList = styled(StyledFlatList)`
   padding-left: 15;
   padding-right: 15;
@@ -93,6 +95,7 @@ type GradientProps = {
   style: Object,
   gradientColors: Array,
 };
+
 const Gradient = ({ style, gradientColors }: GradientProps) => (
   <LinearGradient
     style={style}
@@ -101,6 +104,7 @@ const Gradient = ({ style, gradientColors }: GradientProps) => (
     end={{ x: 1, y: 0.5 }}
   />
 );
+
 const ScrollGradient = styled(Gradient)`
   position: absolute;
   width: 15;
