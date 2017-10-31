@@ -18,7 +18,7 @@ type Props = {
 };
 
 const Section = styled.View`
-  margin-top: 15px;
+  margin: 15px 0 0;
 `;
 const SectionTitle = styled.Text`
   color: ${colors.black};
@@ -29,7 +29,7 @@ const StyledTitleView = styled.View`
   padding: 15px;
 `;
 const LoadingIcon = styled(ActivityIndicator)`
-  margin: 20px 0px;
+  margin: 20px 0;
 `;
 const StyledButton = styled(Button)`
   background-color: ${colors.white};
