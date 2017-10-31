@@ -2,8 +2,8 @@
 export const fr = {
   auth: {
     login: {
-      connectingToGitHub: 'Connexion à GitHub..',
-      preparingGitPoint: 'Configuration de GitPoint..',
+      connectingToGitHub: 'Connexion à GitHub...',
+      preparingGitPoint: 'Configuration de GitPoint...',
       cancel: 'ANNULER',
       welcomeTitle: 'Bienvenue dans GitPoint',
       welcomeMessage:
@@ -114,7 +114,7 @@ export const fr = {
       analyticsInfo1:
         "Nous utilisons actuellement Google Analytics et iTunes App Analytics pour mesurer le trafic et les tendances d'utilisation de GitPoint. Ces outils collectent les informations envoyées par votre appareil, dont la version de l'appareil et de son système d'exploitation, votre position et votre référent. Ces informations ne peuvent être utilisées pour vous identifier de manière nominative et aucune donnée personnelle n'est extraite.",
       analyticsInfo2:
-        "Si jamais nous venions à inclure un autre service de collecte de suivi de pile, journaux d'erreurs ou d'autres informations analytiques, nous nous assurerons que les données utilisateurs restent anonymes et cryptées.",
+        "Si jamais nous venions à inclure un autre service de collecte de suivi de pile, journaux d'erreurs ou d'autres informations analytiques, nous nous assurerons que les données utilisateurs restent anonymes et chiffrées.",
       openSourceTitle: 'OPEN SOURCE',
       openSource1:
         "GitPoint est open source et l'historique des contributions à la plateforme restera toujours visible de manière publique.",
@@ -124,7 +124,7 @@ export const fr = {
       contact1:
         "Merci d'avoir pris le temps de lire notre politique de confidentialité. Nous espérons que vous apprécierez l'utilisation de GitPoint autant que nous avons apprécié son développement.",
       contact2:
-        'Si vous avez des questions en rapport avec cette politique de confidentialité, ou GitPoint en général, merci de soumettre un ticket sur le',
+        'Si vous avez des questions en rapport avec cette politique de confidentialité ou GitPoint en général, merci de soumettre un ticket sur le',
       contactLink: 'dépôt GitPoint',
     },
   },
@@ -196,8 +196,8 @@ export const fr = {
       viewAllButton: 'Voir tous',
       newIssueButton: 'Nouveau ticket',
       pullRequestTitle: 'PULL REQUESTS',
-      noPullRequestsMessage: 'Aucune pull requests',
-      noOpenPullRequestsMessage: 'Aucune pull requests ouverte',
+      noPullRequestsMessage: 'Aucune pull request',
+      noOpenPullRequestsMessage: 'Aucune pull request ouverte',
       starsTitle: 'Favoris',
       forksTitle: 'Forks',
       forkedFromMessage: 'forké depuis',
@@ -221,8 +221,8 @@ export const fr = {
       openButton: 'Ouvert',
       closedButton: 'Fermé',
       searchingMessage: 'Recherche de {{query}}',
-      noOpenPulls: 'Aucun pull request ouvert trouvé !',
-      noClosedPulls: 'Aucun pull request fermé trouvé !',
+      noOpenPulls: 'Aucune pull request ouvert trouvé !',
+      noClosedPulls: 'Aucune pull request fermé trouvé !',
     },
     pullDiff: {
       title: 'Diff',
@@ -241,7 +241,7 @@ export const fr = {
       membersTitle: 'MEMBRES',
       descriptionTitle: 'DESCRIPTION',
     },
-    organizationActions: "Actions sur l'organization",
+    organizationActions: "Actions sur l'organisation",
   },
   issue: {
     settings: {
@@ -271,7 +271,7 @@ export const fr = {
       assignees: 'Assignés',
       mergeButton: 'Fusionner la pull request',
       noDescription: 'Aucune description fournie.',
-      lockedCommentInput: 'Verrouiller, mais vous pouvez encore commenter...',
+      lockedCommentInput: 'Verrouillé, mais vous pouvez encore commenter...',
       commentInput: 'Ajouter un commentaire...',
       lockedIssue: 'Ce ticket est verrouillé',
       states: {
