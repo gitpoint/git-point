@@ -22,8 +22,16 @@ describe('<CommentInput />', () => {
 
     expect(wrapper.find('Styled(TextInput)').length).toEqual(1);
     expect(wrapper.find('Styled(TouchableOpacity)').length).toEqual(1);
-    expect(wrapper.find('Styled(PostButtonIcon)').length).toEqual(1);
+  });
+
+  it('should not render styled Text and Icon if user has post permissions and issue is not locked', () => {
+
+    const wrapper = shallow(
+      <CommentInput {...defaultProps}/>
+    );
+
     expect(wrapper.find('Styled(Text)').length).toEqual(0);
+    expect(wrapper.find('Icon').length).toEqual(0);
   });
 
   it('should not render styled TextInput and styled TouchableOpacity if user does not have post permissions and issue is locked', () => {
@@ -37,6 +45,17 @@ describe('<CommentInput />', () => {
 
     expect(wrapper.find('Styled(TextInput)').length).toEqual(0);
     expect(wrapper.find('Styled(TouchableOpacity)').length).toEqual(0);
+  });
+
+  it('should render styled Text and Icon if user does not have post permissions and issue is locked', () => {
+
+    const wrapper = shallow(
+      <CommentInput
+        {...defaultProps}
+        userHasPushPermission={false}
+        issueLocked={true}/>
+    );
+
     expect(wrapper.find('Styled(Text)').length).toEqual(1);
     expect(wrapper.find('Icon').length).toEqual(1);
   });
@@ -48,27 +67,41 @@ describe('<CommentInput />', () => {
         issueLocked={true}/>
     );
 
-    console.log(wrapper.debug());
-
     expect(wrapper.find('Styled(TextInput)').length).toEqual(1);
     expect(wrapper.find('Styled(TouchableOpacity)').length).toEqual(1);
-    expect(wrapper.find('Styled(PostButtonIcon)').length).toEqual(1);
-    expect(wrapper.find('Styled(Text)').length).toEqual(0);
   });
 
-  it('should render styled TextInput and styled TouchableOpacity if user has not post permissions and issue is not locked', () => {
+  it('should not render styled Text and Icon if user has post permissions and issue is locked', () => {
     const wrapper = shallow(
       <CommentInput
         {...defaultProps}
         issueLocked={true}/>
     );
 
-    console.log(wrapper.debug());
+    expect(wrapper.find('Styled(Text)').length).toEqual(0);
+    expect(wrapper.find('Icon').length).toEqual(0);
+  });
+
+  it('should render styled TextInput and styled TouchableOpacity if user does not have post permissions and issue is not locked', () => {
+    const wrapper = shallow(
+      <CommentInput
+        {...defaultProps}
+        issueLocked={true}/>
+    );
 
     expect(wrapper.find('Styled(TextInput)').length).toEqual(1);
     expect(wrapper.find('Styled(TouchableOpacity)').length).toEqual(1);
-    expect(wrapper.find('Styled(PostButtonIcon)').length).toEqual(1);
+  });
+
+  it('should not render styled Text and icon if user does not have post permissions and issue is not locked', () => {
+    const wrapper = shallow(
+      <CommentInput
+        {...defaultProps}
+        issueLocked={true}/>
+    );
+
     expect(wrapper.find('Styled(Text)').length).toEqual(0);
+    expect(wrapper.find('Icon').length).toEqual(0);
   });
 
   it('should update the state text if value is changed', () => {
