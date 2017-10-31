@@ -47,12 +47,12 @@ const CodeLineContainer = styled.View`
 const CodeLineStyled = styled.Text`
   font-family: ${styledFonts.fontCode};
   font-size: ${normalize(11)};
-  padding: 3 10;
+  padding: 3px 10px;
   ${props =>
     props.newChunk &&
     css`
       color: ${colors.grey};
-    `}
+    `};
 `;
 
 const LineNumbers = styled.View`
