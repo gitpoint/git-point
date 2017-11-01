@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 import { View, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-import { colors, fonts, normalize } from 'config';
+import { colors, styledFonts, normalize } from 'config';
 
 type Props = {
   notification: Object,
@@ -15,7 +15,7 @@ type Props = {
 
 const NotificationListItemContainer = styled.View`
   border-bottom-color: ${colors.greyLight};
-  border-bottom-width: 1px;
+  border-bottom-width: 1;
 `;
 
 const Wrapper = styled.View`
@@ -37,7 +37,7 @@ const TitleContainer = styled.View`
 
 const Title = styled.Text`
   color: ${colors.black};
-  ${{ ...fonts.fontPrimary }};
+  font-family: ${styledFonts.fontPrimary};
   font-size: ${normalize(12)};
   margin-left: 10px;
 `;
@@ -53,8 +53,6 @@ const IconStyled = styled(Icon).attrs({
   size: 22,
   type: 'octicon',
 })``;
-
-const CheckIcon = styled(IconStyled).attrs({ name: 'check' })``;
 
 export class NotificationListItem extends Component {
   props: Props;
@@ -103,7 +101,7 @@ export class NotificationListItem extends Component {
               onPress={() => iconAction(notification.id)}
               nativeId="notification-unread"
             >
-              <CheckIcon />
+              <IconStyled name="check" />
             </CheckButton>
           )}
         </Wrapper>
