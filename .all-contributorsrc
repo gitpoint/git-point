@@ -610,6 +610,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "ibotdotout",
+      "name": "botbotbot",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/686676?v=4",
+      "profile": "http://dev.im-bot.com",
+      "contributions": [
+        "test"
+      ]
     }
   ]
 }
