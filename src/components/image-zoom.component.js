@@ -40,7 +40,7 @@ const CloseIcon = styled(Icon).attrs({
   size: 28,
   name: 'x',
   type: 'octicon',
-});
+})``;
 
 export class ImageZoom extends Component {
   props: {
