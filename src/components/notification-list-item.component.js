@@ -74,17 +74,22 @@ export class NotificationListItem extends Component {
     }
   };
 
+  getTitleComponentProps = () => {
+    const { notification, navigationAction } = this.props;
+
+    return notification.subject.type === 'Commit'
+      ? {}
+      : {
+          onPress: () => navigationAction(notification),
+          nativeId: 'TitleComponent',
+        };
+  };
+
   render() {
-    const { notification, iconAction, navigationAction } = this.props;
+    const { notification, iconAction } = this.props;
     const tag = this.getComponentType();
     const iconName = this.getIconName(notification.subject.type);
-    const titleComponentProps =
-      notification.subject.type === 'Commit'
-        ? {}
-        : {
-            onPress: () => navigationAction(notification),
-            nativeId: 'TitleComponent',
-          };
+    const titleComponentProps = this.getTitleComponentProps();
 
     return (
       <NotificationListItemContainer>

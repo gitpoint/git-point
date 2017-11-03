@@ -92,4 +92,25 @@ describe('<NotificationListItem />', () => {
     expect(iconActionMock).toHaveBeenCalledWith(1);
     expect(iconActionMock).toHaveBeenCalledTimes(1);
   });
+
+  it('should return object empty', () => {
+    const wrapper = shallow(<NotificationListItem {...defaultProps} />);
+
+    expect(wrapper.instance().getTitleComponentProps()).toEqual({});
+  });
+
+  it('should return object with nativeId and onPress', () => {
+    const notification = {
+      subject: {
+        type: 'not a commit',
+      },
+    };
+    const wrapper = shallow(
+      <NotificationListItem {...defaultProps} notification={notification} />
+    );
+
+    const result = wrapper.instance().getTitleComponentProps();
+    expect(result.nativeId).toBe('TitleComponent');
+    expect(result.onPress).toEqual(expect.any(Function));
+  });
 });
