@@ -9,7 +9,7 @@ describe('<ImageZoom />', () => {
     uri: { uri: 'dummy.png' },
   };
 
-  it('should render clickable image', () => {
+  it('should render clickable image when the component initializes', () => {
     const wrapper = shallow(<ImageZoom {...defaultProps} />);
 
     const clickableImg = wrapper.find({ nativeId: 'image-zoom-clickable-img' });
@@ -20,7 +20,7 @@ describe('<ImageZoom />', () => {
   it('should render modal when the user presses Touchable', () => {
     const wrapper = shallow(<ImageZoom {...defaultProps} />);
 
-    wrapper.simulate('press');
+    wrapper.find({ nativeId: 'image-zoom-clickable-img' }).simulate('press');
 
     const modal = wrapper.find({ nativeId: 'image-zoom-modal' });
 
@@ -31,9 +31,11 @@ describe('<ImageZoom />', () => {
     const wrapper = shallow(<ImageZoom {...defaultProps} />);
     wrapper.setState({ imgZoom: true });
 
-    wrapper.props().onRequestClose();
+    wrapper.find({ nativeId: 'image-zoom-modal' }).simulate('requestClose');
 
-    expect(wrapper.state('imgZoom')).toBeFalsy();
+    const modal = wrapper.find({ nativeId: 'image-zoom-modal' });
+
+    expect(modal.length).toBe(0);
   });
 
   it('should close modal when the user presses CloseButton', () => {
