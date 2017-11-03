@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import styled from 'styled-components/native';
-import { AppRegistry, AsyncStorage, LayoutAnimation } from 'react-native';
+import {
+  AppRegistry,
+  AsyncStorage,
+  LayoutAnimation,
+  StatusBar,
+} from 'react-native';
 import { persistStore } from 'redux-persist';
 import createEncryptor from 'redux-persist-transform-encrypt';
 import DeviceInfo from 'react-native-device-info';
@@ -62,6 +67,7 @@ class App extends Component {
     );
 
     this.constructor.initLocale();
+    this.getCurrentRouteName = this.getCurrentRouteName.bind(this);
   }
 
   componentDidMount() {
@@ -77,6 +83,20 @@ class App extends Component {
     LayoutAnimation.spring();
   }
 
+  getCurrentRouteName(navigationState) {
+    if (!navigationState) {
+      return null;
+    }
+    const route = navigationState.routes[navigationState.index];
+    // dive into nested navigators
+
+    if (route.routes) {
+      return this.getCurrentRouteName(route);
+    }
+
+    return route.routeName;
+  }
+
   render() {
     if (!this.state.rehydrated) {
       return (
@@ -88,7 +108,24 @@ class App extends Component {
 
     return (
       <Provider store={configureStore}>
-        <GitPoint onNavigationStateChange={null} />
+        <GitPoint
+          onNavigationStateChange={(prev, next) => {
+            const darkScreens = [
+              'MyProfile',
+              'Profile',
+              'Organization',
+              'Repository',
+            ];
+
+            if (darkScreens.includes(this.getCurrentRouteName(next))) {
+              StatusBar.setBarStyle('light-content');
+              StatusBar.setBackgroundColor(colors.primaryDark);
+            } else {
+              StatusBar.setBarStyle('dark-content');
+              StatusBar.setBackgroundColor(colors.white);
+            }
+          }}
+        />
       </Provider>
     );
   }
