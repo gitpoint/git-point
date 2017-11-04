@@ -15,6 +15,10 @@ type Props = {
 };
 
 const StyledListItem = styled(ListItem).attrs({
+  containerStyle: {
+    borderBottomColor: colors.greyLight,
+    borderBottomWidth: 1,
+  },
   titleStyle: {
     color: colors.black,
     ...fonts.fontPrimary,
