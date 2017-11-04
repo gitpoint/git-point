@@ -59,10 +59,6 @@ const mapDispatchToProps = dispatch =>
 
 const styles = StyleSheet.create({
   listTitle: {
-    color: colors.black,
-    ...fonts.fontPrimary,
-  },
-  listSubTitle: {
     color: colors.greyDark,
     ...fonts.fontPrimary,
   },
@@ -211,8 +207,9 @@ class Profile extends Component {
                   user.bio !== '' && (
                     <SectionList title={translate('common.bio', locale)}>
                       <ListItem
-                        subtitle={emojifyText(user.bio)}
-                        subtitleStyle={styles.listSubTitle}
+                        titleNumberOfLines={0}
+                        title={emojifyText(user.bio)}
+                        titleStyle={styles.listTitle}
                         hideChevron
                       />
                     </SectionList>

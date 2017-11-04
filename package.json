@@ -129,8 +129,7 @@
     "react-native-cli": "^2.0.1",
     "react-test-renderer": "^16.0.0",
     "reactotron-react-native": "^1.12.2",
-    "reactotron-redux": "^1.12.2",
-    "sinon": "^4.0.0"
+    "reactotron-redux": "^1.12.2"
   },
   "jest": {
     "preset": "react-native",

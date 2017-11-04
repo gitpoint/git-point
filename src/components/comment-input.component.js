@@ -1,51 +1,55 @@
 // @flow
 
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  Text,
-  TextInput,
-  Platform,
-} from 'react-native';
+import { View, Text, Platform } from 'react-native';
 import { Icon } from 'react-native-elements';
+import styled from 'styled-components/native';
 
 import { MentionArea } from 'components';
 import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
 
-const styles = StyleSheet.create({
-  container: {
-    borderTopColor: colors.greyLight,
-    borderTopWidth: 1,
-    backgroundColor: 'transparent',
-  },
-  wrapper: {
-    padding: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  textInput: {
-    fontSize: normalize(12),
-    flex: 1,
-    marginRight: 5,
-    color: colors.black,
-    ...fonts.fontPrimary,
-  },
-  postButtonContainer: {
-    flex: 0.15,
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-  },
-  postButtonDisabled: {
-    color: colors.grey,
-  },
-  postButtonEnabled: {
-    color: colors.primaryDark,
-  },
-});
+const Container = styled.View`
+  border-top-color: ${colors.greyLight};
+  border-top-width: 1;
+  background-color: transparent;
+`;
+
+const Wrapper = styled.View`
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+  justify-content: center;
+`;
+
+const InputText = styled.TextInput`
+  font-size: ${normalize(12)};
+  flex: 1;
+  margin-right: 5;
+  color: ${colors.black};
+  ${fonts.fontPrimary};
+`;
+const TextInputText = InputText.withComponent(Text);
+
+const PostButtonContainerCanPost = styled.TouchableOpacity`
+  flex: 0.15;
+  align-items: flex-end;
+  justify-content: center;
+`;
+const PostButtonContainerCantPost = PostButtonContainerCanPost.withComponent(
+  View
+);
+
+type PostButtonIconProps = {
+  style: Object,
+};
+
+const PostButtonIcon = ({ style }: PostButtonIconProps) => (
+  <Icon name="send" iconStyle={style} />
+);
+const StyledPostButtonIcon = styled(PostButtonIcon)`
+  color: ${props => (props.disabled ? colors.grey : colors.primaryDark)};
+`;
 
 export class CommentInput extends Component {
   props: {
@@ -93,7 +97,7 @@ export class CommentInput extends Component {
     }
 
     return (
-      <View style={styles.container}>
+      <Container>
         <MentionArea
           trigger="@"
           text={this.state.text}
@@ -101,9 +105,9 @@ export class CommentInput extends Component {
           height={200}
           users={users}
         />
-        <View style={styles.wrapper}>
+        <Wrapper>
           {userCanPost && (
-            <TextInput
+            <InputText
               underlineColorAndroid={'transparent'}
               placeholder={
                 issueLocked && userHasPushPermission
@@ -118,45 +122,36 @@ export class CommentInput extends Component {
               onSubmitEditing={event =>
                 this.handleSubmitEditing(event.nativeEvent.text)}
               placeholderTextColor={colors.grey}
-              style={[
-                styles.textInput,
-                { height: Math.max(30, this.state.height) },
-              ]}
+              style={{
+                height: Math.max(30, this.state.height),
+              }}
               value={this.state.text}
             />
           )}
 
           {!userCanPost && (
-            <Text style={[styles.textInput, { color: colors.grey }]}>
+            <TextInputText style={{ color: colors.grey }}>
               {translate('issue.main.lockedIssue', locale)}
-            </Text>
+            </TextInputText>
           )}
 
           {userCanPost && (
-            <TouchableOpacity
+            <PostButtonContainerCanPost
               disabled={this.state.text === ''}
-              style={styles.postButtonContainer}
               onPress={() => this.handleSubmit(this.state.text)}
             >
-              <Icon
-                name="send"
-                iconStyle={
-                  this.state.text === ''
-                    ? styles.postButtonDisabled
-                    : styles.postButtonEnabled
-                }
-              />
-            </TouchableOpacity>
+              <StyledPostButtonIcon disabled={this.state.text === ''} />
+            </PostButtonContainerCanPost>
           )}
 
           {!userCanPost &&
             this.props.issueLocked && (
-              <View style={styles.postButtonContainer}>
+              <PostButtonContainerCantPost>
                 <Icon name="lock" type="octicon" color={colors.grey} />
-              </View>
+              </PostButtonContainerCantPost>
             )}
-        </View>
-      </View>
+        </Wrapper>
+      </Container>
     );
   }
 }
