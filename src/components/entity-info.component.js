@@ -22,9 +22,17 @@ const StyledListItem = styled(ListItem).attrs({
   subtitleStyle: {
     color: colors.greyDark,
     ...fonts.fontPrimary,
+    fontWeight: 'normal',
   },
-  underlayColor: props => (props.unknown ? null : colors.greyLight),
-  hideChevron: props => props.unknown,
+  wrapperStyle: {
+    borderBottomColor: colors.greyLight,
+    borderBottomWidth: 1,
+    padding: 10,
+    marginLeft: 0,
+  },
+  underlayColor: props => (props.transparentChevron ? null : colors.greyLight),
+  chevronColor: props =>
+    props.transparentChevron ? colors.transparent : undefined,
 })``;
 
 const getBlogLink = url =>
@@ -78,7 +86,7 @@ export const EntityInfo = ({ entity, orgs, locale, navigation }: Props) => {
             }}
             subtitle={entity.company}
             onPress={() => navigateToCompany(entity.company, orgs, navigation)}
-            unknown={companyInOrgs(entity.company, orgs)}
+            transparentChevron={!companyInOrgs(entity.company, orgs)}
           />
         )}
 
