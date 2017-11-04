@@ -106,7 +106,7 @@ export class IssueDescription extends Component {
 
   renderLabelButtons = labels => {
     return labels
-      .slice(0, 5)
+      .slice(0, 3)
       .map(label => <InlineLabel key={label.id} label={label} />);
   };
 
