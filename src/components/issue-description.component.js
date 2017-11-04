@@ -44,6 +44,10 @@ const RepoLink = styled(ListItem).attrs({
   leftIconContainerStyle: {
     flex: 0,
   },
+  containerStyle: {
+    borderBottomColor: colors.greyLight,
+    borderBottomWidth: 1,
+  },
 })``;
 
 const IssueTitle = styled(ListItem).attrs({
