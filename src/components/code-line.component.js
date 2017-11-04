@@ -74,8 +74,6 @@ const CodeLineNumber = styled.Text`
   color: ${colors.grey};
 `;
 
-const SyntaxHighlighterStyled = CodeLineStyled.withComponent(SyntaxHighlighter);
-
 export class CodeLine extends Component {
   props: {
     newChunk: boolean,
@@ -122,7 +120,7 @@ export class CodeLine extends Component {
             )}
 
             {this.isKnownType(language) && (
-              <SyntaxHighlighterStyled
+              <SyntaxHighlighter
                 language={language}
                 style={GithubStyle}
                 CodeTag={Text}
@@ -131,7 +129,7 @@ export class CodeLine extends Component {
                 fontSize={normalize(11)}
               >
                 {change.content}
-              </SyntaxHighlighterStyled>
+              </SyntaxHighlighter>
             )}
           </CodeLineContainer>
         </Wrapper>
