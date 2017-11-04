@@ -63,3 +63,5 @@ haste-map-react-native-packager*
 # editors
 .vscode
 .idea
+
+coverage

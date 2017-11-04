@@ -15,50 +15,42 @@ const Header = styled.View`
 `;
 
 const IconStyled = styled(Icon)`
-  background-color: ${colors.greyLight}
+  background-color: ${colors.greyLight};
   border-radius: 13;
   width: 26;
   height: 26;
   margin-left: 14;
   margin-right: 14;
-  flex-grow: 0;
-  flex-shrink: 0;
-  flex-basis: 26;
+  flex: 0 0 26px;
 `;
 
 const ContentContainer = styled.View`
   flex-direction: row;
-  flex-grow: 1;
-  flex-shrink: 1;
-  border-bottom-color: ${colors.greyLight}
+  flex: 1 1;
+  border-bottom-color: ${colors.greyLight};
   border-bottom-width: 1;
 `;
 
 const EventTextContainer = styled.View`
   padding-bottom: 10;
-  flex-direction: row;
-  flex-wrap: wrap;
-  flex-grow: 1;
-  flex-shrink: 1;
+  flex-flow: row wrap;
+  flex: 1 1;
   align-items: center;
 `;
 
 const DateContainer = styled.View`
-  flex: 1;
   align-items: flex-end;
   justify-content: center;
   align-self: flex-start;
   margin-top: 2;
-  flex-grow: 0;
-  flex-shrink: 0;
-  flex-basis: 39;
+  flex: 0 0 39px;
   width: 39;
 `;
 
 const BoldText = styled.Text`
-  font-family: ${styledFonts.fontPrimaryBold}
-  font-size: ${normalize(13)}
-  color: ${colors.primaryDark}
+  font-family: ${styledFonts.fontPrimaryBold};
+  font-size: ${normalize(13)};
+  color: ${colors.primaryDark};
 `;
 
 const DateText = styled.Text`
