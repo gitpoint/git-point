@@ -36,8 +36,8 @@ const ContainerBorderBottom = styled.View`
 `;
 
 const ListItemStyled = styled(ListItem)`
-  color: ${colors.primaryDark}
-  font-family: ${styledFonts.fontPrimarySemiBold}
+  color: ${colors.primaryDark};
+  font-family: ${styledFonts.fontPrimarySemiBold};
 `;
 
 const ListItemURL = ListItemStyled.extend`
@@ -58,8 +58,7 @@ const DiffBlocksContainer = styled.View`
 `;
 
 const LabelButtonGroup = styled.View`
-  flex-wrap: wrap;
-  flex-direction: row;
+  flex-flow: row wrap;
   margin-left: 54;
   padding-bottom: 15;
 `;
@@ -74,7 +73,8 @@ const MergeButtonContainer = styled.View`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding-vertical: 15;
+  padding-top: 15;
+  padding-bottom: 15;
 `;
 
 export class IssueDescription extends Component {
