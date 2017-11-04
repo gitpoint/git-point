@@ -619,6 +619,15 @@
       "contributions": [
         "test"
       ]
+    },
+    {
+      "login": "Kietzmann",
+      "name": "Dmytro Kytsmen",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/8254906?v=4",
+      "profile": "https://github.com/Kietzmann",
+      "contributions": [
+        "translation"
+      ]
     }
   ]
 }
