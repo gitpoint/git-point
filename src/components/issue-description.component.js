@@ -8,7 +8,7 @@ import styled from 'styled-components/native';
 import {
   StateBadge,
   MembersList,
-  LabelButton,
+  InlineLabel,
   DiffBlocks,
   Button,
 } from 'components';
@@ -102,8 +102,8 @@ export class IssueDescription extends Component {
 
   renderLabelButtons = labels => {
     return labels
-      .slice(0, 3)
-      .map(label => <LabelButton key={label.id} label={label} />);
+      .slice(0, 5)
+      .map(label => <InlineLabel key={label.id} label={label} />);
   };
 
   render() {
