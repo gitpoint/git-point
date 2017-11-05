@@ -51,6 +51,11 @@ const StyledPostButtonIcon = styled(PostButtonIcon)`
   color: ${props => (props.disabled ? colors.grey : colors.primaryDark)};
 `;
 
+const inputMaxHeight = Platform.select({
+  ios: 30,
+  android: 37,
+});
+
 export class CommentInput extends Component {
   props: {
     users: Array,
@@ -70,7 +75,7 @@ export class CommentInput extends Component {
 
     this.state = {
       text: '',
-      height: 0,
+      height: inputMaxHeight,
     };
   }
 
@@ -123,7 +128,7 @@ export class CommentInput extends Component {
                 this.handleSubmitEditing(event.nativeEvent.text)}
               placeholderTextColor={colors.grey}
               style={{
-                height: Math.max(30, this.state.height),
+                height: Math.max(inputMaxHeight, this.state.height),
               }}
               value={this.state.text}
             />
