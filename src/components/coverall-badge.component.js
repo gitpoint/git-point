@@ -46,12 +46,14 @@ const ValueContainer = styled(LinearGradient).attrs({
   padding-top: 1;
   align-items: center;
 `;
+
 const ValueBorderContainer = ValueContainer.extend`
   width: 20;
   border-radius: 3;
   position: absolute;
   left: 83;
 `;
+
 const Value = Label.extend`
   font-size: ${props => normalize(props.value === 100 ? 10 : 11)};
 `;
