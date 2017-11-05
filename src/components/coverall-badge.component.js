@@ -63,7 +63,7 @@ export const CoverallBadge = ({ coverage = 100 }: Props) => (
     </LabelContainer>
     <ValueBorderContainer />
     <ValueContainer>
-      <Value value={coverage}>{coverage}%</Value>
+      <Value value={coverage}>{coverage === -1 ? 'ERR' : `${coverage}%`}</Value>
     </ValueContainer>
   </Container>
 );
