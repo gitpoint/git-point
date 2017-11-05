@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { View, Text, Platform } from 'react-native';
+import { Text, Platform } from 'react-native';
 import { Icon } from 'react-native-elements';
 import styled from 'styled-components/native';
 
@@ -31,25 +31,15 @@ const InputText = styled.TextInput`
 `;
 const TextInputText = InputText.withComponent(Text);
 
-const PostButtonContainerCanPost = styled.TouchableOpacity`
+const PostButtonContainer = styled.TouchableOpacity`
   flex: 0.15;
   align-items: flex-end;
   justify-content: center;
 `;
-const PostButtonContainerCantPost = PostButtonContainerCanPost.withComponent(
-  View
-);
 
-type PostButtonIconProps = {
-  style: Object,
-};
-
-const PostButtonIcon = ({ style }: PostButtonIconProps) => (
-  <Icon name="send" iconStyle={style} />
-);
-const StyledPostButtonIcon = styled(PostButtonIcon)`
-  color: ${props => (props.disabled ? colors.grey : colors.primaryDark)};
-`;
+const PostButtonIcon = styled(Icon).attrs({
+  color: props => (props.disabled ? colors.grey : colors.primaryDark),
+})``;
 
 export class CommentInput extends Component {
   props: {
@@ -88,13 +78,7 @@ export class CommentInput extends Component {
   render() {
     const { userHasPushPermission, issueLocked, locale, users } = this.props;
 
-    let userCanPost = null;
-
-    if (issueLocked && !userHasPushPermission) {
-      userCanPost = false;
-    } else {
-      userCanPost = true;
-    }
+    const userCanPost = !issueLocked || userHasPushPermission;
 
     return (
       <Container>
@@ -108,7 +92,7 @@ export class CommentInput extends Component {
         <Wrapper>
           {userCanPost && (
             <InputText
-              underlineColorAndroid={'transparent'}
+              underlineColorAndroid="transparent"
               placeholder={
                 issueLocked && userHasPushPermission
                   ? translate('issue.main.lockedCommentInput', locale)
@@ -136,19 +120,19 @@ export class CommentInput extends Component {
           )}
 
           {userCanPost && (
-            <PostButtonContainerCanPost
+            <PostButtonContainer
               disabled={this.state.text === ''}
               onPress={() => this.handleSubmit(this.state.text)}
             >
-              <StyledPostButtonIcon disabled={this.state.text === ''} />
-            </PostButtonContainerCanPost>
+              <PostButtonIcon name="send" disabled={this.state.text === ''} />
+            </PostButtonContainer>
           )}
 
           {!userCanPost &&
             this.props.issueLocked && (
-              <PostButtonContainerCantPost>
+              <PostButtonContainer>
                 <Icon name="lock" type="octicon" color={colors.grey} />
-              </PostButtonContainerCantPost>
+              </PostButtonContainer>
             )}
         </Wrapper>
       </Container>
