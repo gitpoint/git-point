@@ -6,7 +6,7 @@ import SyntaxHighlighter from 'react-native-syntax-highlighter';
 import { github as GithubStyle } from 'react-syntax-highlighter/dist/styles';
 import entities from 'entities';
 
-import { ImageZoom, ToggleView } from 'components';
+import { ImageZoom, ToggleView, CoverallBadge } from 'components';
 import { colors, fonts, normalize } from 'config';
 
 const textStyle = Platform.select({
@@ -302,6 +302,31 @@ export class GithubHtmlView extends Component {
                 {'\n'}
               </Text>
             );
+          }
+
+          if (
+            node.attribs['data-canonical-src'] &&
+            node.attribs['data-canonical-src'].startsWith(
+              'https://coveralls.io/builds'
+            )
+          ) {
+            let value;
+
+            try {
+              const coverageReport = node.next.next.children[0].data;
+              const percentage = coverageReport.match(
+                /Coverage .* (to|at) (\d{1,3}).?(\d{1})?/
+              );
+
+              value = parseInt(percentage[2], 10);
+              if (parseInt(percentage[3], 10) >= 5) {
+                value += 1;
+              }
+            } catch (exception) {
+              value = -1;
+            }
+
+            return <CoverallBadge coverage={value} />;
           }
 
           const zoom = hasAncestor(node, ['table']) ? 0.3 : 0.6;
