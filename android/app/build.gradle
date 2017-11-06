@@ -76,6 +76,7 @@ import com.android.build.OutputFile
     // Name of the font files you want to copy
     iconFontNames: [
       'FontAwesome.ttf',
+      'Ionicons.ttf',
       'MaterialIcons.ttf',
       'Octicons.ttf']
   ]
@@ -144,6 +145,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-vector-icons')
     compile project(':react-native-linear-gradient')
     compile project(':react-native-cookies')
     compile project(':react-native-i18n')
@@ -151,7 +153,6 @@ dependencies {
     compile project(':react-native-config')
     compile project(':react-native-code-push')
     compile project(':react-native-device-info')
-    compile project(':react-native-vector-icons')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:23.0.1"
     compile "com.facebook.react:react-native:+"  // From node_modules
