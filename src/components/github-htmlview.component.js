@@ -48,6 +48,10 @@ const styles = {
   code: codeStyle,
   span: textStyle,
   p: { ...textStyle, margin: 0, padding: 0 },
+  sub: {
+    ...hrStyle,
+    fontSize: normalize(9),
+  },
   h1: {
     ...fonts.fontPrimarySemiBold,
     ...hrStyle,
