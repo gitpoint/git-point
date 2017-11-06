@@ -6,5 +6,4 @@ cache:
 node_js:
   - 7
 script:
-  - yarn run test:coverage
-  - yarn run eslint
+  - yarn run eslint && yarn run test:coverage
