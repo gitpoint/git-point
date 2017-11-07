@@ -3333,10 +3333,6 @@ image-size@^0.6.0:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/image-size/-/image-size-0.6.1.tgz#98122a562d59dcc097ef1b2c8191866eb8f5d663"
 
-immutable@^3.8.1:
-  version "3.8.1"
-  resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.1.tgz#200807f11ab0f72710ea485542de088075f68cd2"
-
 import-from@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/import-from/-/import-from-2.1.0.tgz#335db7f2a7affd53aaa471d4b8021dee36b7f3b1"
@@ -5633,16 +5629,14 @@ react-native-drawer-layout@1.3.2:
   dependencies:
     react-native-dismiss-keyboard "1.0.0"
 
-react-native-elements@^0.17.0:
-  version "0.17.0"
-  resolved "https://registry.yarnpkg.com/react-native-elements/-/react-native-elements-0.17.0.tgz#b5f3e0959b41f04f0aa6a1c1a547be22f94c8a12"
+react-native-elements@^0.18.2:
+  version "0.18.2"
+  resolved "https://registry.yarnpkg.com/react-native-elements/-/react-native-elements-0.18.2.tgz#f3e814db3983d3c52c31a40293220439745e5ab4"
   dependencies:
     lodash.isempty "^4.4.0"
     lodash.times "^4.3.2"
     opencollective "^1.0.3"
     prop-types "^15.5.8"
-    react-native-side-menu "^1.0.2"
-    react-native-tab-navigator "^0.3.4"
 
 react-native-htmlview@^0.12.0:
   version "0.12.0"
@@ -5704,12 +5698,6 @@ react-native-safari-view@^2.0.0:
     create-react-class "^15.6.2"
     prop-types "^15.6.0"
 
-react-native-side-menu@^1.0.2:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/react-native-side-menu/-/react-native-side-menu-1.1.3.tgz#6ef5d2232ecf718312df6cedef019148bac3073a"
-  dependencies:
-    prop-types "^15.5.10"
-
 react-native-swiper@^1.5.13:
   version "1.5.13"
   resolved "https://registry.yarnpkg.com/react-native-swiper/-/react-native-swiper-1.5.13.tgz#fa695cd4ab77b9a9df2d2bfee38ea7274dd07a2e"
@@ -5728,13 +5716,6 @@ react-native-syntax-highlighter@^1.2.1:
     babel-preset-react "^6.24.1"
     babel-runtime "^6.23.0"
     react-syntax-highlighter "^5.6.2"
-
-react-native-tab-navigator@^0.3.4:
-  version "0.3.4"
-  resolved "https://registry.yarnpkg.com/react-native-tab-navigator/-/react-native-tab-navigator-0.3.4.tgz#54a18f1ad06a09d4a0de81ff00416bc1b760c960"
-  dependencies:
-    immutable "^3.8.1"
-    prop-types "^15.5.10"
 
 react-native-tab-view@^0.0.67:
   version "0.0.67"

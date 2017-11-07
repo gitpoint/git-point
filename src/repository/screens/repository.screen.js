@@ -65,6 +65,10 @@ const styles = StyleSheet.create({
     color: colors.black,
     ...fonts.fontPrimary,
   },
+  listContainerStyle: {
+    borderBottomColor: colors.greyLight,
+    borderBottomWidth: 1,
+  },
 });
 
 class Repository extends Component {
@@ -338,6 +342,7 @@ class Repository extends Component {
                   type: 'octicon',
                 }}
                 titleStyle={styles.listTitle}
+                containerStyle={styles.listContainerStyle}
                 onPress={() =>
                   navigation.navigate('ReadMe', {
                     repository,
@@ -348,6 +353,7 @@ class Repository extends Component {
             <ListItem
               title={translate('repository.main.viewSource', locale)}
               titleStyle={styles.listTitle}
+              containerStyle={styles.listContainerStyle}
               leftIcon={{
                 name: 'code',
                 color: colors.grey,
