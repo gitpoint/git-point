@@ -1,10 +1,11 @@
 /* eslint-disable no-nested-ternary */
 
 import React, { Component } from 'react';
-import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import styled from 'styled-components/native';
+import { View, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-import { colors, fonts, normalize } from 'config';
+import { colors, styledFonts, normalize } from 'config';
 
 type Props = {
   notification: Object,
@@ -12,41 +13,46 @@ type Props = {
   navigationAction: Function,
 };
 
-const styles = StyleSheet.create({
-  container: {
-    borderBottomColor: colors.greyLight,
-    borderBottomWidth: 1,
-  },
-  wrapper: {
-    padding: 10,
-    flexDirection: 'row',
-  },
-  notificationInfo: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  avatar: {
-    backgroundColor: colors.greyLight,
-    borderRadius: 17,
-    width: 34,
-    height: 34,
-  },
-  titleContainer: {
-    flex: 1,
-  },
-  title: {
-    color: colors.black,
-    ...fonts.fontPrimary,
-    fontSize: normalize(12),
-    marginLeft: 10,
-  },
-  iconContainer: {
-    flex: 0.15,
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-  },
-});
+const NotificationListItemContainer = styled.View`
+  border-bottom-color: ${colors.greyLight};
+  border-bottom-width: 1;
+`;
+
+const Wrapper = styled.View`
+  flex-direction: row;
+  padding: 10px;
+`;
+
+const TitleComponent = styled(({ tag, children, ...props }) =>
+  React.createElement(tag, props, children)
+)`
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const TitleContainer = styled.View`
+  flex: 1;
+`;
+
+const Title = styled.Text`
+  color: ${colors.black};
+  font-family: ${styledFonts.fontPrimary};
+  font-size: ${normalize(12)};
+  margin-left: 10px;
+`;
+
+const CheckButton = styled.TouchableOpacity`
+  flex: 0.15;
+  align-items: flex-end;
+  justify-content: center;
+`;
+
+const IconStyled = styled(Icon).attrs({
+  color: colors.grey,
+  size: 22,
+  type: 'octicon',
+})``;
 
 export class NotificationListItem extends Component {
   props: Props;
@@ -59,52 +65,52 @@ export class NotificationListItem extends Component {
 
   getIconName = type => {
     switch (type) {
-      case 'commit':
+      case 'Commit':
         return 'git-commit';
-      case 'pullRequest':
+      case 'PullRequest':
         return 'git-pull-request';
       default:
         return 'issue-opened';
     }
   };
 
-  render() {
-    const { notification, iconAction, navigationAction } = this.props;
+  getTitleComponentProps = () => {
+    const { notification, navigationAction } = this.props;
 
-    const TitleComponent = this.getComponentType();
+    return notification.subject.type === 'Commit'
+      ? {}
+      : {
+          onPress: () => navigationAction(notification),
+          nativeId: 'TitleComponent',
+        };
+  };
+
+  render() {
+    const { notification, iconAction } = this.props;
+    const tag = this.getComponentType();
     const iconName = this.getIconName(notification.subject.type);
+    const titleComponentProps = this.getTitleComponentProps();
 
     return (
-      <View style={styles.container}>
-        <View style={styles.wrapper}>
-          <TitleComponent
-            nativeId="TitleComponent"
-            style={styles.notificationInfo}
-            onPress={() => navigationAction(notification)}
-          >
-            <Icon
-              color={colors.grey}
-              size={22}
-              name={iconName}
-              type="octicon"
-            />
-
-            <View style={styles.titleContainer}>
-              <Text style={styles.title}>{notification.subject.title}</Text>
-            </View>
+      <NotificationListItemContainer>
+        <Wrapper>
+          <TitleComponent tag={tag} {...titleComponentProps}>
+            <IconStyled name={iconName} />
+            <TitleContainer>
+              <Title>{notification.subject.title}</Title>
+            </TitleContainer>
           </TitleComponent>
 
           {notification.unread && (
-            <TouchableOpacity
-              nativeId="notification-unread"
-              style={styles.iconContainer}
+            <CheckButton
               onPress={() => iconAction(notification.id)}
+              nativeId="notification-unread"
             >
-              <Icon color={colors.grey} size={22} name="check" type="octicon" />
-            </TouchableOpacity>
+              <IconStyled name="check" />
+            </CheckButton>
           )}
-        </View>
-      </View>
+        </Wrapper>
+      </NotificationListItemContainer>
     );
   }
 }
