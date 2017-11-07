@@ -8,10 +8,10 @@ export const es = {
       preparingGitPoint: 'Preparando GitPoint...',
       cancel: 'CANCELAR',
       welcomeTitle: 'Bienvenido a GitPoint',
-      welcomeMessage: 'El cliente GitHub con más funcionalidades, 100% gratuito',
+      welcomeMessage:
+        'El cliente GitHub con más funcionalidades, 100% gratuito',
       notificationsTitle: 'Gestiona notificaciones',
-      notificationsMessage:
-        'Revisa y gestiona tus notificaciones pendientes',
+      notificationsMessage: 'Revisa y gestiona tus notificaciones pendientes',
       reposTitle: 'Repositorios y Usuarios',
       reposMessage:
         'Obtén fácilmente información de repositorios, usuarios y organizaciones',
@@ -40,8 +40,10 @@ export const es = {
       pullRequestEvent: '{{action}} pull request',
       pullRequestReviewEvent: '{{action}} revisiones de pull request',
       pullRequestReviewCommentEvent: '{{action}} en pull request',
-      pullRequestReviewEditedEvent: '{{action}} su comentario en el pull request',
-      pullRequestReviewDeletedEvent: '{{action}} su comentario en el pull request',
+      pullRequestReviewEditedEvent:
+        '{{action}} su comentario en el pull request',
+      pullRequestReviewDeletedEvent:
+        '{{action}} su comentario en el pull request',
       releaseEvent: '{{action}} lanzamiento',
       atConnector: 'at',
       toConnector: 'at',
@@ -84,7 +86,8 @@ export const es = {
     },
     profile: {
       orgsRequestApprovalTop: '¿No ves todas tus organizaciones?',
-      orgsRequestApprovalBottom: 'Quizá tengas que solicitar aprobación para verlas.',
+      orgsRequestApprovalBottom:
+        'Quizá tengas que solicitar aprobación para verlas.',
       codePushCheck: 'Comprobar actualizaciones',
       codePushChecking: 'Comprobando actualizaciones...',
       codePushUpdated: 'Aplicación actualizada',

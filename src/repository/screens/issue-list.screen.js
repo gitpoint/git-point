@@ -269,13 +269,9 @@ class IssueList extends Component {
           searchType === 0 && (
             <LoadingContainer
               animating={isPendingSearchOpenIssues && searchType === 0}
-              text={translate(
-                'repository.issueList.searchingMessage',
-                locale,
-                {
-                  query,
-                }
-              )}
+              text={translate('repository.issueList.searchingMessage', locale, {
+                query,
+              })}
               style={styles.marginSpacing}
             />
           )}
@@ -284,13 +280,9 @@ class IssueList extends Component {
           searchType === 1 && (
             <LoadingContainer
               animating={isPendingSearchClosedIssues && searchType === 1}
-              text={translate(
-                'repository.issueList.searchingMessage',
-                locale,
-                {
-                  query,
-                }
-              )}
+              text={translate('repository.issueList.searchingMessage', locale, {
+                query,
+              })}
               style={styles.marginSpacing}
             />
           )}

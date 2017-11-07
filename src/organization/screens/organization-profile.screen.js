@@ -129,7 +129,7 @@ class OrganizationProfile extends Component {
     return (
       <ViewContainer>
         <ParallaxScroll
-          renderContent={() =>
+          renderContent={() => (
             <UserProfile
               type="org"
               initialUser={initialOrganization}
@@ -139,7 +139,8 @@ class OrganizationProfile extends Component {
                   : initialOrganization
               }
               navigation={navigation}
-            />}
+            />
+          )}
           refreshControl={
             <RefreshControl
               onRefresh={this.getOrgData}
@@ -152,36 +153,40 @@ class OrganizationProfile extends Component {
           showMenu
           menuAction={() => this.showMenuActionSheet()}
         >
-          {isPendingMembers &&
+          {isPendingMembers && (
             <LoadingMembersList
               title={translate('organization.main.membersTitle', locale)}
-            />}
+            />
+          )}
 
-          {!isPendingMembers &&
+          {!isPendingMembers && (
             <MembersList
               title={translate('organization.main.membersTitle', locale)}
               members={members}
               navigation={navigation}
-            />}
+            />
+          )}
 
           {!!organization.description &&
-            organization.description !== '' &&
-            <SectionList
-              title={translate('organization.main.descriptionTitle', locale)}
-            >
-              <ListItem
-                subtitle={emojifyText(organization.description)}
-                subtitleStyle={styles.listSubTitle}
-                hideChevron
-              />
-            </SectionList>}
+            organization.description !== '' && (
+              <SectionList
+                title={translate('organization.main.descriptionTitle', locale)}
+              >
+                <ListItem
+                  subtitle={emojifyText(organization.description)}
+                  subtitleStyle={styles.listSubTitle}
+                  hideChevron
+                />
+              </SectionList>
+            )}
 
-          {!isPendingOrg &&
+          {!isPendingOrg && (
             <EntityInfo
               entity={organization}
               navigation={navigation}
               locale={locale}
-            />}
+            />
+          )}
         </ParallaxScroll>
 
         <ActionSheet
