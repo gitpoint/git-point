@@ -8,12 +8,12 @@ import styled from 'styled-components/native';
 import {
   StateBadge,
   MembersList,
-  LabelButton,
+  InlineLabel,
   DiffBlocks,
   Button,
 } from 'components';
 import { translate } from 'utils';
-import { colors, styledFonts, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 import { v3 } from 'api';
 
 const styles = StyleSheet.create({
@@ -35,19 +35,32 @@ const ContainerBorderBottom = styled.View`
   border-bottom-color: ${colors.greyLight};
 `;
 
-const ListItemStyled = styled(ListItem)`
-  color: ${colors.primaryDark};
-  font-family: ${styledFonts.fontPrimarySemiBold};
-`;
+const RepoLink = styled(ListItem).attrs({
+  titleStyle: {
+    color: colors.primaryDark,
+    ...fonts.fontPrimarySemiBold,
+    fontSize: normalize(10),
+  },
+  leftIconContainerStyle: {
+    flex: 0,
+  },
+  containerStyle: {
+    borderBottomColor: colors.greyLight,
+    borderBottomWidth: 1,
+  },
+})``;
 
-const ListItemURL = ListItemStyled.extend`
-  font-size: ${normalize(10)};
-`;
-
-const ListItemIssueTitle = ListItemStyled.extend`
-  border-bottom-width: 0;
-  flex: 1;
-`;
+const IssueTitle = styled(ListItem).attrs({
+  titleStyle: {
+    color: colors.primaryDark,
+    ...fonts.fontPrimarySemiBold,
+  },
+  containerStyle: {
+    borderBottomWidth: 0,
+    flex: 1,
+  },
+  titleNumberOfLines: 0,
+})``;
 
 const DiffBlocksContainer = styled.View`
   flex-direction: row;
@@ -94,7 +107,7 @@ export class IssueDescription extends Component {
   renderLabelButtons = labels => {
     return labels
       .slice(0, 3)
-      .map(label => <LabelButton key={label.id} label={label} />);
+      .map(label => <InlineLabel key={label.id} label={label} />);
   };
 
   render() {
@@ -124,7 +137,7 @@ export class IssueDescription extends Component {
     return (
       <ContainerBorderBottom>
         {issue.repository_url && (
-          <ListItemURL
+          <RepoLink
             title={issue.repository_url.replace(`${v3.root}/repos/`, '')}
             leftIcon={{
               name: 'repo',
@@ -138,7 +151,7 @@ export class IssueDescription extends Component {
         )}
 
         <HeaderContainer>
-          <ListItemIssueTitle
+          <IssueTitle
             title={issue.title}
             subtitle={moment(issue.created_at).fromNow()}
             leftIcon={{

@@ -13,7 +13,7 @@
   Make sure the title of your PR follows our commit style guidelines (see other
   open PR's for reference if you're confused):
 
-  https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#-git-commit-guidelines
+  https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines
 
   Thanks again for your hard work!
 -->

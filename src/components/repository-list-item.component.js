@@ -49,6 +49,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
   },
+  container: {
+    borderBottomColor: colors.greyLight,
+    borderBottomWidth: 1,
+  },
 });
 
 const renderTitle = (repository, showFullName) => (
@@ -128,6 +132,7 @@ export const RepositoryListItem = ({
       color: colors.grey,
       type: 'octicon',
     }}
+    containerStyle={styles.container}
     underlayColor={colors.greyLight}
     onPress={() => navigation.navigate('Repository', { repository })}
   />
