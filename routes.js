@@ -136,10 +136,7 @@ const sharedRoutes = {
       const { issue, issueURL, isPR, locale } = navigation.state.params;
       const number = issue ? issue.number : issueURL.match(issueNumberRegex)[1];
       const langKey = isPR ? 'pullRequest' : 'issue';
-      const langTitle = translate(
-        `issue.main.screenTitles.${langKey}`,
-        locale
-      );
+      const langTitle = translate(`issue.main.screenTitles.${langKey}`, locale);
 
       return {
         title: `${langTitle} #${number}`,

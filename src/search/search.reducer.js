@@ -1,6 +1,6 @@
 import { SEARCH_REPOS, SEARCH_USERS } from './search.type';
 
-const initialState = {
+export const initialState = {
   users: [],
   repos: [],
   isPendingSearchUsers: false,

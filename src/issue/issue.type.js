@@ -15,3 +15,4 @@ export const GET_PULL_REQUEST_FROM_URL = createActionSet(
 export const MERGE_PULL_REQUEST = createActionSet('MERGE_PULL_REQUEST');
 export const GET_ISSUE_FROM_URL = createActionSet('GET_ISSUE_FROM_URL');
 export const SUBMIT_NEW_ISSUE = createActionSet('SUBMIT_NEW_ISSUE');
+export const GET_ISSUE_EVENTS = createActionSet('GET_ISSUE_EVENTS');

@@ -227,12 +227,17 @@ export const eo = {
       deleted: 'DIVITA',
       fileRenamed: 'Dosiero renomita sen ia ajn ŝanĝo',
     },
+    readMe: {
+      readMeActions: 'README Actions',
+      noReadMeFound: 'No README.md found',
+    },
   },
   organization: {
     main: {
       membersTitle: 'Membroj',
       descriptionTitle: 'PRISKRIBO',
     },
+    organizationActions: 'Organization Actions',
   },
   issue: {
     settings: {
@@ -277,6 +282,7 @@ export const eo = {
       openIssueSubTitle: '# {{number}} malfermis {{time}} ago per {{user}}',
       closedIssueSubTitle:
         '# {{number}} per {{user}} estis fermita {{time}} ago',
+      issueActions: 'Issue Actions',
     },
     newIssue: {
       title: 'New Issue',
@@ -333,5 +339,6 @@ export const eo = {
     abbreviations: {
       thousand: 'k',
     },
+    openInBrowser: 'Open in Browser',
   },
 };

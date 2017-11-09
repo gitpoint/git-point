@@ -45,10 +45,6 @@ const mapDispatchToProps = dispatch =>
 
 const styles = StyleSheet.create({
   listTitle: {
-    color: colors.black,
-    ...fonts.fontPrimary,
-  },
-  listSubTitle: {
     color: colors.greyDark,
     ...fonts.fontPrimary,
   },
@@ -113,6 +109,8 @@ class AuthProfile extends Component {
       hasInitialUser,
     } = this.props;
 
+    const hasBackButton = navigation.state.routeName === 'AuthProfile';
+
     const isPending = isPendingUser || isPendingOrgs;
 
     return (
@@ -135,6 +133,8 @@ class AuthProfile extends Component {
             />
           }
           stickyTitle={user.login}
+          navigateBack={hasBackButton}
+          navigation={navigation}
           showMenu
           menuIcon="gear"
           menuAction={() =>
@@ -155,15 +155,21 @@ class AuthProfile extends Component {
             user.bio !== '' && (
               <SectionList title={translate('common.bio', locale)}>
                 <ListItem
-                  subtitle={emojifyText(user.bio)}
-                  subtitleStyle={styles.listSubTitle}
+                  titleNumberOfLines={0}
+                  title={emojifyText(user.bio)}
+                  titleStyle={styles.listTitle}
                   hideChevron
                 />
               </SectionList>
             )}
 
           {!isPending && (
-            <EntityInfo entity={user} orgs={orgs} navigation={navigation} locale={locale} />
+            <EntityInfo
+              entity={user}
+              orgs={orgs}
+              navigation={navigation}
+              locale={locale}
+            />
           )}
 
           {!isPending && (

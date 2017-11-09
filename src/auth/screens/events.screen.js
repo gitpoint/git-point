@@ -9,7 +9,7 @@ import moment from 'moment/min/moment-with-locales.min';
 import { LoadingUserListItem, UserListItem, ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { emojifyText, translate } from 'utils';
-import { getUserEvents, getUser } from 'auth';
+import { getUserEvents } from 'auth';
 import { getNotificationsCount } from 'notifications';
 
 const mapStateToProps = state => ({
@@ -25,7 +25,6 @@ const mapDispatchToProps = dispatch =>
     {
       getUserEvents,
       getNotificationsCount,
-      getUser,
     },
     dispatch
   );
@@ -79,13 +78,7 @@ const styles = StyleSheet.create({
 
 class Events extends Component {
   componentDidMount() {
-    const { user: { login }, getUser } = this.props;
-
-    if (login) {
-      this.getUserEvents();
-    } else {
-      getUser();
-    }
+    this.getUserEvents();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -173,13 +166,9 @@ class Events extends Component {
             }
           );
         } else if (action === 'edited') {
-          return translate(
-            'auth.events.pullRequestReviewEditedEvent',
-            locale,
-            {
-              action: translate(`auth.events.actions.${action}`, locale),
-            }
-          );
+          return translate('auth.events.pullRequestReviewEditedEvent', locale, {
+            action: translate(`auth.events.actions.${action}`, locale),
+          });
         } else if (action === 'deleted') {
           return translate(
             'auth.events.pullRequestReviewDeletedEvent',

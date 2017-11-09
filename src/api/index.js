@@ -389,3 +389,14 @@ export const fetchRepoTopics = async (owner, repoName, accessToken) => {
 
   return response.json();
 };
+
+export const fetchIssueEvents = (
+  owner: string,
+  repoName: string,
+  issueNum: number,
+  accessToken: string
+) =>
+  v3.getJson(
+    `/repos/${owner}/${repoName}/issues/${issueNum}/events`,
+    accessToken
+  );
