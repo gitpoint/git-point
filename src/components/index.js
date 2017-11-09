@@ -3,6 +3,7 @@ export * from './loading-indicators';
 export * from './code-line.component';
 export * from './comment-input.component';
 export * from './comment-list-item.component';
+export * from './coverall-badge.component';
 export * from './diff-blocks.component';
 export * from './entity-info.component';
 export * from './issue-description.component';
