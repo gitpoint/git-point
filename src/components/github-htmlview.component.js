@@ -48,7 +48,7 @@ const styles = {
   code: codeStyle,
   span: textStyle,
   p: { ...textStyle, margin: 0, padding: 0 },
-  sub:{ 
+  sub: {
     ...textStyle,
     fontSize: normalize(9),
   },
