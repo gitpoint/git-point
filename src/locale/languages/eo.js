@@ -199,6 +199,7 @@ export const eo = {
       starred: 'Fenita',
       watching: 'Rigardanta',
       watchers: 'Gardistoj',
+      topicsTitle: 'TOPICS',
     },
     codeList: {
       title: 'Kodo',

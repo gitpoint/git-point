@@ -199,6 +199,7 @@ export const ptBr = {
       starred: 'Favoritado',
       watching: 'Observando',
       watchers: 'Observador',
+      topicsTitle: 'TÓPICOS',
     },
     codeList: {
       title: 'Código',

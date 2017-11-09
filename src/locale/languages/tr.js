@@ -198,6 +198,7 @@ export const tr = {
       forkedFromMessage: 'buradan fork edildi:',
       starred: 'Starred',
       watching: 'İzleniyor',
+      topicsTitle: 'konular',
     },
     codeList: {
       title: 'Code',

@@ -201,6 +201,7 @@ export const pt = {
       starred: 'Favoritos',
       watching: 'A Acompanhar',
       watchers: 'Acompanhando',
+      topicsTitle: 'TÓPICOS',
     },
     codeList: {
       title: 'Código',

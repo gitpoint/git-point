@@ -199,6 +199,7 @@ export const fr = {
       starsTitle: 'Favoris',
       forksTitle: 'Forks',
       forkedFromMessage: 'forké depuis',
+      topicsTitle: 'SUJETS',
     },
     codeList: {
       title: 'Code',

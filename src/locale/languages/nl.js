@@ -195,6 +195,7 @@ export const nl = {
       starsTitle: 'Sterren',
       forksTitle: 'Forks',
       forkedFromMessage: 'forked from',
+      topicsTitle: 'TOPICS',
     },
     codeList: {
       title: 'Code',

@@ -194,6 +194,7 @@ export const erase = {
       forkedFromMessage: 'forked from',
       starred: 'Starred',
       watching: 'Watching',
+      topicsTitle: 'TEMAS',
     },
     codeList: {
       title: 'Code',
