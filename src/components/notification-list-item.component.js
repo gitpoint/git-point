@@ -54,20 +54,27 @@ const IconStyled = styled(Icon).attrs({
   type: 'octicon',
 })``;
 
+const SubjectType = {
+  commit: 'Commit',
+  pull: 'PullRequest',
+};
+
 export class NotificationListItem extends Component {
   props: Props;
 
   getComponentType = () => {
     const { notification } = this.props;
 
-    return notification.subject.type === 'Commit' ? View : TouchableOpacity;
+    return notification.subject.type === SubjectType.commit
+      ? View
+      : TouchableOpacity;
   };
 
   getIconName = type => {
     switch (type) {
-      case 'Commit':
+      case SubjectType.commit:
         return 'git-commit';
-      case 'PullRequest':
+      case SubjectType.pull:
         return 'git-pull-request';
       default:
         return 'issue-opened';
@@ -77,7 +84,7 @@ export class NotificationListItem extends Component {
   getTitleComponentProps = () => {
     const { notification, navigationAction } = this.props;
 
-    return notification.subject.type === 'Commit'
+    return notification.subject.type === SubjectType.commit
       ? {}
       : {
           onPress: () => navigationAction(notification),
