@@ -305,10 +305,13 @@ export class GithubHtmlView extends Component {
         },
         details: (node, index, siblings, parent, defaultRenderer) => {
           const tags = onlyTagsChildren(node);
+          const firstTag = tags[0] || {};
+          const secondTag = tags[1] || {};
           const summaryTag =
-            tags[0] && tags.name === 'summary' ? tags[0] : undefined;
-          const hiddenTag =
-            tags[1] && tags.name === 'hidden' ? tags[1] : undefined;
+            firstTag.name === 'summary'
+              ? firstTag
+              : { type: 'text', data: 'details' };
+          const hiddenTag = secondTag.name === 'hidden' ? secondTag : {};
 
           return (
             <ToggleView
