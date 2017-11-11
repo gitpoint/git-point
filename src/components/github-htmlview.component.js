@@ -305,6 +305,10 @@ export class GithubHtmlView extends Component {
         },
         details: (node, index, siblings, parent, defaultRenderer) => {
           const tags = onlyTagsChildren(node);
+          const summaryTag =
+            tags[0] && tags.name === 'summary' ? tags[0] : undefined;
+          const hiddenTag =
+            tags[1] && tags.name === 'hidden' ? tags[1] : undefined;
 
           return (
             <ToggleView
@@ -313,7 +317,7 @@ export class GithubHtmlView extends Component {
 
                 return [
                   <Text style={detailsSummaryPrefixStyle}> {prefix}</Text>,
-                  defaultRenderer([tags[0]], node),
+                  defaultRenderer([summaryTag], node),
                 ];
               }}
               TouchableStyle={{
@@ -322,7 +326,7 @@ export class GithubHtmlView extends Component {
                 alignItems: 'center',
               }}
             >
-              {defaultRenderer([tags[1]], node)}
+              {defaultRenderer([hiddenTag], node)}
             </ToggleView>
           );
         },
