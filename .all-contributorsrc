@@ -561,7 +561,9 @@
       "name": "Jose Luis Naranjo",
       "avatar_url": "https://avatars2.githubusercontent.com/u/3025600?v=4",
       "profile": "https://co.linkedin.com/in/josenaranjo/en",
-      "contributions": []
+      "contributions": [
+        "code"
+      ]
     },
     {
       "login": "MrLoh",
@@ -598,6 +600,51 @@
       "contributions": [
         "code",
         "design"
+      ]
+    },
+    {
+      "login": "ShiiFu",
+      "name": "Damien Leroy",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/10438692?v=4",
+      "profile": "https://github.com/ShiiFu",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "ibotdotout",
+      "name": "botbotbot",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/686676?v=4",
+      "profile": "http://dev.im-bot.com",
+      "contributions": [
+        "test"
+      ]
+    },
+    {
+      "login": "Kietzmann",
+      "name": "Dmytro Kytsmen",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/8254906?v=4",
+      "profile": "https://github.com/Kietzmann",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "TheCodeTalker",
+      "name": "TheCodeTalker",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/3683673?v=4",
+      "profile": "https://thecodetalker.github.io/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "LeoCp",
+      "name": "Leonardo",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/2670744?v=4",
+      "profile": "https://github.com/LeoCp",
+      "contributions": [
+        "code"
       ]
     }
   ]

@@ -78,11 +78,9 @@ class NewIssue extends Component {
     const owner = repository.owner.login;
 
     if (issueTitle === '') {
-      Alert.alert(
-        translate('issue.newIssue.missingTitleAlert', locale),
-        null,
-        [{ text: translate('common.ok', locale) }]
-      );
+      Alert.alert(translate('issue.newIssue.missingTitleAlert', locale), null, [
+        { text: translate('common.ok', locale) },
+      ]);
     } else {
       submitNewIssue(owner, repoName, issueTitle, issueComment).then(issue => {
         navigation.navigate('Issue', {
@@ -135,9 +133,7 @@ class NewIssue extends Component {
             />
           </SectionList>
 
-          <SectionList
-            title={translate('issue.newIssue.issueComment', locale)}
-          >
+          <SectionList title={translate('issue.newIssue.issueComment', locale)}>
             <TextInput
               underlineColorAndroid={'transparent'}
               placeholder={translate('issue.newIssue.writeAComment', locale)}

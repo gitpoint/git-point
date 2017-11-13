@@ -172,7 +172,7 @@ class IssueSettings extends Component {
             noItemsMessage={translate('issue.settings.noneMessage', locale)}
             title={translate('issue.settings.labelsTitle', locale)}
           >
-            {issue.labels.map(item =>
+            {issue.labels.map(item => (
               <LabelListItem
                 label={item}
                 key={item.id}
@@ -194,7 +194,7 @@ class IssueSettings extends Component {
                     }
                   )}
               />
-            )}
+            ))}
           </SectionList>
 
           <SectionList
@@ -221,7 +221,7 @@ class IssueSettings extends Component {
             noItemsMessage={translate('issue.settings.noneMessage', locale)}
             title={translate('issue.settings.assigneesTitle', locale)}
           >
-            {issue.assignees.map(item =>
+            {issue.assignees.map(item => (
               <UserListItem
                 user={item}
                 key={item.id}
@@ -243,7 +243,7 @@ class IssueSettings extends Component {
                     }
                   )}
               />
-            )}
+            ))}
           </SectionList>
 
           <SectionList title={translate('issue.settings.actionsTitle', locale)}>
@@ -263,7 +263,7 @@ class IssueSettings extends Component {
               onPress={this.showLockIssueActionSheet}
             />
 
-            {!isMerged &&
+            {!isMerged && (
               <ListItem
                 title={
                   issue.state === 'open'
@@ -282,7 +282,8 @@ class IssueSettings extends Component {
                     : styles.openActionTitle
                 }
                 onPress={this.showChangeIssueStateActionSheet}
-              />}
+              />
+            )}
           </SectionList>
 
           <SectionList>
