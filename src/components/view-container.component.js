@@ -1,5 +1,4 @@
 import React from 'react';
-import { StatusBar } from 'react-native';
 import styled from 'styled-components/native';
 
 import { colors } from 'config';
@@ -17,10 +16,7 @@ const Container = styled.View`
 `;
 
 export const ViewContainer = ({ children }: Props) => (
-  <Container>
-    <StatusBar />
-    {children}
-  </Container>
+  <Container>{children}</Container>
 );
 
 ViewContainer.defaultProps = {

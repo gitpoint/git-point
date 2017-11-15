@@ -47,6 +47,7 @@ class App extends Component {
     this.state = {
       rehydrated: false,
     };
+    this.statusBarHandler = this.statusBarHandler.bind(this);
   }
 
   componentWillMount() {
@@ -67,7 +68,6 @@ class App extends Component {
     );
 
     this.constructor.initLocale();
-    this.getCurrentRouteName = this.getCurrentRouteName.bind(this);
   }
 
   componentDidMount() {
@@ -88,13 +88,35 @@ class App extends Component {
       return null;
     }
     const route = navigationState.routes[navigationState.index];
-    // dive into nested navigators
 
     if (route.routes) {
       return this.getCurrentRouteName(route);
     }
 
     return route.routeName;
+  }
+
+  statusBarHandler(prev, next) {
+    const routeName = this.getCurrentRouteName(next);
+    const lightContentScreens = [
+      'MyProfile',
+      'Profile',
+      'Organization',
+      'Repository',
+      'Login',
+    ];
+
+    if (lightContentScreens.includes(routeName)) {
+      StatusBar.setTranslucent(true);
+      StatusBar.setBackgroundColor(
+        routeName === 'Login' ? colors.transparent : colors.black
+      );
+      StatusBar.setBarStyle('light-content');
+    } else {
+      StatusBar.setTranslucent(false);
+      StatusBar.setBackgroundColor(colors.grey);
+      StatusBar.setBarStyle('dark-content');
+    }
   }
 
   render() {
@@ -108,24 +130,9 @@ class App extends Component {
 
     return (
       <Provider store={configureStore}>
-        <GitPoint
-          onNavigationStateChange={(prev, next) => {
-            const darkScreens = [
-              'MyProfile',
-              'Profile',
-              'Organization',
-              'Repository',
-            ];
-
-            if (darkScreens.includes(this.getCurrentRouteName(next))) {
-              StatusBar.setBarStyle('light-content');
-              StatusBar.setBackgroundColor(colors.primaryDark);
-            } else {
-              StatusBar.setBarStyle('dark-content');
-              StatusBar.setBackgroundColor(colors.white);
-            }
-          }}
-        />
+        <GitPoint onNavigationStateChange={this.statusBarHandler}>
+          <StatusBar />
+        </GitPoint>
       </Provider>
     );
   }
