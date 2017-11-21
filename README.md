@@ -123,5 +123,4 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 
 ## Acknowledgments
 
-Thanks to [JetBrains](https://www.jetbrains.com) for supporting us with [free Open Source License](https://www.jetbrains.com/buy/opensource). If you will actively participate in this project you can receive this one. Feel free to contribute!
-
+Thanks to [JetBrains](https://www.jetbrains.com) for supporting us with a [free Open Source License](https://www.jetbrains.com/buy/opensource).
