@@ -14,7 +14,7 @@ const BadgeContainer = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
-  border-radius: 18;
+  border-radius: 25;
   width: 18;
   height: 18;
   border-color: ${colors.alabaster};
