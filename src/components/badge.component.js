@@ -25,7 +25,7 @@ const BadgeContainer = styled.View`
 const BadgeText = styled.Text`
   ${{ ...fonts.fontPrimaryBold }};
   background-color: transparent;
-  ${({ color }) => `color: ${color};`};
+  ${({ color }) => `color: ${color || colors.black};`};
   ${({ largeText }) =>
     `font-size: ${largeText ? normalize(9.5) : normalize(7)};`};
 `;
