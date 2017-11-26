@@ -4,7 +4,7 @@ import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { Icon } from 'react-native-elements';
 import styled from 'styled-components/native';
 
-import { colors, fonts, normalize } from 'config';
+import { colors, normalize, styledFonts } from 'config';
 
 const STICKY_HEADER_HEIGHT = 62;
 
@@ -28,7 +28,7 @@ const Background = styled.View`
   position: absolute;
   top: 0;
   background-color: ${colors.primaryDark};
-  ${props => props.style};
+  height: ${props => props.height};
 `;
 
 const StickySection = styled.View`
@@ -40,7 +40,7 @@ const StickySection = styled.View`
 
 const StickySectionText = styled.Text`
   color: ${colors.white};
-  ${fonts.fontPrimaryBold};
+  font-family: ${styledFonts.fontPrimaryBold};
   font-size: ${normalize(16)};
   margin: 10px;
 `;
@@ -109,7 +109,7 @@ export class ParallaxScroll extends Component {
         backgroundSpeed={10}
         renderBackground={() => (
           <View key="background">
-            <Background style={{ height: this.state.parallaxHeaderHeight }} />
+            <Background height={this.state.parallaxHeaderHeight} />
           </View>
         )}
         renderForeground={renderContent}
