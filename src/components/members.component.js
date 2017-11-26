@@ -5,7 +5,7 @@ import { List, ListItem } from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components/native';
 
-import { colors, fonts } from 'config';
+import { colors, styledFonts } from 'config';
 
 const mapStateToProps = state => ({
   authUser: state.auth.user,
@@ -24,16 +24,25 @@ type Props = {
 const avatarSize = 30;
 
 const Container = styled.View`
-  margin-top: 30;
-  ${props => props.containerStyle};
+  margin-top: ${props => (props.noMargin ? 0 : 30)};
+  ${props =>
+    props.noMargin
+      ? {
+          paddingTop: 0,
+          paddingLeft: 0,
+        }
+      : null};
 `;
 
-const AvatarContainer = styled.TouchableHighlight`
+const AvatarContainer = styled.TouchableHighlight.attrs({
+  underlayColor: 'transparent',
+  onPress: props => props.onPress,
+})`
   background-color: ${colors.greyLight};
   border-radius: ${avatarSize / 2};
   width: ${avatarSize};
   height: ${avatarSize};
-  ${props => props.style};
+  margin-right: ${props => (props.addMarginRight ? 5 : 0)}};
 `;
 
 const Avatar = styled.Image`
@@ -42,54 +51,33 @@ const Avatar = styled.Image`
   width: ${avatarSize};
 `;
 
-type StyledListProps = {
-  style: Object,
-  children: Element,
-};
-
-const StyledList = ({ style, children }: StyledListProps) => (
-  <List containerStyle={style}>{children}</List>
-);
-
-const NoMembersList = styled(StyledList)`
-  margin-top: 0;
-`;
+const NoMembersList = styled(List).attrs({
+  containerStyle: {
+    marginTop: 0,
+  },
+})``;
 
 const SectionTitle = styled.Text`
   color: ${props => (props.isTitleSmall ? colors.primaryDark : colors.black)};
   ${props =>
-    props.isTitleSmall ? fonts.fontPrimarySemiBold : fonts.fontPrimaryBold};
+    props.isTitleSmall
+      ? styledFonts.fontPrimarySemiBold
+      : styledFonts.fontPrimaryBold};
   margin-bottom: 10;
   padding-left: 15;
 `;
 
-type StyledFlatListProps = {
-  style: Object,
-  data: Array,
-  renderItem: Function,
-  keyExtractor: Number,
-};
-
-const StyledFlatList = ({
-  style,
-  data,
-  renderItem,
-  keyExtractor,
-}: StyledFlatListProps) => (
-  <FlatList
-    contentContainerStyle={style}
-    data={data}
-    showsHorizontalScrollIndicator={false}
-    renderItem={renderItem}
-    keyExtractor={keyExtractor}
-    horizontal
-  />
-);
-
-const MembersFlatList = styled(StyledFlatList)`
-  padding-left: 15;
-  padding-right: 15;
-`;
+const MembersFlatList = styled(FlatList).attrs({
+  contentContainerStyle: {
+    paddingLeft: 15,
+    paddingRight: 15,
+  },
+  data: props => props.data,
+  showsHorizontalScrollIndicator: false,
+  renderItem: props => props.renderItem,
+  keyExtractor: props => props.keyExtractor,
+  horizontal: true,
+})``;
 
 type GradientProps = {
   style: Object,
@@ -109,7 +97,7 @@ const ScrollGradient = styled(Gradient)`
   position: absolute;
   width: 15;
   height: ${avatarSize};
-  ${props => props.gradientPosition};
+  ${props => props.position};
 `;
 
 const MembersListComponent = ({
@@ -143,8 +131,7 @@ const MembersListComponent = ({
                 }
               );
             }}
-            underlayColor="transparent"
-            style={{ marginRight: index < members.length - 1 ? 5 : 0 }}
+            addMarginRight={index < members.length - 1}
           >
             <Avatar
               source={{
@@ -157,12 +144,12 @@ const MembersListComponent = ({
       />
 
       <ScrollGradient
-        gradientPosition={{ left: 0 }}
+        position={{ left: 0 }}
         gradientColors={['white', 'rgba(255, 255, 255, 0)']}
       />
 
       <ScrollGradient
-        gradientPosition={{ right: 0 }}
+        position={{ right: 0 }}
         gradientColors={['rgba(255, 255, 255, 0)', 'white']}
       />
     </View>
