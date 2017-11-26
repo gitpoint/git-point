@@ -1,6 +1,21 @@
 import I18n from 'react-native-i18n';
 import { common } from 'config';
-import { en, fr, nl, pt, ptBr, tr, ru, eo, gl, pl, de, es } from './languages';
+import {
+  en,
+  fr,
+  nl,
+  pt,
+  ptBR,
+  tr,
+  ru,
+  eo,
+  gl,
+  pl,
+  de,
+  es,
+  zhCN,
+  uk,
+} from './languages';
 
 I18n.fallbacks = true;
 I18n.defaultLocale = common.defaultLocale;
@@ -11,13 +26,15 @@ I18n.translations = {
   nl,
   tr,
   pt,
-  'pt-br': ptBr,
+  'pt-br': ptBR,
   ru,
   es,
   eo,
   gl,
   pl,
   de,
+  'zh-cn': zhCN,
+  uk,
 };
 
 export default I18n;

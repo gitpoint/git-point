@@ -23,8 +23,8 @@ const StyledPhotoView = styled(PhotoView).attrs({
   minimumZoomScale: 0.5,
   maximumZoomScale: 3,
 })`
-   width: ${Dimensions.get('window').width}px;
-   height: ${Dimensions.get('window').height}px;
+  width: ${Dimensions.get('window').width}px;
+  height: ${Dimensions.get('window').height}px;
 `;
 
 const CloseButton = styled.TouchableOpacity.attrs({

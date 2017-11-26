@@ -59,4 +59,14 @@ export default [
     emojiCode: ':flag-es:',
     name: 'Español',
   },
+  {
+    code: 'zh-cn',
+    emojiCode: ':flag-cn:',
+    name: '简体中文',
+  },
+  {
+    code: 'uk',
+    emojiCode: ':flag-ua:',
+    name: 'Українська',
+  },
 ];
