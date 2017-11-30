@@ -13,7 +13,7 @@ import DeviceInfo from 'react-native-device-info';
 import md5 from 'md5';
 import codePush from 'react-native-code-push';
 
-import { colors, darkStatusBar, lightStatusBar, lightScreens } from 'config';
+import { colors, getStatusBarConfig } from 'config';
 import { getCurrentLocale, configureLocale } from 'utils';
 import { GitPoint } from './routes';
 import { configureStore } from './root.store';
@@ -96,20 +96,16 @@ class App extends Component {
     return route.routeName;
   }
 
-  setStatusBar = ({ translucent, backgroundColor, barStyle }, routeName) => {
-    StatusBar.setTranslucent(translucent);
-    StatusBar.setBackgroundColor(backgroundColor(routeName));
-    StatusBar.setBarStyle(barStyle);
-  };
-
   statusBarHandler(prev, next) {
     const routeName = this.getCurrentRouteName(next);
 
-    const statusBarConfig = lightScreens.includes(routeName)
-      ? lightStatusBar
-      : darkStatusBar;
+    const { translucent, backgroundColor, barStyle } = getStatusBarConfig(
+      routeName
+    );
 
-    this.setStatusBar(statusBarConfig, routeName);
+    StatusBar.setTranslucent(translucent);
+    StatusBar.setBackgroundColor(backgroundColor);
+    StatusBar.setBarStyle(barStyle);
   }
 
   render() {
