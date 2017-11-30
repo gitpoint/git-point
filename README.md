@@ -19,10 +19,6 @@
   </a>
 </p>
 
-<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/hMT4iGPzvQ6QZ6RfizbJKpVA/gitpoint/git-point'>
-  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/hMT4iGPzvQ6QZ6RfizbJKpVA/gitpoint/git-point.svg' />
-</a>
-
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 ## Table of Contents
