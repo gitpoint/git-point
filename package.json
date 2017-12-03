@@ -22,6 +22,7 @@
     "commitmsg": "minicat $GIT_PARAMS | commitlint",
     "precommit": "lint-staged",
     "eslint": "eslint .",
+    "stylelint": "stylelint src/**/*.js",
     "prettier": "prettier --write \"**/*.js\"",
     "test": "jest",
     "test:watch": "jest --watch",
