@@ -6,6 +6,7 @@ import {
   AsyncStorage,
   LayoutAnimation,
   StatusBar,
+  Platform,
 } from 'react-native';
 import { persistStore } from 'redux-persist';
 import createEncryptor from 'redux-persist-transform-encrypt';
@@ -103,8 +104,10 @@ class App extends Component {
       routeName
     );
 
-    StatusBar.setTranslucent(translucent);
-    StatusBar.setBackgroundColor(backgroundColor);
+    if (Platform.OS === 'android') {
+      StatusBar.setTranslucent(translucent);
+      StatusBar.setBackgroundColor(backgroundColor);
+    }
     StatusBar.setBarStyle(barStyle);
   }
 
