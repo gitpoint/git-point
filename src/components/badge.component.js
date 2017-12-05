@@ -19,14 +19,14 @@ const BadgeContainer = styled.View`
   height: 18;
   border-color: ${colors.alabaster};
   border-width: 1;
-  ${({ backgroundColor }) => `background-color: ${backgroundColor};`};
+  background-color: ${({ backgroundColor }) => backgroundColor};
 `;
 
 const BadgeText = styled.Text`
   ${{ ...fonts.fontPrimaryBold }};
   background-color: transparent;
-  ${({ largeText }) =>
-    `font-size: ${largeText ? normalize(9.5) : normalize(7)};`};
+  color: ${({ color }) => color || color.black};
+  font-size: ${({ largeText }) => (largeText ? normalize(9.5) : normalize(7))};
 `;
 
 export const Badge = ({ color, backgroundColor, text, largeText }: Props) => (
