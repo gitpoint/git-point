@@ -244,16 +244,16 @@ class Issue extends Component {
 
   handleActionSheetPress = index => {
     if (index === 0) {
-      openURLInView(this.props.navigation.state.params.issue.html_url);
+      openURLInView(this.props.issue.html_url);
     }
   };
 
   postComment = body => {
-    const { repository, navigation } = this.props;
+    const { issue, repository } = this.props;
 
     const repoName = repository.name;
     const owner = repository.owner.login;
-    const issueNum = navigation.state.params.issue.number;
+    const issueNum = issue.number;
 
     this.props.postIssueComment(body, owner, repoName, issueNum);
     Keyboard.dismiss();
