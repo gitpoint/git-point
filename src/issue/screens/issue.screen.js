@@ -199,28 +199,33 @@ class Issue extends Component {
       .replace(`${v3.root}/repos/`, '')
       .replace(/([^/]+\/[^/]+)\/issues\/\d+$/, '$1');
 
-    const repoName = repository.name;
-    const owner = repository.owner.login;
-
     Promise.all([
       getIssueFromUrl(issueURL),
       getIssueComments(`${issueURL}/comments`),
-    ]).then(() => {
-      const issue = this.props.issue;
+    ])
+      .then(() => {
+        const issue = this.props.issue;
 
-      if (repository.full_name !== issueRepository) {
-        Promise.all([
-          getRepository(issue.repository_url),
-          getContributors(this.getContributorsLink(issue.repository_url)),
-        ]).then(() => {
-          this.setNavigationParams();
-        });
-      } else {
+        if (repository.full_name !== issueRepository) {
+          return Promise.all([
+            getRepository(issue.repository_url),
+            getContributors(this.getContributorsLink(issue.repository_url)),
+          ]);
+        }
+
+        return [];
+      })
+      .then(() => {
+        const { issue, repository } = this.props;
+
         this.setNavigationParams();
-      }
 
-      return getIssueEvents(owner, repoName, issue.number);
-    });
+        return getIssueEvents(
+          repository.owner.login,
+          repository.name,
+          issue.number
+        );
+      });
   };
 
   getContributorsLink = repository => `${repository}/contributors`;
