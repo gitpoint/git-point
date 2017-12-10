@@ -52,6 +52,7 @@
     ]
   },
   "dependencies": {
+    "date-fns": "^1.29.0",
     "entities": "^1.1.1",
     "enzyme": "^3.0.0",
     "enzyme-adapter-react-16": "^1.0.0",
@@ -59,7 +60,6 @@
     "lodash.uniqby": "^4.7.0",
     "lowlight": "^1.5.0",
     "md5": "^2.2.1",
-    "moment": "^2.17.1",
     "node-emoji": "^1.7.0",
     "opencollective": "^1.0.3",
     "parse-diff": "^0.4.0",

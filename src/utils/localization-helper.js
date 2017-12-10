@@ -1,5 +1,5 @@
 import { AsyncStorage } from 'react-native';
-import moment from 'moment/min/moment-with-locales.min';
+import distanceInWordsStrict from 'date-fns/distance_in_words_strict';
 
 import { common } from 'config';
 import I18n from 'locale';
@@ -35,21 +35,32 @@ export async function getCurrentLocale() {
 
 export const configureLocale = locale => {
   I18n.locale = locale;
-
-  const checkLocales = [locale, locale.substr(0, 2)];
-  const localeForMoment =
-    moment
-      .locales()
-      .filter(momentLocale => checkLocales.includes(momentLocale))[0] ||
-    common.defaultLocale;
-
-  moment.updateLocale(localeForMoment, {
-    relativeTime: translate('common.relativeTime', locale),
-  });
 };
 
 export async function saveLocale(locale) {
   await AsyncStorage.setItem('locale', locale);
 
   return true;
+}
+
+/** Wrapper for date-fns' distanceInWordsStrict applaying current locale. */
+export function relativeTimeToNow(date) {
+  const locale = getLocale();
+  // Custom locale config to get our own translations for relative time and
+  // avoid date-fns translations.
+  // Overrides date-fns `formatDistance` function.
+  // https://github.com/date-fns/date-fns/blob/master/src/locale/en-US/_lib/formatDistance/index.js
+  const localeConfig = {
+    distanceInWords: {
+      localize: (token, count) => {
+        const translationKey = `common.relativeTime.${token}.${count === 1
+          ? 'one'
+          : 'other'}`;
+
+        return translate(translationKey, locale, { count });
+      },
+    },
+  };
+
+  return distanceInWordsStrict(new Date(), date, { locale: localeConfig });
 }

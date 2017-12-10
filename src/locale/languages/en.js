@@ -324,18 +324,30 @@ export const en = {
     ok: 'OK',
     submit: 'Submit',
     relativeTime: {
-      past: '%s',
-      s: '%ds',
-      m: '%dm',
-      mm: '%dm',
-      h: '%dh',
-      hh: '%dh',
-      d: '%dd',
-      dd: '%dd',
-      M: '%dmo',
-      MM: '%dmo',
-      y: '%dy',
-      yy: '%dy',
+      xSeconds: {
+        one: '1 second',
+        other: '{{count}} seconds',
+      },
+      xMinutes: {
+        one: '1 minute',
+        other: '{{count}} minutes',
+      },
+      xHours: {
+        one: '1 hour',
+        other: '{{count}} hours',
+      },
+      xDays: {
+        one: '1 day',
+        other: '{{count}} days',
+      },
+      xMonths: {
+        one: '1 month',
+        other: '{{count}} months',
+      },
+      xYears: {
+        one: '1 year',
+        other: '{{count}} years',
+      },
     },
     abbreviations: {
       thousand: 'k',
