@@ -61,7 +61,14 @@ class App extends Component {
       {
         storage: AsyncStorage,
         transforms: [encryptor],
-        blacklist: ['user'],
+        blacklist: [
+          'user',
+          'issue',
+          'repository',
+          'organization',
+          'search',
+          'notifications',
+        ],
       },
       () => {
         this.setState({ rehydrated: true });
