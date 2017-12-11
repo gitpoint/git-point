@@ -53,11 +53,7 @@ export function relativeTimeToNow(date) {
   const localeConfig = {
     distanceInWords: {
       localize: (token, count) => {
-        const translationKey = `common.relativeTime.${token}.${count === 1
-          ? 'one'
-          : 'other'}`;
-
-        return translate(translationKey, locale, { count });
+        return translate(`common.relativeTime.${token}`, locale, { count });
       },
     },
   };
