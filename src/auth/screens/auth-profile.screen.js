@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styled from 'styled-components/native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
@@ -44,10 +45,6 @@ const mapDispatchToProps = dispatch =>
   );
 
 const styles = StyleSheet.create({
-  listTitle: {
-    color: colors.greyDark,
-    ...fonts.fontPrimary,
-  },
   update: {
     flex: 1,
     alignItems: 'center',
@@ -71,6 +68,17 @@ const styles = StyleSheet.create({
     ...fonts.fontPrimarySemiBold,
   },
 });
+
+const BioListItem = styled(ListItem).attrs({
+  containerStyle: {
+    borderBottomColor: colors.greyLight,
+    borderBottomWidth: 1,
+  },
+  titleStyle: {
+    color: colors.greyDark,
+    ...fonts.fontPrimary,
+  },
+})``;
 
 class AuthProfile extends Component {
   props: {
@@ -154,10 +162,9 @@ class AuthProfile extends Component {
             user.bio &&
             user.bio !== '' && (
               <SectionList title={translate('common.bio', locale)}>
-                <ListItem
+                <BioListItem
                   titleNumberOfLines={0}
                   title={emojifyText(user.bio)}
-                  titleStyle={styles.listTitle}
                   hideChevron
                 />
               </SectionList>
