@@ -127,7 +127,6 @@ const styles = StyleSheet.create({
   markAllAsReadButtonContainer: {
     marginTop: 0,
     marginBottom: 20,
-    marginHorizontal: 10,
   },
   contentBlock: {
     flex: 1,
