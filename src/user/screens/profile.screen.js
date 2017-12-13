@@ -166,7 +166,7 @@ class Profile extends Component {
     ];
 
     return (
-      <ViewContainer>
+      <ViewContainer barColor="light">
         <ParallaxScroll
           renderContent={() => (
             <UserProfile

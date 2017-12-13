@@ -250,7 +250,7 @@ class Repository extends Component {
     const showReadMe = !isPendingCheckReadMe && hasReadMe;
 
     return (
-      <ViewContainer>
+      <ViewContainer barColor="light">
         {loader}
 
         <ParallaxScroll

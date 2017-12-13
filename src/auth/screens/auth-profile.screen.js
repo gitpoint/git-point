@@ -122,7 +122,7 @@ class AuthProfile extends Component {
     const isPending = isPendingUser || isPendingOrgs;
 
     return (
-      <ViewContainer>
+      <ViewContainer barColor="light">
         <ParallaxScroll
           renderContent={() => (
             <UserProfile
