@@ -1,5 +1,5 @@
 import { AsyncStorage } from 'react-native';
-import distanceInWordsStrict from 'date-fns/distance_in_words_strict';
+import distanceInWords from 'date-fns/distance_in_words';
 
 import { common } from 'config';
 import I18n from 'locale';
@@ -48,8 +48,8 @@ export function relativeTimeToNow(date) {
   const locale = getLocale();
   // Custom locale config to get our own translations for relative time and
   // avoid date-fns translations.
-  // Overrides date-fns `formatDistance` function.
-  // https://github.com/date-fns/date-fns/blob/master/src/locale/en-US/_lib/formatDistance/index.js
+  // Overrides date-fns `distanceInWords` function.
+  // https://github.com/date-fns/date-fns/blob/v1.29.0/src/locale/en/build_distance_in_words_locale/index.js
   const localeConfig = {
     distanceInWords: {
       localize: (token, count) => {
@@ -58,5 +58,5 @@ export function relativeTimeToNow(date) {
     },
   };
 
-  return distanceInWordsStrict(new Date(), date, { locale: localeConfig });
+  return distanceInWords(date, new Date(), { locale: localeConfig });
 }
