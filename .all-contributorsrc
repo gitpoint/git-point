@@ -646,6 +646,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "coderste",
+      "name": "Stephen",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/13105865?v=4",
+      "profile": "https://github.com/coderste",
+      "contributions": [
+        "doc"
+      ]
     }
   ]
 }
