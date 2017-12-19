@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styled from 'styled-components/native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
@@ -44,14 +45,6 @@ const mapDispatchToProps = dispatch =>
   );
 
 const styles = StyleSheet.create({
-  listTitle: {
-    color: colors.black,
-    ...fonts.fontPrimary,
-  },
-  listSubTitle: {
-    color: colors.greyDark,
-    ...fonts.fontPrimary,
-  },
   update: {
     flex: 1,
     alignItems: 'center',
@@ -75,6 +68,17 @@ const styles = StyleSheet.create({
     ...fonts.fontPrimarySemiBold,
   },
 });
+
+const BioListItem = styled(ListItem).attrs({
+  containerStyle: {
+    borderBottomColor: colors.greyLight,
+    borderBottomWidth: 1,
+  },
+  titleStyle: {
+    color: colors.greyDark,
+    ...fonts.fontPrimary,
+  },
+})``;
 
 class AuthProfile extends Component {
   props: {
@@ -113,6 +117,8 @@ class AuthProfile extends Component {
       hasInitialUser,
     } = this.props;
 
+    const hasBackButton = navigation.state.routeName === 'AuthProfile';
+
     const isPending = isPendingUser || isPendingOrgs;
 
     return (
@@ -135,6 +141,8 @@ class AuthProfile extends Component {
             />
           }
           stickyTitle={user.login}
+          navigateBack={hasBackButton}
+          navigation={navigation}
           showMenu
           menuIcon="gear"
           menuAction={() =>
@@ -154,16 +162,21 @@ class AuthProfile extends Component {
             user.bio &&
             user.bio !== '' && (
               <SectionList title={translate('common.bio', locale)}>
-                <ListItem
-                  subtitle={emojifyText(user.bio)}
-                  subtitleStyle={styles.listSubTitle}
+                <BioListItem
+                  titleNumberOfLines={0}
+                  title={emojifyText(user.bio)}
                   hideChevron
                 />
               </SectionList>
             )}
 
           {!isPending && (
-            <EntityInfo entity={user} orgs={orgs} navigation={navigation} locale={locale} />
+            <EntityInfo
+              entity={user}
+              orgs={orgs}
+              navigation={navigation}
+              locale={locale}
+            />
           )}
 
           {!isPending && (

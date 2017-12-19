@@ -1,4 +1,4 @@
-export const ptBr = {
+export const ptBR = {
   auth: {
     login: {
       connectingToGitHub: 'Conectando ao GitHub...',
@@ -334,6 +334,9 @@ export const ptBr = {
       MM: '%dmo',
       y: '%dy',
       yy: '%dy',
+    },
+    abbreviations: {
+      thousand: 'k',
     },
     openInBrowser: 'Abrir no Navegador.',
   },

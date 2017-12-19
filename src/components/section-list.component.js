@@ -10,7 +10,6 @@ type Props = {
   children?: React.Element<*>,
   showButton: boolean,
   buttonTitle: string,
-  noOuterBorders: boolean,
   noItems: boolean,
   noItemsMessage: string,
   buttonAction: Function,
@@ -42,14 +41,11 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     paddingVertical: 5,
     paddingHorizontal: 10,
-    marginTop: -8,
   },
   list: {
     marginTop: 0,
-  },
-  noOuterBorders: {
-    borderTopWidth: 0,
-    borderBottomWidth: 0,
+    borderBottomColor: colors.grey,
+    borderBottomWidth: 1,
   },
   loadingIcon: {
     marginVertical: 20,
@@ -62,7 +58,6 @@ export const SectionList = ({
   showButton,
   buttonTitle,
   buttonAction,
-  noOuterBorders,
   noItems,
   noItemsMessage,
   children,
@@ -110,11 +105,7 @@ export const SectionList = ({
             />
           )}
       </View>
-      <List
-        containerStyle={[styles.list, noOuterBorders && styles.noOuterBorders]}
-      >
-        {listDisplay}
-      </List>
+      <List containerStyle={styles.list}>{listDisplay}</List>
     </View>
   );
 };

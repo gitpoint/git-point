@@ -18,9 +18,10 @@ import {
   IssueDescription,
   CommentListItem,
   CommentInput,
+  IssueEventListItem,
 } from 'components';
 import { v3 } from 'api';
-import { translate, openURLInView } from 'utils';
+import { translate, formatEventsToRender, openURLInView } from 'utils';
 import { colors } from 'config';
 import { getRepository, getContributors } from 'repository';
 import {
@@ -28,6 +29,7 @@ import {
   postIssueComment,
   getIssueFromUrl,
   deleteIssueComment,
+  getIssueEvents,
 } from '../issue.action';
 
 const mapStateToProps = state => ({
@@ -40,9 +42,11 @@ const mapStateToProps = state => ({
   pr: state.issue.pr,
   isMerged: state.issue.isMerged,
   comments: state.issue.comments,
+  events: state.issue.events,
   isPendingDiff: state.issue.isPendingDiff,
   isPendingCheckMerge: state.issue.isPendingCheckMerge,
   isPendingComments: state.issue.isPendingComments,
+  isPendingEvents: state.issue.isPendingEvents,
   isPostingComment: state.issue.isPostingComment,
   isPendingContributors: state.repository.isPendingContributors,
   isDeletingComment: state.issue.isDeletingComment,
@@ -57,9 +61,20 @@ const mapDispatchToProps = dispatch =>
       postIssueComment,
       getIssueFromUrl,
       deleteIssueComment,
+      getIssueEvents,
     },
     dispatch
   );
+
+const compareCreatedAt = (a, b) => {
+  if (a.created_at < b.created_at) {
+    return -1;
+  } else if (a.created_at > b.created_at) {
+    return 1;
+  }
+
+  return 0;
+};
 
 class Issue extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -104,6 +119,7 @@ class Issue extends Component {
     getContributors: Function,
     postIssueComment: Function,
     getIssueFromUrl: Function,
+    getIssueEvents: Function,
     deleteIssueComment: Function,
     diff: string,
     issue: Object,
@@ -113,10 +129,12 @@ class Issue extends Component {
     repository: Object,
     contributors: Array,
     comments: Array,
+    events: Array,
     isPendingIssue: boolean,
     isPendingDiff: boolean,
     isPendingCheckMerge: boolean,
     isPendingComments: boolean,
+    isPendingEvents: boolean,
     isDeletingComment: boolean,
     isPendingContributors: boolean,
     // isPostingComment: boolean,
@@ -172,6 +190,7 @@ class Issue extends Component {
       getRepository,
       getContributors,
       getIssueFromUrl,
+      getIssueEvents,
     } = this.props;
 
     const params = navigation.state.params;
@@ -183,20 +202,30 @@ class Issue extends Component {
     Promise.all([
       getIssueFromUrl(issueURL),
       getIssueComments(`${issueURL}/comments`),
-    ]).then(() => {
-      const issue = this.props.issue;
+    ])
+      .then(() => {
+        const issue = this.props.issue;
 
-      if (repository.full_name !== issueRepository) {
-        Promise.all([
-          getRepository(issue.repository_url),
-          getContributors(this.getContributorsLink(issue.repository_url)),
-        ]).then(() => {
-          this.setNavigationParams();
-        });
-      } else {
+        if (repository.full_name !== issueRepository) {
+          return Promise.all([
+            getRepository(issue.repository_url),
+            getContributors(this.getContributorsLink(issue.repository_url)),
+          ]);
+        }
+
+        return [];
+      })
+      .then(() => {
+        const { issue, repository } = this.props;
+
         this.setNavigationParams();
-      }
-    });
+
+        return getIssueEvents(
+          repository.owner.login,
+          repository.name,
+          issue.number
+        );
+      });
   };
 
   getContributorsLink = repository => `${repository}/contributors`;
@@ -215,16 +244,16 @@ class Issue extends Component {
 
   handleActionSheetPress = index => {
     if (index === 0) {
-      openURLInView(this.props.navigation.state.params.issue.html_url);
+      openURLInView(this.props.issue.html_url);
     }
   };
 
   postComment = body => {
-    const { repository, navigation } = this.props;
+    const { issue, repository } = this.props;
 
     const repoName = repository.name;
     const owner = repository.owner.login;
-    const issueNum = navigation.state.params.issue.number;
+    const issueNum = issue.number;
 
     this.props.postIssueComment(body, owner, repoName, issueNum);
     Keyboard.dismiss();
@@ -250,8 +279,8 @@ class Issue extends Component {
     });
   };
 
-  keyExtractor = item => {
-    return item.id;
+  keyExtractor = (item, index) => {
+    return index;
   };
 
   renderHeader = () => {
@@ -284,7 +313,11 @@ class Issue extends Component {
   };
 
   renderItem = ({ item }) => {
-    const { locale } = this.props;
+    const { locale, navigation } = this.props;
+
+    if (item.event) {
+      return <IssueEventListItem event={item} navigation={navigation} />;
+    }
 
     return (
       <CommentListItem
@@ -293,7 +326,7 @@ class Issue extends Component {
         onDeletePress={this.deleteComment}
         onEditPress={this.editComment}
         locale={locale}
-        navigation={this.props.navigation}
+        navigation={navigation}
       />
     );
   };
@@ -304,6 +337,7 @@ class Issue extends Component {
       comments,
       contributors,
       isPendingComments,
+      isPendingEvents,
       isPendingContributors,
       isPendingIssue,
       isDeletingComment,
@@ -316,11 +350,15 @@ class Issue extends Component {
       isPendingIssue ||
       isDeletingComment
     );
-    const isShowLoadingContainer = isPendingComments || isPendingIssue;
-    const fullComments = !isPendingComments ? [issue, ...comments] : [];
+    const isShowLoadingContainer =
+      isPendingComments || isPendingIssue || isPendingEvents;
+    const events = formatEventsToRender([...this.props.events]);
+    const conversation = !isPendingComments
+      ? [issue, ...comments, ...events].sort(compareCreatedAt)
+      : [];
 
     const participantNames = !isPendingComments
-      ? fullComments.map(item => item && item.user && item.user.login)
+      ? conversation.map(item => item && item.user && item.user.login)
       : [];
     const contributorNames = !isPendingContributors
       ? contributors.map(item => item && item.login)
@@ -333,44 +371,46 @@ class Issue extends Component {
 
     return (
       <ViewContainer>
-        {isShowLoadingContainer &&
-          <LoadingContainer animating={isShowLoadingContainer} center />}
+        {isShowLoadingContainer && (
+          <LoadingContainer animating={isShowLoadingContainer} center />
+        )}
 
         {!isPendingComments &&
           !isPendingIssue &&
-          issue &&
-          <KeyboardAvoidingView
-            style={{ flex: 1 }}
-            behavior={'padding'}
-            keyboardVerticalOffset={Platform.select({
-              ios: 65,
-              android: -200,
-            })}
-          >
-            <FlatList
-              ref={ref => {
-                this.commentsList = ref;
-              }}
-              refreshing={isLoadingData}
-              onRefresh={this.getIssueInformation}
-              contentContainerStyle={{ flexGrow: 1 }}
-              ListHeaderComponent={this.renderHeader}
-              removeClippedSubviews={false}
-              data={fullComments}
-              keyExtractor={this.keyExtractor}
-              renderItem={this.renderItem}
-            />
+          issue && (
+            <KeyboardAvoidingView
+              style={{ flex: 1 }}
+              behavior={'padding'}
+              keyboardVerticalOffset={Platform.select({
+                ios: 65,
+                android: -200,
+              })}
+            >
+              <FlatList
+                ref={ref => {
+                  this.commentsList = ref;
+                }}
+                refreshing={isLoadingData}
+                onRefresh={this.getIssueInformation}
+                contentContainerStyle={{ flexGrow: 1 }}
+                ListHeaderComponent={this.renderHeader}
+                removeClippedSubviews={false}
+                data={conversation}
+                keyExtractor={this.keyExtractor}
+                renderItem={this.renderItem}
+              />
 
-            <CommentInput
-              users={fullUsers}
-              userHasPushPermission={
-                navigation.state.params.userHasPushPermission
-              }
-              issueLocked={issue.locked}
-              locale={locale}
-              onSubmit={this.postComment}
-            />
-          </KeyboardAvoidingView>}
+              <CommentInput
+                users={fullUsers}
+                userHasPushPermission={
+                  navigation.state.params.userHasPushPermission
+                }
+                issueLocked={issue.locked}
+                locale={locale}
+                onSubmit={this.postComment}
+              />
+            </KeyboardAvoidingView>
+          )}
 
         <ActionSheet
           ref={o => {

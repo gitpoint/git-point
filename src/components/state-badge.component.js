@@ -58,16 +58,18 @@ export const StateBadge = ({
     issueText = translate('issue.main.states.closed', locale);
   }
 
+  let issueStyle = {};
+
+  if (issueState === 'merged') {
+    issueStyle = styles.mergedIssue;
+  } else if (issueState === 'open') {
+    issueStyle = styles.openIssue;
+  } else if (issueState === 'closed') {
+    issueStyle = styles.closedIssue;
+  }
+
   return (
-    <View
-      style={[
-        styles.badge,
-        style,
-        issueState === 'merged' && styles.mergedIssue,
-        issueState === 'open' && styles.openIssue,
-        issueState === 'closed' && styles.closedIssue,
-      ]}
-    >
+    <View style={[styles.badge, style, issueStyle]}>
       <Text style={styles.text}>{issueText}</Text>
     </View>
   );

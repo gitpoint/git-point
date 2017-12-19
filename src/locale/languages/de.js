@@ -206,7 +206,7 @@ export const de = {
       starred: 'Starred',
       watching: 'Watching',
       watchers: 'Watchers',
-      topicsTitle: 'THEMEN',
+      topicsTitle: 'TOPICS',
     },
     codeList: {
       title: 'Code',
@@ -244,6 +244,7 @@ export const de = {
       membersTitle: 'MITGLIEDER',
       descriptionTitle: 'BESCHREIBUNG',
     },
+    organizationActions: 'Organisation Aktionen',
   },
   issue: {
     settings: {
@@ -288,6 +289,7 @@ export const de = {
       openIssueSubTitle: '#{{number}} wude vor {{time}} von {{user}} geöffnet',
       closedIssueSubTitle:
         '#{{number}} von {{user}} wurde vor {{time}} geschlossen',
+      issueActions: 'Issue Aktionen',
     },
     newIssue: {
       title: 'Neues Issue',
@@ -344,5 +346,6 @@ export const de = {
     abbreviations: {
       thousand: 't',
     },
+    openInBrowser: 'In Browser öffnen',
   },
 };

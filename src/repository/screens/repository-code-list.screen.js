@@ -40,6 +40,10 @@ const styles = StyleSheet.create({
     fontSize: normalize(18),
     textAlign: 'center',
   },
+  container: {
+    borderBottomColor: colors.greyLight,
+    borderBottomWidth: 1,
+  },
 });
 
 class RepositoryCodeList extends Component {
@@ -99,6 +103,7 @@ class RepositoryCodeList extends Component {
         type: 'octicon',
       }}
       titleStyle={item.type === 'dir' ? styles.titleBold : styles.title}
+      containerStyle={styles.container}
       onPress={() => this.goToPath(item)}
       underlayColor={colors.greyLight}
     />

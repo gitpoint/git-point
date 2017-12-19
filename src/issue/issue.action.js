@@ -7,6 +7,7 @@ import {
   fetchSubmitNewIssue,
   fetchDeleteIssueComment,
   fetchEditIssueComment,
+  fetchIssueEvents,
   v3,
 } from 'api';
 import {
@@ -23,6 +24,7 @@ import {
   SUBMIT_NEW_ISSUE,
   DELETE_ISSUE_COMMENT,
   EDIT_ISSUE_COMMENT,
+  GET_ISSUE_EVENTS,
 } from './issue.type';
 
 const getDiff = url => {
@@ -366,6 +368,28 @@ export const submitNewIssue = (owner, repo, issueTitle, issueComment) => {
       .catch(error => {
         dispatch({
           type: SUBMIT_NEW_ISSUE.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+export const getIssueEvents = (owner, repoName, issueNum) => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: GET_ISSUE_EVENTS.PENDING });
+
+    return fetchIssueEvents(owner, repoName, issueNum, accessToken)
+      .then(events => {
+        dispatch({
+          type: GET_ISSUE_EVENTS.SUCCESS,
+          payload: events,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: GET_ISSUE_EVENTS.ERROR,
           payload: error,
         });
       });

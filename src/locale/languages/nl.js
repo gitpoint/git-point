@@ -145,6 +145,8 @@ export const nl = {
       searchMessage: 'Zoeken naar {{type}}',
       repository: 'repository',
       user: 'gebruiker',
+      noUsersFound: 'No users found :(',
+      noRepositoriesFound: 'No repositories found :(',
     },
   },
   user: {
@@ -196,6 +198,9 @@ export const nl = {
       forksTitle: 'Forks',
       forkedFromMessage: 'forked from',
       topicsTitle: 'TOPICS',
+      starred: 'Starred',
+      watching: 'Watching',
+      watchers: 'Watchers',
     },
     codeList: {
       title: 'Code',
