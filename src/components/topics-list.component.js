@@ -19,7 +19,7 @@ const styles = {
     paddingLeft: 15,
   },
   topic: {
-    backgroundColor: colors.primaryDark,
+    backgroundColor: colors.topicLightBlue,
     marginLeft: 5,
     marginRight: 5,
     paddingTop: 3,
@@ -44,7 +44,7 @@ export const TopicsList = ({ containerStyle, title, topics }: Props) => (
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => (
           <TouchableOpacity style={styles.topic}>
-            <Text style={{ color: colors.white }}>{item}</Text>
+            <Text style={{ color: colors.topicDarkBlue }}>{item}</Text>
           </TouchableOpacity>
         )}
         keyExtractor={item => item}
