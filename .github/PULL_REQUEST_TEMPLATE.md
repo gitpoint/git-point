@@ -40,7 +40,7 @@
 
 | Before   | After    |
 | -------- | -------- |
-| ![before](http://placekitten.com/700/1000) | ![after](http://placekitten.com/700/1001) |
+|![before](http://placekitten.com/700/1000)|![after](http://placekitten.com/700/1001)|
 
 ## Description
 
