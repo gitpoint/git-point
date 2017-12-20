@@ -2,7 +2,7 @@ export const eu = {
   auth: {
     login: {
       connectingToGitHub: 'GitHubera konektatzen...',
-      preparingGitPoint: 'GifPoint prestatzen...',
+      preparingGitPoint: 'GitPoint prestatzen...',
       cancel: 'EZEZTATU',
       welcomeTitle: 'Ongi etorri GitPointera',
       welcomeMessage:
