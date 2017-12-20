@@ -20,7 +20,7 @@
 
 | Question         | Response    |
 | ---------------- | ----------- |
-| Version?         | v1.4.0      |
+| Version?         | v1.4.1      |
 | Devices tested?  | iPhone 7... |
 | Bug fix?         | yes/no      |
 | New feature?     | yes/no      |
