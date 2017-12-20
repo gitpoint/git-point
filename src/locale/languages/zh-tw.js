@@ -8,8 +8,8 @@ export const zhTW = {
       welcomeMessage: '完全免費，功能最強大的 GitHub 應用程式！',
       notificationsTitle: '通知設定',
       notificationsMessage: '檢視並設定所有未讀與參與的通知',
-      reposTitle: '儲存庫與使用者',
-      reposMessage: '便捷地獲得儲存庫、使用者與組織的資訊',
+      reposTitle: '版本庫與使用者',
+      reposMessage: '便捷地獲得版本庫、使用者與組織的資訊',
       issuesTitle: '議題 與 合併請求',
       issuesMessage: '參與議題討論、合併請求',
       signInButton: '登入',
@@ -18,7 +18,7 @@ export const zhTW = {
       welcomeTitle: '歡迎使用 GitPoint',
     },
     events: {
-      welcomeMessage: '歡迎！這是您的消息動態，在這裡你可以看到你關注的儲存庫與使用者最近的動態',
+      welcomeMessage: '歡迎！這是您的消息動態，在這裡你可以看到你關注的版本庫與使用者最近的動態',
       commitCommentEvent: '在 commit 上評論',
       createEvent: '建立了{{object}}',
       deleteEvent: '刪除了{{object}}',
@@ -43,7 +43,7 @@ export const zhTW = {
         issue: '議題',
       },
       objects: {
-        repository: '儲存庫',
+        repository: '版本庫',
         branch: '分支',
         tag: 'tag',
       },
@@ -129,14 +129,14 @@ export const zhTW = {
   },
   search: {
     main: {
-      repositoryButton: '儲存庫',
+      repositoryButton: '版本庫',
       userButton: '使用者',
       searchingMessage: '正在搜尋 {{query}}',
       searchMessage: '搜尋任意 {{type}}',
-      repository: '儲存庫',
+      repository: '版本庫',
       user: '使用者',
       noUsersFound: '未找到符合條件的使用者 :(',
-      noRepositoriesFound: '未找到符合條件的儲存庫 :(',
+      noRepositoriesFound: '未找到符合條件的版本庫 :(',
     },
   },
   user: {
@@ -146,7 +146,7 @@ export const zhTW = {
       follow: '關注',
     },
     repositoryList: {
-      title: '儲存庫',
+      title: '版本庫',
     },
     followers: {
       title: '追蹤者',
@@ -163,7 +163,7 @@ export const zhTW = {
     main: {
       shareRepositoryTitle: '分享 {{repoName}}',
       shareRepositoryMessage: '快來看看 GitHub上 的 {{repoName}} {{repoUrl}}',
-      repoActions: '儲存庫操作',
+      repoActions: '版本庫操作',
       forkAction: 'Fork',
       starAction: '加星',
       unstarAction: '取消加星',
@@ -306,7 +306,7 @@ export const zhTW = {
     location: '地點',
     email: 'Email',
     website: '網站',
-    repositories: '儲存庫',
+    repositories: '版本庫',
     cancel: '取消',
     yes: '是',
     ok: 'OK',
