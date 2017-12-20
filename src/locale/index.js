@@ -15,6 +15,7 @@ import {
   es,
   zhCN,
   uk,
+  eu,
 } from './languages';
 
 I18n.fallbacks = true;
@@ -35,6 +36,7 @@ I18n.translations = {
   de,
   'zh-cn': zhCN,
   uk,
+  eu,
 };
 
 export default I18n;
