@@ -31,7 +31,6 @@ export const colors = {
   orange: '#e67e22',
   githubDark: '#1f2327',
   alabaster: '#f7f7f7',
-  topicDarkBlue: '#0366d6',
   topicLightBlue: '#f1f8ff',
 };
 

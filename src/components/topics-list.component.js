@@ -1,55 +1,66 @@
 import React from 'react';
-import { TouchableOpacity, FlatList, Text, View } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import styled from 'styled-components/native';
 import { colors, fonts } from 'config';
+import { InlineLabel } from 'components';
 
 type Props = {
-  containerStyle: Object,
   title: string,
   topics: Array,
 };
 
 const styles = {
-  container: {
-    marginTop: 30,
-  },
-  sectionTitle: {
-    color: colors.black,
-    ...fonts.fontPrimaryBold,
-    marginBottom: 10,
-    paddingLeft: 15,
-  },
-  topic: {
-    backgroundColor: colors.topicLightBlue,
-    marginLeft: 5,
-    marginRight: 5,
-    paddingTop: 3,
-    paddingRight: 10,
-    paddingBottom: 3,
-    paddingLeft: 10,
-    borderRadius: 3,
-  },
-  flatList: {
-    marginLeft: 15,
-    marginRight: 15,
+  scrollGradient: {
+    position: 'absolute',
+    width: 15,
+    height: 30,
   },
 };
 
-export const TopicsList = ({ containerStyle, title, topics }: Props) => (
-  <View style={styles.container}>
-    <Text style={[styles.sectionTitle, containerStyle]}>{title}</Text>
+const TopicsFlatList = styled.FlatList`
+  marginleft: 15;
+  marginright: 15;
+`;
+
+const TopicsListContainer = styled.View`
+  margintop: 30;
+`;
+
+const TopicsListLabel = styled.Text`
+  color: ${colors.black};
+  ${{ ...fonts.fontPrimaryBold }};
+  marginbottom: 10;
+  paddingleft: 15;
+`;
+
+export const TopicsList = ({ title, topics }: Props) => (
+  <TopicsListContainer>
+    <TopicsListLabel>{title}</TopicsListLabel>
     {topics.length > 0 && (
-      <FlatList
-        style={styles.flatList}
+      <TopicsFlatList
         data={topics}
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => (
-          <TouchableOpacity style={styles.topic}>
-            <Text style={{ color: colors.topicDarkBlue }}>{item}</Text>
-          </TouchableOpacity>
+          <InlineLabel
+            label={{ name: item, color: colors.topicLightBlue.slice(1) }}
+          />
         )}
         keyExtractor={item => item}
         horizontal
       />
     )}
-  </View>
+    <LinearGradient
+      style={[styles.scrollGradient, { left: 0 }]}
+      colors={['white', 'rgba(255, 255, 255, 0)']}
+      start={{ x: 0, y: 0.5 }}
+      end={{ x: 1, y: 0.5 }}
+    />
+
+    <LinearGradient
+      style={[styles.scrollGradient, { right: 0 }]}
+      colors={['rgba(255, 255, 255, 0)', 'white']}
+      start={{ x: 0, y: 0.5 }}
+      end={{ x: 1, y: 0.5 }}
+    />
+  </TopicsListContainer>
 );
