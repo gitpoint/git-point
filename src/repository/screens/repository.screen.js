@@ -211,7 +211,8 @@ class Repository extends Component {
     const { refreshing } = this.state;
 
     const initalRepository = navigation.state.params.repository;
-    const pulls = issues.filter(issue => issue.hasOwnProperty('pull_request')); // eslint-disable-line no-prototype-builtins
+    // eslint-disable-next-line no-prototype-builtins
+    const pulls = issues.filter(issue => issue.hasOwnProperty('pull_request'));
     const pureIssues = issues.filter(issue => {
       // eslint-disable-next-line no-prototype-builtins
       return !issue.hasOwnProperty('pull_request');
@@ -346,7 +347,8 @@ class Repository extends Component {
                 onPress={() =>
                   navigation.navigate('ReadMe', {
                     repository,
-                  })}
+                  })
+                }
                 underlayColor={colors.greyLight}
               />
             )}
@@ -363,7 +365,8 @@ class Repository extends Component {
                 navigation.navigate('RepositoryCodeList', {
                   title: translate('repository.codeList.title', locale),
                   topLevel: true,
-                })}
+                })
+              }
               underlayColor={colors.greyLight}
             />
           </SectionList>
@@ -428,7 +431,8 @@ class Repository extends Component {
                 title: translate('repository.pullList.title', locale),
                 type: 'pull',
                 issues: pulls,
-              })}
+              })
+            }
           >
             {openPulls
               .slice(0, 3)

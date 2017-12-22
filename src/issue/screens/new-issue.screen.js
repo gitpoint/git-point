@@ -122,7 +122,8 @@ class NewIssue extends Component {
               onContentSizeChange={event =>
                 this.setState({
                   issueTitleHeight: event.nativeEvent.contentSize.height,
-                })}
+                })
+              }
               onChangeText={text => this.setState({ issueTitle: text })}
               placeholderTextColor={colors.grey}
               style={[
@@ -142,7 +143,8 @@ class NewIssue extends Component {
               onContentSizeChange={event =>
                 this.setState({
                   issueCommentHeight: event.nativeEvent.contentSize.height,
-                })}
+                })
+              }
               placeholderTextColor={colors.grey}
               style={[
                 styles.textInput,

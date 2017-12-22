@@ -198,12 +198,14 @@ class UserOptions extends Component {
                 navigation.navigate('PrivacyPolicy', {
                   title: translate('auth.privacyPolicy.title', locale),
                   locale,
-                })}
+                })
+              }
             />
             <StyledListItem
               title={translate('auth.userOptions.donate', locale)}
               onPress={() =>
-                openURLInView('https://opencollective.com/git-point')}
+                openURLInView('https://opencollective.com/git-point')
+              }
             />
             <StyledListItem
               title={translate('auth.userOptions.signOut', locale)}

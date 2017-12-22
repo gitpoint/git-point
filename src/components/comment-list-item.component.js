@@ -146,7 +146,8 @@ class CommentListItemComponent extends Component {
                   {
                     user: comment.user,
                   }
-                )}
+                )
+              }
             >
               <Image
                 style={styles.avatar}
@@ -169,7 +170,8 @@ class CommentListItemComponent extends Component {
                     {
                       user: comment.user,
                     }
-                  )}
+                  )
+                }
               >
                 {comment.user.login}
               </Text>

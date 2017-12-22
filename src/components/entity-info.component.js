@@ -111,7 +111,8 @@ export const EntityInfo = ({ entity, orgs, locale, navigation }: Props) => {
             }}
             subtitle={entity.email}
             onPress={() =>
-              Communications.email([entity.email], null, null, null, null)}
+              Communications.email([entity.email], null, null, null, null)
+            }
           />
         )}
 

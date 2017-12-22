@@ -140,7 +140,8 @@ class RepositoryList extends Component {
                   showsCancelButton={searchFocus}
                   onFocus={() => this.setState({ searchFocus: true })}
                   onCancelButtonPress={() =>
-                    this.setState({ searchStart: false, query: '' })}
+                    this.setState({ searchStart: false, query: '' })
+                  }
                   onSearchButtonPress={query => {
                     this.search(query);
                   }}
@@ -152,7 +153,8 @@ class RepositoryList extends Component {
 
           {loading &&
             [...Array(searchStart ? repoCount : 10)].map(
-              (item, index) => <LoadingRepositoryListItem key={index} /> // eslint-disable-line react/no-array-index-key
+              // eslint-disable-next-line react/no-array-index-key
+              (item, index) => <LoadingRepositoryListItem key={index} />
             )}
 
           {!loading && (

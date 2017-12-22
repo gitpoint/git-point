@@ -1,5 +1,7 @@
 {
-  "processors": ["stylelint-processor-styled-components"],
+  "processors": [
+    "stylelint-processor-styled-components"
+  ],
   "extends": [
     "stylelint-config-standard",
     "stylelint-config-styled-components"
@@ -8,8 +10,12 @@
     "block-no-empty": null,
     "declaration-colon-newline-after": null,
     "declaration-property-value-whitelist": {
-      "margin": ["/^(0|[+-]?(\\d*\\.)?\\d+px)( (0|[+-]?(\\d*\\.)?\\d+px))?$/"],
-      "padding": ["/^(0|[+-]?(\\d*\\.)?\\d+px)( (0|[+-]?(\\d*\\.)?\\d+px))?$/"],
+      "margin": [
+        "/^(0|[+-]?(\\d*\\.)?\\d+px)( (0|[+-]?(\\d*\\.)?\\d+px))?$/"
+      ],
+      "padding": [
+        "/^(0|[+-]?(\\d*\\.)?\\d+px)( (0|[+-]?(\\d*\\.)?\\d+px))?$/"
+      ]
     },
     "value-list-max-empty-lines": null
   },

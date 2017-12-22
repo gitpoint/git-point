@@ -107,9 +107,11 @@ export class CommentInput extends Component {
               blurOnSubmit={false}
               onChangeText={text => this.setState({ text })}
               onContentSizeChange={event =>
-                this.setState({ height: event.nativeEvent.contentSize.height })}
+                this.setState({ height: event.nativeEvent.contentSize.height })
+              }
               onSubmitEditing={event =>
-                this.handleSubmitEditing(event.nativeEvent.text)}
+                this.handleSubmitEditing(event.nativeEvent.text)
+              }
               placeholderTextColor={colors.grey}
               style={{
                 height: Math.max(inputMinHeight, this.state.height),

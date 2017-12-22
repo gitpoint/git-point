@@ -1,0 +1,30 @@
+[all]
+files = **.js, **.json
+ignore = node_modules/**, src/locale/languages/*.js, ios/**, android/**, __tests__/**
+max_line_length = 160
+use_spaces = True
+
+[all.whitespace]
+bears = SpaceConsistencyBear
+default_actions = *: ApplyPatchAction
+
+[all.linelength]
+ignore += package.json, src/components/github-style.js
+bears = LineLengthBear
+
+[all.links]
+bears = InvalidLinkBear
+link_ignore_regex = (github\.com|\{|\$)
+
+[js]
+files = **.js
+ignore = node_modules/**, __tests__/**, testenv.js, src/locale/languages/*.js, src/components/github-style.js
+bears = ESLintBear
+eslint_config = .eslintrc
+default_actions = *: ApplyPatchAction
+
+[json]
+files = *.json, .eslintrc, .babelrc, .stylelintrc
+bears = JSONFormatBear
+indent_size = 2
+default_actions = *: ApplyPatchAction

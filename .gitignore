@@ -60,6 +60,9 @@ haste-map-react-native-packager*
 # eslint cache
 .eslintcache
 
+# coala
+*.orig
+
 # editors
 .vscode
 .idea

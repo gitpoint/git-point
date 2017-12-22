@@ -70,7 +70,8 @@ class RepositoryCodeList extends Component {
   sortedContents = contents => {
     if (contents) {
       return contents.sort((a, b) => {
-        return a.type === b.type ? 0 : a.type === 'dir' ? -1 : 1; // eslint-disable-line no-nested-ternary
+        // eslint-disable-next-line no-nested-ternary
+        return a.type === b.type ? 0 : a.type === 'dir' ? -1 : 1;
       });
     }
 
@@ -118,8 +119,8 @@ class RepositoryCodeList extends Component {
     return (
       <ViewContainer>
         {isPendingContents &&
-          [...Array(15)].map((item, index) => <LoadingListItem key={index} />) // eslint-disable-line react/no-array-index-key
-        }
+          // eslint-disable-next-line react/no-array-index-key
+          [...Array(15)].map((item, index) => <LoadingListItem key={index} />)}
 
         {!isPendingContents &&
           currentContents &&

@@ -127,7 +127,7 @@
     "jest": "^21.2.1",
     "lint-staged": "^3.2.6",
     "minicat": "^1.0.0",
-    "prettier": "^1.7.4",
+    "prettier": "^1.9.2",
     "react-dom": "^16.0.0",
     "react-native-cli": "^2.0.1",
     "react-test-renderer": "^16.0.0",
@@ -163,7 +163,7 @@
   "collective": {
     "type": "opencollective",
     "url": "https://opencollective.com/git-point",
-    "logo": "https://opencollective.com/opencollective/logo.txt"
+    "logo": "https://opencollective.com/opencollective/logo.svg"
   },
   "repository": {
     "type": "git",

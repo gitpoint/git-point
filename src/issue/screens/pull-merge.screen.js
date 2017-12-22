@@ -156,7 +156,8 @@ class PullMerge extends Component {
               onContentSizeChange={event =>
                 this.setState({
                   commitTitleHeight: event.nativeEvent.contentSize.height,
-                })}
+                })
+              }
               onChangeText={text => this.setState({ commitTitle: text })}
               placeholderTextColor={colors.grey}
               style={[
@@ -179,7 +180,8 @@ class PullMerge extends Component {
               onContentSizeChange={event =>
                 this.setState({
                   commitMessageHeight: event.nativeEvent.contentSize.height,
-                })}
+                })
+              }
               placeholderTextColor={colors.grey}
               style={[
                 styles.textInput,

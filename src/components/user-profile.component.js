@@ -150,7 +150,8 @@ export class UserProfile extends Component {
                     title: translate('user.repositoryList.title', locale),
                     user,
                     repoCount: user.public_repos > 15 ? 15 : user.public_repos,
-                  })}
+                  })
+                }
               >
                 <Text style={styles.unitNumber}>
                   {!isNaN(parseInt(user.public_repos, 10))
@@ -185,7 +186,8 @@ export class UserProfile extends Component {
                       title: translate('user.followers.title', locale),
                       user,
                       followerCount: user.followers > 15 ? 15 : user.followers,
-                    })}
+                    })
+                  }
                 >
                   <Text style={styles.unitNumber}>
                     {!isNaN(parseInt(user.followers, 10))
@@ -212,7 +214,8 @@ export class UserProfile extends Component {
                       title: translate('user.following.title', locale),
                       user,
                       followingCount: user.following > 15 ? 15 : user.following,
-                    })}
+                    })
+                  }
                 >
                   <Text style={styles.unitNumber}>
                     {!isNaN(parseInt(user.following, 10))

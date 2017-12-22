@@ -185,11 +185,21 @@ export class GithubHtmlView extends Component {
         .replace(/\n<\/li>/g, '</li>')
         // task list
         .replace(
-          /<li class="task-list-item">(<span[^>]*>)?<input class="task-list-item-checkbox" disabled="" id="" type="checkbox"> ?\.? ?/g,
+          new RegExp(
+            '<li class="task-list-item">(<span[^>]*>)?<input class=' +
+              '"task-list-item-checkbox" disabled="" id="" type="checkbox"> ' +
+              '?.? ?',
+            'g'
+          ),
           '$1⬜ '
         )
         .replace(
-          /<li class="task-list-item">(<span[^>]*>)?<input checked="" class="task-list-item-checkbox" disabled="" id="" type="checkbox"> ?\.? ?/g,
+          new RegExp(
+            '<li class="task-list-item">(<span[^>]*>)?<input ' +
+              'checked="" class="task-list-item-checkbox" disabled="" id="" ' +
+              'type="checkbox"> ?.? ?',
+            'g'
+          ),
           '$1✅ '
         )
         // Quoted email reply
@@ -300,7 +310,8 @@ export class GithubHtmlView extends Component {
               <Text
                 style={linkStyle}
                 onPress={() =>
-                  onLinkPress({ ...node, attribs: { href: node.attribs.src } })}
+                  onLinkPress({ ...node, attribs: { href: node.attribs.src } })
+                }
               >
                 [{node.attribs.alt}]
                 {'\n'}

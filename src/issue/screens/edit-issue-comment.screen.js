@@ -111,7 +111,8 @@ class EditIssueComment extends Component {
               onContentSizeChange={event =>
                 this.setState({
                   issueCommentHeight: event.nativeEvent.contentSize.height,
-                })}
+                })
+              }
               placeholderTextColor={colors.grey}
               style={[
                 styles.textInput,

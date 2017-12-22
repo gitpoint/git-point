@@ -17,7 +17,8 @@ export function formatEventsToRender(events = []) {
       return true;
     })
     .reduce((results, event, index, list) => {
-      // Label events are recorded individually, but we want to group them for display
+      // Label events are recorded individually, but we want to group them for
+      // display
       const labelEvents = ['labeled', 'unlabeled'];
       const prevEvent = index > 0 ? list[index - 1] : {};
 

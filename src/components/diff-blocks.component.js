@@ -83,15 +83,18 @@ export const DiffBlocks = ({
       )}
 
       {[...Array(greenBlocks)].map((item, index) => {
-        return <View key={index} style={[styles.block, styles.greenBlock]} />; // eslint-disable-line react/no-array-index-key
+        // eslint-disable-next-line react/no-array-index-key
+        return <View key={index} style={[styles.block, styles.greenBlock]} />;
       })}
 
       {[...Array(redBlocks)].map((item, index) => {
-        return <View key={index} style={[styles.block, styles.redBlock]} />; // eslint-disable-line react/no-array-index-key
+        // eslint-disable-next-line react/no-array-index-key
+        return <View key={index} style={[styles.block, styles.redBlock]} />;
       })}
 
       {[...Array(greyBlocks)].map((item, index) => {
-        return <View key={index} style={[styles.block, styles.greyBlock]} />; // eslint-disable-line react/no-array-index-key
+        // eslint-disable-next-line react/no-array-index-key
+        return <View key={index} style={[styles.block, styles.greyBlock]} />;
       })}
     </Component>
   );

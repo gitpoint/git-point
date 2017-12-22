@@ -110,7 +110,8 @@ class IssueList extends Component {
           onPress={() =>
             navigate('NewIssue', {
               title: translate('issue.newIssue.title', state.params.locale),
-            })}
+            })
+          }
         />
       ),
     };
@@ -243,7 +244,8 @@ class IssueList extends Component {
                 showsCancelButton={searchFocus}
                 onFocus={() => this.setState({ searchFocus: true })}
                 onCancelButtonPress={() =>
-                  this.setState({ searchStart: false, query: '' })}
+                  this.setState({ searchStart: false, query: '' })
+                }
                 onSearchButtonPress={text => {
                   this.search(text);
                 }}

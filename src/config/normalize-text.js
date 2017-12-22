@@ -72,11 +72,13 @@ export const normalize = size => {
     // catch Android font scaling on small machines
     // where pixel ratio / font scale ratio => 3:3
     if (deviceWidth <= 360) {
-      return size; // Catch other smaller android height sizings
+      return size; // catch other smaller android height sizings
     }
 
     if (deviceHeight < 667) {
-      return size * 1.2; // catch in-between size Androids and scale font up // a tad but not too much
+      // catch in-between size Androids and scale font up
+      // a tad but not too much
+      return size * 1.2;
     }
 
     if (deviceHeight >= 667 && deviceHeight <= 735) {

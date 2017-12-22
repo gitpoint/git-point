@@ -192,7 +192,8 @@ class IssueSettings extends Component {
                         label => label.name !== labelToRemove.name
                       ),
                     }
-                  )}
+                  )
+                }
               />
             ))}
           </SectionList>
@@ -216,7 +217,8 @@ class IssueSettings extends Component {
                   ],
                 },
                 { assignees: [...issue.assignees, authUser] }
-              )}
+              )
+            }
             noItems={issue.assignees.length === 0}
             noItemsMessage={translate('issue.settings.noneMessage', locale)}
             title={translate('issue.settings.assigneesTitle', locale)}
@@ -241,7 +243,8 @@ class IssueSettings extends Component {
                         assignee => assignee.login !== userToRemove
                       ),
                     }
-                  )}
+                  )
+                }
               />
             ))}
           </SectionList>

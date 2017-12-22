@@ -69,7 +69,8 @@ export const IssueListItem = ({ type, issue, navigation, locale }: Props) => (
         issue,
         isPR: !!issue.pull_request,
         locale,
-      })}
+      })
+    }
     underlayColor={colors.greyLight}
   >
     <View style={styles.container}>

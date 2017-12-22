@@ -1,9 +1,15 @@
-language: node_js
+language: python
 cache:
-  yarn: true
+  pip: true
   directories:
     - node_modules
-node_js:
-  - 7
+python:
+  - 3.6
+install:
+  - nvm install 8
+  - pip install --upgrade coala-bears
+  - yarn
+  - export PATH="$PATH:node_modules/.bin"
+  - which eslint
 script:
-  - yarn run eslint && yarn run stylelint && yarn run test:coverage
+  - coala --ci -V && yarn run eslint && yarn run stylelint && yarn run test:coverage

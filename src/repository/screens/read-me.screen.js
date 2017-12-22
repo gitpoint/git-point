@@ -107,8 +107,9 @@ class ReadMe extends Component {
           !noReadMe && (
             <MarkdownWebView
               html={readMe}
-              baseUrl={`${this.props.navigation.state.params.repository
-                .html_url}/raw/master/`}
+              baseUrl={`${
+                this.props.navigation.state.params.repository.html_url
+              }/raw/master/`}
             />
           )}
         {!isPendingReadMe &&

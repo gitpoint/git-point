@@ -217,7 +217,8 @@ class Search extends Component {
                 showsCancelButton={this.state.searchFocus}
                 onFocus={() => this.setState({ searchFocus: true })}
                 onCancelButtonPress={() =>
-                  this.setState({ searchStart: false, query: '' })}
+                  this.setState({ searchStart: false, query: '' })
+                }
                 onSearchButtonPress={text => {
                   this.search(text);
                 }}

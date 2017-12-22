@@ -15,7 +15,7 @@ const initialState = {
   user: {},
   orgs: [],
   isFollowing: false, // auth is following user
-  isFollower: false, // user is a follower of auth, as well as user is following auth
+  isFollower: false, // user is follower of auth and is following auth
   repositories: [],
   followers: [],
   following: [],

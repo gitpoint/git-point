@@ -8,7 +8,8 @@ export const translate = (key, locale, interpolation = null) =>
   I18n.t(key, { locale, ...interpolation });
 
 export const getLocale = () => {
-  // If for some reason a locale cannot be determined, fall back to defaultLocale.
+  // If for some reason a locale cannot be determined, fall back to
+  // defaultLocale.
   const locale =
     (I18n.locale && I18n.locale.toLowerCase()) || common.defaultLocale;
   const specialLocales = {

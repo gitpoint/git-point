@@ -18,7 +18,7 @@ export const initialState = {
   hasInitialUser: false,
   orgs: [],
   events: [],
-  // TODO: there should not be a dependency here that can't be constructor injected.
+  // TODO: no dependency here that can't be constructor injected.
   locale: getLocale(),
   isPendingUser: false,
   isPendingOrgs: false,

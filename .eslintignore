@@ -1,3 +1,5 @@
 __tests__/**
 testenv.js
 coverage/**
+src/locale/languages/*.js
+src/components/github-style.js

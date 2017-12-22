@@ -1,6 +1,7 @@
 import { compose, createStore, applyMiddleware } from 'redux';
 import { autoRehydrate } from 'redux-persist';
-import Reactotron from 'reactotron-react-native'; // eslint-disable-line import/no-extraneous-dependencies
+// eslint-disable-next-line import/no-extraneous-dependencies
+import Reactotron from 'reactotron-react-native';
 import createLogger from 'redux-logger';
 import reduxThunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';

@@ -13,9 +13,6 @@
     "node": true,
     "es6": true
   },
-  "ecmaFeatures": {
-    "jsx": true
-  },
   "globals": {
     "__DEV__": true
   },
@@ -59,6 +56,10 @@
       "always-multiline"
     ],
     "indent": "off",
+    "max-len": [
+      "error",
+      160
+    ],
     "newline-after-var": [
       "error",
       "always"
@@ -102,7 +103,6 @@
       }
     ],
     "no-underscore-dangle": "off",
-    "max-len": "off",
     "no-plusplus": [
       "error",
       {
@@ -176,10 +176,10 @@
             "shouldComponentUpdate",
             "componentWillUpdate",
             "componentDidUpdate",
-            "componentWillUnmount",
-          ],
-        },
-      },
-    ],
+            "componentWillUnmount"
+          ]
+        }
+      }
+    ]
   }
 }
