@@ -18,19 +18,19 @@ const styles = {
 };
 
 const TopicsFlatList = styled.FlatList`
-  marginleft: 15;
-  marginright: 15;
+  margin-left: 15;
+  margin-right: 15;
 `;
 
 const TopicsListContainer = styled.View`
-  margintop: 30;
+  margin-top: 30;
 `;
 
 const TopicsListLabel = styled.Text`
   color: ${colors.black};
   ${{ ...fonts.fontPrimaryBold }};
-  marginbottom: 10;
-  paddingleft: 15;
+  margin-bottom: 10;
+  padding-left: 15;
 `;
 
 export const TopicsList = ({ title, topics }: Props) => (
