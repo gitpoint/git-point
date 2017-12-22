@@ -65,6 +65,11 @@ export default [
     name: '简体中文',
   },
   {
+    code: 'zh-tw',
+    emojiCode: ':flag-tw:',
+    name: '正體中文',
+  },
+  {
     code: 'uk',
     emojiCode: ':flag-ua:',
     name: 'Українська',

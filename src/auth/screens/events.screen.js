@@ -319,7 +319,7 @@ class Events extends Component {
           userEvent.payload.ref_type === 'branch' ||
           userEvent.payload.ref_type === 'tag'
         ) {
-          return 'at';
+          return translate('auth.events.atConnector', locale);
         }
 
         return null;

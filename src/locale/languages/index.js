@@ -11,4 +11,5 @@ export * from './eo.js';
 export * from './gl.js';
 export * from './de.js';
 export * from './zh-cn.js';
+export * from './zh-tw.js';
 export * from './uk.js';
