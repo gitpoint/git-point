@@ -14,6 +14,7 @@ import {
   de,
   es,
   zhCN,
+  zhTW,
   uk,
   eu,
 } from './languages';
@@ -35,6 +36,7 @@ I18n.translations = {
   pl,
   de,
   'zh-cn': zhCN,
+  'zh-tw': zhTW,
   uk,
   eu,
 };

@@ -86,7 +86,8 @@
       "profile": "https://patw.me",
       "contributions": [
         "code",
-        "bug"
+        "bug",
+        "translation"
       ]
     },
     {
@@ -654,6 +655,16 @@
       "profile": "https://github.com/coderste",
       "contributions": [
         "doc"
+      ]
+    },
+    {
+      "login": "ZahraTee",
+      "name": "Zahra Traboulsi",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/5565340?v=4",
+      "profile": "http://www.zahra.tech",
+      "contributions": [
+        "code",
+        "test"
       ]
     },
     {

@@ -20,7 +20,7 @@ const mapStateToProps = state => ({
   notificationsCount: state.notifications.notificationsCount,
 });
 
-class NotificationIconComponent extends Component {
+export class NotificationIconComponent extends Component {
   props: {
     iconColor: string,
     notificationsCount: number,
