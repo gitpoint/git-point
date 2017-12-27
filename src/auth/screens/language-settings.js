@@ -74,4 +74,9 @@ export default [
     emojiCode: ':flag-ua:',
     name: 'Українська',
   },
+  {
+    code: 'eu',
+    emojiCode: ':waving_white_flag:',
+    name: 'Basque',
+  },
 ];
