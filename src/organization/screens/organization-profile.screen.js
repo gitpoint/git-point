@@ -49,10 +49,6 @@ const actionCreators = {
 const actions = dispatch => bindActionCreators(actionCreators, dispatch);
 
 const DescriptionListItem = styled(ListItem).attrs({
-  titleStyle: {
-    color: colors.black,
-    ...fonts.fontPrimary,
-  },
   subtitleStyle: {
     color: colors.greyDark,
     ...fonts.fontPrimary,
