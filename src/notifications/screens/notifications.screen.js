@@ -1,18 +1,10 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
+import styled from 'styled-components/native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {
-  StyleSheet,
-  FlatList,
-  View,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  Image,
-  Platform,
-} from 'react-native';
+import { FlatList, View, ScrollView, Platform } from 'react-native';
 import { ButtonGroup, Card, Icon } from 'react-native-elements';
 
 import { v3 } from 'api';
@@ -61,77 +53,89 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-const styles = StyleSheet.create({
-  buttonGroupWrapper: {
-    backgroundColor: colors.greyLight,
-    paddingTop: Platform.OS === 'ios' ? 30 : 10,
-    paddingBottom: 10,
-    marginBottom: 15,
-  },
-  buttonGroupContainer: {
+const ButtonGroupWrapper = styled.View`
+  background-color: ${colors.greyLight};
+  padding-top: ${Platform.OS === 'ios' ? 30 : 10};
+  padding-bottom: 10;
+  margin-bottom: 15;
+`;
+
+const StyledButtonGroup = styled(ButtonGroup).attrs({
+  containerStyle: {
     height: 30,
     marginTop: 0,
     marginBottom: 0,
     marginLeft: 15,
     marginRight: 15,
   },
-  buttonGroupText: {
+  textStyle: {
     ...fonts.fontPrimaryBold,
   },
-  buttonGroupTextSelected: {
+  selectedTextStyle: {
     color: colors.black,
   },
-  repositoryContainer: {
+})``;
+
+const RepositoryContainer = styled(Card).attrs({
+  containerStyle: {
     padding: 0,
     marginTop: 0,
     marginBottom: 25,
   },
-  headerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingLeft: 5,
-    paddingVertical: 8,
-    backgroundColor: colors.greyLight,
-  },
-  repositoryOwnerAvatar: {
-    borderRadius: 13,
-    width: 26,
-    height: 26,
-  },
-  repositoryTitle: {
-    color: colors.primaryDark,
-    ...fonts.fontPrimarySemiBold,
-    marginLeft: 10,
-    flex: 1,
-  },
-  markAsReadIconRepo: {
-    flex: 0.15,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  container: {
-    flex: 1,
-    backgroundColor: 'transparent',
-  },
-  textContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  noneTitle: {
-    paddingHorizontal: 15,
-    fontSize: normalize(16),
-    textAlign: 'center',
-    ...fonts.fontPrimary,
-  },
-  markAllAsReadButtonContainer: {
-    marginTop: 0,
-    marginBottom: 20,
-  },
-  contentBlock: {
-    flex: 1,
-  },
-});
+})``;
+
+const HeaderContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  padding-left: 5;
+  padding-vertical: 8;
+  background-color: ${colors.greyLight};
+`;
+
+const RepositoryOwnerAvatar = styled.Image`
+  border-radius: 13;
+  width: 26;
+  height: 26;
+`;
+
+const RepositoryTitle = styled.Text`
+  color: ${colors.primaryDark};
+  ${{ ...fonts.fontPrimarySemiBold }};
+  margin-left: 10;
+  flex: 1;
+`;
+const MarkAsReadIconRepo = styled.TouchableOpacity`
+  flex: 0.15;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Container = styled.View`
+  flex: 1;
+  background-color: transparent;
+`;
+
+const TextContainer = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
+
+const NoneTitle = styled.Text`
+  padding-horizontal: 15;
+  font-size: ${normalize(16)};
+  text-align: center;
+  ${{ ...fonts.fontPrimary }};
+`;
+
+const MarkAllAsReadButtonContainer = styled.View`
+  margin-top: 0;
+  margin-bottom: 20;
+`;
+
+const ContentBlock = styled.View`
+  flex: 1;
+`;
 
 const NotificationsType = {
   UNREAD: 0,
@@ -378,43 +382,36 @@ class Notifications extends Component {
       <View>
         {isFirstItem &&
           isFirstTab && (
-            <View style={styles.markAllAsReadButtonContainer}>
+            <MarkAllAsReadButtonContainer>
               <Button
                 icon={{ name: 'check', type: 'octicon' }}
                 onPress={() => markAllNotificationsAsRead()}
                 title={translate('notifications.main.markAllAsRead')}
               />
-            </View>
+            </MarkAllAsReadButtonContainer>
           )}
 
-        <Card containerStyle={styles.repositoryContainer}>
-          <View style={styles.headerContainer}>
-            <Image
-              style={styles.repositoryOwnerAvatar}
+        <RepositoryContainer>
+          <HeaderContainer>
+            <RepositoryOwnerAvatar
               source={{
                 uri: this.getImage(item),
               }}
             />
 
-            <Text
-              style={styles.repositoryTitle}
-              onPress={() => this.navigateToRepo(item)}
-            >
+            <RepositoryTitle onPress={() => this.navigateToRepo(item)}>
               {item}
-            </Text>
+            </RepositoryTitle>
 
-            <TouchableOpacity
-              style={styles.markAsReadIconRepo}
-              onPress={() => markRepoAsRead(item)}
-            >
+            <MarkAsReadIconRepo onPress={() => markRepoAsRead(item)}>
               <Icon
                 color={colors.greyDark}
                 size={28}
                 name="check"
                 type="octicon"
               />
-            </TouchableOpacity>
-          </View>
+            </MarkAsReadIconRepo>
+          </HeaderContainer>
 
           <ScrollView>
             {notifications.map(notification => (
@@ -427,7 +424,7 @@ class Notifications extends Component {
               />
             ))}
           </ScrollView>
-        </Card>
+        </RepositoryContainer>
       </View>
     );
   };
@@ -444,9 +441,9 @@ class Notifications extends Component {
 
     return (
       <ViewContainer>
-        <View style={styles.container}>
-          <View style={styles.buttonGroupWrapper}>
-            <ButtonGroup
+        <Container>
+          <ButtonGroupWrapper>
+            <StyledButtonGroup
               onPress={this.switchType}
               selectedIndex={type}
               buttons={[
@@ -454,30 +451,21 @@ class Notifications extends Component {
                 translate('notifications.main.participatingButton', locale),
                 translate('notifications.main.allButton', locale),
               ]}
-              textStyle={styles.buttonGroupText}
-              selectedTextStyle={styles.buttonGroupTextSelected}
-              containerStyle={styles.buttonGroupContainer}
             />
-          </View>
+          </ButtonGroupWrapper>
 
-          <View
-            onLayout={this.saveContentBlockHeight}
-            style={styles.contentBlock}
-          >
+          <ContentBlock onLayout={this.saveContentBlockHeight}>
             {isRetrievingNotifications && (
-              <View
-                style={[styles.textContainer, { height: contentBlockHeight }]}
-              >
+              <TextContainer height={contentBlockHeight}>
                 <LoadingContainer
                   animating={isRetrievingNotifications}
                   text={translate(
                     'notifications.main.retrievingMessage',
                     locale
                   )}
-                  style={styles.marginSpacing}
                   center
                 />
-              </View>
+              </TextContainer>
             )}
 
             {!isRetrievingNotifications && (
@@ -493,22 +481,17 @@ class Notifications extends Component {
                 renderItem={this.renderItem}
                 ListEmptyComponent={
                   !isLoadingNewNotifications && (
-                    <View
-                      style={[
-                        styles.textContainer,
-                        { height: contentBlockHeight },
-                      ]}
-                    >
-                      <Text style={styles.noneTitle}>
+                    <TextContainer height={contentBlockHeight}>
+                      <NoneTitle>
                         {translate('notifications.main.noneMessage', locale)}
-                      </Text>
-                    </View>
+                      </NoneTitle>
+                    </TextContainer>
                   )
                 }
               />
             )}
-          </View>
-        </View>
+          </ContentBlock>
+        </Container>
       </ViewContainer>
     );
   }
