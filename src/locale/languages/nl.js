@@ -145,6 +145,8 @@ export const nl = {
       searchMessage: 'Zoeken naar {{type}}',
       repository: 'repository',
       user: 'gebruiker',
+      noUsersFound: 'No users found :(',
+      noRepositoriesFound: 'No repositories found :(',
     },
   },
   user: {
@@ -199,6 +201,9 @@ export const nl = {
       starsTitle: 'Sterren',
       forksTitle: 'Forks',
       forkedFromMessage: 'forked from',
+      starred: 'Starred',
+      watching: 'Watching',
+      watchers: 'Watchers',
     },
     codeList: {
       title: 'Code',
@@ -228,6 +233,7 @@ export const nl = {
     },
     readMe: {
       readMeActions: 'README Acties',
+      noReadMeFound: 'Geen README.md gevonden',
     },
   },
   organization: {

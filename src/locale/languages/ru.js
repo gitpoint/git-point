@@ -147,6 +147,8 @@ export const ru = {
       searchMessage: 'Поиск {{type}}',
       repository: 'репозиториев',
       user: 'пользователей',
+      noUsersFound: 'Пользователи не найдены :(',
+      noRepositoriesFound: 'Репозитории не найдены :(',
     },
   },
   user: {
@@ -221,8 +223,8 @@ export const ru = {
       openButton: 'Открыто',
       closedButton: 'Закрыто',
       searchingMessage: 'Поиск по {{query}}',
-      noOpenIssues: 'Не найдено открытых pull-запросов!',
-      noClosedIssues: 'Не найдено закрытых pull-запросов!',
+      noOpenPulls: 'Не найдено открытых pull-запросов!',
+      noClosedPulls: 'Не найдено закрытых pull-запросов!',
     },
     pullDiff: {
       title: 'Сравнить изменения',
@@ -233,6 +235,7 @@ export const ru = {
     },
     readMe: {
       readMeActions: 'Действия с README',
+      noReadMeFound: 'He yдалось найти README.md',
     },
   },
   organization: {
@@ -260,6 +263,12 @@ export const ru = {
       areYouSurePrompt: 'Вы уверены?',
       applyLabelTitle: 'Добавить ярлык к этой задаче',
     },
+    comment: {
+      commentActions: 'Действия с комментарием',
+      editCommentTitle: 'Редактирование комментария',
+      editAction: 'Редактировать',
+      deleteAction: 'Удалить',
+    },
     main: {
       assignees: 'Ответственные',
       mergeButton: 'Принять pull-запрос',
@@ -267,7 +276,6 @@ export const ru = {
       lockedCommentInput:
         'Заблокировано, но вы все ещё можете прокомментировать...',
       commentInput: 'Добавить комментарий...',
-      commentButton: 'Отправить',
       lockedIssue: 'Задача заблокирована',
       states: {
         open: 'Открыто',
@@ -318,8 +326,6 @@ export const ru = {
     email: 'Электронная почта',
     website: 'Сайт',
     repositories: 'Репозиториев',
-    pullRequest: 'pull-запрос',
-    issue: 'задача',
     cancel: 'Отменить',
     yes: 'Да',
     ok: 'OK',

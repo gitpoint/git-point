@@ -34,13 +34,11 @@ const styles = StyleSheet.create({
   background: {
     position: 'absolute',
     top: 0,
-    width: window.width,
     backgroundColor: colors.primaryDark,
   },
   stickySection: {
     height: STICKY_HEADER_HEIGHT,
     backgroundColor: colors.primaryDark,
-    width: window.width,
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
@@ -78,13 +76,13 @@ export class ParallaxScroll extends Component {
   }
 
   getParallaxHeaderHeight = (window = Dimensions.get('window')) => {
-    let devider = 2;
+    let divider = 2;
 
     if (window.width > window.height) {
-      devider = Platform.OS === 'ios' ? 1.2 : 1.4;
+      divider = Platform.OS === 'ios' ? 1.2 : 1.4;
     }
 
-    return window.height / devider;
+    return window.height / divider;
   };
 
   dimensionsDidChange = ({ window }) => {
@@ -112,7 +110,7 @@ export class ParallaxScroll extends Component {
         stickyHeaderHeight={STICKY_HEADER_HEIGHT}
         parallaxHeaderHeight={this.state.parallaxHeaderHeight}
         backgroundSpeed={10}
-        renderBackground={() =>
+        renderBackground={() => (
           <View key="background">
             <View
               style={[
@@ -120,17 +118,17 @@ export class ParallaxScroll extends Component {
                 { height: this.state.parallaxHeaderHeight },
               ]}
             />
-          </View>}
+          </View>
+        )}
         renderForeground={renderContent}
-        renderStickyHeader={() =>
+        renderStickyHeader={() => (
           <View key="sticky-header" style={styles.stickySection}>
-            <Text style={styles.stickySectionText}>
-              {stickyTitle}
-            </Text>
-          </View>}
-        renderFixedHeader={() =>
+            <Text style={styles.stickySectionText}>{stickyTitle}</Text>
+          </View>
+        )}
+        renderFixedHeader={() => (
           <View key="fixed-header">
-            {navigateBack &&
+            {navigateBack && (
               <View style={styles.fixedSectionLeft}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                   <Icon
@@ -140,9 +138,10 @@ export class ParallaxScroll extends Component {
                     underlayColor="transparent"
                   />
                 </TouchableOpacity>
-              </View>}
+              </View>
+            )}
 
-            {showMenu &&
+            {showMenu && (
               <View style={styles.fixedSectionRight}>
                 <TouchableOpacity onPress={menuAction}>
                   <Icon
@@ -152,8 +151,10 @@ export class ParallaxScroll extends Component {
                     underlayColor="transparent"
                   />
                 </TouchableOpacity>
-              </View>}
-          </View>}
+              </View>
+            )}
+          </View>
+        )}
         refreshControl={refreshControl}
       >
         {children}

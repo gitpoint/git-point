@@ -6,7 +6,7 @@ import SyntaxHighlighter from 'react-native-syntax-highlighter';
 import { github as GithubStyle } from 'react-syntax-highlighter/dist/styles';
 import entities from 'entities';
 
-import { ImageZoom } from 'components';
+import { ImageZoom, ToggleView } from 'components';
 import { colors, fonts, normalize } from 'config';
 
 const textStyle = Platform.select({
@@ -27,6 +27,7 @@ const boldStyle = {
   ...fonts.fontPrimarySemiBold,
 };
 const italicStyle = { ...textStyle, ...fonts.fontPrimaryItalic };
+const delStyle = { ...textStyle, textDecorationLine: 'line-through' };
 const hrStyle = { borderBottomWidth: 2, borderBottomColor: colors.greyDark };
 const underlineStyle = { textDecorationLine: 'underline' };
 const codeStyle = {
@@ -42,10 +43,15 @@ const styles = {
   i: italicStyle,
   em: italicStyle,
   u: underlineStyle,
+  del: delStyle,
   pre: { ...codeStyle, padding: 5, marginBottom: 10 },
   code: codeStyle,
   span: textStyle,
   p: { ...textStyle, margin: 0, padding: 0 },
+  sub: {
+    ...textStyle,
+    fontSize: normalize(9),
+  },
   h1: {
     ...fonts.fontPrimarySemiBold,
     ...hrStyle,
@@ -63,6 +69,16 @@ const styles = {
   hr: { ...hrStyle },
   li: textStyle,
   a: linkStyle,
+};
+
+const quotedEmailToggleStyle = {
+  backgroundColor: colors.greyMid,
+  paddingHorizontal: 4,
+  alignSelf: 'flex-start',
+  height: 15,
+  lineHeight: 12,
+  marginBottom: 6,
+  marginTop: 3,
 };
 
 const styleSheet = StyleSheet.create(styles);
@@ -176,6 +192,11 @@ export class GithubHtmlView extends Component {
           /<li class="task-list-item">(<span[^>]*>)?<input checked="" class="task-list-item-checkbox" disabled="" id="" type="checkbox"> ?\.? ?/g,
           '$1✅ '
         )
+        // Quoted email reply
+        .replace(
+          /<span class="email-hidden-toggle"><a href="#">…<\/a><\/span>/g,
+          ''
+        )
         // Remove links & spans around images
         .replace(/<a[^>]+><img([^>]+)><\/a>/g, '<img$1>')
         .replace(/<span[^>]*><img([^>]+)><\/span>/g, '<img$1>')
@@ -199,7 +220,7 @@ export class GithubHtmlView extends Component {
       /* eslint-disable no-unused-vars */
       const onLinkPress = this.props.onLinkPress;
       const renderers = {
-        blockquote: (node, index, siblings, parent, defaultRenderer) =>
+        blockquote: (node, index, siblings, parent, defaultRenderer) => (
           <View
             key={index}
             style={{
@@ -216,13 +237,13 @@ export class GithubHtmlView extends Component {
             >
               {defaultRenderer(node.children, parent)}
             </Text>
-          </View>,
-        pre: (node, index, siblings, parent, defaultRenderer) =>
-          <View key={index}>
-            {defaultRenderer(node.children, node)}
-          </View>,
+          </View>
+        ),
+        pre: (node, index, siblings, parent, defaultRenderer) => (
+          <View key={index}>{defaultRenderer(node.children, node)}</View>
+        ),
         code: (node, index, siblings, parent, defaultRenderer) => {
-          if (parent.name === 'pre') {
+          if (parent && parent.name === 'pre') {
             return (
               <SyntaxHighlighter
                 key={index}
@@ -243,8 +264,36 @@ export class GithubHtmlView extends Component {
         h4: headingRenderer,
         h5: headingRenderer,
         h6: headingRenderer,
-        hr: (node, index, siblings, parent, defaultRenderer) =>
-          <View key={index} style={{ ...hrStyle }} />,
+        hr: (node, index, siblings, parent, defaultRenderer) => (
+          <View key={index} style={{ ...hrStyle }} />
+        ),
+        div: (node, index, siblings, parent, defaultRenderer) => {
+          if (node.attribs.class) {
+            const className = node.attribs.class;
+
+            if (className.includes('email-hidden-reply')) {
+              return defaultRenderer(onlyTagsChildren(node), node);
+            }
+
+            if (className.includes('email-quoted-reply')) {
+              return (
+                <ToggleView
+                  TouchableView={<Text style={quotedEmailToggleStyle}>…</Text>}
+                >
+                  {renderers.blockquote(
+                    node,
+                    index,
+                    siblings,
+                    parent,
+                    defaultRenderer
+                  )}
+                </ToggleView>
+              );
+            }
+          }
+
+          return undefined;
+        },
         img: (node, index, siblings, parent, defaultRenderer) => {
           if (hasAncestor(node, ['ol', 'ul', 'span'])) {
             return (
@@ -273,21 +322,23 @@ export class GithubHtmlView extends Component {
             />
           );
         },
-        table: (node, index, siblings, parent, defaultRenderer) =>
+        table: (node, index, siblings, parent, defaultRenderer) => (
           <Table key={index} style={{ width: width * 0.8 }}>
             {defaultRenderer(onlyTagsChildren(node), node)}
-          </Table>,
+          </Table>
+        ),
         thead: (node, index, siblings, parent, defaultRenderer) =>
           defaultRenderer(onlyTagsChildren(node), node),
         tbody: (node, index, siblings, parent, defaultRenderer) =>
           defaultRenderer(onlyTagsChildren(node), node),
-        tr: (node, index, siblings, parent, defaultRenderer) =>
+        tr: (node, index, siblings, parent, defaultRenderer) => (
           <TableWrapper
             key={index}
             style={{ width: width * 0.8, flexDirection: 'row' }}
           >
             {defaultRenderer(onlyTagsChildren(node), node)}
-          </TableWrapper>,
+          </TableWrapper>
+        ),
         td: (node, index, siblings, parent, defaultRenderer) => {
           const Component = cellForNode(node);
           const styleText = {

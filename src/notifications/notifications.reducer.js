@@ -8,7 +8,7 @@ import {
   MARK_ALL_NOTIFICATIONS_AS_READ,
 } from './notifications.type';
 
-const initialState = {
+export const initialState = {
   unread: [],
   participating: [],
   all: [],

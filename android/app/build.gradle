@@ -72,7 +72,17 @@ import com.android.build.OutputFile
  * ]
  */
 
+  project.ext.vectoricons = [
+    // Name of the font files you want to copy
+    iconFontNames: [
+      'FontAwesome.ttf',
+      'Ionicons.ttf',
+      'MaterialIcons.ttf',
+      'Octicons.ttf']
+  ]
+
 apply from: "../../node_modules/react-native/react.gradle"
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
@@ -99,8 +109,8 @@ android {
         applicationId "com.gitpoint"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 3
-        versionName "1.3.0"
+        versionCode 6
+        versionName "1.4.1"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -135,13 +145,14 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-vector-icons')
+    compile project(':react-native-linear-gradient')
     compile project(':react-native-cookies')
     compile project(':react-native-i18n')
     compile project(':react-native-photo-view')
     compile project(':react-native-config')
     compile project(':react-native-code-push')
     compile project(':react-native-device-info')
-    compile project(':react-native-vector-icons')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:23.0.1"
     compile "com.facebook.react:react-native:+"  // From node_modules

@@ -40,6 +40,10 @@ const styles = StyleSheet.create({
     fontSize: normalize(18),
     textAlign: 'center',
   },
+  container: {
+    borderBottomColor: colors.greyLight,
+    borderBottomWidth: 1,
+  },
 });
 
 class RepositoryCodeList extends Component {
@@ -90,7 +94,7 @@ class RepositoryCodeList extends Component {
     return item.path;
   };
 
-  renderItem = ({ item }) =>
+  renderItem = ({ item }) => (
     <ListItem
       title={item.name}
       leftIcon={{
@@ -99,9 +103,11 @@ class RepositoryCodeList extends Component {
         type: 'octicon',
       }}
       titleStyle={item.type === 'dir' ? styles.titleBold : styles.title}
+      containerStyle={styles.container}
       onPress={() => this.goToPath(item)}
       underlayColor={colors.greyLight}
-    />;
+    />
+  );
 
   render() {
     const { contents, isPendingContents, navigation } = this.props;
@@ -117,22 +123,22 @@ class RepositoryCodeList extends Component {
 
         {!isPendingContents &&
           currentContents &&
-          currentContents.length > 0 &&
-          <FlatList
-            data={this.sortedContents(currentContents)}
-            keyExtractor={this.keyExtractor}
-            renderItem={this.renderItem}
-          />}
+          currentContents.length > 0 && (
+            <FlatList
+              data={this.sortedContents(currentContents)}
+              keyExtractor={this.keyExtractor}
+              renderItem={this.renderItem}
+            />
+          )}
 
         {!isPendingContents &&
           navigation.state.params.topLevel &&
           currentContents &&
-          currentContents.message &&
-          <View style={styles.textContainer}>
-            <Text style={styles.noCodeTitle}>
-              {currentContents.message}
-            </Text>
-          </View>}
+          currentContents.message && (
+            <View style={styles.textContainer}>
+              <Text style={styles.noCodeTitle}>{currentContents.message}</Text>
+            </View>
+          )}
       </ViewContainer>
     );
   }

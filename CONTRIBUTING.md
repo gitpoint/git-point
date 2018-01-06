@@ -15,6 +15,9 @@ If you notice any bugs in the app, see some code that can be improved, or have f
 
 If you want to open a PR that fixes a bug or adds a feature, then we can't thank you enough! It is definitely appreciated if an issue has been created before-hand so it can be discussed first.
 
+## Unit Tests
+Please refer to [Tests Guide](TESTS.md)
+
 ### Working on issues
 
 Please feel free to take on any issue that's currently open. Feel free to resolve any issue that you would enjoy working on even if it happens to be a low priority.
@@ -32,13 +35,14 @@ Please feel free to take on any issue that's currently open. Feel free to resolv
 8. Use one of the following commands depending on the target platform:
     - `yarn start:ios` to start the packager and run the app in the iOS simulator (`yarn start:ios:logger` will boot the application with [redux-logger](https://github.com/evgenyrodionov/redux-logger))
     - `yarn start:android` to start the packager and run the app in the the Android device/emulator (`yarn start:android:logger` will boot the application with [redux-logger](https://github.com/evgenyrodionov/redux-logger))
-9. Work your magic! Run the app on an [actual device](http://facebook.github.io/react-native/releases/0.46/docs/running-on-device.html#running-on-device) as well to test your feature/fix.
+9. Work your magic! Run the app on an [actual device](https://facebook.github.io/react-native/docs/running-on-device.html) as well to test your feature/fix.
 10. Add yourself to the [contributor's list](https://github.com/gitpoint/git-point/blob/master/CONTRIBUTORS.md) by doing `yarn contributors:add`
-11. Commit your changes with a message following the [Angular commit conventions](https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#-git-commit-guidelines)
+11. Commit your changes with a message following the [Angular commit conventions](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines)
     - [Commitizen](https://github.com/commitizen/cz-cli) works with this repo. You can install the CLI globally (`yarn global add commitizen`) where you can then create formatted commit messages with `git cz` by filling out a few required fields
 12. Push your branch to your fork
 13. Create a pull request from your branch on your fork to `master` on this repo
-14. Have your branch get merged in! :star2:
+14. If your PR changes any UI or styling, **add screenshots** of all the components and screens you've modified **before and after** your changes. We can't approve your PR unless you have those screenshots _and_ we've tested it locally on our simulators/device
+15. Have your branch get merged in! :star2:
 
 If you experience a problem at any point, please don't hesitate to file an issue or send me a message!
 
@@ -51,6 +55,10 @@ Translation contributions are always welcome! If you happen to speak/read any la
 3. Next, we'll need to add the new lang object [here](https://github.com/gitpoint/git-point/blob/023c7f4ae52694f75a1bc9748b072f6f66687b0a/src/locale/index.js#L7).
 4. And lastly, in order for the language to be displayed in the options screen, we'll need to add a [two-letter code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements) in lowercase (for example: _es_ for Spanish) and the native language name (for example: _España_ for Spanish) to the [language-settings.js](https://github.com/gitpoint/git-point/blob/master/src/auth/screens/language-settings.js) file. Please make sure the two-letter code matches the code used for the `moment` library to allow for date/time compatibility (you can view the list [here](https://github.com/moment/moment/tree/develop/locale)).
 5. Test out selecting your new translation and if it all looks good, submit that PR in! :smile:
+
+## Styled Components
+
+We're moving from React Native's styles implementation and we are start using [Styled Components](https://www.styled-components.com/) This will let us write the styles for the app in a more _css way_. If you like to know why we're taking this decision you can read [This issue](https://github.com/gitpoint/git-point/issues/480)
 
 ## Troubleshooting
 

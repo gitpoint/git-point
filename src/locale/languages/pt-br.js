@@ -1,4 +1,4 @@
-export const ptBr = {
+export const ptBR = {
   auth: {
     login: {
       connectingToGitHub: 'Conectando ao GitHub...',
@@ -232,6 +232,7 @@ export const ptBr = {
     },
     readMe: {
       readMeActions: 'Ações do README',
+      noReadMeFound: 'Nenhum README.md foi encontrado',
     },
   },
   organization: {
@@ -336,6 +337,9 @@ export const ptBr = {
       MM: '%dmo',
       y: '%dy',
       yy: '%dy',
+    },
+    abbreviations: {
+      thousand: 'k',
     },
     openInBrowser: 'Abrir no Navegador.',
   },

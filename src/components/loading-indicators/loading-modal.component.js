@@ -15,9 +15,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export const LoadingModal = () =>
+export const LoadingModal = () => (
   <Modal transparent onRequestClose={() => null}>
     <View style={styles.container}>
       <ActivityIndicator />
     </View>
-  </Modal>;
+  </Modal>
+);

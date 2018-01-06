@@ -13,7 +13,7 @@ import { getReadMe } from '../repository.action';
 const mapStateToProps = state => ({
   readMe: state.repository.readMe,
   isPendingReadMe: state.repository.isPendingReadMe,
-  language: state.auth.language,
+  locale: state.auth.locale,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -59,7 +59,7 @@ class ReadMe extends Component {
     readMe: string,
     isPendingReadMe: boolean,
     navigation: Object,
-    language: string,
+    locale: string,
   };
 
   componentDidMount() {
@@ -90,13 +90,13 @@ class ReadMe extends Component {
   };
 
   render() {
-    const { readMe, isPendingReadMe, language } = this.props;
+    const { readMe, isPendingReadMe, locale } = this.props;
     let noReadMe = null;
 
     if (this.isJsonString(readMe)) {
       noReadMe = JSON.parse(readMe).message;
     }
-    const readmeActions = [translate('common.openInBrowser', language)];
+    const readmeActions = [translate('common.openInBrowser', locale)];
 
     return (
       <ViewContainer>
@@ -114,7 +114,9 @@ class ReadMe extends Component {
         {!isPendingReadMe &&
           noReadMe && (
             <View style={styles.textContainer}>
-              <Text style={styles.noReadMeTitle}>No README.md found</Text>
+              <Text style={styles.noReadMeTitle}>
+                {translate('repository.readMe.noReadMeFound', locale)}
+              </Text>
             </View>
           )}
 
@@ -122,8 +124,8 @@ class ReadMe extends Component {
           ref={o => {
             this.ActionSheet = o;
           }}
-          title={translate('repository.readMe.readMeActions', language)}
-          options={[...readmeActions, translate('common.cancel', language)]}
+          title={translate('repository.readMe.readMeActions', locale)}
+          options={[...readmeActions, translate('common.cancel', locale)]}
           cancelButtonIndex={1}
           onPress={this.handleActionSheetPress}
         />

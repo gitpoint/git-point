@@ -1,9 +1,9 @@
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
+import styled from 'styled-components/native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
-  StyleSheet,
   ActivityIndicator,
   Dimensions,
   View,
@@ -35,7 +35,7 @@ const mapStateToProps = state => ({
   user: state.user.user,
   orgs: state.user.orgs,
   starCount: state.user.starCount,
-  language: state.auth.language,
+  locale: state.auth.locale,
   isFollowing: state.user.isFollowing,
   isFollower: state.user.isFollower,
   isPendingUser: state.user.isPendingUser,
@@ -57,16 +57,16 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-const styles = StyleSheet.create({
-  listTitle: {
-    color: colors.black,
-    ...fonts.fontPrimary,
+const BioListItem = styled(ListItem).attrs({
+  containerStyle: {
+    borderBottomColor: colors.greyLight,
+    borderBottomWidth: 1,
   },
-  listSubTitle: {
+  titleStyle: {
     color: colors.greyDark,
     ...fonts.fontPrimary,
   },
-});
+})``;
 
 class Profile extends Component {
   props: {
@@ -79,7 +79,7 @@ class Profile extends Component {
     user: Object,
     orgs: Array,
     starCount: string,
-    language: string,
+    locale: string,
     isFollowing: boolean,
     isFollower: boolean,
     isPendingUser: boolean,
@@ -140,7 +140,7 @@ class Profile extends Component {
       user,
       orgs,
       starCount,
-      language,
+      locale,
       isFollowing,
       isFollower,
       isPendingUser,
@@ -160,9 +160,9 @@ class Profile extends Component {
       isPendingCheckFollower;
     const userActions = [
       isFollowing
-        ? translate('user.profile.unfollow', language)
-        : translate('user.profile.follow', language),
-      translate('common.openInBrowser', language),
+        ? translate('user.profile.unfollow', locale)
+        : translate('user.profile.follow', locale),
+      translate('common.openInBrowser', locale),
     ];
 
     return (
@@ -176,7 +176,7 @@ class Profile extends Component {
               isFollowing={!isPending ? isFollowing : false}
               isFollower={!isPending ? isFollower : false}
               user={!isPending ? user : {}}
-              language={language}
+              locale={locale}
               navigation={navigation}
             />
           )}
@@ -209,21 +209,26 @@ class Profile extends Component {
               <View>
                 {!!user.bio &&
                   user.bio !== '' && (
-                    <SectionList title={translate('common.bio', language)}>
-                      <ListItem
-                        subtitle={emojifyText(user.bio)}
-                        subtitleStyle={styles.listSubTitle}
+                    <SectionList title={translate('common.bio', locale)}>
+                      <BioListItem
+                        titleNumberOfLines={0}
+                        title={emojifyText(user.bio)}
                         hideChevron
                       />
                     </SectionList>
                   )}
 
-                <EntityInfo entity={user} orgs={orgs} navigation={navigation} />
+                <EntityInfo
+                  entity={user}
+                  orgs={orgs}
+                  navigation={navigation}
+                  locale={locale}
+                />
 
                 <SectionList
-                  title={translate('common.orgs', language)}
+                  title={translate('common.orgs', locale)}
                   noItems={orgs.length === 0}
-                  noItemsMessage={translate('common.noOrgsMessage', language)}
+                  noItemsMessage={translate('common.noOrgsMessage', locale)}
                 >
                   {orgs.map(item => (
                     <UserListItem
@@ -241,8 +246,8 @@ class Profile extends Component {
           ref={o => {
             this.ActionSheet = o;
           }}
-          title={translate('user.profile.userActions', language)}
-          options={[...userActions, translate('common.cancel', language)]}
+          title={translate('user.profile.userActions', locale)}
+          options={[...userActions, translate('common.cancel', locale)]}
           cancelButtonIndex={2}
           onPress={this.handlePress}
         />

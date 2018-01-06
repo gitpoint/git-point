@@ -49,16 +49,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
   },
+  container: {
+    borderBottomColor: colors.greyLight,
+    borderBottomWidth: 1,
+  },
 });
 
-const renderTitle = (repository, showFullName) =>
+const renderTitle = (repository, showFullName) => (
   <View style={styles.wrapper}>
     <View style={styles.repositoryContainer}>
       <View style={styles.titleWrapper}>
         <Text style={styles.title}>
           {showFullName ? repository.full_name : repository.name}
         </Text>
-        {repository.private &&
+        {repository.private && (
           <View style={styles.privateIconContainer}>
             <Icon
               size={16}
@@ -66,7 +70,8 @@ const renderTitle = (repository, showFullName) =>
               type="octicon"
               color={colors.greyDarkest}
             />
-          </View>}
+          </View>
+        )}
       </View>
       <Text style={styles.description}>
         {emojifyText(repository.description)}
@@ -99,25 +104,25 @@ const renderTitle = (repository, showFullName) =>
         {abbreviateNumber(repository.forks_count)}
       </Text>
 
-      {repository.language !== null &&
+      {repository.language !== null && (
         <Icon
           containerStyle={styles.extraInfoIcon}
           name="fiber-manual-record"
           size={15}
           color={languageColors[repository.language]}
-        />}
+        />
+      )}
 
-      <Text style={styles.extraInfoSubject}>
-        {repository.language}
-      </Text>
+      <Text style={styles.extraInfoSubject}>{repository.language}</Text>
     </View>
-  </View>;
+  </View>
+);
 
 export const RepositoryListItem = ({
   repository,
   showFullName,
   navigation,
-}: Props) =>
+}: Props) => (
   <ListItem
     key={repository.id}
     title={renderTitle(repository, showFullName)}
@@ -127,9 +132,11 @@ export const RepositoryListItem = ({
       color: colors.grey,
       type: 'octicon',
     }}
+    containerStyle={styles.container}
     underlayColor={colors.greyLight}
     onPress={() => navigation.navigate('Repository', { repository })}
-  />;
+  />
+);
 
 RepositoryListItem.defaultProps = {
   showFullName: true,

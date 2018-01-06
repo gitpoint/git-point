@@ -12,19 +12,20 @@
           "./src"
         ],
         "alias": {
-          "components": "components",
-          "search": "search",
-          "notifications": "notifications",
-          "auth": "auth",
-          "user": "user",
-          "organization": "organization",
-          "repository": "repository",
-          "issue": "issue",
           "api": "api",
+          "auth": "auth",
+          "components": "components",
           "config": "config",
-          "utils": "utils",
+          "issue": "issue",
           "locale": "locale",
-          "package.json": "./package.json"
+          "notifications": "notifications",
+          "organization": "organization",
+          "package.json": "./package.json",
+          "repository": "repository",
+          "search": "search",
+          "testData": "./__tests__/data",
+          "user": "user",
+          "utils": "utils"
         }
       }
     ],

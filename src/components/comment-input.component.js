@@ -1,50 +1,49 @@
 // @flow
 
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  Text,
-  TextInput,
-  Platform,
-} from 'react-native';
+import { Text, Platform } from 'react-native';
 import { Icon } from 'react-native-elements';
+import styled from 'styled-components/native';
 
 import { MentionArea } from 'components';
 import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
 
-const styles = StyleSheet.create({
-  container: {
-    borderTopColor: colors.greyLight,
-    borderTopWidth: 1,
-    backgroundColor: 'transparent',
-  },
-  wrapper: {
-    padding: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  textInput: {
-    fontSize: normalize(12),
-    flex: 1,
-    marginRight: 5,
-    color: colors.black,
-    ...fonts.fontPrimary,
-  },
-  postButtonContainer: {
-    flex: 0.15,
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-  },
-  postButtonDisabled: {
-    color: colors.grey,
-  },
-  postButtonEnabled: {
-    color: colors.primaryDark,
-  },
+const Container = styled.View`
+  border-top-color: ${colors.greyLight};
+  border-top-width: 1;
+  background-color: transparent;
+`;
+
+const Wrapper = styled.View`
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+  justify-content: center;
+`;
+
+const InputText = styled.TextInput`
+  font-size: ${normalize(12)};
+  flex: 1;
+  margin-right: 5;
+  color: ${colors.black};
+  ${fonts.fontPrimary};
+`;
+const TextInputText = InputText.withComponent(Text);
+
+const PostButtonContainer = styled.TouchableOpacity`
+  flex: 0.15;
+  align-items: flex-end;
+  justify-content: center;
+`;
+
+const PostButtonIcon = styled(Icon).attrs({
+  color: props => (props.disabled ? colors.grey : colors.primaryDark),
+})``;
+
+const inputMinHeight = Platform.select({
+  ios: 30,
+  android: 37,
 });
 
 export class CommentInput extends Component {
@@ -52,7 +51,7 @@ export class CommentInput extends Component {
     users: Array,
     userHasPushPermission: boolean,
     issueLocked: boolean,
-    language: string,
+    locale: string,
     onSubmit: Function,
   };
 
@@ -66,7 +65,7 @@ export class CommentInput extends Component {
 
     this.state = {
       text: '',
-      height: 0,
+      height: inputMinHeight,
     };
   }
 
@@ -82,18 +81,12 @@ export class CommentInput extends Component {
   };
 
   render() {
-    const { userHasPushPermission, issueLocked, language, users } = this.props;
+    const { userHasPushPermission, issueLocked, locale, users } = this.props;
 
-    let userCanPost = null;
-
-    if (issueLocked && !userHasPushPermission) {
-      userCanPost = false;
-    } else {
-      userCanPost = true;
-    }
+    const userCanPost = !issueLocked || userHasPushPermission;
 
     return (
-      <View style={styles.container}>
+      <Container>
         <MentionArea
           trigger="@"
           text={this.state.text}
@@ -101,14 +94,14 @@ export class CommentInput extends Component {
           height={200}
           users={users}
         />
-        <View style={styles.wrapper}>
-          {userCanPost &&
-            <TextInput
-              underlineColorAndroid={'transparent'}
+        <Wrapper>
+          {userCanPost && (
+            <InputText
+              underlineColorAndroid="transparent"
               placeholder={
                 issueLocked && userHasPushPermission
-                  ? translate('issue.main.lockedCommentInput', language)
-                  : translate('issue.main.commentInput', language)
+                  ? translate('issue.main.lockedCommentInput', locale)
+                  : translate('issue.main.commentInput', locale)
               }
               multiline
               blurOnSubmit={false}
@@ -118,41 +111,36 @@ export class CommentInput extends Component {
               onSubmitEditing={event =>
                 this.handleSubmitEditing(event.nativeEvent.text)}
               placeholderTextColor={colors.grey}
-              style={[
-                styles.textInput,
-                { height: Math.max(30, this.state.height) },
-              ]}
+              style={{
+                height: Math.max(inputMinHeight, this.state.height),
+              }}
               value={this.state.text}
-            />}
+            />
+          )}
 
-          {!userCanPost &&
-            <Text style={[styles.textInput, { color: colors.grey }]}>
-              {translate('issue.main.lockedIssue', language)}
-            </Text>}
+          {!userCanPost && (
+            <TextInputText style={{ color: colors.grey }}>
+              {translate('issue.main.lockedIssue', locale)}
+            </TextInputText>
+          )}
 
-          {userCanPost &&
-            <TouchableOpacity
+          {userCanPost && (
+            <PostButtonContainer
               disabled={this.state.text === ''}
-              style={styles.postButtonContainer}
               onPress={() => this.handleSubmit(this.state.text)}
             >
-              <Icon
-                name="send"
-                iconStyle={
-                  this.state.text === ''
-                    ? styles.postButtonDisabled
-                    : styles.postButtonEnabled
-                }
-              />
-            </TouchableOpacity>}
+              <PostButtonIcon name="send" disabled={this.state.text === ''} />
+            </PostButtonContainer>
+          )}
 
           {!userCanPost &&
-            this.props.issueLocked &&
-            <View style={styles.postButtonContainer}>
-              <Icon name="lock" type="octicon" color={colors.grey} />
-            </View>}
-        </View>
-      </View>
+            this.props.issueLocked && (
+              <PostButtonContainer>
+                <Icon name="lock" type="octicon" color={colors.grey} />
+              </PostButtonContainer>
+            )}
+        </Wrapper>
+      </Container>
     );
   }
 }

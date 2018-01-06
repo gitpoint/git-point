@@ -9,13 +9,13 @@ import moment from 'moment/min/moment-with-locales.min';
 import { LoadingUserListItem, UserListItem, ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { emojifyText, translate } from 'utils';
-import { getUserEvents, getUser } from 'auth';
+import { getUserEvents } from 'auth';
 import { getNotificationsCount } from 'notifications';
 
 const mapStateToProps = state => ({
   user: state.auth.user,
   userEvents: state.auth.events,
-  language: state.auth.language,
+  locale: state.auth.locale,
   isPendingEvents: state.auth.isPendingEvents,
   accessToken: state.auth.accessToken,
 });
@@ -25,9 +25,8 @@ const mapDispatchToProps = dispatch =>
     {
       getUserEvents,
       getNotificationsCount,
-      getUser,
     },
-    dispatch,
+    dispatch
   );
 
 const styles = StyleSheet.create({
@@ -79,13 +78,7 @@ const styles = StyleSheet.create({
 
 class Events extends Component {
   componentDidMount() {
-    const { user: { login }, getUser } = this.props;
-
-    if (login) {
-      this.getUserEvents();
-    } else {
-      getUser();
-    }
+    this.getUserEvents();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -100,28 +93,28 @@ class Events extends Component {
   };
 
   getAction = userEvent => {
-    const { language } = this.props;
+    const { locale } = this.props;
     const eventType = userEvent.type;
     /* eslint-disable prefer-const */
     let { action, ref_type: object } = userEvent.payload;
 
     switch (eventType) {
       case 'CommitCommentEvent':
-        return translate('auth.events.commitCommentEvent', language);
+        return translate('auth.events.commitCommentEvent', locale);
       case 'CreateEvent':
-        return translate('auth.events.createEvent', language, {
-          object: translate(`auth.events.objects.${object}`, language),
+        return translate('auth.events.createEvent', locale, {
+          object: translate(`auth.events.objects.${object}`, locale),
         });
       case 'DeleteEvent':
-        return translate('auth.events.deleteEvent', language, {
-          object: translate(`auth.events.objects.${object}`, language),
+        return translate('auth.events.deleteEvent', locale, {
+          object: translate(`auth.events.objects.${object}`, locale),
         });
       case 'ForkEvent':
-        return translate('auth.events.actions.forked', language);
+        return translate('auth.events.actions.forked', locale);
       case 'GollumEvent':
         action = userEvent.payload.pages[0].action;
 
-        return translate(`auth.events.actions.${action}`, language);
+        return translate(`auth.events.actions.${action}`, locale);
       case 'IssueCommentEvent': {
         const eventsByActions = {
           created: 'issueCommentEvent',
@@ -140,68 +133,64 @@ class Events extends Component {
 
         const issueData = {
           type: userEvent.payload.issue.pull_request
-            ? translate('auth.events.types.pullRequest', language)
-            : translate('auth.events.types.issue', language),
-          action: translate(`auth.events.actions.${action}`, language),
+            ? translate('auth.events.types.pullRequest', locale)
+            : translate('auth.events.types.issue', locale),
+          action: translate(`auth.events.actions.${action}`, locale),
         };
 
-        return translate(`auth.events.${event}`, language, issueData);
+        return translate(`auth.events.${event}`, locale, issueData);
       }
       case 'IssuesEvent':
-        return translate('auth.events.issuesEvent', language, {
-          action: translate(`auth.events.actions.${action}`, language),
+        return translate('auth.events.issuesEvent', locale, {
+          action: translate(`auth.events.actions.${action}`, locale),
         });
       case 'MemberEvent':
-        return translate(`auth.events.actions.${action}`, language);
+        return translate(`auth.events.actions.${action}`, locale);
       case 'PublicEvent':
-        return translate('auth.events.publicEvent.action', language);
+        return translate('auth.events.publicEvent.action', locale);
       case 'PullRequestEvent':
-        return translate('auth.events.pullRequestEvent', language, {
-          action: translate(`auth.events.actions.${action}`, language),
+        return translate('auth.events.pullRequestEvent', locale, {
+          action: translate(`auth.events.actions.${action}`, locale),
         });
       case 'PullRequestReviewEvent':
-        return translate('auth.events.pullRequestReviewEvent', language, {
-          payload: translate(`auth.events.actions.${action}`, language),
+        return translate('auth.events.pullRequestReviewEvent', locale, {
+          payload: translate(`auth.events.actions.${action}`, locale),
         });
       case 'PullRequestReviewCommentEvent': {
         if (action === 'created') {
           return translate(
             'auth.events.pullRequestReviewCommentEvent',
-            language,
+            locale,
             {
-              action: translate('auth.events.actions.commented', language),
-            },
+              action: translate('auth.events.actions.commented', locale),
+            }
           );
         } else if (action === 'edited') {
-          return translate(
-            'auth.events.pullRequestReviewEditedEvent',
-            language,
-            {
-              action: translate(`auth.events.actions.${action}`, language),
-            },
-          );
+          return translate('auth.events.pullRequestReviewEditedEvent', locale, {
+            action: translate(`auth.events.actions.${action}`, locale),
+          });
         } else if (action === 'deleted') {
           return translate(
             'auth.events.pullRequestReviewDeletedEvent',
-            language,
+            locale,
             {
-              action: translate(`auth.events.actions.${action}`, language),
-            },
+              action: translate(`auth.events.actions.${action}`, locale),
+            }
           );
         }
 
         return null;
       }
       case 'PushEvent':
-        return translate('auth.events.actions.pushedTo', language);
+        return translate('auth.events.actions.pushedTo', locale);
       case 'ReleaseEvent':
-        return translate('auth.events.releaseEvent', language, {
-          action: translate(`auth.events.actions.${action}`, language),
+        return translate('auth.events.releaseEvent', locale, {
+          action: translate(`auth.events.actions.${action}`, locale),
         });
       case 'RepositoryEvent':
-        return translate(`auth.events.actions.${action}`, language);
+        return translate(`auth.events.actions.${action}`, locale);
       case 'WatchEvent':
-        return translate('auth.events.actions.starred', language);
+        return translate('auth.events.actions.starred', locale);
       default:
         return null;
     }
@@ -321,7 +310,7 @@ class Events extends Component {
   }
 
   getConnector = userEvent => {
-    const { language } = this.props;
+    const { locale } = this.props;
     const eventType = userEvent.type;
 
     switch (eventType) {
@@ -330,23 +319,23 @@ class Events extends Component {
           userEvent.payload.ref_type === 'branch' ||
           userEvent.payload.ref_type === 'tag'
         ) {
-          return 'at';
+          return translate('auth.events.atConnector', locale);
         }
 
         return null;
       }
       case 'ForkEvent':
       case 'MemberEvent':
-        return translate('auth.events.toConnector', language);
+        return translate('auth.events.toConnector', locale);
       case 'DeleteEvent':
       case 'IssueCommentEvent':
       case 'IssuesEvent':
       case 'PushEvent':
       case 'PullRequestEvent':
       case 'PullRequestReviewCommentEvent':
-        return translate('auth.events.atConnector', language);
+        return translate('auth.events.atConnector', locale);
       case 'PublicEvent':
-        return translate('auth.events.publicEvent.connector', language);
+        return translate('auth.events.publicEvent.connector', locale);
       default:
         return null;
     }
@@ -466,7 +455,7 @@ class Events extends Component {
         ? {
             ...userEvent.repo,
             name: userEvent.repo.name.substring(
-              userEvent.repo.name.indexOf('/') + 1,
+              userEvent.repo.name.indexOf('/') + 1
             ),
           }
         : userEvent.payload.forkee,
@@ -479,7 +468,7 @@ class Events extends Component {
         userEvent.payload.issue ||
         this.formatPullRequestObject(userEvent.payload.pull_request),
       isPR: !!userEvent.payload.pull_request,
-      language: this.props.language,
+      locale: this.props.locale,
     });
   };
 
@@ -502,9 +491,7 @@ class Events extends Component {
         >
           {userEvent.actor.login}{' '}
         </Text>
-        <Text>
-          {this.getAction(userEvent)}{' '}
-        </Text>
+        <Text>{this.getAction(userEvent)} </Text>
         {this.getItem(userEvent)}
         {this.getAction(userEvent) && ' '}
         {this.getConnector(userEvent)}
@@ -519,7 +506,7 @@ class Events extends Component {
   }
 
   render() {
-    const { isPendingEvents, userEvents, language, navigation } = this.props;
+    const { isPendingEvents, userEvents, locale, navigation } = this.props;
     const linebreaksPattern = /(\r\n|\n|\r)/gm;
     let content;
 
@@ -532,7 +519,7 @@ class Events extends Component {
       content = (
         <View style={styles.textContainer}>
           <Text style={styles.noneTitle}>
-            {translate('auth.events.welcomeMessage', language)}
+            {translate('auth.events.welcomeMessage', locale)}
           </Text>
         </View>
       );
@@ -544,7 +531,7 @@ class Events extends Component {
           onRefresh={this.getUserEvents}
           refreshing={isPendingEvents}
           keyExtractor={this.keyExtractor}
-          renderItem={({ item }) =>
+          renderItem={({ item }) => (
             <View>
               <UserListItem
                 user={item.actor}
@@ -560,28 +547,26 @@ class Events extends Component {
               />
 
               {(item.type === 'IssueCommentEvent' ||
-                item.type === 'PullRequestReviewCommentEvent') &&
+                item.type === 'PullRequestReviewCommentEvent') && (
                 <View style={styles.subtitleContainer}>
                   <Text numberOfLines={3} style={styles.subtitle}>
                     {emojifyText(
-                      item.payload.comment.body.replace(linebreaksPattern, ' '),
+                      item.payload.comment.body.replace(linebreaksPattern, ' ')
                     )}
                   </Text>
-                </View>}
-            </View>}
-          extraData={this.props.language}
+                </View>
+              )}
+            </View>
+          )}
+          extraData={this.props.locale}
         />
       );
     }
 
-    return (
-      <ViewContainer>
-        {content}
-      </ViewContainer>
-    );
+    return <ViewContainer>{content}</ViewContainer>;
   }
 }
 
 export const EventsScreen = connect(mapStateToProps, mapDispatchToProps)(
-  Events,
+  Events
 );

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
+import styled from 'styled-components/native';
 import {
   AppRegistry,
   AsyncStorage,
-  Image,
-  StyleSheet,
-  View,
   LayoutAnimation,
+  StatusBar,
+  Platform,
 } from 'react-native';
 import { persistStore } from 'redux-persist';
 import createEncryptor from 'redux-persist-transform-encrypt';
@@ -14,24 +14,22 @@ import DeviceInfo from 'react-native-device-info';
 import md5 from 'md5';
 import codePush from 'react-native-code-push';
 
-import { colors } from 'config';
-import { configureLocale } from 'utils';
-import { determineLanguage } from 'locale';
+import { colors, getStatusBarConfig } from 'config';
+import { getCurrentLocale, configureLocale } from 'utils';
 import { GitPoint } from './routes';
 import { configureStore } from './root.store';
 
-const styles = StyleSheet.create({
-  logoContainer: {
-    backgroundColor: colors.white,
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  logo: {
-    width: 100,
-    height: 100,
-  },
-});
+const Container = styled.View`
+  align-items: center;
+  background-color: ${colors.white}
+  flex: 1;
+  justify-content: center;
+`;
+
+const Logo = styled.Image`
+  height: 100;
+  width: 100;
+`;
 
 if (console) {
   console.disableYellowBox = true; // eslint-disable-line no-console
@@ -39,9 +37,9 @@ if (console) {
 
 class App extends Component {
   static async initLocale() {
-    const language = await determineLanguage();
+    const locale = await getCurrentLocale();
 
-    configureLocale(language);
+    configureLocale(locale);
   }
 
   constructor() {
@@ -50,6 +48,7 @@ class App extends Component {
     this.state = {
       rehydrated: false,
     };
+    this.statusBarHandler = this.statusBarHandler.bind(this);
   }
 
   componentWillMount() {
@@ -62,7 +61,7 @@ class App extends Component {
       {
         storage: AsyncStorage,
         transforms: [encryptor],
-        blacklist: ['user'],
+        whitelist: ['auth'],
       },
       () => {
         this.setState({ rehydrated: true });
@@ -85,21 +84,47 @@ class App extends Component {
     LayoutAnimation.spring();
   }
 
+  getCurrentRouteName(navigationState) {
+    if (!navigationState) {
+      return null;
+    }
+    const route = navigationState.routes[navigationState.index];
+
+    if (route.routes) {
+      return this.getCurrentRouteName(route);
+    }
+
+    return route.routeName;
+  }
+
+  statusBarHandler(prev, next) {
+    const routeName = this.getCurrentRouteName(next);
+
+    const { translucent, backgroundColor, barStyle } = getStatusBarConfig(
+      routeName
+    );
+
+    if (Platform.OS === 'android') {
+      StatusBar.setTranslucent(translucent);
+      StatusBar.setBackgroundColor(backgroundColor);
+    }
+    StatusBar.setBarStyle(barStyle);
+  }
+
   render() {
     if (!this.state.rehydrated) {
       return (
-        <View style={styles.logoContainer}>
-          <Image
-            style={styles.logo}
-            source={require('./src/assets/logo-black.png')}
-          />
-        </View>
+        <Container>
+          <Logo source={require('./src/assets/logo-black.png')} />
+        </Container>
       );
     }
 
     return (
       <Provider store={configureStore}>
-        <GitPoint onNavigationStateChange={null} />
+        <GitPoint onNavigationStateChange={this.statusBarHandler}>
+          <StatusBar />
+        </GitPoint>
       </Provider>
     );
   }

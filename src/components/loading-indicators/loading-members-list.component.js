@@ -48,9 +48,7 @@ export class LoadingMembersList extends Component {
 
     return (
       <View style={styles.wrapper}>
-        <Text style={styles.sectionTitle}>
-          {title}
-        </Text>
+        <Text style={styles.sectionTitle}>{title}</Text>
 
         <View style={styles.avatarContainer}>
           {[...Array(10)].map((item, index) => {
