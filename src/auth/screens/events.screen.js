@@ -51,7 +51,7 @@ const DeletedLinkBranchDescription = styled.Text`
   font-family: ${fonts.fontCode.fontFamily};
 `;
 
-const Date = styled.Text`
+const Datestamp = styled.Text`
   color: ${colors.greyDark};
 `;
 
@@ -283,7 +283,7 @@ class Events extends Component {
           </LinkBranchDescription>
         );
       case 'ReleaseEvent':
-        return `888 ${userEvent.payload.release.id}`;
+        return `${userEvent.payload.release.id}`;
       case 'RepositoryEvent':
         return (
           <LinkDescription
@@ -293,7 +293,7 @@ class Events extends Component {
               }
             }}
           >
-            999 {userEvent.repo.name}
+            {userEvent.repo.name}
           </LinkDescription>
         );
       default:
@@ -484,7 +484,7 @@ class Events extends Component {
         {this.getItem(userEvent) && ' '}
         {this.getSecondItem(userEvent)}
         {this.getItem(userEvent) && this.getConnector(userEvent) && ' '}
-        <Date>{moment(userEvent.created_at).fromNow()}</Date>
+        <Datestamp>{moment(userEvent.created_at).fromNow()}</Datestamp>
       </DescriptionContainer>
     );
   }
