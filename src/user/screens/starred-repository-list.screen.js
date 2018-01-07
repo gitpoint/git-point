@@ -42,18 +42,22 @@ class StarredRepositoryList extends Component {
       isPendingStarredRepositories,
     } = this.props;
 
+    const repoCount = navigation.state.params.repoCount;
+
     return (
       <ViewContainer>
         {isPendingStarredRepositories &&
-          [...Array(starredRepositories.length)].map(
+          [...Array(repoCount)].map(
             (item, index) => <LoadingRepositoryListItem key={index} /> // eslint-disable-line react/no-array-index-key
           )}
-        {!isPendingStarredRepositories &&
+        {!isPendingStarredRepositories && (
           <FlatList
             data={starredRepositories}
-            renderItem={({ item }) =>
-              <RepositoryListItem repository={item} navigation={navigation} />}
-          />}
+            renderItem={({ item }) => (
+              <RepositoryListItem repository={item} navigation={navigation} />
+            )}
+          />
+        )}
       </ViewContainer>
     );
   }
