@@ -180,7 +180,7 @@ export class UserProfile extends Component {
                     navigation.navigate('StarredRepositoryList', {
                       title: translate(
                         'user.starredRepositoryList.title',
-                        language
+                        locale
                       ),
                       user,
                       repoCount: Math.min(
@@ -193,7 +193,7 @@ export class UserProfile extends Component {
                     {!isNaN(parseInt(starCount, 10)) ? starCount : ' '}
                   </Text>
                   <Text style={styles.unitText}>
-                    {translate('user.starredRepositoryList.text', language)}
+                    {translate('user.starredRepositoryList.text', locale)}
                   </Text>
                 </TouchableOpacity>
               )}
