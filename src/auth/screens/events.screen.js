@@ -35,20 +35,20 @@ const DescriptionContainer = styled.Text`
   flex: 1;
   margin-left: 10;
   color: ${colors.primaryDark};
-  font-family: ${fonts.fontPrimaryLight.fontFamily};
+  ${fonts.fontPrimaryLight};
 `;
 
 const LinkDescription = styled.Text`
-  font-family: ${fonts.fontPrimarySemiBold.fontFamily};
+  ${fonts.fontPrimarySemiBold};
 `;
 
 const LinkBranchDescription = styled.Text`
-  font-family: ${fonts.fontCode.fontFamily};
+  ${fonts.fontCode};
 `;
 
 const DeletedLinkBranchDescription = styled.Text`
   color: ${colors.greyDarkest};
-  font-family: ${fonts.fontCode.fontFamily};
+  ${fonts.fontCode};
 `;
 
 const Datestamp = styled.Text`
