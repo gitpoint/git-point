@@ -158,6 +158,10 @@ export const eu = {
     repositoryList: {
       title: 'Biltegiak',
     },
+    starredRepositoryList: {
+      title: 'Stars',
+      text: 'Stars',
+    },
     followers: {
       title: 'Jarraitzaileak',
       text: 'Jarraitzaileak',

@@ -148,6 +148,10 @@ export const zhTW = {
     repositoryList: {
       title: '版本庫',
     },
+    starredRepositoryList: {
+      title: 'Stars',
+      text: 'Stars',
+    },
     followers: {
       title: '追蹤者',
       text: '追蹤者',
