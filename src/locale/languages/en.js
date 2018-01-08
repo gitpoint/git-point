@@ -160,6 +160,10 @@ export const en = {
     repositoryList: {
       title: 'Repositories',
     },
+    starredRepositoryList: {
+      title: 'Stars',
+      text: 'Stars',
+    },
     followers: {
       title: 'Followers',
       text: 'Followers',

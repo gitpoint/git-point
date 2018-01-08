@@ -158,6 +158,10 @@ export const uk = {
     repositoryList: {
       title: 'Репозиторії',
     },
+    starredRepositoryList: {
+      title: 'Stars',
+      text: 'Stars',
+    },
     followers: {
       title: 'Підписники',
       text: 'Підписників',

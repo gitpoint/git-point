@@ -163,6 +163,10 @@ export const es = {
     repositoryList: {
       title: 'Repositorios',
     },
+    starredRepositoryList: {
+      title: 'Stars',
+      text: 'Stars',
+    },
     followers: {
       title: 'Seguidores',
       text: 'Seguidores',
