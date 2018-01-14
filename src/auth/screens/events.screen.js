@@ -43,12 +43,17 @@ const LinkDescription = styled.Text`
 `;
 
 const LinkBranchDescription = styled.Text`
+  background-color: ${colors.codeChunkBlue};
+  color: ${colors.blue};
   ${fonts.fontCode};
+  font-size: ${normalize(11)};
 `;
 
 const DeletedLinkBranchDescription = styled.Text`
-  color: ${colors.greyDarkest};
+  background-color: ${colors.delCodeLineNumberRed};
+  color: ${colors.red};
   ${fonts.fontCode};
+  font-size: ${normalize(11)};
 `;
 
 const Datestamp = styled.Text`
