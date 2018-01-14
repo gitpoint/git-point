@@ -100,7 +100,7 @@ const RepositoryOwnerAvatar = styled.Image`
 
 const RepositoryTitle = styled.Text`
   color: ${colors.primaryDark};
-  ${{ ...fonts.fontPrimarySemiBold }};
+  ${fonts.fontPrimarySemiBold};
   margin-left: 10;
   flex: 1;
 `;
@@ -125,7 +125,7 @@ const NoneTitle = styled.Text`
   padding-horizontal: 15;
   font-size: ${normalize(16)};
   text-align: center;
-  ${{ ...fonts.fontPrimary }};
+  ${fonts.fontPrimary};
 `;
 
 const MarkAllAsReadButtonContainer = styled.View`
