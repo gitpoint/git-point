@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text } from 'react-native';
 import { Icon as BaseIcon } from 'react-native-elements';
 import moment from 'moment/min/moment-with-locales.min';
-import { colors, styledFonts, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 import { InlineLabel } from 'components';
 import styled from 'styled-components/native';
 
@@ -77,7 +77,7 @@ const Date = styled.Text`
 `;
 
 const BoldText = styled.Text`
-  font-family: ${styledFonts.fontPrimaryBold};
+  ${fonts.fontPrimaryBold};
   font-size: ${normalize(13)};
   color: ${colors.primaryDark};
 `;
