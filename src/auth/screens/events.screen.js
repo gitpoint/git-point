@@ -50,8 +50,8 @@ const LinkBranchDescription = styled.Text`
 `;
 
 const DeletedLinkBranchDescription = styled.Text`
-  background-color: ${colors.delCodeLineNumberRed};
-  color: ${colors.red};
+  background-color: ${colors.greyVeryLight};
+  color: ${colors.greyDarkest};
   ${fonts.fontCode};
   font-size: ${normalize(11)};
 `;
