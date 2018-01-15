@@ -219,7 +219,8 @@ class Events extends Component {
         ) {
           return (
             <LinkBranchDescription>
-              {userEvent.payload.ref}
+              {' '}
+              {userEvent.payload.ref}{' '}
             </LinkBranchDescription>
           );
         } else if (userEvent.payload.ref_type === 'repository') {
@@ -237,7 +238,8 @@ class Events extends Component {
       case 'DeleteEvent':
         return (
           <DeletedLinkBranchDescription>
-            {userEvent.payload.ref}
+            {' '}
+            {userEvent.payload.ref}{' '}
           </DeletedLinkBranchDescription>
         ); // can only be branch or tag
       case 'ForkEvent':
