@@ -46,7 +46,7 @@ describe('Auth Reducer', () => {
     expect(authReducer(initialState, action)).toEqual(expectedState);
   });
 
-  it('should set an error from payload of LOGIN.FAILURE action and set isLoggingIn: false, isAuthenticated: false', () => {
+  it('should set an error from payload of LOGIN.ERROR action and set isLoggingIn: false, isAuthenticated: false', () => {
     const expectedState = {
       ...initialState,
       isLoggingIn: false,
@@ -54,7 +54,7 @@ describe('Auth Reducer', () => {
       error: authError,
     };
     const action = {
-      type: LOGIN.FAILURE,
+      type: LOGIN.ERROR,
       payload: authError,
     };
 
@@ -88,14 +88,14 @@ describe('Auth Reducer', () => {
     expect(authReducer(initialState, action)).toEqual(expectedState);
   });
 
-  it('should set an error from payload of LOGOUT.FAILURE action and set isSigningOut: false', () => {
+  it('should set an error from payload of LOGOUT.ERROR action and set isSigningOut: false', () => {
     const expectedState = {
       ...initialState,
       isSigningOut: false,
       error: authError,
     };
     const action = {
-      type: LOGOUT.FAILURE,
+      type: LOGOUT.ERROR,
       payload: authError,
     };
 

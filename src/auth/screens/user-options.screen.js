@@ -1,5 +1,6 @@
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
+import styled from 'styled-components/native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
@@ -46,14 +47,6 @@ const styles = StyleSheet.create({
     color: colors.black,
     ...fonts.fontPrimary,
   },
-  listSubTitle: {
-    color: colors.greyDark,
-    ...fonts.fontPrimary,
-  },
-  logoutTitle: {
-    color: colors.red,
-    ...fonts.fontPrimary,
-  },
   update: {
     flex: 1,
     alignItems: 'center',
@@ -73,14 +66,20 @@ const styles = StyleSheet.create({
     paddingRight: 7,
     color: colors.black, // random any color for the correct display emoji
   },
-  containerStyle: {
-    paddingTop: 0,
-    paddingBottom: 0,
-    height: 45,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
 });
+
+const StyledListItem = styled(ListItem).attrs({
+  containerStyle: {
+    borderBottomColor: colors.greyLight,
+    borderBottomWidth: 1,
+  },
+  titleStyle: props => ({
+    color: props.signOut ? colors.red : colors.black,
+    ...fonts.fontPrimary,
+  }),
+  underlayColor: colors.greyLight,
+  hideChevron: props => props.hideChevron,
+})``;
 
 const updateText = locale => ({
   check: translate('auth.profile.codePushCheck', locale),
@@ -167,7 +166,7 @@ class UserOptions extends Component {
               data={languages}
               renderItem={({ item }) => {
                 return (
-                  <ListItem
+                  <StyledListItem
                     title={
                       <View style={styles.language}>
                         <Text style={styles.flag}>
@@ -176,12 +175,9 @@ class UserOptions extends Component {
                         <Text style={styles.listTitle}>{item.name}</Text>
                       </View>
                     }
-                    titleStyle={styles.listTitle}
-                    containerStyle={styles.containerStyle}
                     hideChevron={locale !== item.code}
                     rightIcon={{ name: 'check' }}
                     onPress={() => changeLocale(item.code)}
-                    underlayColor={colors.greyLight}
                   />
                 );
               }}
@@ -191,36 +187,29 @@ class UserOptions extends Component {
           </SectionList>
 
           <SectionList>
-            <ListItem
+            <StyledListItem
               title={translate('common.openInBrowser', locale)}
-              titleStyle={styles.listTitle}
               onPress={() => openURLInView(this.props.user.html_url)}
-              underlayColor={colors.greyLight}
             />
 
-            <ListItem
+            <StyledListItem
               title={translate('auth.userOptions.privacyPolicy', locale)}
-              titleStyle={styles.listTitle}
               onPress={() =>
                 navigation.navigate('PrivacyPolicy', {
                   title: translate('auth.privacyPolicy.title', locale),
                   locale,
                 })}
-              underlayColor={colors.greyLight}
             />
-            <ListItem
+            <StyledListItem
               title={translate('auth.userOptions.donate', locale)}
-              titleStyle={styles.listTitle}
               onPress={() =>
                 openURLInView('https://opencollective.com/git-point')}
-              underlayColor={colors.greyLight}
             />
-            <ListItem
+            <StyledListItem
               title={translate('auth.userOptions.signOut', locale)}
-              titleStyle={styles.logoutTitle}
               hideChevron
               onPress={() => this.signOutUser()}
-              underlayColor={colors.greyLight}
+              signOut
             />
           </SectionList>
 

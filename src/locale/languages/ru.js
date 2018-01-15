@@ -160,6 +160,10 @@ export const ru = {
     repositoryList: {
       title: 'Репозитории',
     },
+    starredRepositoryList: {
+      title: 'Звёзд',
+      text: 'Звёзд',
+    },
     followers: {
       title: 'Подписчики',
       text: 'Подписчиков',

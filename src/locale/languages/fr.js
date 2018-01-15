@@ -162,6 +162,10 @@ export const fr = {
     repositoryList: {
       title: 'Dépôts',
     },
+    starredRepositoryList: {
+      title: 'Favoris',
+      text: 'Favoris',
+    },
     followers: {
       title: 'Followers',
       text: 'Followers',
