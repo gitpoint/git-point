@@ -160,6 +160,10 @@ export const gl = {
     repositoryList: {
       title: 'Repositorios',
     },
+    starredRepositoryList: {
+      title: 'Favoritos',
+      text: 'Favoritos',
+    },
     followers: {
       title: 'Seguidores',
       text: 'Seguidores',

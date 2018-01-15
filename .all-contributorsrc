@@ -86,7 +86,8 @@
       "profile": "https://patw.me",
       "contributions": [
         "code",
-        "bug"
+        "bug",
+        "translation"
       ]
     },
     {
@@ -643,6 +644,43 @@
       "name": "Leonardo",
       "avatar_url": "https://avatars0.githubusercontent.com/u/2670744?v=4",
       "profile": "https://github.com/LeoCp",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "coderste",
+      "name": "Stephen",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/13105865?v=4",
+      "profile": "https://github.com/coderste",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "ZahraTee",
+      "name": "Zahra Traboulsi",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/5565340?v=4",
+      "profile": "http://www.zahra.tech",
+      "contributions": [
+        "code",
+        "test"
+      ]
+    },
+    {
+      "login": "jcarral",
+      "name": "Joseba Carral",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/13391685?v=4",
+      "profile": "http://codevs.es",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "CTownsdin",
+      "name": "CTownsdin",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/5800039?v=4",
+      "profile": "https://github.com/CTownsdin",
       "contributions": [
         "code"
       ]

@@ -150,6 +150,10 @@ export const zhCN = {
     repositoryList: {
       title: '仓库列表',
     },
+    starredRepositoryList: {
+      title: 'Stars',
+      text: 'Stars',
+    },
     followers: {
       title: '粉丝',
       text: '粉丝',

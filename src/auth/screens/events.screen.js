@@ -1,9 +1,10 @@
 /* eslint react/prop-types: 0 */
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
+import styled from 'styled-components/native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { StyleSheet, Text, FlatList, View } from 'react-native';
+import { Text, FlatList, View } from 'react-native';
 
 import { LoadingUserListItem, UserListItem, ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
@@ -28,52 +29,58 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-const styles = StyleSheet.create({
-  descriptionContainer: {
-    justifyContent: 'center',
-    flex: 1,
-    marginLeft: 10,
-    color: colors.primaryDark,
-    ...fonts.fontPrimaryLight,
-  },
-  linkDescription: {
-    ...fonts.fontPrimarySemiBold,
-  },
-  linkBranchDescription: {
-    ...fonts.fontCode,
-  },
-  deletedLinkBranchDescription: {
-    color: colors.greyDarkest,
-    ...fonts.fontCode,
-  },
-  date: {
-    color: colors.greyDark,
-  },
-  subtitleContainer: {
-    paddingHorizontal: 15,
-    paddingBottom: 10,
-    borderBottomColor: colors.greyLight,
-    borderBottomWidth: 1,
-  },
-  subtitle: {
-    color: colors.greyDark,
-    fontSize: normalize(11),
-    marginTop: 1,
-    ...fonts.fontPrimarySemiBold,
-    marginLeft: 39,
-  },
-  textContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginHorizontal: 15,
-  },
-  noneTitle: {
-    fontSize: normalize(14),
-    textAlign: 'center',
-    ...fonts.fontPrimary,
-  },
-});
+const DescriptionContainer = styled.Text`
+  justify-content: center;
+  flex: 1;
+  margin-left: 10;
+  color: ${colors.primaryDark};
+  ${fonts.fontPrimaryLight};
+`;
+
+const LinkDescription = styled.Text`
+  ${fonts.fontPrimarySemiBold};
+`;
+
+const LinkBranchDescription = styled.Text`
+  ${fonts.fontCode};
+`;
+
+const DeletedLinkBranchDescription = styled.Text`
+  color: ${colors.greyDarkest};
+  ${fonts.fontCode};
+`;
+
+const Datestamp = styled.Text`
+  color: ${colors.greyDark};
+`;
+
+const SubtitleContainer = styled.View`
+  padding-horizontal: 15;
+  padding-bottom: 10;
+  border-bottom-color: ${colors.greyLight};
+  border-bottom-width: 1;
+`;
+
+const Subtitle = styled.Text`
+  color: ${colors.greyDark};
+  font-size: ${normalize(11)};
+  margin-top: 1;
+  ${fonts.fontPrimarySemiBold};
+  margin-left: 39;
+`;
+
+const TextContainer = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  margin-horizontal: 15;
+`;
+
+const NoneTitle = styled.Text`
+  font-size: ${normalize(14)};
+  text-align: center;
+  ${fonts.fontPrimary};
+`;
 
 class Events extends Component {
   componentDidMount() {
@@ -205,18 +212,17 @@ class Events extends Component {
           userEvent.payload.ref_type === 'tag'
         ) {
           return (
-            <Text style={styles.linkBranchDescription}>
+            <LinkBranchDescription>
               {userEvent.payload.ref}
-            </Text>
+            </LinkBranchDescription>
           );
         } else if (userEvent.payload.ref_type === 'repository') {
           return (
-            <Text
-              style={styles.linkDescription}
+            <LinkDescription
               onPress={() => this.navigateToRepository(userEvent)}
             >
               {userEvent.repo.name}
-            </Text>
+            </LinkDescription>
           );
         }
 
@@ -224,76 +230,62 @@ class Events extends Component {
       }
       case 'DeleteEvent':
         return (
-          <Text style={styles.deletedLinkBranchDescription}>
+          <DeletedLinkBranchDescription>
             {userEvent.payload.ref}
-          </Text>
+          </DeletedLinkBranchDescription>
         ); // can only be branch or tag
       case 'ForkEvent':
       case 'WatchEvent':
       case 'PublicEvent':
         return (
-          <Text
-            style={styles.linkDescription}
-            onPress={() => this.navigateToRepository(userEvent)}
-          >
+          <LinkDescription onPress={() => this.navigateToRepository(userEvent)}>
             {userEvent.repo.name}
-          </Text>
+          </LinkDescription>
         );
       case 'GollumEvent':
         return (
           <Text>
             the{' '}
-            <Text
-              style={styles.linkDescription}
+            <LinkDescription
               onPress={() => this.navigateToRepository(userEvent)}
             >
               {userEvent.repo.name}
-            </Text>{' '}
+            </LinkDescription>{' '}
             wiki
           </Text>
         );
       case 'IssueCommentEvent':
       case 'IssuesEvent':
         return (
-          <Text
-            style={styles.linkDescription}
-            onPress={() => this.navigateToIssue(userEvent)}
-          >
+          <LinkDescription onPress={() => this.navigateToIssue(userEvent)}>
             {userEvent.payload.issue.title}
-          </Text>
+          </LinkDescription>
         );
       case 'MemberEvent':
         return (
-          <Text
-            style={styles.linkDescription}
-            onPress={() => this.navigateToProfile(userEvent)}
-          >
+          <LinkDescription onPress={() => this.navigateToProfile(userEvent)}>
             {userEvent.payload.member.login}
-          </Text>
+          </LinkDescription>
         );
       case 'PullRequestEvent':
       case 'PullRequestReviewEvent':
       case 'PullRequestReviewCommentEvent':
         return (
-          <Text
-            style={styles.linkDescription}
-            onPress={() => this.navigateToIssue(userEvent)}
-          >
+          <LinkDescription onPress={() => this.navigateToIssue(userEvent)}>
             {userEvent.payload.pull_request.title}
-          </Text>
+          </LinkDescription>
         );
       case 'PushEvent':
         return (
-          <Text style={styles.linkDescription}>
+          <LinkBranchDescription>
             {userEvent.payload.ref.replace('refs/heads/', '')}
-          </Text>
+          </LinkBranchDescription>
         );
       case 'ReleaseEvent':
         return `${userEvent.payload.release.id}`;
       case 'RepositoryEvent':
         return (
-          <Text
-            style={styles.linkDescription}
+          <LinkDescription
             onPress={() => {
               if (userEvent.action !== 'deleted') {
                 this.navigateToRepository(userEvent);
@@ -301,7 +293,7 @@ class Events extends Component {
             }}
           >
             {userEvent.repo.name}
-          </Text>
+          </LinkDescription>
         );
       default:
         return null;
@@ -318,7 +310,7 @@ class Events extends Component {
           userEvent.payload.ref_type === 'branch' ||
           userEvent.payload.ref_type === 'tag'
         ) {
-          return 'at';
+          return translate('auth.events.atConnector', locale);
         }
 
         return null;
@@ -350,12 +342,11 @@ class Events extends Component {
           userEvent.payload.ref_type === 'tag'
         ) {
           return (
-            <Text
-              style={styles.linkDescription}
+            <LinkDescription
               onPress={() => this.navigateToRepository(userEvent)}
             >
               {userEvent.repo.name}
-            </Text>
+            </LinkDescription>
           );
         }
 
@@ -369,21 +360,17 @@ class Events extends Component {
       case 'MemberEvent':
       case 'PullRequestReviewCommentEvent':
         return (
-          <Text
-            style={styles.linkDescription}
-            onPress={() => this.navigateToRepository(userEvent)}
-          >
+          <LinkDescription onPress={() => this.navigateToRepository(userEvent)}>
             {userEvent.repo.name}
-          </Text>
+          </LinkDescription>
         );
       case 'ForkEvent':
         return (
-          <Text
-            style={styles.linkDescription}
+          <LinkDescription
             onPress={() => this.navigateToRepository(userEvent, true)}
           >
             {userEvent.payload.forkee.full_name}
-          </Text>
+          </LinkDescription>
         );
       default:
         return null;
@@ -483,13 +470,12 @@ class Events extends Component {
 
   renderDescription(userEvent) {
     return (
-      <Text style={styles.descriptionContainer}>
-        <Text
-          style={styles.linkDescription}
+      <DescriptionContainer>
+        <LinkDescription
           onPress={() => this.navigateToProfile(userEvent, true)}
         >
           {userEvent.actor.login}{' '}
-        </Text>
+        </LinkDescription>
         <Text>{this.getAction(userEvent)} </Text>
         {this.getItem(userEvent)}
         {this.getAction(userEvent) && ' '}
@@ -497,10 +483,8 @@ class Events extends Component {
         {this.getItem(userEvent) && ' '}
         {this.getSecondItem(userEvent)}
         {this.getItem(userEvent) && this.getConnector(userEvent) && ' '}
-        <Text style={styles.date}>
-          {relativeTimeToNow(userEvent.created_at)}
-        </Text>
-      </Text>
+        <Datestamp>{relativeTimeToNow(userEvent.created_at)}</Datestamp>
+      </DescriptionContainer>
     );
   }
 
@@ -516,11 +500,11 @@ class Events extends Component {
       });
     } else if (!isPendingEvents && userEvents && userEvents.length === 0) {
       content = (
-        <View style={styles.textContainer}>
-          <Text style={styles.noneTitle}>
+        <TextContainer>
+          <NoneTitle>
             {translate('auth.events.welcomeMessage', locale)}
-          </Text>
-        </View>
+          </NoneTitle>
+        </TextContainer>
       );
     } else {
       content = (
@@ -547,13 +531,13 @@ class Events extends Component {
 
               {(item.type === 'IssueCommentEvent' ||
                 item.type === 'PullRequestReviewCommentEvent') && (
-                <View style={styles.subtitleContainer}>
-                  <Text numberOfLines={3} style={styles.subtitle}>
+                <SubtitleContainer>
+                  <Subtitle numberOfLines={3}>
                     {emojifyText(
                       item.payload.comment.body.replace(linebreaksPattern, ' ')
                     )}
-                  </Text>
-                </View>
+                  </Subtitle>
+                </SubtitleContainer>
               )}
             </View>
           )}

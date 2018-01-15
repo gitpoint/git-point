@@ -158,6 +158,10 @@ export const nl = {
     repositoryList: {
       title: 'Repositories',
     },
+    starredRepositoryList: {
+      title: 'Sterren',
+      text: 'Sterren',
+    },
     followers: {
       title: 'Volgers',
       text: 'Volgers',

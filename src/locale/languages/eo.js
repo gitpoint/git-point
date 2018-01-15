@@ -157,6 +157,10 @@ export const eo = {
     repositoryList: {
       title: 'Repositorioj',
     },
+    starredRepositoryList: {
+      title: 'Stars',
+      text: 'Stars',
+    },
     followers: {
       title: 'Sekvantoj',
       text: 'Sekvantoj',

@@ -81,8 +81,6 @@ const AssigneesSection = styled.View`
 `;
 
 const MergeButtonContainer = styled.View`
-  flex: 1;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
   padding-top: 15;

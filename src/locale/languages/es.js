@@ -134,7 +134,7 @@ export const es = {
       unread: 'no leído',
       participating: 'participando',
       all: 'todas',
-      unreadButton: 'Marcar como no leído',
+      unreadButton: 'No leídas',
       participatingButton: 'Participando',
       allButton: 'Todas',
       retrievingMessage: 'Cargando notificaciones',
@@ -162,6 +162,10 @@ export const es = {
     },
     repositoryList: {
       title: 'Repositorios',
+    },
+    starredRepositoryList: {
+      title: 'Stars',
+      text: 'Stars',
     },
     followers: {
       title: 'Seguidores',

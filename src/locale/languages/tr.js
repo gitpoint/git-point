@@ -158,6 +158,10 @@ export const tr = {
     repositoryList: {
       title: "Repository'ler",
     },
+    starredRepositoryList: {
+      title: 'Stars',
+      text: 'Stars',
+    },
     followers: {
       title: 'Takipçiler',
       text: 'Takipçiler',
