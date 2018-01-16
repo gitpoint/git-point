@@ -1,9 +1,9 @@
 export const tr = {
   auth: {
     login: {
-      connectingToGitHub: 'Connecting to GitHub...',
-      preparingGitPoint: 'Preparing GitPoint...',
-      cancel: 'CANCEL',
+      connectingToGitHub: "GitHub'a Bağlanılıyor...",
+      preparingGitPoint: 'GitPoint Hazırlanıyor...',
+      cancel: 'İPTAL',
       welcomeTitle: "GitPoint'e Hoşgeldiniz",
       welcomeMessage:
         "En zengin özelliklere sahip GitHub client'ı ve 100% ücretsiz",
@@ -90,6 +90,7 @@ export const tr = {
       codePushNotApplicable: 'Hata ayıklama modunda uygulanamaz',
     },
     userOptions: {
+      donate: 'Bağış yap',
       title: 'Ayarlar',
       language: 'Dil',
       privacyPolicy: 'Gizlilik Politikası',
@@ -133,6 +134,7 @@ export const tr = {
       allButton: 'Tümü',
       retrievingMessage: 'Bildirim alınıyor',
       noneMessage: 'Bu türde hiçbir bildirime sahip değilsiniz',
+      markAllAsRead: 'Hepsini okundu olarak işaretle',
     },
   },
   search: {
@@ -143,6 +145,8 @@ export const tr = {
       searchMessage: 'Herhangi bir {{type}} ara',
       repository: 'repository',
       user: 'kullanıcı',
+      noUsersFound: 'Kullanıcı Bulunamadı :(',
+      noRepositoriesFound: 'Repository Bulunamadı :(',
     },
   },
   user: {
@@ -154,14 +158,19 @@ export const tr = {
     repositoryList: {
       title: "Repository'ler",
     },
-    followerList: {
+    starredRepositoryList: {
+      title: 'Stars',
+      text: 'Stars',
+    },
+    followers: {
       title: 'Takipçiler',
+      text: 'Takipçiler',
+      followsYou: 'Seni takip ediyor',
     },
-    followingList: {
+    following: {
       title: 'Takip',
-    },
-    followYou: {
-      title: 'Seni takip ediyor',
+      text: 'Takip',
+      followingYou: 'Takip',
     },
   },
   repository: {
@@ -195,6 +204,7 @@ export const tr = {
       forkedFromMessage: 'buradan fork edildi:',
       starred: 'Starred',
       watching: 'İzleniyor',
+      watchers: 'İzleyenler',
     },
     codeList: {
       title: 'Code',
@@ -223,12 +233,17 @@ export const tr = {
       fileRenamed:
         'Dosya herhangi bir değişiklik yapılmaksızın yeniden adlandırıldı',
     },
+    readMe: {
+      readMeActions: 'README Actions',
+      noReadMeFound: 'README.md bulunamadı',
+    },
   },
   organization: {
     main: {
       membersTitle: 'ÜYELER',
       descriptionTitle: 'AÇIKLAMA',
     },
+    organizationActions: 'Organization Actions',
   },
   issue: {
     settings: {
@@ -248,6 +263,12 @@ export const tr = {
       areYouSurePrompt: 'Emin misiniz?',
       applyLabelTitle: "Bu issue'ya bir etiket uygulayın",
     },
+    comment: {
+      commentActions: 'Yorum Hareketleri',
+      editCommentTitle: 'Yorumu Düzenle',
+      editAction: 'Düzenle',
+      deleteAction: 'Sil',
+    },
     main: {
       assignees: 'Atananlar',
       mergeButton: 'Merge Pull Request',
@@ -264,6 +285,9 @@ export const tr = {
         issue: 'Issue',
         pullRequest: 'Pull Request',
       },
+      openIssueSubTitle: '#{{number}} opened {{time}} ago by {{user}}',
+      closedIssueSubTitle: '#{{number}} by {{user}} was closed {{time}} ago',
+      issueActions: 'Issue Actions',
     },
     newIssue: {
       title: 'Yeni Issue',
@@ -299,28 +323,29 @@ export const tr = {
     email: 'Email',
     website: 'Website',
     repositories: "Repository'ler",
-    followers: 'Takipçiler',
-    following: 'Takip',
     cancel: 'Vazgeç',
     yes: 'Evet',
     ok: 'TAMAM',
     submit: 'Gönder',
     relativeTime: {
-      past: '%s',
-      s: '%ds',
-      m: '%dm',
-      mm: '%dm',
-      h: '%dh',
-      hh: '%dh',
-      d: '%dd',
-      dd: '%dd',
-      M: '%dmo',
-      MM: '%dmo',
-      y: '%dy',
-      yy: '%dy',
+      lessThanXSeconds: '{{count}}s',
+      xSeconds: '{{count}}s',
+      halfAMinute: '30s',
+      lessThanXMinutes: '{{count}}m',
+      xMinutes: '{{count}}m',
+      aboutXHours: '{{count}}h',
+      xHours: '{{count}}h',
+      xDays: '{{count}}d',
+      aboutXMonths: '{{count}}mo',
+      xMonths: '{{count}}mo',
+      aboutXYears: '{{count}}y',
+      xYears: '{{count}}y',
+      overXYears: '{{count}}y',
+      almostXYears: '{{count}}y',
     },
     abbreviations: {
       thousand: 'k',
     },
+    openInBrowser: 'Open in Browser',
   },
 };

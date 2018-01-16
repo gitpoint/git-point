@@ -8,6 +8,7 @@ import {
 } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
+import { NotificationIcon } from 'components';
 import { colors } from 'config';
 import { translate } from 'utils';
 
@@ -26,6 +27,7 @@ import {
 import {
   ProfileScreen,
   RepositoryListScreen,
+  StarredRepositoryListScreen,
   FollowerListScreen,
   FollowingListScreen,
 } from 'user';
@@ -56,11 +58,18 @@ import {
   IssueSettingsScreen,
   NewIssueScreen,
   PullMergeScreen,
+  EditIssueCommentScreen,
 } from 'issue';
 
 const sharedRoutes = {
   RepositoryList: {
     screen: RepositoryListScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    }),
+  },
+  StarredRepositoryList: {
+    screen: StarredRepositoryListScreen,
     navigationOptions: ({ navigation }) => ({
       title: navigation.state.params.title,
     }),
@@ -130,14 +139,11 @@ const sharedRoutes = {
   Issue: {
     screen: IssueScreen,
     navigationOptions: ({ navigation }) => {
-      const issueNumberRegex = /issues\/([0-9]+)$/;
-      const { issue, issueURL, isPR, language } = navigation.state.params;
+      const issueNumberRegex = /issues\/([0-9]+)(#|$)/;
+      const { issue, issueURL, isPR, locale } = navigation.state.params;
       const number = issue ? issue.number : issueURL.match(issueNumberRegex)[1];
       const langKey = isPR ? 'pullRequest' : 'issue';
-      const langTitle = translate(
-        `issue.main.screenTitles.${langKey}`,
-        language
-      );
+      const langTitle = translate(`issue.main.screenTitles.${langKey}`, locale);
 
       return {
         title: `${langTitle} #${number}`,
@@ -154,6 +160,12 @@ const sharedRoutes = {
   },
   NewIssue: {
     screen: NewIssueScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    }),
+  },
+  EditIssueComment: {
+    screen: EditIssueCommentScreen,
     navigationOptions: ({ navigation }) => ({
       title: navigation.state.params.title,
     }),
@@ -255,60 +267,63 @@ const MainTabNavigator = TabNavigator(
     Home: {
       screen: HomeStackNavigator,
       navigationOptions: {
-        tabBarIcon: ({ tintColor }) =>
+        tabBarIcon: ({ tintColor }) => (
           <Icon
             containerStyle={{ justifyContent: 'center', alignItems: 'center' }}
             color={tintColor}
             name="home"
             size={33}
-          />,
+          />
+        ),
       },
     },
     Notifications: {
       screen: NotificationsStackNavigator,
       navigationOptions: {
-        tabBarIcon: ({ tintColor }) =>
-          <Icon
-            containerStyle={{ justifyContent: 'center', alignItems: 'center' }}
-            color={tintColor}
-            name="notifications"
-            size={33}
-          />,
+        tabBarIcon: ({ tintColor }) => (
+          <NotificationIcon iconColor={tintColor} />
+        ),
       },
     },
     Search: {
       screen: SearchStackNavigator,
       navigationOptions: {
-        tabBarIcon: ({ tintColor }) =>
+        tabBarIcon: ({ tintColor }) => (
           <Icon
             containerStyle={{ justifyContent: 'center', alignItems: 'center' }}
             color={tintColor}
             name="search"
             size={33}
-          />,
+          />
+        ),
       },
     },
     MyProfile: {
       screen: MyProfileStackNavigator,
       navigationOptions: {
-        tabBarIcon: ({ tintColor }) =>
+        tabBarIcon: ({ tintColor }) => (
           <Icon
             containerStyle={{ justifyContent: 'center', alignItems: 'center' }}
             color={tintColor}
             name="person"
             size={33}
-          />,
+          />
+        ),
       },
     },
   },
   {
+    lazy: true,
     tabBarPosition: 'bottom',
     tabBarOptions: {
       showLabel: false,
       activeTintColor: colors.primaryDark,
       inactiveTintColor: colors.grey,
+      style: {
+        backgroundColor: colors.alabaster,
+      },
     },
-    tabBarComponent: ({ jumpToIndex, ...props }) =>
+    tabBarComponent: ({ jumpToIndex, ...props }) => (
       <TabBarBottom
         {...props}
         jumpToIndex={index => {
@@ -334,7 +349,8 @@ const MainTabNavigator = TabNavigator(
             jumpToIndex(index);
           }
         }}
-      />,
+      />
+    ),
   }
 );
 
@@ -369,5 +385,8 @@ export const GitPoint = StackNavigator(
   {
     headerMode: 'screen',
     URIPrefix: 'gitpoint://',
+    cardStyle: {
+      backgroundColor: 'transparent',
+    },
   }
 );

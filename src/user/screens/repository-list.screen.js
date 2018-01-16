@@ -1,8 +1,9 @@
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
+import styled from 'styled-components/native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { FlatList, View, Dimensions, StyleSheet } from 'react-native';
+import { View, FlatList, Dimensions } from 'react-native';
 
 import {
   ViewContainer,
@@ -14,6 +15,7 @@ import { colors } from 'config';
 import { getRepositories, searchUserRepos } from 'user';
 
 const mapStateToProps = state => ({
+  authUser: state.auth.user,
   user: state.user.user,
   repositories: state.user.repositories,
   searchedUserRepos: state.user.searchedUserRepos,
@@ -30,31 +32,30 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-const styles = StyleSheet.create({
-  header: {
-    borderBottomColor: colors.greyLight,
-    borderBottomWidth: 1,
-  },
-  searchBarWrapper: {
-    flexDirection: 'row',
-  },
-  searchContainer: {
-    width: Dimensions.get('window').width,
-    backgroundColor: colors.white,
-    flex: 1,
-  },
-  searchCancelButton: {
-    color: colors.black,
-  },
-  listContainer: {
-    marginBottom: 90,
-  },
-});
+const Header = styled.View`
+  border-bottom-color: ${colors.greyLight};
+  border-bottom-width: 1;
+`;
+
+const SearchBarWrapper = styled.View`
+  flex-direction: row;
+`;
+
+const SearchContainer = styled.View`
+  width: ${Dimensions.get('window').width};
+  background-color: ${colors.white};
+  flex: 1;
+`;
+
+const ListContainer = styled.View`
+  margin-bottom: 90;
+`;
 
 class RepositoryList extends Component {
   props: {
     getRepositories: Function,
     searchUserRepos: Function,
+    authUser: Object,
     user: Object,
     repositories: Array,
     searchedUserRepos: Array,
@@ -115,6 +116,7 @@ class RepositoryList extends Component {
 
   render() {
     const {
+      authUser,
       isPendingRepositories,
       isPendingSearchUserRepos,
       navigation,
@@ -128,9 +130,9 @@ class RepositoryList extends Component {
     return (
       <ViewContainer>
         <View>
-          <View style={styles.header}>
-            <View style={styles.searchBarWrapper}>
-              <View style={styles.searchContainer}>
+          <Header>
+            <SearchBarWrapper>
+              <SearchContainer>
                 <SearchBar
                   textColor={colors.primaryDark}
                   textFieldBackgroundColor={colors.greyLight}
@@ -143,28 +145,31 @@ class RepositoryList extends Component {
                   }}
                   hideBackground
                 />
-              </View>
-            </View>
-          </View>
+              </SearchContainer>
+            </SearchBarWrapper>
+          </Header>
 
           {loading &&
             [...Array(searchStart ? repoCount : 10)].map(
               (item, index) => <LoadingRepositoryListItem key={index} /> // eslint-disable-line react/no-array-index-key
             )}
 
-          {!loading &&
-            <View style={styles.listContainer}>
+          {!loading && (
+            <ListContainer>
               <FlatList
                 removeClippedSubviews={false}
                 data={this.getList()}
                 keyExtractor={this.keyExtractor}
-                renderItem={({ item }) =>
+                renderItem={({ item }) => (
                   <RepositoryListItem
                     repository={item}
+                    showFullName={authUser.login !== item.owner.login}
                     navigation={navigation}
-                  />}
+                  />
+                )}
               />
-            </View>}
+            </ListContainer>
+          )}
         </View>
       </ViewContainer>
     );

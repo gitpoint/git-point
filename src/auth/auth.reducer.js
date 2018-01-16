@@ -1,15 +1,15 @@
-import { getLanguage } from 'locale';
+import { getLocale } from 'utils';
 import {
   LOGIN,
   LOGOUT,
   GET_AUTH_USER,
   GET_AUTH_ORGS,
   GET_EVENTS,
-  CHANGE_LANGUAGE,
+  CHANGE_LOCALE,
   GET_AUTH_STAR_COUNT,
 } from './auth.type';
 
-const initialState = {
+export const initialState = {
   isLoggingIn: false,
   isSigningOut: false,
   isAuthenticated: false,
@@ -18,7 +18,8 @@ const initialState = {
   hasInitialUser: false,
   orgs: [],
   events: [],
-  language: getLanguage(),
+  // TODO: there should not be a dependency here that can't be constructor injected.
+  locale: getLocale(),
   isPendingUser: false,
   isPendingOrgs: false,
   isPendingEvents: false,
@@ -40,7 +41,7 @@ export const authReducer = (state = initialState, action = {}) => {
         isAuthenticated: true,
         accessToken: action.payload,
       };
-    case LOGIN.FAILURE:
+    case LOGIN.ERROR:
       return {
         ...state,
         isLoggingIn: false,
@@ -57,7 +58,7 @@ export const authReducer = (state = initialState, action = {}) => {
         ...initialState,
         hasInitialUser: false,
       };
-    case LOGOUT.FAILURE:
+    case LOGOUT.ERROR:
       return {
         ...state,
         isSigningOut: false,
@@ -71,33 +72,32 @@ export const authReducer = (state = initialState, action = {}) => {
     case GET_AUTH_USER.SUCCESS:
       return {
         ...state,
-        user: action.payload,
         isPendingUser: false,
         hasInitialUser: true,
+        user: action.payload,
       };
     case GET_AUTH_USER.ERROR:
       return {
         ...state,
-        error: action.payload,
         isPendingUser: false,
+        error: action.payload,
       };
     case GET_AUTH_STAR_COUNT.PENDING:
       return {
         ...state,
-        starCount: ' ',
         isPendingStarCount: true,
       };
     case GET_AUTH_STAR_COUNT.SUCCESS:
       return {
         ...state,
-        starCount: action.payload,
         isPendingStarCount: false,
+        starCount: action.payload,
       };
     case GET_AUTH_STAR_COUNT.ERROR:
       return {
         ...state,
-        error: action.payload,
         isPendingStarCount: false,
+        error: action.payload,
       };
     case GET_AUTH_ORGS.PENDING:
       return {
@@ -107,14 +107,14 @@ export const authReducer = (state = initialState, action = {}) => {
     case GET_AUTH_ORGS.SUCCESS:
       return {
         ...state,
-        orgs: action.payload,
         isPendingOrgs: false,
+        orgs: action.payload,
       };
     case GET_AUTH_ORGS.ERROR:
       return {
         ...state,
-        error: action.payload,
         isPendingOrgs: false,
+        error: action.payload,
       };
     case GET_EVENTS.PENDING:
       return {
@@ -124,19 +124,19 @@ export const authReducer = (state = initialState, action = {}) => {
     case GET_EVENTS.SUCCESS:
       return {
         ...state,
-        events: action.payload,
         isPendingEvents: false,
+        events: action.payload,
       };
     case GET_EVENTS.ERROR:
       return {
         ...state,
-        error: action.payload,
         isPendingEvents: false,
+        error: action.payload,
       };
-    case CHANGE_LANGUAGE.SUCCESS:
+    case CHANGE_LOCALE.SUCCESS:
       return {
         ...state,
-        language: action.payload,
+        locale: action.payload,
       };
     default:
       return state;

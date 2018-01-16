@@ -4,8 +4,6 @@ cache:
   directories:
     - node_modules
 node_js:
-  - '7'
-before_script:
-  - 'yarn'
+  - 8
 script:
-  - yarn run eslint
+  - yarn run eslint && yarn run stylelint && yarn run test:coverage

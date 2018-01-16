@@ -4,6 +4,7 @@ import {
   GET_IS_FOLLOWING,
   GET_IS_FOLLOWER,
   GET_REPOSITORIES,
+  GET_STARRED_REPOSITORIES,
   GET_FOLLOWERS,
   GET_FOLLOWING,
   SEARCH_USER_REPOS,
@@ -15,11 +16,12 @@ const initialState = {
   user: {},
   orgs: [],
   isFollowing: false, // auth is following user
-  isFollower: false,  // user is a follower of auth, as well as user is following auth
+  isFollower: false, // user is a follower of auth, as well as user is following auth
   repositories: [],
   followers: [],
   following: [],
   searchedUserRepos: [],
+  starredRepositories: [],
   isPendingUser: false,
   isPendingOrgs: false,
   isPendingStarCount: false,
@@ -29,6 +31,7 @@ const initialState = {
   isPendingFollowers: false,
   isPendingFollowing: false,
   isPendingSearchUserRepos: false,
+  isPendingStarredRepositories: false,
   error: '',
 };
 
@@ -71,7 +74,6 @@ export const userReducer = (state = initialState, action = {}) => {
     case GET_STAR_COUNT.PENDING:
       return {
         ...state,
-        starCount: ' ',
         isPendingStarCount: true,
       };
     case GET_STAR_COUNT.SUCCESS:
@@ -162,6 +164,23 @@ export const userReducer = (state = initialState, action = {}) => {
         ...state,
         error: action.payload,
         isPendingRepositories: false,
+      };
+    case GET_STARRED_REPOSITORIES.PENDING:
+      return {
+        ...state,
+        isPendingStarredRepositories: true,
+      };
+    case GET_STARRED_REPOSITORIES.SUCCESS:
+      return {
+        ...state,
+        starredRepositories: action.payload,
+        isPendingStarredRepositories: false,
+      };
+    case GET_STARRED_REPOSITORIES.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isPendingStarredRepositories: false,
       };
     case GET_FOLLOWERS.PENDING:
       return {

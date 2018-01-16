@@ -36,6 +36,7 @@ android/gradle.properties
 node_modules/
 npm-debug.log
 yarn-error.log
+package-lock.json
 
 # BUCK
 buck-out/
@@ -59,3 +60,9 @@ haste-map-react-native-packager*
 
 # eslint cache
 .eslintcache
+
+# editors
+.vscode
+.idea
+
+coverage

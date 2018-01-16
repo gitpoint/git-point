@@ -1,8 +1,11 @@
 export const ru = {
   auth: {
     login: {
+      connectingToGitHub: 'Подключение к GitHub...',
+      preparingGitPoint: 'Подготовка GitPoint...',
+      cancel: 'ОТМЕНА',
       welcomeTitle: 'Добро пожаловать в GitPoint',
-      welcomeMessage: 'Самый многофункциональный бесплатный GitHub клиент',
+      welcomeMessage: 'Самый многофункциональный бесплатный GitHub-клиент',
       notificationsTitle: 'Управление уведомлениями',
       notificationsMessage:
         'Просматривайте и управляйте всеми вашими непрочитанными и активными уведомлениями',
@@ -19,7 +22,7 @@ export const ru = {
     },
     events: {
       welcomeMessage:
-        'Добро пожаловать! Это ваша лента новостей - она поможет следить вам за последней активностью в репозиториях, которые вы отслеживаете, и за людьми, на которых вы подписаны.',
+        'Добро пожаловать! Это ваша лента новостей - она поможет следить вам за последней активностью в репозиториях, которые вы отслеживаете, и за пользователями, на которых вы подписаны.',
       commitCommentEvent: 'прокомментировал коммит',
       createEvent: 'создал {{object}}',
       deleteEvent: 'удалил {{object}}',
@@ -89,6 +92,7 @@ export const ru = {
       codePushNotApplicable: 'Не поддерживается в режиме отладки',
     },
     userOptions: {
+      donate: 'Сделать пожертвование',
       title: 'Настройки',
       language: 'Язык',
       privacyPolicy: 'Политика конфиденциальности',
@@ -132,6 +136,7 @@ export const ru = {
       allButton: 'Все',
       retrievingMessage: 'Получение уведомлений',
       noneMessage: 'У вас нет уведомлений по этому типу',
+      markAllAsRead: 'Отметить все как прочитанные',
     },
   },
   search: {
@@ -142,6 +147,8 @@ export const ru = {
       searchMessage: 'Поиск {{type}}',
       repository: 'репозиториев',
       user: 'пользователей',
+      noUsersFound: 'Пользователи не найдены :(',
+      noRepositoriesFound: 'Репозитории не найдены :(',
     },
   },
   user: {
@@ -153,14 +160,19 @@ export const ru = {
     repositoryList: {
       title: 'Репозитории',
     },
-    followerList: {
+    starredRepositoryList: {
+      title: 'Звёзд',
+      text: 'Звёзд',
+    },
+    followers: {
       title: 'Подписчики',
+      text: 'Подписчиков',
+      followsYou: 'Подписан на вас',
     },
-    followingList: {
+    following: {
       title: 'Подписки',
-    },
-    followYou: {
-      title: 'Подписан на вас',
+      text: 'Подписок',
+      followingYou: 'Подписан',
     },
   },
   repository: {
@@ -211,8 +223,8 @@ export const ru = {
       openButton: 'Открыто',
       closedButton: 'Закрыто',
       searchingMessage: 'Поиск по {{query}}',
-      noOpenIssues: 'Не найдено открытых pull-запросов!',
-      noClosedIssues: 'Не найдено закрытых pull-запросов!',
+      noOpenPulls: 'Не найдено открытых pull-запросов!',
+      noClosedPulls: 'Не найдено закрытых pull-запросов!',
     },
     pullDiff: {
       title: 'Сравнить изменения',
@@ -221,12 +233,17 @@ export const ru = {
       deleted: 'УДАЛЕННЫЙ',
       fileRenamed: 'Файл переименован без каких-либо изменений',
     },
+    readMe: {
+      readMeActions: 'Действия с README',
+      noReadMeFound: 'He yдалось найти README.md',
+    },
   },
   organization: {
     main: {
       membersTitle: 'УЧАСТНИКИ',
       descriptionTitle: 'ОПИСАНИЕ',
     },
+    organizationActions: 'Действия с организацией',
   },
   issue: {
     settings: {
@@ -246,6 +263,12 @@ export const ru = {
       areYouSurePrompt: 'Вы уверены?',
       applyLabelTitle: 'Добавить ярлык к этой задаче',
     },
+    comment: {
+      commentActions: 'Действия с комментарием',
+      editCommentTitle: 'Редактирование комментария',
+      editAction: 'Редактировать',
+      deleteAction: 'Удалить',
+    },
     main: {
       assignees: 'Ответственные',
       mergeButton: 'Принять pull-запрос',
@@ -253,7 +276,6 @@ export const ru = {
       lockedCommentInput:
         'Заблокировано, но вы все ещё можете прокомментировать...',
       commentInput: 'Добавить комментарий...',
-      commentButton: 'Отправить',
       lockedIssue: 'Задача заблокирована',
       states: {
         open: 'Открыто',
@@ -264,6 +286,11 @@ export const ru = {
         issue: 'Задача',
         pullRequest: 'Pull-запрос',
       },
+      openIssueSubTitle:
+        '#{{number}} открыт {{time}} назад пользователем {{user}}',
+      closedIssueSubTitle:
+        '#{{number}} закрыт {{time}} назад пользователем {{user}}',
+      issueActions: 'Действия с задачей',
     },
     newIssue: {
       title: 'Новая задача',
@@ -299,30 +326,29 @@ export const ru = {
     email: 'Электронная почта',
     website: 'Сайт',
     repositories: 'Репозиториев',
-    followers: 'Подписчиков',
-    following: 'Подписан',
-    pullRequest: 'pull-запрос',
-    issue: 'задача',
     cancel: 'Отменить',
     yes: 'Да',
     ok: 'OK',
     submit: 'Отправить',
     relativeTime: {
-      past: '%s',
-      s: 'сейчас',
-      m: '1 м',
-      mm: '%d м',
-      h: '1 ч',
-      hh: '%d ч',
-      d: '1 д',
-      dd: '%d д',
-      M: '1 мес',
-      MM: '%d мес',
-      y: '1 г',
-      yy: '%d г',
+      lessThanXSeconds: 'сейчас',
+      xSeconds: '{{count}} с',
+      halfAMinute: '30 c',
+      lessThanXMinutes: '{{count}} м',
+      xMinutes: '{{count}} м',
+      aboutXHours: '{{count}} ч',
+      xHours: '{{count}} ч',
+      xDays: '{{count}} д',
+      aboutXMonths: '{{count}} мес',
+      xMonths: '{{count}} мес',
+      aboutXYears: '{{count}} г',
+      xYears: '{{count}} г',
+      overXYears: '{{count}} г',
+      almostXYears: '{{count}} г',
     },
     abbreviations: {
       thousand: ' тыс.',
     },
+    openInBrowser: 'Открыть в браузере',
   },
 };

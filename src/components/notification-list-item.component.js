@@ -1,7 +1,8 @@
 /* eslint-disable no-nested-ternary */
 
-import React from 'react';
-import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import React, { Component } from 'react';
+import styled from 'styled-components/native';
+import { View, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 import { colors, fonts, normalize } from 'config';
@@ -12,85 +13,111 @@ type Props = {
   navigationAction: Function,
 };
 
-const styles = StyleSheet.create({
-  container: {
-    borderBottomColor: colors.greyLight,
-    borderBottomWidth: 1,
-  },
-  wrapper: {
-    padding: 10,
-    flexDirection: 'row',
-  },
-  notificationInfo: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  avatar: {
-    backgroundColor: colors.greyLight,
-    borderRadius: 17,
-    width: 34,
-    height: 34,
-  },
-  titleContainer: {
-    flex: 1,
-  },
-  title: {
-    color: colors.black,
-    ...fonts.fontPrimary,
-    fontSize: normalize(12),
-    marginLeft: 10,
-  },
-  iconContainer: {
-    flex: 0.15,
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-  },
-});
+const NotificationListItemContainer = styled.View`
+  border-bottom-color: ${colors.greyLight};
+  border-bottom-width: 1;
+`;
 
-export const NotificationListItem = ({
-  notification,
-  iconAction,
-  navigationAction,
-}: Props) => {
-  const TitleComponent =
-    notification.subject.type === 'Commit' ? View : TouchableOpacity;
+const Wrapper = styled.View`
+  flex-direction: row;
+  padding: 10px;
+`;
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.wrapper}>
-        <TitleComponent
-          style={styles.notificationInfo}
-          onPress={() => navigationAction(notification)}
-        >
-          <Icon
-            color={colors.grey}
-            size={22}
-            name={
-              notification.subject.type === 'Commit'
-                ? 'git-commit'
-                : notification.subject.type === 'PullRequest'
-                  ? 'git-pull-request'
-                  : 'issue-opened'
-            }
-            type="octicon"
-          />
+const TitleComponent = styled(({ tag, children, ...props }) =>
+  React.createElement(tag, props, children)
+)`
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+`;
 
-          <View style={styles.titleContainer}>
-            <Text style={styles.title}>
-              {notification.subject.title}
-            </Text>
-          </View>
-        </TitleComponent>
+const TitleContainer = styled.View`
+  flex: 1;
+`;
 
-        {notification.unread &&
-          <TouchableOpacity
-            style={styles.iconContainer}
-            onPress={() => iconAction(notification.id)}
-          >
-            <Icon color={colors.grey} size={22} name="check" type="octicon" />
-          </TouchableOpacity>}
-      </View>
-    </View>
-  );
+const Title = styled.Text`
+  color: ${colors.black};
+  ${fonts.fontPrimary};
+  font-size: ${normalize(12)};
+  margin-left: 10px;
+`;
+
+const CheckButton = styled.TouchableOpacity`
+  flex: 0.15;
+  align-items: flex-end;
+  justify-content: center;
+`;
+
+const IconStyled = styled(Icon).attrs({
+  color: colors.grey,
+  size: 22,
+  type: 'octicon',
+})``;
+
+const SubjectType = {
+  commit: 'Commit',
+  pull: 'PullRequest',
 };
+
+export class NotificationListItem extends Component {
+  props: Props;
+
+  getComponentType = () => {
+    const { notification } = this.props;
+
+    return notification.subject.type === SubjectType.commit
+      ? View
+      : TouchableOpacity;
+  };
+
+  getIconName = type => {
+    switch (type) {
+      case SubjectType.commit:
+        return 'git-commit';
+      case SubjectType.pull:
+        return 'git-pull-request';
+      default:
+        return 'issue-opened';
+    }
+  };
+
+  getTitleComponentProps = () => {
+    const { notification, navigationAction } = this.props;
+
+    return notification.subject.type === SubjectType.commit
+      ? {}
+      : {
+          onPress: () => navigationAction(notification),
+          nativeId: 'TitleComponent',
+        };
+  };
+
+  render() {
+    const { notification, iconAction } = this.props;
+    const tag = this.getComponentType();
+    const iconName = this.getIconName(notification.subject.type);
+    const titleComponentProps = this.getTitleComponentProps();
+
+    return (
+      <NotificationListItemContainer>
+        <Wrapper>
+          <TitleComponent tag={tag} {...titleComponentProps}>
+            <IconStyled name={iconName} />
+            <TitleContainer>
+              <Title>{notification.subject.title}</Title>
+            </TitleContainer>
+          </TitleComponent>
+
+          {notification.unread && (
+            <CheckButton
+              onPress={() => iconAction(notification.id)}
+              nativeId="notification-unread"
+            >
+              <IconStyled name="check" />
+            </CheckButton>
+          )}
+        </Wrapper>
+      </NotificationListItemContainer>
+    );
+  }
+}

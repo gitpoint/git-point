@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
+import styled from 'styled-components/native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { StyleSheet, RefreshControl } from 'react-native';
+import { RefreshControl } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { createStructuredSelector } from 'reselect';
-import {
-  getAuthLanguage,
-} from 'auth';
+import ActionSheet from 'react-native-actionsheet';
+import { getAuthLocale } from 'auth';
 import {
   ViewContainer,
   UserProfile,
@@ -16,10 +16,7 @@ import {
   ParallaxScroll,
   EntityInfo,
 } from 'components';
-import {
-  emojifyText,
-  translate,
-} from 'utils';
+import { emojifyText, translate, openURLInView } from 'utils';
 import { colors, fonts } from 'config';
 import {
   // actions
@@ -41,7 +38,7 @@ const selectors = createStructuredSelector({
   isPendingOrg: getOrganizationIsPendingOrg,
   isPendingRepos: getOrganizationIsPendingRepos,
   isPendingMembers: getOrganizationIsPendingMembers,
-  language: getAuthLanguage,
+  locale: getAuthLocale,
 });
 
 const actionCreators = {
@@ -51,16 +48,12 @@ const actionCreators = {
 
 const actions = dispatch => bindActionCreators(actionCreators, dispatch);
 
-const styles = StyleSheet.create({
-  listTitle: {
-    color: colors.black,
-    ...fonts.fontPrimary,
-  },
-  listSubTitle: {
+const DescriptionListItem = styled(ListItem).attrs({
+  subtitleStyle: {
     color: colors.greyDark,
     ...fonts.fontPrimary,
   },
-});
+})``;
 
 class OrganizationProfile extends Component {
   props: {
@@ -74,7 +67,7 @@ class OrganizationProfile extends Component {
     // isPendingRepos: boolean,
     isPendingMembers: boolean,
     navigation: Object,
-    language: string,
+    locale: string,
   };
 
   state: {
@@ -107,6 +100,16 @@ class OrganizationProfile extends Component {
     });
   };
 
+  showMenuActionSheet = () => {
+    this.ActionSheet.show();
+  };
+
+  handleActionSheetPress = index => {
+    if (index === 0) {
+      openURLInView(this.props.organization.html_url);
+    }
+  };
+
   render() {
     const {
       organization,
@@ -114,15 +117,16 @@ class OrganizationProfile extends Component {
       isPendingOrg,
       isPendingMembers,
       navigation,
-      language,
+      locale,
     } = this.props;
     const { refreshing } = this.state;
     const initialOrganization = this.props.navigation.state.params.organization;
+    const organizationActions = [translate('common.openInBrowser', locale)];
 
     return (
       <ViewContainer>
         <ParallaxScroll
-          renderContent={() =>
+          renderContent={() => (
             <UserProfile
               type="org"
               initialUser={initialOrganization}
@@ -132,7 +136,8 @@ class OrganizationProfile extends Component {
                   : initialOrganization
               }
               navigation={navigation}
-            />}
+            />
+          )}
           refreshControl={
             <RefreshControl
               onRefresh={this.getOrgData}
@@ -142,40 +147,58 @@ class OrganizationProfile extends Component {
           stickyTitle={organization.name}
           navigateBack
           navigation={navigation}
+          showMenu
+          menuAction={() => this.showMenuActionSheet()}
         >
-          {isPendingMembers &&
+          {isPendingMembers && (
             <LoadingMembersList
-              title={translate('organization.main.membersTitle', language)}
-            />}
+              title={translate('organization.main.membersTitle', locale)}
+            />
+          )}
 
-          {!isPendingMembers &&
+          {!isPendingMembers && (
             <MembersList
-              title={translate('organization.main.membersTitle', language)}
+              title={translate('organization.main.membersTitle', locale)}
               members={members}
               navigation={navigation}
-            />}
+            />
+          )}
 
           {!!organization.description &&
-            organization.description !== '' &&
-            <SectionList
-              title={translate('organization.main.descriptionTitle', language)}
-            >
-              <ListItem
-                subtitle={emojifyText(organization.description)}
-                subtitleStyle={styles.listSubTitle}
-                hideChevron
-              />
-            </SectionList>}
+            organization.description !== '' && (
+              <SectionList
+                title={translate('organization.main.descriptionTitle', locale)}
+              >
+                <DescriptionListItem
+                  subtitle={emojifyText(organization.description)}
+                  hideChevron
+                />
+              </SectionList>
+            )}
 
-          {!isPendingOrg &&
-            <EntityInfo entity={organization} navigation={navigation} />}
+          {!isPendingOrg && (
+            <EntityInfo
+              entity={organization}
+              navigation={navigation}
+              locale={locale}
+            />
+          )}
         </ParallaxScroll>
+
+        <ActionSheet
+          ref={o => {
+            this.ActionSheet = o;
+          }}
+          title={translate('organization.organizationActions', locale)}
+          options={[...organizationActions, translate('common.cancel', locale)]}
+          cancelButtonIndex={1}
+          onPress={this.handleActionSheetPress}
+        />
       </ViewContainer>
     );
   }
 }
 
-export const OrganizationProfileScreen = connect(
-  selectors,
-  actions
-)(OrganizationProfile);
+export const OrganizationProfileScreen = connect(selectors, actions)(
+  OrganizationProfile
+);

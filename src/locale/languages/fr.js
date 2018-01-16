@@ -2,8 +2,8 @@
 export const fr = {
   auth: {
     login: {
-      connectingToGitHub: 'Connexion à GitHub..',
-      preparingGitPoint: 'Configuration de GitPoint..',
+      connectingToGitHub: 'Connexion à GitHub...',
+      preparingGitPoint: 'Configuration de GitPoint...',
       cancel: 'ANNULER',
       welcomeTitle: 'Bienvenue dans GitPoint',
       welcomeMessage:
@@ -94,6 +94,7 @@ export const fr = {
       codePushNotApplicable: 'Non applicable en mode débogage',
     },
     userOptions: {
+      donate: 'Faire un don',
       title: 'Options',
       language: 'Langue',
       privacyPolicy: 'Politique de confidentialité',
@@ -113,7 +114,7 @@ export const fr = {
       analyticsInfo1:
         "Nous utilisons actuellement Google Analytics et iTunes App Analytics pour mesurer le trafic et les tendances d'utilisation de GitPoint. Ces outils collectent les informations envoyées par votre appareil, dont la version de l'appareil et de son système d'exploitation, votre position et votre référent. Ces informations ne peuvent être utilisées pour vous identifier de manière nominative et aucune donnée personnelle n'est extraite.",
       analyticsInfo2:
-        "Si jamais nous venions à inclure un autre service de collecte de suivi de pile, journaux d'erreurs ou d'autres informations analytiques, nous nous assurerons que les données utilisateurs restent anonymes et cryptées.",
+        "Si jamais nous venions à inclure un autre service de collecte de suivi de pile, journaux d'erreurs ou d'autres informations analytiques, nous nous assurerons que les données utilisateurs restent anonymes et chiffrées.",
       openSourceTitle: 'OPEN SOURCE',
       openSource1:
         "GitPoint est open source et l'historique des contributions à la plateforme restera toujours visible de manière publique.",
@@ -123,7 +124,7 @@ export const fr = {
       contact1:
         "Merci d'avoir pris le temps de lire notre politique de confidentialité. Nous espérons que vous apprécierez l'utilisation de GitPoint autant que nous avons apprécié son développement.",
       contact2:
-        'Si vous avez des questions en rapport avec cette politique de confidentialité, ou GitPoint en général, merci de soumettre un ticket sur le',
+        'Si vous avez des questions en rapport avec cette politique de confidentialité ou GitPoint en général, merci de soumettre un ticket sur le',
       contactLink: 'dépôt GitPoint',
     },
   },
@@ -137,6 +138,7 @@ export const fr = {
       allButton: 'Tous',
       retrievingMessage: 'Récupération des notifications',
       noneMessage: "Vous n'avez aucune notification de ce type",
+      markAllAsRead: 'Marquer tous comme lus',
     },
   },
   search: {
@@ -147,6 +149,8 @@ export const fr = {
       searchMessage: 'Recherche de tout {{type}}',
       repository: 'dépôt',
       user: 'utilisateur',
+      noUsersFound: 'Aucun utilisateur trouvé :(',
+      noRepositoriesFound: 'Aucun dépôt trouvé :(',
     },
   },
   user: {
@@ -158,14 +162,19 @@ export const fr = {
     repositoryList: {
       title: 'Dépôts',
     },
-    followerList: {
+    starredRepositoryList: {
+      title: 'Favoris',
+      text: 'Favoris',
+    },
+    followers: {
       title: 'Followers',
+      text: 'Followers',
+      followsYou: 'Vous suit',
     },
-    followingList: {
+    following: {
       title: 'Following',
-    },
-    followYou: {
-      title: 'Vous suit',
+      text: 'Following',
+      followingYou: 'Following',
     },
   },
   repository: {
@@ -191,11 +200,14 @@ export const fr = {
       viewAllButton: 'Voir tous',
       newIssueButton: 'Nouveau ticket',
       pullRequestTitle: 'PULL REQUESTS',
-      noPullRequestsMessage: 'Aucune pull requests',
-      noOpenPullRequestsMessage: 'Aucune pull requests ouverte',
+      noPullRequestsMessage: 'Aucune pull request',
+      noOpenPullRequestsMessage: 'Aucune pull request ouverte',
       starsTitle: 'Favoris',
       forksTitle: 'Forks',
       forkedFromMessage: 'forké depuis',
+      starred: 'Favoris',
+      watching: 'Abonné',
+      watchers: 'Abonnés',
     },
     codeList: {
       title: 'Code',
@@ -213,8 +225,8 @@ export const fr = {
       openButton: 'Ouvert',
       closedButton: 'Fermé',
       searchingMessage: 'Recherche de {{query}}',
-      noOpenIssues: 'Aucun pull request ouvert trouvé !',
-      noClosedIssues: 'Aucun pull request fermé trouvé !',
+      noOpenPulls: 'Aucune pull request ouvert trouvé !',
+      noClosedPulls: 'Aucune pull request fermé trouvé !',
     },
     pullDiff: {
       title: 'Diff',
@@ -223,12 +235,17 @@ export const fr = {
       deleted: 'SUPPRIMÉ',
       fileRenamed: 'Fichier renommé sans aucune modification',
     },
+    readMe: {
+      readMeActions: 'Actions sur le README',
+      noReadMeFound: 'Pas de README.md trouvé',
+    },
   },
   organization: {
     main: {
       membersTitle: 'MEMBRES',
       descriptionTitle: 'DESCRIPTION',
     },
+    organizationActions: "Actions sur l'organisation",
   },
   issue: {
     settings: {
@@ -248,11 +265,17 @@ export const fr = {
       areYouSurePrompt: 'Êtes-vous certain ?',
       applyLabelTitle: 'Appliquer un libellé à ce ticket',
     },
+    comment: {
+      commentActions: 'Actions sur le commentaire',
+      editCommentTitle: 'Editer le commentaire',
+      editAction: 'Editer',
+      deleteAction: 'Supprimer',
+    },
     main: {
       assignees: 'Assignés',
       mergeButton: 'Fusionner la pull request',
       noDescription: 'Aucune description fournie.',
-      lockedCommentInput: 'Verrouiller, mais vous pouvez encore commenter...',
+      lockedCommentInput: 'Verrouillé, mais vous pouvez encore commenter...',
       commentInput: 'Ajouter un commentaire...',
       lockedIssue: 'Ce ticket est verrouillé',
       states: {
@@ -264,6 +287,9 @@ export const fr = {
         issue: 'Ticket',
         pullRequest: 'Pull Request',
       },
+      openIssueSubTitle: '#{{number}} ouvert il y a {{time}} par {{user}}',
+      closedIssueSubTitle: '#{{number}} par {{user}} fermé il y a {{time}}',
+      issueActions: 'Issue Actions',
     },
     newIssue: {
       title: 'Nouveau ticket',
@@ -299,28 +325,29 @@ export const fr = {
     email: 'Email',
     website: 'Site web',
     repositories: 'Dépôts',
-    followers: 'Followers',
-    following: 'Following',
     cancel: 'Annuler',
     yes: 'Oui',
     ok: 'OK',
     submit: 'Envoyer',
     relativeTime: {
-      past: '%s',
-      s: '%ds',
-      m: '%dm',
-      mm: '%dm',
-      h: '%dh',
-      hh: '%dh',
-      d: '%dj',
-      dd: '%dj',
-      M: '%dmo',
-      MM: '%dmo',
-      y: '%da',
-      yy: '%da',
+      lessThanXSeconds: '{{count}}s',
+      xSeconds: '{{count}}s',
+      halfAMinute: '30s',
+      lessThanXMinutes: '{{count}}m',
+      xMinutes: '{{count}}m',
+      aboutXHours: '{{count}}h',
+      xHours: '{{count}}h',
+      xDays: '{{count}}j',
+      aboutXMonths: '{{count}}mo',
+      xMonths: '{{count}}mo',
+      aboutXYears: '{{count}}a',
+      xYears: '{{count}}a',
+      overXYears: '{{count}}a',
+      almostXYears: '{{count}}a',
     },
     abbreviations: {
       thousand: 'k',
     },
+    openInBrowser: 'Ouvrir dans le navigateur',
   },
 };

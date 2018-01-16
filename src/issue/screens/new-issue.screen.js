@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     flex: 1,
     color: colors.black,
-    ...fonts.fontPrimaryLight,
+    ...fonts.fontPrimary,
   },
   submitTitle: {
     color: colors.green,
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  language: state.auth.language,
+  locale: state.auth.locale,
   repository: state.repository.repository,
   isPendingSubmitting: state.issue.isPendingSubmitting,
 });
@@ -49,7 +49,7 @@ const mapDispatchToProps = dispatch =>
 class NewIssue extends Component {
   props: {
     submitNewIssue: Function,
-    language: string,
+    locale: string,
     repository: Object,
     navigation: Object,
     isPendingSubmitting: boolean,
@@ -72,17 +72,15 @@ class NewIssue extends Component {
   }
 
   submitNewIssue = () => {
-    const { submitNewIssue, repository, language, navigation } = this.props;
+    const { submitNewIssue, repository, locale, navigation } = this.props;
     const { issueTitle, issueComment } = this.state;
     const repoName = repository.name;
     const owner = repository.owner.login;
 
     if (issueTitle === '') {
-      Alert.alert(
-        translate('issue.newIssue.missingTitleAlert', language),
-        null,
-        [{ text: translate('common.ok', language) }]
-      );
+      Alert.alert(translate('issue.newIssue.missingTitleAlert', locale), null, [
+        { text: translate('common.ok', locale) },
+      ]);
     } else {
       submitNewIssue(owner, repoName, issueTitle, issueComment).then(issue => {
         navigation.navigate('Issue', {
@@ -95,14 +93,14 @@ class NewIssue extends Component {
   };
 
   render() {
-    const { language, repository, isPendingSubmitting } = this.props;
+    const { locale, repository, isPendingSubmitting } = this.props;
     const { issueTitle, issueComment } = this.state;
 
     return (
       <ViewContainer>
         {isPendingSubmitting && <LoadingModal />}
         <ScrollView>
-          {repository.full_name &&
+          {repository.full_name && (
             <ListItem
               title={repository.full_name}
               titleStyle={styles.titleSmall}
@@ -113,11 +111,12 @@ class NewIssue extends Component {
                 type: 'octicon',
               }}
               hideChevron
-            />}
-          <SectionList title={translate('issue.newIssue.issueTitle', language)}>
+            />
+          )}
+          <SectionList title={translate('issue.newIssue.issueTitle', locale)}>
             <TextInput
               underlineColorAndroid={'transparent'}
-              placeholder={translate('issue.newIssue.writeATitle', language)}
+              placeholder={translate('issue.newIssue.writeATitle', locale)}
               blurOnSubmit
               multiline
               onContentSizeChange={event =>
@@ -134,12 +133,10 @@ class NewIssue extends Component {
             />
           </SectionList>
 
-          <SectionList
-            title={translate('issue.newIssue.issueComment', language)}
-          >
+          <SectionList title={translate('issue.newIssue.issueComment', locale)}>
             <TextInput
               underlineColorAndroid={'transparent'}
-              placeholder={translate('issue.newIssue.writeAComment', language)}
+              placeholder={translate('issue.newIssue.writeAComment', locale)}
               multiline
               onChangeText={text => this.setState({ issueComment: text })}
               onContentSizeChange={event =>
@@ -158,7 +155,7 @@ class NewIssue extends Component {
           <SectionList>
             <View style={styles.listItemContainer}>
               <ListItem
-                title={translate('common.submit', language)}
+                title={translate('common.submit', locale)}
                 hideChevron
                 underlayColor={colors.greyLight}
                 titleStyle={styles.submitTitle}

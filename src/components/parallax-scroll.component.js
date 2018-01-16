@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, Dimensions, StyleSheet, Platform } from 'react-native';
+import {
+  View,
+  Text,
+  Dimensions,
+  StyleSheet,
+  Platform,
+  TouchableOpacity,
+} from 'react-native';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { Icon } from 'react-native-elements';
 
@@ -27,13 +34,11 @@ const styles = StyleSheet.create({
   background: {
     position: 'absolute',
     top: 0,
-    width: window.width,
     backgroundColor: colors.primaryDark,
   },
   stickySection: {
     height: STICKY_HEADER_HEIGHT,
     backgroundColor: colors.primaryDark,
-    width: window.width,
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
@@ -71,13 +76,13 @@ export class ParallaxScroll extends Component {
   }
 
   getParallaxHeaderHeight = (window = Dimensions.get('window')) => {
-    let devider = 2;
+    let divider = 2;
 
     if (window.width > window.height) {
-      devider = Platform.OS === 'ios' ? 1.2 : 1.4;
+      divider = Platform.OS === 'ios' ? 1.2 : 1.4;
     }
 
-    return window.height / devider;
+    return window.height / divider;
   };
 
   dimensionsDidChange = ({ window }) => {
@@ -105,7 +110,7 @@ export class ParallaxScroll extends Component {
         stickyHeaderHeight={STICKY_HEADER_HEIGHT}
         parallaxHeaderHeight={this.state.parallaxHeaderHeight}
         backgroundSpeed={10}
-        renderBackground={() =>
+        renderBackground={() => (
           <View key="background">
             <View
               style={[
@@ -113,40 +118,43 @@ export class ParallaxScroll extends Component {
                 { height: this.state.parallaxHeaderHeight },
               ]}
             />
-          </View>}
+          </View>
+        )}
         renderForeground={renderContent}
-        renderStickyHeader={() =>
+        renderStickyHeader={() => (
           <View key="sticky-header" style={styles.stickySection}>
-            <Text style={styles.stickySectionText}>
-              {stickyTitle}
-            </Text>
-          </View>}
-        renderFixedHeader={() =>
+            <Text style={styles.stickySectionText}>{stickyTitle}</Text>
+          </View>
+        )}
+        renderFixedHeader={() => (
           <View key="fixed-header">
-            {navigateBack &&
+            {navigateBack && (
               <View style={styles.fixedSectionLeft}>
-                <Icon
-                  style={styles.headerIcon}
-                  name="chevron-left"
-                  size={42}
-                  color={colors.white}
-                  onPress={() => navigation.goBack()}
-                  underlayColor="transparent"
-                />
-              </View>}
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <Icon
+                    name="chevron-left"
+                    size={42}
+                    color={colors.white}
+                    underlayColor="transparent"
+                  />
+                </TouchableOpacity>
+              </View>
+            )}
 
-            {showMenu &&
+            {showMenu && (
               <View style={styles.fixedSectionRight}>
-                <Icon
-                  style={styles.headerIcon}
-                  name={menuIcon}
-                  type="font-awesome"
-                  onPress={menuAction}
-                  color={colors.white}
-                  underlayColor="transparent"
-                />
-              </View>}
-          </View>}
+                <TouchableOpacity onPress={menuAction}>
+                  <Icon
+                    name={menuIcon}
+                    type="font-awesome"
+                    color={colors.white}
+                    underlayColor="transparent"
+                  />
+                </TouchableOpacity>
+              </View>
+            )}
+          </View>
+        )}
         refreshControl={refreshControl}
       >
         {children}

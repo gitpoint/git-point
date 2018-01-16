@@ -1,97 +1,123 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, ActivityIndicator } from 'react-native';
-import { ListItem, Button } from 'react-native-elements';
+import { StyleSheet, ActivityIndicator } from 'react-native';
+import { ListItem } from 'react-native-elements';
 import Parse from 'parse-diff';
-import moment from 'moment/min/moment-with-locales.min';
+import styled from 'styled-components/native';
 
-import { StateBadge, MembersList, LabelButton, DiffBlocks } from 'components';
-import { translate } from 'utils';
+import {
+  StateBadge,
+  MembersList,
+  InlineLabel,
+  DiffBlocks,
+  Button,
+} from 'components';
+import { translate, relativeTimeToNow } from 'utils';
 import { colors, fonts, normalize } from 'config';
-import { root as apiRoot } from 'api';
+import { v3 } from 'api';
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingRight: 10,
-  },
-  borderBottom: {
-    borderBottomWidth: 1,
-    borderBottomColor: colors.greyLight,
-  },
-  title: {
-    color: colors.primaryDark,
-    ...fonts.fontPrimarySemiBold,
-  },
-  titleSmall: {
-    color: colors.primaryDark,
-    ...fonts.fontPrimarySemiBold,
-    fontSize: normalize(10),
-  },
-  listItemContainer: {
-    borderBottomWidth: 0,
-    flex: 1,
-  },
-  diffBlocksContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    paddingRight: 10,
-    paddingBottom: 10,
-  },
   badge: {
     alignItems: 'flex-end',
     justifyContent: 'center',
   },
-  labelButtonGroup: {
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    marginLeft: 54,
-    paddingBottom: 15,
-  },
-  assigneesSection: {
-    marginLeft: 54,
-    paddingBottom: 5,
-  },
-  mergeButtonContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 15,
-  },
 });
+
+const HeaderContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding-right: 10;
+`;
+
+const ContainerBorderBottom = styled.View`
+  border-bottom-width: 1;
+  border-bottom-color: ${colors.greyLight};
+`;
+
+const RepoLink = styled(ListItem).attrs({
+  titleStyle: {
+    color: colors.primaryDark,
+    ...fonts.fontPrimarySemiBold,
+    fontSize: normalize(10),
+  },
+  leftIconContainerStyle: {
+    flex: 0,
+  },
+  containerStyle: {
+    borderBottomColor: colors.greyLight,
+    borderBottomWidth: 1,
+  },
+})``;
+
+const IssueTitle = styled(ListItem).attrs({
+  titleStyle: {
+    color: colors.primaryDark,
+    ...fonts.fontPrimarySemiBold,
+  },
+  containerStyle: {
+    borderBottomWidth: 0,
+    flex: 1,
+  },
+  titleNumberOfLines: 0,
+})``;
+
+const DiffBlocksContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 10;
+  padding-bottom: 10;
+`;
+
+const LabelButtonGroup = styled.View`
+  flex-flow: row wrap;
+  margin-left: 54;
+  padding-bottom: 15;
+`;
+
+const AssigneesSection = styled.View`
+  margin-left: 54;
+  padding-bottom: 5;
+`;
+
+const MergeButtonContainer = styled.View`
+  justify-content: center;
+  align-items: center;
+  padding-top: 15;
+  padding-bottom: 15;
+`;
 
 export class IssueDescription extends Component {
   props: {
     issue: Object,
     diff: string,
+    isMergeable: boolean,
     isMerged: boolean,
     isPendingDiff: boolean,
     isPendingCheckMerge: boolean,
     onRepositoryPress: Function,
     userHasPushPermission: boolean,
-    language: string,
+    locale: string,
     navigation: Object,
   };
 
   renderLabelButtons = labels => {
     return labels
       .slice(0, 3)
-      .map(label => <LabelButton key={label.id} label={label} />);
+      .map(label => <InlineLabel key={label.id} label={label} />);
   };
 
   render() {
     const {
       diff,
       issue,
+      isMergeable,
       isMerged,
       isPendingDiff,
       isPendingCheckMerge,
       onRepositoryPress,
       userHasPushPermission,
-      language,
+      locale,
       navigation,
     } = this.props;
 
@@ -106,11 +132,10 @@ export class IssueDescription extends Component {
     });
 
     return (
-      <View style={(styles.container, styles.borderBottom)}>
-        {issue.repository_url &&
-          <ListItem
-            title={issue.repository_url.replace(`${apiRoot}/repos/`, '')}
-            titleStyle={styles.titleSmall}
+      <ContainerBorderBottom>
+        {issue.repository_url && (
+          <RepoLink
+            title={issue.repository_url.replace(`${v3.root}/repos/`, '')}
             leftIcon={{
               name: 'repo',
               size: 17,
@@ -119,14 +144,13 @@ export class IssueDescription extends Component {
             }}
             onPress={() => onRepositoryPress(issue.repository_url)}
             hideChevron
-          />}
+          />
+        )}
 
-        <View style={styles.headerContainer}>
-          <ListItem
+        <HeaderContainer>
+          <IssueTitle
             title={issue.title}
-            titleStyle={styles.title}
-            subtitle={moment(issue.created_at).fromNow()}
-            containerStyle={styles.listItemContainer}
+            subtitle={relativeTimeToNow(issue.created_at)}
             leftIcon={{
               name: issue.pull_request ? 'git-pull-request' : 'issue-opened',
               size: 36,
@@ -138,69 +162,76 @@ export class IssueDescription extends Component {
 
           {!issue.pull_request ||
             (issue.pull_request &&
-              !isPendingCheckMerge &&
-              <StateBadge
-                style={styles.badge}
-                issue={issue}
-                isMerged={isMerged && issue.pull_request}
-                language={language}
-              />)}
-        </View>
+              !isPendingCheckMerge && (
+                <StateBadge
+                  style={styles.badge}
+                  issue={issue}
+                  isMerged={isMerged && issue.pull_request}
+                  locale={locale}
+                />
+              ))}
+        </HeaderContainer>
 
-        {issue.pull_request &&
-          <View style={styles.diffBlocksContainer}>
-            {isPendingDiff &&
-              <ActivityIndicator animating={isPendingDiff} size="small" />}
+        {issue.pull_request && (
+          <DiffBlocksContainer>
+            {isPendingDiff && (
+              <ActivityIndicator animating={isPendingDiff} size="small" />
+            )}
 
             {!isPendingDiff &&
-              (lineAdditions !== 0 || lineDeletions !== 0) &&
-              <DiffBlocks
-                additions={lineAdditions}
-                deletions={lineDeletions}
-                showNumbers
-                onPress={() =>
-                  navigation.navigate('PullDiff', {
-                    title: translate('repository.pullDiff.title', language),
-                    language,
-                    diff,
-                  })}
-              />}
-          </View>}
+              (lineAdditions !== 0 || lineDeletions !== 0) && (
+                <DiffBlocks
+                  additions={lineAdditions}
+                  deletions={lineDeletions}
+                  showNumbers
+                  onPress={() =>
+                    navigation.navigate('PullDiff', {
+                      title: translate('repository.pullDiff.title', locale),
+                      locale,
+                      diff,
+                    })}
+                />
+              )}
+          </DiffBlocksContainer>
+        )}
 
         {issue.labels &&
-          issue.labels.length > 0 &&
-          <View style={styles.labelButtonGroup}>
-            {this.renderLabelButtons(issue.labels)}
-          </View>}
+          issue.labels.length > 0 && (
+            <LabelButtonGroup>
+              {this.renderLabelButtons(issue.labels)}
+            </LabelButtonGroup>
+          )}
         {issue.assignees &&
-          issue.assignees.length > 0 &&
-          <View style={styles.assigneesSection}>
-            <MembersList
-              title={translate('issue.main.assignees', language)}
-              members={issue.assignees}
-              containerStyle={{ marginTop: 0, paddingTop: 0, paddingLeft: 0 }}
-              smallTitle
-              navigation={navigation}
-            />
-          </View>}
+          issue.assignees.length > 0 && (
+            <AssigneesSection>
+              <MembersList
+                title={translate('issue.main.assignees', locale)}
+                members={issue.assignees}
+                containerStyle={{ marginTop: 0, paddingTop: 0, paddingLeft: 0 }}
+                smallTitle
+                navigation={navigation}
+              />
+            </AssigneesSection>
+          )}
 
         {issue.pull_request &&
           !isMerged &&
           issue.state === 'open' &&
-          userHasPushPermission &&
-          <View style={styles.mergeButtonContainer}>
-            <Button
-              backgroundColor={colors.green}
-              borderRadius={10}
-              fontSize={14}
-              onPress={() =>
-                navigation.navigate('PullMerge', {
-                  title: translate('issue.pullMerge.title', language),
-                })}
-              title={translate('issue.main.mergeButton', language)}
-            />
-          </View>}
-      </View>
+          userHasPushPermission && (
+            <MergeButtonContainer>
+              <Button
+                type={isMergeable ? 'success' : 'default'}
+                icon={{ name: 'git-merge', type: 'octicon' }}
+                disabled={!isMergeable}
+                onPress={() =>
+                  navigation.navigate('PullMerge', {
+                    title: translate('issue.pullMerge.title', locale),
+                  })}
+                title={translate('issue.main.mergeButton', locale)}
+              />
+            </MergeButtonContainer>
+          )}
+      </ContainerBorderBottom>
     );
   }
 }

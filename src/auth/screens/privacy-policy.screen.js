@@ -4,7 +4,7 @@ import { StyleSheet, ScrollView, View, Text } from 'react-native';
 import { ViewContainer } from 'components';
 import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
-import { root as apiRoot } from 'api';
+import { v3 } from 'api';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,13 +25,13 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: normalize(12),
     color: colors.primaryDark,
-    ...fonts.fontPrimarySemiBold,
+    ...fonts.fontPrimaryBold,
     marginBottom: 15,
   },
   text: {
-    fontSize: normalize(11),
+    fontSize: normalize(12),
     color: colors.primaryDark,
-    ...fonts.fontPrimaryLight,
+    ...fonts.fontPrimary,
     marginBottom: 15,
   },
   link: {
@@ -46,83 +46,83 @@ export class PrivacyPolicyScreen extends Component {
 
   render() {
     const { navigation } = this.props;
-    const { language } = navigation.state.params.language;
+    const { locale } = navigation.state.params.locale;
 
     return (
       <ViewContainer>
         <ScrollView>
           <View style={styles.container}>
             <Text style={styles.title}>
-              {translate('auth.privacyPolicy.effectiveDate', language)}
+              {translate('auth.privacyPolicy.effectiveDate', locale)}
             </Text>
 
             <View style={styles.section}>
               <Text style={styles.text}>
-                {translate('auth.privacyPolicy.introduction', language)}
+                {translate('auth.privacyPolicy.introduction', locale)}
               </Text>
             </View>
 
             <View style={styles.section}>
               <Text style={styles.sectionTitle}>
-                {translate('auth.privacyPolicy.userDataTitle', language)}
+                {translate('auth.privacyPolicy.userDataTitle', locale)}
               </Text>
 
               <Text style={styles.text}>
-                {translate('auth.privacyPolicy.userData1', language)}
+                {translate('auth.privacyPolicy.userData1', locale)}
               </Text>
 
               <Text style={styles.text}>
-                {translate('auth.privacyPolicy.userData2', language)}
+                {translate('auth.privacyPolicy.userData2', locale)}
               </Text>
             </View>
 
             <View style={styles.section}>
               <Text style={styles.sectionTitle}>
-                {translate('auth.privacyPolicy.analyticsInfoTitle', language)}
+                {translate('auth.privacyPolicy.analyticsInfoTitle', locale)}
               </Text>
 
               <Text style={styles.text}>
-                {translate('auth.privacyPolicy.analyticsInfo1', language)}
+                {translate('auth.privacyPolicy.analyticsInfo1', locale)}
               </Text>
 
               <Text style={styles.text}>
-                {translate('auth.privacyPolicy.analyticsInfo2', language)}
+                {translate('auth.privacyPolicy.analyticsInfo2', locale)}
               </Text>
             </View>
 
             <View style={styles.section}>
               <Text style={styles.sectionTitle}>
-                {translate('auth.privacyPolicy.openSourceTitle', language)}
+                {translate('auth.privacyPolicy.openSourceTitle', locale)}
               </Text>
 
               <Text style={styles.text}>
-                {translate('auth.privacyPolicy.openSource1', language)}
+                {translate('auth.privacyPolicy.openSource1', locale)}
               </Text>
 
               <Text style={styles.text}>
-                {translate('auth.privacyPolicy.openSource2', language)}
+                {translate('auth.privacyPolicy.openSource2', locale)}
               </Text>
             </View>
 
             <View style={styles.section}>
               <Text style={styles.sectionTitle}>
-                {translate('auth.privacyPolicy.contactTitle', language)}
+                {translate('auth.privacyPolicy.contactTitle', locale)}
               </Text>
 
               <Text style={styles.text}>
-                {translate('auth.privacyPolicy.contact1', language)}
+                {translate('auth.privacyPolicy.contact1', locale)}
               </Text>
 
               <Text style={styles.text}>
-                {translate('auth.privacyPolicy.contact2', language)}{' '}
+                {translate('auth.privacyPolicy.contact2', locale)}{' '}
                 <Text
                   style={styles.link}
                   onPress={() =>
                     navigation.navigate('Repository', {
-                      repositoryUrl: `${apiRoot}/repos/gitpoint/git-point`,
+                      repositoryUrl: `${v3.root}/repos/gitpoint/git-point`,
                     })}
                 >
-                  {translate('auth.privacyPolicy.contactLink', language)}
+                  {translate('auth.privacyPolicy.contactLink', locale)}
                 </Text>
               </Text>
             </View>
