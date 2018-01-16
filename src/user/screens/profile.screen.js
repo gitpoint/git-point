@@ -1,9 +1,9 @@
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
+import styled from 'styled-components/native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
-  StyleSheet,
   ActivityIndicator,
   Dimensions,
   View,
@@ -57,16 +57,16 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-const styles = StyleSheet.create({
-  listTitle: {
-    color: colors.black,
-    ...fonts.fontPrimary,
+const BioListItem = styled(ListItem).attrs({
+  containerStyle: {
+    borderBottomColor: colors.greyLight,
+    borderBottomWidth: 1,
   },
-  listSubTitle: {
+  titleStyle: {
     color: colors.greyDark,
     ...fonts.fontPrimary,
   },
-});
+})``;
 
 class Profile extends Component {
   props: {
@@ -168,7 +168,7 @@ class Profile extends Component {
     return (
       <ViewContainer>
         <ParallaxScroll
-          renderContent={() =>
+          renderContent={() => (
             <UserProfile
               type="user"
               initialUser={initialUser}
@@ -178,7 +178,8 @@ class Profile extends Component {
               user={!isPending ? user : {}}
               locale={locale}
               navigation={navigation}
-            />}
+            />
+          )}
           refreshControl={
             <RefreshControl
               refreshing={refreshing || isPending}
@@ -195,47 +196,50 @@ class Profile extends Component {
           navigateBack
           navigation={navigation}
         >
-          {isPending &&
+          {isPending && (
             <ActivityIndicator
               animating={isPending}
               style={{ height: Dimensions.get('window').height / 3 }}
               size="large"
-            />}
+            />
+          )}
 
           {!isPending &&
-            initialUser.login === user.login &&
-            <View>
-              {!!user.bio &&
-                user.bio !== '' &&
-                <SectionList title={translate('common.bio', locale)}>
-                  <ListItem
-                    subtitle={emojifyText(user.bio)}
-                    subtitleStyle={styles.listSubTitle}
-                    hideChevron
-                  />
-                </SectionList>}
+            initialUser.login === user.login && (
+              <View>
+                {!!user.bio &&
+                  user.bio !== '' && (
+                    <SectionList title={translate('common.bio', locale)}>
+                      <BioListItem
+                        titleNumberOfLines={0}
+                        title={emojifyText(user.bio)}
+                        hideChevron
+                      />
+                    </SectionList>
+                  )}
 
-              <EntityInfo
-                entity={user}
-                orgs={orgs}
-                navigation={navigation}
-                locale={locale}
-              />
+                <EntityInfo
+                  entity={user}
+                  orgs={orgs}
+                  navigation={navigation}
+                  locale={locale}
+                />
 
-              <SectionList
-                title={translate('common.orgs', locale)}
-                noItems={orgs.length === 0}
-                noItemsMessage={translate('common.noOrgsMessage', locale)}
-              >
-                {orgs.map(item =>
-                  <UserListItem
-                    key={item.id}
-                    user={item}
-                    navigation={navigation}
-                  />
-                )}
-              </SectionList>
-            </View>}
+                <SectionList
+                  title={translate('common.orgs', locale)}
+                  noItems={orgs.length === 0}
+                  noItemsMessage={translate('common.noOrgsMessage', locale)}
+                >
+                  {orgs.map(item => (
+                    <UserListItem
+                      key={item.id}
+                      user={item}
+                      navigation={navigation}
+                    />
+                  ))}
+                </SectionList>
+              </View>
+            )}
         </ParallaxScroll>
 
         <ActionSheet

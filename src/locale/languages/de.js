@@ -163,6 +163,10 @@ export const de = {
     repositoryList: {
       title: 'Repositories',
     },
+    starredRepositoryList: {
+      title: 'Stars',
+      text: 'Stars',
+    },
     followers: {
       title: 'Follower',
       text: 'Follower',
@@ -243,6 +247,7 @@ export const de = {
       membersTitle: 'MITGLIEDER',
       descriptionTitle: 'BESCHREIBUNG',
     },
+    organizationActions: 'Organisation Aktionen',
   },
   issue: {
     settings: {
@@ -287,6 +292,7 @@ export const de = {
       openIssueSubTitle: '#{{number}} wude vor {{time}} von {{user}} geöffnet',
       closedIssueSubTitle:
         '#{{number}} von {{user}} wurde vor {{time}} geschlossen',
+      issueActions: 'Issue Aktionen',
     },
     newIssue: {
       title: 'Neues Issue',
@@ -327,21 +333,24 @@ export const de = {
     ok: 'OK',
     submit: 'Bestätigen',
     relativeTime: {
-      past: '%s',
-      s: '%ds',
-      m: '%dm',
-      mm: '%dm',
-      h: '%dh',
-      hh: '%dh',
-      d: '%dd',
-      dd: '%dd',
-      M: '%dmo',
-      MM: '%dmo',
-      y: '%dy',
-      yy: '%dy',
+      lessThanXSeconds: '{{count}}s',
+      xSeconds: '{{count}}s',
+      halfAMinute: '30s',
+      lessThanXMinutes: '{{count}}m',
+      xMinutes: '{{count}}m',
+      aboutXHours: '{{count}}h',
+      xHours: '{{count}}h',
+      xDays: '{{count}}d',
+      aboutXMonths: '{{count}}mo',
+      xMonths: '{{count}}mo',
+      aboutXYears: '{{count}}y',
+      xYears: '{{count}}y',
+      overXYears: '{{count}}y',
+      almostXYears: '{{count}}y',
     },
     abbreviations: {
       thousand: 't',
     },
+    openInBrowser: 'In Browser öffnen',
   },
 };

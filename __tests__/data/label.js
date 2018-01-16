@@ -1,4 +1,4 @@
 export default {
-  name: 'test tag',
+  name: 'test label text',
   color: 'c3c3c3',
 };

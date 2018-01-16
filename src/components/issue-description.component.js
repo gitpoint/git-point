@@ -2,42 +2,46 @@ import React, { Component } from 'react';
 import {
   Text,
   StyleSheet,
-  View,
   ActivityIndicator,
   TouchableHighlight,
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
 import Parse from 'parse-diff';
-import moment from 'moment/min/moment-with-locales.min';
+import styled from 'styled-components/native';
 
 import {
   StateBadge,
   MembersList,
-  LabelButton,
+  InlineLabel,
   DiffBlocks,
   Button,
 } from 'components';
-import { translate } from 'utils';
+import { translate, relativeTimeToNow } from 'utils';
 import { colors, fonts, normalize } from 'config';
 import { v3 } from 'api';
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  badge: {
+    alignItems: 'flex-end',
     justifyContent: 'center',
-    paddingRight: 10,
   },
-  borderBottom: {
-    borderBottomWidth: 1,
-    borderBottomColor: colors.greyLight,
-  },
-  title: {
-    color: colors.primaryDark,
-    ...fonts.fontPrimarySemiBold,
-  },
-  titleSmall: {
+});
+
+const HeaderContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding-right: 10;
+`;
+
+const ContainerBorderBottom = styled.View`
+  border-bottom-width: 1;
+  border-bottom-color: ${colors.greyLight};
+`;
+
+const RepoLink = styled(ListItem).attrs({
+  titleStyle: {
     color: colors.primaryDark,
     ...fonts.fontPrimarySemiBold,
     fontSize: normalize(10),
@@ -58,24 +62,52 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     justifyContent: 'center',
   },
-  labelButtonGroup: {
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    marginLeft: 54,
-    paddingBottom: 15,
+  leftIconContainerStyle: {
+    flex: 0,
   },
-  assigneesSection: {
-    marginLeft: 54,
-    paddingBottom: 5,
+  containerStyle: {
+    borderBottomColor: colors.greyLight,
+    borderBottomWidth: 1,
   },
-  mergeButtonContainer: {
+})``;
+
+const IssueTitle = styled(ListItem).attrs({
+  titleStyle: {
+    color: colors.primaryDark,
+    ...fonts.fontPrimarySemiBold,
+  },
+  containerStyle: {
+    borderBottomWidth: 0,
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 15,
   },
-});
+  titleNumberOfLines: 0,
+})``;
+
+const DiffBlocksContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 10;
+  padding-bottom: 10;
+`;
+
+const LabelButtonGroup = styled.View`
+  flex-flow: row wrap;
+  margin-left: 54;
+  padding-bottom: 15;
+`;
+
+const AssigneesSection = styled.View`
+  margin-left: 54;
+  padding-bottom: 5;
+`;
+
+const MergeButtonContainer = styled.View`
+  justify-content: center;
+  align-items: center;
+  padding-top: 15;
+  padding-bottom: 15;
+`;
 
 export class IssueDescription extends Component {
   props: {
@@ -112,7 +144,7 @@ export class IssueDescription extends Component {
   renderLabelButtons = labels => {
     return labels
       .slice(0, 3)
-      .map(label => <LabelButton key={label.id} label={label} />);
+      .map(label => <InlineLabel key={label.id} label={label} />);
   };
 
   render() {
@@ -142,11 +174,10 @@ export class IssueDescription extends Component {
     });
 
     return (
-      <View style={(styles.container, styles.borderBottom)}>
+      <ContainerBorderBottom>
         {issue.repository_url && (
-          <ListItem
+          <RepoLink
             title={issue.repository_url.replace(`${v3.root}/repos/`, '')}
-            titleStyle={styles.titleSmall}
             leftIcon={{
               name: 'repo',
               size: 17,
@@ -158,12 +189,10 @@ export class IssueDescription extends Component {
           />
         )}
 
-        <View style={styles.headerContainer}>
-          <ListItem
+        <HeaderContainer>
+          <IssueTitle
             title={issue.title}
-            titleStyle={styles.title}
-            subtitle={moment(issue.created_at).fromNow()}
-            containerStyle={styles.listItemContainer}
+            subtitle={relativeTimeToNow(issue.created_at)}
             leftIcon={{
               name: issue.pull_request ? 'git-pull-request' : 'issue-opened',
               size: 36,
@@ -183,10 +212,10 @@ export class IssueDescription extends Component {
                   locale={locale}
                 />
               ))}
-        </View>
+        </HeaderContainer>
 
         {issue.pull_request && (
-          <View style={styles.diffBlocksContainer}>
+          <DiffBlocksContainer>
             {isPendingCommit && (
               <ActivityIndicator animating={isPendingCommit} size="small" />
             )}
@@ -218,18 +247,18 @@ export class IssueDescription extends Component {
                     })}
                 />
               )}
-          </View>
+          </DiffBlocksContainer>
         )}
 
         {issue.labels &&
           issue.labels.length > 0 && (
-            <View style={styles.labelButtonGroup}>
+            <LabelButtonGroup>
               {this.renderLabelButtons(issue.labels)}
-            </View>
+            </LabelButtonGroup>
           )}
         {issue.assignees &&
           issue.assignees.length > 0 && (
-            <View style={styles.assigneesSection}>
+            <AssigneesSection>
               <MembersList
                 title={translate('issue.main.assignees', locale)}
                 members={issue.assignees}
@@ -237,14 +266,14 @@ export class IssueDescription extends Component {
                 smallTitle
                 navigation={navigation}
               />
-            </View>
+            </AssigneesSection>
           )}
 
         {issue.pull_request &&
           !isMerged &&
           issue.state === 'open' &&
           userHasPushPermission && (
-            <View style={styles.mergeButtonContainer}>
+            <MergeButtonContainer>
               <Button
                 type={isMergeable ? 'success' : 'default'}
                 icon={{ name: 'git-merge', type: 'octicon' }}
@@ -255,9 +284,9 @@ export class IssueDescription extends Component {
                   })}
                 title={translate('issue.main.mergeButton', locale)}
               />
-            </View>
+            </MergeButtonContainer>
           )}
-      </View>
+      </ContainerBorderBottom>
     );
   }
 }

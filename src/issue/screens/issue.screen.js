@@ -207,11 +207,10 @@ class Issue extends Component {
     const issueRepository = issueURL
       .replace(`${v3.root}/repos/`, '')
       .replace(/([^/]+\/[^/]+)\/issues\/\d+$/, '$1');
-    const pullRequestCommitsURL = `${issueURL
-      .replace('issues', 'pulls')}/commits`;
-
-    const repoName = repository.name;
-    const owner = repository.owner.login;
+    const pullRequestCommitsURL = `${issueURL.replace(
+      'issues',
+      'pulls'
+    )}/commits`;
 
     Promise.all([
       getIssueFromUrl(issueURL),
@@ -219,22 +218,30 @@ class Issue extends Component {
       (issue || params.issue).pull_request
         ? getCommits(pullRequestCommitsURL)
         : Promise.resolve(),
-    ]).then(() => {
-      const issue = this.props.issue;
+    ])
+      .then(() => {
+        const issue = this.props.issue;
 
-      if (repository.full_name !== issueRepository) {
-        Promise.all([
-          getRepository(issue.repository_url),
-          getContributors(this.getContributorsLink(issue.repository_url)),
-        ]).then(() => {
-          this.setNavigationParams();
-        });
-      } else {
+        if (repository.full_name !== issueRepository) {
+          return Promise.all([
+            getRepository(issue.repository_url),
+            getContributors(this.getContributorsLink(issue.repository_url)),
+          ]);
+        }
+
+        return [];
+      })
+      .then(() => {
+        const { issue, repository } = this.props;
+
         this.setNavigationParams();
-      }
 
-      return getIssueEvents(owner, repoName, issue.number);
-    });
+        return getIssueEvents(
+          repository.owner.login,
+          repository.name,
+          issue.number
+        );
+      });
   };
 
   getContributorsLink = repository => `${repository}/contributors`;
@@ -253,16 +260,16 @@ class Issue extends Component {
 
   handleActionSheetPress = index => {
     if (index === 0) {
-      openURLInView(this.props.navigation.state.params.issue.html_url);
+      openURLInView(this.props.issue.html_url);
     }
   };
 
   postComment = body => {
-    const { repository, navigation } = this.props;
+    const { issue, repository } = this.props;
 
     const repoName = repository.name;
     const owner = repository.owner.login;
-    const issueNum = navigation.state.params.issue.number;
+    const issueNum = issue.number;
 
     this.props.postIssueComment(body, owner, repoName, issueNum);
     Keyboard.dismiss();

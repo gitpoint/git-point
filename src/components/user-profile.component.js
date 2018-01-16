@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { colors, fonts, normalize } from 'config';
-import { translate, abbreviateNumber } from 'utils';
+import { translate } from 'utils';
 import { ImageZoom } from 'components';
 
 type Props = {
@@ -96,15 +96,23 @@ const styles = StyleSheet.create({
   },
 });
 
+const maxLoadingConstraints = {
+  maxFollowers: 15,
+  maxFollowing: 15,
+  maxPublicRepos: 15,
+  maxStars: 15,
+};
+
 export class UserProfile extends Component {
   props: Props;
 
   getUserUri = () => {
     const { initialUser, user } = this.props;
-
-    return initialUser.avatar_url
+    const image = initialUser.avatar_url
       ? `${initialUser.avatar_url}&lastModified=${initialUser.updated_at}`
       : `${user.avatar_url}&lastModified=${user.updated_at}`;
+
+    return { uri: image };
   };
 
   render() {
@@ -130,7 +138,7 @@ export class UserProfile extends Component {
           >
             <View style={styles.profile}>
               <ImageZoom
-                uri={this.getUserUri}
+                uri={this.getUserUri()}
                 style={[
                   styles.avatar,
                   (initialUser.type === 'User' || user.type === 'User') &&
@@ -148,7 +156,10 @@ export class UserProfile extends Component {
                   navigation.navigate('RepositoryList', {
                     title: translate('user.repositoryList.title', locale),
                     user,
-                    repoCount: user.public_repos > 15 ? 15 : user.public_repos,
+                    repoCount: Math.min(
+                      maxLoadingConstraints.maxPublicRepos,
+                      user.public_repos
+                    ),
                   })}
               >
                 <Text style={styles.unitNumber}>
@@ -165,12 +176,24 @@ export class UserProfile extends Component {
                 <TouchableOpacity
                   nativeId="touchable-star-count-list"
                   style={styles.unit}
+                  onPress={() =>
+                    navigation.navigate('StarredRepositoryList', {
+                      title: translate(
+                        'user.starredRepositoryList.title',
+                        locale
+                      ),
+                      user,
+                      repoCount: Math.min(
+                        maxLoadingConstraints.maxStars,
+                        starCount
+                      ),
+                    })}
                 >
                   <Text style={styles.unitNumber}>
-                    {abbreviateNumber(starCount)}
+                    {!isNaN(parseInt(starCount, 10)) ? starCount : ' '}
                   </Text>
                   <Text style={styles.unitText}>
-                    {translate('common.stars', locale)}
+                    {translate('user.starredRepositoryList.text', locale)}
                   </Text>
                 </TouchableOpacity>
               )}
@@ -183,7 +206,10 @@ export class UserProfile extends Component {
                     navigation.navigate('FollowerList', {
                       title: translate('user.followers.title', locale),
                       user,
-                      followerCount: user.followers > 15 ? 15 : user.followers,
+                      followerCount: Math.min(
+                        maxLoadingConstraints.maxFollowers,
+                        user.followers
+                      ),
                     })}
                 >
                   <Text style={styles.unitNumber}>
@@ -210,7 +236,10 @@ export class UserProfile extends Component {
                     navigation.navigate('FollowingList', {
                       title: translate('user.following.title', locale),
                       user,
-                      followingCount: user.following > 15 ? 15 : user.following,
+                      followingCount: Math.min(
+                        maxLoadingConstraints.maxFollowing,
+                        user.following
+                      ),
                     })}
                 >
                   <Text style={styles.unitNumber}>

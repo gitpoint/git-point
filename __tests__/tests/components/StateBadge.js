@@ -1,12 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { closed as closedIssue, open as openIssue } from '../../data/issue';
+import { closed as closedIssue, open as openIssue } from 'testData/api/issue';
 import {
   closed as closedPr,
   open as openPr,
   merged as mergedPr,
-} from '../../data/pull-request';
+} from 'testData/api/pull-request';
 import { colors } from 'config';
 
 import { StateBadge } from 'components';

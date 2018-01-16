@@ -1,10 +1,9 @@
 import React from 'react';
 import { StyleSheet, TouchableHighlight, View, Text } from 'react-native';
 import { ListItem, Icon } from 'react-native-elements';
-import moment from 'moment/min/moment-with-locales.min';
 
 import { colors, fonts, normalize } from 'config';
-import { translate } from 'utils';
+import { translate, relativeTimeToNow } from 'utils';
 
 type Props = {
   type: string,
@@ -81,12 +80,12 @@ export const IssueListItem = ({ type, issue, navigation, locale }: Props) => (
             ? translate('issue.main.openIssueSubTitle', locale, {
                 number: issue.number,
                 user: issue.user.login,
-                time: moment(issue.created_at).fromNow(),
+                time: relativeTimeToNow(issue.created_at),
               })
             : translate('issue.main.closedIssueSubTitle', locale, {
                 number: issue.number,
                 user: issue.user.login,
-                time: moment(issue.closed_at).fromNow(),
+                time: relativeTimeToNow(issue.closed_at),
               })
         }
         leftIcon={{

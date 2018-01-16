@@ -1,4 +1,4 @@
-import moment from 'moment/min/moment-with-locales.min';
+import differenceInMilliseconds from 'date-fns/difference_in_milliseconds';
 
 export function formatEventsToRender(events = []) {
   return events
@@ -25,7 +25,8 @@ export function formatEventsToRender(events = []) {
         index > 0 &&
         labelEvents.includes(event.event) &&
         labelEvents.includes(prevEvent.event) &&
-        moment(event.created_at).diff(prevEvent.created_at) < 10000 &&
+        differenceInMilliseconds(event.created_at, prevEvent.created_at) <
+          10000 &&
         event.actor.login === prevEvent.actor.login
       ) {
         const labelGroup = results[results.length - 1];

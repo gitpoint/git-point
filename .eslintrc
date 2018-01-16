@@ -37,6 +37,7 @@
           "repository": "repository",
           "search": "search",
           "testData": "./__tests__/data",
+          "user": "user",
           "utils": "utils"
         }
       }

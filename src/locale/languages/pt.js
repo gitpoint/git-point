@@ -159,6 +159,10 @@ export const pt = {
     repositoryList: {
       title: 'Repositórios',
     },
+    starredRepositoryList: {
+      title: 'Favoritos',
+      text: 'Favoritos',
+    },
     followers: {
       title: 'Seguidores',
       text: 'Seguidores',
@@ -238,6 +242,7 @@ export const pt = {
       membersTitle: 'MEMBROS',
       descriptionTitle: 'DESCRIÇÃO',
     },
+    organizationActions: 'Opções de Entidade',
   },
   issue: {
     settings: {
@@ -281,6 +286,7 @@ export const pt = {
       },
       openIssueSubTitle: '#{{number}} aberta em {{time}} por {{user}}',
       closedIssueSubTitle: '#{{number}} de {{user}} foi  fechada em {{time}} ',
+      issueActions: 'Acções sobre Issues',
     },
     newIssue: {
       title: 'Nova Issue',
@@ -321,18 +327,24 @@ export const pt = {
     ok: 'OK',
     submit: 'Enviar',
     relativeTime: {
-      past: '%s',
-      s: '%ds',
-      m: '%dm',
-      mm: '%dm',
-      h: '%dh',
-      hh: '%dh',
-      d: '%dd',
-      dd: '%dd',
-      M: '%dmo',
-      MM: '%dmo',
-      y: '%dy',
-      yy: '%dy',
+      lessThanXSeconds: '{{count}}s',
+      xSeconds: '{{count}}s',
+      halfAMinute: '30s',
+      lessThanXMinutes: '{{count}}m',
+      xMinutes: '{{count}}m',
+      aboutXHours: '{{count}}h',
+      xHours: '{{count}}h',
+      xDays: '{{count}}d',
+      aboutXMonths: '{{count}}mo',
+      xMonths: '{{count}}mo',
+      aboutXYears: '{{count}}y',
+      xYears: '{{count}}y',
+      overXYears: '{{count}}y',
+      almostXYears: '{{count}}y',
     },
+    abbreviations: {
+      thousand: 'k',
+    },
+    openInBrowser: 'Abrir no Browser',
   },
 };

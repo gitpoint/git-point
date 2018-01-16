@@ -1,68 +1,86 @@
 import React, { Component } from 'react';
 import { Text } from 'react-native';
-import { Icon } from 'react-native-elements';
-import moment from 'moment/min/moment-with-locales.min';
-import { colors, styledFonts, normalize } from 'config';
+import { Icon as BaseIcon } from 'react-native-elements';
+import { colors, fonts, normalize } from 'config';
 import { InlineLabel } from 'components';
 import styled from 'styled-components/native';
 
-const Header = styled.View`
-  padding-right: 10;
+import { relativeTimeToNow } from 'utils';
+
+const marginLeftForIconName = name => {
+  switch (name) {
+    case 'git-branch':
+    case 'git-merge':
+    case 'primitive-dot':
+      return 8;
+    case 'bookmark':
+      return 6;
+    case 'person':
+    case 'lock':
+      return 4;
+    default:
+      return 2;
+  }
+};
+
+const Container = styled.View`
   padding-top: 10;
+  padding-right: 10;
   background-color: transparent;
   flex-direction: row;
   align-items: stretch;
 `;
 
-const IconStyled = styled(Icon)`
-  background-color: ${colors.greyLight}
-  border-radius: 13;
-  width: 26;
-  height: 26;
-  margin-left: 14;
-  margin-right: 14;
-  flex-grow: 0;
-  flex-shrink: 0;
-  flex-basis: 26;
-`;
+const Icon = styled(BaseIcon).attrs({
+  iconStyle: props => ({
+    marginTop: 1,
+    color: props.color,
+    marginLeft: marginLeftForIconName(props.name),
+  }),
+  containerStyle: props => ({
+    borderRadius: 13,
+    width: 26,
+    height: 26,
+    marginLeft: 14,
+    marginRight: 14,
+    flexGrow: 0,
+    flexShrink: 0,
+    flexBasis: 26,
+    backgroundColor: props.backgroundColor,
+  }),
+})``;
 
 const ContentContainer = styled.View`
   flex-direction: row;
-  flex-grow: 1;
-  flex-shrink: 1;
-  border-bottom-color: ${colors.greyLight}
+  flex: 1 1;
+  border-bottom-color: ${colors.greyLight};
   border-bottom-width: 1;
 `;
 
 const EventTextContainer = styled.View`
   padding-bottom: 10;
-  flex-direction: row;
-  flex-wrap: wrap;
-  flex-grow: 1;
-  flex-shrink: 1;
+  flex-flow: row wrap;
+  flex: 1 1;
   align-items: center;
 `;
 
 const DateContainer = styled.View`
-  flex: 1;
   align-items: flex-end;
   justify-content: center;
   align-self: flex-start;
   margin-top: 2;
-  flex-grow: 0;
-  flex-shrink: 0;
-  flex-basis: 39;
+  flex: 0 0 39px;
   width: 39;
 `;
 
-const BoldText = styled.Text`
-  font-family: ${styledFonts.fontPrimaryBold}
-  font-size: ${normalize(13)}
-  color: ${colors.primaryDark}
+const Date = styled.Text`
+  color: ${colors.greyDark};
 `;
 
-const DateText = styled.Text`
-  color: ${colors.greyDark};
+const BoldText = styled.Text`
+  ${fonts.fontPrimaryBold};
+  font-size: ${normalize(13)};
+  color: ${colors.primaryDark};
 `;
 
 export class IssueEventListItem extends Component {
@@ -308,22 +326,6 @@ export class IssueEventListItem extends Component {
   }
 }
 
-const marginLeftForIconName = name => {
-  switch (name) {
-    case 'git-branch':
-    case 'git-merge':
-    case 'primitive-dot':
-      return 8;
-    case 'bookmark':
-      return 6;
-    case 'person':
-    case 'lock':
-      return 4;
-    default:
-      return 2;
-  }
-};
-
 class Event extends Component {
   props: {
     iconName: String,
@@ -343,25 +345,21 @@ class Event extends Component {
     } = this.props;
 
     return (
-      <Header>
-        <IconStyled
-          iconStyle={{
-            marginLeft: marginLeftForIconName(iconName),
-            marginTop: 1,
-            color: iconColor,
-          }}
-          containerStyle={[{ backgroundColor: iconBackgroundColor }]}
+      <Container>
+        <Icon
           name={iconName}
           type="octicon"
           size={16}
+          color={iconColor}
+          backgroundColor={iconBackgroundColor}
         />
         <ContentContainer>
           <EventTextContainer>{text}</EventTextContainer>
           <DateContainer>
-            <DateText>{moment(createdAt).fromNow()}</DateText>
+            <Date>{relativeTimeToNow(createdAt)}</Date>
           </DateContainer>
         </ContentContainer>
-      </Header>
+      </Container>
     );
   }
 }

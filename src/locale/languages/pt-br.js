@@ -1,4 +1,4 @@
-export const ptBr = {
+export const ptBR = {
   auth: {
     login: {
       connectingToGitHub: 'Conectando ao GitHub...',
@@ -156,6 +156,10 @@ export const ptBr = {
     },
     repositoryList: {
       title: 'Repositórios',
+    },
+    starredRepositoryList: {
+      title: 'Favoritos',
+      text: 'Favoritos',
     },
     followers: {
       title: 'Seguidores',
@@ -321,18 +325,23 @@ export const ptBr = {
     ok: 'OK',
     submit: 'Enviar',
     relativeTime: {
-      past: '%s',
-      s: '%ds',
-      m: '%dm',
-      mm: '%dm',
-      h: '%dh',
-      hh: '%dh',
-      d: '%dd',
-      dd: '%dd',
-      M: '%dmo',
-      MM: '%dmo',
-      y: '%dy',
-      yy: '%dy',
+      lessThanXSeconds: '{{count}}s',
+      xSeconds: '{{count}}s',
+      halfAMinute: '30s',
+      lessThanXMinutes: '{{count}}m',
+      xMinutes: '{{count}}m',
+      aboutXHours: '{{count}}h',
+      xHours: '{{count}}h',
+      xDays: '{{count}}d',
+      aboutXMonths: '{{count}}mo',
+      xMonths: '{{count}}mo',
+      aboutXYears: '{{count}}y',
+      xYears: '{{count}}y',
+      overXYears: '{{count}}y',
+      almostXYears: '{{count}}y',
+    },
+    abbreviations: {
+      thousand: 'k',
     },
     openInBrowser: 'Abrir no Navegador.',
   },

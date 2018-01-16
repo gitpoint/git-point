@@ -292,6 +292,9 @@ export const issueReducer = (state = initialState, action = {}) => {
         ...state,
         issue: action.payload,
         isPendingIssue: false,
+        pr: initialState.pr,
+        diff: initialState.diff,
+        isMerged: initialState.isMerged,
       };
     case GET_ISSUE_FROM_URL.ERROR:
       return {
