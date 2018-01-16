@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import { ListItem, Icon } from 'react-native-elements';
 
 import { emojifyText, abbreviateNumber } from 'utils';
-import { colors, languageColors, styledFonts, normalize } from 'config';
+import { colors, languageColors, fonts, normalize } from 'config';
 
 type Props = {
   repository: Object,
@@ -32,7 +32,7 @@ const ColoredText = styled.Text`
 `;
 
 const TitleText = ColoredText.extend`
-  font-family: ${styledFonts.fontPrimarySemiBold};
+  ${fonts.fontPrimarySemiBold};
 `;
 
 const PrivateIconContainer = styled.View`
@@ -40,7 +40,7 @@ const PrivateIconContainer = styled.View`
 `;
 
 const DescriptionText = ColoredText.extend`
-  font-family: ${styledFonts.fontPrimaryLight};
+  ${fonts.fontPrimaryLight};
 `;
 
 const ExtraInfoWrapper = styled.View`
@@ -54,7 +54,7 @@ const ExtraInfoText = styled.Text`
   padding-left: 3;
   padding-top: 2;
   margin-right: 15;
-  font-family: ${styledFonts.fontPrimary};
+  ${fonts.fontPrimary};
   font-size: ${normalize(10)};
 `;
 
@@ -117,7 +117,7 @@ const renderTitle = (repository, showFullName) => (
 const Repository = styled(ListItem).attrs({
   titleStyle: {
     color: colors.primaryDark,
-    fontFamily: styledFonts.fontPrimarySemiBold,
+    fontFamily: fonts.fontPrimarySemiBold.fontFamily,
   },
   underlayColor: colors.greyLight,
   containerStyle: {
