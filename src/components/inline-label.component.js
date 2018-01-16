@@ -6,7 +6,7 @@ import { getFontColorByBackground } from 'utils';
 
 const InlineLabelText = styled.Text`
   font-size: ${normalize(10)};
-  ${{ ...fonts.fontPrimarySemiBold }};
+  ${fonts.fontPrimarySemiBold};
   padding-left: 5;
   padding-right: 5;
   margin: 2px;

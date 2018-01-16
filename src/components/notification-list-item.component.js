@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 import { View, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-import { colors, styledFonts, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 
 type Props = {
   notification: Object,
@@ -37,7 +37,7 @@ const TitleContainer = styled.View`
 
 const Title = styled.Text`
   color: ${colors.black};
-  font-family: ${styledFonts.fontPrimary};
+  ${fonts.fontPrimary};
   font-size: ${normalize(12)};
   margin-left: 10px;
 `;

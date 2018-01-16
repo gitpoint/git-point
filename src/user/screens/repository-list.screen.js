@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components/native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { FlatList, Dimensions } from 'react-native';
+import { View, FlatList, Dimensions } from 'react-native';
 
 import {
   ViewContainer,
@@ -129,46 +129,48 @@ class RepositoryList extends Component {
 
     return (
       <ViewContainer>
-        <Header>
-          <SearchBarWrapper>
-            <SearchContainer>
-              <SearchBar
-                textColor={colors.primaryDark}
-                textFieldBackgroundColor={colors.greyLight}
-                showsCancelButton={searchFocus}
-                onFocus={() => this.setState({ searchFocus: true })}
-                onCancelButtonPress={() =>
-                  this.setState({ searchStart: false, query: '' })}
-                onSearchButtonPress={query => {
-                  this.search(query);
-                }}
-                hideBackground
-              />
-            </SearchContainer>
-          </SearchBarWrapper>
-        </Header>
-
-        {loading &&
-          [...Array(searchStart ? repoCount : 10)].map(
-            (item, index) => <LoadingRepositoryListItem key={index} /> // eslint-disable-line react/no-array-index-key
-          )}
-
-        {!loading && (
-          <ListContainer>
-            <FlatList
-              removeClippedSubviews={false}
-              data={this.getList()}
-              keyExtractor={this.keyExtractor}
-              renderItem={({ item }) => (
-                <RepositoryListItem
-                  repository={item}
-                  showFullName={authUser.login !== item.owner.login}
-                  navigation={navigation}
+        <View>
+          <Header>
+            <SearchBarWrapper>
+              <SearchContainer>
+                <SearchBar
+                  textColor={colors.primaryDark}
+                  textFieldBackgroundColor={colors.greyLight}
+                  showsCancelButton={searchFocus}
+                  onFocus={() => this.setState({ searchFocus: true })}
+                  onCancelButtonPress={() =>
+                    this.setState({ searchStart: false, query: '' })}
+                  onSearchButtonPress={query => {
+                    this.search(query);
+                  }}
+                  hideBackground
                 />
-              )}
-            />
-          </ListContainer>
-        )}
+              </SearchContainer>
+            </SearchBarWrapper>
+          </Header>
+
+          {loading &&
+            [...Array(searchStart ? repoCount : 10)].map(
+              (item, index) => <LoadingRepositoryListItem key={index} /> // eslint-disable-line react/no-array-index-key
+            )}
+
+          {!loading && (
+            <ListContainer>
+              <FlatList
+                removeClippedSubviews={false}
+                data={this.getList()}
+                keyExtractor={this.keyExtractor}
+                renderItem={({ item }) => (
+                  <RepositoryListItem
+                    repository={item}
+                    showFullName={authUser.login !== item.owner.login}
+                    navigation={navigation}
+                  />
+                )}
+              />
+            </ListContainer>
+          )}
+        </View>
       </ViewContainer>
     );
   }
