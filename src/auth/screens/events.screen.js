@@ -5,11 +5,10 @@ import styled from 'styled-components/native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Text, FlatList, View } from 'react-native';
-import moment from 'moment/min/moment-with-locales.min';
 
 import { LoadingUserListItem, UserListItem, ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
-import { emojifyText, translate } from 'utils';
+import { emojifyText, translate, relativeTimeToNow } from 'utils';
 import { getUserEvents } from 'auth';
 import { getNotificationsCount } from 'notifications';
 
@@ -492,7 +491,7 @@ class Events extends Component {
         {this.getItem(userEvent) && ' '}
         {this.getSecondItem(userEvent)}
         {this.getItem(userEvent) && this.getConnector(userEvent) && ' '}
-        <Datestamp>{moment(userEvent.created_at).fromNow()}</Datestamp>
+        <Datestamp>{relativeTimeToNow(userEvent.created_at)}</Datestamp>
       </DescriptionContainer>
     );
   }
