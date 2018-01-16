@@ -286,7 +286,8 @@ class Events extends Component {
       case 'PushEvent':
         return (
           <LinkBranchDescription>
-            {userEvent.payload.ref.replace('refs/heads/', '')}
+            {' '}
+            {userEvent.payload.ref.replace('refs/heads/', '')}{' '}
           </LinkBranchDescription>
         );
       case 'ReleaseEvent':
