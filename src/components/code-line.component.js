@@ -6,7 +6,7 @@ import { Text, Dimensions } from 'react-native';
 import SyntaxHighlighter from 'react-native-syntax-highlighter';
 import { getLanguage } from 'lowlight';
 import { github as GithubStyle } from 'react-syntax-highlighter/dist/styles';
-import { colors, normalize, styledFonts } from 'config';
+import { colors, normalize, fonts } from 'config';
 import styled, { css } from 'styled-components/native';
 
 function addOrDelLineColors(change) {
@@ -45,7 +45,7 @@ const CodeLineContainer = styled.View`
 `;
 
 const CodeLineStyled = styled.Text`
-  font-family: ${styledFonts.fontCode};
+  ${fonts.fontCode};
   font-size: ${normalize(11)};
   padding: 3px 10px;
   ${props =>
@@ -67,7 +67,7 @@ const LineNumbers = styled.View`
 `;
 
 const CodeLineNumber = styled.Text`
-  font-family: ${styledFonts.fontCode};
+  ${fonts.fontCode};
   font-size: ${normalize(11)};
   flex: 1;
   align-items: center;
@@ -125,7 +125,7 @@ export class CodeLine extends Component {
                 style={GithubStyle}
                 CodeTag={Text}
                 customStyle={customStyle}
-                fontFamily={styledFonts.fontCode}
+                fontFamily={fonts.fontCode.fontFamily}
                 fontSize={normalize(11)}
               >
                 {change.content}
