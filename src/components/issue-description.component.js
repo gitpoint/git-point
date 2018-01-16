@@ -94,11 +94,11 @@ export class IssueDescription extends Component {
   };
 
   navigateToCommitList = () => {
-    const { commits } = this.props;
+    const { commits, locale } = this.props;
 
     if (commits.length > 1) {
       this.props.navigation.navigate('CommitList', {
-        title: translate('repository.commitList.title', this.props.language),
+        title: translate('repository.commitList.title', locale),
         commits,
       });
     } else {
@@ -143,7 +143,7 @@ export class IssueDescription extends Component {
 
     return (
       <View style={(styles.container, styles.borderBottom)}>
-        {issue.repository_url &&
+        {issue.repository_url && (
           <ListItem
             title={issue.repository_url.replace(`${v3.root}/repos/`, '')}
             titleStyle={styles.titleSmall}
@@ -155,7 +155,8 @@ export class IssueDescription extends Component {
             }}
             onPress={() => onRepositoryPress(issue.repository_url)}
             hideChevron
-          />}
+          />
+        )}
 
         <View style={styles.headerContainer}>
           <ListItem
@@ -174,79 +175,88 @@ export class IssueDescription extends Component {
 
           {!issue.pull_request ||
             (issue.pull_request &&
-              !isPendingCheckMerge &&
-              <StateBadge
-                style={styles.badge}
-                issue={issue}
-                isMerged={isMerged && issue.pull_request}
-                locale={locale}
-              />)}
+              !isPendingCheckMerge && (
+                <StateBadge
+                  style={styles.badge}
+                  issue={issue}
+                  isMerged={isMerged && issue.pull_request}
+                  locale={locale}
+                />
+              ))}
         </View>
 
-        {issue.pull_request &&
+        {issue.pull_request && (
           <View style={styles.diffBlocksContainer}>
-            {isPendingCommit &&
-              <ActivityIndicator animating={isPendingCommit} size="small" />}
+            {isPendingCommit && (
+              <ActivityIndicator animating={isPendingCommit} size="small" />
+            )}
 
-            {isPendingDiff &&
-              <ActivityIndicator animating={isPendingDiff} size="small" />}
+            {isPendingDiff && (
+              <ActivityIndicator animating={isPendingDiff} size="small" />
+            )}
 
-            {!isPendingCommit &&
+            {!isPendingCommit && (
               <TouchableHighlight
                 onPress={() => this.navigateToCommitList()}
                 underlayColor={colors.greyLight}
               >
                 <Text>{`${commits.length} commits`}</Text>
-              </TouchableHighlight>}
+              </TouchableHighlight>
+            )}
 
             {!isPendingDiff &&
-              (lineAdditions !== 0 || lineDeletions !== 0) &&
-              <DiffBlocks
-                additions={lineAdditions}
-                deletions={lineDeletions}
-                showNumbers
-                onPress={() =>
-                  navigation.navigate('PullDiff', {
-                    title: translate('repository.pullDiff.title', locale),
-                    locale,
-                    diff,
-                  })}
-              />}
-          </View>}
+              (lineAdditions !== 0 || lineDeletions !== 0) && (
+                <DiffBlocks
+                  additions={lineAdditions}
+                  deletions={lineDeletions}
+                  showNumbers
+                  onPress={() =>
+                    navigation.navigate('PullDiff', {
+                      title: translate('repository.pullDiff.title', locale),
+                      locale,
+                      diff,
+                    })}
+                />
+              )}
+          </View>
+        )}
 
         {issue.labels &&
-          issue.labels.length > 0 &&
-          <View style={styles.labelButtonGroup}>
-            {this.renderLabelButtons(issue.labels)}
-          </View>}
+          issue.labels.length > 0 && (
+            <View style={styles.labelButtonGroup}>
+              {this.renderLabelButtons(issue.labels)}
+            </View>
+          )}
         {issue.assignees &&
-          issue.assignees.length > 0 &&
-          <View style={styles.assigneesSection}>
-            <MembersList
-              title={translate('issue.main.assignees', locale)}
-              members={issue.assignees}
-              containerStyle={{ marginTop: 0, paddingTop: 0, paddingLeft: 0 }}
-              smallTitle
-              navigation={navigation}
-            />
-          </View>}
+          issue.assignees.length > 0 && (
+            <View style={styles.assigneesSection}>
+              <MembersList
+                title={translate('issue.main.assignees', locale)}
+                members={issue.assignees}
+                containerStyle={{ marginTop: 0, paddingTop: 0, paddingLeft: 0 }}
+                smallTitle
+                navigation={navigation}
+              />
+            </View>
+          )}
 
         {issue.pull_request &&
           !isMerged &&
           issue.state === 'open' &&
-          userHasPushPermission &&
-          <View style={styles.mergeButtonContainer}>
-            <Button
-              type={isMergeable ? 'success' : 'default'}
-              icon={{ name: 'git-merge', type: 'octicon' }}
-              disabled={!isMergeable}
-              onPress={() =>
-                navigation.navigate('PullMerge', {
-                  title: translate('issue.pullMerge.title', locale),
-                })}
-              title={translate('issue.main.mergeButton', locale)}
-            />
-          </View>}
+          userHasPushPermission && (
+            <View style={styles.mergeButtonContainer}>
+              <Button
+                type={isMergeable ? 'success' : 'default'}
+                icon={{ name: 'git-merge', type: 'octicon' }}
+                disabled={!isMergeable}
+                onPress={() =>
+                  navigation.navigate('PullMerge', {
+                    title: translate('issue.pullMerge.title', locale),
+                  })}
+                title={translate('issue.main.mergeButton', locale)}
+              />
+            </View>
+          )}
       </View>
     );
   }
