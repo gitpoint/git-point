@@ -133,6 +133,7 @@
     "react-test-renderer": "^16.0.0",
     "reactotron-react-native": "^1.12.2",
     "reactotron-redux": "^1.12.2",
+    "standard-changelog": "^1.0.7",
     "stylelint": "^8.2.0",
     "stylelint-config-standard": "^17.0.0",
     "stylelint-config-styled-components": "^0.1.1",
