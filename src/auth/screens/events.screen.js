@@ -43,12 +43,17 @@ const LinkDescription = styled.Text`
 `;
 
 const LinkBranchDescription = styled.Text`
+  background-color: ${colors.codeChunkBlue};
+  color: ${colors.blue};
   ${fonts.fontCode};
+  font-size: ${normalize(11)};
 `;
 
 const DeletedLinkBranchDescription = styled.Text`
+  background-color: ${colors.greyVeryLight};
   color: ${colors.greyDarkest};
   ${fonts.fontCode};
+  font-size: ${normalize(11)};
 `;
 
 const Datestamp = styled.Text`
@@ -214,7 +219,8 @@ class Events extends Component {
         ) {
           return (
             <LinkBranchDescription>
-              {userEvent.payload.ref}
+              {' '}
+              {userEvent.payload.ref}{' '}
             </LinkBranchDescription>
           );
         } else if (userEvent.payload.ref_type === 'repository') {
@@ -232,7 +238,8 @@ class Events extends Component {
       case 'DeleteEvent':
         return (
           <DeletedLinkBranchDescription>
-            {userEvent.payload.ref}
+            {' '}
+            {userEvent.payload.ref}{' '}
           </DeletedLinkBranchDescription>
         ); // can only be branch or tag
       case 'ForkEvent':
@@ -279,7 +286,8 @@ class Events extends Component {
       case 'PushEvent':
         return (
           <LinkBranchDescription>
-            {userEvent.payload.ref.replace('refs/heads/', '')}
+            {' '}
+            {userEvent.payload.ref.replace('refs/heads/', '')}{' '}
           </LinkBranchDescription>
         );
       case 'ReleaseEvent':
