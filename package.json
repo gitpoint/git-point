@@ -79,7 +79,7 @@
     "react-native-linear-gradient": "^2.3.0",
     "react-native-material-design-searchbar": "^1.1.4",
     "react-native-mock": "https://github.com/shqld/react-native-mock/tarball/master",
-    "react-native-parallax-scroll-view": "https://github.com/mini-eggs/react-native-parallax-scroll-view/tarball/react16-support",
+    "react-native-parallax-scroll-view": "^0.20.1",
     "react-native-photo-view": "^1.5.2",
     "react-native-safari-view": "^2.0.0",
     "react-native-search-bar": "https://github.com/andrewda/react-native-search-bar/tarball/master",
