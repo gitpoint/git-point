@@ -366,6 +366,7 @@ class Repository extends Component {
               <ListItem
                 title={translate('repository.main.viewCommit', locale)}
                 titleStyle={styles.listTitle}
+                containerStyle={styles.listContainerStyle}
                 leftIcon={{
                   name: 'git-commit',
                   color: colors.grey,

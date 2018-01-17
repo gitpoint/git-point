@@ -243,14 +243,7 @@ export const getCommitDetails = commit => {
     const url = commit.url || commit.commit.url;
 
     dispatch(getCommitFromUrl(url));
-    dispatch(
-      getCommitDiffFromUrl(
-        url
-          .replace('https://api.github.com/repos/', 'https://github.com/')
-          .replace('/commits/', '/commit/')
-          .concat('.diff')
-      )
-    );
+    dispatch(getCommitDiffFromUrl(url));
   };
 };
 
