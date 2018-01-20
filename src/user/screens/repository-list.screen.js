@@ -1,8 +1,9 @@
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
+import styled from 'styled-components/native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { FlatList, View, Dimensions, StyleSheet } from 'react-native';
+import { View, FlatList, Dimensions } from 'react-native';
 
 import {
   ViewContainer,
@@ -31,26 +32,24 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-const styles = StyleSheet.create({
-  header: {
-    borderBottomColor: colors.greyLight,
-    borderBottomWidth: 1,
-  },
-  searchBarWrapper: {
-    flexDirection: 'row',
-  },
-  searchContainer: {
-    width: Dimensions.get('window').width,
-    backgroundColor: colors.white,
-    flex: 1,
-  },
-  searchCancelButton: {
-    color: colors.black,
-  },
-  listContainer: {
-    marginBottom: 90,
-  },
-});
+const Header = styled.View`
+  border-bottom-color: ${colors.greyLight};
+  border-bottom-width: 1;
+`;
+
+const SearchBarWrapper = styled.View`
+  flex-direction: row;
+`;
+
+const SearchContainer = styled.View`
+  width: ${Dimensions.get('window').width};
+  background-color: ${colors.white};
+  flex: 1;
+`;
+
+const ListContainer = styled.View`
+  margin-bottom: 90;
+`;
 
 class RepositoryList extends Component {
   props: {
@@ -131,9 +130,9 @@ class RepositoryList extends Component {
     return (
       <ViewContainer>
         <View>
-          <View style={styles.header}>
-            <View style={styles.searchBarWrapper}>
-              <View style={styles.searchContainer}>
+          <Header>
+            <SearchBarWrapper>
+              <SearchContainer>
                 <SearchBar
                   textColor={colors.primaryDark}
                   textFieldBackgroundColor={colors.greyLight}
@@ -146,9 +145,9 @@ class RepositoryList extends Component {
                   }}
                   hideBackground
                 />
-              </View>
-            </View>
-          </View>
+              </SearchContainer>
+            </SearchBarWrapper>
+          </Header>
 
           {loading &&
             [...Array(searchStart ? repoCount : 10)].map(
@@ -156,7 +155,7 @@ class RepositoryList extends Component {
             )}
 
           {!loading && (
-            <View style={styles.listContainer}>
+            <ListContainer>
               <FlatList
                 removeClippedSubviews={false}
                 data={this.getList()}
@@ -169,7 +168,7 @@ class RepositoryList extends Component {
                   />
                 )}
               />
-            </View>
+            </ListContainer>
           )}
         </View>
       </ViewContainer>

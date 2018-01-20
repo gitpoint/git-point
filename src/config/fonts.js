@@ -4,5 +4,5 @@ export const fonts = {
   fontPrimaryItalic: { fontFamily: 'Nunito-Italic' },
   fontPrimarySemiBold: { fontFamily: 'Nunito-SemiBold' },
   fontPrimaryBold: { fontFamily: 'Nunito-Bold' },
-  fontCode: { fontFamily: 'Menlo' },
+  fontCode: { fontFamily: 'Inconsolata-Regular' },
 };

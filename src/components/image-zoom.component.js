@@ -53,6 +53,9 @@ export class ImageZoom extends Component {
     this.state = {
       imgZoom: false,
     };
+
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   openModal() {
@@ -68,11 +71,22 @@ export class ImageZoom extends Component {
 
     if (this.state.imgZoom) {
       return (
-        <Modal animationType={'fade'} onRequestClose={() => this.closeModal()}>
+        <Modal
+          nativeId="image-zoom-modal"
+          animationType={'fade'}
+          onRequestClose={this.closeModal}
+        >
           <ModalContainer>
-            <StyledPhotoView onTap={() => this.closeModal()} source={uri} />
+            <StyledPhotoView
+              nativeId="image-zoom-photo-view"
+              onTap={this.closeModal}
+              source={uri}
+            />
 
-            <CloseButton onPress={() => this.closeModal()}>
+            <CloseButton
+              nativeId="image-zoom-close-button"
+              onPress={this.closeModal}
+            >
               <CloseIcon />
             </CloseButton>
           </ModalContainer>
@@ -81,7 +95,11 @@ export class ImageZoom extends Component {
     }
 
     return (
-      <Touchable onPress={() => this.openModal()} underlayColor="transparent">
+      <Touchable
+        nativeId="image-zoom-clickable-img"
+        onPress={this.openModal}
+        underlayColor="transparent"
+      >
         <Image style={style} source={uri} />
       </Touchable>
     );
