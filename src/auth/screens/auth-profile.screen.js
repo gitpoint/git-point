@@ -3,8 +3,6 @@ import styled from 'styled-components/native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
-  StyleSheet,
-  Text,
   RefreshControl,
   View,
   ActivityIndicator,
@@ -44,30 +42,17 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-const styles = StyleSheet.create({
-  update: {
-    flex: 1,
-    alignItems: 'center',
-    marginVertical: 40,
-  },
-  updateText: {
-    color: colors.greyDark,
-    ...fonts.fontPrimary,
-  },
-  updateTextSub: {
-    fontSize: normalize(11),
-  },
-  note: {
-    fontSize: normalize(11),
-    color: colors.primaryDark,
-    ...fonts.fontPrimaryLight,
-    textAlign: 'center',
-    padding: 10,
-  },
-  noteLink: {
-    ...fonts.fontPrimarySemiBold,
-  },
-});
+const Note = styled.Text`
+  font-size: ${normalize(11)};
+  color: ${colors.primaryDark};
+  ${fonts.fontPrimaryLight};
+  text-align: center;
+  padding: 10px;
+`;
+
+const NoteLink = styled.Text`
+  ${fonts.fontPrimarySemiBold};
+`;
 
 const BioListItem = styled(ListItem).attrs({
   containerStyle: {
@@ -193,11 +178,10 @@ class AuthProfile extends Component {
                     navigation={navigation}
                   />
                 ))}
-                <Text style={styles.note}>
+                <Note>
                   {translate('auth.profile.orgsRequestApprovalTop', locale)}
                   {'\n'}
-                  <Text
-                    style={styles.noteLink}
+                  <NoteLink
                     onPress={() =>
                       openURLInView('https://github.com/settings/applications')}
                   >
@@ -205,8 +189,8 @@ class AuthProfile extends Component {
                       'auth.profile.orgsRequestApprovalBottom',
                       locale
                     )}
-                  </Text>
-                </Text>
+                  </NoteLink>
+                </Note>
               </SectionList>
             </View>
           )}

@@ -1,43 +1,47 @@
 import React, { Component } from 'react';
-import { StyleSheet, ScrollView, View, Text } from 'react-native';
+import styled from 'styled-components/native';
+import { ScrollView } from 'react-native';
 
 import { ViewContainer } from 'components';
 import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
 import { v3 } from 'api';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 15,
-  },
-  title: {
-    fontSize: normalize(14),
-    color: colors.primaryDark,
-    ...fonts.fontPrimarySemiBold,
-    marginBottom: 15,
-  },
-  section: {
-    borderTopColor: colors.greyLight,
-    borderTopWidth: 3,
-    paddingVertical: 15,
-  },
-  sectionTitle: {
-    fontSize: normalize(12),
-    color: colors.primaryDark,
-    ...fonts.fontPrimaryBold,
-    marginBottom: 15,
-  },
-  text: {
-    fontSize: normalize(12),
-    color: colors.primaryDark,
-    ...fonts.fontPrimary,
-    marginBottom: 15,
-  },
-  link: {
-    ...fonts.fontPrimarySemiBold,
-  },
-});
+const Container = styled.View`
+  flex: 1;
+  padding: 15px;
+`;
+
+const Title = styled.Text`
+  font-size: ${normalize(14)};
+  color: ${colors.primaryDark};
+  ${fonts.fontPrimarySemiBold};
+  margin-bottom: 15;
+`;
+
+const Section = styled.View`
+  border-top-color: ${colors.greyLight};
+  border-top-width: 3;
+  padding-vertical: 15;
+`;
+
+const SectionTitle = styled.Text`
+  font-size: ${normalize(12)};
+  color: ${colors.primaryDark};
+  ${fonts.fontPrimaryBold};
+  margin-bottom: 15;
+`;
+
+const StyledText = styled.Text`
+  font-size: ${normalize(12)};
+  color: ${colors.primaryDark};
+  ${fonts.fontPrimary};
+  margin-bottom: 15;
+`;
+
+const Link = styled.Text`
+  ${fonts.fontPrimarySemiBold};
+`;
 
 export class PrivacyPolicyScreen extends Component {
   props: {
@@ -51,82 +55,81 @@ export class PrivacyPolicyScreen extends Component {
     return (
       <ViewContainer>
         <ScrollView>
-          <View style={styles.container}>
-            <Text style={styles.title}>
+          <Container>
+            <Title>
               {translate('auth.privacyPolicy.effectiveDate', locale)}
-            </Text>
+            </Title>
 
-            <View style={styles.section}>
-              <Text style={styles.text}>
+            <Section>
+              <StyledText>
                 {translate('auth.privacyPolicy.introduction', locale)}
-              </Text>
-            </View>
+              </StyledText>
+            </Section>
 
-            <View style={styles.section}>
-              <Text style={styles.sectionTitle}>
+            <Section>
+              <SectionTitle>
                 {translate('auth.privacyPolicy.userDataTitle', locale)}
-              </Text>
+              </SectionTitle>
 
-              <Text style={styles.text}>
+              <StyledText>
                 {translate('auth.privacyPolicy.userData1', locale)}
-              </Text>
+              </StyledText>
 
-              <Text style={styles.text}>
+              <StyledText>
                 {translate('auth.privacyPolicy.userData2', locale)}
-              </Text>
-            </View>
+              </StyledText>
+            </Section>
 
-            <View style={styles.section}>
-              <Text style={styles.sectionTitle}>
+            <Section>
+              <SectionTitle>
                 {translate('auth.privacyPolicy.analyticsInfoTitle', locale)}
-              </Text>
+              </SectionTitle>
 
-              <Text style={styles.text}>
+              <StyledText>
                 {translate('auth.privacyPolicy.analyticsInfo1', locale)}
-              </Text>
+              </StyledText>
 
-              <Text style={styles.text}>
+              <StyledText>
                 {translate('auth.privacyPolicy.analyticsInfo2', locale)}
-              </Text>
-            </View>
+              </StyledText>
+            </Section>
 
-            <View style={styles.section}>
-              <Text style={styles.sectionTitle}>
+            <Section>
+              <SectionTitle>
                 {translate('auth.privacyPolicy.openSourceTitle', locale)}
-              </Text>
+              </SectionTitle>
 
-              <Text style={styles.text}>
+              <StyledText>
                 {translate('auth.privacyPolicy.openSource1', locale)}
-              </Text>
+              </StyledText>
 
-              <Text style={styles.text}>
+              <StyledText>
                 {translate('auth.privacyPolicy.openSource2', locale)}
-              </Text>
-            </View>
+              </StyledText>
+            </Section>
 
-            <View style={styles.section}>
-              <Text style={styles.sectionTitle}>
+            <Section>
+              <SectionTitle>
                 {translate('auth.privacyPolicy.contactTitle', locale)}
-              </Text>
+              </SectionTitle>
 
-              <Text style={styles.text}>
+              <StyledText>
                 {translate('auth.privacyPolicy.contact1', locale)}
-              </Text>
+              </StyledText>
 
-              <Text style={styles.text}>
+              <StyledText>
                 {translate('auth.privacyPolicy.contact2', locale)}{' '}
-                <Text
-                  style={styles.link}
+                <Link
                   onPress={() =>
                     navigation.navigate('Repository', {
                       repositoryUrl: `${v3.root}/repos/gitpoint/git-point`,
                     })}
                 >
                   {translate('auth.privacyPolicy.contactLink', locale)}
-                </Text>
-              </Text>
-            </View>
-          </View>
+                </Link>
+              </StyledText>
+            </Section>
+          </Container>
         </ScrollView>
       </ViewContainer>
     );
