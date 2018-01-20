@@ -262,7 +262,7 @@ class Login extends Component {
     const { locale, isLoggingIn, hasInitialUser } = this.props;
 
     return (
-      <ViewContainer barColor="light">
+      <ViewContainer>
         {this.shouldDisplayIntro() && (
           <Swiper
             loop={false}
@@ -360,6 +360,7 @@ class Login extends Component {
                   onNavigationStateChange={e => this.onNavigationStateChange(e)}
                   renderLoading={() => this.renderLoading()}
                   startInLoadingState
+                  javaScriptEnabled
                 />
               </View>
               <View style={styles.miniSection}>

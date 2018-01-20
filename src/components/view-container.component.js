@@ -1,11 +1,9 @@
 import React from 'react';
-import { StatusBar } from 'react-native';
 import styled from 'styled-components/native';
 
 import { colors } from 'config';
 
 type Props = {
-  barColor: string,
   children?: React.Element<*>,
 };
 
@@ -17,13 +15,8 @@ const Container = styled.View`
   background-color: ${colors.white};
 `;
 
-export const ViewContainer = ({ barColor, children }: Props) => (
-  <Container>
-    <StatusBar
-      barStyle={barColor === 'light' ? 'light-content' : 'dark-content'}
-    />
-    {children}
-  </Container>
+export const ViewContainer = ({ children }: Props) => (
+  <Container>{children}</Container>
 );
 
 ViewContainer.defaultProps = {

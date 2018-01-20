@@ -1,8 +1,8 @@
 // @flow
 
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-
+import { TouchableOpacity } from 'react-native';
+import styled from 'styled-components/native';
 import { colors, fonts } from 'config';
 
 type Props = {
@@ -12,42 +12,51 @@ type Props = {
   onPress: Function,
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  linesChanged: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  numAdditions: {
-    marginRight: 3,
-    ...fonts.fontPrimarySemiBold,
-    color: colors.green,
-    letterSpacing: 1,
-  },
-  numDeletions: {
-    marginRight: 2,
-    ...fonts.fontPrimarySemiBold,
-    color: colors.red,
-    letterSpacing: 1,
-  },
-  block: {
-    width: 7,
-    height: 7,
-    marginLeft: 1,
-  },
-  greenBlock: {
-    backgroundColor: colors.green,
-  },
-  redBlock: {
-    backgroundColor: colors.darkRed,
-  },
-  greyBlock: {
-    backgroundColor: colors.greyMid,
-  },
-});
+const DiffBlocksViewContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
+const DiffBlocksTouchableContainer = DiffBlocksViewContainer.withComponent(
+  TouchableOpacity
+);
+
+const Num = styled.Text`
+  letter-spacing: 1;
+  ${fonts.fontPrimarySemiBold};
+`;
+
+const NumAdditions = Num.extend`
+  margin-right: 3;
+  color: ${colors.green};
+`;
+
+const NumDeletions = Num.extend`
+  margin-right: 2;
+  color: ${colors.red};
+`;
+
+const LinesChanged = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
+
+const Block = styled.View`
+  width: 7;
+  height: 7;
+  margin-left: 1;
+`;
+
+const AddedBlock = Block.extend`
+  background-color: ${colors.green};
+`;
+
+const DeletedBlock = Block.extend`
+  background-color: ${colors.darkRed};
+`;
+
+const NeutralBlock = Block.extend`
+  background-color: ${colors.greyMid};
+`;
 
 export const DiffBlocks = ({
   additions,
@@ -57,42 +66,44 @@ export const DiffBlocks = ({
 }: Props) => {
   const linesChanged = additions + deletions;
 
-  let greenBlocks = null;
-  let redBlocks = null;
-  let greyBlocks = null;
+  let addedBlocks = null;
+  let deletedBlocks = null;
+  let neutralBlocks = null;
 
   if (linesChanged <= 5) {
-    greenBlocks = additions;
-    redBlocks = deletions;
-    greyBlocks = 5 - (greenBlocks + redBlocks);
+    addedBlocks = additions;
+    deletedBlocks = deletions;
+    neutralBlocks = 5 - (addedBlocks + deletedBlocks);
   } else {
-    greenBlocks = Math.floor(additions / linesChanged * 5);
-    redBlocks = Math.floor(deletions / linesChanged * 5);
-    greyBlocks = 5 - (greenBlocks + redBlocks);
+    addedBlocks = Math.floor(additions / linesChanged * 5);
+    deletedBlocks = Math.floor(deletions / linesChanged * 5);
+    neutralBlocks = 5 - (addedBlocks + deletedBlocks);
   }
 
-  const Component = onPress ? TouchableOpacity : View;
+  const Container = onPress
+    ? DiffBlocksTouchableContainer
+    : DiffBlocksViewContainer;
 
   return (
-    <Component style={styles.container} onPress={onPress}>
+    <Container onPress={onPress}>
       {showNumbers && (
-        <View style={styles.linesChanged}>
-          <Text style={styles.numAdditions}>{`+${additions}`}</Text>
-          <Text style={styles.numDeletions}>{`-${deletions}`}</Text>
-        </View>
+        <LinesChanged>
+          <NumAdditions>{`+${additions}`}</NumAdditions>
+          <NumDeletions>{`-${deletions}`}</NumDeletions>
+        </LinesChanged>
       )}
 
-      {[...Array(greenBlocks)].map((item, index) => {
-        return <View key={index} style={[styles.block, styles.greenBlock]} />; // eslint-disable-line react/no-array-index-key
+      {[...Array(addedBlocks)].map((item, index) => {
+        return <AddedBlock key={index} />; // eslint-disable-line react/no-array-index-key
       })}
 
-      {[...Array(redBlocks)].map((item, index) => {
-        return <View key={index} style={[styles.block, styles.redBlock]} />; // eslint-disable-line react/no-array-index-key
+      {[...Array(deletedBlocks)].map((item, index) => {
+        return <DeletedBlock key={index} />; // eslint-disable-line react/no-array-index-key
       })}
 
-      {[...Array(greyBlocks)].map((item, index) => {
-        return <View key={index} style={[styles.block, styles.greyBlock]} />; // eslint-disable-line react/no-array-index-key
+      {[...Array(neutralBlocks)].map((item, index) => {
+        return <NeutralBlock key={index} />; // eslint-disable-line react/no-array-index-key
       })}
-    </Component>
+    </Container>
   );
 };

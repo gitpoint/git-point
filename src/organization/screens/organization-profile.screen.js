@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import styled from 'styled-components/native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { StyleSheet, RefreshControl } from 'react-native';
+import { RefreshControl } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { createStructuredSelector } from 'reselect';
 import ActionSheet from 'react-native-actionsheet';
@@ -47,16 +48,12 @@ const actionCreators = {
 
 const actions = dispatch => bindActionCreators(actionCreators, dispatch);
 
-const styles = StyleSheet.create({
-  listTitle: {
-    color: colors.black,
-    ...fonts.fontPrimary,
-  },
-  listSubTitle: {
+const DescriptionListItem = styled(ListItem).attrs({
+  subtitleStyle: {
     color: colors.greyDark,
     ...fonts.fontPrimary,
   },
-});
+})``;
 
 class OrganizationProfile extends Component {
   props: {
@@ -172,9 +169,8 @@ class OrganizationProfile extends Component {
               <SectionList
                 title={translate('organization.main.descriptionTitle', locale)}
               >
-                <ListItem
+                <DescriptionListItem
                   subtitle={emojifyText(organization.description)}
-                  subtitleStyle={styles.listSubTitle}
                   hideChevron
                 />
               </SectionList>

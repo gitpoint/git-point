@@ -1,9 +1,9 @@
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
+import styled from 'styled-components/native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
-  StyleSheet,
   ActivityIndicator,
   Dimensions,
   View,
@@ -57,12 +57,16 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-const styles = StyleSheet.create({
-  listTitle: {
+const BioListItem = styled(ListItem).attrs({
+  containerStyle: {
+    borderBottomColor: colors.greyLight,
+    borderBottomWidth: 1,
+  },
+  titleStyle: {
     color: colors.greyDark,
     ...fonts.fontPrimary,
   },
-});
+})``;
 
 class Profile extends Component {
   props: {
@@ -206,10 +210,9 @@ class Profile extends Component {
                 {!!user.bio &&
                   user.bio !== '' && (
                     <SectionList title={translate('common.bio', locale)}>
-                      <ListItem
+                      <BioListItem
                         titleNumberOfLines={0}
                         title={emojifyText(user.bio)}
-                        titleStyle={styles.listTitle}
                         hideChevron
                       />
                     </SectionList>

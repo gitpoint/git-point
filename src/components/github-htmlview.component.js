@@ -243,7 +243,7 @@ export class GithubHtmlView extends Component {
           <View key={index}>{defaultRenderer(node.children, node)}</View>
         ),
         code: (node, index, siblings, parent, defaultRenderer) => {
-          if (parent.name === 'pre') {
+          if (parent && parent.name === 'pre') {
             return (
               <SyntaxHighlighter
                 key={index}

@@ -35,7 +35,7 @@ Please feel free to take on any issue that's currently open. Feel free to resolv
 8. Use one of the following commands depending on the target platform:
     - `yarn start:ios` to start the packager and run the app in the iOS simulator (`yarn start:ios:logger` will boot the application with [redux-logger](https://github.com/evgenyrodionov/redux-logger))
     - `yarn start:android` to start the packager and run the app in the the Android device/emulator (`yarn start:android:logger` will boot the application with [redux-logger](https://github.com/evgenyrodionov/redux-logger))
-9. Work your magic! Run the app on an [actual device](http://facebook.github.io/react-native/releases/0.46/docs/running-on-device.html#running-on-device) as well to test your feature/fix.
+9. Work your magic! Run the app on an [actual device](https://facebook.github.io/react-native/docs/running-on-device.html) as well to test your feature/fix.
 10. Add yourself to the [contributor's list](https://github.com/gitpoint/git-point/blob/master/CONTRIBUTORS.md) by doing `yarn contributors:add`
 11. Commit your changes with a message following the [Angular commit conventions](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines)
     - [Commitizen](https://github.com/commitizen/cz-cli) works with this repo. You can install the CLI globally (`yarn global add commitizen`) where you can then create formatted commit messages with `git cz` by filling out a few required fields

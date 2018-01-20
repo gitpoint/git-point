@@ -8,9 +8,7 @@ import { GithubHtmlView } from 'components';
 import { Icon } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
 
-import moment from 'moment/min/moment-with-locales.min';
-
-import { translate } from 'utils';
+import { translate, relativeTimeToNow } from 'utils';
 import { colors, fonts, normalize } from 'config';
 
 const styles = StyleSheet.create({
@@ -178,7 +176,7 @@ class CommentListItemComponent extends Component {
 
           <View style={styles.dateContainer}>
             <Text style={styles.date}>
-              {moment(comment.created_at).fromNow()}
+              {relativeTimeToNow(comment.created_at)}
             </Text>
           </View>
         </View>
