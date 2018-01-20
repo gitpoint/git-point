@@ -5,7 +5,7 @@ import { List, ListItem } from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components/native';
 
-import { colors, styledFonts } from 'config';
+import { colors, fonts } from 'config';
 
 const mapStateToProps = state => ({
   authUser: state.auth.user,
@@ -14,8 +14,8 @@ const mapStateToProps = state => ({
 type Props = {
   title: string,
   members: Array,
+  noMargin: Boolean,
   noMembersMessage: string,
-  containerStyle: Object,
   smallTitle: string,
   navigation: Object,
   authUser: Object,
@@ -60,9 +60,7 @@ const NoMembersList = styled(List).attrs({
 const SectionTitle = styled.Text`
   color: ${props => (props.isTitleSmall ? colors.primaryDark : colors.black)};
   ${props =>
-    props.isTitleSmall
-      ? styledFonts.fontPrimarySemiBold
-      : styledFonts.fontPrimaryBold};
+    props.isTitleSmall ? fonts.fontPrimarySemiBold : fonts.fontPrimaryBold};
   margin-bottom: 10;
   padding-left: 15;
 `;
@@ -104,12 +102,12 @@ const MembersListComponent = ({
   title,
   members,
   noMembersMessage,
-  containerStyle,
+  noMargin,
   smallTitle,
   navigation,
   authUser,
 }: Props) => (
-  <Container style={containerStyle}>
+  <Container noMargin={noMargin}>
     <SectionTitle isTitleSmall={smallTitle}>{title}</SectionTitle>
 
     {noMembersMessage &&
