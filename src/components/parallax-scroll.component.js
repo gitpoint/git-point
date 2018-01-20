@@ -4,7 +4,7 @@ import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { Icon } from 'react-native-elements';
 import styled from 'styled-components/native';
 
-import { colors, normalize, styledFonts } from 'config';
+import { colors, normalize, fonts } from 'config';
 
 const STICKY_HEADER_HEIGHT = 62;
 
@@ -40,9 +40,9 @@ const StickySection = styled.View`
 
 const StickySectionText = styled.Text`
   color: ${colors.white};
-  font-family: ${styledFonts.fontPrimaryBold};
   font-size: ${normalize(16)};
   margin: 10px;
+  ${fonts.fontPrimaryBold};
 `;
 
 const FixedSectionLeft = styled.View`
