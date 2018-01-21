@@ -14,7 +14,7 @@ const mapStateToProps = state => ({
 type Props = {
   title: string,
   members: Array,
-  noMargin: Boolean,
+  noMargin: boolean,
   noMembersMessage: string,
   smallTitle: string,
   navigation: Object,
