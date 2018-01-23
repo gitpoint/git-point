@@ -7,7 +7,8 @@ import { ListItem } from 'react-native-elements';
 import { colors, fonts, normalize } from 'config';
 import { changeLocale } from 'auth';
 import { bindActionCreators } from 'redux';
-import { emojifyText } from 'utils';
+import { emojifyText, translate } from 'utils';
+import { NavigationActions } from 'react-navigation';
 import languages from './language-settings';
 
 const styles = StyleSheet.create({
@@ -54,6 +55,19 @@ class LanguageSettings extends Component {
     locale: string,
     changeLocale: () => void,
   };
+
+  componentWillReceiveProps(nextState) {
+    if (nextState.locale !== this.props.locale) {
+      const navigationParams = NavigationActions.setParams({
+        params: {
+          title: translate('auth.userOptions.language', nextState.locale),
+        },
+        key: nextState.navigation.state.key,
+      });
+
+      nextState.navigation.dispatch(navigationParams);
+    }
+  }
 
   render() {
     const { locale, changeLocale } = this.props;
