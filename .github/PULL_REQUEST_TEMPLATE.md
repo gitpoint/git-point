@@ -13,14 +13,14 @@
   Make sure the title of your PR follows our commit style guidelines (see other
   open PR's for reference if you're confused):
 
-  https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#-git-commit-guidelines
+  https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines
 
   Thanks again for your hard work!
 -->
 
 | Question         | Response    |
 | ---------------- | ----------- |
-| Version?         | v1.4.0      |
+| Version?         | v1.4.1      |
 | Devices tested?  | iPhone 7... |
 | Bug fix?         | yes/no      |
 | New feature?     | yes/no      |
@@ -40,7 +40,7 @@
 
 | Before   | After    |
 | -------- | -------- |
-| ![before](http://placekitten.com/700/1000) | ![after](http://placekitten.com/700/1001) |
+|![before](http://placekitten.com/700/1000)|![after](http://placekitten.com/700/1001)|
 
 ## Description
 
