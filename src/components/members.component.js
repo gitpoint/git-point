@@ -42,7 +42,7 @@ const AvatarContainer = styled.TouchableHighlight.attrs({
   border-radius: ${avatarSize / 2};
   width: ${avatarSize};
   height: ${avatarSize};
-  margin-right: ${props => (props.addMarginRight ? 5 : 0)}};
+  margin-right: ${props => (props.addMarginRight ? 5 : 0)};
 `;
 
 const Avatar = styled.Image`
