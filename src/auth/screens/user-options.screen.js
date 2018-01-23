@@ -3,30 +3,17 @@ import React, { Component } from 'react';
 import styled from 'styled-components/native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {
-  ScrollView,
-  StyleSheet,
-  FlatList,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { NavigationActions } from 'react-navigation';
 import CookieManager from 'react-native-cookies';
 
 import { ViewContainer, SectionList } from 'components';
 import { colors, fonts, normalize } from 'config';
-import {
-  resetNavigationTo,
-  openURLInView,
-  translate,
-  emojifyText,
-} from 'utils';
+import { resetNavigationTo, openURLInView, translate } from 'utils';
 import { version } from 'package.json';
 import codePush from 'react-native-code-push';
-import { signOut, changeLocale } from 'auth';
-import languages from './language-settings';
+import { signOut } from 'auth';
 
 const mapStateToProps = state => ({
   locale: state.auth.locale,
@@ -37,7 +24,6 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       signOut,
-      changeLocale,
     },
     dispatch
   );
@@ -92,7 +78,6 @@ const updateText = locale => ({
 class UserOptions extends Component {
   props: {
     locale: string,
-    changeLocale: () => void,
     signOut: () => void,
     navigation: Object,
     user: Object,
@@ -156,37 +141,20 @@ class UserOptions extends Component {
   }
 
   render() {
-    const { locale, changeLocale, navigation } = this.props;
+    const { locale, navigation } = this.props;
 
     return (
       <ViewContainer>
         <ScrollView>
-          <SectionList title={translate('auth.userOptions.language', locale)}>
-            <FlatList
-              data={languages}
-              renderItem={({ item }) => {
-                return (
-                  <StyledListItem
-                    title={
-                      <View style={styles.language}>
-                        <Text style={styles.flag}>
-                          {emojifyText(item.emojiCode)}
-                        </Text>
-                        <Text style={styles.listTitle}>{item.name}</Text>
-                      </View>
-                    }
-                    hideChevron={locale !== item.code}
-                    rightIcon={{ name: 'check' }}
-                    onPress={() => changeLocale(item.code)}
-                  />
-                );
-              }}
-              keyExtractor={(item, index) => index}
-              extraData={locale}
-            />
-          </SectionList>
-
           <SectionList>
+            <StyledListItem
+              title={translate('auth.userOptions.language', locale)}
+              onPress={() =>
+                navigation.navigate('LanguageSettings', {
+                  title: translate('auth.userOptions.language', locale),
+                  locale,
+                })}
+            />
             <StyledListItem
               title={translate('common.openInBrowser', locale)}
               onPress={() => openURLInView(this.props.user.html_url)}
