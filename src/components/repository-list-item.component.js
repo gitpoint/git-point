@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import styled from 'styled-components/native';
 import { ListItem, Icon } from 'react-native-elements';
 
 import { emojifyText, abbreviateNumber } from 'utils';
@@ -11,129 +11,134 @@ type Props = {
   navigation: Object,
 };
 
-const styles = StyleSheet.create({
-  wrapper: {
-    marginTop: 5,
-    marginBottom: 5,
-    marginLeft: 5,
-  },
-  titleWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  title: {
-    color: colors.primaryDark,
-    ...fonts.fontPrimarySemiBold,
-  },
-  privateIconContainer: {
-    marginLeft: 6,
-  },
-  description: {
-    color: colors.primaryDark,
-    ...fonts.fontPrimaryLight,
-  },
-  extraInfo: {
-    flexDirection: 'row',
-    flex: 1,
-    paddingTop: 5,
-  },
-  extraInfoSubject: {
-    color: colors.greyDark,
-    paddingLeft: 3,
-    paddingTop: 2,
-    marginRight: 15,
-    fontSize: normalize(10),
-    ...fonts.fontPrimary,
-  },
-  repositoryContainer: {
-    justifyContent: 'center',
-    flex: 1,
-  },
-  container: {
-    borderBottomColor: colors.greyLight,
-    borderBottomWidth: 1,
-  },
-});
+const ListItemWrapper = styled.View`
+  margin-top: 5;
+  margin-bottom: 5;
+  margin-left: 5;
+`;
+
+const RepoContainer = styled.View`
+  justify-content: center;
+  flex: 1;
+`;
+
+const TitleWrapper = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
+
+const ColoredText = styled.Text`
+  color: ${colors.primaryDark};
+`;
+
+const TitleText = ColoredText.extend`
+  ${fonts.fontPrimarySemiBold};
+`;
+
+const PrivateIconContainer = styled.View`
+  margin-left: 6;
+`;
+
+const DescriptionText = ColoredText.extend`
+  ${fonts.fontPrimaryLight};
+`;
+
+const ExtraInfoWrapper = styled.View`
+  flex-direction: row;
+  flex: 1;
+  padding-top: 5;
+`;
+
+const ExtraInfoText = styled.Text`
+  color: ${colors.greyDark};
+  padding-left: 3;
+  padding-top: 2;
+  margin-right: 15;
+  ${fonts.fontPrimary};
+  font-size: ${normalize(10)};
+`;
+
+const ExtraInfoForksText = ExtraInfoText.extend`
+  padding-left: 0;
+  margin-right: 13;
+`;
 
 const renderTitle = (repository, showFullName) => (
-  <View style={styles.wrapper}>
-    <View style={styles.repositoryContainer}>
-      <View style={styles.titleWrapper}>
-        <Text style={styles.title}>
+  <ListItemWrapper>
+    <RepoContainer>
+      <TitleWrapper>
+        <TitleText>
           {showFullName ? repository.full_name : repository.name}
-        </Text>
+        </TitleText>
         {repository.private && (
-          <View style={styles.privateIconContainer}>
+          <PrivateIconContainer>
             <Icon
               size={16}
               name="lock"
               type="octicon"
               color={colors.greyDarkest}
             />
-          </View>
+          </PrivateIconContainer>
         )}
-      </View>
-      <Text style={styles.description}>
-        {emojifyText(repository.description)}
-      </Text>
-    </View>
-    <View style={styles.extraInfo}>
-      <Icon
-        containerStyle={styles.extraInfoIcon}
-        name="star"
-        type="octicon"
-        size={15}
-        color={colors.greyDark}
-      />
+      </TitleWrapper>
+      <DescriptionText>{emojifyText(repository.description)}</DescriptionText>
+    </RepoContainer>
+    <ExtraInfoWrapper>
+      <Icon name="star" type="octicon" size={15} color={colors.greyDark} />
 
-      <Text style={styles.extraInfoSubject}>
+      <ExtraInfoText>
         {abbreviateNumber(repository.stargazers_count)}
-      </Text>
+      </ExtraInfoText>
 
       <Icon
-        containerStyle={styles.extraInfoIcon}
         name="repo-forked"
         type="octicon"
         size={15}
         color={colors.greyDark}
       />
 
-      <Text
-        style={[styles.extraInfoSubject, { paddingLeft: 0, marginRight: 13 }]}
-      >
+      <ExtraInfoForksText>
         {abbreviateNumber(repository.forks_count)}
-      </Text>
+      </ExtraInfoForksText>
 
       {repository.language !== null && (
         <Icon
-          containerStyle={styles.extraInfoIcon}
           name="fiber-manual-record"
           size={15}
           color={languageColors[repository.language]}
         />
       )}
 
-      <Text style={styles.extraInfoSubject}>{repository.language}</Text>
-    </View>
-  </View>
+      <ExtraInfoText>{repository.language}</ExtraInfoText>
+    </ExtraInfoWrapper>
+  </ListItemWrapper>
 );
+
+const Repository = styled(ListItem).attrs({
+  titleStyle: {
+    color: colors.primaryDark,
+    fontFamily: fonts.fontPrimarySemiBold.fontFamily,
+  },
+  underlayColor: colors.greyLight,
+  containerStyle: {
+    borderBottomColor: colors.greyLight,
+    borderBottomWidth: 1,
+  },
+})``;
 
 export const RepositoryListItem = ({
   repository,
   showFullName,
   navigation,
 }: Props) => (
-  <ListItem
+  <Repository
     key={repository.id}
     title={renderTitle(repository, showFullName)}
-    titleStyle={styles.title}
     rightIcon={{
       name: repository.fork ? 'repo-forked' : 'repo',
       color: colors.grey,
       type: 'octicon',
     }}
-    containerStyle={styles.container}
-    underlayColor={colors.greyLight}
     onPress={() => navigation.navigate('Repository', { repository })}
   />
 );
