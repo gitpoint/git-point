@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
-import {
-  View,
-  Text,
-  Dimensions,
-  StyleSheet,
-  Platform,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Dimensions, Platform, TouchableOpacity } from 'react-native';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { Icon } from 'react-native-elements';
+import styled from 'styled-components/native';
 
-import { colors, fonts, normalize } from 'config';
+import { colors, normalize, fonts } from 'config';
 
 const STICKY_HEADER_HEIGHT = 62;
 
@@ -30,34 +24,37 @@ type State = {
   parallaxHeaderHeight: number,
 };
 
-const styles = StyleSheet.create({
-  background: {
-    position: 'absolute',
-    top: 0,
-    backgroundColor: colors.primaryDark,
-  },
-  stickySection: {
-    height: STICKY_HEADER_HEIGHT,
-    backgroundColor: colors.primaryDark,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
-  stickySectionText: {
-    color: colors.white,
-    ...fonts.fontPrimaryBold,
-    fontSize: normalize(16),
-    margin: 10,
-  },
-  fixedSectionLeft: {
-    position: 'absolute',
-    bottom: 0,
-  },
-  fixedSectionRight: {
-    position: 'absolute',
-    bottom: 10,
-    right: 10,
-  },
-});
+const Background = styled.View`
+  position: absolute;
+  top: 0;
+  background-color: ${colors.primaryDark};
+  height: ${props => props.height};
+`;
+
+const StickySection = styled.View`
+  height: ${STICKY_HEADER_HEIGHT};
+  background-color: ${colors.primaryDark};
+  align-items: center;
+  justify-content: flex-end;
+`;
+
+const StickySectionText = styled.Text`
+  color: ${colors.white};
+  font-size: ${normalize(16)};
+  margin: 10px;
+  ${fonts.fontPrimaryBold};
+`;
+
+const FixedSectionLeft = styled.View`
+  position: absolute;
+  bottom: 0;
+`;
+
+const FixedSectionRight = styled.View`
+  position: absolute;
+  bottom: 10;
+  right: 10;
+`;
 
 export class ParallaxScroll extends Component {
   props: Props;
@@ -112,24 +109,19 @@ export class ParallaxScroll extends Component {
         backgroundSpeed={10}
         renderBackground={() => (
           <View key="background">
-            <View
-              style={[
-                styles.background,
-                { height: this.state.parallaxHeaderHeight },
-              ]}
-            />
+            <Background height={this.state.parallaxHeaderHeight} />
           </View>
         )}
         renderForeground={renderContent}
         renderStickyHeader={() => (
-          <View key="sticky-header" style={styles.stickySection}>
-            <Text style={styles.stickySectionText}>{stickyTitle}</Text>
-          </View>
+          <StickySection key="sticky-header">
+            <StickySectionText>{stickyTitle}</StickySectionText>
+          </StickySection>
         )}
         renderFixedHeader={() => (
           <View key="fixed-header">
             {navigateBack && (
-              <View style={styles.fixedSectionLeft}>
+              <FixedSectionLeft>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                   <Icon
                     name="chevron-left"
@@ -138,11 +130,11 @@ export class ParallaxScroll extends Component {
                     underlayColor="transparent"
                   />
                 </TouchableOpacity>
-              </View>
+              </FixedSectionLeft>
             )}
 
             {showMenu && (
-              <View style={styles.fixedSectionRight}>
+              <FixedSectionRight>
                 <TouchableOpacity onPress={menuAction}>
                   <Icon
                     name={menuIcon}
@@ -151,7 +143,7 @@ export class ParallaxScroll extends Component {
                     underlayColor="transparent"
                   />
                 </TouchableOpacity>
-              </View>
+              </FixedSectionRight>
             )}
           </View>
         )}
