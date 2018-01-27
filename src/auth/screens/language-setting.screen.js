@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
-import { StyleSheet, FlatList, Text, View } from 'react-native';
+import { FlatList } from 'react-native';
 import styled from 'styled-components/native';
 import { connect } from 'react-redux';
 import { ListItem } from 'react-native-elements';
@@ -12,19 +12,19 @@ import { NavigationActions } from 'react-navigation';
 import { ViewContainer } from 'components';
 import languages from './language-settings';
 
-const styles = StyleSheet.create({
-  listTitle: {
-    color: colors.black,
-    ...fonts.fontPrimary,
-  },
-  language: {
-    flexDirection: 'row',
-  },
-  flag: {
-    paddingRight: 7,
-    color: colors.black, // random any color for the correct display emoji
-  },
-});
+const ListTitle = styled.Text`
+  color: ${colors.black};
+  ${fonts.fontPrimary};
+`;
+
+const Language = styled.View`
+  flex-direction: row;
+`;
+
+const Flag = styled.Text`
+  padding-right: 7;
+  color: ${colors.black}; // random any color for the correct display emoji
+`;
 
 const StyledListItem = styled(ListItem).attrs({
   containerStyle: {
@@ -66,10 +66,10 @@ class LanguageSettings extends Component {
     return (
       <StyledListItem
         title={
-          <View style={styles.language}>
-            <Text style={styles.flag}>{emojifyText(item.emojiCode)}</Text>
-            <Text style={styles.listTitle}>{item.name}</Text>
-          </View>
+          <Language>
+            <Flag>{emojifyText(item.emojiCode)}</Flag>
+            <ListTitle>{item.name}</ListTitle>
+          </Language>
         }
         hideChevron={locale !== item.code}
         rightIcon={{ name: 'check' }}
