@@ -5984,11 +5984,11 @@ react-native-material-design-searchbar@^1.1.4:
     react-addons-create-fragment latest
     warning "^2.1.0"
 
-"react-native-parallax-scroll-view@https://github.com/mini-eggs/react-native-parallax-scroll-view/tarball/react16-support":
+react-native-parallax-scroll-view@^0.20.1:
   version "0.20.1"
-  resolved "https://github.com/mini-eggs/react-native-parallax-scroll-view/tarball/react16-support#f8fabb0403fd8adb564c91015422cb648bb9948f"
+  resolved "https://registry.yarnpkg.com/react-native-parallax-scroll-view/-/react-native-parallax-scroll-view-0.20.1.tgz#7fad3411df8632b7c99fed5d0a5c0a8f97007b38"
   dependencies:
-    prop-types "^15.5.10"
+    prop-types "^15.6.0"
 
 react-native-photo-view@^1.5.2:
   version "1.5.2"
