@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components/native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { ScrollView, FlatList } from 'react-native';
+import { ScrollView } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { NavigationActions } from 'react-navigation';
 import CookieManager from 'react-native-cookies';
@@ -28,11 +28,6 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-const ListTitle = styled.Text`
-  color: ${colors.black};
-  ${fonts.fontPrimary};
-`;
-
 const Update = styled.TouchableOpacity`
   flex: 1;
   align-items: center;
@@ -46,15 +41,6 @@ const UpdateText = styled.Text`
 
 const UpdateTextSub = UpdateText.extend`
   font-size: ${normalize(11)};
-`;
-
-const Language = styled.View`
-  flex-direction: row;
-`;
-
-const Flag = styled.Text`
-  padding-right: 7;
-  color: ${colors.black}; // random any color for the correct display emoji
 `;
 
 const StyledListItem = styled(ListItem).attrs({
