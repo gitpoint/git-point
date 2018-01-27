@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import styled from 'styled-components/native';
 import { connect } from 'react-redux';
-import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 
 import { ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
@@ -11,20 +12,19 @@ const mapStateToProps = state => ({
   isLoggingIn: state.auth.isLoggingIn,
 });
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: colors.githubDark,
-  },
-  welcomeMessage: {
-    color: colors.white,
-    paddingBottom: 20,
-    fontSize: normalize(24),
-    ...fonts.fontPrimary,
-  },
-});
+const Container = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  background-color: ${colors.githubDark};
+`;
+
+const WelcomeMessage = styled.Text`
+  color: ${colors.white};
+  padding-bottom: 20;
+  font-size: ${normalize(24)};
+  ${fonts.fontPrimary};
+`;
 
 class Welcome extends Component {
   props: {
@@ -37,12 +37,12 @@ class Welcome extends Component {
 
     return (
       <ViewContainer>
-        <View style={styles.container}>
-          <Text style={styles.welcomeMessage}>
+        <Container>
+          <WelcomeMessage>
             {translate('auth.welcome.welcomeTitle', locale)}
-          </Text>
+          </WelcomeMessage>
           <ActivityIndicator animating={isLoggingIn} color={colors.white} />
-        </View>
+        </Container>
       </ViewContainer>
     );
   }

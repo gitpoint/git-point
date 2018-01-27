@@ -3,14 +3,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components/native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {
-  ScrollView,
-  StyleSheet,
-  FlatList,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { ScrollView, FlatList } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { NavigationActions } from 'react-navigation';
 import CookieManager from 'react-native-cookies';
@@ -42,31 +35,34 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-const styles = StyleSheet.create({
-  listTitle: {
-    color: colors.black,
-    ...fonts.fontPrimary,
-  },
-  update: {
-    flex: 1,
-    alignItems: 'center',
-    marginVertical: 40,
-  },
-  updateText: {
-    color: colors.greyDark,
-    ...fonts.fontPrimary,
-  },
-  updateTextSub: {
-    fontSize: normalize(11),
-  },
-  language: {
-    flexDirection: 'row',
-  },
-  flag: {
-    paddingRight: 7,
-    color: colors.black, // random any color for the correct display emoji
-  },
-});
+const ListTitle = styled.Text`
+  color: ${colors.black};
+  ${fonts.fontPrimary};
+`;
+
+const Update = styled.TouchableOpacity`
+  flex: 1;
+  align-items: center;
+  margin-vertical: 40;
+`;
+
+const UpdateText = styled.Text`
+  color: ${colors.greyDark};
+  ${fonts.fontPrimary};
+`;
+
+const UpdateTextSub = UpdateText.extend`
+  font-size: ${normalize(11)};
+`;
+
+const Language = styled.View`
+  flex-direction: row;
+`;
+
+const Flag = styled.Text`
+  padding-right: 7;
+  color: ${colors.black}; // random any color for the correct display emoji
+`;
 
 const StyledListItem = styled(ListItem).attrs({
   containerStyle: {
@@ -168,12 +164,10 @@ class UserOptions extends Component {
                 return (
                   <StyledListItem
                     title={
-                      <View style={styles.language}>
-                        <Text style={styles.flag}>
-                          {emojifyText(item.emojiCode)}
-                        </Text>
-                        <Text style={styles.listTitle}>{item.name}</Text>
-                      </View>
+                      <Language>
+                        <Flag>{emojifyText(item.emojiCode)}</Flag>
+                        <ListTitle>{item.name}</ListTitle>
+                      </Language>
                     }
                     hideChevron={locale !== item.code}
                     rightIcon={{ name: 'check' }}
@@ -213,12 +207,10 @@ class UserOptions extends Component {
             />
           </SectionList>
 
-          <TouchableOpacity style={styles.update} onPress={this.checkForUpdate}>
-            <Text style={styles.updateText}>GitPoint v{version}</Text>
-            <Text style={[styles.updateText, styles.updateTextSub]}>
-              {this.state.updateText}
-            </Text>
-          </TouchableOpacity>
+          <Update onPress={this.checkForUpdate}>
+            <UpdateText>GitPoint v{version}</UpdateText>
+            <UpdateTextSub>{this.state.updateText}</UpdateTextSub>
+          </Update>
         </ScrollView>
       </ViewContainer>
     );
