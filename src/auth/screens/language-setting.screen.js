@@ -60,30 +60,32 @@ class LanguageSettings extends Component {
     }
   }
 
-  render() {
+  renderListItem = ({ item }) => {
     const { locale, changeLocale } = this.props;
+
+    return (
+      <StyledListItem
+        title={
+          <View style={styles.language}>
+            <Text style={styles.flag}>{emojifyText(item.emojiCode)}</Text>
+            <Text style={styles.listTitle}>{item.name}</Text>
+          </View>
+        }
+        hideChevron={locale !== item.code}
+        rightIcon={{ name: 'check' }}
+        onPress={() => changeLocale(item.code)}
+      />
+    );
+  };
+
+  render() {
+    const { locale } = this.props;
 
     return (
       <ViewContainer>
         <FlatList
           data={languages}
-          renderItem={({ item }) => {
-            return (
-              <StyledListItem
-                title={
-                  <View style={styles.language}>
-                    <Text style={styles.flag}>
-                      {emojifyText(item.emojiCode)}
-                    </Text>
-                    <Text style={styles.listTitle}>{item.name}</Text>
-                  </View>
-                }
-                hideChevron={locale !== item.code}
-                rightIcon={{ name: 'check' }}
-                onPress={() => changeLocale(item.code)}
-              />
-            );
-          }}
+          renderItem={this.renderListItem}
           keyExtractor={(item, index) => index}
           extraData={locale}
         />
