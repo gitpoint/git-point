@@ -4,29 +4,18 @@ import { StyleSheet, FlatList, Text, View } from 'react-native';
 import styled from 'styled-components/native';
 import { connect } from 'react-redux';
 import { ListItem } from 'react-native-elements';
-import { colors, fonts, normalize } from 'config';
+import { colors, fonts } from 'config';
 import { changeLocale } from 'auth';
 import { bindActionCreators } from 'redux';
 import { emojifyText, translate } from 'utils';
 import { NavigationActions } from 'react-navigation';
+import { ViewContainer } from 'components';
 import languages from './language-settings';
 
 const styles = StyleSheet.create({
   listTitle: {
     color: colors.black,
     ...fonts.fontPrimary,
-  },
-  update: {
-    flex: 1,
-    alignItems: 'center',
-    marginVertical: 40,
-  },
-  updateText: {
-    color: colors.greyDark,
-    ...fonts.fontPrimary,
-  },
-  updateTextSub: {
-    fontSize: normalize(11),
   },
   language: {
     flexDirection: 'row',
@@ -41,6 +30,8 @@ const StyledListItem = styled(ListItem).attrs({
   containerStyle: {
     borderBottomColor: colors.greyLight,
     borderBottomWidth: 1,
+    height: 50,
+    justifyContent: 'center',
   },
   titleStyle: props => ({
     color: props.signOut ? colors.red : colors.black,
@@ -73,26 +64,30 @@ class LanguageSettings extends Component {
     const { locale, changeLocale } = this.props;
 
     return (
-      <FlatList
-        data={languages}
-        renderItem={({ item }) => {
-          return (
-            <StyledListItem
-              title={
-                <View style={styles.language}>
-                  <Text style={styles.flag}>{emojifyText(item.emojiCode)}</Text>
-                  <Text style={styles.listTitle}>{item.name}</Text>
-                </View>
-              }
-              hideChevron={locale !== item.code}
-              rightIcon={{ name: 'check' }}
-              onPress={() => changeLocale(item.code)}
-            />
-          );
-        }}
-        keyExtractor={(item, index) => index}
-        extraData={locale}
-      />
+      <ViewContainer>
+        <FlatList
+          data={languages}
+          renderItem={({ item }) => {
+            return (
+              <StyledListItem
+                title={
+                  <View style={styles.language}>
+                    <Text style={styles.flag}>
+                      {emojifyText(item.emojiCode)}
+                    </Text>
+                    <Text style={styles.listTitle}>{item.name}</Text>
+                  </View>
+                }
+                hideChevron={locale !== item.code}
+                rightIcon={{ name: 'check' }}
+                onPress={() => changeLocale(item.code)}
+              />
+            );
+          }}
+          keyExtractor={(item, index) => index}
+          extraData={locale}
+        />
+      </ViewContainer>
     );
   }
 }
