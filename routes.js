@@ -21,6 +21,7 @@ import {
   EventsScreen,
   PrivacyPolicyScreen,
   UserOptionsScreen,
+  LanguageSettingsScreen,
 } from 'auth';
 
 // User
@@ -196,6 +197,12 @@ const sharedRoutes = {
   },
   UserOptions: {
     screen: UserOptionsScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    }),
+  },
+  LanguageSettings: {
+    screen: LanguageSettingsScreen,
     navigationOptions: ({ navigation }) => ({
       title: navigation.state.params.title,
     }),
