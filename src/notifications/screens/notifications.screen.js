@@ -55,7 +55,7 @@ const mapDispatchToProps = dispatch =>
 
 const ButtonGroupWrapper = styled.View`
   background-color: ${colors.greyLight};
-  padding-top: ${Platform.OS === 'ios' ? 30 : 10};
+  padding-top: ${Platform.OS === 'ios' ? 40 : 10};
   padding-bottom: 10;
   margin-bottom: 15;
 `;

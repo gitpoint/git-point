@@ -6,7 +6,7 @@ import styled from 'styled-components/native';
 
 import { colors, normalize, fonts } from 'config';
 
-const STICKY_HEADER_HEIGHT = 62;
+const STICKY_HEADER_HEIGHT = 76;
 
 type Props = {
   renderContent: any,
