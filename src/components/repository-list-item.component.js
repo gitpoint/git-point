@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 import { ListItem, Icon } from 'react-native-elements';
 
 import { emojifyText, abbreviateNumber } from 'utils';

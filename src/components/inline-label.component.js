@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 
 import { fonts, normalize } from 'config';
 import { getFontColorByBackground } from 'utils';

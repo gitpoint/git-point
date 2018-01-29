@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { FlatList } from 'react-native';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { ListItem } from 'react-native-elements';
 import { colors, fonts } from 'config';

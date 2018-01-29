@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { View, FlatList, Dimensions } from 'react-native';
@@ -139,7 +139,8 @@ class RepositoryList extends Component {
                   showsCancelButton={searchFocus}
                   onFocus={() => this.setState({ searchFocus: true })}
                   onCancelButtonPress={() =>
-                    this.setState({ searchStart: false, query: '' })}
+                    this.setState({ searchStart: false, query: '' })
+                  }
                   onSearchButtonPress={query => {
                     this.search(query);
                   }}

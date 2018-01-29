@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, ActivityIndicator } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Parse from 'parse-diff';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 
 import {
   StateBadge,
@@ -189,7 +189,8 @@ export class IssueDescription extends Component {
                       title: translate('repository.pullDiff.title', locale),
                       locale,
                       diff,
-                    })}
+                    })
+                  }
                 />
               )}
           </DiffBlocksContainer>
@@ -226,7 +227,8 @@ export class IssueDescription extends Component {
                 onPress={() =>
                   navigation.navigate('PullMerge', {
                     title: translate('issue.pullMerge.title', locale),
-                  })}
+                  })
+                }
                 title={translate('issue.main.mergeButton', locale)}
               />
             </MergeButtonContainer>
