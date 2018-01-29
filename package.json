@@ -63,7 +63,7 @@
     "node-emoji": "^1.7.0",
     "opencollective": "^1.0.3",
     "parse-diff": "^0.4.0",
-    "query-string": "^4.3.1",
+    "query-string": "^5.0.1",
     "react": "16.2.0",
     "react-native": "0.52.0",
     "react-native-actionsheet": "^2.2.0",
