@@ -7,6 +7,8 @@ import {
   LayoutAnimation,
   StatusBar,
   Platform,
+  SafeAreaView,
+  StyleSheet,
 } from 'react-native';
 import { persistStore } from 'redux-persist';
 import createEncryptor from 'redux-persist-transform-encrypt';
@@ -30,6 +32,13 @@ const Logo = styled.Image`
   height: 100;
   width: 100;
 `;
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#ffcc00',
+  },
+});
 
 if (console) {
   console.disableYellowBox = true; // eslint-disable-line no-console
@@ -122,9 +131,11 @@ class App extends Component {
 
     return (
       <Provider store={configureStore}>
-        <GitPoint onNavigationStateChange={this.statusBarHandler}>
-          <StatusBar />
-        </GitPoint>
+        <SafeAreaView style={styles.safeArea}>
+          <GitPoint onNavigationStateChange={this.statusBarHandler}>
+            <StatusBar />
+          </GitPoint>
+        </SafeAreaView>
       </Provider>
     );
   }
