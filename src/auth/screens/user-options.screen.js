@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ScrollView } from 'react-native';
@@ -142,7 +142,8 @@ class UserOptions extends Component {
                 navigation.navigate('LanguageSettings', {
                   title: translate('auth.userOptions.language', locale),
                   locale,
-                })}
+                })
+              }
             />
             <StyledListItem
               title={translate('common.openInBrowser', locale)}
@@ -155,12 +156,14 @@ class UserOptions extends Component {
                 navigation.navigate('PrivacyPolicy', {
                   title: translate('auth.privacyPolicy.title', locale),
                   locale,
-                })}
+                })
+              }
             />
             <StyledListItem
               title={translate('auth.userOptions.donate', locale)}
               onPress={() =>
-                openURLInView('https://opencollective.com/git-point')}
+                openURLInView('https://opencollective.com/git-point')
+              }
             />
             <StyledListItem
               title={translate('auth.userOptions.signOut', locale)}

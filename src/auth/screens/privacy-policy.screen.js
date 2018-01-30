@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 import { ScrollView } from 'react-native';
 
 import { ViewContainer } from 'components';
@@ -123,7 +123,8 @@ export class PrivacyPolicyScreen extends Component {
                   onPress={() =>
                     navigation.navigate('Repository', {
                       repositoryUrl: `${v3.root}/repos/gitpoint/git-point`,
-                    })}
+                    })
+                  }
                 >
                   {translate('auth.privacyPolicy.contactLink', locale)}
                 </Link>

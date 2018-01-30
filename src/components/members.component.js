@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { View, FlatList } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 
 import { colors, fonts } from 'config';
 

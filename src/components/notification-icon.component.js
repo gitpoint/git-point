@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View } from 'react-native';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 
 import { Icon } from 'react-native-elements';
 

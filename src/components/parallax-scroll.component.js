@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Dimensions, Platform, TouchableOpacity } from 'react-native';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { Icon } from 'react-native-elements';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 
 import { colors, normalize, fonts } from 'config';
 
