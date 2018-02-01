@@ -1,32 +1,19 @@
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {
-  ScrollView,
-  StyleSheet,
-  FlatList,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { ScrollView } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { NavigationActions } from 'react-navigation';
 import CookieManager from 'react-native-cookies';
 
 import { ViewContainer, SectionList } from 'components';
 import { colors, fonts, normalize } from 'config';
-import {
-  resetNavigationTo,
-  openURLInView,
-  translate,
-  emojifyText,
-} from 'utils';
+import { resetNavigationTo, openURLInView, translate } from 'utils';
 import { version } from 'package.json';
 import codePush from 'react-native-code-push';
-import { signOut, changeLocale } from 'auth';
-import languages from './language-settings';
+import { signOut } from 'auth';
 
 const mapStateToProps = state => ({
   locale: state.auth.locale,
@@ -37,36 +24,24 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       signOut,
-      changeLocale,
     },
     dispatch
   );
 
-const styles = StyleSheet.create({
-  listTitle: {
-    color: colors.black,
-    ...fonts.fontPrimary,
-  },
-  update: {
-    flex: 1,
-    alignItems: 'center',
-    marginVertical: 40,
-  },
-  updateText: {
-    color: colors.greyDark,
-    ...fonts.fontPrimary,
-  },
-  updateTextSub: {
-    fontSize: normalize(11),
-  },
-  language: {
-    flexDirection: 'row',
-  },
-  flag: {
-    paddingRight: 7,
-    color: colors.black, // random any color for the correct display emoji
-  },
-});
+const Update = styled.TouchableOpacity`
+  flex: 1;
+  align-items: center;
+  margin-vertical: 40;
+`;
+
+const UpdateText = styled.Text`
+  color: ${colors.greyDark};
+  ${fonts.fontPrimary};
+`;
+
+const UpdateTextSub = UpdateText.extend`
+  font-size: ${normalize(11)};
+`;
 
 const StyledListItem = styled(ListItem).attrs({
   containerStyle: {
@@ -92,7 +67,6 @@ const updateText = locale => ({
 class UserOptions extends Component {
   props: {
     locale: string,
-    changeLocale: () => void,
     signOut: () => void,
     navigation: Object,
     user: Object,
@@ -156,37 +130,20 @@ class UserOptions extends Component {
   }
 
   render() {
-    const { locale, changeLocale, navigation } = this.props;
+    const { locale, navigation } = this.props;
 
     return (
       <ViewContainer>
         <ScrollView>
-          <SectionList title={translate('auth.userOptions.language', locale)}>
-            <FlatList
-              data={languages}
-              renderItem={({ item }) => {
-                return (
-                  <StyledListItem
-                    title={
-                      <View style={styles.language}>
-                        <Text style={styles.flag}>
-                          {emojifyText(item.emojiCode)}
-                        </Text>
-                        <Text style={styles.listTitle}>{item.name}</Text>
-                      </View>
-                    }
-                    hideChevron={locale !== item.code}
-                    rightIcon={{ name: 'check' }}
-                    onPress={() => changeLocale(item.code)}
-                  />
-                );
-              }}
-              keyExtractor={(item, index) => index}
-              extraData={locale}
-            />
-          </SectionList>
-
           <SectionList>
+            <StyledListItem
+              title={translate('auth.userOptions.language', locale)}
+              onPress={() =>
+                navigation.navigate('LanguageSettings', {
+                  title: translate('auth.userOptions.language', locale),
+                  locale,
+                })}
+            />
             <StyledListItem
               title={translate('common.openInBrowser', locale)}
               onPress={() => openURLInView(this.props.user.html_url)}
@@ -213,12 +170,10 @@ class UserOptions extends Component {
             />
           </SectionList>
 
-          <TouchableOpacity style={styles.update} onPress={this.checkForUpdate}>
-            <Text style={styles.updateText}>GitPoint v{version}</Text>
-            <Text style={[styles.updateText, styles.updateTextSub]}>
-              {this.state.updateText}
-            </Text>
-          </TouchableOpacity>
+          <Update onPress={this.checkForUpdate}>
+            <UpdateText>GitPoint v{version}</UpdateText>
+            <UpdateTextSub>{this.state.updateText}</UpdateTextSub>
+          </Update>
         </ScrollView>
       </ViewContainer>
     );

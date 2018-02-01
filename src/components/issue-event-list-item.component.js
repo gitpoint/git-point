@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Text } from 'react-native';
 import { Icon as BaseIcon } from 'react-native-elements';
-import moment from 'moment/min/moment-with-locales.min';
-import { colors, styledFonts, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 import { InlineLabel } from 'components';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
+
+import { relativeTimeToNow } from 'utils';
 
 const marginLeftForIconName = name => {
   switch (name) {
@@ -77,7 +78,7 @@ const Date = styled.Text`
 `;
 
 const BoldText = styled.Text`
-  font-family: ${styledFonts.fontPrimaryBold};
+  ${fonts.fontPrimaryBold};
   font-size: ${normalize(13)};
   color: ${colors.primaryDark};
 `;
@@ -355,7 +356,7 @@ class Event extends Component {
         <ContentContainer>
           <EventTextContainer>{text}</EventTextContainer>
           <DateContainer>
-            <Date>{moment(createdAt).fromNow()}</Date>
+            <Date>{relativeTimeToNow(createdAt)}</Date>
           </DateContainer>
         </ContentContainer>
       </Container>

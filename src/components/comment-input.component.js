@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { Text, Platform } from 'react-native';
 import { Icon } from 'react-native-elements';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 
 import { MentionArea } from 'components';
 import { translate } from 'utils';

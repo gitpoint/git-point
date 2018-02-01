@@ -41,7 +41,7 @@ export const authReducer = (state = initialState, action = {}) => {
         isAuthenticated: true,
         accessToken: action.payload,
       };
-    case LOGIN.FAILURE:
+    case LOGIN.ERROR:
       return {
         ...state,
         isLoggingIn: false,
@@ -58,7 +58,7 @@ export const authReducer = (state = initialState, action = {}) => {
         ...initialState,
         hasInitialUser: false,
       };
-    case LOGOUT.FAILURE:
+    case LOGOUT.ERROR:
       return {
         ...state,
         isSigningOut: false,

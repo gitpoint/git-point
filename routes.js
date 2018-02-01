@@ -21,12 +21,14 @@ import {
   EventsScreen,
   PrivacyPolicyScreen,
   UserOptionsScreen,
+  LanguageSettingsScreen,
 } from 'auth';
 
 // User
 import {
   ProfileScreen,
   RepositoryListScreen,
+  StarredRepositoryListScreen,
   FollowerListScreen,
   FollowingListScreen,
 } from 'user';
@@ -63,6 +65,12 @@ import {
 const sharedRoutes = {
   RepositoryList: {
     screen: RepositoryListScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    }),
+  },
+  StarredRepositoryList: {
+    screen: StarredRepositoryListScreen,
     navigationOptions: ({ navigation }) => ({
       title: navigation.state.params.title,
     }),
@@ -189,6 +197,12 @@ const sharedRoutes = {
   },
   UserOptions: {
     screen: UserOptionsScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    }),
+  },
+  LanguageSettings: {
+    screen: LanguageSettingsScreen,
     navigationOptions: ({ navigation }) => ({
       title: navigation.state.params.title,
     }),

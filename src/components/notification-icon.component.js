@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View } from 'react-native';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 
 import { Icon } from 'react-native-elements';
 
@@ -20,7 +20,7 @@ const mapStateToProps = state => ({
   notificationsCount: state.notifications.notificationsCount,
 });
 
-class NotificationIconComponent extends Component {
+export class NotificationIconComponent extends Component {
   props: {
     iconColor: string,
     notificationsCount: number,
