@@ -110,6 +110,7 @@ class Search extends Component {
 
     this.state = {
       query: '',
+      currentQuery: {},
       searchType: 0,
       searchStart: false,
       searchFocus: false,
@@ -129,9 +130,12 @@ class Search extends Component {
     if (query !== '') {
       this.setState({
         searchStart: true,
+        currentQuery: {
+          ...this.state.currentQuery,
+          [selectedSearchType]: query,
+        },
         query,
       });
-
       if (selectedSearchType === 0) {
         searchRepos(query);
       } else {
@@ -145,8 +149,9 @@ class Search extends Component {
       this.setState({
         searchType: selectedType,
       });
-
-      this.search(this.state.query, selectedType);
+      if (this.state.currentQuery[selectedType] !== this.state.query) {
+        this.search(this.state.query, selectedType);
+      }
     }
   }
 
