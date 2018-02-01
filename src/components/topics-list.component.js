@@ -3,6 +3,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components/native';
 import { colors, fonts } from 'config';
 import { InlineLabel } from 'components';
+import { FlatList, View } from 'react-native';
 
 type Props = {
   title: string,
@@ -16,11 +17,6 @@ const styles = {
     height: 30,
   },
 };
-
-const TopicsFlatList = styled.FlatList`
-  margin-left: 15;
-  margin-right: 15;
-`;
 
 const TopicsListContainer = styled.View`
   margin-top: 30;
@@ -36,31 +32,33 @@ const TopicsListLabel = styled.Text`
 export const TopicsList = ({ title, topics }: Props) => (
   <TopicsListContainer>
     <TopicsListLabel>{title}</TopicsListLabel>
-    {topics.length > 0 && (
-      <TopicsFlatList
-        data={topics}
-        showsHorizontalScrollIndicator={false}
-        renderItem={({ item }) => (
-          <InlineLabel
-            label={{ name: item, color: colors.topicLightBlue.slice(1) }}
-          />
-        )}
-        keyExtractor={item => item}
-        horizontal
+    <View>
+      {topics.length > 0 && (
+        <FlatList
+          data={topics}
+          showsHorizontalScrollIndicator={false}
+          renderItem={({ item }) => (
+            <InlineLabel
+              label={{ name: item, color: colors.topicLightBlue.slice(1) }}
+            />
+          )}
+          keyExtractor={item => item}
+          horizontal
+        />
+      )}
+      <LinearGradient
+        style={[styles.scrollGradient, { left: 0 }]}
+        colors={['white', 'rgba(255, 255, 255, 0)']}
+        start={{ x: 0, y: 0.5 }}
+        end={{ x: 1, y: 0.5 }}
       />
-    )}
-    <LinearGradient
-      style={[styles.scrollGradient, { left: 0 }]}
-      colors={['white', 'rgba(255, 255, 255, 0)']}
-      start={{ x: 0, y: 0.5 }}
-      end={{ x: 1, y: 0.5 }}
-    />
 
-    <LinearGradient
-      style={[styles.scrollGradient, { right: 0 }]}
-      colors={['rgba(255, 255, 255, 0)', 'white']}
-      start={{ x: 0, y: 0.5 }}
-      end={{ x: 1, y: 0.5 }}
-    />
+      <LinearGradient
+        style={[styles.scrollGradient, { right: 0 }]}
+        colors={['rgba(255, 255, 255, 0)', 'white']}
+        start={{ x: 0, y: 0.5 }}
+        end={{ x: 1, y: 0.5 }}
+      />
+    </View>
   </TopicsListContainer>
 );

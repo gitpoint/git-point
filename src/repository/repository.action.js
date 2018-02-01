@@ -268,7 +268,6 @@ export const getRepositoryInfo = url => {
       );
 
       dispatch(getTopics(repo.owner.login, repo.name));
-
       dispatch(getContributors(contributorsUrl));
       dispatch(getIssues(issuesUrl));
       dispatch(
