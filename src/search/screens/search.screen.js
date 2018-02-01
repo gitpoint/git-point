@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { View, FlatList, Dimensions, Platform } from 'react-native';
+import { FlatList, Dimensions, Platform } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
 
 import {
@@ -190,34 +190,32 @@ class Search extends Component {
 
     return (
       <ViewContainer>
-        <View>
-          <SearchBarWrapper>
-            <SearchContainer>
-              <SearchBar
-                textColor={colors.primaryDark}
-                textFieldBackgroundColor={colors.greyLight}
-                showsCancelButton={this.state.searchFocus}
-                onFocus={() => this.setState({ searchFocus: true })}
-                onCancelButtonPress={() =>
-                  this.setState({ searchStart: false, query: '' })
-                }
-                onSearchButtonPress={text => {
-                  this.search(text);
-                }}
-                hideBackground
-              />
-            </SearchContainer>
-          </SearchBarWrapper>
+        <SearchBarWrapper>
+          <SearchContainer>
+            <SearchBar
+              textColor={colors.primaryDark}
+              textFieldBackgroundColor={colors.greyLight}
+              showsCancelButton={this.state.searchFocus}
+              onFocus={() => this.setState({ searchFocus: true })}
+              onCancelButtonPress={() =>
+                this.setState({ searchStart: false, query: '' })
+              }
+              onSearchButtonPress={text => {
+                this.search(text);
+              }}
+              hideBackground
+            />
+          </SearchContainer>
+        </SearchBarWrapper>
 
-          <StyledButtonGroup
-            onPress={this.switchQueryType}
-            selectedIndex={this.state.searchType}
-            buttons={[
-              translate('search.main.repositoryButton', locale),
-              translate('search.main.userButton', locale),
-            ]}
-          />
-        </View>
+        <StyledButtonGroup
+          onPress={this.switchQueryType}
+          selectedIndex={this.state.searchType}
+          buttons={[
+            translate('search.main.repositoryButton', locale),
+            translate('search.main.userButton', locale),
+          ]}
+        />
 
         {isPendingSearchRepos &&
           searchType === 0 && (
