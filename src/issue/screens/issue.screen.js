@@ -93,7 +93,8 @@ class Issue extends Component {
               navigate('IssueSettings', {
                 title: translate('issue.settings.title', state.params.locale),
                 issue: state.params.issue,
-              })}
+              })
+            }
           />
         );
       }

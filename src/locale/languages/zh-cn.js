@@ -21,7 +21,8 @@ export const zhCN = {
       welcomeTitle: '欢迎使用GitPoint',
     },
     events: {
-      welcomeMessage: '欢迎！这是你的信息流，在这里你可以看到你关注的仓库和用户最近的活动',
+      welcomeMessage:
+        '欢迎！这是你的信息流，在这里你可以看到你关注的仓库和用户最近的活动',
       commitCommentEvent: '评论提交',
       createEvent: '创建了 {{object}}',
       deleteEvent: '删除了 {{object}}',
@@ -97,7 +98,8 @@ export const zhCN = {
     privacyPolicy: {
       title: '隐私条款',
       effectiveDate: '最近更新: 2017年7月15日',
-      introduction: '我们很高兴您选择使用GitPoint。您可以在本隐私条款中看到我们使用哪些和不使用哪些用户数据。',
+      introduction:
+        '我们很高兴您选择使用GitPoint。您可以在本隐私条款中看到我们使用哪些和不使用哪些用户数据。',
       userDataTitle: '用户数据',
       userData1:
         '我们不会把您的GitHub信息用于任何事。授权登录后，用户的OAuth令牌只会被直接保存在客户端设备存储中。我们无法获取令牌信息。我们从不查看或保存用户的访问令牌。',
@@ -106,12 +108,16 @@ export const zhCN = {
       analyticsInfoTitle: '分析数据',
       analyticsInfo1:
         '目前我们使用Google Analytics和iTunes App Analytics来帮助我们分析GitPoint的流量和使用趋势。这些工具从您的设备上收集包含设备类型、版本、区域、来源等信息。这些信息并无法被用来识别单个用户或者获取任何个人信息。',
-      analyticsInfo2: '如果我们使用第三方平台来收集追溯栈、错误报告，或者更多的分析信息，我们将保证用户的信息均为匿名并且加密。',
+      analyticsInfo2:
+        '如果我们使用第三方平台来收集追溯栈、错误报告，或者更多的分析信息，我们将保证用户的信息均为匿名并且加密。',
       openSourceTitle: '开源',
-      openSource1: 'GitPoint是开源软件，所有对本软件的历史贡献信息都会一直向外界公开。',
-      openSource2: '每次向本App提交的代码贡献都会经过我们的审查以防止任何人注入任何形式的恶意代码。',
+      openSource1:
+        'GitPoint是开源软件，所有对本软件的历史贡献信息都会一直向外界公开。',
+      openSource2:
+        '每次向本App提交的代码贡献都会经过我们的审查以防止任何人注入任何形式的恶意代码。',
       contactTitle: '联系方式',
-      contact1: '感谢阅读我们的隐私条款。我们希望您如同我们享受开发GitPoint的过程一般享受使用它！',
+      contact1:
+        '感谢阅读我们的隐私条款。我们希望您如同我们享受开发GitPoint的过程一般享受使用它！',
       contact2: '如果您对本条款或GitPoint有任何问题，请提交问题到',
       contactLink: 'GitPoint仓库',
     },
