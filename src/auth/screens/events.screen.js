@@ -1,15 +1,14 @@
 /* eslint react/prop-types: 0 */
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Text, FlatList, View } from 'react-native';
-import moment from 'moment/min/moment-with-locales.min';
 
 import { LoadingUserListItem, UserListItem, ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
-import { emojifyText, translate } from 'utils';
+import { emojifyText, translate, relativeTimeToNow } from 'utils';
 import { getUserEvents } from 'auth';
 import { getNotificationsCount } from 'notifications';
 
@@ -43,12 +42,17 @@ const LinkDescription = styled.Text`
 `;
 
 const LinkBranchDescription = styled.Text`
+  background-color: ${colors.codeChunkBlue};
+  color: ${colors.blue};
   ${fonts.fontCode};
+  font-size: ${normalize(11)};
 `;
 
 const DeletedLinkBranchDescription = styled.Text`
+  background-color: ${colors.greyVeryLight};
   color: ${colors.greyDarkest};
   ${fonts.fontCode};
+  font-size: ${normalize(11)};
 `;
 
 const Datestamp = styled.Text`
@@ -214,7 +218,8 @@ class Events extends Component {
         ) {
           return (
             <LinkBranchDescription>
-              {userEvent.payload.ref}
+              {' '}
+              {userEvent.payload.ref}{' '}
             </LinkBranchDescription>
           );
         } else if (userEvent.payload.ref_type === 'repository') {
@@ -232,7 +237,8 @@ class Events extends Component {
       case 'DeleteEvent':
         return (
           <DeletedLinkBranchDescription>
-            {userEvent.payload.ref}
+            {' '}
+            {userEvent.payload.ref}{' '}
           </DeletedLinkBranchDescription>
         ); // can only be branch or tag
       case 'ForkEvent':
@@ -279,7 +285,8 @@ class Events extends Component {
       case 'PushEvent':
         return (
           <LinkBranchDescription>
-            {userEvent.payload.ref.replace('refs/heads/', '')}
+            {' '}
+            {userEvent.payload.ref.replace('refs/heads/', '')}{' '}
           </LinkBranchDescription>
         );
       case 'ReleaseEvent':
@@ -484,7 +491,7 @@ class Events extends Component {
         {this.getItem(userEvent) && ' '}
         {this.getSecondItem(userEvent)}
         {this.getItem(userEvent) && this.getConnector(userEvent) && ' '}
-        <Datestamp>{moment(userEvent.created_at).fromNow()}</Datestamp>
+        <Datestamp>{relativeTimeToNow(userEvent.created_at)}</Datestamp>
       </DescriptionContainer>
     );
   }

@@ -6,13 +6,19 @@
     "start": "react-native start",
     "start:logger": "LOGGER_ENABLED=true react-native start --reset-cache",
     "start:tron": "TRON_ENABLED=true react-native start --reset-cache",
-    "start:android": "concurrently -r 'react-native start' 'yarn start:android:no-packager'",
-    "start:android:logger": "LOGGER_ENABLED=true concurrently -r 'react-native start --reset-cache' 'yarn start:android:no-packager'",
-    "start:android:tron": "TRON_ENABLED=true concurrently -r 'react-native start --reset-cache' 'yarn start:android:no-packager'",
+    "start:android":
+      "concurrently -r 'react-native start' 'yarn start:android:no-packager'",
+    "start:android:logger":
+      "LOGGER_ENABLED=true concurrently -r 'react-native start --reset-cache' 'yarn start:android:no-packager'",
+    "start:android:tron":
+      "TRON_ENABLED=true concurrently -r 'react-native start --reset-cache' 'yarn start:android:no-packager'",
     "start:android:no-packager": "react-native run-android --no-packager",
-    "start:ios": "concurrently -r 'react-native start' 'yarn start:ios:no-packager'",
-    "start:ios:logger": "LOGGER_ENABLED=true concurrently -r 'react-native start --reset-cache' 'yarn start:ios:no-packager'",
-    "start:ios:tron": "TRON_ENABLED=true concurrently -r 'react-native start --reset-cache' 'yarn start:ios:no-packager'",
+    "start:ios":
+      "concurrently -r 'react-native start' 'yarn start:ios:no-packager'",
+    "start:ios:logger":
+      "LOGGER_ENABLED=true concurrently -r 'react-native start --reset-cache' 'yarn start:ios:no-packager'",
+    "start:ios:tron":
+      "TRON_ENABLED=true concurrently -r 'react-native start --reset-cache' 'yarn start:ios:no-packager'",
     "start:ios:no-packager": "react-native run-ios --no-packager",
     "clean": "rm -rf node_modules",
     "clean:android": "cd android && ./gradlew clean && cd -",
@@ -36,22 +42,24 @@
     "cp-release:ios": "code-push release-react git-point-ios ios",
     "cp-release:android": "code-push release-react git-point-android android",
     "cp-promote:ios": "code-push promote git-point-ios Staging Production",
-    "cp-promote:android": "code-push promote git-point-android Staging Production",
-    "cp-history:ios-staging": "code-push deployment history git-point-ios Staging",
-    "cp-history:android-staging": "code-push deployment history git-point-android Staging",
-    "cp-history:android-production": "code-push deployment history git-point-android Production",
-    "cp-history:ios-production": "code-push deployment history git-point-ios Production",
+    "cp-promote:android":
+      "code-push promote git-point-android Staging Production",
+    "cp-history:ios-staging":
+      "code-push deployment history git-point-ios Staging",
+    "cp-history:android-staging":
+      "code-push deployment history git-point-android Staging",
+    "cp-history:android-production":
+      "code-push deployment history git-point-android Production",
+    "cp-history:ios-production":
+      "code-push deployment history git-point-ios Production",
     "doctoc": "doctoc --title='## Table of Contents' README.md",
     "postinstall": "opencollective postinstall"
   },
   "lint-staged": {
-    "*.js": [
-      "prettier --write",
-      "git add",
-      "eslint --cache"
-    ]
+    "*.js": ["prettier --write", "git add", "eslint --cache"]
   },
   "dependencies": {
+    "date-fns": "^1.29.0",
     "entities": "^1.1.1",
     "enzyme": "^3.0.0",
     "enzyme-adapter-react-16": "^1.0.0",
@@ -59,16 +67,15 @@
     "lodash.uniqby": "^4.7.0",
     "lowlight": "^1.5.0",
     "md5": "^2.2.1",
-    "moment": "^2.17.1",
     "node-emoji": "^1.7.0",
     "opencollective": "^1.0.3",
     "parse-diff": "^0.4.0",
-    "query-string": "^4.3.1",
-    "react": "^16.0.0",
-    "react-native": "^0.48.4",
+    "query-string": "^5.0.1",
+    "react": "16.2.0",
+    "react-native": "0.52.0",
     "react-native-actionsheet": "^2.2.0",
     "react-native-code-push": "^5.0.0-beta",
-    "react-native-collapsible": "^0.9.0",
+    "react-native-collapsible": "^0.10.0",
     "react-native-communications": "^2.2.1",
     "react-native-config": "^0.6.0",
     "react-native-cookies": "^3.2.0",
@@ -76,13 +83,14 @@
     "react-native-elements": "^0.18.2",
     "react-native-htmlview": "^0.12.0",
     "react-native-i18n": "^2.0.4",
-    "react-native-linear-gradient": "^2.3.0",
+    "react-native-linear-gradient": "^2.4.0",
     "react-native-material-design-searchbar": "^1.1.4",
-    "react-native-mock": "https://github.com/shqld/react-native-mock/tarball/master",
-    "react-native-parallax-scroll-view": "https://github.com/mini-eggs/react-native-parallax-scroll-view/tarball/react16-support",
+    "react-native-mock":
+      "https://github.com/shqld/react-native-mock/tarball/master",
+    "react-native-parallax-scroll-view": "^0.20.1",
     "react-native-photo-view": "^1.5.2",
     "react-native-safari-view": "^2.0.0",
-    "react-native-search-bar": "https://github.com/andrewda/react-native-search-bar/tarball/master",
+    "react-native-search-bar": "^3.3.1",
     "react-native-swiper": "^1.5.13",
     "react-native-syntax-highlighter": "^1.2.1",
     "react-native-table-component": "^1.1.0",
@@ -98,11 +106,11 @@
     "redux-persist-transform-encrypt": "^1.0.2",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
-    "styled-components": "^2.2.1"
+    "styled-components": "^3.1.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^3.1.0",
-    "all-contributors-cli": "^4.5.3",
+    "all-contributors-cli": "^4.10.1",
     "babel-eslint": "^7.1.1",
     "babel-jest": "^21.2.0",
     "babel-plugin-module-resolver": "^2.7.1",
@@ -128,33 +136,31 @@
     "lint-staged": "^3.2.6",
     "minicat": "^1.0.0",
     "prettier": "^1.7.4",
-    "react-dom": "^16.0.0",
+    "react-dom": "^16.2.0",
     "react-native-cli": "^2.0.1",
     "react-test-renderer": "^16.0.0",
     "reactotron-react-native": "^1.12.2",
     "reactotron-redux": "^1.12.2",
     "standard-changelog": "^1.0.7",
     "stylelint": "^8.2.0",
-    "stylelint-config-standard": "^17.0.0",
+    "stylelint-config-standard": "^18.0.0",
     "stylelint-config-styled-components": "^0.1.1",
     "stylelint-processor-styled-components": "^1.0.0"
   },
   "jest": {
     "preset": "react-native",
-    "testMatch": [
-      "**/__tests__/tests/**/*.js"
-    ],
-    "setupFiles": [
-      "./testenv.js"
-    ],
+    "testMatch": ["**/__tests__/tests/**/*.js"],
+    "setupFiles": ["./testenv.js"],
     "transformIgnorePatterns": [
       "node_modules/(?!(jest-)?react-native|react-navigation)"
-    ]
+    ],
+    "moduleNameMapper": {
+      "styled-components":
+        "<rootDir>/node_modules/styled-components/dist/styled-components.native.cjs.js"
+    }
   },
   "rnpm": {
-    "assets": [
-      "./src/assets/fonts"
-    ]
+    "assets": ["./src/assets/fonts"]
   },
   "config": {
     "commitizen": {

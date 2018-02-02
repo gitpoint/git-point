@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 import { ListItem } from 'react-native-elements';
 import Communications from 'react-native-communications';
 
@@ -111,7 +111,8 @@ export const EntityInfo = ({ entity, orgs, locale, navigation }: Props) => {
             }}
             subtitle={entity.email}
             onPress={() =>
-              Communications.email([entity.email], null, null, null, null)}
+              Communications.email([entity.email], null, null, null, null)
+            }
           />
         )}
 

@@ -684,6 +684,34 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "apoeco",
+      "name": "Apostolis Economou",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/7470681?v=4",
+      "profile": "https://github.com/apoeco",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Arjun-sna",
+      "name": "Arjun",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/9337254?v=4",
+      "profile": "https://github.com/Arjun-sna",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "rkpasia",
+      "name": "Riccardo",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/5786033?v=4",
+      "profile": "http://rkpasia.github.io",
+      "contributions": [
+        "code",
+        "design"
+      ]
     }
   ]
 }

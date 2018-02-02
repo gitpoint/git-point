@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, ActivityIndicator } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Parse from 'parse-diff';
-import moment from 'moment/min/moment-with-locales.min';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 
 import {
   StateBadge,
@@ -12,7 +11,7 @@ import {
   DiffBlocks,
   Button,
 } from 'components';
-import { translate } from 'utils';
+import { translate, relativeTimeToNow } from 'utils';
 import { colors, fonts, normalize } from 'config';
 import { v3 } from 'api';
 
@@ -151,7 +150,7 @@ export class IssueDescription extends Component {
         <HeaderContainer>
           <IssueTitle
             title={issue.title}
-            subtitle={moment(issue.created_at).fromNow()}
+            subtitle={relativeTimeToNow(issue.created_at)}
             leftIcon={{
               name: issue.pull_request ? 'git-pull-request' : 'issue-opened',
               size: 36,
@@ -190,7 +189,8 @@ export class IssueDescription extends Component {
                       title: translate('repository.pullDiff.title', locale),
                       locale,
                       diff,
-                    })}
+                    })
+                  }
                 />
               )}
           </DiffBlocksContainer>
@@ -227,7 +227,8 @@ export class IssueDescription extends Component {
                 onPress={() =>
                   navigation.navigate('PullMerge', {
                     title: translate('issue.pullMerge.title', locale),
-                  })}
+                  })
+                }
                 title={translate('issue.main.mergeButton', locale)}
               />
             </MergeButtonContainer>

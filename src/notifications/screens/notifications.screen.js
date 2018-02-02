@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FlatList, View, ScrollView, Platform } from 'react-native';
@@ -100,7 +100,7 @@ const RepositoryOwnerAvatar = styled.Image`
 
 const RepositoryTitle = styled.Text`
   color: ${colors.primaryDark};
-  ${{ ...fonts.fontPrimarySemiBold }};
+  ${fonts.fontPrimarySemiBold};
   margin-left: 10;
   flex: 1;
 `;
@@ -125,7 +125,7 @@ const NoneTitle = styled.Text`
   padding-horizontal: 15;
   font-size: ${normalize(16)};
   text-align: center;
-  ${{ ...fonts.fontPrimary }};
+  ${fonts.fontPrimary};
 `;
 
 const MarkAllAsReadButtonContainer = styled.View`

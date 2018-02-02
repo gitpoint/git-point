@@ -93,7 +93,8 @@ class Issue extends Component {
               navigate('IssueSettings', {
                 title: translate('issue.settings.title', state.params.locale),
                 issue: state.params.issue,
-              })}
+              })
+            }
           />
         );
       }
@@ -255,9 +256,10 @@ class Issue extends Component {
     const owner = repository.owner.login;
     const issueNum = issue.number;
 
-    this.props.postIssueComment(body, owner, repoName, issueNum);
+    this.props.postIssueComment(body, owner, repoName, issueNum).then(() => {
+      this.commentsList.scrollToEnd();
+    });
     Keyboard.dismiss();
-    this.commentsList.scrollToEnd();
   };
 
   deleteComment = comment => {
@@ -315,6 +317,10 @@ class Issue extends Component {
   renderItem = ({ item }) => {
     const { locale, navigation } = this.props;
 
+    if (item.header) {
+      return this.renderHeader();
+    }
+
     if (item.event) {
       return <IssueEventListItem event={item} navigation={navigation} />;
     }
@@ -352,10 +358,11 @@ class Issue extends Component {
     );
     const isShowLoadingContainer =
       isPendingComments || isPendingIssue || isPendingEvents;
+    const header = { header: true, created_at: '' };
     const events = formatEventsToRender([...this.props.events]);
     const conversation = !isPendingComments
-      ? [issue, ...comments, ...events].sort(compareCreatedAt)
-      : [];
+      ? [header, issue, ...comments, ...events].sort(compareCreatedAt)
+      : [header];
 
     const participantNames = !isPendingComments
       ? conversation.map(item => item && item.user && item.user.login)
@@ -393,7 +400,6 @@ class Issue extends Component {
                 refreshing={isLoadingData}
                 onRefresh={this.getIssueInformation}
                 contentContainerStyle={{ flexGrow: 1 }}
-                ListHeaderComponent={this.renderHeader}
                 removeClippedSubviews={false}
                 data={conversation}
                 keyExtractor={this.keyExtractor}
