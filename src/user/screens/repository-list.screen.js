@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { View, FlatList, Dimensions, Platform } from 'react-native';
-import { ButtonGroup } from 'react-native-elements';
+import { ButtonGroup, Icon } from 'react-native-elements';
 
 import {
   ViewContainer,
@@ -65,7 +65,7 @@ const StyledButtonGroup = styled(ButtonGroup).attrs({
         marginBottom: 10,
       },
       android: {
-        marginTop: 5,
+        marginTop: 8,
         marginBottom: 12,
       },
     }),
@@ -75,6 +75,23 @@ const StyledButtonGroup = styled(ButtonGroup).attrs({
 const repoTypes = ['all', 'owner', 'member', 'private', 'public'];
 
 class RepositoryList extends Component {
+  static navigationOptions = ({ navigation }) => {
+    const { state } = navigation;
+
+    return {
+      headerRight: (
+        <Icon
+          name="search"
+          color={colors.primaryDark}
+          type="font-awesome"
+          containerStyle={{ marginRight: 20 }}
+          underlayColor={colors.transparent}
+          onPress={state.params.openSearch}
+        />
+      ),
+    };
+  };
+
   props: {
     getRepositories: Function,
     searchUserRepos: Function,
@@ -107,12 +124,14 @@ class RepositoryList extends Component {
     this.search = this.search.bind(this);
     this.getList = this.getList.bind(this);
     this.switchRepoType = this.switchRepoType.bind(this);
+    this.openSearch = this.openSearch.bind(this);
   }
 
   componentDidMount() {
     const user = this.props.navigation.state.params.user;
 
     this.props.getRepositories(user);
+    this.props.navigation.setParams({ openSearch: this.openSearch });
   }
 
   getList = () => {
@@ -121,6 +140,10 @@ class RepositoryList extends Component {
 
     return searchStart ? searchedUserRepos : repositories;
   };
+
+  openSearch() {
+    this.setState({ searchFocus: true });
+  }
 
   search(query) {
     const { searchUserRepos } = this.props;
@@ -171,53 +194,67 @@ class RepositoryList extends Component {
       <ViewContainer>
         <View>
           <Header>
-            <SearchBarWrapper>
-              <SearchContainer>
-                <SearchBar
-                  textColor={colors.primaryDark}
-                  textFieldBackgroundColor={colors.greyLight}
-                  showsCancelButton={searchFocus}
-                  onFocus={() => this.setState({ searchFocus: true })}
-                  onCancelButtonPress={() =>
-                    this.setState({ searchStart: false, query: '' })}
-                  onSearchButtonPress={query => {
-                    this.search(query);
-                  }}
-                  hideBackground
-                />
-              </SearchContainer>
-            </SearchBarWrapper>
-            <StyledButtonGroup
-              onPress={this.switchRepoType}
-              selectedIndex={this.state.repoType}
-              buttons={
-                authUser.login === currentuser.login
-                  ? [
-                      translate('user.repositoryList.allReposButton', locale),
-                      translate('user.repositoryList.ownedReposButton', locale),
-                      translate(
-                        'user.repositoryList.memberReposButton',
-                        locale
-                      ),
-                      translate(
-                        'user.repositoryList.privateReposButton',
-                        locale
-                      ),
-                      translate(
-                        'user.repositoryList.publicReposButton',
-                        locale
-                      ),
-                    ]
-                  : [
-                      translate('user.repositoryList.allReposButton', locale),
-                      translate('user.repositoryList.ownedReposButton', locale),
-                      translate(
-                        'user.repositoryList.memberReposButton',
-                        locale
-                      ),
-                    ]
-              }
-            />
+            {this.state.searchFocus ? (
+              <SearchBarWrapper>
+                <SearchContainer>
+                  <SearchBar
+                    textColor={colors.primaryDark}
+                    textFieldBackgroundColor={colors.greyLight}
+                    showsCancelButton={searchFocus}
+                    onCancelButtonPress={() =>
+                      this.setState({
+                        searchStart: false,
+                        searchFocus: false,
+                        query: '',
+                      })
+                    }
+                    onSearchButtonPress={query => {
+                      this.search(query);
+                    }}
+                    hideBackground
+                    autoFocus
+                  />
+                </SearchContainer>
+              </SearchBarWrapper>
+            ) : (
+              <StyledButtonGroup
+                onPress={this.switchRepoType}
+                selectedIndex={this.state.repoType}
+                buttons={
+                  authUser.login === currentuser.login
+                    ? [
+                        translate('user.repositoryList.allReposButton', locale),
+                        translate(
+                          'user.repositoryList.ownedReposButton',
+                          locale
+                        ),
+                        translate(
+                          'user.repositoryList.memberReposButton',
+                          locale
+                        ),
+                        translate(
+                          'user.repositoryList.privateReposButton',
+                          locale
+                        ),
+                        translate(
+                          'user.repositoryList.publicReposButton',
+                          locale
+                        ),
+                      ]
+                    : [
+                        translate('user.repositoryList.allReposButton', locale),
+                        translate(
+                          'user.repositoryList.ownedReposButton',
+                          locale
+                        ),
+                        translate(
+                          'user.repositoryList.memberReposButton',
+                          locale
+                        ),
+                      ]
+                }
+              />
+            )}
           </Header>
 
           {loading &&
