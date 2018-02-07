@@ -11,6 +11,10 @@ type Props = {
 };
 
 const styles = {
+  contentContainerStyle: {
+    paddingLeft: 13,
+    paddingRight: 13,
+  },
   scrollGradient: {
     position: 'absolute',
     width: 15,
@@ -35,6 +39,7 @@ export const TopicsList = ({ title, topics }: Props) => (
     <View>
       {topics.length > 0 && (
         <FlatList
+          contentContainerStyle={styles.contentContainerStyle}
           data={topics}
           showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => (
