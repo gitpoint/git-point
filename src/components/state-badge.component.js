@@ -47,21 +47,14 @@ export const StateBadge = ({
     issueText = translate('issue.main.states.closed', locale);
   }
 
-  let issueStateColor;
-
-  switch (issueState) {
-    case 'merged':
-      issueStateColor = colors.purple;
-      break;
-    case 'open':
-      issueStateColor = colors.green;
-      break;
-    case 'closed':
-      issueStateColor = colors.red;
-      break;
-    default:
-      issueStateColor = colors.gray;
-  }
+  const stateColor = {
+    merged: colors.purple,
+    open: colors.green,
+    closed: colors.red,
+  };
+  const issueStateColor = stateColor[issueState]
+    ? stateColor[issueState]
+    : colors.gray;
 
   return (
     <Badge color={issueStateColor} style={style}>
