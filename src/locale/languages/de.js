@@ -186,7 +186,7 @@ export const de = {
       repoActions: 'Repository Aktionen',
       forkAction: 'Fork',
       starAction: 'Star',
-      unstarAction: 'Unstart',
+      unstarAction: 'Unstar',
       shareAction: 'Teilen',
       unwatchAction: 'Unwatch',
       watchAction: 'Watch',
