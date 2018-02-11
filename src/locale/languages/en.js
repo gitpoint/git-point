@@ -191,6 +191,7 @@ export const en = {
       noContributorsMessage: 'No contributors found',
       sourceTitle: 'SOURCE',
       readMe: 'README',
+      viewCommit: 'View Commits',
       viewSource: 'View Code',
       issuesTitle: 'ISSUES',
       noIssuesMessage: 'No issues',
@@ -209,6 +210,17 @@ export const en = {
     },
     codeList: {
       title: 'Code',
+    },
+    commitList: {
+      title: 'Commits',
+      noCommit: 'No commit found!',
+    },
+    commit: {
+      numFilesChanged: '{{numFilesChanged}} files',
+      new: 'NEW',
+      deleted: 'DELETED',
+      fileRenamed: 'File renamed without any changes',
+      byConnector: 'By {{contributor}}',
     },
     issueList: {
       title: 'Issues',

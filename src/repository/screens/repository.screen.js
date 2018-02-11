@@ -23,6 +23,9 @@ import { translate, openURLInView } from 'utils';
 import { colors, fonts } from 'config';
 import {
   getRepositoryInfo,
+  getContributors,
+  getIssues,
+  getCommits,
   changeStarStatusRepo,
   forkRepo,
   subscribeToRepo,
@@ -35,6 +38,7 @@ const mapStateToProps = state => ({
   repository: state.repository.repository,
   contributors: state.repository.contributors,
   issues: state.repository.issues,
+  commits: state.repository.commits,
   starred: state.repository.starred,
   forked: state.repository.forked,
   subscribed: state.repository.subscribed,
@@ -52,6 +56,9 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getRepositoryInfo,
+      getContributors,
+      getIssues,
+      getCommits,
       changeStarStatusRepo,
       forkRepo,
       subscribeToRepo,
@@ -74,6 +81,8 @@ const styles = StyleSheet.create({
 class Repository extends Component {
   props: {
     getRepositoryInfo: Function,
+    // getIssues: Function,
+    // getCommits: Function,
     changeStarStatusRepo: Function,
     forkRepo: Function,
     // repositoryName: string,
@@ -81,6 +90,7 @@ class Repository extends Component {
     contributors: Array,
     hasReadMe: boolean,
     issues: Array,
+    commits: Array,
     starred: boolean,
     // forked: boolean,
     isPendingRepository: boolean,
@@ -195,6 +205,7 @@ class Repository extends Component {
       contributors,
       hasReadMe,
       issues,
+      commits,
       starred,
       locale,
       isPendingRepository,
@@ -350,6 +361,26 @@ class Repository extends Component {
                 underlayColor={colors.greyLight}
               />
             )}
+
+            {commits.length > 0 && (
+              <ListItem
+                title={translate('repository.main.viewCommit', locale)}
+                titleStyle={styles.listTitle}
+                containerStyle={styles.listContainerStyle}
+                leftIcon={{
+                  name: 'git-commit',
+                  color: colors.grey,
+                  type: 'octicon',
+                }}
+                onPress={() =>
+                  this.props.navigation.navigate('CommitList', {
+                    commits,
+                    title: translate('repository.commitList.title', locale),
+                  })}
+                underlayColor={colors.greyLight}
+              />
+            )}
+
             <ListItem
               title={translate('repository.main.viewSource', locale)}
               titleStyle={styles.listTitle}

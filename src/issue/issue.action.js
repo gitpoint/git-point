@@ -17,6 +17,7 @@ import {
   EDIT_ISSUE_BODY,
   CHANGE_LOCK_STATUS,
   GET_ISSUE_DIFF,
+  GET_ISSUE_COMMITS,
   GET_ISSUE_MERGE_STATUS,
   GET_PULL_REQUEST_FROM_URL,
   MERGE_PULL_REQUEST,
@@ -122,6 +123,29 @@ export const getIssueComments = issueCommentsURL => {
       .catch(error => {
         dispatch({
           type: GET_ISSUE_COMMENTS.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
+export const getCommits = url => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: GET_ISSUE_COMMITS.PENDING });
+
+    return v3
+      .getJson(url, accessToken)
+      .then(data => {
+        dispatch({
+          type: GET_ISSUE_COMMITS.SUCCESS,
+          payload: data,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: GET_ISSUE_COMMITS.ERROR,
           payload: error,
         });
       });

@@ -28,6 +28,7 @@ import {
   getIssueComments,
   postIssueComment,
   getIssueFromUrl,
+  getCommits,
   deleteIssueComment,
   getIssueEvents,
 } from '../issue.action';
@@ -39,11 +40,13 @@ const mapStateToProps = state => ({
   contributors: state.repository.contributors,
   issue: state.issue.issue,
   diff: state.issue.diff,
+  commits: state.issue.commits,
   pr: state.issue.pr,
   isMerged: state.issue.isMerged,
   comments: state.issue.comments,
   events: state.issue.events,
   isPendingDiff: state.issue.isPendingDiff,
+  isPendingCommits: state.issue.isPendingCommits,
   isPendingCheckMerge: state.issue.isPendingCheckMerge,
   isPendingComments: state.issue.isPendingComments,
   isPendingEvents: state.issue.isPendingEvents,
@@ -60,6 +63,7 @@ const mapDispatchToProps = dispatch =>
       getContributors,
       postIssueComment,
       getIssueFromUrl,
+      getCommits,
       deleteIssueComment,
       getIssueEvents,
     },
@@ -119,9 +123,11 @@ class Issue extends Component {
     getContributors: Function,
     postIssueComment: Function,
     getIssueFromUrl: Function,
+    getCommits: Function,
     getIssueEvents: Function,
     deleteIssueComment: Function,
     diff: string,
+    commits: Array,
     issue: Object,
     pr: Object,
     isMerged: boolean,
@@ -132,6 +138,7 @@ class Issue extends Component {
     events: Array,
     isPendingIssue: boolean,
     isPendingDiff: boolean,
+    isPendingCommits: boolean,
     isPendingCheckMerge: boolean,
     isPendingComments: boolean,
     isPendingEvents: boolean,
@@ -190,6 +197,8 @@ class Issue extends Component {
       getRepository,
       getContributors,
       getIssueFromUrl,
+      getCommits,
+      issue,
       getIssueEvents,
     } = this.props;
 
@@ -198,10 +207,17 @@ class Issue extends Component {
     const issueRepository = issueURL
       .replace(`${v3.root}/repos/`, '')
       .replace(/([^/]+\/[^/]+)\/issues\/\d+$/, '$1');
+    const pullRequestCommitsURL = `${issueURL.replace(
+      'issues',
+      'pulls'
+    )}/commits`;
 
     Promise.all([
       getIssueFromUrl(issueURL),
       getIssueComments(`${issueURL}/comments`),
+      (issue || params.issue).pull_request
+        ? getCommits(pullRequestCommitsURL)
+        : Promise.resolve(),
     ])
       .then(() => {
         const issue = this.props.issue;
@@ -289,8 +305,10 @@ class Issue extends Component {
       issue,
       pr,
       diff,
+      commits,
       isMerged,
       isPendingDiff,
+      isPendingCommits,
       isPendingCheckMerge,
       locale,
       navigation,
@@ -300,9 +318,11 @@ class Issue extends Component {
       <IssueDescription
         issue={issue}
         diff={diff}
+        commits={commits}
         isMergeable={pr.mergeable}
         isMerged={isMerged}
         isPendingDiff={isPendingDiff}
+        isPendingCommits={isPendingCommits}
         isPendingCheckMerge={isPendingCheckMerge}
         onRepositoryPress={url => this.onRepositoryPress(url)}
         onLinkPress={node => this.onLinkPress(node)}
