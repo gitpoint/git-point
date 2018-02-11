@@ -5,8 +5,9 @@ import { Icon } from 'react-native-elements';
 import styled from 'styled-components/native';
 
 import { colors, normalize, fonts } from 'config';
+import { isIphoneX } from 'utils';
 
-const STICKY_HEADER_HEIGHT = 76;
+const STICKY_HEADER_HEIGHT = isIphoneX() ? 76 : 62;
 
 type Props = {
   renderContent: any,

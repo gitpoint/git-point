@@ -20,7 +20,7 @@ import {
   SearchBar,
 } from 'components';
 import { colors, fonts, normalize } from 'config';
-import { translate } from 'utils';
+import { isIphoneX, translate } from 'utils';
 import { searchRepos, searchUsers } from '../index';
 
 const mapStateToProps = state => ({
@@ -43,7 +43,14 @@ const mapDispatchToProps = dispatch =>
 const styles = StyleSheet.create({
   searchBarWrapper: {
     flexDirection: 'row',
-    marginTop: Platform.OS === 'ios' ? 30 : 5,
+    ...Platform.select({
+      ios: {
+        marginTop: isIphoneX() ? 30 : 20,
+      },
+      android: {
+        marginTop: 5,
+      },
+    }),
   },
   searchContainer: {
     width: Dimensions.get('window').width,
