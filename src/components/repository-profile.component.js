@@ -179,8 +179,7 @@ export const RepositoryProfile = ({
                 onPress={() =>
                   navigation.navigate('Repository', {
                     repository: repository.parent,
-                  })
-                }
+                  })}
               >
                 {' '}
                 {repository.parent.full_name}

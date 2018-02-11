@@ -189,8 +189,7 @@ export class IssueDescription extends Component {
                       title: translate('repository.pullDiff.title', locale),
                       locale,
                       diff,
-                    })
-                  }
+                    })}
                 />
               )}
           </DiffBlocksContainer>
@@ -227,8 +226,7 @@ export class IssueDescription extends Component {
                 onPress={() =>
                   navigation.navigate('PullMerge', {
                     title: translate('issue.pullMerge.title', locale),
-                  })
-                }
+                  })}
                 title={translate('issue.main.mergeButton', locale)}
               />
             </MergeButtonContainer>

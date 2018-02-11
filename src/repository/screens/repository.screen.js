@@ -18,6 +18,7 @@ import {
   IssueListItem,
   LoadingMembersList,
   LoadingModal,
+  TopicsList,
 } from 'components';
 import { translate, openURLInView } from 'utils';
 import { colors, fonts } from 'config';
@@ -45,7 +46,9 @@ const mapStateToProps = state => ({
   isPendingCheckReadMe: state.repository.isPendingCheckReadMe,
   isPendingCheckStarred: state.repository.isPendingCheckStarred,
   isPendingFork: state.repository.isPendingFork,
+  isPendingTopics: state.repository.isPendingTopics,
   isPendingSubscribe: state.repository.isPendingSubscribe,
+  topics: state.repository.topics,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -89,6 +92,7 @@ class Repository extends Component {
     isPendingIssues: boolean,
     isPendingCheckStarred: boolean,
     isPendingFork: boolean,
+    isPendingTopics: boolean,
     isPendingSubscribe: boolean,
     // isPendingCheckForked: boolean,
     navigation: Object,
@@ -97,6 +101,7 @@ class Repository extends Component {
     subscribed: boolean,
     subscribeToRepo: Function,
     unSubscribeToRepo: Function,
+    topics: Array,
   };
 
   state: {
@@ -195,6 +200,7 @@ class Repository extends Component {
       contributors,
       hasReadMe,
       issues,
+      topics,
       starred,
       locale,
       isPendingRepository,
@@ -204,6 +210,7 @@ class Repository extends Component {
       isPendingCheckStarred,
       isPendingFork,
       isPendingSubscribe,
+      isPendingTopics,
       navigation,
       username,
       subscribed,
@@ -282,6 +289,14 @@ class Repository extends Component {
           navigation={navigation}
           navigateBack
         >
+          {!isPendingTopics &&
+            topics.length > 0 && (
+              <TopicsList
+                title={translate('repository.main.topicsTitle', locale)}
+                topics={topics}
+              />
+            )}
+
           {initalRepository &&
             !initalRepository.owner &&
             isPendingRepository && (
