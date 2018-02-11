@@ -39,6 +39,15 @@
     {
       "extent": "full-screen",
       "idiom": "iphone",
+      "filename": "Default-Portrait-2436h@3x.png",
+      "minimum-system-version": "11.0",
+      "orientation": "portrait",
+      "scale": "3x",
+      "subtype": "2436h"
+    },
+    {
+      "extent": "full-screen",
+      "idiom": "iphone",
       "filename": "Default@2x.png",
       "minimum-system-version": "7.0",
       "orientation": "portrait",

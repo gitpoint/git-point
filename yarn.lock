@@ -6142,9 +6142,9 @@ react-native-cookies@^3.2.0:
   dependencies:
     invariant "^2.1.0"
 
-react-native-device-info@^0.11.0:
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.11.0.tgz#e96dd0e3f8a7d7e3022c1f441f51fa912fdc7444"
+react-native-device-info@^0.15.1:
+  version "0.15.1"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.15.1.tgz#abe2e4c005816dbf8e77445389a96e5e37ed34c6"
 
 react-native-dismiss-keyboard@1.0.0:
   version "1.0.0"
@@ -6326,7 +6326,7 @@ react-native@0.52.0:
     xmldoc "^0.4.0"
     yargs "^9.0.0"
 
-react-navigation@^1.0.0-beta.11:
+react-navigation@^1.0.0-beta.27:
   version "1.0.0-beta.27"
   resolved "https://registry.yarnpkg.com/react-navigation/-/react-navigation-1.0.0-beta.27.tgz#e6263b01975cd790e32b3711c2eb6cead96c102c"
   dependencies:
