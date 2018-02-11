@@ -721,6 +721,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "jstrobel",
+      "name": "Jens Strobel",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/1428396?v=4",
+      "profile": "https://github.com/jstrobel",
+      "contributions": [
+        "bug",
+        "translation"
+      ]
     }
   ]
 }
