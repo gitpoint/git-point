@@ -201,6 +201,7 @@ export const nl = {
       starsTitle: 'Sterren',
       forksTitle: 'Forks',
       forkedFromMessage: 'forked from',
+      topicsTitle: 'TOPICS',
       starred: 'Starred',
       watching: 'Watching',
       watchers: 'Watchers',

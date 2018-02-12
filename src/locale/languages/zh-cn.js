@@ -193,6 +193,7 @@ export const zhCN = {
       starsTitle: '星标',
       forksTitle: '派生',
       forkedFromMessage: '派生于',
+      topicsTitle: 'TOPICS',
       starred: '已星标',
       watching: '关注中',
       watchers: '关注者',

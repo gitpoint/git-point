@@ -207,6 +207,7 @@ export const es = {
       forksTitle: 'Forks',
       forkedFromMessage: 'forked from',
       starred: 'Favoritos',
+      topicsTitle: 'TOPICS',
       watching: 'Siguiendo',
       watchers: 'Seguidores',
     },

@@ -204,6 +204,7 @@ export const eu = {
       starred: 'Gogokoenak',
       watching: 'Jarraitzen',
       watchers: 'Jarraitzaileak',
+      topicsTitle: 'TOPICS',
     },
     codeList: {
       title: 'Kodea',

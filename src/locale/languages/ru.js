@@ -206,6 +206,7 @@ export const ru = {
       starred: 'Отмечено',
       watching: 'Наблюдаю',
       watchers: 'Наблюдателей',
+      topicsTitle: 'TOPICS',
     },
     codeList: {
       title: 'Код',

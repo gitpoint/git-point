@@ -14,7 +14,7 @@ import {
 } from 'components';
 import styled from 'styled-components';
 import { colors, fonts, normalize } from 'config';
-import { translate } from 'utils';
+import { isIphoneX, translate } from 'utils';
 import { searchRepos, searchUsers } from '../index';
 
 const mapStateToProps = state => ({
@@ -36,7 +36,7 @@ const mapDispatchToProps = dispatch =>
 
 const SearchBarWrapper = styled.View`
   flex-direction: row;
-  margin-top: ${Platform.OS === 'ios' ? 20 : 5};
+  margin-top: ${Platform.OS === 'ios' ? (isIphoneX() ? 30: 20) : 5};
 `;
 
 const SearchContainer = styled.View`

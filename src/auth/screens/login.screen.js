@@ -74,7 +74,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: '100%',
     width: '100%',
-    textAlign: 'center',
     backgroundColor: colors.githubDark,
   },
   browserLoadingLabel: {

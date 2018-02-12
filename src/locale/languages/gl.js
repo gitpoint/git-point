@@ -206,6 +206,7 @@ export const gl = {
       starred: 'Engadido a favoritos',
       watching: 'Vixiando',
       watchers: 'Vixiantes',
+      topicsTitle: 'TOPICS',
     },
     codeList: {
       title: 'Código',

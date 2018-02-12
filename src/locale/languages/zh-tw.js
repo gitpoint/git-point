@@ -18,7 +18,8 @@ export const zhTW = {
       welcomeTitle: '歡迎使用 GitPoint',
     },
     events: {
-      welcomeMessage: '歡迎！這是您的消息動態，在這裡你可以看到你關注的版本庫與使用者最近的動態',
+      welcomeMessage:
+        '歡迎！這是您的消息動態，在這裡你可以看到你關注的版本庫與使用者最近的動態',
       commitCommentEvent: '在 commit 上評論',
       createEvent: '建立了{{object}}',
       deleteEvent: '刪除了{{object}}',
@@ -94,7 +95,8 @@ export const zhTW = {
     privacyPolicy: {
       title: '隱私條款',
       effectiveDate: '最後更新：2017年7月15日',
-      introduction: '我們很高興您選擇使用 GitPoint。您可以在本隱私條款中查閱我們使用哪些與不使用哪些使用者資料。',
+      introduction:
+        '我們很高興您選擇使用 GitPoint。您可以在本隱私條款中查閱我們使用哪些與不使用哪些使用者資料。',
       userDataTitle: '使用者資料',
       userData1:
         '我們不會把您的 GitHub 資訊用於任何用途。授權登入後，使用者的 OAuth token 只會被保留在使用者裝置的儲存空間中。我們無法取得此類資訊。我們不會查看或儲存使用者的 access token。',
@@ -106,10 +108,13 @@ export const zhTW = {
       analyticsInfo2:
         '如果我們使用第三方平台來蒐集堆棧跟蹤訊息（stack traces）、錯誤紀錄（error logs）或更多的分析資訊，我們將保證使用者的資訊均為匿名且加密的。',
       openSourceTitle: '開源',
-      openSource1: 'GitPoint 是開源軟體，所有對本軟體的歷史貢獻資訊都會一直向外界公開。',
-      openSource2: '每個向本 App 送交的程式碼貢獻都會經過我們的審查，以防止任何人注入任何形式的惡意程式碼。',
+      openSource1:
+        'GitPoint 是開源軟體，所有對本軟體的歷史貢獻資訊都會一直向外界公開。',
+      openSource2:
+        '每個向本 App 送交的程式碼貢獻都會經過我們的審查，以防止任何人注入任何形式的惡意程式碼。',
       contactTitle: '聯絡方式',
-      contact1: '感謝閱讀我們的隱私條款。我們希望您能如同我們享受開發 GitPoint 的過程般，也很享受地使用它！',
+      contact1:
+        '感謝閱讀我們的隱私條款。我們希望您能如同我們享受開發 GitPoint 的過程般，也很享受地使用它！',
       contact2: '如果您對本條款或 GitPoint 有任何問題，請將問題發送至',
       contactLink: 'GitPoint 的 repository',
     },
@@ -194,6 +199,7 @@ export const zhTW = {
       starred: '已加星',
       watching: '關注中',
       watchers: '關注者',
+      topicsTitle: 'TOPICS',
     },
     codeList: {
       title: '程式碼',
