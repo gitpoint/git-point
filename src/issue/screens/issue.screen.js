@@ -93,7 +93,8 @@ class Issue extends Component {
               navigate('IssueSettings', {
                 title: translate('issue.settings.title', state.params.locale),
                 issue: state.params.issue,
-              })}
+              })
+            }
           />
         );
       }
@@ -314,14 +315,20 @@ class Issue extends Component {
   };
 
   renderItem = ({ item }) => {
-    const { locale, navigation } = this.props;
+    const { repository, locale, navigation } = this.props;
 
     if (item.header) {
       return this.renderHeader();
     }
 
     if (item.event) {
-      return <IssueEventListItem event={item} navigation={navigation} />;
+      return (
+        <IssueEventListItem
+          repository={repository}
+          event={item}
+          navigation={navigation}
+        />
+      );
     }
 
     return (
