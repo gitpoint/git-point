@@ -36,7 +36,10 @@ const mapDispatchToProps = dispatch =>
 
 const SearchBarWrapper = styled.View`
   flex-direction: row;
-  margin-top: ${Platform.OS === 'ios' ? (isIphoneX() ? 30: 20) : 5};
+  margin-top: ${Platform.select({
+    ios: isIphoneX() ? 30 : 20,
+    android: 5,
+  })};
 `;
 
 const SearchContainer = styled.View`
