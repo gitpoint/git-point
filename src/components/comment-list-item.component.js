@@ -3,7 +3,7 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 import { GithubHtmlView } from 'components';
 import { Icon } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
@@ -18,31 +18,31 @@ const Container = styled.View`
 
 const Header = styled.View`
   flex-direction: row;
-  margin-left: 10px;
+  margin-left: 10;
   align-items: center;
 `;
 
 const AvatarContainer = styled.TouchableOpacity`
   background-color: ${colors.greyLight};
-  border-radius: 17px;
-  width: 34px;
-  height: 34px;
+  border-radius: 17;
+  width: 34;
+  height: 34;
 `;
 
 const Avatar = styled.Image`
-  border-radius: 17px;
-  width: 34px;
-  height: 34px;
+  border-radius: 17;
+  width: 34;
+  height: 34;
 `;
 
 const TitleSubtitleContainer = styled.View`
   justify-content: center;
   flex: 1;
-  margin-left: 10px;
+  margin-left: 10;
 `;
 
 const DateContainer = styled.View`
-  flex: 0.1;
+  flex: 0.15;
   align-items: flex-end;
   justify-content: center;
 `;
@@ -58,11 +58,11 @@ const DateLabel = styled.Text`
 `;
 
 const CommentContainer = styled.View`
-  padding-top: 5px;
-  margin-left: 54px;
+  padding-top: 5;
+  margin-left: 54;
   border-bottom-color: ${colors.greyLight};
-  border-bottom-width: 1px;
-  padding-bottom: ${props => (props.bottomPadding ? 15 : 0)}px;
+  border-bottom-width: 1;
+  padding-bottom: ${props => (props.bottomPadding ? 15 : 0)};
 `;
 
 const CommentTextNone = styled.Text`
@@ -72,7 +72,7 @@ const CommentTextNone = styled.Text`
 `;
 
 const ActionButtonIconContainer = styled.View`
-  padding: 5px 0;
+  padding: 5px 0 10px;
   align-items: flex-end;
   justify-content: center;
 `;
@@ -143,7 +143,8 @@ class CommentListItemComponent extends Component {
                   {
                     user: comment.user,
                   }
-                )}
+                )
+              }
             >
               <Avatar
                 source={{
@@ -164,7 +165,8 @@ class CommentListItemComponent extends Component {
                     {
                       user: comment.user,
                     }
-                  )}
+                  )
+                }
               >
                 {comment.user.login}
               </LinkDescription>
