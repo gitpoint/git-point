@@ -1,6 +1,5 @@
 /* eslint-disable no-prototype-builtins */
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { colors, fonts, normalize } from 'config';
 import { translate } from 'utils';
 import { ImageZoom } from 'components';
@@ -32,17 +31,17 @@ const Profile = styled.View`
 `;
 const Title = styled.Text`
   color: ${colors.white};
-  font-family: ${styledFonts.fontPrimaryBold};
+  ${fonts.fontPrimaryBold};
   font-size: ${normalize(16)};
-  margin-bottom: 2px;
+  margin-bottom: 2;
 `;
 const SubTitle = styled.Text`
   color: ${colors.white};
-  font-family: ${styledFonts.fontPrimary};
+  ${fonts.fontPrimary};
   font-size: ${normalize(12)};
-  margin-bottom: 50px;
-  padding-left: 15px;
-  padding-right: 15px;
+  margin-bottom: 50;
+  padding-left: 15;
+  padding-right: 15;
   text-align: center;
 `;
 const Details = styled.View`
@@ -55,29 +54,20 @@ const Unit = styled.TouchableOpacity`
 const UnitNumber = styled.Text`
   text-align: center;
   color: ${colors.white};
-  font-family: ${styledFonts.fontPrimaryBold};
+  ${fonts.fontPrimaryBold};
   font-size: ${normalize(16)};
 `;
 const UnitText = styled.Text`
   text-align: center;
   color: ${colors.white};
   font-size: ${normalize(10)};
-  font-family: ${styledFonts.fontPrimary};
+  ${fonts.fontPrimary};
 `;
 const UnitStatus = styled.Text`
   text-align: center;
   color: ${colors.lighterBoldGreen};
   font-size: ${normalize(8)};
-  font-family: ${styledFonts.fontPrimary};
-  padding-top: 3px;
-  padding-bottom: 3px;
-  margin-top: 5px;
-  margin-left: 17px;
-  margin-right: 17px;
-  border-width: 0.5px;
-  border-radius: 5px;
-  border-color: ${colors.lighterBoldGreen};
-  justify-content: center;
+  ${fonts.fontPrimary};
 `;
 
 const maxLoadingConstraints = {
@@ -147,7 +137,8 @@ export class UserProfile extends Component {
                       maxLoadingConstraints.maxPublicRepos,
                       user.public_repos
                     ),
-                  })}
+                  })
+                }
               >
                 <UnitNumber>
                   {!isNaN(parseInt(user.public_repos, 10))
@@ -158,7 +149,9 @@ export class UserProfile extends Component {
               </Unit>
 
               {type !== 'org' && (
-                <Unit nativeId="touchable-star-count-list" onPress={() =>
+                <Unit
+                  nativeId="touchable-star-count-list"
+                  onPress={() =>
                     navigation.navigate('StarredRepositoryList', {
                       title: translate(
                         'user.starredRepositoryList.title',
@@ -169,9 +162,15 @@ export class UserProfile extends Component {
                         maxLoadingConstraints.maxStars,
                         starCount
                       ),
-                    })}>
-                  <UnitNumber>{!isNaN(parseInt(starCount, 10)) ? starCount : ' '}</UnitNumber>
-                  <UnitText>{translate('user.starredRepositoryList.text', locale)}</UnitText>
+                    })
+                  }
+                >
+                  <UnitNumber>
+                    {!isNaN(parseInt(starCount, 10)) ? starCount : ' '}
+                  </UnitNumber>
+                  <UnitText>
+                    {translate('user.starredRepositoryList.text', locale)}
+                  </UnitText>
                 </Unit>
               )}
 
@@ -186,7 +185,8 @@ export class UserProfile extends Component {
                         maxLoadingConstraints.maxFollowers,
                         user.followers
                       ),
-                    })}
+                    })
+                  }
                 >
                   <UnitNumber>
                     {!isNaN(parseInt(user.followers, 10))
@@ -215,7 +215,8 @@ export class UserProfile extends Component {
                         maxLoadingConstraints.maxFollowing,
                         user.following
                       ),
-                    })}
+                    })
+                  }
                 >
                   <UnitNumber>
                     {!isNaN(parseInt(user.following, 10))
