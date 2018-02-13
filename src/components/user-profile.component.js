@@ -75,20 +75,19 @@ const UnitText = styled.Text`
   font-size: ${normalize(10)};
   ${fonts.fontPrimary};
 `;
+const UnitStatusWrapper = styled.View`
+  padding: 2px;
+  margin-top: 5;
+  margin-left: 20;
+  margin-right: 20;
+  border-radius: 5;
+  background-color: ${colors.lighterBoldGreen};
+`;
 const UnitStatus = styled.Text`
   text-align: center;
-  color: ${colors.lighterBoldGreen};
+  color: ${colors.white};
   font-size: ${normalize(8)};
-  ${fonts.fontPrimary};
-  padding-top: 3;
-  padding-bottom: 3;
-  margin-top: 5;
-  margin-left: 17;
-  margin-right: 17;
-  border-width: 0.5;
-  border-radius: 5;
-  border-color: ${colors.lighterBoldGreen};
-  justify-content: center;
+  ${fonts.fontPrimaryBold};
 `;
 
 const maxLoadingConstraints = {
@@ -207,9 +206,11 @@ export class UserProfile extends Component {
                     {translate('user.followers.text', locale)}
                   </UnitText>
                   {isFollowing && (
-                    <UnitStatus>
-                      {translate('user.following.followingYou', locale)}
-                    </UnitStatus>
+                    <UnitStatusWrapper>
+                      <UnitStatus>
+                        {translate('user.following.followingYou', locale)}
+                      </UnitStatus>
+                    </UnitStatusWrapper>
                   )}
                 </Unit>
               )}
@@ -237,9 +238,11 @@ export class UserProfile extends Component {
                     {translate('user.following.text', locale)}
                   </UnitText>
                   {isFollower && (
-                    <UnitStatus>
-                      {translate('user.followers.followsYou')}
-                    </UnitStatus>
+                    <UnitStatusWrapper>
+                      <UnitStatus>
+                        {translate('user.followers.followsYou')}
+                      </UnitStatus>
+                    </UnitStatusWrapper>
                   )}
                 </Unit>
               )}
