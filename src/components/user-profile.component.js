@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { colors, fonts, normalize } from 'config';
 import { translate } from 'utils';
 import { ImageZoom } from 'components';
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components';
 
 type Props = {
   type: string,
@@ -28,6 +28,18 @@ const Profile = styled.View`
   flex: 3;
   align-items: center;
   justify-content: flex-end;
+`;
+const StyledImageZoom = styled(ImageZoom)`
+  width: 75;
+  height: 75;
+  margin-bottom: 20;
+  border-radius: 37.5;
+  ${props =>
+    props.isUser &&
+    css`
+      border-color: ${colors.white};
+      border-width: 2;
+    `};
 `;
 const Title = styled.Text`
   color: ${colors.white};
@@ -68,6 +80,15 @@ const UnitStatus = styled.Text`
   color: ${colors.lighterBoldGreen};
   font-size: ${normalize(8)};
   ${fonts.fontPrimary};
+  padding-top: 3;
+  padding-bottom: 3;
+  margin-top: 5;
+  margin-left: 17;
+  margin-right: 17;
+  border-width: 0.5;
+  border-radius: 5;
+  border-color: ${colors.lighterBoldGreen};
+  justify-content: center;
 `;
 
 const maxLoadingConstraints = {
@@ -108,20 +129,9 @@ export class UserProfile extends Component {
           type === 'org') && (
           <Wrapper nativeId="user-profile-container">
             <Profile>
-              <ImageZoom
+              <StyledImageZoom
                 uri={this.getUserUri()}
-                style={[
-                  {
-                    width: 75,
-                    height: 75,
-                    marginBottom: 20,
-                    borderRadius: 37.5,
-                  },
-                  (initialUser.type === 'User' || user.type === 'User') && {
-                    borderColor: colors.white,
-                    borderWidth: 2,
-                  },
-                ]}
+                isUser={initialUser.type === 'User' || user.type === 'User'}
               />
               <Title>{user.name || ' '}</Title>
               <SubTitle>{initialUser.login || ' '}</SubTitle>
