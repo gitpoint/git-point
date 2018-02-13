@@ -1,6 +1,6 @@
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 import { colors, fonts } from 'config';
 import { InlineLabel } from 'components';
 import { FlatList, View } from 'react-native';
