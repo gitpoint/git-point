@@ -11,8 +11,8 @@ export const LabelButton = styled(Button).attrs({
   color: ({ label }) => getFontColorByBackground(label.color),
   buttonStyle: ({ largeWithTag }) => [
     {
-      paddingVertical: largeWithTag ? 3 : 5,
-      paddingHorizontal: largeWithTag ? 5 : 10,
+      paddingVertical: largeWithTag ? 5 : 3,
+      paddingHorizontal: largeWithTag ? 10 : 5,
       marginLeft: 0,
       borderRadius: 3,
     },
