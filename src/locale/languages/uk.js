@@ -17,6 +17,7 @@ export const uk = {
         'Спілкуйтесь, приймайте pull-запити і робіть багато іншого',
       signInButton: 'УВІЙТИ',
     },
+    networkError: 'Oops! it seems that you are not connected to the internet!',
     welcome: {
       welcomeTitle: 'Ласкаво просимо в GitPoint',
     },

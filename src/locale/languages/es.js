@@ -20,6 +20,7 @@ export const es = {
         'Comunícate en conversaciones, haz merges de pull requests y más',
       signInButton: 'IDENTIFÍCATE',
     },
+    networkError: 'Oops! Parece que no tienes conexión a internet!',
     welcome: {
       welcomeTitle: 'Bienvenido a GitPoint',
     },

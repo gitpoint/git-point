@@ -14,6 +14,7 @@ export const zhTW = {
       issuesMessage: '參與議題討論、合併請求',
       signInButton: '登入',
     },
+    networkError: 'Oops! it seems that you are not connected to the internet!',
     welcome: {
       welcomeTitle: '歡迎使用 GitPoint',
     },

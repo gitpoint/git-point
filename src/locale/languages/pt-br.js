@@ -16,6 +16,7 @@ export const ptBR = {
       issuesMessage: 'Comunicar-se em conversas, merge pull requests e mais',
       signInButton: 'ENTRAR',
     },
+    networkError: 'Oops! it seems that you are not connected to the internet!',
     welcome: {
       welcomeTitle: 'Bem-vindo ao GitPoint',
     },

@@ -17,6 +17,7 @@ export const eo = {
       issuesMessage: 'Komuniki sur konversacioj, kunfandi tiri petojn kaj pli',
       signInButton: 'ENSALUTI',
     },
+    networkError: 'Oops! it seems that you are not connected to the internet!',
     welcome: {
       welcomeTitle: 'Bonvenon al GitPoint',
     },

@@ -17,6 +17,7 @@ export const gl = {
         'Comunícate en conversas, efectúa merge de pull requests e moito máis',
       signInButton: 'ENTRAR',
     },
+    networkError: 'Oops! it seems that you are not connected to the internet!',
     welcome: {
       welcomeTitle: 'Benvido a GitPoint',
     },

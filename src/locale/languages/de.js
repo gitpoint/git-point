@@ -20,6 +20,7 @@ export const de = {
         'Unterhalte dich in Konversationen, merge Pull Requests und vieles mehr',
       signInButton: 'EINLOGGEN',
     },
+    networkError: 'Oops! it seems that you are not connected to the internet!',
     welcome: {
       welcomeTitle: 'Willkommen bei GitPoint',
     },

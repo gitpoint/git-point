@@ -17,6 +17,7 @@ export const ru = {
         'Общайтесь, принимайте пулл-реквесты и делайте многое другое',
       signInButton: 'ВОЙТИ',
     },
+    networkError: 'Oops! it seems that you are not connected to the internet!',
     welcome: {
       welcomeTitle: 'Добро пожаловать в GitPoint',
     },

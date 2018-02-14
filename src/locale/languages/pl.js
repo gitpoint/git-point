@@ -17,6 +17,7 @@ export const pl = {
         'Powiadom o konwersjacji, zmergowanym pull requeście i więcej',
       signInButton: 'ZALOGUJ',
     },
+    networkError: 'Oops! it seems that you are not connected to the internet!',
     welcome: {
       welcomeTitle: 'Witaj w GitPoint',
     },
