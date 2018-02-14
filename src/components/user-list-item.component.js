@@ -2,13 +2,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, TouchableHighlight } from 'react-native';
 import { Icon } from 'react-native-elements';
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components';
 
 import { colors, fonts, normalize } from 'config';
 
 const ViewBorderContainer = styled.View`
-  border-bottom-color: ${props => props.hasBorderBottom && colors.greyLight};
-  border-bottom-width: ${props => (props.hasBorderBottom ? 1 : 0)};
+  ${props =>
+    props.hasBorderBottom &&
+    css`
+      border-bottom-color: ${colors.greyLight};
+      border-bottom-width: 1;
+    `};
 `;
 const TouchableBorderContainer = ViewBorderContainer.withComponent(
   TouchableHighlight
@@ -122,7 +126,8 @@ class UserListItemComponent extends Component {
           navigation.navigate(
             user.type === 'User' ? userScreen : 'Organization',
             user.type === 'User' ? { user } : { organization: user }
-          )}
+          )
+        }
         underlayColor={colors.greyLight}
         hasBorderBottom={!noBorderBottom}
       >
@@ -131,13 +136,15 @@ class UserListItemComponent extends Component {
             onPress={() =>
               navigation.navigate(userScreen, {
                 user,
-              })}
+              })
+            }
           >
             <ImageContainerComponent
               onPress={() =>
                 navigation.navigate(userScreen, {
                   user,
-                })}
+                })
+              }
             >
               <Avatar
                 source={{
