@@ -177,6 +177,8 @@ export const en = {
   },
   repository: {
     main: {
+      notFoundRepo: 'Repository is not found',
+      unknowLanguage: 'Unknown',
       shareRepositoryTitle: 'Share {{repoName}}',
       shareRepositoryMessage: 'Check out {{repoName}} on GitHub. {{repoUrl}}',
       repoActions: 'Repository Actions',

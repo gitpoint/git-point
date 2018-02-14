@@ -177,6 +177,8 @@ export const gl = {
   },
   repository: {
     main: {
+      notFoundRepo: 'Repository is not found',
+      unknowLanguage: 'Unknown',
       shareRepositoryTitle: 'Compartir {{repoName}}',
       shareRepositoryMessage: 'Revisa {{repoName}} en GitHub. {{repoUrl}}',
       repoActions: 'Accións do Repositorio',

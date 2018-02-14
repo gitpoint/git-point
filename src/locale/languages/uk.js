@@ -175,6 +175,8 @@ export const uk = {
   },
   repository: {
     main: {
+      notFoundRepo: 'Repository is not found',
+      unknowLanguage: 'Unknown',
       shareRepositoryTitle: 'Поділитись {{repoName}}',
       shareRepositoryMessage: 'Перевірити {{repoName}} на GitHub. {{repoUrl}}',
       repoActions: 'Дії с репозиторієм',
