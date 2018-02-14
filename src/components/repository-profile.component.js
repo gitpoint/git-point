@@ -12,7 +12,6 @@ type Props = {
   loading: boolean,
   subscribed: boolean,
   locale: string,
-  notFoundMsg: string,
 };
 
 const styles = StyleSheet.create({
@@ -114,6 +113,18 @@ const styles = StyleSheet.create({
   },
 });
 
+const iconName = repository => {
+  let icon = '';
+
+  if (!repository.name) {
+    icon = 'stop';
+  } else {
+    icon = repository.fork ? 'repo-forked' : 'repo';
+  }
+
+  return icon;
+};
+
 export const RepositoryProfile = ({
   repository,
   starred,
@@ -121,7 +132,6 @@ export const RepositoryProfile = ({
   loading,
   subscribed,
   locale,
-  notFoundMsg,
 }: Props) => (
   <View style={styles.container}>
     <View style={styles.languageInfo}>
@@ -135,7 +145,8 @@ export const RepositoryProfile = ({
         )}
 
       <Text style={[styles.languageInfoTitle]}>
-        {notFoundMsg || repository.language || ' '}
+        {repository.language ||
+          translate('repository.main.unknowLanguage', locale)}
       </Text>
     </View>
 
@@ -145,17 +156,15 @@ export const RepositoryProfile = ({
           styles.icon,
           repository.fork ? { marginLeft: 17 } : { marginLeft: 13 },
         ]}
-        name={
-          (notFoundMsg && 'stop') ||
-          (repository.fork && 'repo-forked') ||
-          'repo'
-        }
+        name={iconName(repository)}
         type="octicon"
         size={45}
         color={colors.greyLight}
       />
 
-      <Text style={styles.title}>{notFoundMsg || repository.name || ' '}</Text>
+      <Text style={styles.title}>
+        {repository.name || translate('repository.main.notFoundRepo', locale)}
+      </Text>
 
       <Text
         numberOfLines={repository.fork ? 1 : 3}

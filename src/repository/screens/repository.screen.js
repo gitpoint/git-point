@@ -49,7 +49,7 @@ const mapStateToProps = state => ({
   isPendingTopics: state.repository.isPendingTopics,
   isPendingSubscribe: state.repository.isPendingSubscribe,
   topics: state.repository.topics,
-  notFoundMsg: state.repository.error.message,
+  errorMessage: state.repository.error.message,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -103,7 +103,7 @@ class Repository extends Component {
     subscribeToRepo: Function,
     unSubscribeToRepo: Function,
     topics: Array,
-    notFoundMsg: string,
+    errorMessage: string,
   };
 
   state: {
@@ -216,7 +216,7 @@ class Repository extends Component {
       navigation,
       username,
       subscribed,
-      notFoundMsg,
+      errorMessage,
     } = this.props;
     const { refreshing } = this.state;
 
@@ -277,7 +277,6 @@ class Repository extends Component {
                 navigation={navigation}
                 subscribed={isSubscribed}
                 locale={locale}
-                notFoundMsg={notFoundMsg}
               />
             );
           }}
@@ -289,7 +288,7 @@ class Repository extends Component {
           }
           stickyTitle={repository.name}
           showMenu={
-            !notFoundMsg && !isPendingRepository && !isPendingCheckStarred
+            !errorMessage && !isPendingRepository && !isPendingCheckStarred
           }
           menuAction={this.showMenuActionSheet}
           navigation={navigation}
@@ -323,7 +322,7 @@ class Repository extends Component {
               </SectionList>
             )}
 
-          {!notFoundMsg &&
+          {!errorMessage &&
             initalRepository &&
             initalRepository.owner && (
               <SectionList
@@ -389,7 +388,7 @@ class Repository extends Component {
                 })
               }
               underlayColor={colors.greyLight}
-              disabled={(notFoundMsg && true) || false}
+              disabled={!!errorMessage}
             />
           </SectionList>
 
