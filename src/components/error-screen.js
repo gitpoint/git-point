@@ -8,8 +8,6 @@ const ViewWrapper = styled.View`
   align-content: center;
   height: 100%;
   justify-content: center;
-  left: 0;
-  top: 0;
 `;
 
 const TextStyled = styled.Text`
