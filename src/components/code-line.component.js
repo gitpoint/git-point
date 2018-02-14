@@ -7,7 +7,7 @@ import SyntaxHighlighter from 'react-native-syntax-highlighter';
 import { getLanguage } from 'lowlight';
 import { github as GithubStyle } from 'react-syntax-highlighter/dist/styles';
 import { colors, normalize, fonts } from 'config';
-import styled, { css } from 'styled-components/native';
+import styled, { css } from 'styled-components';
 
 function addOrDelLineColors(change) {
   const lineColors = {

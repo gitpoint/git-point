@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 
 import React, { Component } from 'react';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 import { View, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
 

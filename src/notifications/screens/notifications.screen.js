@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FlatList, View, ScrollView, Platform } from 'react-native';
@@ -15,7 +15,7 @@ import {
   NotificationListItem,
 } from 'components';
 import { colors, fonts, normalize } from 'config';
-import { translate } from 'utils';
+import { isIphoneX, translate } from 'utils';
 import {
   getUnreadNotifications,
   getParticipatingNotifications,
@@ -55,7 +55,7 @@ const mapDispatchToProps = dispatch =>
 
 const ButtonGroupWrapper = styled.View`
   background-color: ${colors.greyLight};
-  padding-top: ${Platform.OS === 'ios' ? 30 : 10};
+  padding-top: ${Platform.OS === 'ios' ? (isIphoneX() ? 40 : 30) : 10};
   padding-bottom: 10;
   margin-bottom: 15;
 `;

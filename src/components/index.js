@@ -30,4 +30,5 @@ export * from './image-zoom.component';
 export * from './button.component';
 export * from './notification-icon.component';
 export * from './badge.component';
+export * from './topics-list.component';
 export * from './toggle-view.component';

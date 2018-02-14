@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Image, Modal, Dimensions } from 'react-native';
 import { Icon } from 'react-native-elements';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 import PhotoView from 'react-native-photo-view';
 
 import { colors } from 'config';

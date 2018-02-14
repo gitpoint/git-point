@@ -202,6 +202,7 @@ export const uk = {
       forksTitle: 'Форків',
       forkedFromMessage: 'склоновано від',
       starred: 'Відмічено',
+      topicsTitle: 'TOPICS',
       watching: 'Спостерігаю',
       watchers: 'Спостерігачів',
     },

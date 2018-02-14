@@ -3,7 +3,7 @@ import { Text } from 'react-native';
 import { Icon as BaseIcon } from 'react-native-elements';
 import { colors, fonts, normalize } from 'config';
 import { InlineLabel } from 'components';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 
 import { relativeTimeToNow } from 'utils';
 

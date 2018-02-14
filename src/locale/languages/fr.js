@@ -205,6 +205,7 @@ export const fr = {
       starsTitle: 'Favoris',
       forksTitle: 'Forks',
       forkedFromMessage: 'forké depuis',
+      topicsTitle: 'TOPICS',
       starred: 'Favoris',
       watching: 'Abonné',
       watchers: 'Abonnés',

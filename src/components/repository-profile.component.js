@@ -98,18 +98,18 @@ const styles = StyleSheet.create({
     fontSize: normalize(10),
     ...fonts.fontPrimary,
   },
-  badge: {
-    paddingTop: 3,
-    paddingBottom: 3,
-    marginTop: 5,
-    marginLeft: 27,
-    marginRight: 27,
-    borderWidth: 0.5,
+  badgeView: {
     borderRadius: 5,
-    borderColor: colors.lighterBoldGreen,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
+    padding: 2,
+    flexGrow: 0,
+    backgroundColor: colors.lighterBoldGreen,
+    marginLeft: 20,
+    marginRight: 20,
+    marginTop: 5,
+  },
+  badge: {
+    color: colors.white,
+    ...fonts.fontPrimaryBold,
   },
 });
 
@@ -201,9 +201,11 @@ export const RepositoryProfile = ({
           {translate('repository.main.starsTitle', locale)}
         </Text>
         {starred && (
-          <Text style={[styles.unitStatus, styles.badge]}>
-            {translate('repository.main.starred', locale)}
-          </Text>
+          <View style={styles.badgeView}>
+            <Text style={[styles.unitStatus, styles.badge]}>
+              {translate('repository.main.starred', locale)}
+            </Text>
+          </View>
         )}
       </View>
 
@@ -217,9 +219,11 @@ export const RepositoryProfile = ({
           {translate('repository.main.watchers', locale)}
         </Text>
         {subscribed && (
-          <Text style={[styles.unitStatus, styles.badge]}>
-            {translate('repository.main.watching', locale)}
-          </Text>
+          <View style={styles.badgeView}>
+            <Text style={[styles.unitStatus, styles.badge]}>
+              {translate('repository.main.watching', locale)}
+            </Text>
+          </View>
         )}
       </View>
 

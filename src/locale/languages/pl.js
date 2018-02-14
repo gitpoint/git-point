@@ -206,6 +206,7 @@ export const pl = {
       starred: 'Polubiony',
       watching: 'Obserwowany',
       watchers: 'Obserwujący',
+      topicsTitle: 'TOPICS',
     },
     codeList: {
       title: 'Kod',
