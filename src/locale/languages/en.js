@@ -20,6 +20,7 @@ export const en = {
         'Communicate on conversations, merge pull requests and more',
       signInButton: 'SIGN IN',
     },
+    networkError: 'Oops! it seems that you are not connected to the internet!',
     welcome: {
       welcomeTitle: 'Welcome to GitPoint',
     },
