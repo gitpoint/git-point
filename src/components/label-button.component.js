@@ -1,51 +1,66 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
-import { Button } from 'react-native-elements';
+import React, { Component } from 'react';
+import styled from 'styled-components/native';
 
 import { fonts } from 'config';
 import { getFontColorByBackground } from 'utils';
 
-type Props = {
-  label: Object,
-  largeWithTag: boolean,
-};
+const LabelButtonSmall = styled.Button`
+  padding: 5px;
+  padding-top: 3;
+  padding-bottom: 3;
+  border-radius: 3;
+  margin-left: 0;
+  margin-right: 10;
+  min-width: 70;
+`;
 
-const styles = StyleSheet.create({
-  smallLabelButton: {
-    padding: 5,
-    paddingTop: 3,
-    paddingBottom: 3,
-    borderRadius: 3,
-    marginLeft: 0,
-    marginRight: 10,
-    minWidth: 70,
-  },
-  largeLabelButton: {
-    paddingTop: 5,
-    paddingBottom: 5,
-    paddingLeft: 10,
-    paddingRight: 10,
-    marginLeft: 0,
-    borderRadius: 3,
-  },
-});
+const LabelButtonLarge = styled.Button`
+  padding-top: 5;
+  padding-bottom: 5;
+  padding-left: 10;
+  padding-right: 10;
+  margin-left: 0;
+  border-radius: 3;
+`;
 
-export const LabelButton = ({ label, largeWithTag }: Props) => (
-  <Button
-    title={label.name}
-    textStyle={fonts.fontPrimarySemiBold}
-    fontSize={largeWithTag ? 13 : 12}
-    color={getFontColorByBackground(label.color)}
-    buttonStyle={
-      largeWithTag ? styles.largeLabelButton : styles.smallLabelButton
+export class LabelButton extends Component {
+  props: {
+    label: Object,
+    largeWithTag: boolean,
+  };
+
+  render() {
+    const { label, largeWithTag } = this.props;
+    const icon = {
+      name: 'tag',
+      type: 'octicon',
+      color: getFontColorByBackground(label.color),
+    };
+    let button = null;
+
+    if (largeWithTag) {
+      button = (
+        <LabelButtonLarge
+          title={label.name}
+          textStyle={fonts.fontPrimarySemiBold}
+          fontSize="13"
+          color={getFontColorByBackground(label.color)}
+          backgroundColor={`#${label.color}`}
+          icon={icon}
+        />
+      );
+    } else {
+      button = (
+        <LabelButtonSmall
+          title={label.name}
+          textStyle={fonts.fontPrimarySemiBold}
+          fontSize="12"
+          color={getFontColorByBackground(label.color)}
+          backgroundColor={`#${label.color}`}
+        />
+      );
     }
-    backgroundColor={`#${label.color}`}
-    icon={
-      largeWithTag && {
-        name: 'tag',
-        type: 'octicon',
-        color: getFontColorByBackground(label.color),
-      }
-    }
-  />
-);
+
+    return { button };
+  }
+}
