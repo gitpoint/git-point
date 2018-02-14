@@ -49,6 +49,7 @@ const mapStateToProps = state => ({
   isPendingTopics: state.repository.isPendingTopics,
   isPendingSubscribe: state.repository.isPendingSubscribe,
   topics: state.repository.topics,
+  notFoundMsg: state.repository.error.message,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -102,6 +103,7 @@ class Repository extends Component {
     subscribeToRepo: Function,
     unSubscribeToRepo: Function,
     topics: Array,
+    notFoundMsg: string,
   };
 
   state: {
@@ -214,6 +216,7 @@ class Repository extends Component {
       navigation,
       username,
       subscribed,
+      notFoundMsg,
     } = this.props;
     const { refreshing } = this.state;
 
@@ -274,6 +277,7 @@ class Repository extends Component {
                 navigation={navigation}
                 subscribed={isSubscribed}
                 locale={locale}
+                notFoundMsg={notFoundMsg}
               />
             );
           }}
@@ -284,7 +288,9 @@ class Repository extends Component {
             />
           }
           stickyTitle={repository.name}
-          showMenu={!isPendingRepository && !isPendingCheckStarred}
+          showMenu={
+            !notFoundMsg && !isPendingRepository && !isPendingCheckStarred
+          }
           menuAction={this.showMenuActionSheet}
           navigation={navigation}
           navigateBack
@@ -317,7 +323,8 @@ class Repository extends Component {
               </SectionList>
             )}
 
-          {initalRepository &&
+          {!notFoundMsg &&
+            initalRepository &&
             initalRepository.owner && (
               <SectionList
                 title={translate('repository.main.ownerTitle', locale)}
@@ -361,7 +368,8 @@ class Repository extends Component {
                 onPress={() =>
                   navigation.navigate('ReadMe', {
                     repository,
-                  })}
+                  })
+                }
                 underlayColor={colors.greyLight}
               />
             )}
@@ -378,8 +386,10 @@ class Repository extends Component {
                 navigation.navigate('RepositoryCodeList', {
                   title: translate('repository.codeList.title', locale),
                   topLevel: true,
-                })}
+                })
+              }
               underlayColor={colors.greyLight}
+              disabled={(notFoundMsg && true) || false}
             />
           </SectionList>
 
@@ -443,7 +453,8 @@ class Repository extends Component {
                 title: translate('repository.pullList.title', locale),
                 type: 'pull',
                 issues: pulls,
-              })}
+              })
+            }
           >
             {openPulls
               .slice(0, 3)

@@ -12,6 +12,7 @@ type Props = {
   loading: boolean,
   subscribed: boolean,
   locale: string,
+  notFoundMsg: string,
 };
 
 const styles = StyleSheet.create({
@@ -120,6 +121,7 @@ export const RepositoryProfile = ({
   loading,
   subscribed,
   locale,
+  notFoundMsg,
 }: Props) => (
   <View style={styles.container}>
     <View style={styles.languageInfo}>
@@ -133,7 +135,7 @@ export const RepositoryProfile = ({
         )}
 
       <Text style={[styles.languageInfoTitle]}>
-        {repository.language || ' '}
+        {notFoundMsg || repository.language || ' '}
       </Text>
     </View>
 
@@ -143,13 +145,17 @@ export const RepositoryProfile = ({
           styles.icon,
           repository.fork ? { marginLeft: 17 } : { marginLeft: 13 },
         ]}
-        name={repository.fork ? 'repo-forked' : 'repo'}
+        name={
+          (notFoundMsg && 'stop') ||
+          (repository.fork && 'repo-forked') ||
+          'repo'
+        }
         type="octicon"
         size={45}
         color={colors.greyLight}
       />
 
-      <Text style={styles.title}>{repository.name || ' '}</Text>
+      <Text style={styles.title}>{notFoundMsg || repository.name || ' '}</Text>
 
       <Text
         numberOfLines={repository.fork ? 1 : 3}
@@ -179,7 +185,8 @@ export const RepositoryProfile = ({
                 onPress={() =>
                   navigation.navigate('Repository', {
                     repository: repository.parent,
-                  })}
+                  })
+                }
               >
                 {' '}
                 {repository.parent.full_name}

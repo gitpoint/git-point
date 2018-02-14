@@ -62,17 +62,19 @@ export const repositoryReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         issues: [],
+        error: '',
         isPendingRepository: true,
       };
     case GET_REPOSITORY.SUCCESS:
       return {
         ...state,
         repository: action.payload,
+        error: '',
         isPendingRepository: false,
       };
     case GET_REPOSITORY.ERROR:
       return {
-        ...state,
+        ...initialState,
         error: action.payload,
         isPendingRepository: false,
       };
