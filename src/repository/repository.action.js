@@ -36,7 +36,18 @@ export const getRepository = url => {
     dispatch({ type: GET_REPOSITORY.PENDING });
 
     return v3
-      .getJson(url, accessToken)
+      .get(url, accessToken)
+      .then(response => {
+        let json = {};
+
+        if (response.status === 200) {
+          json = response.json();
+        } else {
+          json = response.json().then(err => Promise.reject(err));
+        }
+
+        return json;
+      })
       .then(data => {
         dispatch({
           type: GET_REPOSITORY.SUCCESS,

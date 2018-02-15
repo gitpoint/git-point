@@ -118,9 +118,7 @@ export const v3 = {
   getJson: async (url, accessToken) => {
     const response = await v3.call(url, v3.parameters(accessToken));
 
-    return response.ok
-      ? response.json()
-      : response.json().then(err => Promise.reject(err));
+    return response.json();
   },
   getRaw: async (url, accessToken) => {
     const response = await v3.call(
