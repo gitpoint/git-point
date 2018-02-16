@@ -2,14 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  Dimensions,
-  Platform,
-} from 'react-native';
+import { FlatList, Dimensions, Platform } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
 
 import {
@@ -19,6 +12,7 @@ import {
   LoadingContainer,
   SearchBar,
 } from 'components';
+import styled from 'styled-components';
 import { colors, fonts, normalize } from 'config';
 import { isIphoneX, translate } from 'utils';
 import { searchRepos, searchUsers } from '../index';
@@ -40,29 +34,44 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-const styles = StyleSheet.create({
-  searchBarWrapper: {
-    flexDirection: 'row',
-    ...Platform.select({
-      ios: {
-        marginTop: isIphoneX() ? 30 : 20,
-      },
-      android: {
-        marginTop: 5,
-      },
-    }),
-  },
-  searchContainer: {
-    width: Dimensions.get('window').width,
-    backgroundColor: colors.white,
-    flex: 1,
-    height: 55,
-    justifyContent: 'center',
-  },
-  list: {
-    marginTop: 0,
-  },
-  buttonGroupContainer: {
+const SearchBarWrapper = styled.View`
+  flex-direction: row;
+  margin-top: ${Platform.select({
+    ios: isIphoneX() ? 30 : 20,
+    android: 5,
+  })};
+`;
+
+const SearchContainer = styled.View`
+  width: ${Dimensions.get('window').width};
+  background-color: ${colors.white};
+  flex: 1;
+  height: 55;
+  justify-content: center;
+`;
+
+const ListContainer = styled.View`
+  border-top-color: ${colors.greyLight};
+  border-top-width: ${props => (props.noBorderTopWidth ? 0 : 1)};
+  margin-bottom: 105;
+`;
+
+const TextContainer = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
+
+const SearchInfoText = styled.Text`
+  font-size: ${normalize(18)};
+  text-align: center;
+  ${fonts.fontPrimary};
+`;
+
+const StyledButtonGroup = styled(ButtonGroup).attrs({
+  textStyle: { ...fonts.fontPrimaryBold },
+  selectedTextStyle: { color: colors.black },
+  containerStyle: {
     height: 30,
     ...Platform.select({
       ios: {
@@ -75,38 +84,7 @@ const styles = StyleSheet.create({
       },
     }),
   },
-  buttonGroupText: {
-    ...fonts.fontPrimaryBold,
-  },
-  buttonGroupTextSelected: {
-    color: colors.black,
-  },
-  loadingIndicatorContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  textContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  searchTitle: {
-    fontSize: normalize(18),
-    textAlign: 'center',
-    ...fonts.fontPrimary,
-  },
-  searchCancelButton: {
-    color: colors.black,
-  },
-  listContainer: {
-    borderTopColor: colors.greyLight,
-    borderTopWidth: 1,
-    marginBottom: 105,
-  },
-  noBorderTopWidth: {
-    borderTopWidth: 0,
-  },
-});
+})``;
 
 class Search extends Component {
   props: {
@@ -215,37 +193,32 @@ class Search extends Component {
 
     return (
       <ViewContainer>
-        <View>
-          <View style={styles.searchBarWrapper}>
-            <View style={styles.searchContainer}>
-              <SearchBar
-                textColor={colors.primaryDark}
-                textFieldBackgroundColor={colors.greyLight}
-                showsCancelButton={this.state.searchFocus}
-                onFocus={() => this.setState({ searchFocus: true })}
-                onCancelButtonPress={() =>
-                  this.setState({ searchStart: false, query: '' })
-                }
-                onSearchButtonPress={text => {
-                  this.search(text);
-                }}
-                hideBackground
-              />
-            </View>
-          </View>
+        <SearchBarWrapper>
+          <SearchContainer>
+            <SearchBar
+              textColor={colors.primaryDark}
+              textFieldBackgroundColor={colors.greyLight}
+              showsCancelButton={this.state.searchFocus}
+              onFocus={() => this.setState({ searchFocus: true })}
+              onCancelButtonPress={() =>
+                this.setState({ searchStart: false, query: '' })
+              }
+              onSearchButtonPress={text => {
+                this.search(text);
+              }}
+              hideBackground
+            />
+          </SearchContainer>
+        </SearchBarWrapper>
 
-          <ButtonGroup
-            onPress={this.switchQueryType}
-            selectedIndex={this.state.searchType}
-            buttons={[
-              translate('search.main.repositoryButton', locale),
-              translate('search.main.userButton', locale),
-            ]}
-            textStyle={styles.buttonGroupText}
-            selectedTextStyle={styles.buttonGroupTextSelected}
-            containerStyle={styles.buttonGroupContainer}
-          />
-        </View>
+        <StyledButtonGroup
+          onPress={this.switchQueryType}
+          selectedIndex={this.state.searchType}
+          buttons={[
+            translate('search.main.repositoryButton', locale),
+            translate('search.main.userButton', locale),
+          ]}
+        />
 
         {isPendingSearchRepos &&
           searchType === 0 && (
@@ -254,7 +227,6 @@ class Search extends Component {
               text={translate('search.main.searchingMessage', locale, {
                 query,
               })}
-              style={styles.marginSpacing}
             />
           )}
 
@@ -265,59 +237,53 @@ class Search extends Component {
               text={translate('search.main.searchingMessage', locale, {
                 query,
               })}
-              style={styles.marginSpacing}
             />
           )}
 
         {searchStart &&
           noResults && (
-            <View
-              style={[
-                styles.listContainer,
-                isPending && styles.noBorderTopWidth,
-              ]}
-            >
+            <ListContainer noBorderTopWidth={isPending}>
               <FlatList
                 data={searchType === 0 ? repos : users}
                 keyExtractor={this.keyExtractor}
                 renderItem={this.renderItem}
               />
-            </View>
+            </ListContainer>
           )}
 
         {!searchStart && (
-          <View style={styles.textContainer}>
-            <Text style={styles.searchTitle}>
+          <TextContainer>
+            <SearchInfoText>
               {translate('search.main.searchMessage', locale, {
                 type:
                   searchType === 0
                     ? translate('search.main.repository', locale)
                     : translate('search.main.user', locale),
               })}
-            </Text>
-          </View>
+            </SearchInfoText>
+          </TextContainer>
         )}
 
         {searchStart &&
           !isPendingSearchRepos &&
           repos.length === 0 &&
           searchType === 0 && (
-            <View style={styles.textContainer}>
-              <Text style={styles.searchTitle}>
+            <TextContainer>
+              <SearchInfoText>
                 {translate('search.main.noRepositoriesFound', locale)}
-              </Text>
-            </View>
+              </SearchInfoText>
+            </TextContainer>
           )}
 
         {searchStart &&
           !isPendingSearchUsers &&
           users.length === 0 &&
           searchType === 1 && (
-            <View style={styles.textContainer}>
-              <Text style={styles.searchTitle}>
+            <TextContainer>
+              <SearchInfoText>
                 {translate('search.main.noUsersFound', locale)}
-              </Text>
-            </View>
+              </SearchInfoText>
+            </TextContainer>
           )}
       </ViewContainer>
     );
