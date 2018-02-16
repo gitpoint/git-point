@@ -175,7 +175,7 @@ export const eo = {
   repository: {
     main: {
       notFoundRepo: 'Repository is not found',
-      unknowLanguage: 'Unknown',
+      unknownLanguage: 'Unknown',
       shareRepositoryTitle: 'Kunhavigi {{repoName}}',
       shareRepositoryMessage: 'Kontrolu {{repoName}} sur GitHub. {{repoUrl}} ',
       repoActions: 'Repository-Agoj',

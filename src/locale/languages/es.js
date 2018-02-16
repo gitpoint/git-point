@@ -181,7 +181,7 @@ export const es = {
   repository: {
     main: {
       notFoundRepo: 'Repository is not found',
-      unknowLanguage: 'Unknown',
+      unknownLanguage: 'Unknown',
       shareRepositoryTitle: 'Compartir {{repoName}}',
       shareRepositoryMessage: 'Revisa {{repoName}} en GitHub. {{repoUrl}}',
       repoActions: 'Acciones del repositorio',

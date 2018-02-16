@@ -146,7 +146,7 @@ export const RepositoryProfile = ({
 
       <Text style={[styles.languageInfoTitle]}>
         {repository.language ||
-          translate('repository.main.unknowLanguage', locale)}
+          translate('repository.main.unknownLanguage', locale)}
       </Text>
     </View>
 

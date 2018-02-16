@@ -38,15 +38,9 @@ export const getRepository = url => {
     return v3
       .get(url, accessToken)
       .then(response => {
-        let json = {};
-
-        if (response.status === 200) {
-          json = response.json();
-        } else {
-          json = response.json().then(err => Promise.reject(err));
-        }
-
-        return json;
+        return response.status === 200
+          ? response.json()
+          : response.json().then(err => Promise.reject(err));
       })
       .then(data => {
         dispatch({

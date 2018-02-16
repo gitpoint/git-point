@@ -178,7 +178,7 @@ export const ru = {
   repository: {
     main: {
       notFoundRepo: 'Repository is not found',
-      unknowLanguage: 'Unknown',
+      unknownLanguage: 'Unknown',
       shareRepositoryTitle: 'Поделиться {{repoName}}',
       shareRepositoryMessage: 'Проверить {{repoName}} на GitHub. {{repoUrl}}',
       repoActions: 'Действия с репозиторием',

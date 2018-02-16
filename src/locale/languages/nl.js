@@ -176,7 +176,7 @@ export const nl = {
   repository: {
     main: {
       notFoundRepo: 'Repository is not found',
-      unknowLanguage: 'Unknown',
+      unknownLanguage: 'Unknown',
       shareRepositoryTitle: 'Deel {{repoName}}',
       shareRepositoryMessage: 'Bekijk {{repoName}} op GitHub. {{repoUrl}}',
       repoActions: 'Repository Acties',

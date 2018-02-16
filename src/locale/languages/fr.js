@@ -180,7 +180,7 @@ export const fr = {
   repository: {
     main: {
       notFoundRepo: 'Repository is not found',
-      unknowLanguage: 'Unknown',
+      unknownLanguage: 'Unknown',
       shareRepositoryTitle: 'Partager {{repoName}}',
       shareRepositoryMessage: 'Découvre {{repoName}} sur GitHub. {{repoUrl}}',
       repoActions: 'Actions sur le dépôt',

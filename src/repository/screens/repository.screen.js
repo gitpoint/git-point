@@ -178,7 +178,7 @@ class Repository extends Component {
     } = this.props.navigation.state.params;
 
     this.setState({ refreshing: true });
-    this.props.getRepositoryInfo(repo ? repo.url : repoUrl).then(() => {
+    this.props.getRepositoryInfo(repo ? repo.url : repoUrl).finally(() => {
       this.setState({ refreshing: false });
     });
   };
