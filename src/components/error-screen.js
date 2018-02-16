@@ -18,11 +18,18 @@ const TextStyled = styled.Text`
   width: 80%;
 `;
 
+type Props = {
+  locale: string,
+};
+
 export class ErrorScreen extends Component {
+  props: Props;
   render() {
     return (
       <ViewWrapper>
-        <TextStyled>{translate('auth.networkError')}</TextStyled>
+        <TextStyled>
+          {translate('auth.networkError', this.props.locale)}
+        </TextStyled>
       </ViewWrapper>
     );
   }

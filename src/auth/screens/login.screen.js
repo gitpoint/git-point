@@ -354,7 +354,7 @@ class Login extends Component {
                   source={{
                     uri: `https://github.com/login/oauth/authorize?response_type=token&client_id=${CLIENT_ID}&redirect_uri=gitpoint://welcome&scope=user%20repo&state=${stateRandom}`,
                   }}
-                  renderError={() => <ErrorScreen />}
+                  renderError={() => <ErrorScreen locale={locale} />}
                   onLoadStart={e => this.toggleCancelButton(e, true)}
                   onLoadEnd={e => this.toggleCancelButton(e, false)}
                   onNavigationStateChange={e => this.onNavigationStateChange(e)}
