@@ -63,6 +63,7 @@ export const repositoryReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         issues: [],
+        hasRepoExist: false,
         error: '',
         isPendingRepository: true,
       };
