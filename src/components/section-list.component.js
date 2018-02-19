@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import { List, ListItem, Button } from 'react-native-elements';
 import styled from 'styled-components';
 
-import { colors, fonts } from 'config';
+import { colors, fonts, normalize } from 'config';
 
 type Props = {
   loading: boolean,
@@ -30,6 +30,9 @@ const SectionTitle = styled.Text`
   padding: 15px;
   ${fonts.fontPrimaryBold};
 `;
+const TitleView = styled.View`
+  padding: 15px;
+`;
 const SectionList = styled(List).attrs({
   containerStyle: {
     margin-top: 0;
@@ -43,15 +46,13 @@ const SectionListItem = styled(ListItem).attrs({
       ${fonts.fontPrimary},
   }
 })``;
-const StyledTitleView = styled.View`
-  padding: 15px;
-`;
 const LoadingIcon = styled(ActivityIndicator)`
   margin: 20px 0;
 `;
 const StyledButton = styled(Button)`
   background-color: ${colors.white};
   border-color: ${colors.primaryDark};
+
   border-width: 1;
   border-radius: 3;
   padding: 5px 10px;
@@ -71,27 +72,22 @@ export const SectionList = ({
 
   if (loading) {
     listDisplay = (
-      <LoadingIcon
-       animating={loading}
+      <LoadingIcon animating={loading}
       />
     );
   } else if (noItems) {
     listDisplay = (
-      <SectionListItem
-        title={noItemsMessage}
-        hideChevron
-      />
+      <SectionListItem title={noItemsMessage} hideChevron />
     );
   } else {
     listDisplay = children;
   }
 
   let sectionTitle = '';
-
   if (typeof title === 'string') {
     sectionTitle = <SectionTitle>{title}</SectionTitle>;
   } else {
-    sectionTitle = <StyledTitleView>{title}</StyledTitleView>;
+    sectionTitle = <TitleView>{title}</TitleView>;
   }
 
   return (
