@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import { List, ListItem, Button } from 'react-native-elements';
+import styled from 'styled-components';
 
 import { colors, fonts } from 'config';
 
@@ -14,6 +15,28 @@ type Props = {
   noItemsMessage: string,
   buttonAction: Function,
 };
+
+const Section = styled.View`
+  margin-top: 15;
+`;
+const SectionTitle = styled.Text`
+  color: ${colors.black};
+  padding: 15px;
+  ${fonts.fontPrimaryBold};
+`;
+const StyledTitleView = styled.View`
+  padding: 15px;
+`;
+const LoadingIcon = styled(ActivityIndicator)`
+  margin: 20px 0;
+`;
+const StyledButton = styled(Button)`
+  background-color: ${colors.white};
+  border-color: ${colors.primaryDark};
+  border-width: 1px;
+  border-radius: 3px;
+  padding: 5px 10px;
+`;
 
 const styles = StyleSheet.create({
   section: {
