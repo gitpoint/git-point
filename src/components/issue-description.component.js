@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, ActivityIndicator } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Parse from 'parse-diff';
-import moment from 'moment/min/moment-with-locales.min';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 
 import {
   StateBadge,
@@ -12,16 +11,9 @@ import {
   DiffBlocks,
   Button,
 } from 'components';
-import { translate } from 'utils';
+import { translate, relativeTimeToNow } from 'utils';
 import { colors, fonts, normalize } from 'config';
 import { v3 } from 'api';
-
-const styles = StyleSheet.create({
-  badge: {
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-  },
-});
 
 const HeaderContainer = styled.View`
   flex-direction: row;
@@ -82,8 +74,6 @@ const AssigneesSection = styled.View`
 `;
 
 const MergeButtonContainer = styled.View`
-  flex: 1;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
   padding-top: 15;
@@ -153,7 +143,7 @@ export class IssueDescription extends Component {
         <HeaderContainer>
           <IssueTitle
             title={issue.title}
-            subtitle={moment(issue.created_at).fromNow()}
+            subtitle={relativeTimeToNow(issue.created_at)}
             leftIcon={{
               name: issue.pull_request ? 'git-pull-request' : 'issue-opened',
               size: 36,
@@ -167,7 +157,6 @@ export class IssueDescription extends Component {
             (issue.pull_request &&
               !isPendingCheckMerge && (
                 <StateBadge
-                  style={styles.badge}
                   issue={issue}
                   isMerged={isMerged && issue.pull_request}
                   locale={locale}

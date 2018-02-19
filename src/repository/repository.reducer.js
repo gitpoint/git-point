@@ -6,6 +6,7 @@ import {
   GET_REPOSITORY_ISSUES,
   GET_REPO_README_STATUS,
   GET_REPO_STARRED_STATUS,
+  GET_REPOSITORY_TOPICS,
   FORK_REPO_STATUS,
   CHANGE_STAR_STATUS,
   GET_REPOSITORY_README,
@@ -49,8 +50,10 @@ const initialState = {
   isPendingSearchOpenPulls: false,
   isPendingSearchClosedPulls: false,
   isPendingFork: false,
+  isPendingTopics: false,
   isPendingSubscribe: false,
   error: '',
+  topics: [],
 };
 
 export const repositoryReducer = (state = initialState, action = {}) => {
@@ -270,6 +273,22 @@ export const repositoryReducer = (state = initialState, action = {}) => {
         ...state,
         error: action.payload,
         isPendingLabels: false,
+      };
+    case GET_REPOSITORY_TOPICS.SUCCESS:
+      return {
+        ...state,
+        topics: action.payload,
+        isPendingTopics: false,
+      };
+    case GET_REPOSITORY_TOPICS.PENDING:
+      return {
+        ...state,
+        isPendingTopics: true,
+      };
+    case GET_REPOSITORY_TOPICS.ERROR:
+      return {
+        ...state,
+        error: action.payload,
       };
     case SEARCH_OPEN_ISSUES.PENDING:
       return {

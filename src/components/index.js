@@ -19,7 +19,6 @@ export * from './notification-list-item.component';
 export * from './parallax-scroll.component';
 export * from './repository-list-item.component';
 export * from './repository-profile.component';
-export * from './repository-section-title.component';
 export * from './search-bar.component'; // eslint-disable-line import/no-unresolved
 export * from './section-list.component';
 export * from './state-badge.component';
@@ -30,4 +29,5 @@ export * from './image-zoom.component';
 export * from './button.component';
 export * from './notification-icon.component';
 export * from './badge.component';
+export * from './topics-list.component';
 export * from './toggle-view.component';

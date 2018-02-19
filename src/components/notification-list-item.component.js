@@ -1,11 +1,11 @@
 /* eslint-disable no-nested-ternary */
 
 import React, { Component } from 'react';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 import { View, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-import { colors, styledFonts, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 
 type Props = {
   notification: Object,
@@ -37,7 +37,7 @@ const TitleContainer = styled.View`
 
 const Title = styled.Text`
   color: ${colors.black};
-  font-family: ${styledFonts.fontPrimary};
+  ${fonts.fontPrimary};
   font-size: ${normalize(12)};
   margin-left: 10px;
 `;
@@ -54,20 +54,27 @@ const IconStyled = styled(Icon).attrs({
   type: 'octicon',
 })``;
 
+const SubjectType = {
+  commit: 'Commit',
+  pull: 'PullRequest',
+};
+
 export class NotificationListItem extends Component {
   props: Props;
 
   getComponentType = () => {
     const { notification } = this.props;
 
-    return notification.subject.type === 'Commit' ? View : TouchableOpacity;
+    return notification.subject.type === SubjectType.commit
+      ? View
+      : TouchableOpacity;
   };
 
   getIconName = type => {
     switch (type) {
-      case 'Commit':
+      case SubjectType.commit:
         return 'git-commit';
-      case 'PullRequest':
+      case SubjectType.pull:
         return 'git-pull-request';
       default:
         return 'issue-opened';
@@ -77,7 +84,7 @@ export class NotificationListItem extends Component {
   getTitleComponentProps = () => {
     const { notification, navigationAction } = this.props;
 
-    return notification.subject.type === 'Commit'
+    return notification.subject.type === SubjectType.commit
       ? {}
       : {
           onPress: () => navigationAction(notification),

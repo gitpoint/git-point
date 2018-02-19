@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import fuzzysort from 'fuzzysort';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 import { TouchableOpacity, Animated, ScrollView } from 'react-native';
 
 import { animations, fonts, normalize } from 'config';
