@@ -52,7 +52,6 @@ const LoadingIcon = styled(ActivityIndicator)`
 const StyledButton = styled(Button)`
   background-color: ${colors.white};
   border-color: ${colors.primaryDark};
-
   border-width: 1;
   border-radius: 3;
   padding: 5px 10px;
