@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 import { List, ListItem, Button } from 'react-native-elements';
 import styled from 'styled-components';
 
-import { colors, fonts, normalize } from 'config';
+import { colors, fonts } from 'config';
 
 type Props = {
   loading: boolean,
@@ -20,10 +20,10 @@ const Section = styled.View`
   margin-top: 15;
 `;
 const Header = styled.View`
-  flex: 1;
-  flex-direction: 'row';
-  justify-content: 'space-between';
-  align-items: 'center';
+  flex: auto;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `;
 const SectionTitle = styled.Text`
   color: ${colors.black};
@@ -33,29 +33,32 @@ const SectionTitle = styled.Text`
 const TitleView = styled.View`
   padding: 15px;
 `;
-const SectionList = styled(List).attrs({
+const StyledList = styled(List).attrs({
   containerStyle: {
-    margin-top: 0;
-    border-bottom-color: ${colors.grey},
-    border-bottom-width: 1,
+    marginTop: 0,
+    borderBottomColor: colors.grey,
+    borderBottomWidth: 1,
   },
 })``;
-const SectionListItem = styled(ListItem).attrs({
+const StyledListItem = styled(ListItem).attrs({
   titleStyle: {
-     color: colors.black,
-      ${fonts.fontPrimary},
-  }
+    color: colors.black,
+    ...fonts.fontPrimary,
+  },
 })``;
 const LoadingIcon = styled(ActivityIndicator)`
   margin: 20px 0;
 `;
-const StyledButton = styled(Button)`
-  background-color: ${colors.white};
-  border-color: ${colors.primaryDark};
-  border-width: 1;
-  border-radius: 3;
-  padding: 5px 10px;
-`;
+const StyledButton = styled(Button).attrs({
+  buttonStyle: {
+    backgroundColor: colors.white,
+    borderColor: colors.primaryDark,
+    borderWidth: 1,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    ...fonts.fontPrimaryBold,
+  },
+})``;
 
 export const SectionList = ({
   loading,
@@ -70,19 +73,15 @@ export const SectionList = ({
   let listDisplay;
 
   if (loading) {
-    listDisplay = (
-      <LoadingIcon animating={loading}
-      />
-    );
+    listDisplay = <LoadingIcon animating={loading} />;
   } else if (noItems) {
-    listDisplay = (
-      <SectionListItem title={noItemsMessage} hideChevron />
-    );
+    listDisplay = <StyledListItem title={noItemsMessage} hideChevron />;
   } else {
     listDisplay = children;
   }
 
   let sectionTitle = '';
+
   if (typeof title === 'string') {
     sectionTitle = <SectionTitle>{title}</SectionTitle>;
   } else {
@@ -96,16 +95,10 @@ export const SectionList = ({
 
         {showButton &&
           !loading && (
-            <StyledButton
-              title={buttonTitle}
-              textStyle={fonts.fontPrimarySemiBold}
-              fontSize={13}
-              color={showButton ? colors.primaryDark : colors.white}
-              onPress={buttonAction}
-            />
+            <StyledButton title={buttonTitle} onPress={buttonAction} />
           )}
       </Header>
-      <SectionList>{listDisplay}</SectionList>
+      <StyledList>{listDisplay}</StyledList>
     </Section>
   );
 };
