@@ -20,8 +20,6 @@ const Section = styled.View`
   margin-top: 15;
 `;
 const Header = styled.View`
-  flex-grow: 0;
-  flex-basis: 0;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
