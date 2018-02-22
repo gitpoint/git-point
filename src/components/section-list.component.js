@@ -20,7 +20,8 @@ const Section = styled.View`
   margin-top: 15;
 `;
 const Header = styled.View`
-  flex: auto;
+  flex-grow: 0;
+  flex-basis: 0;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -50,13 +51,18 @@ const LoadingIcon = styled(ActivityIndicator)`
   margin: 20px 0;
 `;
 const StyledButton = styled(Button).attrs({
+  textStyle: {
+    ...fonts.fontPrimaryBold,
+  },
+  fontSize: 13,
+  color: colors.primaryDark,
   buttonStyle: {
     backgroundColor: colors.white,
     borderColor: colors.primaryDark,
     borderWidth: 1,
+    borderRadius: 3,
     paddingVertical: 5,
     paddingHorizontal: 10,
-    ...fonts.fontPrimaryBold,
   },
 })``;
 
