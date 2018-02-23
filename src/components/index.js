@@ -1,6 +1,7 @@
 export * from './loading-indicators';
 
 export * from './code-line.component';
+export * from './error-screen';
 export * from './comment-input.component';
 export * from './comment-list-item.component';
 export * from './diff-blocks.component';

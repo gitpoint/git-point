@@ -16,6 +16,7 @@ export const pt = {
       issuesMessage: 'Comunicar problemas/sugestões, merge pull requests, etc',
       signInButton: 'ENTRAR',
     },
+    networkError: 'Oops! it seems that you are not connected to the internet!',
     welcome: {
       welcomeTitle: 'Bem-vindo ao GitPoint',
     },

@@ -16,6 +16,7 @@ export const nl = {
       issuesMessage: 'Neem deel aan conversaties, merge pull requests en meer',
       signInButton: 'AANMELDEN',
     },
+    networkError: 'Oops! it seems that you are not connected to the internet!',
     welcome: {
       welcomeTitle: 'Welkom bij GitPoint',
     },

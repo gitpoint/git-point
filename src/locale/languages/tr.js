@@ -18,6 +18,7 @@ export const tr = {
         "Sohbet ederek iletişim kurun, pull request'leri merge edin ve daha fazlası",
       signInButton: 'GİRİŞ YAP',
     },
+    networkError: 'Oops! it seems that you are not connected to the internet!',
     welcome: {
       welcomeTitle: "GitPoint'e Hoşgeldiniz",
     },

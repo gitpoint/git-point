@@ -18,7 +18,7 @@ import Swiper from 'react-native-swiper';
 import queryString from 'query-string';
 import CookieManager from 'react-native-cookies';
 
-import { ViewContainer } from 'components';
+import { ViewContainer, ErrorScreen } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { CLIENT_ID } from 'api';
 import { auth, getUser } from 'auth';
@@ -354,6 +354,7 @@ class Login extends Component {
                   source={{
                     uri: `https://github.com/login/oauth/authorize?response_type=token&client_id=${CLIENT_ID}&redirect_uri=gitpoint://welcome&scope=user%20repo&state=${stateRandom}`,
                   }}
+                  renderError={() => <ErrorScreen locale={locale} />}
                   onLoadStart={e => this.toggleCancelButton(e, true)}
                   onLoadEnd={e => this.toggleCancelButton(e, false)}
                   onNavigationStateChange={e => this.onNavigationStateChange(e)}

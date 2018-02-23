@@ -18,6 +18,7 @@ export const eu = {
         'Elkarrizketetan komunikatu, merge-en pull requests egin eta aber',
       signInButton: 'Identifika zaitez',
     },
+    networkError: 'Oops! it seems that you are not connected to the internet!',
     welcome: {
       welcomeTitle: 'Ongi etorri GitPointera',
     },
