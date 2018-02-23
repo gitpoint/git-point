@@ -210,9 +210,6 @@ export const fetchUser = (user, accessToken) =>
 export const fetchUserOrgs = (user, accessToken) =>
   v3.getJson(`/users/${user}/orgs`, accessToken);
 
-export const fetchUserEvents = (user, accessToken) =>
-  v3.getJson(`/users/${user}/received_events?per_page=100`, accessToken);
-
 export const fetchReadMe = (user, repository, accessToken) =>
   v3.getHtml(`/repos/${user}/${repository}/readme?ref=master`, accessToken);
 
