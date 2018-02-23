@@ -300,7 +300,8 @@ export class GithubHtmlView extends Component {
               <Text
                 style={linkStyle}
                 onPress={() =>
-                  onLinkPress({ ...node, attribs: { href: node.attribs.src } })}
+                  onLinkPress({ ...node, attribs: { href: node.attribs.src } })
+                }
               >
                 [{node.attribs.alt}]
                 {'\n'}
@@ -388,13 +389,13 @@ export class GithubHtmlView extends Component {
       };
 
       if (_node.type === 'text') {
-        if (_node.data === '\n') {
+        if (_node.data.trim() === '' && _node.data.includes('\n')) {
           return (
             <Text
               key={_index}
               style={{ height: 8, fontSize: normalize(8), width: 2 }}
             >
-              {_node.data}
+              {'\n'}
             </Text>
           );
         }

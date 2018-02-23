@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, ActivityIndicator } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Parse from 'parse-diff';
 import styled from 'styled-components';
@@ -14,13 +14,6 @@ import {
 import { translate, relativeTimeToNow } from 'utils';
 import { colors, fonts, normalize } from 'config';
 import { v3 } from 'api';
-
-const styles = StyleSheet.create({
-  badge: {
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-  },
-});
 
 const HeaderContainer = styled.View`
   flex-direction: row;
@@ -164,7 +157,6 @@ export class IssueDescription extends Component {
             (issue.pull_request &&
               !isPendingCheckMerge && (
                 <StateBadge
-                  style={styles.badge}
                   issue={issue}
                   isMerged={isMerged && issue.pull_request}
                   locale={locale}

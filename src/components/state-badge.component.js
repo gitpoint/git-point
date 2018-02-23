@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import styled from 'styled-components';
 
 import { colors, fonts, normalize } from 'config';
 import { translate } from 'utils';
@@ -13,28 +13,17 @@ type Props = {
   locale: string,
 };
 
-const styles = StyleSheet.create({
-  badge: {
-    padding: 12,
-    paddingTop: 3,
-    paddingBottom: 3,
-    borderRadius: 20,
-  },
-  mergedIssue: {
-    backgroundColor: colors.purple,
-  },
-  openIssue: {
-    backgroundColor: colors.green,
-  },
-  closedIssue: {
-    backgroundColor: colors.red,
-  },
-  text: {
-    fontSize: normalize(12),
-    ...fonts.fontPrimarySemiBold,
-    color: colors.white,
-  },
-});
+const Badge = styled.View`
+  padding: 3px 12px;
+  border-radius: 20px;
+  background-color: ${props => props.color};
+`;
+
+const BadgeText = styled.Text`
+  color: ${colors.white};
+  font-size: ${normalize(12)};
+  ${fonts.fontPrimarySemiBold};
+`;
 
 export const StateBadge = ({
   issue,
@@ -58,19 +47,18 @@ export const StateBadge = ({
     issueText = translate('issue.main.states.closed', locale);
   }
 
-  let issueStyle = {};
-
-  if (issueState === 'merged') {
-    issueStyle = styles.mergedIssue;
-  } else if (issueState === 'open') {
-    issueStyle = styles.openIssue;
-  } else if (issueState === 'closed') {
-    issueStyle = styles.closedIssue;
-  }
+  const stateColor = {
+    merged: colors.purple,
+    open: colors.green,
+    closed: colors.red,
+  };
+  const issueStateColor = stateColor[issueState]
+    ? stateColor[issueState]
+    : colors.gray;
 
   return (
-    <View style={[styles.badge, style, issueStyle]}>
-      <Text style={styles.text}>{issueText}</Text>
-    </View>
+    <Badge color={issueStateColor} style={style}>
+      <BadgeText>{issueText}</BadgeText>
+    </Badge>
   );
 };
