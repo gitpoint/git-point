@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 import { fonts, normalize } from 'config';
-import { getFontColorByBackground } from 'utils';
+import { emojifyText, getFontColorByBackground } from 'utils';
 
 const InlineLabelText = styled.Text`
   font-size: ${normalize(10)};
@@ -34,7 +34,7 @@ export class InlineLabel extends Component {
         color={color}
         borderColor={color}
       >
-        {name}
+        {emojifyText(name)}
       </InlineLabelText>
     );
   }
