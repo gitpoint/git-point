@@ -2,10 +2,10 @@ import { Button } from 'react-native-elements';
 import styled from 'styled-components';
 
 import { fonts } from 'config';
-import { getFontColorByBackground } from 'utils';
+import { emojifyText, getFontColorByBackground } from 'utils';
 
 export const LabelButton = styled(Button).attrs({
-  title: ({ label }) => label.name,
+  title: ({ label }) => emojifyText(label.name),
   textStyle: fonts.fontPrimarySemiBold,
   fontSize: ({ largeWithTag }) => (largeWithTag ? 13 : 12),
   color: ({ label }) => getFontColorByBackground(label.color),

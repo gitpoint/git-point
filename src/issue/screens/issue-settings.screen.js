@@ -11,7 +11,7 @@ import {
   UserListItem,
   LabelListItem,
 } from 'components';
-import { translate, openURLInView } from 'utils';
+import { emojifyText, translate, openURLInView } from 'utils';
 import { colors, fonts } from 'config';
 import { getLabels } from 'repository';
 import { editIssue, changeIssueLockStatus } from '../issue.action';
@@ -192,7 +192,8 @@ class IssueSettings extends Component {
                         label => label.name !== labelToRemove.name
                       ),
                     }
-                  )}
+                  )
+                }
               />
             ))}
           </SectionList>
@@ -216,7 +217,8 @@ class IssueSettings extends Component {
                   ],
                 },
                 { assignees: [...issue.assignees, authUser] }
-              )}
+              )
+            }
             noItems={issue.assignees.length === 0}
             noItemsMessage={translate('issue.settings.noneMessage', locale)}
             title={translate('issue.settings.assigneesTitle', locale)}
@@ -241,7 +243,8 @@ class IssueSettings extends Component {
                         assignee => assignee.login !== userToRemove
                       ),
                     }
-                  )}
+                  )
+                }
               />
             ))}
           </SectionList>
@@ -327,7 +330,7 @@ class IssueSettings extends Component {
           }}
           title={translate('issue.settings.applyLabelTitle', locale)}
           options={[
-            ...this.props.labels.map(label => label.name),
+            ...this.props.labels.map(label => emojifyText(label.name)),
             translate('common.cancel', locale),
           ]}
           cancelButtonIndex={this.props.labels.length}
