@@ -158,6 +158,11 @@ export const eu = {
     },
     repositoryList: {
       title: 'Biltegiak',
+      allReposButton: 'All',
+      ownedReposButton: 'Owner',
+      memberReposButton: 'Member',
+      privateReposButton: 'Private',
+      publicReposButton: 'Public',
     },
     starredRepositoryList: {
       title: 'Stars',

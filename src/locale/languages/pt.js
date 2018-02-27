@@ -159,6 +159,11 @@ export const pt = {
     },
     repositoryList: {
       title: 'Repositórios',
+      allReposButton: 'All',
+      ownedReposButton: 'Owner',
+      memberReposButton: 'Member',
+      privateReposButton: 'Private',
+      publicReposButton: 'Public',
     },
     starredRepositoryList: {
       title: 'Favoritos',

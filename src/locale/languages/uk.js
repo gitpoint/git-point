@@ -158,6 +158,11 @@ export const uk = {
     },
     repositoryList: {
       title: 'Репозиторії',
+      allReposButton: 'All',
+      ownedReposButton: 'Owner',
+      memberReposButton: 'Member',
+      privateReposButton: 'Private',
+      publicReposButton: 'Public',
     },
     starredRepositoryList: {
       title: 'Stars',

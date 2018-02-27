@@ -160,6 +160,11 @@ export const ru = {
     },
     repositoryList: {
       title: 'Репозитории',
+      allReposButton: 'All',
+      ownedReposButton: 'Owner',
+      memberReposButton: 'Member',
+      privateReposButton: 'Private',
+      publicReposButton: 'Public',
     },
     starredRepositoryList: {
       title: 'Звёзд',

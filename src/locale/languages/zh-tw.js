@@ -153,6 +153,11 @@ export const zhTW = {
     },
     repositoryList: {
       title: '版本庫',
+      allReposButton: 'All',
+      ownedReposButton: 'Owner',
+      memberReposButton: 'Member',
+      privateReposButton: 'Private',
+      publicReposButton: 'Public',
     },
     starredRepositoryList: {
       title: 'Stars',

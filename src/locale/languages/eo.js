@@ -157,6 +157,11 @@ export const eo = {
     },
     repositoryList: {
       title: 'Repositorioj',
+      allReposButton: 'All',
+      ownedReposButton: 'Owner',
+      memberReposButton: 'Member',
+      privateReposButton: 'Private',
+      publicReposButton: 'Public',
     },
     starredRepositoryList: {
       title: 'Stars',
