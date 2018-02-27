@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { View, FlatList, Dimensions, Platform } from 'react-native';
+import { View, Text, FlatList, Dimensions, Platform } from 'react-native';
 import { ButtonGroup, Icon } from 'react-native-elements';
 
 import {
@@ -72,6 +72,14 @@ const StyledButtonGroup = styled(ButtonGroup).attrs({
   },
 })``;
 
+const TitleText = styled(Text).attrs({
+  numberOfLines: 1,
+  ellipsizeMode: 'tail',
+})`
+  margin-left: 5;
+  margin-right: 5;
+`;
+
 const repoTypes = ['all', 'owner', 'member', 'private', 'public'];
 
 class RepositoryList extends Component {
@@ -82,7 +90,7 @@ class RepositoryList extends Component {
       headerRight: (
         <Icon
           name="search"
-          color={colors.primaryDark}
+          color={colors.greyDark}
           type="font-awesome"
           containerStyle={{ marginRight: 20 }}
           underlayColor={colors.transparent}
@@ -141,6 +149,8 @@ class RepositoryList extends Component {
     return searchStart ? searchedUserRepos : repositories;
   };
 
+  getRepoTypeTitle = title => () => <TitleText>{title}</TitleText>;
+
   openSearch() {
     this.setState({ searchFocus: true });
   }
@@ -189,6 +199,38 @@ class RepositoryList extends Component {
     const loading =
       (isPendingRepositories && !searchStart) ||
       (isPendingSearchUserRepos && searchStart);
+    const buttons = [
+      {
+        element: this.getRepoTypeTitle(
+          translate('user.repositoryList.allReposButton', locale)
+        ),
+      },
+      {
+        element: this.getRepoTypeTitle(
+          translate('user.repositoryList.ownedReposButton', locale)
+        ),
+      },
+      {
+        element: this.getRepoTypeTitle(
+          translate('user.repositoryList.memberReposButton', locale)
+        ),
+      },
+    ];
+
+    if (authUser.login === currentuser.login) {
+      buttons.push(
+        {
+          element: this.getRepoTypeTitle(
+            translate('user.repositoryList.privateReposButton', locale)
+          ),
+        },
+        {
+          element: this.getRepoTypeTitle(
+            translate('user.repositoryList.publicReposButton', locale)
+          ),
+        }
+      );
+    }
 
     return (
       <ViewContainer>
@@ -220,39 +262,7 @@ class RepositoryList extends Component {
               <StyledButtonGroup
                 onPress={this.switchRepoType}
                 selectedIndex={this.state.repoType}
-                buttons={
-                  authUser.login === currentuser.login
-                    ? [
-                        translate('user.repositoryList.allReposButton', locale),
-                        translate(
-                          'user.repositoryList.ownedReposButton',
-                          locale
-                        ),
-                        translate(
-                          'user.repositoryList.memberReposButton',
-                          locale
-                        ),
-                        translate(
-                          'user.repositoryList.privateReposButton',
-                          locale
-                        ),
-                        translate(
-                          'user.repositoryList.publicReposButton',
-                          locale
-                        ),
-                      ]
-                    : [
-                        translate('user.repositoryList.allReposButton', locale),
-                        translate(
-                          'user.repositoryList.ownedReposButton',
-                          locale
-                        ),
-                        translate(
-                          'user.repositoryList.memberReposButton',
-                          locale
-                        ),
-                      ]
-                }
+                buttons={buttons}
               />
             )}
           </Header>

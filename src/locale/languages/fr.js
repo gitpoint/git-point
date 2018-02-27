@@ -162,6 +162,11 @@ export const fr = {
     },
     repositoryList: {
       title: 'Dépôts',
+      allReposButton: 'Tous',
+      ownedReposButton: 'Propriétaire',
+      memberReposButton: 'Membre',
+      privateReposButton: 'Privé',
+      publicReposButton: 'Public',
     },
     starredRepositoryList: {
       title: 'Favoris',
