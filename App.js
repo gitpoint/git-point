@@ -21,7 +21,7 @@ import { configureStore } from './root.store';
 
 const Container = styled.View`
   align-items: center;
-  background-color: ${colors.white}
+  background-color: ${colors.white};
   flex: 1;
   justify-content: center;
 `;
