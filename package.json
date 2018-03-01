@@ -83,6 +83,7 @@
     "react-native-photo-view": "^1.5.2",
     "react-native-safari-view": "^2.0.0",
     "react-native-search-bar": "^3.3.1",
+    "react-native-simple-toast": "^0.0.8",
     "react-native-swiper": "^1.5.13",
     "react-native-syntax-highlighter": "^1.2.1",
     "react-native-table-component": "^1.1.0",

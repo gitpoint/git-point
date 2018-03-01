@@ -176,6 +176,8 @@ export const eu = {
   },
   repository: {
     main: {
+      notFoundRepo: 'Repository is not found',
+      unknownLanguage: 'Unknown',
       shareRepositoryTitle: 'Konpartitu {{repoName}}',
       shareRepositoryMessage: 'Egiaztatu {{repoName}} GitHub-en. {{repoUrl}}',
       repoActions: 'Biltegiaren ekintzak',
