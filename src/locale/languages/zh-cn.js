@@ -174,6 +174,8 @@ export const zhCN = {
   },
   repository: {
     main: {
+      notFoundRepo: 'Repository is not found',
+      unknownLanguage: 'Unknown',
       shareRepositoryTitle: '分享 {{repoName}}',
       shareRepositoryMessage: '快来看看GitHub上的 {{repoName}} {{repoUrl}}',
       repoActions: '仓库操作',

@@ -176,6 +176,8 @@ export const tr = {
   },
   repository: {
     main: {
+      notFoundRepo: 'Repository is not found',
+      unknownLanguage: 'Unknown',
       shareRepositoryTitle: 'Paylaş {{repoName}}',
       shareRepositoryMessage:
         "GitHub'daki {{repoName}}'i kontrol edin. {{repoUrl}}",

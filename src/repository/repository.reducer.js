@@ -26,6 +26,7 @@ const initialState = {
   fileContent: '',
   issues: [],
   readMe: '',
+  hasRepoExist: false,
   hasReadMe: false,
   starred: false,
   forked: false,
@@ -61,20 +62,27 @@ export const repositoryReducer = (state = initialState, action = {}) => {
     case GET_REPOSITORY.PENDING:
       return {
         ...state,
+        contributors: [],
         issues: [],
+        readMe: '',
+        hasRepoExist: false,
+        hasReadMe: false,
+        error: '',
+        topics: [],
         isPendingRepository: true,
       };
     case GET_REPOSITORY.SUCCESS:
       return {
         ...state,
         repository: action.payload,
+        hasRepoExist: true,
+        error: '',
         isPendingRepository: false,
       };
     case GET_REPOSITORY.ERROR:
       return {
-        ...state,
+        ...initialState,
         error: action.payload,
-        isPendingRepository: false,
       };
     case GET_REPOSITORY_CONTRIBUTORS.PENDING:
       return {
