@@ -133,7 +133,8 @@ class AuthProfile extends Component {
           menuAction={() =>
             navigation.navigate('UserOptions', {
               title: translate('auth.userOptions.title', locale),
-            })}
+            })
+          }
         >
           {isPending && (
             <ActivityIndicator
@@ -145,6 +146,7 @@ class AuthProfile extends Component {
 
           {hasInitialUser &&
             user.bio &&
+            !isPending &&
             user.bio !== '' && (
               <SectionList title={translate('common.bio', locale)}>
                 <BioListItem
@@ -183,7 +185,8 @@ class AuthProfile extends Component {
                   {'\n'}
                   <NoteLink
                     onPress={() =>
-                      openURLInView('https://github.com/settings/applications')}
+                      openURLInView('https://github.com/settings/applications')
+                    }
                   >
                     {translate(
                       'auth.profile.orgsRequestApprovalBottom',
