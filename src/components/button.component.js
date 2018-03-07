@@ -79,8 +79,6 @@ const sizes = {
       paddingBottom: 5,
       paddingEnd: 8,
       paddingLeft: 8,
-      marginLeft: 4,
-      marginRight: 4,
     },
     textStyle: {
       fontSize: normalize(12),
@@ -95,8 +93,6 @@ const sizes = {
       paddingBottom: 8,
       paddingRight: 14,
       paddingLeft: 14,
-      marginLeft: 6,
-      marginRight: 6,
     },
     textStyle: {
       fontSize: normalize(14),
@@ -111,8 +107,6 @@ const sizes = {
       paddingBottom: 13,
       paddingRight: 17,
       paddingLeft: 17,
-      marginLeft: 8,
-      marginRight: 8,
     },
     textStyle: {
       fontSize: normalize(16),
@@ -152,6 +146,10 @@ const defaultDisabledTextStyle = {
   color: '#d2d2d2',
 };
 
+const defaultContainerViewStyle = {
+  borderRadius: 2,
+};
+
 export class Button extends Component {
   props: {
     icon: string,
@@ -178,6 +176,7 @@ export class Button extends Component {
         {...this.props}
         title={isAndroid ? title.toUpperCase() : title}
         raised={isAndroid}
+        containerViewStyle={defaultContainerViewStyle}
         buttonStyle={{
           ...defaultButtonStyle,
           ...types[type].buttonStyle,

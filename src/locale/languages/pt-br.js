@@ -1,4 +1,4 @@
-export const ptBr = {
+export const ptBR = {
   auth: {
     login: {
       connectingToGitHub: 'Conectando ao GitHub...',
@@ -16,6 +16,7 @@ export const ptBr = {
       issuesMessage: 'Comunicar-se em conversas, merge pull requests e mais',
       signInButton: 'ENTRAR',
     },
+    networkError: 'Oops! it seems that you are not connected to the internet!',
     welcome: {
       welcomeTitle: 'Bem-vindo ao GitPoint',
     },
@@ -157,6 +158,10 @@ export const ptBr = {
     repositoryList: {
       title: 'Repositórios',
     },
+    starredRepositoryList: {
+      title: 'Favoritos',
+      text: 'Favoritos',
+    },
     followers: {
       title: 'Seguidores',
       text: 'Seguidores',
@@ -170,6 +175,8 @@ export const ptBr = {
   },
   repository: {
     main: {
+      notFoundRepo: 'Repository is not found',
+      unknownLanguage: 'Unknown',
       shareRepositoryTitle: 'Compartilhar {{repoName}}',
       shareRepositoryMessage: 'Veja {{repoName}} no GitHub. {{repoUrl}}',
       repoActions: 'Ações do Repositório',
@@ -199,6 +206,7 @@ export const ptBr = {
       starred: 'Favoritado',
       watching: 'Observando',
       watchers: 'Observador',
+      topicsTitle: 'TÓPICOS',
     },
     codeList: {
       title: 'Código',
@@ -321,18 +329,23 @@ export const ptBr = {
     ok: 'OK',
     submit: 'Enviar',
     relativeTime: {
-      past: '%s',
-      s: '%ds',
-      m: '%dm',
-      mm: '%dm',
-      h: '%dh',
-      hh: '%dh',
-      d: '%dd',
-      dd: '%dd',
-      M: '%dmo',
-      MM: '%dmo',
-      y: '%dy',
-      yy: '%dy',
+      lessThanXSeconds: '{{count}}s',
+      xSeconds: '{{count}}s',
+      halfAMinute: '30s',
+      lessThanXMinutes: '{{count}}m',
+      xMinutes: '{{count}}m',
+      aboutXHours: '{{count}}h',
+      xHours: '{{count}}h',
+      xDays: '{{count}}d',
+      aboutXMonths: '{{count}}mo',
+      xMonths: '{{count}}mo',
+      aboutXYears: '{{count}}y',
+      xYears: '{{count}}y',
+      overXYears: '{{count}}y',
+      almostXYears: '{{count}}y',
+    },
+    abbreviations: {
+      thousand: 'k',
     },
     openInBrowser: 'Abrir no Navegador.',
   },

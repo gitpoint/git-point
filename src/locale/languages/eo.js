@@ -17,6 +17,7 @@ export const eo = {
       issuesMessage: 'Komuniki sur konversacioj, kunfandi tiri petojn kaj pli',
       signInButton: 'ENSALUTI',
     },
+    networkError: 'Oops! it seems that you are not connected to the internet!',
     welcome: {
       welcomeTitle: 'Bonvenon al GitPoint',
     },
@@ -157,6 +158,10 @@ export const eo = {
     repositoryList: {
       title: 'Repositorioj',
     },
+    starredRepositoryList: {
+      title: 'Stars',
+      text: 'Stars',
+    },
     followers: {
       title: 'Sekvantoj',
       text: 'Sekvantoj',
@@ -170,6 +175,8 @@ export const eo = {
   },
   repository: {
     main: {
+      notFoundRepo: 'Repository is not found',
+      unknownLanguage: 'Unknown',
       shareRepositoryTitle: 'Kunhavigi {{repoName}}',
       shareRepositoryMessage: 'Kontrolu {{repoName}} sur GitHub. {{repoUrl}} ',
       repoActions: 'Repository-Agoj',
@@ -199,6 +206,7 @@ export const eo = {
       starred: 'Fenita',
       watching: 'Rigardanta',
       watchers: 'Gardistoj',
+      topicsTitle: 'TOPICS',
     },
     codeList: {
       title: 'Kodo',
@@ -226,12 +234,17 @@ export const eo = {
       deleted: 'DIVITA',
       fileRenamed: 'Dosiero renomita sen ia ajn ŝanĝo',
     },
+    readMe: {
+      readMeActions: 'README Actions',
+      noReadMeFound: 'No README.md found',
+    },
   },
   organization: {
     main: {
       membersTitle: 'Membroj',
       descriptionTitle: 'PRISKRIBO',
     },
+    organizationActions: 'Organization Actions',
   },
   issue: {
     settings: {
@@ -276,6 +289,7 @@ export const eo = {
       openIssueSubTitle: '# {{number}} malfermis {{time}} ago per {{user}}',
       closedIssueSubTitle:
         '# {{number}} per {{user}} estis fermita {{time}} ago',
+      issueActions: 'Issue Actions',
     },
     newIssue: {
       title: 'New Issue',
@@ -316,21 +330,24 @@ export const eo = {
     ok: 'BONE',
     submit: 'Proponi',
     relativeTime: {
-      past: '% s',
-      s: '% ds',
-      m: '% dm',
-      mm: '% dm',
-      h: '% dh',
-      hh: '% dh',
-      d: '% dd',
-      dd: '% dd',
-      M: '% dmo',
-      MM: '% dmo',
-      y: '% dy',
-      yy: '% dy',
+      lessThanXSeconds: '{{count}}s',
+      xSeconds: '{{count}}s',
+      halfAMinute: '30s',
+      lessThanXMinutes: '{{count}}m',
+      xMinutes: '{{count}}m',
+      aboutXHours: '{{count}}h',
+      xHours: '{{count}}h',
+      xDays: '{{count}}d',
+      aboutXMonths: '{{count}}mo',
+      xMonths: '{{count}}mo',
+      aboutXYears: '{{count}}y',
+      xYears: '{{count}}y',
+      overXYears: '{{count}}y',
+      almostXYears: '{{count}}y',
     },
     abbreviations: {
       thousand: 'k',
     },
+    openInBrowser: 'Open in Browser',
   },
 };

@@ -18,6 +18,7 @@ export const tr = {
         "Sohbet ederek iletişim kurun, pull request'leri merge edin ve daha fazlası",
       signInButton: 'GİRİŞ YAP',
     },
+    networkError: 'Oops! it seems that you are not connected to the internet!',
     welcome: {
       welcomeTitle: "GitPoint'e Hoşgeldiniz",
     },
@@ -145,6 +146,8 @@ export const tr = {
       searchMessage: 'Herhangi bir {{type}} ara',
       repository: 'repository',
       user: 'kullanıcı',
+      noUsersFound: 'Kullanıcı Bulunamadı :(',
+      noRepositoriesFound: 'Repository Bulunamadı :(',
     },
   },
   user: {
@@ -155,6 +158,10 @@ export const tr = {
     },
     repositoryList: {
       title: "Repository'ler",
+    },
+    starredRepositoryList: {
+      title: 'Stars',
+      text: 'Stars',
     },
     followers: {
       title: 'Takipçiler',
@@ -169,6 +176,8 @@ export const tr = {
   },
   repository: {
     main: {
+      notFoundRepo: 'Repository is not found',
+      unknownLanguage: 'Unknown',
       shareRepositoryTitle: 'Paylaş {{repoName}}',
       shareRepositoryMessage:
         "GitHub'daki {{repoName}}'i kontrol edin. {{repoUrl}}",
@@ -198,6 +207,8 @@ export const tr = {
       forkedFromMessage: 'buradan fork edildi:',
       starred: 'Starred',
       watching: 'İzleniyor',
+      topicsTitle: 'TOPICS',
+      watchers: 'İzleyenler',
     },
     codeList: {
       title: 'Code',
@@ -321,18 +332,20 @@ export const tr = {
     ok: 'TAMAM',
     submit: 'Gönder',
     relativeTime: {
-      past: '%s',
-      s: '%ds',
-      m: '%dm',
-      mm: '%dm',
-      h: '%dh',
-      hh: '%dh',
-      d: '%dd',
-      dd: '%dd',
-      M: '%dmo',
-      MM: '%dmo',
-      y: '%dy',
-      yy: '%dy',
+      lessThanXSeconds: '{{count}}s',
+      xSeconds: '{{count}}s',
+      halfAMinute: '30s',
+      lessThanXMinutes: '{{count}}m',
+      xMinutes: '{{count}}m',
+      aboutXHours: '{{count}}h',
+      xHours: '{{count}}h',
+      xDays: '{{count}}d',
+      aboutXMonths: '{{count}}mo',
+      xMonths: '{{count}}mo',
+      aboutXYears: '{{count}}y',
+      xYears: '{{count}}y',
+      overXYears: '{{count}}y',
+      almostXYears: '{{count}}y',
     },
     abbreviations: {
       thousand: 'k',

@@ -1,9 +1,9 @@
 /* eslint-disable no-prototype-builtins */
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { colors, fonts, normalize } from 'config';
-import { translate, abbreviateNumber } from 'utils';
+import { translate } from 'utils';
 import { ImageZoom } from 'components';
+import styled, { css } from 'styled-components';
 
 type Props = {
   type: string,
@@ -16,85 +16,86 @@ type Props = {
   navigation: Object,
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  wrapperContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  profile: {
-    flex: 3,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
-  avatar: {
-    width: 75,
-    height: 75,
-    marginBottom: 20,
-    borderRadius: 37.5,
-  },
-  userAvatar: {
-    borderColor: colors.white,
-    borderWidth: 2,
-  },
-  title: {
-    color: colors.white,
-    ...fonts.fontPrimaryBold,
-    fontSize: normalize(16),
-    marginBottom: 2,
-  },
-  subtitle: {
-    color: colors.white,
-    ...fonts.fontPrimary,
-    fontSize: normalize(12),
-    marginBottom: 50,
-    paddingLeft: 15,
-    paddingRight: 15,
-    textAlign: 'center',
-  },
-  details: {
-    flex: 1,
-    flexDirection: 'row',
-  },
-  unit: {
-    flex: 1,
-  },
-  unitNumber: {
-    textAlign: 'center',
-    color: colors.white,
-    ...fonts.fontPrimaryBold,
-    fontSize: normalize(16),
-  },
-  unitText: {
-    textAlign: 'center',
-    color: colors.white,
-    fontSize: normalize(10),
-    ...fonts.fontPrimary,
-  },
-  unitStatus: {
-    textAlign: 'center',
-    color: colors.lighterBoldGreen,
-    fontSize: normalize(8),
-    ...fonts.fontPrimary,
-  },
-  badge: {
-    paddingTop: 3,
-    paddingBottom: 3,
-    marginTop: 5,
-    marginLeft: 17,
-    marginRight: 17,
-    borderWidth: 0.5,
-    borderRadius: 5,
-    borderColor: colors.lighterBoldGreen,
-    justifyContent: 'center',
-  },
-  green: {
-    color: colors.lightGreen,
-  },
-});
+const Container = styled.View`
+  flex: 1;
+`;
+const Wrapper = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
+const Profile = styled.View`
+  flex: 3;
+  align-items: center;
+  justify-content: flex-end;
+`;
+const StyledImageZoom = styled(ImageZoom)`
+  width: 75;
+  height: 75;
+  margin-bottom: 20;
+  border-radius: 37.5;
+  ${props =>
+    props.isUser &&
+    css`
+      border-color: ${colors.white};
+      border-width: 2;
+    `};
+`;
+const Title = styled.Text`
+  color: ${colors.white};
+  ${fonts.fontPrimaryBold};
+  font-size: ${normalize(16)};
+  margin-bottom: 2;
+`;
+const SubTitle = styled.Text`
+  color: ${colors.white};
+  ${fonts.fontPrimary};
+  font-size: ${normalize(12)};
+  margin-bottom: 50;
+  padding-left: 15;
+  padding-right: 15;
+  text-align: center;
+`;
+const Details = styled.View`
+  flex: 1;
+  flex-direction: row;
+`;
+const Unit = styled.TouchableOpacity`
+  flex: 1;
+`;
+const UnitNumber = styled.Text`
+  text-align: center;
+  color: ${colors.white};
+  ${fonts.fontPrimaryBold};
+  font-size: ${normalize(16)};
+`;
+const UnitText = styled.Text`
+  text-align: center;
+  color: ${colors.white};
+  font-size: ${normalize(10)};
+  ${fonts.fontPrimary};
+`;
+const UnitStatusWrapper = styled.View`
+  padding: 2px;
+  margin-top: 5;
+  margin-left: 20;
+  margin-right: 20;
+  border-radius: 5;
+  background-color: ${colors.lighterBoldGreen};
+`;
+const UnitStatus = styled.Text`
+  text-align: center;
+  color: ${colors.white};
+  font-size: ${normalize(8)};
+  ${fonts.fontPrimaryBold};
+`;
+
+const maxLoadingConstraints = {
+  maxFollowers: 15,
+  maxFollowing: 15,
+  maxPublicRepos: 15,
+  maxStars: 15,
+};
 
 export class UserProfile extends Component {
   props: Props;
@@ -121,118 +122,134 @@ export class UserProfile extends Component {
     } = this.props;
 
     return (
-      <View style={styles.container}>
+      <Container>
         {((user.hasOwnProperty('public_repos') &&
           !isNaN(parseInt(starCount, 10))) ||
           type === 'org') && (
-          <View
-            nativeId="user-profile-container"
-            style={styles.wrapperContainer}
-          >
-            <View style={styles.profile}>
-              <ImageZoom
+          <Wrapper nativeId="user-profile-container">
+            <Profile>
+              <StyledImageZoom
                 uri={this.getUserUri()}
-                style={[
-                  styles.avatar,
-                  (initialUser.type === 'User' || user.type === 'User') &&
-                    styles.userAvatar,
-                ]}
+                isUser={initialUser.type === 'User' || user.type === 'User'}
               />
-              <Text style={styles.title}>{user.name || ' '}</Text>
-              <Text style={styles.subtitle}>{initialUser.login || ' '}</Text>
-            </View>
-            <View style={styles.details}>
-              <TouchableOpacity
-                style={styles.unit}
+              <Title>{user.name || ' '}</Title>
+              <SubTitle>{initialUser.login || ' '}</SubTitle>
+            </Profile>
+            <Details>
+              <Unit
                 nativeId="touchable-repository-list"
                 onPress={() =>
                   navigation.navigate('RepositoryList', {
                     title: translate('user.repositoryList.title', locale),
                     user,
-                    repoCount: user.public_repos > 15 ? 15 : user.public_repos,
-                  })}
+                    repoCount: Math.min(
+                      maxLoadingConstraints.maxPublicRepos,
+                      user.public_repos
+                    ),
+                  })
+                }
               >
-                <Text style={styles.unitNumber}>
+                <UnitNumber>
                   {!isNaN(parseInt(user.public_repos, 10))
                     ? user.public_repos + (user.total_private_repos || 0)
                     : ' '}
-                </Text>
-                <Text style={styles.unitText}>
-                  {translate('common.repositories', locale)}
-                </Text>
-              </TouchableOpacity>
+                </UnitNumber>
+                <UnitText>{translate('common.repositories', locale)}</UnitText>
+              </Unit>
 
               {type !== 'org' && (
-                <TouchableOpacity
+                <Unit
                   nativeId="touchable-star-count-list"
-                  style={styles.unit}
+                  onPress={() =>
+                    navigation.navigate('StarredRepositoryList', {
+                      title: translate(
+                        'user.starredRepositoryList.title',
+                        locale
+                      ),
+                      user,
+                      repoCount: Math.min(
+                        maxLoadingConstraints.maxStars,
+                        starCount
+                      ),
+                    })
+                  }
                 >
-                  <Text style={styles.unitNumber}>
-                    {abbreviateNumber(starCount)}
-                  </Text>
-                  <Text style={styles.unitText}>
-                    {translate('common.stars', locale)}
-                  </Text>
-                </TouchableOpacity>
+                  <UnitNumber>
+                    {!isNaN(parseInt(starCount, 10)) ? starCount : ' '}
+                  </UnitNumber>
+                  <UnitText>
+                    {translate('user.starredRepositoryList.text', locale)}
+                  </UnitText>
+                </Unit>
               )}
 
               {type !== 'org' && (
-                <TouchableOpacity
+                <Unit
                   nativeId="touchable-followers-list"
-                  style={styles.unit}
                   onPress={() =>
                     navigation.navigate('FollowerList', {
                       title: translate('user.followers.title', locale),
                       user,
-                      followerCount: user.followers > 15 ? 15 : user.followers,
-                    })}
+                      followerCount: Math.min(
+                        maxLoadingConstraints.maxFollowers,
+                        user.followers
+                      ),
+                    })
+                  }
                 >
-                  <Text style={styles.unitNumber}>
+                  <UnitNumber>
                     {!isNaN(parseInt(user.followers, 10))
                       ? user.followers
                       : ' '}
-                  </Text>
-                  <Text style={styles.unitText}>
+                  </UnitNumber>
+                  <UnitText>
                     {translate('user.followers.text', locale)}
-                  </Text>
+                  </UnitText>
                   {isFollowing && (
-                    <Text style={[styles.unitStatus, styles.badge]}>
-                      {translate('user.following.followingYou', locale)}
-                    </Text>
+                    <UnitStatusWrapper>
+                      <UnitStatus>
+                        {translate('user.following.followingYou', locale)}
+                      </UnitStatus>
+                    </UnitStatusWrapper>
                   )}
-                </TouchableOpacity>
+                </Unit>
               )}
 
               {type !== 'org' && (
-                <TouchableOpacity
+                <Unit
                   nativeId="touchable-following-list"
-                  style={styles.unit}
                   onPress={() =>
                     navigation.navigate('FollowingList', {
                       title: translate('user.following.title', locale),
                       user,
-                      followingCount: user.following > 15 ? 15 : user.following,
-                    })}
+                      followingCount: Math.min(
+                        maxLoadingConstraints.maxFollowing,
+                        user.following
+                      ),
+                    })
+                  }
                 >
-                  <Text style={styles.unitNumber}>
+                  <UnitNumber>
                     {!isNaN(parseInt(user.following, 10))
                       ? user.following
                       : ' '}
-                  </Text>
-                  <Text style={styles.unitText}>
+                  </UnitNumber>
+                  <UnitText>
                     {translate('user.following.text', locale)}
-                  </Text>
+                  </UnitText>
                   {isFollower && (
-                    <Text style={[styles.unitStatus, styles.badge]}>
-                      {translate('user.followers.followsYou')}
-                    </Text>
+                    <UnitStatusWrapper>
+                      <UnitStatus>
+                        {translate('user.followers.followsYou')}
+                      </UnitStatus>
+                    </UnitStatusWrapper>
                   )}
-                </TouchableOpacity>
+                </Unit>
               )}
-            </View>
-          </View>
+            </Details>
+          </Wrapper>
         )}
-      </View>
+      </Container>
     );
   }
 }

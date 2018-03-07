@@ -1,12 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { closed as closedIssue, open as openIssue } from '../../data/issue';
+import { closed as closedIssue, open as openIssue } from 'testData/api/issue';
 import {
   closed as closedPr,
   open as openPr,
   merged as mergedPr,
-} from '../../data/pull-request';
+} from 'testData/api/pull-request';
 import { colors } from 'config';
 
 import { StateBadge } from 'components';
@@ -21,7 +21,7 @@ describe('<StateBadge />', () => {
         .childAt(0)
         .text()
     ).toEqual('Open');
-    expect(wrapper.prop('style')[2].backgroundColor).toEqual(colors.green);
+    expect(wrapper.prop('color')).toEqual(colors.green);
   });
 
   it('correctly renders with closed issue', () => {
@@ -33,7 +33,7 @@ describe('<StateBadge />', () => {
         .childAt(0)
         .text()
     ).toEqual('Closed');
-    expect(wrapper.prop('style')[2].backgroundColor).toEqual(colors.red);
+    expect(wrapper.prop('color')).toEqual(colors.red);
   });
 
   it('correctly renders with open pull request', () => {
@@ -45,7 +45,7 @@ describe('<StateBadge />', () => {
         .childAt(0)
         .text()
     ).toEqual('Open');
-    expect(wrapper.prop('style')[2].backgroundColor).toEqual(colors.green);
+    expect(wrapper.prop('color')).toEqual(colors.green);
   });
 
   it('correctly renders with closed pull request', () => {
@@ -57,7 +57,7 @@ describe('<StateBadge />', () => {
         .childAt(0)
         .text()
     ).toEqual('Closed');
-    expect(wrapper.prop('style')[2].backgroundColor).toEqual(colors.red);
+    expect(wrapper.prop('color')).toEqual(colors.red);
   });
 
   it('correctly renders with merged pull request', () => {
@@ -71,7 +71,7 @@ describe('<StateBadge />', () => {
         .childAt(0)
         .text()
     ).toEqual('Merged');
-    expect(wrapper.prop('style')[2].backgroundColor).toEqual(colors.purple);
+    expect(wrapper.prop('color')).toEqual(colors.purple);
   });
 
   it('correctly renders without issue', () => {
@@ -83,7 +83,7 @@ describe('<StateBadge />', () => {
         .childAt(0)
         .text()
     ).toEqual('Merged');
-    expect(wrapper.prop('style')[2].backgroundColor).toEqual(colors.purple);
+    expect(wrapper.prop('color')).toEqual(colors.purple);
   });
 
   it('correctly renders with open type', () => {
@@ -95,7 +95,7 @@ describe('<StateBadge />', () => {
         .childAt(0)
         .text()
     ).toEqual('');
-    expect(wrapper.prop('style')[2].backgroundColor).toEqual(colors.green);
+    expect(wrapper.prop('color')).toEqual(colors.green);
   });
 
   it('correctly renders with closed type', () => {
@@ -107,7 +107,7 @@ describe('<StateBadge />', () => {
         .childAt(0)
         .text()
     ).toEqual('');
-    expect(wrapper.prop('style')[2].backgroundColor).toEqual(colors.red);
+    expect(wrapper.prop('color')).toEqual(colors.red);
   });
 
   it('correctly renders with closed type', () => {
@@ -119,7 +119,7 @@ describe('<StateBadge />', () => {
         .childAt(0)
         .text()
     ).toEqual('');
-    expect(wrapper.prop('style')[2].backgroundColor).toEqual(colors.purple);
+    expect(wrapper.prop('color')).toEqual(colors.purple);
   });
 
   it('correctly renders with custom text', () => {
@@ -133,6 +133,6 @@ describe('<StateBadge />', () => {
         .childAt(0)
         .text()
     ).toEqual('test text');
-    expect(wrapper.prop('style')[2].backgroundColor).toEqual(colors.green);
+    expect(wrapper.prop('color')).toEqual(colors.green);
   });
 });

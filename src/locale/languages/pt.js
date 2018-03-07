@@ -16,6 +16,7 @@ export const pt = {
       issuesMessage: 'Comunicar problemas/sugestões, merge pull requests, etc',
       signInButton: 'ENTRAR',
     },
+    networkError: 'Oops! it seems that you are not connected to the internet!',
     welcome: {
       welcomeTitle: 'Bem-vindo ao GitPoint',
     },
@@ -159,6 +160,10 @@ export const pt = {
     repositoryList: {
       title: 'Repositórios',
     },
+    starredRepositoryList: {
+      title: 'Favoritos',
+      text: 'Favoritos',
+    },
     followers: {
       title: 'Seguidores',
       text: 'Seguidores',
@@ -172,6 +177,8 @@ export const pt = {
   },
   repository: {
     main: {
+      notFoundRepo: 'Repository is not found',
+      unknownLanguage: 'Unknown',
       shareRepositoryTitle: 'Compartilhar {{repoName}}',
       shareRepositoryMessage: 'Veja {{repoName}} no GitHub. {{repoUrl}}',
       repoActions: 'Ações do Repositório',
@@ -201,6 +208,7 @@ export const pt = {
       starred: 'Favoritos',
       watching: 'A Acompanhar',
       watchers: 'Acompanhando',
+      topicsTitle: 'TÓPICOS',
     },
     codeList: {
       title: 'Código',
@@ -238,6 +246,7 @@ export const pt = {
       membersTitle: 'MEMBROS',
       descriptionTitle: 'DESCRIÇÃO',
     },
+    organizationActions: 'Opções de Entidade',
   },
   issue: {
     settings: {
@@ -281,6 +290,7 @@ export const pt = {
       },
       openIssueSubTitle: '#{{number}} aberta em {{time}} por {{user}}',
       closedIssueSubTitle: '#{{number}} de {{user}} foi  fechada em {{time}} ',
+      issueActions: 'Acções sobre Issues',
     },
     newIssue: {
       title: 'Nova Issue',
@@ -321,18 +331,24 @@ export const pt = {
     ok: 'OK',
     submit: 'Enviar',
     relativeTime: {
-      past: '%s',
-      s: '%ds',
-      m: '%dm',
-      mm: '%dm',
-      h: '%dh',
-      hh: '%dh',
-      d: '%dd',
-      dd: '%dd',
-      M: '%dmo',
-      MM: '%dmo',
-      y: '%dy',
-      yy: '%dy',
+      lessThanXSeconds: '{{count}}s',
+      xSeconds: '{{count}}s',
+      halfAMinute: '30s',
+      lessThanXMinutes: '{{count}}m',
+      xMinutes: '{{count}}m',
+      aboutXHours: '{{count}}h',
+      xHours: '{{count}}h',
+      xDays: '{{count}}d',
+      aboutXMonths: '{{count}}mo',
+      xMonths: '{{count}}mo',
+      aboutXYears: '{{count}}y',
+      xYears: '{{count}}y',
+      overXYears: '{{count}}y',
+      almostXYears: '{{count}}y',
     },
+    abbreviations: {
+      thousand: 'k',
+    },
+    openInBrowser: 'Abrir no Browser',
   },
 };

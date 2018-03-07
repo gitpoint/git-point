@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { StyleSheet, View, Image } from 'react-native';
 
 import { colors } from 'config';
 import { resetNavigationTo } from 'utils';
@@ -9,18 +9,17 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-const styles = StyleSheet.create({
-  logoContainer: {
-    backgroundColor: colors.white,
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  logo: {
-    width: 100,
-    height: 100,
-  },
-});
+const LogoContainer = styled.View`
+  background-color: ${colors.white};
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Logo = styled.View`
+  width: 100;
+  height: 100;
+`;
 
 class Splash extends Component {
   props: {
@@ -40,12 +39,9 @@ class Splash extends Component {
 
   render() {
     return (
-      <View style={styles.logoContainer}>
-        <Image
-          style={styles.logo}
-          source={require('../../assets/logo-black.png')}
-        />
-      </View>
+      <LogoContainer>
+        <Logo source={require('../../assets/logo-black.png')} />
+      </LogoContainer>
     );
   }
 }

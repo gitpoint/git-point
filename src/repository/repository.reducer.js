@@ -6,6 +6,7 @@ import {
   GET_REPOSITORY_ISSUES,
   GET_REPO_README_STATUS,
   GET_REPO_STARRED_STATUS,
+  GET_REPOSITORY_TOPICS,
   FORK_REPO_STATUS,
   CHANGE_STAR_STATUS,
   GET_REPOSITORY_README,
@@ -25,6 +26,7 @@ const initialState = {
   fileContent: '',
   issues: [],
   readMe: '',
+  hasRepoExist: false,
   hasReadMe: false,
   starred: false,
   forked: false,
@@ -49,8 +51,10 @@ const initialState = {
   isPendingSearchOpenPulls: false,
   isPendingSearchClosedPulls: false,
   isPendingFork: false,
+  isPendingTopics: false,
   isPendingSubscribe: false,
   error: '',
+  topics: [],
 };
 
 export const repositoryReducer = (state = initialState, action = {}) => {
@@ -58,20 +62,27 @@ export const repositoryReducer = (state = initialState, action = {}) => {
     case GET_REPOSITORY.PENDING:
       return {
         ...state,
+        contributors: [],
         issues: [],
+        readMe: '',
+        hasRepoExist: false,
+        hasReadMe: false,
+        error: '',
+        topics: [],
         isPendingRepository: true,
       };
     case GET_REPOSITORY.SUCCESS:
       return {
         ...state,
         repository: action.payload,
+        hasRepoExist: true,
+        error: '',
         isPendingRepository: false,
       };
     case GET_REPOSITORY.ERROR:
       return {
-        ...state,
+        ...initialState,
         error: action.payload,
-        isPendingRepository: false,
       };
     case GET_REPOSITORY_CONTRIBUTORS.PENDING:
       return {
@@ -270,6 +281,22 @@ export const repositoryReducer = (state = initialState, action = {}) => {
         ...state,
         error: action.payload,
         isPendingLabels: false,
+      };
+    case GET_REPOSITORY_TOPICS.SUCCESS:
+      return {
+        ...state,
+        topics: action.payload,
+        isPendingTopics: false,
+      };
+    case GET_REPOSITORY_TOPICS.PENDING:
+      return {
+        ...state,
+        isPendingTopics: true,
+      };
+    case GET_REPOSITORY_TOPICS.ERROR:
+      return {
+        ...state,
+        error: action.payload,
       };
     case SEARCH_OPEN_ISSUES.PENDING:
       return {

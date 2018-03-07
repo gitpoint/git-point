@@ -98,20 +98,32 @@ const styles = StyleSheet.create({
     fontSize: normalize(10),
     ...fonts.fontPrimary,
   },
-  badge: {
-    paddingTop: 3,
-    paddingBottom: 3,
-    marginTop: 5,
-    marginLeft: 27,
-    marginRight: 27,
-    borderWidth: 0.5,
+  badgeView: {
     borderRadius: 5,
-    borderColor: colors.lighterBoldGreen,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
+    padding: 2,
+    flexGrow: 0,
+    backgroundColor: colors.lighterBoldGreen,
+    marginLeft: 20,
+    marginRight: 20,
+    marginTop: 5,
+  },
+  badge: {
+    color: colors.white,
+    ...fonts.fontPrimaryBold,
   },
 });
+
+const iconName = repository => {
+  let icon = '';
+
+  if (!repository.name) {
+    icon = 'stop';
+  } else {
+    icon = repository.fork ? 'repo-forked' : 'repo';
+  }
+
+  return icon;
+};
 
 export const RepositoryProfile = ({
   repository,
@@ -133,7 +145,8 @@ export const RepositoryProfile = ({
         )}
 
       <Text style={[styles.languageInfoTitle]}>
-        {repository.language || ' '}
+        {repository.language ||
+          translate('repository.main.unknownLanguage', locale)}
       </Text>
     </View>
 
@@ -143,13 +156,15 @@ export const RepositoryProfile = ({
           styles.icon,
           repository.fork ? { marginLeft: 17 } : { marginLeft: 13 },
         ]}
-        name={repository.fork ? 'repo-forked' : 'repo'}
+        name={iconName(repository)}
         type="octicon"
         size={45}
         color={colors.greyLight}
       />
 
-      <Text style={styles.title}>{repository.name || ' '}</Text>
+      <Text style={styles.title}>
+        {repository.name || translate('repository.main.notFoundRepo', locale)}
+      </Text>
 
       <Text
         numberOfLines={repository.fork ? 1 : 3}
@@ -179,7 +194,8 @@ export const RepositoryProfile = ({
                 onPress={() =>
                   navigation.navigate('Repository', {
                     repository: repository.parent,
-                  })}
+                  })
+                }
               >
                 {' '}
                 {repository.parent.full_name}
@@ -201,9 +217,11 @@ export const RepositoryProfile = ({
           {translate('repository.main.starsTitle', locale)}
         </Text>
         {starred && (
-          <Text style={[styles.unitStatus, styles.badge]}>
-            {translate('repository.main.starred', locale)}
-          </Text>
+          <View style={styles.badgeView}>
+            <Text style={[styles.unitStatus, styles.badge]}>
+              {translate('repository.main.starred', locale)}
+            </Text>
+          </View>
         )}
       </View>
 
@@ -217,9 +235,11 @@ export const RepositoryProfile = ({
           {translate('repository.main.watchers', locale)}
         </Text>
         {subscribed && (
-          <Text style={[styles.unitStatus, styles.badge]}>
-            {translate('repository.main.watching', locale)}
-          </Text>
+          <View style={styles.badgeView}>
+            <Text style={[styles.unitStatus, styles.badge]}>
+              {translate('repository.main.watching', locale)}
+            </Text>
+          </View>
         )}
       </View>
 

@@ -1,0 +1,17 @@
+{
+  "processors": ["stylelint-processor-styled-components"],
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-styled-components"
+  ],
+  "rules": {
+    "block-no-empty": null,
+    "declaration-colon-newline-after": null,
+    "declaration-property-value-whitelist": {
+      "margin": ["/^(0|[+-]?(\\d*\\.)?\\d+px)( (0|[+-]?(\\d*\\.)?\\d+px)){0,3}$/"],
+      "padding": ["/^(0|[+-]?(\\d*\\.)?\\d+px)( (0|[+-]?(\\d*\\.)?\\d+px)){0,3}$/"],
+    },
+    "value-list-max-empty-lines": null
+  },
+  "syntax": "scss"
+}

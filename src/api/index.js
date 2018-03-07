@@ -5,11 +5,12 @@ export const CLIENT_ID = '87c7f05700c052937cfb';
 export const CLIENT_SECRET = '3a70aee4d5e26c457720a31c3efe2f9062a4997a';
 
 const ACCEPT = {
-  JSON: 'application/vnd.github.v3+json',
-  HTML: 'application/vnd.github.v3.html+json',
   DIFF: 'application/vnd.github.v3.diff+json',
-  RAW: 'application/vnd.github.v3.raw+json',
   FULL: 'application/vnd.github.v3.full+json',
+  HTML: 'application/vnd.github.v3.html+json',
+  JSON: 'application/vnd.github.v3+json',
+  MERCY_PREVIEW: 'application/vnd.github.mercy-preview+json',
+  RAW: 'application/vnd.github.v3.raw+json',
 };
 
 const METHOD = {
@@ -379,6 +380,15 @@ export const fetchNotificationsCount = accessToken =>
 
 export const fetchRepoNotificationsCount = (owner, repoName, accessToken) =>
   v3.count(`/repos/${owner}/${repoName}/notifications?per_page=1`, accessToken);
+
+export const fetchRepoTopics = async (owner, repoName, accessToken) => {
+  const response = await v3.call(
+    `/repos/${owner}/${repoName}/topics`,
+    v3.parameters(accessToken, METHOD.GET, ACCEPT.MERCY_PREVIEW)
+  );
+
+  return response.json();
+};
 
 export const fetchIssueEvents = (
   owner: string,

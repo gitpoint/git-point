@@ -59,4 +59,24 @@ export default [
     emojiCode: ':flag-es:',
     name: 'Español',
   },
+  {
+    code: 'zh-cn',
+    emojiCode: ':flag-cn:',
+    name: '简体中文',
+  },
+  {
+    code: 'zh-tw',
+    emojiCode: ':flag-tw:',
+    name: '正體中文',
+  },
+  {
+    code: 'uk',
+    emojiCode: ':flag-ua:',
+    name: 'Українська',
+  },
+  {
+    code: 'eu',
+    emojiCode: ':waving_white_flag:',
+    name: 'Basque',
+  },
 ];
