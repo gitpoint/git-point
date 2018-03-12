@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Communications from 'react-native-communications';
 
@@ -13,11 +14,11 @@ type Props = {
   locale: string,
   navigation: Object,
 };
-
+const hairlineWidth = StyleSheet.hairlineWidth;
 const StyledListItem = styled(ListItem).attrs({
   containerStyle: {
     borderBottomColor: colors.greyLight,
-    borderBottomWidth: 1,
+    borderBottomWidth: hairlineWidth,
   },
   titleStyle: {
     color: colors.black,
@@ -111,7 +112,8 @@ export const EntityInfo = ({ entity, orgs, locale, navigation }: Props) => {
             }}
             subtitle={entity.email}
             onPress={() =>
-              Communications.email([entity.email], null, null, null, null)}
+              Communications.email([entity.email], null, null, null, null)
+            }
           />
         )}
 

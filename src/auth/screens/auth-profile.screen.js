@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import {
   RefreshControl,
   View,
+  StyleSheet,
   ActivityIndicator,
   Dimensions,
 } from 'react-native';
@@ -42,6 +43,8 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
+const hairlineWidth = StyleSheet.hairlineWidth;
+
 const Note = styled.Text`
   font-size: ${normalize(11)};
   color: ${colors.primaryDark};
@@ -57,7 +60,7 @@ const NoteLink = styled.Text`
 const BioListItem = styled(ListItem).attrs({
   containerStyle: {
     borderBottomColor: colors.greyLight,
-    borderBottomWidth: 1,
+    borderBottomWidth: hairlineWidth,
   },
   titleStyle: {
     color: colors.greyDark,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, StyleSheet } from 'react-native';
 import { List, ListItem, Button } from 'react-native-elements';
 import styled from 'styled-components';
 
@@ -15,9 +15,9 @@ type Props = {
   noItemsMessage: string,
   buttonAction: Function,
 };
-
+const hairlineWidth = StyleSheet.hairlineWidth;
 const Section = styled.View`
-  margin-top: 15;
+  /* margin-top: 15; */
 `;
 const Header = styled.View`
   flex-direction: row;
@@ -35,8 +35,8 @@ const TitleView = styled.View`
 const StyledList = styled(List).attrs({
   containerStyle: {
     marginTop: 0,
-    borderBottomColor: colors.grey,
-    borderBottomWidth: 1,
+    borderBottomColor: colors.greyLight,
+    borderBottomWidth: hairlineWidth,
   },
 })``;
 const StyledListItem = styled(ListItem).attrs({
@@ -57,7 +57,7 @@ const StyledButton = styled(Button).attrs({
   buttonStyle: {
     backgroundColor: colors.white,
     borderColor: colors.primaryDark,
-    borderWidth: 1,
+    borderWidth: hairlineWidth,
     borderRadius: 3,
     paddingVertical: 5,
     paddingHorizontal: 10,
