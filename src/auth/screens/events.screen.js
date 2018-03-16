@@ -121,8 +121,6 @@ class Events extends Component {
         return translate('auth.events.releaseEvent', locale, {
           action: translate(`auth.events.actions.${action}`, locale),
         });
-      case 'RepositoryEvent':
-        return translate(`auth.events.actions.${action}`, locale);
       default:
         return null;
     }
@@ -142,18 +140,6 @@ class Events extends Component {
 
       case 'ReleaseEvent':
         return `${userEvent.payload.release.id}`;
-      case 'RepositoryEvent':
-        return (
-          <LinkDescription
-            onPress={() => {
-              if (userEvent.action !== 'deleted') {
-                this.navigateToRepository(userEvent);
-              }
-            }}
-          >
-            {userEvent.repo.name}
-          </LinkDescription>
-        );
       default:
         return null;
     }
@@ -239,8 +225,6 @@ class Events extends Component {
         return 'git-commit';
       case 'ReleaseEvent':
         return 'tag';
-      case 'RepositoryEvent':
-        return 'repo';
       case 'WatchEvent':
         return 'star';
       default:
