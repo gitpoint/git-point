@@ -1,117 +1,121 @@
 {
   "Unknown event type: {0}": {
     "translation": "",
-    "origin": [["src/auth/screens/events.screen.js", 148]]
+    "origin": [["src/auth/screens/events.screen.js", 147]]
   },
   "<0/> commented on commit": {
     "translation": "",
-    "origin": [["src/auth/screens/events.screen.js", 200]]
+    "origin": [["src/auth/screens/events.screen.js", 199]]
   },
   "<0/> created branch <1/> at <2/>": {
     "translation": "",
-    "origin": [["src/auth/screens/events.screen.js", 216]]
+    "origin": [["src/auth/screens/events.screen.js", 215]]
   },
   "<0/> created tag <1/> at <2/>": {
     "translation": "",
-    "origin": [["src/auth/screens/events.screen.js", 222]]
+    "origin": [["src/auth/screens/events.screen.js", 221]]
   },
   "<0/> created repository <1/>": {
     "translation": "",
-    "origin": [["src/auth/screens/events.screen.js", 228]]
+    "origin": [["src/auth/screens/events.screen.js", 227]]
   },
   "<0/> deleted branch <1/> at <2/>": {
     "translation": "",
-    "origin": [["src/auth/screens/events.screen.js", 247]]
+    "origin": [["src/auth/screens/events.screen.js", 246]]
   },
   "<0/> deleted tag <1/> at <2/>": {
     "translation": "",
-    "origin": [["src/auth/screens/events.screen.js", 253]]
+    "origin": [["src/auth/screens/events.screen.js", 252]]
   },
   "<0/> forked <1/> at <2/>": {
     "translation": "",
-    "origin": [["src/auth/screens/events.screen.js", 274]]
+    "origin": [["src/auth/screens/events.screen.js", 273]]
   },
   "<0/> created the <1/> wiki": {
     "translation": "",
-    "origin": [["src/auth/screens/events.screen.js", 288]]
+    "origin": [["src/auth/screens/events.screen.js", 287]]
   },
   "<0/> edited the <1/> wiki": {
     "translation": "",
-    "origin": [["src/auth/screens/events.screen.js", 295]]
+    "origin": [["src/auth/screens/events.screen.js", 294]]
   },
   "<0/> edit a comment on <1/> at <2/>": {
     "translation": "",
-    "origin": [["src/auth/screens/events.screen.js", 313]]
+    "origin": [["src/auth/screens/events.screen.js", 312]]
   },
   "<0/> deleted a comment on <1/> at <2/>": {
     "translation": "",
-    "origin": [["src/auth/screens/events.screen.js", 319]]
+    "origin": [["src/auth/screens/events.screen.js", 318]]
   },
   "<0/> commented on pull request <1/> at <2/>": {
     "translation": "",
     "origin": [
-      ["src/auth/screens/events.screen.js", 328],
-      ["src/auth/screens/events.screen.js", 464]
+      ["src/auth/screens/events.screen.js", 327],
+      ["src/auth/screens/events.screen.js", 463]
     ]
   },
   "<0/> commented on issue <1/> at <2/>": {
     "translation": "",
-    "origin": [["src/auth/screens/events.screen.js", 336]]
+    "origin": [["src/auth/screens/events.screen.js", 335]]
   },
   "<0/> opened issue <1/> at <2/>": {
     "translation": "",
-    "origin": [["src/auth/screens/events.screen.js", 351]]
+    "origin": [["src/auth/screens/events.screen.js", 350]]
   },
   "<0/> reopened issue <1/> at <2/>": {
     "translation": "",
-    "origin": [["src/auth/screens/events.screen.js", 357]]
+    "origin": [["src/auth/screens/events.screen.js", 356]]
   },
   "<0/> closed issue <1/> at <2/>": {
     "translation": "",
-    "origin": [["src/auth/screens/events.screen.js", 363]]
+    "origin": [["src/auth/screens/events.screen.js", 362]]
   },
   "<0/> edited <1/> permissions in <2/>": {
     "translation": "",
-    "origin": [["src/auth/screens/events.screen.js", 385]]
+    "origin": [["src/auth/screens/events.screen.js", 384]]
   },
   "<0/> removed <1/> from <2/>": {
     "translation": "",
-    "origin": [["src/auth/screens/events.screen.js", 393]]
+    "origin": [["src/auth/screens/events.screen.js", 392]]
   },
   "<0/> added <1/> to <2/>": {
     "translation": "",
-    "origin": [["src/auth/screens/events.screen.js", 400]]
+    "origin": [["src/auth/screens/events.screen.js", 399]]
   },
   "<0/> made <1/> public": {
     "translation": "",
-    "origin": [["src/auth/screens/events.screen.js", 412]]
+    "origin": [["src/auth/screens/events.screen.js", 411]]
   },
   "<0/> opened pull request <1/> in <2/>": {
     "translation": "",
-    "origin": [["src/auth/screens/events.screen.js", 426]]
+    "origin": [["src/auth/screens/events.screen.js", 425]]
   },
   "<0/> reopened pull request <1/> in <2/>": {
     "translation": "",
-    "origin": [["src/auth/screens/events.screen.js", 432]]
+    "origin": [["src/auth/screens/events.screen.js", 431]]
   },
   "<0/> merged pull request <1/> in <2/>": {
     "translation": "",
-    "origin": [["src/auth/screens/events.screen.js", 439]]
+    "origin": [["src/auth/screens/events.screen.js", 438]]
   },
   "<0/> closed pull request <1/> in <2/>": {
     "translation": "",
-    "origin": [["src/auth/screens/events.screen.js", 446]]
+    "origin": [["src/auth/screens/events.screen.js", 445]]
   },
   "<0/> pushed to <1>{0} </1> in <2/>": {
     "translation": "",
-    "origin": [["src/auth/screens/events.screen.js", 480]]
+    "origin": [["src/auth/screens/events.screen.js", 479]]
   },
   "<0/> published release {id}": {
     "translation": "",
-    "origin": [["src/auth/screens/events.screen.js", 498]]
+    "origin": [["src/auth/screens/events.screen.js", 497]]
   },
   "<0/> starred <1/>": {
     "translation": "",
-    "origin": [["src/auth/screens/events.screen.js", 513]]
+    "origin": [["src/auth/screens/events.screen.js", 512]]
+  },
+  "Welcome to GitPoint": {
+    "translation": "",
+    "origin": [["src/auth/screens/events.screen.js", 585]]
   }
 }

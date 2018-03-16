@@ -9,7 +9,7 @@ import { Trans } from '@lingui/react';
 
 import { LoadingUserListItem, UserListItem, ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
-import { emojifyText, translate, relativeTimeToNow } from 'utils';
+import { emojifyText, relativeTimeToNow } from 'utils';
 import { getUserEvents } from 'auth';
 import { getNotificationsCount } from 'notifications';
 
@@ -18,7 +18,6 @@ const T = props => props.c;
 const mapStateToProps = state => ({
   user: state.auth.user,
   userEvents: state.auth.events,
-  locale: state.auth.locale,
   isPendingEvents: state.auth.isPendingEvents,
   accessToken: state.auth.accessToken,
 });
@@ -570,7 +569,7 @@ class Events extends Component {
   }
 
   render() {
-    const { isPendingEvents, userEvents, locale, navigation } = this.props;
+    const { isPendingEvents, userEvents, navigation } = this.props;
     const linebreaksPattern = /(\r\n|\n|\r)/gm;
     let content;
 
@@ -583,7 +582,7 @@ class Events extends Component {
       content = (
         <TextContainer>
           <NoneTitle>
-            {translate('auth.events.welcomeMessage', locale)}
+            <Trans>Welcome to GitPoint</Trans>
           </NoneTitle>
         </TextContainer>
       );
@@ -622,7 +621,6 @@ class Events extends Component {
               )}
             </View>
           )}
-          extraData={this.props.locale}
         />
       );
     }

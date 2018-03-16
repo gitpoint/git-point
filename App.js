@@ -13,12 +13,12 @@ import createEncryptor from 'redux-persist-transform-encrypt';
 import DeviceInfo from 'react-native-device-info';
 import md5 from 'md5';
 import codePush from 'react-native-code-push';
-import { I18nProvider } from '@lingui/react';
 
 import { colors, getStatusBarConfig } from 'config';
 import { getCurrentLocale, configureLocale } from 'utils';
 
-import catalog from './locale/';
+import I18nLoader from './I18nLoader';
+import catalogs from './locale';
 
 import { GitPoint } from './routes';
 import { configureStore } from './root.store';
@@ -50,6 +50,7 @@ class App extends Component {
     super();
 
     this.state = {
+      language: 'en',
       rehydrated: false,
     };
     this.statusBarHandler = this.statusBarHandler.bind(this);
@@ -67,8 +68,8 @@ class App extends Component {
         transforms: [encryptor],
         whitelist: ['auth'],
       },
-      () => {
-        this.setState({ rehydrated: true });
+      (err, { auth }) => {
+        this.setState({ rehydrated: true, language: auth.locale });
       }
     );
 
@@ -116,7 +117,9 @@ class App extends Component {
   }
 
   render() {
-    if (!this.state.rehydrated) {
+    const { rehydrated, language } = this.state;
+
+    if (!rehydrated) {
       return (
         <Container>
           <Logo source={require('./src/assets/logo-black.png')} />
@@ -126,11 +129,11 @@ class App extends Component {
 
     return (
       <Provider store={configureStore}>
-        <I18nProvider language="fr" catalogs={catalog}>
+        <I18nLoader language={language} catalogs={catalogs}>
           <GitPoint onNavigationStateChange={this.statusBarHandler}>
             <StatusBar />
           </GitPoint>
-        </I18nProvider>
+        </I18nLoader>
       </Provider>
     );
   }
