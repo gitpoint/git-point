@@ -106,45 +106,6 @@ class Events extends Component {
     this.props.getNotificationsCount(accessToken);
   };
 
-  getAction = userEvent => {
-    const { locale } = this.props;
-    const eventType = userEvent.type;
-    /* eslint-disable prefer-const */
-    let { action } = userEvent.payload;
-
-    switch (eventType) {
-      case 'PullRequestReviewEvent':
-        return translate('auth.events.pullRequestReviewEvent', locale, {
-          payload: translate(`auth.events.actions.${action}`, locale),
-        });
-      case 'ReleaseEvent':
-        return translate('auth.events.releaseEvent', locale, {
-          action: translate(`auth.events.actions.${action}`, locale),
-        });
-      default:
-        return null;
-    }
-  };
-
-  getItem(userEvent) {
-    const eventType = userEvent.type;
-
-    switch (eventType) {
-      case 'PullRequestReviewEvent':
-      case 'PullRequestReviewCommentEvent':
-        return (
-          <LinkDescription onPress={() => this.navigateToIssue(userEvent)}>
-            {userEvent.payload.pull_request.title}
-          </LinkDescription>
-        );
-
-      case 'ReleaseEvent':
-        return `${userEvent.payload.release.id}`;
-      default:
-        return null;
-    }
-  }
-
   getIssueLink(userEvent) {
     return (
       <LinkDescription onPress={() => this.navigateToIssue(userEvent)}>
@@ -525,6 +486,23 @@ class Events extends Component {
         in <T c={repo} />
       </Trans>
     );
+  }
+
+  handleRelease(userEvent) {
+    const actor = this.getActorLink(userEvent);
+    const id = userEvent.payload.release.id;
+
+    switch (userEvent.payload.action) {
+      case 'published':
+        return (
+          <Trans>
+            <T c={actor} /> published release {id}
+          </Trans>
+        );
+
+      default:
+        return null;
+    }
   }
 
   handleWatchEvent(userEvent) {

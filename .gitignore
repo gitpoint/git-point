@@ -68,3 +68,4 @@ coverage
 
 # lingui
 locale/_build/
+locale/*/*.js
