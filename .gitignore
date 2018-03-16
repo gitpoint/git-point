@@ -65,3 +65,6 @@ haste-map-react-native-packager*
 .idea
 
 coverage
+
+# lingui
+locale/_build/

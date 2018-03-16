@@ -13,15 +13,19 @@ import createEncryptor from 'redux-persist-transform-encrypt';
 import DeviceInfo from 'react-native-device-info';
 import md5 from 'md5';
 import codePush from 'react-native-code-push';
+import { I18nProvider } from '@lingui/react';
 
 import { colors, getStatusBarConfig } from 'config';
 import { getCurrentLocale, configureLocale } from 'utils';
+
+import catalog from './locale/';
+
 import { GitPoint } from './routes';
 import { configureStore } from './root.store';
 
 const Container = styled.View`
   align-items: center;
-  background-color: ${colors.white}
+  background-color: ${colors.white};
   flex: 1;
   justify-content: center;
 `;
@@ -122,9 +126,11 @@ class App extends Component {
 
     return (
       <Provider store={configureStore}>
-        <GitPoint onNavigationStateChange={this.statusBarHandler}>
-          <StatusBar />
-        </GitPoint>
+        <I18nProvider language="fr" catalogs={catalog}>
+          <GitPoint onNavigationStateChange={this.statusBarHandler}>
+            <StatusBar />
+          </GitPoint>
+        </I18nProvider>
       </Provider>
     );
   }

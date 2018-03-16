@@ -52,6 +52,8 @@
     ]
   },
   "dependencies": {
+    "@lingui/babel-preset-react": "2.0.2",
+    "@lingui/react": "2.0.2",
     "date-fns": "^1.29.0",
     "entities": "^1.1.1",
     "enzyme": "^3.0.0",
@@ -103,6 +105,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^3.1.0",
+    "@lingui/cli": "2.0.2",
     "all-contributors-cli": "^4.10.1",
     "babel-eslint": "^7.1.1",
     "babel-jest": "^21.2.0",

@@ -1,0 +1,112 @@
+{
+  "Unknown event type: {0}": {
+    "translation": "",
+    "origin": [["src/auth/screens/events.screen.js", 292]]
+  },
+  "<0/> created branch <1/> in <2/>": {
+    "translation": "",
+    "origin": [["src/auth/screens/events.screen.js", 352]]
+  },
+  "<0/> created tag <1/> in <2/>": {
+    "translation": "",
+    "origin": [["src/auth/screens/events.screen.js", 358]]
+  },
+  "<0/> created repository <1/>": {
+    "translation": "<0/> a <1/> créé le repository <1/>",
+    "origin": [["src/auth/screens/events.screen.js", 364]]
+  },
+  "<0/> forked <1/> at <2/>": {
+    "translation": "<0/> a forké <1/> en <2/>",
+    "origin": [["src/auth/screens/events.screen.js", 383]]
+  },
+  "<0/> created wiki page {0} at <1/>": {
+    "translation": "",
+    "origin": [["src/auth/screens/events.screen.js", 397]]
+  },
+  "<0/> edited wiki page {0} at <1/>": {
+    "translation": "",
+    "origin": [["src/auth/screens/events.screen.js", 404]]
+  },
+  "<0/> edit a comment on <1/> at <2/>": {
+    "translation": "",
+    "origin": [["src/auth/screens/events.screen.js", 422]]
+  },
+  "<0/> deleted a comment on <1/> at <2/>": {
+    "translation": "",
+    "origin": [["src/auth/screens/events.screen.js", 428]]
+  },
+  "<0/> commented on pull request <1/> at <2/>": {
+    "translation": "",
+    "origin": [["src/auth/screens/events.screen.js", 437]]
+  },
+  "<0/> commented on issue <1/> at <2/>": {
+    "translation": "",
+    "origin": [["src/auth/screens/events.screen.js", 445]]
+  },
+  "<0/> edited <1/> permissions in <2/>": {
+    "translation": "",
+    "origin": [["src/auth/screens/events.screen.js", 464]]
+  },
+  "<0/> removed <1/> from <2/>": {
+    "translation": "",
+    "origin": [["src/auth/screens/events.screen.js", 472]]
+  },
+  "<0/> added <1/> to <2/>": {
+    "translation": "",
+    "origin": [["src/auth/screens/events.screen.js", 479]]
+  },
+  "<0/> opened pull request <1/> in <2/>": {
+    "translation": "",
+    "origin": [["src/auth/screens/events.screen.js", 494]]
+  },
+  "<0/> reopened pull request <1/> in <2/>": {
+    "translation": "",
+    "origin": [["src/auth/screens/events.screen.js", 500]]
+  },
+  "<0/> merged pull request <1/> in <2/>": {
+    "translation": "",
+    "origin": [["src/auth/screens/events.screen.js", 507]]
+  },
+  "<0/> closed pull request <1/> in <2/>": {
+    "translation": "",
+    "origin": [["src/auth/screens/events.screen.js", 514]]
+  },
+  "<0/> pushed to <1>{0} </1> in <2/>": {
+    "translation": "",
+    "origin": [["src/auth/screens/events.screen.js", 529]]
+  },
+  "<0/> starred <1/>": {
+    "translation": "",
+    "origin": [["src/auth/screens/events.screen.js", 545]]
+  },
+  "Unhandled": {
+    "translation": "",
+    "origin": [["src/auth/screens/events.screen.js", 525]],
+    "obsolete": true
+  },
+  "<0/> created branch <1>{0} </1> in <2/>": {
+    "translation": "",
+    "origin": [["src/auth/screens/events.screen.js", 378]],
+    "obsolete": true
+  },
+  "<0/> created tag <1>{0} </1> in <2/>": {
+    "translation": "",
+    "origin": [["src/auth/screens/events.screen.js", 389]],
+    "obsolete": true
+  },
+  "Hello lingui": {
+    "translation": "Bonjour Lingui",
+    "origin": [["src/auth/screens/events.screen.js", 149]],
+    "obsolete": true
+  },
+  "<0/>started watching <1/>": {
+    "translation": "",
+    "origin": [["src/auth/screens/events.screen.js", 415]],
+    "obsolete": true
+  },
+  "started watching <0/>": {
+    "translation": "a commencé à suivre <0/>",
+    "origin": [["src/auth/screens/events.screen.js", 411]],
+    "obsolete": true
+  }
+}
