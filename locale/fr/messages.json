@@ -183,129 +183,143 @@
       "Si vous avez des questions en rapport avec cette politique de confidentialité ou GitPoint en général, merci de soumettre un ticket sur le <0>dépôt GitPoint</0>",
     "origin": [["src/auth/screens/privacy-policy.screen.js", 157]]
   },
+  "Open in Browser": {
+    "translation": "Ouvrir dans le navigateur",
+    "origin": [
+      ["src/repository/screens/read-me.screen.js", 99],
+      ["src/repository/screens/repository.screen.js", 247]
+    ]
+  },
+  "No README.md found": {
+    "translation": "Pas de README.md trouvé",
+    "origin": [["src/repository/screens/read-me.screen.js", 119]]
+  },
+  "README Actions": {
+    "translation": "Actions sur le README",
+    "origin": [["src/repository/screens/read-me.screen.js", 128]]
+  },
+  "Cancel": {
+    "translation": "Annuler",
+    "origin": [
+      ["src/repository/screens/read-me.screen.js", 129],
+      ["src/repository/screens/repository.screen.js", 461]
+    ]
+  },
   "Share {0}": {
     "translation": "Partager {0}",
-    "origin": [["src/repository/screens/repository.screen.js", 187]]
+    "origin": [["src/repository/screens/repository.screen.js", 188]]
   },
   "Unstar": {
     "translation": "Supprimer des favoris",
-    "origin": [["src/repository/screens/repository.screen.js", 243]]
+    "origin": [["src/repository/screens/repository.screen.js", 244]]
   },
   "Star": {
     "translation": "Ajouter aux favoris",
-    "origin": [["src/repository/screens/repository.screen.js", 243]]
+    "origin": [["src/repository/screens/repository.screen.js", 244]]
   },
   "Unwatch": {
     "translation": "Ne plus surveiller",
-    "origin": [["src/repository/screens/repository.screen.js", 244]]
+    "origin": [["src/repository/screens/repository.screen.js", 245]]
   },
   "Watch": {
     "translation": "Surveiller",
-    "origin": [["src/repository/screens/repository.screen.js", 244]]
+    "origin": [["src/repository/screens/repository.screen.js", 245]]
   },
   "Share": {
     "translation": "Partager",
-    "origin": [["src/repository/screens/repository.screen.js", 245]]
-  },
-  "Open in Browser": {
-    "translation": "Ouvrir dans le navigateur",
     "origin": [["src/repository/screens/repository.screen.js", 246]]
   },
   "Fork": {
     "translation": "Forker",
-    "origin": [["src/repository/screens/repository.screen.js", 250]]
+    "origin": [["src/repository/screens/repository.screen.js", 251]]
   },
   "TOPICS": {
     "translation": "SUJETS",
-    "origin": [["src/repository/screens/repository.screen.js", 298]]
+    "origin": [["src/repository/screens/repository.screen.js", 299]]
   },
   "OWNER": {
     "translation": "PROPRIÉTAIRE",
     "origin": [
-      ["src/repository/screens/repository.screen.js", 304],
-      ["src/repository/screens/repository.screen.js", 312],
-      ["src/repository/screens/repository.screen.js", 320]
+      ["src/repository/screens/repository.screen.js", 305],
+      ["src/repository/screens/repository.screen.js", 313],
+      ["src/repository/screens/repository.screen.js", 321]
     ]
   },
   "CONTRIBUTORS": {
     "translation": "CONTRIBUTEURS",
     "origin": [
-      ["src/repository/screens/repository.screen.js", 329],
-      ["src/repository/screens/repository.screen.js", 334]
+      ["src/repository/screens/repository.screen.js", 330],
+      ["src/repository/screens/repository.screen.js", 335]
     ]
   },
   "No contributors found": {
     "translation": "Aucun contributeur trouvé",
-    "origin": [["src/repository/screens/repository.screen.js", 336]]
+    "origin": [["src/repository/screens/repository.screen.js", 337]]
   },
   "SOURCE": {
     "translation": "SOURCE",
-    "origin": [["src/repository/screens/repository.screen.js", 341]]
+    "origin": [["src/repository/screens/repository.screen.js", 342]]
   },
   "README": {
     "translation": "README",
-    "origin": [["src/repository/screens/repository.screen.js", 344]]
+    "origin": [["src/repository/screens/repository.screen.js", 345]]
   },
   "View Code": {
     "translation": "Voir le code",
-    "origin": [["src/repository/screens/repository.screen.js", 361]]
+    "origin": [["src/repository/screens/repository.screen.js", 362]]
   },
   "Code": {
     "translation": "Code",
-    "origin": [["src/repository/screens/repository.screen.js", 371]]
+    "origin": [["src/repository/screens/repository.screen.js", 372]]
   },
   "ISSUES": {
     "translation": "TICKETS",
-    "origin": [["src/repository/screens/repository.screen.js", 384]]
+    "origin": [["src/repository/screens/repository.screen.js", 385]]
   },
   "No issues": {
     "translation": "Aucun ticket",
-    "origin": [["src/repository/screens/repository.screen.js", 388]]
+    "origin": [["src/repository/screens/repository.screen.js", 389]]
   },
   "No open issues": {
     "translation": "Aucun ticket ouvert",
-    "origin": [["src/repository/screens/repository.screen.js", 389]]
+    "origin": [["src/repository/screens/repository.screen.js", 390]]
   },
   "View All": {
     "translation": "Voir tous",
     "origin": [
-      ["src/repository/screens/repository.screen.js", 393],
-      ["src/repository/screens/repository.screen.js", 432]
+      ["src/repository/screens/repository.screen.js", 394],
+      ["src/repository/screens/repository.screen.js", 433]
     ]
   },
   "New Issue": {
     "translation": "Nouveau ticket",
     "origin": [
-      ["src/repository/screens/repository.screen.js", 393],
-      ["src/repository/screens/repository.screen.js", 404]
+      ["src/repository/screens/repository.screen.js", 394],
+      ["src/repository/screens/repository.screen.js", 405]
     ]
   },
   "Issues": {
     "translation": "Tickets",
-    "origin": [["src/repository/screens/repository.screen.js", 398]]
+    "origin": [["src/repository/screens/repository.screen.js", 399]]
   },
   "PULL REQUESTS": {
     "translation": "¨PULL REQUESTS",
-    "origin": [["src/repository/screens/repository.screen.js", 424]]
+    "origin": [["src/repository/screens/repository.screen.js", 425]]
   },
   "No pull requests": {
     "translation": "Aucune pull request",
-    "origin": [["src/repository/screens/repository.screen.js", 428]]
+    "origin": [["src/repository/screens/repository.screen.js", 429]]
   },
   "No open pull requests": {
     "translation": "Aucune pull request ouverte",
-    "origin": [["src/repository/screens/repository.screen.js", 429]]
+    "origin": [["src/repository/screens/repository.screen.js", 430]]
   },
   "Pull Requests": {
     "translation": "Pull Requests",
-    "origin": [["src/repository/screens/repository.screen.js", 435]]
+    "origin": [["src/repository/screens/repository.screen.js", 436]]
   },
   "Repository Actions": {
     "translation": "Actions sur le dépôt",
-    "origin": [["src/repository/screens/repository.screen.js", 459]]
-  },
-  "Cancel": {
-    "translation": "Annuler",
     "origin": [["src/repository/screens/repository.screen.js", 460]]
   }
 }
