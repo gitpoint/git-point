@@ -310,7 +310,8 @@ class Events extends Component {
       case 'edited':
         return (
           <Trans>
-            <T c={actor} /> edit a comment on <T c={issue} /> at <T c={repo} />
+            <T c={actor} /> edited a comment on <T c={issue} /> at{' '}
+            <T c={repo} />
           </Trans>
         );
       case 'deleted':
