@@ -110,48 +110,13 @@ class Events extends Component {
     const { locale } = this.props;
     const eventType = userEvent.type;
     /* eslint-disable prefer-const */
-    let { action, ref_type: object } = userEvent.payload;
+    let { action } = userEvent.payload;
 
     switch (eventType) {
-      case 'DeleteEvent':
-        return translate('auth.events.deleteEvent', locale, {
-          object: translate(`auth.events.objects.${object}`, locale),
-        });
-      case 'IssuesEvent':
-        return translate('auth.events.issuesEvent', locale, {
-          action: translate(`auth.events.actions.${action}`, locale),
-        });
-      case 'PublicEvent':
-        return translate('auth.events.publicEvent.action', locale);
       case 'PullRequestReviewEvent':
         return translate('auth.events.pullRequestReviewEvent', locale, {
           payload: translate(`auth.events.actions.${action}`, locale),
         });
-      case 'PullRequestReviewCommentEvent': {
-        if (action === 'created') {
-          return translate(
-            'auth.events.pullRequestReviewCommentEvent',
-            locale,
-            {
-              action: translate('auth.events.actions.commented', locale),
-            }
-          );
-        } else if (action === 'edited') {
-          return translate('auth.events.pullRequestReviewEditedEvent', locale, {
-            action: translate(`auth.events.actions.${action}`, locale),
-          });
-        } else if (action === 'deleted') {
-          return translate(
-            'auth.events.pullRequestReviewDeletedEvent',
-            locale,
-            {
-              action: translate(`auth.events.actions.${action}`, locale),
-            }
-          );
-        }
-
-        return null;
-      }
       case 'ReleaseEvent':
         return translate('auth.events.releaseEvent', locale, {
           action: translate(`auth.events.actions.${action}`, locale),
@@ -167,26 +132,6 @@ class Events extends Component {
     const eventType = userEvent.type;
 
     switch (eventType) {
-      case 'DeleteEvent':
-        return (
-          <DeletedLinkBranchDescription>
-            {' '}
-            {userEvent.payload.ref}{' '}
-          </DeletedLinkBranchDescription>
-        ); // can only be branch or tag
-      case 'PublicEvent':
-        return (
-          <LinkDescription onPress={() => this.navigateToRepository(userEvent)}>
-            {userEvent.repo.name}
-          </LinkDescription>
-        );
-      case 'IssuesEvent':
-        return (
-          <LinkDescription onPress={() => this.navigateToIssue(userEvent)}>
-            {userEvent.payload.issue.title}
-          </LinkDescription>
-        );
-
       case 'PullRequestReviewEvent':
       case 'PullRequestReviewCommentEvent':
         return (
@@ -206,40 +151,6 @@ class Events extends Component {
               }
             }}
           >
-            {userEvent.repo.name}
-          </LinkDescription>
-        );
-      default:
-        return null;
-    }
-  }
-
-  getConnector = userEvent => {
-    const { locale } = this.props;
-    const eventType = userEvent.type;
-
-    switch (eventType) {
-      case 'DeleteEvent':
-      case 'IssuesEvent':
-      case 'PullRequestReviewCommentEvent':
-        return translate('auth.events.atConnector', locale);
-      case 'PublicEvent':
-        return translate('auth.events.publicEvent.connector', locale);
-      default:
-        return null;
-    }
-  };
-
-  getSecondItem(userEvent) {
-    const eventType = userEvent.type;
-
-    switch (eventType) {
-      case 'DeleteEvent':
-      case 'IssueCommentEvent':
-      case 'IssuesEvent':
-      case 'PullRequestReviewCommentEvent':
-        return (
-          <LinkDescription onPress={() => this.navigateToRepository(userEvent)}>
             {userEvent.repo.name}
           </LinkDescription>
         );
@@ -484,6 +395,36 @@ class Events extends Component {
     }
   }
 
+  handleIssuesEvent(userEvent) {
+    const actor = this.getActorLink(userEvent);
+    const repo = this.getRepoLink(userEvent);
+    const issue = this.getIssueLink(userEvent);
+
+    switch (userEvent.payload.action) {
+      case 'opened':
+        return (
+          <Trans>
+            <T c={actor} /> opened issue <T c={issue} /> at <T c={repo} />
+          </Trans>
+        );
+      case 'reopened':
+        return (
+          <Trans>
+            <T c={actor} /> reopened issue <T c={issue} /> at <T c={repo} />
+          </Trans>
+        );
+      case 'closed':
+        return (
+          <Trans>
+            <T c={actor} /> closed issue <T c={issue} /> at <T c={repo} />
+          </Trans>
+        );
+
+      default:
+        return null;
+    }
+  }
+
   handleMemberEvent(userEvent) {
     const actor = this.getActorLink(userEvent);
     const repo = this.getRepoLink(userEvent);
@@ -518,6 +459,17 @@ class Events extends Component {
     }
   }
 
+  handlePublicEvent(userEvent) {
+    const actor = this.getActorLink(userEvent);
+    const repo = this.getRepoLink(userEvent);
+
+    return (
+      <Trans>
+        <T c={actor} /> made <T c={repo} /> public
+      </Trans>
+    );
+  }
+
   handlePullRequestEvent(userEvent) {
     const actor = this.getActorLink(userEvent);
     const repo = this.getRepoLink(userEvent);
@@ -548,6 +500,25 @@ class Events extends Component {
         return (
           <Trans>
             <T c={actor} /> closed pull request <T c={pr} /> in <T c={repo} />
+          </Trans>
+        );
+
+      default:
+        return null;
+    }
+  }
+
+  handlePullRequestReviewCommentEvent(userEvent) {
+    const actor = this.getActorLink(userEvent);
+    const repo = this.getRepoLink(userEvent);
+    const pr = this.getPullRequestLink(userEvent);
+
+    switch (userEvent.payload.action) {
+      case 'created':
+        return (
+          <Trans>
+            <T c={actor} /> commented on pull request <T c={pr} /> at{' '}
+            <T c={repo} />
           </Trans>
         );
 
