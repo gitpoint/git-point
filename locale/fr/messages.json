@@ -67,7 +67,7 @@
     "origin": [["src/auth/screens/events.screen.js", 365]]
   },
   "<0/> closed issue <1/> at <2/>": {
-    "translation": "<0/> a réouvert le ticket <1/> dans <2/>",
+    "translation": "<0/> a fermé le ticket <1/> dans <2/>",
     "origin": [["src/auth/screens/events.screen.js", 371]]
   },
   "<0/> edited <1/> permissions in <2/>": {
