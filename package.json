@@ -58,7 +58,6 @@
     "postinstall": "opencollective postinstall"
   },
   "lingui": {
-    "fallbackLocale": "en",
     "sourceLocale": "en",
     "localeDir": "<rootDir>/locale",
     "srcPathDirs": ["<rootDir>/src"],
