@@ -630,7 +630,7 @@ class Events extends Component {
   renderDescription(userEvent) {
     return (
       <DescriptionContainer>
-        {this.getDescription(userEvent)}
+        {this.getDescription(userEvent)}{' '}
         <Datestamp>{relativeTimeToNow(userEvent.created_at)}</Datestamp>
       </DescriptionContainer>
     );
