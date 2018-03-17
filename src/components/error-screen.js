@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { colors, fonts, normalize } from 'config';
-import { translate } from 'utils';
 import styled from 'styled-components';
+import { Trans } from '@lingui/react';
 
 const ViewWrapper = styled.View`
   align-items: center;
@@ -18,19 +18,14 @@ const TextStyled = styled.Text`
   width: 80%;
 `;
 
-type Props = {
-  locale: string,
+export const ErrorScreen = () => {
+  return (
+    <ViewWrapper>
+      <TextStyled>
+        <Trans>
+          Oops! it seems that you are not connected to the internet!
+        </Trans>
+      </TextStyled>
+    </ViewWrapper>
+  );
 };
-
-export class ErrorScreen extends Component {
-  props: Props;
-  render() {
-    return (
-      <ViewWrapper>
-        <TextStyled>
-          {translate('auth.networkError', this.props.locale)}
-        </TextStyled>
-      </ViewWrapper>
-    );
-  }
-}

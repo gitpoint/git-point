@@ -5,12 +5,12 @@ import Communications from 'react-native-communications';
 
 import { SectionList } from 'components';
 import { colors, fonts } from 'config';
-import { translate } from 'utils';
+import { withI18n } from '@lingui/react/cjs/react.development';
 
 type Props = {
   entity: Object,
   orgs: Array,
-  locale: string,
+  i18n: Object,
   navigation: Object,
 };
 
@@ -62,72 +62,79 @@ const navigateToCompany = (company, orgs, navigation) => {
   }
 };
 
-export const EntityInfo = ({ entity, orgs, locale, navigation }: Props) => {
-  const checksKeys = ['company', 'location', 'email', 'blog'];
+export const EntityInfo = withI18n()(
+  ({ entity, orgs, i18n, navigation }: Props) => {
+    const checksKeys = ['company', 'location', 'email', 'blog'];
 
-  if (!checksKeys.filter(key => !!entity[key]).length) {
-    return null;
+    if (!checksKeys.filter(key => !!entity[key]).length) {
+      return null;
+    }
+
+    return (
+      <SectionList title={i18n.t`INFO`}>
+        {!!entity.company &&
+          entity.company !== '' && (
+            <StyledListItem
+              title={i18n.t`Company`}
+              leftIcon={{
+                name: 'organization',
+                color: colors.grey,
+                type: 'octicon',
+              }}
+              subtitle={entity.company}
+              onPress={() =>
+                navigateToCompany(entity.company, orgs, navigation)
+              }
+              hideChevron={!companyInOrgs(entity.company, orgs)}
+            />
+          )}
+
+        {!!entity.location &&
+          entity.location !== '' && (
+            <StyledListItem
+              title={i18n.t`Location`}
+              leftIcon={{
+                name: 'location',
+                color: colors.grey,
+                type: 'octicon',
+              }}
+              subtitle={entity.location}
+              onPress={() =>
+                Communications.web(getLocationLink(entity.location))
+              }
+            />
+          )}
+
+        {!!entity.email &&
+          entity.email !== '' && (
+            <StyledListItem
+              title={i18n.t`Email`}
+              leftIcon={{
+                name: 'mail',
+                color: colors.grey,
+                type: 'octicon',
+              }}
+              subtitle={entity.email}
+              onPress={() =>
+                Communications.email([entity.email], null, null, null, null)
+              }
+            />
+          )}
+
+        {!!entity.blog &&
+          entity.blog !== '' && (
+            <StyledListItem
+              title={i18n.t`Website`}
+              leftIcon={{
+                name: 'link',
+                color: colors.grey,
+                type: 'octicon',
+              }}
+              subtitle={entity.blog}
+              onPress={() => Communications.web(getBlogLink(entity.blog))}
+            />
+          )}
+      </SectionList>
+    );
   }
-
-  return (
-    <SectionList title={translate('common.info', locale)}>
-      {!!entity.company &&
-        entity.company !== '' && (
-          <StyledListItem
-            title={translate('common.company', locale)}
-            leftIcon={{
-              name: 'organization',
-              color: colors.grey,
-              type: 'octicon',
-            }}
-            subtitle={entity.company}
-            onPress={() => navigateToCompany(entity.company, orgs, navigation)}
-            hideChevron={!companyInOrgs(entity.company, orgs)}
-          />
-        )}
-
-      {!!entity.location &&
-        entity.location !== '' && (
-          <StyledListItem
-            title={translate('common.location', locale)}
-            leftIcon={{
-              name: 'location',
-              color: colors.grey,
-              type: 'octicon',
-            }}
-            subtitle={entity.location}
-            onPress={() => Communications.web(getLocationLink(entity.location))}
-          />
-        )}
-
-      {!!entity.email &&
-        entity.email !== '' && (
-          <StyledListItem
-            title={translate('common.email', locale)}
-            leftIcon={{
-              name: 'mail',
-              color: colors.grey,
-              type: 'octicon',
-            }}
-            subtitle={entity.email}
-            onPress={() =>
-              Communications.email([entity.email], null, null, null, null)}
-          />
-        )}
-
-      {!!entity.blog &&
-        entity.blog !== '' && (
-          <StyledListItem
-            title={translate('common.website', locale)}
-            leftIcon={{
-              name: 'link',
-              color: colors.grey,
-              type: 'octicon',
-            }}
-            subtitle={entity.blog}
-            onPress={() => Communications.web(getBlogLink(entity.blog))}
-          />
-        )}
-    </SectionList>
-  );
-};
+);

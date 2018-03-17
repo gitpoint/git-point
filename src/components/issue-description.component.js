@@ -3,6 +3,7 @@ import { ActivityIndicator } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Parse from 'parse-diff';
 import styled from 'styled-components';
+import { withI18n } from '@lingui/react';
 
 import {
   StateBadge,
@@ -11,7 +12,7 @@ import {
   DiffBlocks,
   Button,
 } from 'components';
-import { translate, relativeTimeToNow } from 'utils';
+import { relativeTimeToNow } from 'utils';
 import { colors, fonts, normalize } from 'config';
 import { v3 } from 'api';
 
@@ -80,7 +81,7 @@ const MergeButtonContainer = styled.View`
   padding-bottom: 15;
 `;
 
-export class IssueDescription extends Component {
+class IssueDescriptionComponent extends Component {
   props: {
     issue: Object,
     diff: string,
@@ -90,7 +91,7 @@ export class IssueDescription extends Component {
     isPendingCheckMerge: boolean,
     onRepositoryPress: Function,
     userHasPushPermission: boolean,
-    locale: string,
+    i18n: Object,
     navigation: Object,
   };
 
@@ -110,7 +111,7 @@ export class IssueDescription extends Component {
       isPendingCheckMerge,
       onRepositoryPress,
       userHasPushPermission,
-      locale,
+      i18n,
       navigation,
     } = this.props;
 
@@ -159,7 +160,6 @@ export class IssueDescription extends Component {
                 <StateBadge
                   issue={issue}
                   isMerged={isMerged && issue.pull_request}
-                  locale={locale}
                 />
               ))}
         </HeaderContainer>
@@ -178,10 +178,10 @@ export class IssueDescription extends Component {
                   showNumbers
                   onPress={() =>
                     navigation.navigate('PullDiff', {
-                      title: translate('repository.pullDiff.title', locale),
-                      locale,
+                      title: i18n.t`Diff`,
                       diff,
-                    })}
+                    })
+                  }
                 />
               )}
           </DiffBlocksContainer>
@@ -197,7 +197,7 @@ export class IssueDescription extends Component {
           issue.assignees.length > 0 && (
             <AssigneesSection>
               <MembersList
-                title={translate('issue.main.assignees', locale)}
+                title={i18n.t`Assignees`}
                 members={issue.assignees}
                 containerStyle={{ marginTop: 0, paddingTop: 0, paddingLeft: 0 }}
                 smallTitle
@@ -217,9 +217,10 @@ export class IssueDescription extends Component {
                 disabled={!isMergeable}
                 onPress={() =>
                   navigation.navigate('PullMerge', {
-                    title: translate('issue.pullMerge.title', locale),
-                  })}
-                title={translate('issue.main.mergeButton', locale)}
+                    title: i18n.t`Merge Pull Request`,
+                  })
+                }
+                title={i18n.t`Merge Pull Request`}
               />
             </MergeButtonContainer>
           )}
@@ -227,3 +228,5 @@ export class IssueDescription extends Component {
     );
   }
 }
+
+export const IssueDescription = withI18n()(IssueDescriptionComponent);

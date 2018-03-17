@@ -4,9 +4,9 @@ import React, { Component } from 'react';
 import { Text, Platform } from 'react-native';
 import { Icon } from 'react-native-elements';
 import styled from 'styled-components';
-
+import { Trans, withI18n } from '@lingui/react';
 import { MentionArea } from 'components';
-import { translate } from 'utils';
+
 import { colors, fonts, normalize } from 'config';
 
 const Container = styled.View`
@@ -46,13 +46,13 @@ const inputMinHeight = Platform.select({
   android: 37,
 });
 
-export class CommentInput extends Component {
+class CommentInputComponent extends Component {
   props: {
     users: Array,
     userHasPushPermission: boolean,
     issueLocked: boolean,
-    locale: string,
     onSubmit: Function,
+    i18n: Object,
   };
 
   state: {
@@ -81,7 +81,7 @@ export class CommentInput extends Component {
   };
 
   render() {
-    const { userHasPushPermission, issueLocked, locale, users } = this.props;
+    const { userHasPushPermission, i18n, issueLocked, users } = this.props;
 
     const userCanPost = !issueLocked || userHasPushPermission;
 
@@ -100,16 +100,18 @@ export class CommentInput extends Component {
               underlineColorAndroid="transparent"
               placeholder={
                 issueLocked && userHasPushPermission
-                  ? translate('issue.main.lockedCommentInput', locale)
-                  : translate('issue.main.commentInput', locale)
+                  ? i18n.t`Locked, but you can still comment...`
+                  : i18n.t`Add a comment...`
               }
               multiline
               blurOnSubmit={false}
               onChangeText={text => this.setState({ text })}
               onContentSizeChange={event =>
-                this.setState({ height: event.nativeEvent.contentSize.height })}
+                this.setState({ height: event.nativeEvent.contentSize.height })
+              }
               onSubmitEditing={event =>
-                this.handleSubmitEditing(event.nativeEvent.text)}
+                this.handleSubmitEditing(event.nativeEvent.text)
+              }
               placeholderTextColor={colors.grey}
               style={{
                 height: Math.max(inputMinHeight, this.state.height),
@@ -120,7 +122,7 @@ export class CommentInput extends Component {
 
           {!userCanPost && (
             <TextInputText style={{ color: colors.grey }}>
-              {translate('issue.main.lockedIssue', locale)}
+              <Trans>Issue is locked</Trans>
             </TextInputText>
           )}
 
@@ -144,3 +146,5 @@ export class CommentInput extends Component {
     );
   }
 }
+
+export const CommentInput = withI18n()(CommentInputComponent);

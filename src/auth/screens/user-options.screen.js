@@ -7,10 +7,11 @@ import { ScrollView } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { NavigationActions } from 'react-navigation';
 import CookieManager from 'react-native-cookies';
+import { withI18n } from '@lingui/react';
 
 import { ViewContainer, SectionList } from 'components';
 import { colors, fonts, normalize } from 'config';
-import { resetNavigationTo, openURLInView, translate } from 'utils';
+import { resetNavigationTo, openURLInView } from 'utils';
 import { version } from 'package.json';
 import codePush from 'react-native-code-push';
 import { signOut } from 'auth';
@@ -56,18 +57,11 @@ const StyledListItem = styled(ListItem).attrs({
   hideChevron: props => props.hideChevron,
 })``;
 
-const updateText = locale => ({
-  check: translate('auth.profile.codePushCheck', locale),
-  checking: translate('auth.profile.codePushChecking', locale),
-  updated: translate('auth.profile.codePushUpdated', locale),
-  available: translate('auth.profile.codePushAvailable', locale),
-  notApplicable: translate('auth.profile.codePushNotApplicable', locale),
-});
-
 class UserOptions extends Component {
   props: {
     locale: string,
     signOut: () => void,
+    i18n: Object,
     navigation: Object,
     user: Object,
   };
@@ -76,19 +70,19 @@ class UserOptions extends Component {
     super(props);
 
     this.state = {
-      updateText: updateText(props.locale).check,
+      updateText: props.i18n.t`Check for update`,
     };
   }
 
   componentWillReceiveProps(nextState) {
     if (nextState.locale !== this.props.locale) {
       this.setState({
-        updateText: updateText(nextState.locale).check,
+        updateText: this.props.i18n.t`Check for update`,
       });
 
       const navigationParams = NavigationActions.setParams({
         params: {
-          title: translate('auth.userOptions.title', nextState.locale),
+          title: this.props.i18n.t`Options`,
         },
         key: nextState.navigation.state.key,
       });
@@ -98,12 +92,14 @@ class UserOptions extends Component {
   }
 
   checkForUpdate = () => {
+    const { i18n } = this.props;
+
     if (__DEV__) {
       this.setState({
-        updateText: updateText(this.props.locale).notApplicable,
+        updateText: i18n.t`Not applicable in debug mode`,
       });
     } else {
-      this.setState({ updateText: updateText(this.props.locale).checking });
+      this.setState({ updateText: i18n.t`Checking for update...` });
       codePush
         .sync({
           updateDialog: true,
@@ -112,8 +108,8 @@ class UserOptions extends Component {
         .then(update => {
           this.setState({
             updateText: update
-              ? updateText(this.props.locale).available
-              : updateText(this.props.locale).updated,
+              ? i18n.t`Update is available!`
+              : i18n.t`App is up to date`,
           });
         });
     }
@@ -130,40 +126,43 @@ class UserOptions extends Component {
   }
 
   render() {
-    const { locale, navigation } = this.props;
+    const { locale, i18n, navigation } = this.props;
 
     return (
       <ViewContainer>
         <ScrollView>
           <SectionList>
             <StyledListItem
-              title={translate('auth.userOptions.language', locale)}
+              title={i18n.t`Language`}
               onPress={() =>
                 navigation.navigate('LanguageSettings', {
-                  title: translate('auth.userOptions.language', locale),
+                  title: i18n.t`Language`,
                   locale,
-                })}
+                })
+              }
             />
             <StyledListItem
-              title={translate('common.openInBrowser', locale)}
+              title={i18n.t`Open in Browser`}
               onPress={() => openURLInView(this.props.user.html_url)}
             />
 
             <StyledListItem
-              title={translate('auth.userOptions.privacyPolicy', locale)}
+              title={i18n.t`Privacy Policy`}
               onPress={() =>
                 navigation.navigate('PrivacyPolicy', {
-                  title: translate('auth.privacyPolicy.title', locale),
+                  title: i18n.t`Privacy Policy`,
                   locale,
-                })}
+                })
+              }
             />
             <StyledListItem
-              title={translate('auth.userOptions.donate', locale)}
+              title={i18n.t`Make a donation`}
               onPress={() =>
-                openURLInView('https://opencollective.com/git-point')}
+                openURLInView('https://opencollective.com/git-point')
+              }
             />
             <StyledListItem
-              title={translate('auth.userOptions.signOut', locale)}
+              title={i18n.t`Sign Out`}
               hideChevron
               onPress={() => this.signOutUser()}
               signOut
@@ -181,5 +180,5 @@ class UserOptions extends Component {
 }
 
 export const UserOptionsScreen = connect(mapStateToProps, mapDispatchToProps)(
-  UserOptions
+  withI18n()(UserOptions)
 );

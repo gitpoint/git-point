@@ -1,8 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View, Platform } from 'react-native';
 import { Icon } from 'react-native-elements';
+import { Trans, withI18n } from '@lingui/react';
 
-import { emojifyText, abbreviateNumber, translate } from 'utils';
+import { emojifyText, abbreviateNumber } from 'utils';
 import { colors, languageColors, fonts, normalize } from 'config';
 
 type Props = {
@@ -125,134 +126,125 @@ const iconName = repository => {
   return icon;
 };
 
-export const RepositoryProfile = ({
-  repository,
-  starred,
-  navigation,
-  loading,
-  subscribed,
-  locale,
-}: Props) => (
-  <View style={styles.container}>
-    <View style={styles.languageInfo}>
-      {!loading &&
-        repository.language !== null && (
-          <Icon
-            name="fiber-manual-record"
-            size={15}
-            color={languageColors[repository.language]}
-          />
-        )}
-
-      <Text style={[styles.languageInfoTitle]}>
-        {repository.language ||
-          translate('repository.main.unknownLanguage', locale)}
-      </Text>
-    </View>
-
-    <View style={styles.profile}>
-      <Icon
-        containerStyle={[
-          styles.icon,
-          repository.fork ? { marginLeft: 17 } : { marginLeft: 13 },
-        ]}
-        name={iconName(repository)}
-        type="octicon"
-        size={45}
-        color={colors.greyLight}
-      />
-
-      <Text style={styles.title}>
-        {repository.name || translate('repository.main.notFoundRepo', locale)}
-      </Text>
-
-      <Text
-        numberOfLines={repository.fork ? 1 : 3}
-        style={[
-          styles.subtitle,
-          repository.fork
-            ? styles.subtitleDescriptionWithFork
-            : styles.subtitleDescriptionNoFork,
-        ]}
-      >
-        {emojifyText(repository.description) || ' '}
-      </Text>
-
-      {repository.fork && (
-        <Text
-          nativeId="repository-fork-container"
-          style={[styles.subtitle, styles.subtitleFork]}
-        >
-          {repository.parent && (
-            <Text>
-              <Text>
-                {translate('repository.main.forkedFromMessage', locale)}
-              </Text>
-              <Text
-                nativeId="repository-navigate-container"
-                style={{ ...fonts.fontPrimaryBold }}
-                onPress={() =>
-                  navigation.navigate('Repository', {
-                    repository: repository.parent,
-                  })
-                }
-              >
-                {' '}
-                {repository.parent.full_name}
-              </Text>
-            </Text>
+export const RepositoryProfile = withI18n()(
+  ({ repository, starred, navigation, loading, subscribed, i18n }: Props) => (
+    <View style={styles.container}>
+      <View style={styles.languageInfo}>
+        {!loading &&
+          repository.language !== null && (
+            <Icon
+              name="fiber-manual-record"
+              size={15}
+              color={languageColors[repository.language]}
+            />
           )}
-        </Text>
-      )}
-    </View>
 
-    <View style={styles.details}>
-      <View style={styles.unit}>
-        <Text style={styles.unitNumber}>
-          {!isNaN(parseInt(repository.stargazers_count, 10))
-            ? abbreviateNumber(repository.stargazers_count)
-            : ' '}
+        <Text style={[styles.languageInfoTitle]}>
+          {repository.language || i18n.t`Unknown`}
         </Text>
-        <Text style={styles.unitText}>
-          {translate('repository.main.starsTitle', locale)}
+      </View>
+
+      <View style={styles.profile}>
+        <Icon
+          containerStyle={[
+            styles.icon,
+            repository.fork ? { marginLeft: 17 } : { marginLeft: 13 },
+          ]}
+          name={iconName(repository)}
+          type="octicon"
+          size={45}
+          color={colors.greyLight}
+        />
+
+        <Text style={styles.title}>
+          {repository.name || i18n.t`Repository is not found`}
         </Text>
-        {starred && (
-          <View style={styles.badgeView}>
-            <Text style={[styles.unitStatus, styles.badge]}>
-              {translate('repository.main.starred', locale)}
-            </Text>
-          </View>
+
+        <Text
+          numberOfLines={repository.fork ? 1 : 3}
+          style={[
+            styles.subtitle,
+            repository.fork
+              ? styles.subtitleDescriptionWithFork
+              : styles.subtitleDescriptionNoFork,
+          ]}
+        >
+          {emojifyText(repository.description) || ' '}
+        </Text>
+
+        {repository.fork && (
+          <Text
+            nativeId="repository-fork-container"
+            style={[styles.subtitle, styles.subtitleFork]}
+          >
+            {repository.parent && (
+              <Trans>
+                forked from{' '}
+                <Text
+                  nativeId="repository-navigate-container"
+                  style={{ ...fonts.fontPrimaryBold }}
+                  onPress={() =>
+                    navigation.navigate('Repository', {
+                      repository: repository.parent,
+                    })
+                  }
+                >
+                  {repository.parent.full_name}
+                </Text>
+              </Trans>
+            )}
+          </Text>
         )}
       </View>
 
-      <View style={styles.unit}>
-        <Text style={styles.unitNumber}>
-          {!isNaN(parseInt(repository.subscribers_count, 10))
-            ? abbreviateNumber(repository.subscribers_count)
-            : ' '}
-        </Text>
-        <Text style={styles.unitText}>
-          {translate('repository.main.watchers', locale)}
-        </Text>
-        {subscribed && (
-          <View style={styles.badgeView}>
-            <Text style={[styles.unitStatus, styles.badge]}>
-              {translate('repository.main.watching', locale)}
-            </Text>
-          </View>
-        )}
-      </View>
+      <View style={styles.details}>
+        <View style={styles.unit}>
+          <Text style={styles.unitNumber}>
+            {!isNaN(parseInt(repository.stargazers_count, 10))
+              ? abbreviateNumber(repository.stargazers_count)
+              : ' '}
+          </Text>
+          <Text style={styles.unitText}>
+            <Trans>Stars</Trans>
+          </Text>
+          {starred && (
+            <View style={styles.badgeView}>
+              <Text style={[styles.unitStatus, styles.badge]}>
+                <Trans>Starred</Trans>
+              </Text>
+            </View>
+          )}
+        </View>
 
-      <View style={styles.unit}>
-        <Text style={styles.unitNumber}>
-          {!isNaN(parseInt(repository.forks, 10))
-            ? abbreviateNumber(repository.forks)
-            : ' '}
-        </Text>
-        <Text style={styles.unitText}>
-          {translate('repository.main.forksTitle', locale)}
-        </Text>
+        <View style={styles.unit}>
+          <Text style={styles.unitNumber}>
+            {!isNaN(parseInt(repository.subscribers_count, 10))
+              ? abbreviateNumber(repository.subscribers_count)
+              : ' '}
+          </Text>
+          <Text style={styles.unitText}>
+            <Trans>Watchers</Trans>
+          </Text>
+          {subscribed && (
+            <View style={styles.badgeView}>
+              <Text style={[styles.unitStatus, styles.badge]}>
+                <Trans>Watching</Trans>
+              </Text>
+            </View>
+          )}
+        </View>
+
+        <View style={styles.unit}>
+          <Text style={styles.unitNumber}>
+            {!isNaN(parseInt(repository.forks, 10))
+              ? abbreviateNumber(repository.forks)
+              : ' '}
+          </Text>
+          <Text style={styles.unitText}>
+            <Trans>Forks</Trans>
+          </Text>
+        </View>
       </View>
     </View>
-  </View>
+  )
 );

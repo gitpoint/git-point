@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { ActivityIndicator } from 'react-native';
+import { Trans } from '@lingui/react';
 
 import { ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
-import { translate } from 'utils';
 
 const mapStateToProps = state => ({
-  locale: state.auth.locale,
   isLoggingIn: state.auth.isLoggingIn,
 });
 
@@ -28,18 +27,17 @@ const WelcomeMessage = styled.Text`
 
 class Welcome extends Component {
   props: {
-    locale: string,
     isLoggingIn: boolean,
   };
 
   render() {
-    const { locale, isLoggingIn } = this.props;
+    const { isLoggingIn } = this.props;
 
     return (
       <ViewContainer>
         <Container>
           <WelcomeMessage>
-            {translate('auth.welcome.welcomeTitle', locale)}
+            <Trans>Welcome to GitPoint</Trans>
           </WelcomeMessage>
           <ActivityIndicator animating={isLoggingIn} color={colors.white} />
         </Container>

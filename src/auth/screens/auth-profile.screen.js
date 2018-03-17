@@ -9,6 +9,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import { Trans, withI18n } from '@lingui/react';
 
 import {
   ViewContainer,
@@ -20,7 +21,7 @@ import {
 } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { getUser, getOrgs, getStarCount } from 'auth';
-import { emojifyText, openURLInView, translate } from 'utils';
+import { emojifyText, openURLInView } from 'utils';
 
 const mapStateToProps = state => ({
   user: state.auth.user,
@@ -76,6 +77,7 @@ class AuthProfile extends Component {
     starCount: string,
     isPendingUser: boolean,
     isPendingOrgs: boolean,
+    i18n: Object,
     hasInitialUser: boolean,
     navigation: Object,
   };
@@ -97,6 +99,7 @@ class AuthProfile extends Component {
       isPendingUser,
       isPendingOrgs,
       locale,
+      i18n,
       starCount,
       navigation,
       hasInitialUser,
@@ -132,8 +135,9 @@ class AuthProfile extends Component {
           menuIcon="gear"
           menuAction={() =>
             navigation.navigate('UserOptions', {
-              title: translate('auth.userOptions.title', locale),
-            })}
+              title: i18n.t`Options`,
+            })
+          }
         >
           {isPending && (
             <ActivityIndicator
@@ -146,7 +150,7 @@ class AuthProfile extends Component {
           {hasInitialUser &&
             user.bio &&
             user.bio !== '' && (
-              <SectionList title={translate('common.bio', locale)}>
+              <SectionList title={i18n.t`BIO`}>
                 <BioListItem
                   titleNumberOfLines={0}
                   title={emojifyText(user.bio)}
@@ -167,9 +171,9 @@ class AuthProfile extends Component {
           {!isPending && (
             <View>
               <SectionList
-                title={translate('common.orgs', locale)}
+                title={i18n.t`Organizations`}
                 noItems={orgs.length === 0}
-                noItemsMessage={translate('common.noOrgsMessage', locale)}
+                noItemsMessage={i18n.t`No organizations`}
               >
                 {orgs.map(item => (
                   <UserListItem
@@ -179,16 +183,14 @@ class AuthProfile extends Component {
                   />
                 ))}
                 <Note>
-                  {translate('auth.profile.orgsRequestApprovalTop', locale)}
+                  <Trans>Can't see all your organizations?</Trans>
                   {'\n'}
                   <NoteLink
                     onPress={() =>
-                      openURLInView('https://github.com/settings/applications')}
+                      openURLInView('https://github.com/settings/applications')
+                    }
                   >
-                    {translate(
-                      'auth.profile.orgsRequestApprovalBottom',
-                      locale
-                    )}
+                    {i18n.t`You may have to request approval for them.`}
                   </NoteLink>
                 </Note>
               </SectionList>
@@ -201,5 +203,5 @@ class AuthProfile extends Component {
 }
 
 export const AuthProfileScreen = connect(mapStateToProps, mapDispatchToProps)(
-  AuthProfile
+  withI18n()(AuthProfile)
 );
