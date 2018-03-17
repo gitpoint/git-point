@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ScrollView, StyleSheet, TextInput, View, Alert } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import { withI18n } from '@lingui/react';
 
 import { ViewContainer, SectionList, LoadingModal } from 'components';
-import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
 import { submitNewIssue } from '../issue.action';
 
@@ -49,7 +49,7 @@ const mapDispatchToProps = dispatch =>
 class NewIssue extends Component {
   props: {
     submitNewIssue: Function,
-    locale: string,
+    i18n: Object,
     repository: Object,
     navigation: Object,
     isPendingSubmitting: boolean,
@@ -72,14 +72,14 @@ class NewIssue extends Component {
   }
 
   submitNewIssue = () => {
-    const { submitNewIssue, repository, locale, navigation } = this.props;
+    const { submitNewIssue, repository, i18n, navigation } = this.props;
     const { issueTitle, issueComment } = this.state;
     const repoName = repository.name;
     const owner = repository.owner.login;
 
     if (issueTitle === '') {
-      Alert.alert(translate('issue.newIssue.missingTitleAlert', locale), null, [
-        { text: translate('common.ok', locale) },
+      Alert.alert(i18n.t`You need to have an issue title!`, null, [
+        { text: i18n.t`Ok` },
       ]);
     } else {
       submitNewIssue(owner, repoName, issueTitle, issueComment).then(issue => {
@@ -93,7 +93,7 @@ class NewIssue extends Component {
   };
 
   render() {
-    const { locale, repository, isPendingSubmitting } = this.props;
+    const { i18n, repository, isPendingSubmitting } = this.props;
     const { issueTitle, issueComment } = this.state;
 
     return (
@@ -113,16 +113,17 @@ class NewIssue extends Component {
               hideChevron
             />
           )}
-          <SectionList title={translate('issue.newIssue.issueTitle', locale)}>
+          <SectionList title={i18n.t`Issue Title`}>
             <TextInput
               underlineColorAndroid={'transparent'}
-              placeholder={translate('issue.newIssue.writeATitle', locale)}
+              placeholder={i18n.t`Write a title for your issue here`}
               blurOnSubmit
               multiline
               onContentSizeChange={event =>
                 this.setState({
                   issueTitleHeight: event.nativeEvent.contentSize.height,
-                })}
+                })
+              }
               onChangeText={text => this.setState({ issueTitle: text })}
               placeholderTextColor={colors.grey}
               style={[
@@ -133,16 +134,17 @@ class NewIssue extends Component {
             />
           </SectionList>
 
-          <SectionList title={translate('issue.newIssue.issueComment', locale)}>
+          <SectionList title={i18n.t`Issue Comment`}>
             <TextInput
               underlineColorAndroid={'transparent'}
-              placeholder={translate('issue.newIssue.writeAComment', locale)}
+              placeholder={i18n.t`Write a comment for your issue here`}
               multiline
               onChangeText={text => this.setState({ issueComment: text })}
               onContentSizeChange={event =>
                 this.setState({
                   issueCommentHeight: event.nativeEvent.contentSize.height,
-                })}
+                })
+              }
               placeholderTextColor={colors.grey}
               style={[
                 styles.textInput,
@@ -155,7 +157,7 @@ class NewIssue extends Component {
           <SectionList>
             <View style={styles.listItemContainer}>
               <ListItem
-                title={translate('common.submit', locale)}
+                title={i18n.t`Submit`}
                 hideChevron
                 underlayColor={colors.greyLight}
                 titleStyle={styles.submitTitle}
@@ -170,5 +172,5 @@ class NewIssue extends Component {
 }
 
 export const NewIssueScreen = connect(mapStateToProps, mapDispatchToProps)(
-  NewIssue
+  withI18n()(NewIssue)
 );

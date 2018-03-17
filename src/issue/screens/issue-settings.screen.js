@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { ScrollView, StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
+import { withI18n } from '@lingui/react';
 
 import {
   ViewContainer,
@@ -11,7 +12,7 @@ import {
   UserListItem,
   LabelListItem,
 } from 'components';
-import { emojifyText, translate, openURLInView } from 'utils';
+import { emojifyText, openURLInView } from 'utils';
 import { colors, fonts } from 'config';
 import { getLabels } from 'repository';
 import { editIssue, changeIssueLockStatus } from '../issue.action';
@@ -57,7 +58,7 @@ class IssueSettings extends Component {
     editIssue: Function,
     changeIssueLockStatus: Function,
     getLabels: Function,
-    locale: string,
+    i18n: Object,
     authUser: Object,
     repository: Object,
     labels: Array,
@@ -152,25 +153,23 @@ class IssueSettings extends Component {
   openURLInBrowser = () => openURLInView(this.props.issue.html_url);
 
   render() {
-    const { issue, isMerged, locale, authUser, navigation } = this.props;
-    const issueType = issue.pull_request
-      ? translate('issue.settings.pullRequestType', locale)
-      : translate('issue.settings.issueType', locale);
+    const { issue, isMerged, i18n, authUser, navigation } = this.props;
+    const issueType = issue.pull_request ? i18n.t`Pull Request` : i18n.t`Issue`;
 
     return (
       <ViewContainer>
         <ScrollView>
           <SectionList
             showButton
-            buttonTitle={translate('issue.settings.applyLabelButton', locale)}
+            buttonTitle={i18n.t`Apply Label`}
             buttonAction={this.showAddLabelActionSheet}
             style={{
               borderBottomWidth: 1,
               borderBottomColor: colors.grey,
             }}
             noItems={issue.labels.length === 0}
-            noItemsMessage={translate('issue.settings.noneMessage', locale)}
-            title={translate('issue.settings.labelsTitle', locale)}
+            noItemsMessage={i18n.t`None yet`}
+            title={i18n.t`LABELS`}
           >
             {issue.labels.map(item => (
               <LabelListItem
@@ -204,10 +203,7 @@ class IssueSettings extends Component {
                 assignee => assignee.login === authUser.login
               )
             }
-            buttonTitle={translate(
-              'issue.settings.assignYourselfButton',
-              locale
-            )}
+            buttonTitle={i18n.t`Assign Yourself`}
             buttonAction={() =>
               this.editIssue(
                 {
@@ -220,8 +216,8 @@ class IssueSettings extends Component {
               )
             }
             noItems={issue.assignees.length === 0}
-            noItemsMessage={translate('issue.settings.noneMessage', locale)}
-            title={translate('issue.settings.assigneesTitle', locale)}
+            noItemsMessage={i18n.t`None yet`}
+            title={i18n.t`ASSIGNEES`}
           >
             {issue.assignees.map(item => (
               <UserListItem
@@ -249,16 +245,12 @@ class IssueSettings extends Component {
             ))}
           </SectionList>
 
-          <SectionList title={translate('issue.settings.actionsTitle', locale)}>
+          <SectionList title={i18n.t`ACTIONS`}>
             <ListItem
               title={
                 issue.locked
-                  ? translate('issue.settings.unlockIssue', locale, {
-                      issueType,
-                    })
-                  : translate('issue.settings.lockIssue', locale, {
-                      issueType,
-                    })
+                  ? i18n.t`Unlock ${issueType}`
+                  : i18n.t`Lock ${issueType}`
               }
               hideChevron
               underlayColor={colors.greyLight}
@@ -270,12 +262,8 @@ class IssueSettings extends Component {
               <ListItem
                 title={
                   issue.state === 'open'
-                    ? translate('issue.settings.closeIssue', locale, {
-                        issueType,
-                      })
-                    : translate('issue.settings.reopenIssue', locale, {
-                        issueType,
-                      })
+                    ? i18n.t`Close ${issueType}`
+                    : i18n.t`Reopen ${issueType}`
                 }
                 hideChevron
                 underlayColor={colors.greyLight}
@@ -291,7 +279,7 @@ class IssueSettings extends Component {
 
           <SectionList>
             <ListItem
-              title={translate('common.openInBrowser', locale)}
+              title={i18n.t`Open in Browser`}
               hideChevron
               underlayColor={colors.greyLight}
               titleStyle={styles.listItemTitle}
@@ -304,11 +292,8 @@ class IssueSettings extends Component {
           ref={o => {
             this.IssueActionSheet = o;
           }}
-          title={translate('issue.settings.areYouSurePrompt', locale)}
-          options={[
-            translate('common.yes', locale),
-            translate('common.cancel', locale),
-          ]}
+          title={i18n.t`Are you sure?`}
+          options={[i18n.t`Yes`, i18n.t`Cancel`]}
           cancelButtonIndex={1}
           onPress={this.handleIssueActionPress}
         />
@@ -316,11 +301,8 @@ class IssueSettings extends Component {
           ref={o => {
             this.LockIssueActionSheet = o;
           }}
-          title={translate('issue.settings.areYouSurePrompt', locale)}
-          options={[
-            translate('common.yes', locale),
-            translate('common.cancel', locale),
-          ]}
+          title={i18n.t`Are you sure?`}
+          options={[i18n.t`Yes`, i18n.t`Cancel`]}
           cancelButtonIndex={1}
           onPress={this.handleLockIssueActionPress}
         />
@@ -328,10 +310,10 @@ class IssueSettings extends Component {
           ref={o => {
             this.AddLabelActionSheet = o;
           }}
-          title={translate('issue.settings.applyLabelTitle', locale)}
+          title={i18n.t`Apply a label to this issue`}
           options={[
             ...this.props.labels.map(label => emojifyText(label.name)),
-            translate('common.cancel', locale),
+            i18n.t`Cancel`,
           ]}
           cancelButtonIndex={this.props.labels.length}
           onPress={this.handleAddLabelActionPress}
@@ -342,5 +324,5 @@ class IssueSettings extends Component {
 }
 
 export const IssueSettingsScreen = connect(mapStateToProps, mapDispatchToProps)(
-  IssueSettings
+  withI18n()(IssueSettings)
 );

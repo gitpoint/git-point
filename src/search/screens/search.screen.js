@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FlatList, Dimensions, Platform } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
+import { Trans, withI18n } from '@lingui/react';
 
 import {
   ViewContainer,
@@ -14,7 +15,7 @@ import {
 } from 'components';
 import styled from 'styled-components';
 import { colors, fonts, normalize } from 'config';
-import { isIphoneX, translate } from 'utils';
+import { isIphoneX } from 'utils';
 import { searchRepos, searchUsers } from '../index';
 
 const mapStateToProps = state => ({
@@ -92,7 +93,7 @@ class Search extends Component {
     searchUsers: Function,
     users: Array,
     repos: Array,
-    locale: string,
+    i18n: Object,
     isPendingSearchUsers: boolean,
     isPendingSearchRepos: boolean,
     navigation: Object,
@@ -176,7 +177,7 @@ class Search extends Component {
     const {
       users,
       repos,
-      locale,
+      i18n,
       isPendingSearchUsers,
       isPendingSearchRepos,
     } = this.props;
@@ -219,19 +220,14 @@ class Search extends Component {
         <StyledButtonGroup
           onPress={this.switchQueryType}
           selectedIndex={this.state.searchType}
-          buttons={[
-            translate('search.main.repositoryButton', locale),
-            translate('search.main.userButton', locale),
-          ]}
+          buttons={[i18n.t`Repositories`, i18n.t`Users`]}
         />
 
         {isPendingSearchRepos &&
           searchType === 0 && (
             <LoadingContainer
               animating={isPendingSearchRepos && searchType === 0}
-              text={translate('search.main.searchingMessage', locale, {
-                query,
-              })}
+              text={i18n.t`Searching for ${query}`}
             />
           )}
 
@@ -239,9 +235,7 @@ class Search extends Component {
           searchType === 1 && (
             <LoadingContainer
               animating={isPendingSearchUsers && searchType === 1}
-              text={translate('search.main.searchingMessage', locale, {
-                query,
-              })}
+              text={i18n.t`Searching for ${query}`}
             />
           )}
 
@@ -259,12 +253,8 @@ class Search extends Component {
         {!searchStart && (
           <TextContainer>
             <SearchInfoText>
-              {translate('search.main.searchMessage', locale, {
-                type:
-                  searchType === 0
-                    ? translate('search.main.repository', locale)
-                    : translate('search.main.user', locale),
-              })}
+              {searchType === 0 && <Trans>Search for any repository</Trans>}
+              {searchType !== 0 && <Trans>Search for any user</Trans>}
             </SearchInfoText>
           </TextContainer>
         )}
@@ -275,7 +265,7 @@ class Search extends Component {
           searchType === 0 && (
             <TextContainer>
               <SearchInfoText>
-                {translate('search.main.noRepositoriesFound', locale)}
+                <Trans>No repositories found :(</Trans>
               </SearchInfoText>
             </TextContainer>
           )}
@@ -286,7 +276,7 @@ class Search extends Component {
           searchType === 1 && (
             <TextContainer>
               <SearchInfoText>
-                {translate('search.main.noUsersFound', locale)}
+                <Trans>No users found :(</Trans>
               </SearchInfoText>
             </TextContainer>
           )}
@@ -296,5 +286,5 @@ class Search extends Component {
 }
 
 export const SearchScreen = connect(mapStateToProps, mapDispatchToProps)(
-  Search
+  withI18n()(Search)
 );

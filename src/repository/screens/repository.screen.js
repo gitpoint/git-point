@@ -21,7 +21,7 @@ import {
   LoadingModal,
   TopicsList,
 } from 'components';
-import { translate, openURLInView } from 'utils';
+import { openURLInView } from 'utils';
 import { colors, fonts } from 'config';
 import {
   getRepositoryInfo,
@@ -184,16 +184,15 @@ class Repository extends Component {
   };
 
   shareRepository = repository => {
-    const { locale, i18n } = this.props;
+    const { i18n } = this.props;
     const title = i18n.t`Share ${repository.name}`;
 
     Share.share(
       {
         title,
-        message: translate('repository.main.shareRepositoryMessage', locale, {
-          repoName: repository.name,
-          repoUrl: repository.html_url,
-        }),
+        message: i18n.t`Check out ${repository.name} on GitHub. ${
+          repository.html_url
+        }`,
         url: undefined,
       },
       {
