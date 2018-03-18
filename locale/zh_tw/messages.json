@@ -96,19 +96,19 @@
     "origin": [["src/auth/screens/events.screen.js", 351]]
   },
   "<0/> edited <1/> at <2/>": {
-    "translation": "",
+    "translation": "<0/> 編輯了 <1/> 在 <2/>",
     "origin": [["src/auth/screens/events.screen.js", 373]]
   },
   "<0/> removed <1/> at <2/>": {
-    "translation": "",
+    "translation": "<0/> 移除了 <1/> 在 <2/>",
     "origin": [["src/auth/screens/events.screen.js", 380]]
   },
   "<0/> added <1/> at <2/>": {
-    "translation": "",
+    "translation": "<0/> 新增了 <1/> 在 <2/>",
     "origin": [["src/auth/screens/events.screen.js", 387]]
   },
   "<0/> made <1/> public": {
-    "translation": "",
+    "translation": "<0/> 使得 <1/> 公開",
     "origin": [["src/auth/screens/events.screen.js", 402]]
   },
   "<0/> opened pull request <1/> at <2/>": {
