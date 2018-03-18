@@ -1,864 +1,396 @@
 {
-  "<0/> pushed to<1>{0} </1>in <2/>": {
-    "translation": "",
-    "origin": [
-      [
-        "src/auth/screens/events.screen.js",
-        468
-      ]
-    ]
-  },
   "Options": {
     "translation": "设置",
-    "origin": [
-      [
-        "src/auth/screens/auth-profile.screen.js",
-        134
-      ]
-    ]
+    "origin": [["src/auth/screens/auth-profile.screen.js", 134]]
   },
   "BIO": {
     "translation": "简介",
     "origin": [
-      [
-        "src/auth/screens/auth-profile.screen.js",
-        149
-      ],
-      [
-        "src/user/screens/profile.screen.js",
-        213
-      ]
+      ["src/auth/screens/auth-profile.screen.js", 149],
+      ["src/user/screens/profile.screen.js", 213]
     ]
   },
   "ORGANIZATIONS": {
     "translation": "组织",
     "origin": [
-      [
-        "src/auth/screens/auth-profile.screen.js",
-        165
-      ],
-      [
-        "src/user/screens/profile.screen.js",
-        230
-      ]
+      ["src/auth/screens/auth-profile.screen.js", 165],
+      ["src/user/screens/profile.screen.js", 230]
     ]
   },
   "No organizations": {
     "translation": "没有组织",
     "origin": [
-      [
-        "src/auth/screens/auth-profile.screen.js",
-        167
-      ],
-      [
-        "src/user/screens/profile.screen.js",
-        232
-      ]
+      ["src/auth/screens/auth-profile.screen.js", 167],
+      ["src/user/screens/profile.screen.js", 232]
     ]
   },
   "Can't see all your organizations?": {
     "translation": "看不到你所有的组织?",
-    "origin": [
-      [
-        "src/auth/screens/auth-profile.screen.js",
-        177
-      ]
-    ]
+    "origin": [["src/auth/screens/auth-profile.screen.js", 177]]
   },
   "You may have to request approval for them.": {
     "translation": "你可能需要请求他们的许可。",
-    "origin": [
-      [
-        "src/auth/screens/auth-profile.screen.js",
-        184
-      ]
-    ]
+    "origin": [["src/auth/screens/auth-profile.screen.js", 184]]
   },
   "Unknown event type: {0}": {
     "translation": "",
-    "origin": [
-      [
-        "src/auth/screens/events.screen.js",
-        147
-      ]
-    ]
+    "origin": [["src/auth/screens/events.screen.js", 147]]
   },
   "<0/> commented on commit": {
     "translation": "<0/> 评论提交",
-    "origin": [
-      [
-        "src/auth/screens/events.screen.js",
-        199
-      ]
-    ]
+    "origin": [["src/auth/screens/events.screen.js", 199]]
   },
   "<0/> created branch <1/> at <2/>": {
     "translation": "<0/> 创建了 分支 <1/> 在 <2/>",
-    "origin": [
-      [
-        "src/auth/screens/events.screen.js",
-        215
-      ]
-    ]
+    "origin": [["src/auth/screens/events.screen.js", 215]]
   },
   "<0/> created tag <1/> at <2/>": {
     "translation": "<0/> 创建了 标签 <1/> 在 <2/>",
-    "origin": [
-      [
-        "src/auth/screens/events.screen.js",
-        221
-      ]
-    ]
+    "origin": [["src/auth/screens/events.screen.js", 221]]
   },
   "<0/> created repository <1/>": {
     "translation": "<0/> 创建了 仓库 <1/>",
-    "origin": [
-      [
-        "src/auth/screens/events.screen.js",
-        227
-      ]
-    ]
+    "origin": [["src/auth/screens/events.screen.js", 227]]
   },
   "<0/> deleted branch <1/> at <2/>": {
     "translation": "<0/> 删除了 分支 <1/> 在 <2/>",
-    "origin": [
-      [
-        "src/auth/screens/events.screen.js",
-        246
-      ]
-    ]
+    "origin": [["src/auth/screens/events.screen.js", 246]]
   },
   "<0/> deleted tag <1/> at <2/>": {
     "translation": "<0/> 删除了 标签 <1/> 在 <2/>",
-    "origin": [
-      [
-        "src/auth/screens/events.screen.js",
-        252
-      ]
-    ]
+    "origin": [["src/auth/screens/events.screen.js", 252]]
   },
   "<0/> forked <1/> at <2/>": {
     "translation": "<0/> 派生了 <1/> 在 <2/>",
-    "origin": [
-      [
-        "src/auth/screens/events.screen.js",
-        273
-      ]
-    ]
+    "origin": [["src/auth/screens/events.screen.js", 273]]
   },
   "<0/> created the <1/> wiki": {
     "translation": "",
-    "origin": [
-      [
-        "src/auth/screens/events.screen.js",
-        287
-      ]
-    ]
+    "origin": [["src/auth/screens/events.screen.js", 287]]
   },
   "<0/> edited the <1/> wiki": {
     "translation": "",
-    "origin": [
-      [
-        "src/auth/screens/events.screen.js",
-        294
-      ]
-    ]
+    "origin": [["src/auth/screens/events.screen.js", 294]]
   },
   "<0/> commented on pull request <1/> at <2/>": {
     "translation": "<0/> 评论了 了 合并请求 <1/> 在 <2/>",
     "origin": [
-      [
-        "src/auth/screens/events.screen.js",
-        313
-      ],
-      [
-        "src/auth/screens/events.screen.js",
-        452
-      ]
+      ["src/auth/screens/events.screen.js", 313],
+      ["src/auth/screens/events.screen.js", 454]
     ]
   },
   "<0/> commented on issue <1/> at <2/>": {
     "translation": "<0/> 评论了 了 问题 <1/> 在 <2/>",
-    "origin": [
-      [
-        "src/auth/screens/events.screen.js",
-        321
-      ]
-    ]
+    "origin": [["src/auth/screens/events.screen.js", 321]]
   },
   "<0/> opened issue <1/> at <2/>": {
     "translation": "<0/> 打开了 问题 <1/> 在 <2/>",
-    "origin": [
-      [
-        "src/auth/screens/events.screen.js",
-        339
-      ]
-    ]
+    "origin": [["src/auth/screens/events.screen.js", 339]]
   },
   "<0/> reopened issue <1/> at <2/>": {
     "translation": "<0/> 重新打开了 问题 <1/> 在 <2/>",
-    "origin": [
-      [
-        "src/auth/screens/events.screen.js",
-        345
-      ]
-    ]
+    "origin": [["src/auth/screens/events.screen.js", 345]]
   },
   "<0/> closed issue <1/> at <2/>": {
     "translation": "<0/> 关闭了 问题 <1/> 在 <2/>",
-    "origin": [
-      [
-        "src/auth/screens/events.screen.js",
-        351
-      ]
-    ]
+    "origin": [["src/auth/screens/events.screen.js", 351]]
   },
-  "<0/> edited <1/> permissions in <2/>": {
+  "<0/> edited <1/> at <2/>": {
     "translation": "",
-    "origin": [
-      [
-        "src/auth/screens/events.screen.js",
-        373
-      ]
-    ]
+    "origin": [["src/auth/screens/events.screen.js", 373]]
   },
-  "<0/> removed <1/> from <2/>": {
+  "<0/> removed <1/> at <2/>": {
     "translation": "",
-    "origin": [
-      [
-        "src/auth/screens/events.screen.js",
-        381
-      ]
-    ]
+    "origin": [["src/auth/screens/events.screen.js", 380]]
   },
-  "<0/> added <1/> to <2/>": {
+  "<0/> added <1/> at <2/>": {
     "translation": "",
-    "origin": [
-      [
-        "src/auth/screens/events.screen.js",
-        388
-      ]
-    ]
+    "origin": [["src/auth/screens/events.screen.js", 387]]
   },
   "<0/> made <1/> public": {
     "translation": "",
-    "origin": [
-      [
-        "src/auth/screens/events.screen.js",
-        400
-      ]
-    ]
+    "origin": [["src/auth/screens/events.screen.js", 402]]
   },
   "<0/> opened pull request <1/> at <2/>": {
     "translation": "<0/> 打开了 合并请求 <1/> 在 <2/>",
-    "origin": [
-      [
-        "src/auth/screens/events.screen.js",
-        414
-      ]
-    ]
+    "origin": [["src/auth/screens/events.screen.js", 416]]
   },
   "<0/> reopened pull request <1/> at <2/>": {
     "translation": "<0/> 重新打开了 合并请求 <1/> 在 <2/>",
-    "origin": [
-      [
-        "src/auth/screens/events.screen.js",
-        420
-      ]
-    ]
+    "origin": [["src/auth/screens/events.screen.js", 422]]
   },
   "<0/> merged pull request <1/> at <2/>": {
     "translation": "",
-    "origin": [
-      [
-        "src/auth/screens/events.screen.js",
-        427
-      ]
-    ]
+    "origin": [["src/auth/screens/events.screen.js", 429]]
   },
   "<0/> closed pull request <1/> at <2/>": {
     "translation": "<0/> 关闭了 合并请求 <1/> 在 <2/>",
-    "origin": [
-      [
-        "src/auth/screens/events.screen.js",
-        434
-      ]
-    ]
+    "origin": [["src/auth/screens/events.screen.js", 436]]
+  },
+  "<0/> pushed to <1>{0}</1> at <2/>": {
+    "translation": "<0/> 推送向 <1>{0}</1> 在 <2/>",
+    "origin": [["src/auth/screens/events.screen.js", 470]]
   },
   "<0/> published release {id}": {
     "translation": "<0/> 发布了 发布 {id}",
-    "origin": [
-      [
-        "src/auth/screens/events.screen.js",
-        486
-      ]
-    ]
+    "origin": [["src/auth/screens/events.screen.js", 487]]
   },
   "<0/> starred <1/>": {
     "translation": "<0/> 星标了 <1/>",
-    "origin": [
-      [
-        "src/auth/screens/events.screen.js",
-        501
-      ]
-    ]
+    "origin": [["src/auth/screens/events.screen.js", 502]]
   },
   "Welcome to GitPoint": {
     "translation": "欢迎来到GitPoint",
     "origin": [
-      [
-        "src/auth/screens/events.screen.js",
-        574
-      ],
-      [
-        "src/auth/screens/login.screen.js",
-        278
-      ],
-      [
-        "src/auth/screens/welcome.screen.js",
-        40
-      ]
+      ["src/auth/screens/events.screen.js", 575],
+      ["src/auth/screens/login.screen.js", 278],
+      ["src/auth/screens/welcome.screen.js", 40]
     ]
   },
   "The most feature-rich GitHub client that is 100% free": {
     "translation": "完全免费，功能最强大的GitHub客户端!",
-    "origin": [
-      [
-        "src/auth/screens/login.screen.js",
-        281
-      ]
-    ]
+    "origin": [["src/auth/screens/login.screen.js", 281]]
   },
   "Control notifications": {
     "translation": "通知设定",
-    "origin": [
-      [
-        "src/auth/screens/login.screen.js",
-        295
-      ]
-    ]
+    "origin": [["src/auth/screens/login.screen.js", 295]]
   },
   "View and control all of your unread and participating notifications": {
     "translation": "查看并设定你所有未读和参与的通知",
-    "origin": [
-      [
-        "src/auth/screens/login.screen.js",
-        298
-      ]
-    ]
+    "origin": [["src/auth/screens/login.screen.js", 298]]
   },
   "Repositories and Users": {
     "translation": "仓库和用户",
-    "origin": [
-      [
-        "src/auth/screens/login.screen.js",
-        314
-      ]
-    ]
+    "origin": [["src/auth/screens/login.screen.js", 314]]
   },
   "Easily obtain repository, user and organization information": {
     "translation": "便捷地获取仓库、用户以及组织的信息",
-    "origin": [
-      [
-        "src/auth/screens/login.screen.js",
-        317
-      ]
-    ]
+    "origin": [["src/auth/screens/login.screen.js", 317]]
   },
   "Issues and Pull Requests": {
     "translation": "问题和合并请求",
-    "origin": [
-      [
-        "src/auth/screens/login.screen.js",
-        332
-      ]
-    ]
+    "origin": [["src/auth/screens/login.screen.js", 332]]
   },
   "Communicate on conversations, merge pull requests and more": {
     "translation": "查看问题、参与讨论以及处理合并请求",
-    "origin": [
-      [
-        "src/auth/screens/login.screen.js",
-        335
-      ]
-    ]
+    "origin": [["src/auth/screens/login.screen.js", 335]]
   },
   "SIGN IN": {
     "translation": "登录",
-    "origin": [
-      [
-        "src/auth/screens/login.screen.js",
-        346
-      ]
-    ]
+    "origin": [["src/auth/screens/login.screen.js", 346]]
   },
   "CANCEL": {
     "translation": "取消",
-    "origin": [
-      [
-        "src/auth/screens/login.screen.js",
-        378
-      ]
-    ]
+    "origin": [["src/auth/screens/login.screen.js", 378]]
   },
   "Last updated: July 15, 2017": {
     "translation": "最近更新: 2017年7月15日",
-    "origin": [
-      [
-        "src/auth/screens/privacy-policy.screen.js",
-        60
-      ]
-    ]
+    "origin": [["src/auth/screens/privacy-policy.screen.js", 60]]
   },
   "We're glad you decided to use GitPoint. This Privacy Policy is here to inform you about what we do — and do not do — with our user's data.": {
-    "translation": "我们很高兴您选择使用GitPoint。您可以在本隐私条款中看到我们使用哪些和不使用哪些用户数据。",
-    "origin": [
-      [
-        "src/auth/screens/privacy-policy.screen.js",
-        64
-      ]
-    ]
+    "translation":
+      "我们很高兴您选择使用GitPoint。您可以在本隐私条款中看到我们使用哪些和不使用哪些用户数据。",
+    "origin": [["src/auth/screens/privacy-policy.screen.js", 64]]
   },
   "USER DATA": {
     "translation": "用户数据",
-    "origin": [
-      [
-        "src/auth/screens/privacy-policy.screen.js",
-        73
-      ]
-    ]
+    "origin": [["src/auth/screens/privacy-policy.screen.js", 73]]
   },
   "We do not do anything with your GitHub information. After authenticating, the user's OAuth token is persisted directly on their device storage. It is not possible for us to retrieve that information. We never view a user's access token nor store it whatsoever.": {
-    "translation": "我们不会把您的GitHub信息用于任何事。授权登录后，用户的OAuth令牌只会被直接保存在客户端设备存储中。我们无法获取令牌信息。我们从不查看或保存用户的访问令牌。",
-    "origin": [
-      [
-        "src/auth/screens/privacy-policy.screen.js",
-        77
-      ]
-    ]
+    "translation":
+      "我们不会把您的GitHub信息用于任何事。授权登录后，用户的OAuth令牌只会被直接保存在客户端设备存储中。我们无法获取令牌信息。我们从不查看或保存用户的访问令牌。",
+    "origin": [["src/auth/screens/privacy-policy.screen.js", 77]]
   },
   "This means that in no way, shape or form do we ever view, use or share a user's GitHub data. If private data ever becomes visible at any point we will not record or view it. If it happens to be accidentally recorded, we will delete it immediately using secure erase methods. Again, we've set up authentication specifically so that this never happens.": {
-    "translation": "这意味着，我们不可能查看、使用，或者分享用户的GitHub数据。即便隐私数据可以被访问，我们也不会查看或者保存它。如果它被意外地保存，我们会立即使用安全的抹除方案删除它。再次重申，我们已经特别地建立了授权机制以保证这种情形不会发生。",
-    "origin": [
-      [
-        "src/auth/screens/privacy-policy.screen.js",
-        87
-      ]
-    ]
+    "translation":
+      "这意味着，我们不可能查看、使用，或者分享用户的GitHub数据。即便隐私数据可以被访问，我们也不会查看或者保存它。如果它被意外地保存，我们会立即使用安全的抹除方案删除它。再次重申，我们已经特别地建立了授权机制以保证这种情形不会发生。",
+    "origin": [["src/auth/screens/privacy-policy.screen.js", 87]]
   },
   "ANALYTICS INFORMATION": {
     "translation": "分析数据",
-    "origin": [
-      [
-        "src/auth/screens/privacy-policy.screen.js",
-        99
-      ]
-    ]
+    "origin": [["src/auth/screens/privacy-policy.screen.js", 99]]
   },
   "We currently use Google Analytics and iTunes App Analytics to help us measure traffic and usage trends for the GitPoint. These tools collect information sent by your device including device and platform version, region and referrer. This information cannot reasonably be used to identify any particular individual user and no personal information is extracted.": {
-    "translation": "目前我们使用Google Analytics和iTunes App Analytics来帮助我们分析GitPoint的流量和使用趋势。这些工具从您的设备上收集包含设备类型、版本、区域、来源等信息。这些信息并无法被用来识别单个用户或者获取任何个人信息。",
-    "origin": [
-      [
-        "src/auth/screens/privacy-policy.screen.js",
-        103
-      ]
-    ]
+    "translation":
+      "目前我们使用Google Analytics和iTunes App Analytics来帮助我们分析GitPoint的流量和使用趋势。这些工具从您的设备上收集包含设备类型、版本、区域、来源等信息。这些信息并无法被用来识别单个用户或者获取任何个人信息。",
+    "origin": [["src/auth/screens/privacy-policy.screen.js", 103]]
   },
   "If we happen to include another third party platform to collect stack traces, error logs or more analytics information, we'll make sure that user data remains anonymized and encrypted.": {
-    "translation": "如果我们使用第三方平台来收集追溯栈、错误报告，或者更多的分析信息，我们将保证用户的信息均为匿名并且加密。",
-    "origin": [
-      [
-        "src/auth/screens/privacy-policy.screen.js",
-        115
-      ]
-    ]
+    "translation":
+      "如果我们使用第三方平台来收集追溯栈、错误报告，或者更多的分析信息，我们将保证用户的信息均为匿名并且加密。",
+    "origin": [["src/auth/screens/privacy-policy.screen.js", 115]]
   },
   "OPEN SOURCE": {
     "translation": "开源",
-    "origin": [
-      [
-        "src/auth/screens/privacy-policy.screen.js",
-        126
-      ]
-    ]
+    "origin": [["src/auth/screens/privacy-policy.screen.js", 126]]
   },
   "GitPoint is open source and the history of contributions to the platform will always be visible to the public.": {
-    "translation": "GitPoint是开源软件，所有对本软件的历史贡献信息都会一直向外界公开。",
-    "origin": [
-      [
-        "src/auth/screens/privacy-policy.screen.js",
-        130
-      ]
-    ]
+    "translation":
+      "GitPoint是开源软件，所有对本软件的历史贡献信息都会一直向外界公开。",
+    "origin": [["src/auth/screens/privacy-policy.screen.js", 130]]
   },
   "With each contribution to the app, code review is always performed to prevent anybody from including malicious code of any kind.": {
-    "translation": "每次向本App提交的代码贡献都会经过我们的审查以防止任何人注入任何形式的恶意代码。",
-    "origin": [
-      [
-        "src/auth/screens/privacy-policy.screen.js",
-        137
-      ]
-    ]
+    "translation":
+      "每次向本App提交的代码贡献都会经过我们的审查以防止任何人注入任何形式的恶意代码。",
+    "origin": [["src/auth/screens/privacy-policy.screen.js", 137]]
   },
   "CONTACT": {
     "translation": "联系方式",
-    "origin": [
-      [
-        "src/auth/screens/privacy-policy.screen.js",
-        146
-      ]
-    ]
+    "origin": [["src/auth/screens/privacy-policy.screen.js", 146]]
   },
   "Thank you for reading our Privacy Policy. We hope you enjoy using GitPoint as much as we enjoyed building it.": {
-    "translation": "感谢阅读我们的隐私条款。我们希望您如同我们享受开发GitPoint的过程一般享受使用它！",
-    "origin": [
-      [
-        "src/auth/screens/privacy-policy.screen.js",
-        150
-      ]
-    ]
+    "translation":
+      "感谢阅读我们的隐私条款。我们希望您如同我们享受开发GitPoint的过程一般享受使用它！",
+    "origin": [["src/auth/screens/privacy-policy.screen.js", 150]]
   },
   "If you have any questions about this Privacy Policy or GitPoint in general, please file an issue in the <0>GitPoint repository</0>": {
-    "translation": "如果您对本条款或GitPoint有任何问题，请提交问题到 <0>GitPoint仓库</0>",
-    "origin": [
-      [
-        "src/auth/screens/privacy-policy.screen.js",
-        157
-      ]
-    ]
+    "translation":
+      "如果您对本条款或GitPoint有任何问题，请提交问题到 <0>GitPoint仓库</0>",
+    "origin": [["src/auth/screens/privacy-policy.screen.js", 157]]
   },
   "Check for update": {
     "translation": "检查更新",
-    "origin": [
-      [
-        "src/auth/screens/user-options.screen.js",
-        75
-      ]
-    ]
+    "origin": [["src/auth/screens/user-options.screen.js", 75]]
   },
   "Language": {
     "translation": "语言",
     "origin": [
-      [
-        "src/auth/screens/user-options.screen.js",
-        140
-      ],
-      [
-        "src/auth/screens/user-options.screen.js",
-        143
-      ]
+      ["src/auth/screens/user-options.screen.js", 140],
+      ["src/auth/screens/user-options.screen.js", 143]
     ]
   },
   "Open in Browser": {
     "translation": "在浏览器中打开",
     "origin": [
-      [
-        "src/auth/screens/user-options.screen.js",
-        149
-      ],
-      [
-        "src/issue/screens/issue-settings.screen.js",
-        282
-      ],
-      [
-        "src/issue/screens/issue.screen.js",
-        386
-      ],
-      [
-        "src/organization/screens/organization-profile.screen.js",
-        128
-      ],
-      [
-        "src/repository/screens/read-me.screen.js",
-        99
-      ],
-      [
-        "src/repository/screens/repository.screen.js",
-        246
-      ],
-      [
-        "src/user/screens/profile.screen.js",
-        166
-      ]
+      ["src/auth/screens/user-options.screen.js", 149],
+      ["src/issue/screens/issue-settings.screen.js", 282],
+      ["src/issue/screens/issue.screen.js", 386],
+      ["src/organization/screens/organization-profile.screen.js", 128],
+      ["src/repository/screens/read-me.screen.js", 99],
+      ["src/repository/screens/repository.screen.js", 246],
+      ["src/user/screens/profile.screen.js", 166]
     ]
   },
   "Privacy Policy": {
     "translation": "隐私条款",
     "origin": [
-      [
-        "src/auth/screens/user-options.screen.js",
-        154
-      ],
-      [
-        "src/auth/screens/user-options.screen.js",
-        157
-      ]
+      ["src/auth/screens/user-options.screen.js", 154],
+      ["src/auth/screens/user-options.screen.js", 157]
     ]
   },
   "Make a donation": {
     "translation": "捐助我们",
-    "origin": [
-      [
-        "src/auth/screens/user-options.screen.js",
-        163
-      ]
-    ]
+    "origin": [["src/auth/screens/user-options.screen.js", 163]]
   },
   "Sign Out": {
     "translation": "登出",
-    "origin": [
-      [
-        "src/auth/screens/user-options.screen.js",
-        169
-      ]
-    ]
+    "origin": [["src/auth/screens/user-options.screen.js", 169]]
   },
   "Not applicable in debug mode": {
     "translation": "无法在调试模式中使用",
-    "origin": [
-      [
-        "src/auth/screens/user-options.screen.js",
-        103
-      ]
-    ]
+    "origin": [["src/auth/screens/user-options.screen.js", 103]]
   },
   "Checking for update...": {
     "translation": "检查更新中...",
-    "origin": [
-      [
-        "src/auth/screens/user-options.screen.js",
-        106
-      ]
-    ]
+    "origin": [["src/auth/screens/user-options.screen.js", 106]]
   },
   "Update is available!": {
     "translation": "有新的更新!",
-    "origin": [
-      [
-        "src/auth/screens/user-options.screen.js",
-        115
-      ]
-    ]
+    "origin": [["src/auth/screens/user-options.screen.js", 115]]
   },
   "App is up to date": {
     "translation": "App已是最新",
-    "origin": [
-      [
-        "src/auth/screens/user-options.screen.js",
-        116
-      ]
-    ]
+    "origin": [["src/auth/screens/user-options.screen.js", 116]]
   },
   "Locked, but you can still comment...": {
     "translation": "已锁定，但是你可以继续评论...",
-    "origin": [
-      [
-        "src/components/comment-input.component.js",
-        103
-      ]
-    ]
+    "origin": [["src/components/comment-input.component.js", 103]]
   },
   "Add a comment...": {
     "translation": "添加评论...",
-    "origin": [
-      [
-        "src/components/comment-input.component.js",
-        104
-      ]
-    ]
+    "origin": [["src/components/comment-input.component.js", 104]]
   },
   "Issue is locked": {
     "translation": "问题已锁定",
-    "origin": [
-      [
-        "src/components/comment-input.component.js",
-        125
-      ]
-    ]
+    "origin": [["src/components/comment-input.component.js", 125]]
   },
   "Edit": {
     "translation": "编辑",
-    "origin": [
-      [
-        "src/components/comment-list-item.component.js",
-        117
-      ]
-    ]
+    "origin": [["src/components/comment-list-item.component.js", 117]]
   },
   "Delete": {
     "translation": "删除",
-    "origin": [
-      [
-        "src/components/comment-list-item.component.js",
-        120
-      ]
-    ]
+    "origin": [["src/components/comment-list-item.component.js", 120]]
   },
   "No description provided.": {
     "translation": "没有提供简介",
-    "origin": [
-      [
-        "src/components/comment-list-item.component.js",
-        190
-      ]
-    ]
+    "origin": [["src/components/comment-list-item.component.js", 190]]
   },
   "Comment Actions": {
     "translation": "评论操作",
-    "origin": [
-      [
-        "src/components/comment-list-item.component.js",
-        211
-      ]
-    ]
+    "origin": [["src/components/comment-list-item.component.js", 211]]
   },
   "Cancel": {
     "translation": "取消",
     "origin": [
-      [
-        "src/components/comment-list-item.component.js",
-        212
-      ],
-      [
-        "src/issue/screens/issue-settings.screen.js",
-        296
-      ],
-      [
-        "src/issue/screens/issue-settings.screen.js",
-        305
-      ],
-      [
-        "src/issue/screens/issue-settings.screen.js",
-        316
-      ],
-      [
-        "src/issue/screens/issue.screen.js",
-        435
-      ],
-      [
-        "src/issue/screens/pull-merge.screen.js",
-        214
-      ],
-      [
-        "src/organization/screens/organization-profile.screen.js",
-        191
-      ],
-      [
-        "src/repository/screens/read-me.screen.js",
-        129
-      ],
-      [
-        "src/repository/screens/repository.screen.js",
-        460
-      ],
-      [
-        "src/user/screens/profile.screen.js",
-        251
-      ]
+      ["src/components/comment-list-item.component.js", 212],
+      ["src/issue/screens/issue-settings.screen.js", 296],
+      ["src/issue/screens/issue-settings.screen.js", 305],
+      ["src/issue/screens/issue-settings.screen.js", 316],
+      ["src/issue/screens/issue.screen.js", 435],
+      ["src/issue/screens/pull-merge.screen.js", 214],
+      ["src/organization/screens/organization-profile.screen.js", 191],
+      ["src/repository/screens/read-me.screen.js", 129],
+      ["src/repository/screens/repository.screen.js", 460],
+      ["src/user/screens/profile.screen.js", 251]
     ]
   },
   "INFO": {
     "translation": "信息",
-    "origin": [
-      [
-        "src/components/entity-info.component.js",
-        74
-      ]
-    ]
+    "origin": [["src/components/entity-info.component.js", 74]]
   },
   "Company": {
     "translation": "公司",
-    "origin": [
-      [
-        "src/components/entity-info.component.js",
-        78
-      ]
-    ]
+    "origin": [["src/components/entity-info.component.js", 78]]
   },
   "Location": {
     "translation": "地点",
-    "origin": [
-      [
-        "src/components/entity-info.component.js",
-        95
-      ]
-    ]
+    "origin": [["src/components/entity-info.component.js", 95]]
   },
   "Email": {
     "translation": "Email",
-    "origin": [
-      [
-        "src/components/entity-info.component.js",
-        111
-      ]
-    ]
+    "origin": [["src/components/entity-info.component.js", 111]]
   },
   "Website": {
     "translation": "网站",
-    "origin": [
-      [
-        "src/components/entity-info.component.js",
-        127
-      ]
-    ]
+    "origin": [["src/components/entity-info.component.js", 127]]
   },
   "Oops! it seems that you are not connected to the internet!": {
     "translation": "Oops! it seems that you are not connected to the internet!",
-    "origin": [
-      [
-        "src/components/error-screen.js",
-        25
-      ]
-    ]
+    "origin": [["src/components/error-screen.js", 25]]
   },
   "Diff": {
     "translation": "差异",
-    "origin": [
-      [
-        "src/components/issue-description.component.js",
-        181
-      ]
-    ]
+    "origin": [["src/components/issue-description.component.js", 181]]
   },
   "Assignees": {
     "translation": "被分派者",
-    "origin": [
-      [
-        "src/components/issue-description.component.js",
-        200
-      ]
-    ]
+    "origin": [["src/components/issue-description.component.js", 200]]
   },
   "Merge Pull Request": {
     "translation": "接受合并请求",
     "origin": [
-      [
-        "src/components/issue-description.component.js",
-        220
-      ],
-      [
-        "src/components/issue-description.component.js",
-        223
-      ]
+      ["src/components/issue-description.component.js", 220],
+      ["src/components/issue-description.component.js", 223]
     ]
   },
   "#{0} opened {1} ago by {2}": {
     "translation": "{2} 在 {1} 前提交了问题 #{0}。",
-    "origin": [
-      [
-        "src/components/issue-list-item.component.js",
-        84
-      ]
-    ]
+    "origin": [["src/components/issue-list-item.component.js", 84]]
   },
   "#{0} by {1} was closed {2} ago": {
     "translation": "{1} 在 {2} 前关闭了问题 #{0}。",
-    "origin": [
-      [
-        "src/components/issue-list-item.component.js",
-        87
-      ]
-    ]
+    "origin": [["src/components/issue-list-item.component.js", 87]]
   },
   "Stars": {
     "translation": "Stars",
@@ -867,18 +399,9 @@
         "src/components/loading-indicators/loading-repository-profile.component.js",
         94
       ],
-      [
-        "src/components/repository-profile.component.js",
-        208
-      ],
-      [
-        "src/components/user-profile.component.js",
-        167
-      ],
-      [
-        "src/components/user-profile.component.js",
-        180
-      ]
+      ["src/components/repository-profile.component.js", 208],
+      ["src/components/user-profile.component.js", 167],
+      ["src/components/user-profile.component.js", 180]
     ]
   },
   "Forks": {
@@ -888,1058 +411,487 @@
         "src/components/loading-indicators/loading-repository-profile.component.js",
         100
       ],
-      [
-        "src/components/repository-profile.component.js",
-        244
-      ]
+      ["src/components/repository-profile.component.js", 244]
     ]
   },
   "Unknown": {
     "translation": "Unknown",
-    "origin": [
-      [
-        "src/components/repository-profile.component.js",
-        143
-      ]
-    ]
+    "origin": [["src/components/repository-profile.component.js", 143]]
   },
   "Repository is not found": {
     "translation": "Repository is not found",
-    "origin": [
-      [
-        "src/components/repository-profile.component.js",
-        160
-      ]
-    ]
+    "origin": [["src/components/repository-profile.component.js", 160]]
   },
   "forked from <0>{0}</0>": {
     "translation": "派生于 <0>{0}</0>",
-    "origin": [
-      [
-        "src/components/repository-profile.component.js",
-        181
-      ]
-    ]
+    "origin": [["src/components/repository-profile.component.js", 181]]
   },
   "Starred": {
     "translation": "已星标",
-    "origin": [
-      [
-        "src/components/repository-profile.component.js",
-        213
-      ]
-    ]
+    "origin": [["src/components/repository-profile.component.js", 213]]
   },
   "Watchers": {
     "translation": "关注者",
-    "origin": [
-      [
-        "src/components/repository-profile.component.js",
-        226
-      ]
-    ]
+    "origin": [["src/components/repository-profile.component.js", 226]]
   },
   "Watching": {
     "translation": "关注中",
-    "origin": [
-      [
-        "src/components/repository-profile.component.js",
-        231
-      ]
-    ]
+    "origin": [["src/components/repository-profile.component.js", 231]]
   },
   "Merged": {
     "translation": "已合并",
-    "origin": [
-      [
-        "src/components/state-badge.component.js",
-        35
-      ]
-    ]
+    "origin": [["src/components/state-badge.component.js", 35]]
   },
   "Open": {
     "translation": "待解决",
     "origin": [
-      [
-        "src/components/state-badge.component.js",
-        38
-      ],
-      [
-        "src/repository/screens/issue-list.screen.js",
-        261
-      ],
-      [
-        "src/repository/screens/pull-list.screen.js",
-        235
-      ]
+      ["src/components/state-badge.component.js", 38],
+      ["src/repository/screens/issue-list.screen.js", 261],
+      ["src/repository/screens/pull-list.screen.js", 235]
     ]
   },
   "Closed": {
     "translation": "已关闭",
     "origin": [
-      [
-        "src/components/state-badge.component.js",
-        41
-      ],
-      [
-        "src/repository/screens/issue-list.screen.js",
-        261
-      ],
-      [
-        "src/repository/screens/pull-list.screen.js",
-        235
-      ]
+      ["src/components/state-badge.component.js", 41],
+      ["src/repository/screens/issue-list.screen.js", 261],
+      ["src/repository/screens/pull-list.screen.js", 235]
     ]
   },
   "Repositories": {
     "translation": "搜仓库",
     "origin": [
-      [
-        "src/components/user-profile.component.js",
-        143
-      ],
-      [
-        "src/components/user-profile.component.js",
-        158
-      ],
-      [
-        "src/search/screens/search.screen.js",
-        223
-      ]
+      ["src/components/user-profile.component.js", 143],
+      ["src/components/user-profile.component.js", 158],
+      ["src/search/screens/search.screen.js", 223]
     ]
   },
   "Followers": {
     "translation": "粉丝",
     "origin": [
-      [
-        "src/components/user-profile.component.js",
-        190
-      ],
-      [
-        "src/components/user-profile.component.js",
-        205
-      ]
+      ["src/components/user-profile.component.js", 190],
+      ["src/components/user-profile.component.js", 205]
     ]
   },
   "Following": {
     "translation": "关注",
     "origin": [
-      [
-        "src/components/user-profile.component.js",
-        210
-      ],
-      [
-        "src/components/user-profile.component.js",
-        222
-      ],
-      [
-        "src/components/user-profile.component.js",
-        237
-      ]
+      ["src/components/user-profile.component.js", 210],
+      ["src/components/user-profile.component.js", 222],
+      ["src/components/user-profile.component.js", 237]
     ]
   },
   "Follows you": {
     "translation": "你已关注",
-    "origin": [
-      [
-        "src/components/user-profile.component.js",
-        242
-      ]
-    ]
+    "origin": [["src/components/user-profile.component.js", 242]]
   },
   "Issue Comment": {
     "translation": "问题评论",
     "origin": [
-      [
-        "src/issue/screens/edit-issue-comment.screen.js",
-        105
-      ],
-      [
-        "src/issue/screens/new-issue.screen.js",
-        137
-      ]
+      ["src/issue/screens/edit-issue-comment.screen.js", 105],
+      ["src/issue/screens/new-issue.screen.js", 137]
     ]
   },
   "Write a title for your issue here": {
     "translation": "在这里写上你的问题的标题",
     "origin": [
-      [
-        "src/issue/screens/edit-issue-comment.screen.js",
-        108
-      ],
-      [
-        "src/issue/screens/new-issue.screen.js",
-        119
-      ]
+      ["src/issue/screens/edit-issue-comment.screen.js", 108],
+      ["src/issue/screens/new-issue.screen.js", 119]
     ]
   },
   "Submit": {
     "translation": "提交",
     "origin": [
-      [
-        "src/issue/screens/edit-issue-comment.screen.js",
-        131
-      ],
-      [
-        "src/issue/screens/new-issue.screen.js",
-        160
-      ]
+      ["src/issue/screens/edit-issue-comment.screen.js", 131],
+      ["src/issue/screens/new-issue.screen.js", 160]
     ]
   },
   "Pull Request": {
     "translation": "合并请求",
-    "origin": [
-      [
-        "src/issue/screens/issue-settings.screen.js",
-        157
-      ]
-    ]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 157]]
   },
   "Issue": {
     "translation": "问题",
-    "origin": [
-      [
-        "src/issue/screens/issue-settings.screen.js",
-        157
-      ]
-    ]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 157]]
   },
   "Apply Label": {
     "translation": "添加标签",
-    "origin": [
-      [
-        "src/issue/screens/issue-settings.screen.js",
-        164
-      ]
-    ]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 164]]
   },
   "None yet": {
     "translation": "尚无",
     "origin": [
-      [
-        "src/issue/screens/issue-settings.screen.js",
-        171
-      ],
-      [
-        "src/issue/screens/issue-settings.screen.js",
-        219
-      ]
+      ["src/issue/screens/issue-settings.screen.js", 171],
+      ["src/issue/screens/issue-settings.screen.js", 219]
     ]
   },
   "LABELS": {
     "translation": "标签",
-    "origin": [
-      [
-        "src/issue/screens/issue-settings.screen.js",
-        172
-      ]
-    ]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 172]]
   },
   "Assign Yourself": {
     "translation": "分派给自己",
-    "origin": [
-      [
-        "src/issue/screens/issue-settings.screen.js",
-        206
-      ]
-    ]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 206]]
   },
   "ASSIGNEES": {
     "translation": "被分派者",
-    "origin": [
-      [
-        "src/issue/screens/issue-settings.screen.js",
-        220
-      ]
-    ]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 220]]
   },
   "ACTIONS": {
     "translation": "操作",
-    "origin": [
-      [
-        "src/issue/screens/issue-settings.screen.js",
-        248
-      ]
-    ]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 248]]
   },
   "Unlock {issueType}": {
     "translation": "解锁 {issueType}",
-    "origin": [
-      [
-        "src/issue/screens/issue-settings.screen.js",
-        252
-      ]
-    ]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 252]]
   },
   "Lock {issueType}": {
     "translation": "锁定 {issueType}",
-    "origin": [
-      [
-        "src/issue/screens/issue-settings.screen.js",
-        253
-      ]
-    ]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 253]]
   },
   "Close {issueType}": {
     "translation": "关闭 {issueType}",
-    "origin": [
-      [
-        "src/issue/screens/issue-settings.screen.js",
-        265
-      ]
-    ]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 265]]
   },
   "Reopen {issueType}": {
     "translation": "重新开启 {issueType}",
-    "origin": [
-      [
-        "src/issue/screens/issue-settings.screen.js",
-        266
-      ]
-    ]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 266]]
   },
   "Are you sure?": {
     "translation": "你确定吗？",
     "origin": [
-      [
-        "src/issue/screens/issue-settings.screen.js",
-        295
-      ],
-      [
-        "src/issue/screens/issue-settings.screen.js",
-        304
-      ]
+      ["src/issue/screens/issue-settings.screen.js", 295],
+      ["src/issue/screens/issue-settings.screen.js", 304]
     ]
   },
   "Yes": {
     "translation": "是",
     "origin": [
-      [
-        "src/issue/screens/issue-settings.screen.js",
-        296
-      ],
-      [
-        "src/issue/screens/issue-settings.screen.js",
-        305
-      ]
+      ["src/issue/screens/issue-settings.screen.js", 296],
+      ["src/issue/screens/issue-settings.screen.js", 305]
     ]
   },
   "Apply a label to this issue": {
     "translation": "为本问题添加标签",
-    "origin": [
-      [
-        "src/issue/screens/issue-settings.screen.js",
-        313
-      ]
-    ]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 313]]
   },
   "Edit Comment": {
     "translation": "编辑评论",
-    "origin": [
-      [
-        "src/issue/screens/issue.screen.js",
-        280
-      ]
-    ]
+    "origin": [["src/issue/screens/issue.screen.js", 280]]
   },
   "Issue Actions": {
     "translation": "问题操作",
-    "origin": [
-      [
-        "src/issue/screens/issue.screen.js",
-        434
-      ]
-    ]
+    "origin": [["src/issue/screens/issue.screen.js", 434]]
   },
   "Settings": {
     "translation": "设置",
-    "origin": [
-      [
-        "src/issue/screens/issue.screen.js",
-        95
-      ]
-    ]
+    "origin": [["src/issue/screens/issue.screen.js", 95]]
   },
   "You need to have an issue title!": {
     "translation": "请提供一个标题",
-    "origin": [
-      [
-        "src/issue/screens/new-issue.screen.js",
-        81
-      ]
-    ]
+    "origin": [["src/issue/screens/new-issue.screen.js", 81]]
   },
   "OK": {
     "translation": "OK",
     "origin": [
-      [
-        "src/issue/screens/new-issue.screen.js",
-        82
-      ],
-      [
-        "src/issue/screens/pull-merge.screen.js",
-        120
-      ]
+      ["src/issue/screens/new-issue.screen.js", 82],
+      ["src/issue/screens/pull-merge.screen.js", 120]
     ]
   },
   "Issue Title": {
     "translation": "问题标题",
-    "origin": [
-      [
-        "src/issue/screens/new-issue.screen.js",
-        116
-      ]
-    ]
+    "origin": [["src/issue/screens/new-issue.screen.js", 116]]
   },
   "Write a comment for your issue here": {
     "translation": "在这里写上你对问题的评论",
-    "origin": [
-      [
-        "src/issue/screens/new-issue.screen.js",
-        140
-      ]
-    ]
+    "origin": [["src/issue/screens/new-issue.screen.js", 140]]
   },
   "Create a merge commit": {
     "translation": "创建合并提交",
-    "origin": [
-      [
-        "src/issue/screens/pull-merge.screen.js",
-        92
-      ]
-    ]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 92]]
   },
   "Squash and merge": {
     "translation": "压缩并合并",
-    "origin": [
-      [
-        "src/issue/screens/pull-merge.screen.js",
-        92
-      ]
-    ]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 92]]
   },
   "merge": {
     "translation": "合并",
-    "origin": [
-      [
-        "src/issue/screens/pull-merge.screen.js",
-        116
-      ]
-    ]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 116]]
   },
   "squash": {
     "translation": "压缩",
-    "origin": [
-      [
-        "src/issue/screens/pull-merge.screen.js",
-        116
-      ]
-    ]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 116]]
   },
   "You need to have a commit title!": {
     "translation": "请提供一个提交的标题",
-    "origin": [
-      [
-        "src/issue/screens/pull-merge.screen.js",
-        119
-      ]
-    ]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 119]]
   },
   "Commit Title": {
     "translation": "提交标题",
-    "origin": [
-      [
-        "src/issue/screens/pull-merge.screen.js",
-        142
-      ]
-    ]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 142]]
   },
   "Write a title for your commit here": {
     "translation": "在这里写上你的提交的标题",
-    "origin": [
-      [
-        "src/issue/screens/pull-merge.screen.js",
-        145
-      ]
-    ]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 145]]
   },
   "Commit Message": {
     "translation": "提交说明",
-    "origin": [
-      [
-        "src/issue/screens/pull-merge.screen.js",
-        163
-      ]
-    ]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 163]]
   },
   "Write a message for your commit here": {
     "translation": "在这里写上你的提交的说明",
-    "origin": [
-      [
-        "src/issue/screens/pull-merge.screen.js",
-        166
-      ]
-    ]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 166]]
   },
   "Merge Type": {
     "translation": "合并类型",
-    "origin": [
-      [
-        "src/issue/screens/pull-merge.screen.js",
-        184
-      ]
-    ]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 184]]
   },
   "Change Merge Type": {
     "translation": "改变合并类型",
-    "origin": [
-      [
-        "src/issue/screens/pull-merge.screen.js",
-        213
-      ]
-    ]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 213]]
   },
   "Mark all as read": {
     "translation": "全部标记为已读",
-    "origin": [
-      [
-        "src/notifications/screens/notifications.screen.js",
-        392
-      ]
-    ]
+    "origin": [["src/notifications/screens/notifications.screen.js", 392]]
   },
   "Unread": {
     "translation": "查看未读",
-    "origin": [
-      [
-        "src/notifications/screens/notifications.screen.js",
-        452
-      ]
-    ]
+    "origin": [["src/notifications/screens/notifications.screen.js", 452]]
   },
   "Participating": {
     "translation": "查看参与中",
-    "origin": [
-      [
-        "src/notifications/screens/notifications.screen.js",
-        452
-      ]
-    ]
+    "origin": [["src/notifications/screens/notifications.screen.js", 452]]
   },
   "All": {
     "translation": "查看全部",
-    "origin": [
-      [
-        "src/notifications/screens/notifications.screen.js",
-        452
-      ]
-    ]
+    "origin": [["src/notifications/screens/notifications.screen.js", 452]]
   },
   "Retrieving notifications": {
     "translation": "正在获取通知",
-    "origin": [
-      [
-        "src/notifications/screens/notifications.screen.js",
-        461
-      ]
-    ]
+    "origin": [["src/notifications/screens/notifications.screen.js", 461]]
   },
   "You don't have any notifications of this type": {
     "translation": "你没有这个类型的通知",
-    "origin": [
-      [
-        "src/notifications/screens/notifications.screen.js",
-        482
-      ]
-    ]
+    "origin": [["src/notifications/screens/notifications.screen.js", 482]]
   },
   "MEMBERS": {
     "translation": "成员",
     "origin": [
-      [
-        "src/organization/screens/organization-profile.screen.js",
-        157
-      ],
-      [
-        "src/organization/screens/organization-profile.screen.js",
-        161
-      ]
+      ["src/organization/screens/organization-profile.screen.js", 157],
+      ["src/organization/screens/organization-profile.screen.js", 161]
     ]
   },
   "DESCRIPTION": {
     "translation": "简介",
-    "origin": [
-      [
-        "src/organization/screens/organization-profile.screen.js",
-        169
-      ]
-    ]
+    "origin": [["src/organization/screens/organization-profile.screen.js", 169]]
   },
   "Organization Actions": {
     "translation": "组织操作",
-    "origin": [
-      [
-        "src/organization/screens/organization-profile.screen.js",
-        190
-      ]
-    ]
+    "origin": [["src/organization/screens/organization-profile.screen.js", 190]]
   },
   "Searching for {query}": {
     "translation": "正在查找{query}",
     "origin": [
-      [
-        "src/repository/screens/issue-list.screen.js",
-        272
-      ],
-      [
-        "src/repository/screens/issue-list.screen.js",
-        281
-      ],
-      [
-        "src/repository/screens/pull-list.screen.js",
-        246
-      ],
-      [
-        "src/repository/screens/pull-list.screen.js",
-        255
-      ],
-      [
-        "src/search/screens/search.screen.js",
-        230
-      ],
-      [
-        "src/search/screens/search.screen.js",
-        238
-      ]
+      ["src/repository/screens/issue-list.screen.js", 272],
+      ["src/repository/screens/issue-list.screen.js", 281],
+      ["src/repository/screens/pull-list.screen.js", 246],
+      ["src/repository/screens/pull-list.screen.js", 255],
+      ["src/search/screens/search.screen.js", 230],
+      ["src/search/screens/search.screen.js", 238]
     ]
   },
   "No open issues found!": {
     "translation": "没有待解决的问题！",
-    "origin": [
-      [
-        "src/repository/screens/issue-list.screen.js",
-        304
-      ]
-    ]
+    "origin": [["src/repository/screens/issue-list.screen.js", 304]]
   },
   "No closed issues found!": {
     "translation": "没有已关闭的问题！",
-    "origin": [
-      [
-        "src/repository/screens/issue-list.screen.js",
-        315
-      ]
-    ]
+    "origin": [["src/repository/screens/issue-list.screen.js", 315]]
   },
   "New Issue": {
     "translation": "提交新问题",
     "origin": [
-      [
-        "src/repository/screens/issue-list.screen.js",
-        112
-      ],
-      [
-        "src/repository/screens/repository.screen.js",
-        393
-      ],
-      [
-        "src/repository/screens/repository.screen.js",
-        404
-      ]
+      ["src/repository/screens/issue-list.screen.js", 112],
+      ["src/repository/screens/repository.screen.js", 393],
+      ["src/repository/screens/repository.screen.js", 404]
     ]
   },
   "{0} files": {
     "translation": "{0} 个文件",
-    "origin": [
-      [
-        "src/repository/screens/pull-diff.screen.js",
-        98
-      ]
-    ]
+    "origin": [["src/repository/screens/pull-diff.screen.js", 98]]
   },
   "NEW": {
     "translation": "新增",
-    "origin": [
-      [
-        "src/repository/screens/pull-diff.screen.js",
-        161
-      ]
-    ]
+    "origin": [["src/repository/screens/pull-diff.screen.js", 161]]
   },
   "DELETED": {
     "translation": "移除",
-    "origin": [
-      [
-        "src/repository/screens/pull-diff.screen.js",
-        173
-      ]
-    ]
+    "origin": [["src/repository/screens/pull-diff.screen.js", 173]]
   },
   "File renamed without any changes": {
     "translation": "相同文件重命名",
-    "origin": [
-      [
-        "src/repository/screens/pull-diff.screen.js",
-        199
-      ]
-    ]
+    "origin": [["src/repository/screens/pull-diff.screen.js", 199]]
   },
   "No open pull requests found!": {
     "translation": "没有未处理的合并请求！",
-    "origin": [
-      [
-        "src/repository/screens/pull-list.screen.js",
-        278
-      ]
-    ]
+    "origin": [["src/repository/screens/pull-list.screen.js", 278]]
   },
   "No closed pull requests found!": {
     "translation": "没有已关闭的合并请求！",
-    "origin": [
-      [
-        "src/repository/screens/pull-list.screen.js",
-        289
-      ]
-    ]
+    "origin": [["src/repository/screens/pull-list.screen.js", 289]]
   },
   "No README.md found": {
     "translation": "未找到README.md",
-    "origin": [
-      [
-        "src/repository/screens/read-me.screen.js",
-        119
-      ]
-    ]
+    "origin": [["src/repository/screens/read-me.screen.js", 119]]
   },
   "README Actions": {
     "translation": "读我文件操作",
-    "origin": [
-      [
-        "src/repository/screens/read-me.screen.js",
-        128
-      ]
-    ]
+    "origin": [["src/repository/screens/read-me.screen.js", 128]]
   },
   "Share {0}": {
     "translation": "分享 {0}",
-    "origin": [
-      [
-        "src/repository/screens/repository.screen.js",
-        188
-      ]
-    ]
+    "origin": [["src/repository/screens/repository.screen.js", 188]]
   },
   "Check out {0} on GitHub. {1}": {
     "translation": "快来看看GitHub上的 {0} {1}",
-    "origin": [
-      [
-        "src/repository/screens/repository.screen.js",
-        193
-      ]
-    ]
+    "origin": [["src/repository/screens/repository.screen.js", 193]]
   },
   "Unstar": {
     "translation": "取消星标",
-    "origin": [
-      [
-        "src/repository/screens/repository.screen.js",
-        243
-      ]
-    ]
+    "origin": [["src/repository/screens/repository.screen.js", 243]]
   },
   "Star": {
     "translation": "星标",
-    "origin": [
-      [
-        "src/repository/screens/repository.screen.js",
-        243
-      ]
-    ]
+    "origin": [["src/repository/screens/repository.screen.js", 243]]
   },
   "Unwatch": {
     "translation": "取消关注",
-    "origin": [
-      [
-        "src/repository/screens/repository.screen.js",
-        244
-      ]
-    ]
+    "origin": [["src/repository/screens/repository.screen.js", 244]]
   },
   "Watch": {
     "translation": "关注",
-    "origin": [
-      [
-        "src/repository/screens/repository.screen.js",
-        244
-      ]
-    ]
+    "origin": [["src/repository/screens/repository.screen.js", 244]]
   },
   "Share": {
     "translation": "分享",
-    "origin": [
-      [
-        "src/repository/screens/repository.screen.js",
-        245
-      ]
-    ]
+    "origin": [["src/repository/screens/repository.screen.js", 245]]
   },
   "Fork": {
     "translation": "派生",
-    "origin": [
-      [
-        "src/repository/screens/repository.screen.js",
-        250
-      ]
-    ]
+    "origin": [["src/repository/screens/repository.screen.js", 250]]
   },
   "TOPICS": {
     "translation": "TOPICS",
-    "origin": [
-      [
-        "src/repository/screens/repository.screen.js",
-        298
-      ]
-    ]
+    "origin": [["src/repository/screens/repository.screen.js", 298]]
   },
   "OWNER": {
     "translation": "主人",
     "origin": [
-      [
-        "src/repository/screens/repository.screen.js",
-        304
-      ],
-      [
-        "src/repository/screens/repository.screen.js",
-        312
-      ],
-      [
-        "src/repository/screens/repository.screen.js",
-        320
-      ]
+      ["src/repository/screens/repository.screen.js", 304],
+      ["src/repository/screens/repository.screen.js", 312],
+      ["src/repository/screens/repository.screen.js", 320]
     ]
   },
   "CONTRIBUTORS": {
     "translation": "贡献者",
     "origin": [
-      [
-        "src/repository/screens/repository.screen.js",
-        329
-      ],
-      [
-        "src/repository/screens/repository.screen.js",
-        334
-      ]
+      ["src/repository/screens/repository.screen.js", 329],
+      ["src/repository/screens/repository.screen.js", 334]
     ]
   },
   "No contributors found": {
     "translation": "没有贡献者",
-    "origin": [
-      [
-        "src/repository/screens/repository.screen.js",
-        336
-      ]
-    ]
+    "origin": [["src/repository/screens/repository.screen.js", 336]]
   },
   "SOURCE": {
     "translation": "来源",
-    "origin": [
-      [
-        "src/repository/screens/repository.screen.js",
-        341
-      ]
-    ]
+    "origin": [["src/repository/screens/repository.screen.js", 341]]
   },
   "README": {
     "translation": "读我文件",
-    "origin": [
-      [
-        "src/repository/screens/repository.screen.js",
-        344
-      ]
-    ]
+    "origin": [["src/repository/screens/repository.screen.js", 344]]
   },
   "View Code": {
     "translation": "查看代码",
-    "origin": [
-      [
-        "src/repository/screens/repository.screen.js",
-        361
-      ]
-    ]
+    "origin": [["src/repository/screens/repository.screen.js", 361]]
   },
   "Code": {
     "translation": "代码",
-    "origin": [
-      [
-        "src/repository/screens/repository.screen.js",
-        371
-      ]
-    ]
+    "origin": [["src/repository/screens/repository.screen.js", 371]]
   },
   "ISSUES": {
     "translation": "问题",
-    "origin": [
-      [
-        "src/repository/screens/repository.screen.js",
-        384
-      ]
-    ]
+    "origin": [["src/repository/screens/repository.screen.js", 384]]
   },
   "No issues": {
     "translation": "没有问题",
-    "origin": [
-      [
-        "src/repository/screens/repository.screen.js",
-        388
-      ]
-    ]
+    "origin": [["src/repository/screens/repository.screen.js", 388]]
   },
   "No open issues": {
     "translation": "没有未解决的问题",
-    "origin": [
-      [
-        "src/repository/screens/repository.screen.js",
-        389
-      ]
-    ]
+    "origin": [["src/repository/screens/repository.screen.js", 389]]
   },
   "View All": {
     "translation": "查看全部",
     "origin": [
-      [
-        "src/repository/screens/repository.screen.js",
-        393
-      ],
-      [
-        "src/repository/screens/repository.screen.js",
-        432
-      ]
+      ["src/repository/screens/repository.screen.js", 393],
+      ["src/repository/screens/repository.screen.js", 432]
     ]
   },
   "Issues": {
     "translation": "问题",
-    "origin": [
-      [
-        "src/repository/screens/repository.screen.js",
-        398
-      ]
-    ]
+    "origin": [["src/repository/screens/repository.screen.js", 398]]
   },
   "PULL REQUESTS": {
     "translation": "合并请求",
-    "origin": [
-      [
-        "src/repository/screens/repository.screen.js",
-        424
-      ]
-    ]
+    "origin": [["src/repository/screens/repository.screen.js", 424]]
   },
   "No pull requests": {
     "translation": "没有合并请求",
-    "origin": [
-      [
-        "src/repository/screens/repository.screen.js",
-        428
-      ]
-    ]
+    "origin": [["src/repository/screens/repository.screen.js", 428]]
   },
   "No open pull requests": {
     "translation": "没有未处理的合并请求",
-    "origin": [
-      [
-        "src/repository/screens/repository.screen.js",
-        429
-      ]
-    ]
+    "origin": [["src/repository/screens/repository.screen.js", 429]]
   },
   "Pull Requests": {
     "translation": "合并请求",
-    "origin": [
-      [
-        "src/repository/screens/repository.screen.js",
-        435
-      ]
-    ]
+    "origin": [["src/repository/screens/repository.screen.js", 435]]
   },
   "Repository Actions": {
     "translation": "仓库操作",
-    "origin": [
-      [
-        "src/repository/screens/repository.screen.js",
-        459
-      ]
-    ]
+    "origin": [["src/repository/screens/repository.screen.js", 459]]
   },
   "Users": {
     "translation": "搜用户",
-    "origin": [
-      [
-        "src/search/screens/search.screen.js",
-        223
-      ]
-    ]
+    "origin": [["src/search/screens/search.screen.js", 223]]
   },
   "Search for any repository": {
     "translation": "查找任意仓库",
-    "origin": [
-      [
-        "src/search/screens/search.screen.js",
-        256
-      ]
-    ]
+    "origin": [["src/search/screens/search.screen.js", 256]]
   },
   "Search for any user": {
     "translation": "查找任意用户",
-    "origin": [
-      [
-        "src/search/screens/search.screen.js",
-        257
-      ]
-    ]
+    "origin": [["src/search/screens/search.screen.js", 257]]
   },
   "No repositories found :(": {
     "translation": "未找到符合条件的仓库 :(",
-    "origin": [
-      [
-        "src/search/screens/search.screen.js",
-        268
-      ]
-    ]
+    "origin": [["src/search/screens/search.screen.js", 268]]
   },
   "No users found :(": {
     "translation": "未找到符合条件的用户 :(",
-    "origin": [
-      [
-        "src/search/screens/search.screen.js",
-        279
-      ]
-    ]
+    "origin": [["src/search/screens/search.screen.js", 279]]
   },
   "Unfollow": {
     "translation": "取消关注",
-    "origin": [
-      [
-        "src/user/screens/profile.screen.js",
-        165
-      ]
-    ]
+    "origin": [["src/user/screens/profile.screen.js", 165]]
   },
   "Follow": {
     "translation": "关注",
-    "origin": [
-      [
-        "src/user/screens/profile.screen.js",
-        165
-      ]
-    ]
+    "origin": [["src/user/screens/profile.screen.js", 165]]
   },
   "User Actions": {
     "translation": "用户操作",
-    "origin": [
-      [
-        "src/user/screens/profile.screen.js",
-        250
-      ]
-    ]
+    "origin": [["src/user/screens/profile.screen.js", 250]]
   }
 }

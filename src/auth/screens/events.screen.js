@@ -371,24 +371,26 @@ class Events extends Component {
       case 'edited':
         return (
           <Trans>
-            <T c={actor} /> edited <T c={member} /> permissions in{' '}
-            <T c={repo} />
+            <T c={actor} /> edited <T c={member} /> at <T c={repo} />
           </Trans>
         );
 
       case 'deleted':
         return (
           <Trans>
-            <T c={actor} /> removed <T c={member} /> from <T c={repo} />
+            <T c={actor} /> removed <T c={member} /> at <T c={repo} />
+          </Trans>
+        );
+
+      case 'added':
+        return (
+          <Trans>
+            <T c={actor} /> added <T c={member} /> at <T c={repo} />
           </Trans>
         );
 
       default:
-        return (
-          <Trans>
-            <T c={actor} /> added <T c={member} /> to <T c={repo} />
-          </Trans>
-        );
+        return null;
     }
   }
 
@@ -466,12 +468,11 @@ class Events extends Component {
 
     return (
       <Trans>
-        <T c={actor} /> pushed to
+        <T c={actor} /> pushed to{' '}
         <LinkBranchDescription>
-          {' '}
-          {userEvent.payload.ref.replace('refs/heads/', '')}{' '}
-        </LinkBranchDescription>
-        in <T c={repo} />
+          {userEvent.payload.ref.replace('refs/heads/', '')}
+        </LinkBranchDescription>{' '}
+        at <T c={repo} />
       </Trans>
     );
   }
