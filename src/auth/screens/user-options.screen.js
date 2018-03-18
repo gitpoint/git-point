@@ -77,7 +77,6 @@ class UserOptions extends Component {
   }
 
   componentWillReceiveProps(nextState) {
-    console.log('user options', nextState.locale, this.props.locale);
     if (nextState.locale !== this.props.locale) {
       const { i18n } = nextState;
 
