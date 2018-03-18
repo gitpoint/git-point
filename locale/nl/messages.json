@@ -267,7 +267,7 @@
     ]
   },
   "Open in Browser": {
-    "translation": "Open in Browser",
+    "translation": "",
     "origin": [
       ["src/auth/screens/user-options.screen.js", 150],
       ["src/issue/screens/issue-settings.screen.js", 281],
@@ -634,7 +634,7 @@
     "origin": [["src/issue/screens/pull-merge.screen.js", 118]]
   },
   "Commit Title": {
-    "translation": "Commit Title",
+    "translation": "Commit Titel",
     "origin": [["src/issue/screens/pull-merge.screen.js", 141]]
   },
   "Write a title for your commit here": {
@@ -788,7 +788,7 @@
     "origin": [["src/repository/screens/repository.screen.js", 248]]
   },
   "TOPICS": {
-    "translation": "TOPICS",
+    "translation": "",
     "origin": [["src/repository/screens/repository.screen.js", 295]]
   },
   "OWNER": {

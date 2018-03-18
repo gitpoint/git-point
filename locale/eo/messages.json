@@ -266,7 +266,7 @@
     ]
   },
   "Open in Browser": {
-    "translation": "Open in Browser",
+    "translation": "",
     "origin": [
       ["src/auth/screens/user-options.screen.js", 150],
       ["src/issue/screens/issue-settings.screen.js", 281],
@@ -787,7 +787,7 @@
     "origin": [["src/repository/screens/repository.screen.js", 248]]
   },
   "TOPICS": {
-    "translation": "TOPICS",
+    "translation": "",
     "origin": [["src/repository/screens/repository.screen.js", 295]]
   },
   "OWNER": {
