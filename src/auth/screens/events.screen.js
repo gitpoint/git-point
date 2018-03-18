@@ -307,22 +307,7 @@ class Events extends Component {
     const issue = this.getIssueLink(userEvent);
 
     switch (userEvent.payload.action) {
-      case 'edited':
-        return (
-          <Trans>
-            <T c={actor} /> edited a comment on <T c={issue} /> at{' '}
-            <T c={repo} />
-          </Trans>
-        );
-      case 'deleted':
-        return (
-          <Trans>
-            <T c={actor} /> deleted a comment on <T c={issue} /> at{' '}
-            <T c={repo} />
-          </Trans>
-        );
-
-      default:
+      case 'created':
         if (userEvent.payload.issue.pull_request) {
           return (
             <Trans>
@@ -337,6 +322,9 @@ class Events extends Component {
             <T c={actor} /> commented on issue <T c={issue} /> at <T c={repo} />
           </Trans>
         );
+
+      default:
+        return null;
     }
   }
 

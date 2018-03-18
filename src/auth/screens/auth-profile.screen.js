@@ -26,7 +26,6 @@ import { emojifyText, openURLInView } from 'utils';
 const mapStateToProps = state => ({
   user: state.auth.user,
   orgs: state.auth.orgs,
-  locale: state.auth.locale,
   starCount: state.auth.starCount,
   isPendingUser: state.auth.isPendingUser,
   isPendingOrgs: state.auth.isPendingOrgs,
@@ -73,7 +72,6 @@ class AuthProfile extends Component {
     getStarCount: Function,
     user: Object,
     orgs: Array,
-    locale: string,
     starCount: string,
     isPendingUser: boolean,
     isPendingOrgs: boolean,
@@ -98,7 +96,6 @@ class AuthProfile extends Component {
       orgs,
       isPendingUser,
       isPendingOrgs,
-      locale,
       i18n,
       starCount,
       navigation,
@@ -118,7 +115,6 @@ class AuthProfile extends Component {
               initialUser={hasInitialUser ? user : {}}
               user={hasInitialUser ? user : {}}
               starCount={hasInitialUser ? starCount : ''}
-              locale={locale}
               navigation={navigation}
             />
           )}
@@ -160,12 +156,7 @@ class AuthProfile extends Component {
             )}
 
           {!isPending && (
-            <EntityInfo
-              entity={user}
-              orgs={orgs}
-              navigation={navigation}
-              locale={locale}
-            />
+            <EntityInfo entity={user} orgs={orgs} navigation={navigation} />
           )}
 
           {!isPending && (
