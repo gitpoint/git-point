@@ -21,7 +21,6 @@ import { searchRepos, searchUsers } from '../index';
 const mapStateToProps = state => ({
   users: state.search.users,
   repos: state.search.repos,
-  locale: state.auth.locale,
   isPendingSearchUsers: state.search.isPendingSearchUsers,
   isPendingSearchRepos: state.search.isPendingSearchRepos,
 });

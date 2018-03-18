@@ -32,7 +32,6 @@ const mapStateToProps = state => ({
   participating: state.notifications.participating,
   all: state.notifications.all,
   issue: state.issue.issue,
-  locale: state.auth.locale,
   isPendingUnread: state.notifications.isPendingUnread,
   isPendingParticipating: state.notifications.isPendingParticipating,
   isPendingAll: state.notifications.isPendingAll,
@@ -156,7 +155,6 @@ class Notifications extends Component {
     unread: Array,
     participating: Array,
     all: Array,
-    locale: string,
     i18n: Object,
     isPendingUnread: boolean,
     isPendingParticipating: boolean,
@@ -355,7 +353,6 @@ class Notifications extends Component {
     navigation.navigate('Issue', {
       issueURL: notification.subject.url.replace(/pulls\/(\d+)$/, 'issues/$1'),
       isPR: notification.subject.type === 'PullRequest',
-      locale: this.props.locale,
     });
   }
 

@@ -8,7 +8,6 @@ import { createStructuredSelector } from 'reselect';
 import ActionSheet from 'react-native-actionsheet';
 import { withI18n } from '@lingui/react';
 
-import { getAuthLocale } from 'auth';
 import {
   ViewContainer,
   UserProfile,
@@ -40,7 +39,6 @@ const selectors = createStructuredSelector({
   isPendingOrg: getOrganizationIsPendingOrg,
   isPendingRepos: getOrganizationIsPendingRepos,
   isPendingMembers: getOrganizationIsPendingMembers,
-  locale: getAuthLocale,
 });
 
 const actionCreators = {
@@ -69,7 +67,6 @@ class OrganizationProfile extends Component {
     // isPendingRepos: boolean,
     isPendingMembers: boolean,
     navigation: Object,
-    locale: string,
     i18n: Object,
   };
 
@@ -120,7 +117,6 @@ class OrganizationProfile extends Component {
       isPendingOrg,
       isPendingMembers,
       navigation,
-      locale,
       i18n,
     } = this.props;
     const { refreshing } = this.state;
@@ -175,11 +171,7 @@ class OrganizationProfile extends Component {
             )}
 
           {!isPendingOrg && (
-            <EntityInfo
-              entity={organization}
-              navigation={navigation}
-              locale={locale}
-            />
+            <EntityInfo entity={organization} navigation={navigation} />
           )}
         </ParallaxScroll>
 

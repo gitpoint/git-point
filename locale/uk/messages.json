@@ -7,21 +7,21 @@
     "translation": "ДОВІДКА",
     "origin": [
       ["src/auth/screens/auth-profile.screen.js", 149],
-      ["src/user/screens/profile.screen.js", 213]
+      ["src/user/screens/profile.screen.js", 209]
     ]
   },
   "ORGANIZATIONS": {
     "translation": "ОРГАНІЗАЦІЇ",
     "origin": [
       ["src/auth/screens/auth-profile.screen.js", 165],
-      ["src/user/screens/profile.screen.js", 230]
+      ["src/user/screens/profile.screen.js", 221]
     ]
   },
   "No organizations": {
     "translation": "Нема організацій",
     "origin": [
       ["src/auth/screens/auth-profile.screen.js", 167],
-      ["src/user/screens/profile.screen.js", 232]
+      ["src/user/screens/profile.screen.js", 223]
     ]
   },
   "Can't see all your organizations?": {
@@ -143,48 +143,52 @@
   "Welcome to GitPoint": {
     "translation": "Ласкаво просмо в GitPoint",
     "origin": [
-      ["src/auth/screens/events.screen.js", 575],
-      ["src/auth/screens/login.screen.js", 278],
+      ["src/auth/screens/events.screen.js", 574],
+      ["src/auth/screens/login.screen.js", 281],
       ["src/auth/screens/welcome.screen.js", 40]
     ]
   },
+  "Preparing GitPoint...": {
+    "translation": "Підготовка GitPoint...",
+    "origin": [["src/auth/screens/login.screen.js", 222]]
+  },
   "The most feature-rich GitHub client that is 100% free": {
     "translation": "Найбільш багатофункціональни безплатний GitHub-клієнт",
-    "origin": [["src/auth/screens/login.screen.js", 281]]
+    "origin": [["src/auth/screens/login.screen.js", 284]]
   },
   "Control notifications": {
     "translation": "Керування сповіщеннями",
-    "origin": [["src/auth/screens/login.screen.js", 295]]
+    "origin": [["src/auth/screens/login.screen.js", 298]]
   },
   "View and control all of your unread and participating notifications": {
     "translation":
       "Переглядайте і керуйте всіма вашими непрочитаними і активними сповіщеннями",
-    "origin": [["src/auth/screens/login.screen.js", 298]]
+    "origin": [["src/auth/screens/login.screen.js", 301]]
   },
   "Repositories and Users": {
     "translation": "Репозиторії і користувач",
-    "origin": [["src/auth/screens/login.screen.js", 314]]
+    "origin": [["src/auth/screens/login.screen.js", 317]]
   },
   "Easily obtain repository, user and organization information": {
     "translation":
       "Легко отримуйте інформацію про репозиторій, користувача і організації",
-    "origin": [["src/auth/screens/login.screen.js", 317]]
+    "origin": [["src/auth/screens/login.screen.js", 320]]
   },
   "Issues and Pull Requests": {
     "translation": "Задачі и Pull-запити",
-    "origin": [["src/auth/screens/login.screen.js", 332]]
+    "origin": [["src/auth/screens/login.screen.js", 335]]
   },
   "Communicate on conversations, merge pull requests and more": {
     "translation": "Спілкуйтесь, приймайте pull-запити і робіть багато іншого",
-    "origin": [["src/auth/screens/login.screen.js", 335]]
+    "origin": [["src/auth/screens/login.screen.js", 338]]
   },
   "SIGN IN": {
     "translation": "УВІЙТИ",
-    "origin": [["src/auth/screens/login.screen.js", 346]]
+    "origin": [["src/auth/screens/login.screen.js", 349]]
   },
   "CANCEL": {
     "translation": "ВІДМІНИТИ",
-    "origin": [["src/auth/screens/login.screen.js", 378]]
+    "origin": [["src/auth/screens/login.screen.js", 381]]
   },
   "Last updated: July 15, 2017": {
     "translation": "Останнє оновлення: 15 липня 2017 р.",
@@ -258,27 +262,27 @@
   "Language": {
     "translation": "Мова",
     "origin": [
-      ["src/auth/screens/user-options.screen.js", 140],
-      ["src/auth/screens/user-options.screen.js", 143]
+      ["src/auth/screens/user-options.screen.js", 141],
+      ["src/auth/screens/user-options.screen.js", 144]
     ]
   },
   "Open in Browser": {
     "translation": "Відкрити в браузері",
     "origin": [
-      ["src/auth/screens/user-options.screen.js", 149],
-      ["src/issue/screens/issue-settings.screen.js", 282],
-      ["src/issue/screens/issue.screen.js", 386],
-      ["src/organization/screens/organization-profile.screen.js", 128],
+      ["src/auth/screens/user-options.screen.js", 150],
+      ["src/issue/screens/issue-settings.screen.js", 281],
+      ["src/issue/screens/issue.screen.js", 379],
+      ["src/organization/screens/organization-profile.screen.js", 124],
       ["src/repository/screens/read-me.screen.js", 99],
-      ["src/repository/screens/repository.screen.js", 246],
-      ["src/user/screens/profile.screen.js", 166]
+      ["src/repository/screens/repository.screen.js", 244],
+      ["src/user/screens/profile.screen.js", 163]
     ]
   },
   "Privacy Policy": {
     "translation": "Політика конфіденційності",
     "origin": [
-      ["src/auth/screens/user-options.screen.js", 154],
-      ["src/auth/screens/user-options.screen.js", 157]
+      ["src/auth/screens/user-options.screen.js", 155],
+      ["src/auth/screens/user-options.screen.js", 158]
     ]
   },
   "Make a donation": {
@@ -291,19 +295,19 @@
   },
   "Not applicable in debug mode": {
     "translation": "Не підтримується в режимі налагодження",
-    "origin": [["src/auth/screens/user-options.screen.js", 103]]
+    "origin": [["src/auth/screens/user-options.screen.js", 104]]
   },
   "Checking for update...": {
     "translation": "Перевірка оновлення...",
-    "origin": [["src/auth/screens/user-options.screen.js", 106]]
+    "origin": [["src/auth/screens/user-options.screen.js", 107]]
   },
   "Update is available!": {
     "translation": "Доступне оновлення!",
-    "origin": [["src/auth/screens/user-options.screen.js", 115]]
+    "origin": [["src/auth/screens/user-options.screen.js", 116]]
   },
   "App is up to date": {
     "translation": "Програму оновлено",
-    "origin": [["src/auth/screens/user-options.screen.js", 116]]
+    "origin": [["src/auth/screens/user-options.screen.js", 117]]
   },
   "Locked, but you can still comment...": {
     "translation": "Заблоковано, але ви все ще можете прокоментувати...",
@@ -337,15 +341,15 @@
     "translation": "Відминити",
     "origin": [
       ["src/components/comment-list-item.component.js", 212],
-      ["src/issue/screens/issue-settings.screen.js", 296],
-      ["src/issue/screens/issue-settings.screen.js", 305],
-      ["src/issue/screens/issue-settings.screen.js", 316],
-      ["src/issue/screens/issue.screen.js", 435],
-      ["src/issue/screens/pull-merge.screen.js", 214],
-      ["src/organization/screens/organization-profile.screen.js", 191],
+      ["src/issue/screens/issue-settings.screen.js", 295],
+      ["src/issue/screens/issue-settings.screen.js", 304],
+      ["src/issue/screens/issue-settings.screen.js", 315],
+      ["src/issue/screens/issue.screen.js", 427],
+      ["src/issue/screens/pull-merge.screen.js", 213],
+      ["src/organization/screens/organization-profile.screen.js", 183],
       ["src/repository/screens/read-me.screen.js", 129],
-      ["src/repository/screens/repository.screen.js", 460],
-      ["src/user/screens/profile.screen.js", 251]
+      ["src/repository/screens/repository.screen.js", 456],
+      ["src/user/screens/profile.screen.js", 242]
     ]
   },
   "INFO": {
@@ -389,11 +393,11 @@
   },
   "#{0} opened {1} ago by {2}": {
     "translation": "#{0} відкритий {1} назад користувачем {2}",
-    "origin": [["src/components/issue-list-item.component.js", 84]]
+    "origin": [["src/components/issue-list-item.component.js", 82]]
   },
   "#{0} by {1} was closed {2} ago": {
     "translation": "#{0} закритий {2} назад користувачем {1}",
-    "origin": [["src/components/issue-list-item.component.js", 87]]
+    "origin": [["src/components/issue-list-item.component.js", 85]]
   },
   "Stars": {
     "translation": "Stars",
@@ -402,7 +406,7 @@
         "src/components/loading-indicators/loading-repository-profile.component.js",
         94
       ],
-      ["src/components/repository-profile.component.js", 208],
+      ["src/components/repository-profile.component.js", 207],
       ["src/components/user-profile.component.js", 167],
       ["src/components/user-profile.component.js", 180]
     ]
@@ -414,32 +418,32 @@
         "src/components/loading-indicators/loading-repository-profile.component.js",
         100
       ],
-      ["src/components/repository-profile.component.js", 244]
+      ["src/components/repository-profile.component.js", 243]
     ]
   },
   "Unknown": {
     "translation": "Unknown",
-    "origin": [["src/components/repository-profile.component.js", 143]]
+    "origin": [["src/components/repository-profile.component.js", 142]]
   },
   "Repository is not found": {
     "translation": "Repository is not found",
-    "origin": [["src/components/repository-profile.component.js", 160]]
+    "origin": [["src/components/repository-profile.component.js", 159]]
   },
   "forked from <0>{0}</0>": {
     "translation": "склоновано від <0>{0}</0>",
-    "origin": [["src/components/repository-profile.component.js", 181]]
+    "origin": [["src/components/repository-profile.component.js", 180]]
   },
   "Starred": {
     "translation": "Відмічено",
-    "origin": [["src/components/repository-profile.component.js", 213]]
+    "origin": [["src/components/repository-profile.component.js", 212]]
   },
   "Watchers": {
     "translation": "Спостерігачів",
-    "origin": [["src/components/repository-profile.component.js", 226]]
+    "origin": [["src/components/repository-profile.component.js", 225]]
   },
   "Watching": {
     "translation": "Спостерігаю",
-    "origin": [["src/components/repository-profile.component.js", 231]]
+    "origin": [["src/components/repository-profile.component.js", 230]]
   },
   "Merged": {
     "translation": "Злито",
@@ -449,16 +453,16 @@
     "translation": "Відкрито",
     "origin": [
       ["src/components/state-badge.component.js", 38],
-      ["src/repository/screens/issue-list.screen.js", 261],
-      ["src/repository/screens/pull-list.screen.js", 235]
+      ["src/repository/screens/issue-list.screen.js", 250],
+      ["src/repository/screens/pull-list.screen.js", 232]
     ]
   },
   "Closed": {
     "translation": "Закрито",
     "origin": [
       ["src/components/state-badge.component.js", 41],
-      ["src/repository/screens/issue-list.screen.js", 261],
-      ["src/repository/screens/pull-list.screen.js", 235]
+      ["src/repository/screens/issue-list.screen.js", 250],
+      ["src/repository/screens/pull-list.screen.js", 232]
     ]
   },
   "Repositories": {
@@ -466,7 +470,7 @@
     "origin": [
       ["src/components/user-profile.component.js", 143],
       ["src/components/user-profile.component.js", 158],
-      ["src/search/screens/search.screen.js", 223]
+      ["src/search/screens/search.screen.js", 222]
     ]
   },
   "Followers": {
@@ -491,232 +495,232 @@
   "Issue Comment": {
     "translation": "Коментар задачі",
     "origin": [
-      ["src/issue/screens/edit-issue-comment.screen.js", 105],
-      ["src/issue/screens/new-issue.screen.js", 137]
+      ["src/issue/screens/edit-issue-comment.screen.js", 104],
+      ["src/issue/screens/new-issue.screen.js", 136]
     ]
   },
   "Write a title for your issue here": {
     "translation": "Напишіть назву задачі",
     "origin": [
-      ["src/issue/screens/edit-issue-comment.screen.js", 108],
-      ["src/issue/screens/new-issue.screen.js", 119]
+      ["src/issue/screens/edit-issue-comment.screen.js", 107],
+      ["src/issue/screens/new-issue.screen.js", 118]
     ]
   },
   "Submit": {
     "translation": "Відправити",
     "origin": [
-      ["src/issue/screens/edit-issue-comment.screen.js", 131],
-      ["src/issue/screens/new-issue.screen.js", 160]
+      ["src/issue/screens/edit-issue-comment.screen.js", 130],
+      ["src/issue/screens/new-issue.screen.js", 159]
     ]
   },
   "Pull Request": {
     "translation": "Pull-запити",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 157]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 156]]
   },
   "Issue": {
     "translation": "задачу",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 157]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 156]]
   },
   "Apply Label": {
     "translation": "Додати ярлик",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 164]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 163]]
   },
   "None yet": {
     "translation": "Поки немає",
     "origin": [
-      ["src/issue/screens/issue-settings.screen.js", 171],
-      ["src/issue/screens/issue-settings.screen.js", 219]
+      ["src/issue/screens/issue-settings.screen.js", 170],
+      ["src/issue/screens/issue-settings.screen.js", 218]
     ]
   },
   "LABELS": {
     "translation": "ЯРЛИКИ",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 172]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 171]]
   },
   "Assign Yourself": {
     "translation": "Призначити самому собі",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 206]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 205]]
   },
   "ASSIGNEES": {
     "translation": "ВІДПОВІДАЛЬНІ",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 220]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 219]]
   },
   "ACTIONS": {
     "translation": "ДІЇ",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 248]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 247]]
   },
   "Unlock {issueType}": {
     "translation": "Розблокувати {issueType}",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 252]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 251]]
   },
   "Lock {issueType}": {
     "translation": "Блокувати {issueType}",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 253]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 252]]
   },
   "Close {issueType}": {
     "translation": "Закрити {issueType}",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 265]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 264]]
   },
   "Reopen {issueType}": {
     "translation": "Відкрити знову {issueType}",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 266]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 265]]
   },
   "Are you sure?": {
     "translation": "Ви впевнені?",
     "origin": [
-      ["src/issue/screens/issue-settings.screen.js", 295],
-      ["src/issue/screens/issue-settings.screen.js", 304]
+      ["src/issue/screens/issue-settings.screen.js", 294],
+      ["src/issue/screens/issue-settings.screen.js", 303]
     ]
   },
   "Yes": {
     "translation": "Так",
     "origin": [
-      ["src/issue/screens/issue-settings.screen.js", 296],
-      ["src/issue/screens/issue-settings.screen.js", 305]
+      ["src/issue/screens/issue-settings.screen.js", 295],
+      ["src/issue/screens/issue-settings.screen.js", 304]
     ]
   },
   "Apply a label to this issue": {
     "translation": "Додати мітку до цієї задачі",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 313]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 312]]
   },
   "Edit Comment": {
     "translation": "Редагувати Коментар",
-    "origin": [["src/issue/screens/issue.screen.js", 280]]
+    "origin": [["src/issue/screens/issue.screen.js", 277]]
   },
   "Issue Actions": {
     "translation": "Дії з задачею",
-    "origin": [["src/issue/screens/issue.screen.js", 434]]
+    "origin": [["src/issue/screens/issue.screen.js", 426]]
   },
   "Settings": {
     "translation": "Налаштування",
-    "origin": [["src/issue/screens/issue.screen.js", 95]]
+    "origin": [["src/issue/screens/issue.screen.js", 94]]
   },
   "You need to have an issue title!": {
     "translation": "Потрібно вказати назву задачі",
-    "origin": [["src/issue/screens/new-issue.screen.js", 81]]
+    "origin": [["src/issue/screens/new-issue.screen.js", 80]]
   },
   "OK": {
     "translation": "OK",
     "origin": [
-      ["src/issue/screens/new-issue.screen.js", 82],
-      ["src/issue/screens/pull-merge.screen.js", 120]
+      ["src/issue/screens/new-issue.screen.js", 81],
+      ["src/issue/screens/pull-merge.screen.js", 119]
     ]
   },
   "Issue Title": {
     "translation": "Назва задачі",
-    "origin": [["src/issue/screens/new-issue.screen.js", 116]]
+    "origin": [["src/issue/screens/new-issue.screen.js", 115]]
   },
   "Write a comment for your issue here": {
     "translation": "Напишіть коментар до задачі",
-    "origin": [["src/issue/screens/new-issue.screen.js", 140]]
+    "origin": [["src/issue/screens/new-issue.screen.js", 139]]
   },
   "Create a merge commit": {
     "translation": "Стоврити коміт злиття",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 92]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 91]]
   },
   "Squash and merge": {
     "translation": "Обʼєднати і злити",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 92]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 91]]
   },
   "merge": {
     "translation": "злити",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 116]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 115]]
   },
   "squash": {
     "translation": "обʼєднати",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 116]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 115]]
   },
   "You need to have a commit title!": {
     "translation": "Потрібно написати заголовок до коміту!",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 119]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 118]]
   },
   "Commit Title": {
     "translation": "Заголовок коміту",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 142]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 141]]
   },
   "Write a title for your commit here": {
     "translation": "Напишіть заголовок коміту",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 145]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 144]]
   },
   "Commit Message": {
     "translation": "Текст повідомленя коміту",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 163]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 162]]
   },
   "Write a message for your commit here": {
     "translation": "Напишіть текст повідомлення коміту",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 166]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 165]]
   },
   "Merge Type": {
     "translation": "Тип злиття",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 184]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 183]]
   },
   "Change Merge Type": {
     "translation": "Змінити тип злиття",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 213]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 212]]
   },
   "Mark all as read": {
     "translation": "Відмітити всі як прочитані",
-    "origin": [["src/notifications/screens/notifications.screen.js", 392]]
+    "origin": [["src/notifications/screens/notifications.screen.js", 389]]
   },
   "Unread": {
     "translation": "Не прочитано",
-    "origin": [["src/notifications/screens/notifications.screen.js", 452]]
+    "origin": [["src/notifications/screens/notifications.screen.js", 449]]
   },
   "Participating": {
     "translation": "Бере участь",
-    "origin": [["src/notifications/screens/notifications.screen.js", 452]]
+    "origin": [["src/notifications/screens/notifications.screen.js", 449]]
   },
   "All": {
     "translation": "Всі",
-    "origin": [["src/notifications/screens/notifications.screen.js", 452]]
+    "origin": [["src/notifications/screens/notifications.screen.js", 449]]
   },
   "Retrieving notifications": {
     "translation": "Отримання сповіщень",
-    "origin": [["src/notifications/screens/notifications.screen.js", 461]]
+    "origin": [["src/notifications/screens/notifications.screen.js", 458]]
   },
   "You don't have any notifications of this type": {
     "translation": "У вас немає сповіщень цього типу",
-    "origin": [["src/notifications/screens/notifications.screen.js", 482]]
+    "origin": [["src/notifications/screens/notifications.screen.js", 479]]
   },
   "MEMBERS": {
     "translation": "УЧАСНИКИ",
     "origin": [
-      ["src/organization/screens/organization-profile.screen.js", 157],
-      ["src/organization/screens/organization-profile.screen.js", 161]
+      ["src/organization/screens/organization-profile.screen.js", 153],
+      ["src/organization/screens/organization-profile.screen.js", 157]
     ]
   },
   "DESCRIPTION": {
     "translation": "ОПИС",
-    "origin": [["src/organization/screens/organization-profile.screen.js", 169]]
+    "origin": [["src/organization/screens/organization-profile.screen.js", 165]]
   },
   "Organization Actions": {
     "translation": "Дії з організацією",
-    "origin": [["src/organization/screens/organization-profile.screen.js", 190]]
+    "origin": [["src/organization/screens/organization-profile.screen.js", 182]]
   },
   "Searching for {query}": {
     "translation": "Пошук по {query}",
     "origin": [
-      ["src/repository/screens/issue-list.screen.js", 272],
-      ["src/repository/screens/issue-list.screen.js", 281],
-      ["src/repository/screens/pull-list.screen.js", 246],
-      ["src/repository/screens/pull-list.screen.js", 255],
-      ["src/search/screens/search.screen.js", 230],
-      ["src/search/screens/search.screen.js", 238]
+      ["src/repository/screens/issue-list.screen.js", 261],
+      ["src/repository/screens/issue-list.screen.js", 270],
+      ["src/repository/screens/pull-list.screen.js", 243],
+      ["src/repository/screens/pull-list.screen.js", 252],
+      ["src/search/screens/search.screen.js", 229],
+      ["src/search/screens/search.screen.js", 237]
     ]
   },
   "No open issues found!": {
     "translation": "Не знайдено відкритих задач!",
-    "origin": [["src/repository/screens/issue-list.screen.js", 304]]
+    "origin": [["src/repository/screens/issue-list.screen.js", 293]]
   },
   "No closed issues found!": {
     "translation": "Не знайдено закритих задач!",
-    "origin": [["src/repository/screens/issue-list.screen.js", 315]]
+    "origin": [["src/repository/screens/issue-list.screen.js", 304]]
   },
   "New Issue": {
     "translation": "Нова задача",
     "origin": [
-      ["src/repository/screens/issue-list.screen.js", 112],
-      ["src/repository/screens/repository.screen.js", 393],
-      ["src/repository/screens/repository.screen.js", 404]
+      ["src/repository/screens/issue-list.screen.js", 111],
+      ["src/repository/screens/repository.screen.js", 390],
+      ["src/repository/screens/repository.screen.js", 401]
     ]
   },
   "{0} files": {
@@ -737,11 +741,11 @@
   },
   "No open pull requests found!": {
     "translation": "Не знайдено відкритих pull-запитів!",
-    "origin": [["src/repository/screens/pull-list.screen.js", 278]]
+    "origin": [["src/repository/screens/pull-list.screen.js", 275]]
   },
   "No closed pull requests found!": {
     "translation": "Не знайдено закритих pull-запитів!",
-    "origin": [["src/repository/screens/pull-list.screen.js", 289]]
+    "origin": [["src/repository/screens/pull-list.screen.js", 286]]
   },
   "No README.md found": {
     "translation": "He вдалось знайти README.md",
@@ -753,148 +757,148 @@
   },
   "Share {0}": {
     "translation": "Поділитись {0}",
-    "origin": [["src/repository/screens/repository.screen.js", 188]]
+    "origin": [["src/repository/screens/repository.screen.js", 187]]
   },
   "Check out {0} on GitHub. {1}": {
     "translation": "Перевірити {0} на GitHub. {1}",
-    "origin": [["src/repository/screens/repository.screen.js", 193]]
+    "origin": [["src/repository/screens/repository.screen.js", 192]]
   },
   "Unstar": {
     "translation": "Зняти відмітку",
-    "origin": [["src/repository/screens/repository.screen.js", 243]]
+    "origin": [["src/repository/screens/repository.screen.js", 241]]
   },
   "Star": {
     "translation": "Відмітити",
-    "origin": [["src/repository/screens/repository.screen.js", 243]]
+    "origin": [["src/repository/screens/repository.screen.js", 241]]
   },
   "Unwatch": {
     "translation": "Перестати спостерігати",
-    "origin": [["src/repository/screens/repository.screen.js", 244]]
+    "origin": [["src/repository/screens/repository.screen.js", 242]]
   },
   "Watch": {
     "translation": "Спостерігати",
-    "origin": [["src/repository/screens/repository.screen.js", 244]]
+    "origin": [["src/repository/screens/repository.screen.js", 242]]
   },
   "Share": {
     "translation": "Поділитись",
-    "origin": [["src/repository/screens/repository.screen.js", 245]]
+    "origin": [["src/repository/screens/repository.screen.js", 243]]
   },
   "Fork": {
     "translation": "Клонувати",
-    "origin": [["src/repository/screens/repository.screen.js", 250]]
+    "origin": [["src/repository/screens/repository.screen.js", 248]]
   },
   "TOPICS": {
     "translation": "TOPICS",
-    "origin": [["src/repository/screens/repository.screen.js", 298]]
+    "origin": [["src/repository/screens/repository.screen.js", 295]]
   },
   "OWNER": {
     "translation": "ВЛАСНИК",
     "origin": [
-      ["src/repository/screens/repository.screen.js", 304],
-      ["src/repository/screens/repository.screen.js", 312],
-      ["src/repository/screens/repository.screen.js", 320]
+      ["src/repository/screens/repository.screen.js", 301],
+      ["src/repository/screens/repository.screen.js", 309],
+      ["src/repository/screens/repository.screen.js", 317]
     ]
   },
   "CONTRIBUTORS": {
     "translation": "УЧАСНИКИ",
     "origin": [
-      ["src/repository/screens/repository.screen.js", 329],
-      ["src/repository/screens/repository.screen.js", 334]
+      ["src/repository/screens/repository.screen.js", 326],
+      ["src/repository/screens/repository.screen.js", 331]
     ]
   },
   "No contributors found": {
     "translation": "Учасники не знайдені",
-    "origin": [["src/repository/screens/repository.screen.js", 336]]
+    "origin": [["src/repository/screens/repository.screen.js", 333]]
   },
   "SOURCE": {
     "translation": "КОД",
-    "origin": [["src/repository/screens/repository.screen.js", 341]]
+    "origin": [["src/repository/screens/repository.screen.js", 338]]
   },
   "README": {
     "translation": "README",
-    "origin": [["src/repository/screens/repository.screen.js", 344]]
+    "origin": [["src/repository/screens/repository.screen.js", 341]]
   },
   "View Code": {
     "translation": "Дивитись код",
-    "origin": [["src/repository/screens/repository.screen.js", 361]]
+    "origin": [["src/repository/screens/repository.screen.js", 358]]
   },
   "Code": {
     "translation": "Код",
-    "origin": [["src/repository/screens/repository.screen.js", 371]]
+    "origin": [["src/repository/screens/repository.screen.js", 368]]
   },
   "ISSUES": {
     "translation": "ЗАДАЧІ",
-    "origin": [["src/repository/screens/repository.screen.js", 384]]
+    "origin": [["src/repository/screens/repository.screen.js", 381]]
   },
   "No issues": {
     "translation": "Немає задач",
-    "origin": [["src/repository/screens/repository.screen.js", 388]]
+    "origin": [["src/repository/screens/repository.screen.js", 385]]
   },
   "No open issues": {
     "translation": "Немає відкритих задач",
-    "origin": [["src/repository/screens/repository.screen.js", 389]]
+    "origin": [["src/repository/screens/repository.screen.js", 386]]
   },
   "View All": {
     "translation": "Дивитись все",
     "origin": [
-      ["src/repository/screens/repository.screen.js", 393],
-      ["src/repository/screens/repository.screen.js", 432]
+      ["src/repository/screens/repository.screen.js", 390],
+      ["src/repository/screens/repository.screen.js", 429]
     ]
   },
   "Issues": {
     "translation": "Задачі",
-    "origin": [["src/repository/screens/repository.screen.js", 398]]
+    "origin": [["src/repository/screens/repository.screen.js", 395]]
   },
   "PULL REQUESTS": {
     "translation": "PULL-ЗАПИТИ",
-    "origin": [["src/repository/screens/repository.screen.js", 424]]
+    "origin": [["src/repository/screens/repository.screen.js", 421]]
   },
   "No pull requests": {
     "translation": "Немає pull-запитів",
-    "origin": [["src/repository/screens/repository.screen.js", 428]]
+    "origin": [["src/repository/screens/repository.screen.js", 425]]
   },
   "No open pull requests": {
     "translation": "Немає відкритих pull-запитів",
-    "origin": [["src/repository/screens/repository.screen.js", 429]]
+    "origin": [["src/repository/screens/repository.screen.js", 426]]
   },
   "Pull Requests": {
     "translation": "Pull-запити",
-    "origin": [["src/repository/screens/repository.screen.js", 435]]
+    "origin": [["src/repository/screens/repository.screen.js", 432]]
   },
   "Repository Actions": {
     "translation": "Дії с репозиторієм",
-    "origin": [["src/repository/screens/repository.screen.js", 459]]
+    "origin": [["src/repository/screens/repository.screen.js", 455]]
   },
   "Users": {
     "translation": "Користувачі",
-    "origin": [["src/search/screens/search.screen.js", 223]]
+    "origin": [["src/search/screens/search.screen.js", 222]]
   },
   "Search for any repository": {
     "translation": "Пошук репозиторіїв",
-    "origin": [["src/search/screens/search.screen.js", 256]]
+    "origin": [["src/search/screens/search.screen.js", 255]]
   },
   "Search for any user": {
     "translation": "Пошук користувачів",
-    "origin": [["src/search/screens/search.screen.js", 257]]
+    "origin": [["src/search/screens/search.screen.js", 256]]
   },
   "No repositories found :(": {
     "translation": "Репозиторіїв не знайдено :(",
-    "origin": [["src/search/screens/search.screen.js", 268]]
+    "origin": [["src/search/screens/search.screen.js", 267]]
   },
   "No users found :(": {
     "translation": "Користувачів не знайдено :(",
-    "origin": [["src/search/screens/search.screen.js", 279]]
+    "origin": [["src/search/screens/search.screen.js", 278]]
   },
   "Unfollow": {
     "translation": "Відписатись",
-    "origin": [["src/user/screens/profile.screen.js", 165]]
+    "origin": [["src/user/screens/profile.screen.js", 162]]
   },
   "Follow": {
     "translation": "Підписатись",
-    "origin": [["src/user/screens/profile.screen.js", 165]]
+    "origin": [["src/user/screens/profile.screen.js", 162]]
   },
   "User Actions": {
     "translation": "Дії з користувачем",
-    "origin": [["src/user/screens/profile.screen.js", 250]]
+    "origin": [["src/user/screens/profile.screen.js", 241]]
   }
 }

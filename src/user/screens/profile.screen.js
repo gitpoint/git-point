@@ -36,7 +36,6 @@ const mapStateToProps = state => ({
   user: state.user.user,
   orgs: state.user.orgs,
   starCount: state.user.starCount,
-  locale: state.auth.locale,
   isFollowing: state.user.isFollowing,
   isFollower: state.user.isFollower,
   isPendingUser: state.user.isPendingUser,
@@ -80,7 +79,6 @@ class Profile extends Component {
     user: Object,
     orgs: Array,
     starCount: string,
-    locale: string,
     i18n: Object,
     isFollowing: boolean,
     isFollower: boolean,
@@ -142,7 +140,6 @@ class Profile extends Component {
       user,
       orgs,
       starCount,
-      locale,
       i18n,
       isFollowing,
       isFollower,
@@ -177,7 +174,6 @@ class Profile extends Component {
               isFollowing={!isPending ? isFollowing : false}
               isFollower={!isPending ? isFollower : false}
               user={!isPending ? user : {}}
-              locale={locale}
               navigation={navigation}
             />
           )}
@@ -219,12 +215,7 @@ class Profile extends Component {
                     </SectionList>
                   )}
 
-                <EntityInfo
-                  entity={user}
-                  orgs={orgs}
-                  navigation={navigation}
-                  locale={locale}
-                />
+                <EntityInfo entity={user} orgs={orgs} navigation={navigation} />
 
                 <SectionList
                   title={i18n.t`ORGANIZATIONS`}

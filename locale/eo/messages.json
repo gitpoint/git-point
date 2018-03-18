@@ -7,21 +7,21 @@
     "translation": "BIO",
     "origin": [
       ["src/auth/screens/auth-profile.screen.js", 149],
-      ["src/user/screens/profile.screen.js", 213]
+      ["src/user/screens/profile.screen.js", 209]
     ]
   },
   "ORGANIZATIONS": {
     "translation": "ORGANIZOJ",
     "origin": [
       ["src/auth/screens/auth-profile.screen.js", 165],
-      ["src/user/screens/profile.screen.js", 230]
+      ["src/user/screens/profile.screen.js", 221]
     ]
   },
   "No organizations": {
     "translation": "Neniuj organizoj",
     "origin": [
       ["src/auth/screens/auth-profile.screen.js", 167],
-      ["src/user/screens/profile.screen.js", 232]
+      ["src/user/screens/profile.screen.js", 223]
     ]
   },
   "Can't see all your organizations?": {
@@ -142,48 +142,52 @@
   "Welcome to GitPoint": {
     "translation": "Bonvenon al GitPoint",
     "origin": [
-      ["src/auth/screens/events.screen.js", 575],
-      ["src/auth/screens/login.screen.js", 278],
+      ["src/auth/screens/events.screen.js", 574],
+      ["src/auth/screens/login.screen.js", 281],
       ["src/auth/screens/welcome.screen.js", 40]
     ]
+  },
+  "Preparing GitPoint...": {
+    "translation": "Prepari GitPoint...",
+    "origin": [["src/auth/screens/login.screen.js", 222]]
   },
   "The most feature-rich GitHub client that is 100% free": {
     "translation":
       "La plej karakterizaĵo riĉa GitHub-kliento, kiu estas 100% libera",
-    "origin": [["src/auth/screens/login.screen.js", 281]]
+    "origin": [["src/auth/screens/login.screen.js", 284]]
   },
   "Control notifications": {
     "translation": "Kontroli sciigojn",
-    "origin": [["src/auth/screens/login.screen.js", 295]]
+    "origin": [["src/auth/screens/login.screen.js", 298]]
   },
   "View and control all of your unread and participating notifications": {
     "translation":
       "Vidi kaj kontroli ĉiujn viajn nelegitajn kaj partoprenajn sciigojn",
-    "origin": [["src/auth/screens/login.screen.js", 298]]
+    "origin": [["src/auth/screens/login.screen.js", 301]]
   },
   "Repositories and Users": {
     "translation": "Repositorioj kaj Uzantoj",
-    "origin": [["src/auth/screens/login.screen.js", 314]]
+    "origin": [["src/auth/screens/login.screen.js", 317]]
   },
   "Easily obtain repository, user and organization information": {
     "translation": "Facile akiri dosierujon, uzantojn kaj organizajn informojn",
-    "origin": [["src/auth/screens/login.screen.js", 317]]
+    "origin": [["src/auth/screens/login.screen.js", 320]]
   },
   "Issues and Pull Requests": {
     "translation": "Problemoj kaj Petitaj Petoj",
-    "origin": [["src/auth/screens/login.screen.js", 332]]
+    "origin": [["src/auth/screens/login.screen.js", 335]]
   },
   "Communicate on conversations, merge pull requests and more": {
     "translation": "Komuniki sur konversacioj, kunfandi tiri petojn kaj pli",
-    "origin": [["src/auth/screens/login.screen.js", 335]]
+    "origin": [["src/auth/screens/login.screen.js", 338]]
   },
   "SIGN IN": {
     "translation": "ENSALUTI",
-    "origin": [["src/auth/screens/login.screen.js", 346]]
+    "origin": [["src/auth/screens/login.screen.js", 349]]
   },
   "CANCEL": {
     "translation": "CANCELO",
-    "origin": [["src/auth/screens/login.screen.js", 378]]
+    "origin": [["src/auth/screens/login.screen.js", 381]]
   },
   "Last updated: July 15, 2017": {
     "translation": "Lasta ĝisdatigita: July 15, 2017",
@@ -257,27 +261,27 @@
   "Language": {
     "translation": "Lingvo",
     "origin": [
-      ["src/auth/screens/user-options.screen.js", 140],
-      ["src/auth/screens/user-options.screen.js", 143]
+      ["src/auth/screens/user-options.screen.js", 141],
+      ["src/auth/screens/user-options.screen.js", 144]
     ]
   },
   "Open in Browser": {
     "translation": "Open in Browser",
     "origin": [
-      ["src/auth/screens/user-options.screen.js", 149],
-      ["src/issue/screens/issue-settings.screen.js", 282],
-      ["src/issue/screens/issue.screen.js", 386],
-      ["src/organization/screens/organization-profile.screen.js", 128],
+      ["src/auth/screens/user-options.screen.js", 150],
+      ["src/issue/screens/issue-settings.screen.js", 281],
+      ["src/issue/screens/issue.screen.js", 379],
+      ["src/organization/screens/organization-profile.screen.js", 124],
       ["src/repository/screens/read-me.screen.js", 99],
-      ["src/repository/screens/repository.screen.js", 246],
-      ["src/user/screens/profile.screen.js", 166]
+      ["src/repository/screens/repository.screen.js", 244],
+      ["src/user/screens/profile.screen.js", 163]
     ]
   },
   "Privacy Policy": {
     "translation": "Privateca Politiko",
     "origin": [
-      ["src/auth/screens/user-options.screen.js", 154],
-      ["src/auth/screens/user-options.screen.js", 157]
+      ["src/auth/screens/user-options.screen.js", 155],
+      ["src/auth/screens/user-options.screen.js", 158]
     ]
   },
   "Make a donation": {
@@ -290,19 +294,19 @@
   },
   "Not applicable in debug mode": {
     "translation": "Not applicable in analizo mod",
-    "origin": [["src/auth/screens/user-options.screen.js", 103]]
+    "origin": [["src/auth/screens/user-options.screen.js", 104]]
   },
   "Checking for update...": {
     "translation": "Kontroli por ĝisdatigo...",
-    "origin": [["src/auth/screens/user-options.screen.js", 106]]
+    "origin": [["src/auth/screens/user-options.screen.js", 107]]
   },
   "Update is available!": {
     "translation": "Ĝisdatigo estas havebla!",
-    "origin": [["src/auth/screens/user-options.screen.js", 115]]
+    "origin": [["src/auth/screens/user-options.screen.js", 116]]
   },
   "App is up to date": {
     "translation": "La apliko estas ĝisdata",
-    "origin": [["src/auth/screens/user-options.screen.js", 116]]
+    "origin": [["src/auth/screens/user-options.screen.js", 117]]
   },
   "Locked, but you can still comment...": {
     "translation": "Ŝlosita, sed vi ankoraŭ povas diri ...",
@@ -336,15 +340,15 @@
     "translation": "nuligi",
     "origin": [
       ["src/components/comment-list-item.component.js", 212],
-      ["src/issue/screens/issue-settings.screen.js", 296],
-      ["src/issue/screens/issue-settings.screen.js", 305],
-      ["src/issue/screens/issue-settings.screen.js", 316],
-      ["src/issue/screens/issue.screen.js", 435],
-      ["src/issue/screens/pull-merge.screen.js", 214],
-      ["src/organization/screens/organization-profile.screen.js", 191],
+      ["src/issue/screens/issue-settings.screen.js", 295],
+      ["src/issue/screens/issue-settings.screen.js", 304],
+      ["src/issue/screens/issue-settings.screen.js", 315],
+      ["src/issue/screens/issue.screen.js", 427],
+      ["src/issue/screens/pull-merge.screen.js", 213],
+      ["src/organization/screens/organization-profile.screen.js", 183],
       ["src/repository/screens/read-me.screen.js", 129],
-      ["src/repository/screens/repository.screen.js", 460],
-      ["src/user/screens/profile.screen.js", 251]
+      ["src/repository/screens/repository.screen.js", 456],
+      ["src/user/screens/profile.screen.js", 242]
     ]
   },
   "INFO": {
@@ -388,11 +392,11 @@
   },
   "#{0} opened {1} ago by {2}": {
     "translation": "# {0} malfermis {1} ago per {2}",
-    "origin": [["src/components/issue-list-item.component.js", 84]]
+    "origin": [["src/components/issue-list-item.component.js", 82]]
   },
   "#{0} by {1} was closed {2} ago": {
     "translation": "# {0} per {1} estis fermita {2} ago",
-    "origin": [["src/components/issue-list-item.component.js", 87]]
+    "origin": [["src/components/issue-list-item.component.js", 85]]
   },
   "Stars": {
     "translation": "Stars",
@@ -401,7 +405,7 @@
         "src/components/loading-indicators/loading-repository-profile.component.js",
         94
       ],
-      ["src/components/repository-profile.component.js", 208],
+      ["src/components/repository-profile.component.js", 207],
       ["src/components/user-profile.component.js", 167],
       ["src/components/user-profile.component.js", 180]
     ]
@@ -413,32 +417,32 @@
         "src/components/loading-indicators/loading-repository-profile.component.js",
         100
       ],
-      ["src/components/repository-profile.component.js", 244]
+      ["src/components/repository-profile.component.js", 243]
     ]
   },
   "Unknown": {
     "translation": "Unknown",
-    "origin": [["src/components/repository-profile.component.js", 143]]
+    "origin": [["src/components/repository-profile.component.js", 142]]
   },
   "Repository is not found": {
     "translation": "Repository is not found",
-    "origin": [["src/components/repository-profile.component.js", 160]]
+    "origin": [["src/components/repository-profile.component.js", 159]]
   },
   "forked from <0>{0}</0>": {
     "translation": "forkis de <0>{0}</0>",
-    "origin": [["src/components/repository-profile.component.js", 181]]
+    "origin": [["src/components/repository-profile.component.js", 180]]
   },
   "Starred": {
     "translation": "Fenita",
-    "origin": [["src/components/repository-profile.component.js", 213]]
+    "origin": [["src/components/repository-profile.component.js", 212]]
   },
   "Watchers": {
     "translation": "Gardistoj",
-    "origin": [["src/components/repository-profile.component.js", 226]]
+    "origin": [["src/components/repository-profile.component.js", 225]]
   },
   "Watching": {
     "translation": "Rigardanta",
-    "origin": [["src/components/repository-profile.component.js", 231]]
+    "origin": [["src/components/repository-profile.component.js", 230]]
   },
   "Merged": {
     "translation": "kunfandita",
@@ -448,16 +452,16 @@
     "translation": "Malfermi",
     "origin": [
       ["src/components/state-badge.component.js", 38],
-      ["src/repository/screens/issue-list.screen.js", 261],
-      ["src/repository/screens/pull-list.screen.js", 235]
+      ["src/repository/screens/issue-list.screen.js", 250],
+      ["src/repository/screens/pull-list.screen.js", 232]
     ]
   },
   "Closed": {
     "translation": "Fermita",
     "origin": [
       ["src/components/state-badge.component.js", 41],
-      ["src/repository/screens/issue-list.screen.js", 261],
-      ["src/repository/screens/pull-list.screen.js", 235]
+      ["src/repository/screens/issue-list.screen.js", 250],
+      ["src/repository/screens/pull-list.screen.js", 232]
     ]
   },
   "Repositories": {
@@ -465,7 +469,7 @@
     "origin": [
       ["src/components/user-profile.component.js", 143],
       ["src/components/user-profile.component.js", 158],
-      ["src/search/screens/search.screen.js", 223]
+      ["src/search/screens/search.screen.js", 222]
     ]
   },
   "Followers": {
@@ -490,232 +494,232 @@
   "Issue Comment": {
     "translation": "Temo Komento",
     "origin": [
-      ["src/issue/screens/edit-issue-comment.screen.js", 105],
-      ["src/issue/screens/new-issue.screen.js", 137]
+      ["src/issue/screens/edit-issue-comment.screen.js", 104],
+      ["src/issue/screens/new-issue.screen.js", 136]
     ]
   },
   "Write a title for your issue here": {
     "translation": "Skribu titolon por via problemo ĉi tie",
     "origin": [
-      ["src/issue/screens/edit-issue-comment.screen.js", 108],
-      ["src/issue/screens/new-issue.screen.js", 119]
+      ["src/issue/screens/edit-issue-comment.screen.js", 107],
+      ["src/issue/screens/new-issue.screen.js", 118]
     ]
   },
   "Submit": {
     "translation": "Proponi",
     "origin": [
-      ["src/issue/screens/edit-issue-comment.screen.js", 131],
-      ["src/issue/screens/new-issue.screen.js", 160]
+      ["src/issue/screens/edit-issue-comment.screen.js", 130],
+      ["src/issue/screens/new-issue.screen.js", 159]
     ]
   },
   "Pull Request": {
     "translation": "Peti Petojn",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 157]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 156]]
   },
   "Issue": {
     "translation": "Temo",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 157]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 156]]
   },
   "Apply Label": {
     "translation": "Apliki Etikedon",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 164]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 163]]
   },
   "None yet": {
     "translation": "Neniu ankoraŭ",
     "origin": [
-      ["src/issue/screens/issue-settings.screen.js", 171],
-      ["src/issue/screens/issue-settings.screen.js", 219]
+      ["src/issue/screens/issue-settings.screen.js", 170],
+      ["src/issue/screens/issue-settings.screen.js", 218]
     ]
   },
   "LABELS": {
     "translation": "LABELS",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 172]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 171]]
   },
   "Assign Yourself": {
     "translation": "asigni vin mem",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 206]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 205]]
   },
   "ASSIGNEES": {
     "translation": "ASIGNEES",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 220]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 219]]
   },
   "ACTIONS": {
     "translation": "AGOJ",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 248]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 247]]
   },
   "Unlock {issueType}": {
     "translation": "Malŝlosi {issueType}",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 252]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 251]]
   },
   "Lock {issueType}": {
     "translation": "Ŝlosilo {issueType}",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 253]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 252]]
   },
   "Close {issueType}": {
     "translation": "Fermi {issueType}",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 265]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 264]]
   },
   "Reopen {issueType}": {
     "translation": "Revenu {issueType}",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 266]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 265]]
   },
   "Are you sure?": {
     "translation": "Ĉu vi certas?",
     "origin": [
-      ["src/issue/screens/issue-settings.screen.js", 295],
-      ["src/issue/screens/issue-settings.screen.js", 304]
+      ["src/issue/screens/issue-settings.screen.js", 294],
+      ["src/issue/screens/issue-settings.screen.js", 303]
     ]
   },
   "Yes": {
     "translation": "Jes",
     "origin": [
-      ["src/issue/screens/issue-settings.screen.js", 296],
-      ["src/issue/screens/issue-settings.screen.js", 305]
+      ["src/issue/screens/issue-settings.screen.js", 295],
+      ["src/issue/screens/issue-settings.screen.js", 304]
     ]
   },
   "Apply a label to this issue": {
     "translation": "Apliki etikedon al ĉi tiu afero",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 313]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 312]]
   },
   "Edit Comment": {
     "translation": "Redakti Rimarkon",
-    "origin": [["src/issue/screens/issue.screen.js", 280]]
+    "origin": [["src/issue/screens/issue.screen.js", 277]]
   },
   "Issue Actions": {
     "translation": "Issue Actions",
-    "origin": [["src/issue/screens/issue.screen.js", 434]]
+    "origin": [["src/issue/screens/issue.screen.js", 426]]
   },
   "Settings": {
     "translation": "Agordoj",
-    "origin": [["src/issue/screens/issue.screen.js", 95]]
+    "origin": [["src/issue/screens/issue.screen.js", 94]]
   },
   "You need to have an issue title!": {
     "translation": "Vi devas havi aferon-titolon!",
-    "origin": [["src/issue/screens/new-issue.screen.js", 81]]
+    "origin": [["src/issue/screens/new-issue.screen.js", 80]]
   },
   "OK": {
     "translation": "BONE",
     "origin": [
-      ["src/issue/screens/new-issue.screen.js", 82],
-      ["src/issue/screens/pull-merge.screen.js", 120]
+      ["src/issue/screens/new-issue.screen.js", 81],
+      ["src/issue/screens/pull-merge.screen.js", 119]
     ]
   },
   "Issue Title": {
     "translation": "Issue Title",
-    "origin": [["src/issue/screens/new-issue.screen.js", 116]]
+    "origin": [["src/issue/screens/new-issue.screen.js", 115]]
   },
   "Write a comment for your issue here": {
     "translation": "Skribu komenton por via problemo ĉi tie",
-    "origin": [["src/issue/screens/new-issue.screen.js", 140]]
+    "origin": [["src/issue/screens/new-issue.screen.js", 139]]
   },
   "Create a merge commit": {
     "translation": "Krei merge commit",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 92]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 91]]
   },
   "Squash and merge": {
     "translation": "Akvofali kaj kunfandi",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 92]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 91]]
   },
   "merge": {
     "translation": "kunfandi",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 116]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 115]]
   },
   "squash": {
     "translation": "premplatigi",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 116]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 115]]
   },
   "You need to have a commit title!": {
     "translation": "Vi devas havi titolon!",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 119]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 118]]
   },
   "Commit Title": {
     "translation": "Komerca Titolo",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 142]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 141]]
   },
   "Write a title for your commit here": {
     "translation": "Skribu titolon por via kompromiso ĉi tie",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 145]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 144]]
   },
   "Commit Message": {
     "translation": "Komitato Mesaĝo",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 163]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 162]]
   },
   "Write a message for your commit here": {
     "translation": "Skribu mesaĝon por via kompromiso ĉi tie",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 166]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 165]]
   },
   "Merge Type": {
     "translation": "Kombini Tipo",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 184]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 183]]
   },
   "Change Merge Type": {
     "translation": "Ŝanĝi Kombini Tipo",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 213]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 212]]
   },
   "Mark all as read": {
     "translation": "Marki ĉion kiel legita",
-    "origin": [["src/notifications/screens/notifications.screen.js", 392]]
+    "origin": [["src/notifications/screens/notifications.screen.js", 389]]
   },
   "Unread": {
     "translation": "Nelegita",
-    "origin": [["src/notifications/screens/notifications.screen.js", 452]]
+    "origin": [["src/notifications/screens/notifications.screen.js", 449]]
   },
   "Participating": {
     "translation": "Partoprenanta",
-    "origin": [["src/notifications/screens/notifications.screen.js", 452]]
+    "origin": [["src/notifications/screens/notifications.screen.js", 449]]
   },
   "All": {
     "translation": "Ĉio",
-    "origin": [["src/notifications/screens/notifications.screen.js", 452]]
+    "origin": [["src/notifications/screens/notifications.screen.js", 449]]
   },
   "Retrieving notifications": {
     "translation": "Ricevanta sciigojn",
-    "origin": [["src/notifications/screens/notifications.screen.js", 461]]
+    "origin": [["src/notifications/screens/notifications.screen.js", 458]]
   },
   "You don't have any notifications of this type": {
     "translation": "Vi ne havas iujn sciigojn pri ĉi tiu tipo",
-    "origin": [["src/notifications/screens/notifications.screen.js", 482]]
+    "origin": [["src/notifications/screens/notifications.screen.js", 479]]
   },
   "MEMBERS": {
     "translation": "Membroj",
     "origin": [
-      ["src/organization/screens/organization-profile.screen.js", 157],
-      ["src/organization/screens/organization-profile.screen.js", 161]
+      ["src/organization/screens/organization-profile.screen.js", 153],
+      ["src/organization/screens/organization-profile.screen.js", 157]
     ]
   },
   "DESCRIPTION": {
     "translation": "PRISKRIBO",
-    "origin": [["src/organization/screens/organization-profile.screen.js", 169]]
+    "origin": [["src/organization/screens/organization-profile.screen.js", 165]]
   },
   "Organization Actions": {
     "translation": "Organization Actions",
-    "origin": [["src/organization/screens/organization-profile.screen.js", 190]]
+    "origin": [["src/organization/screens/organization-profile.screen.js", 182]]
   },
   "Searching for {query}": {
     "translation": "Serĉante {query}",
     "origin": [
-      ["src/repository/screens/issue-list.screen.js", 272],
-      ["src/repository/screens/issue-list.screen.js", 281],
-      ["src/repository/screens/pull-list.screen.js", 246],
-      ["src/repository/screens/pull-list.screen.js", 255],
-      ["src/search/screens/search.screen.js", 230],
-      ["src/search/screens/search.screen.js", 238]
+      ["src/repository/screens/issue-list.screen.js", 261],
+      ["src/repository/screens/issue-list.screen.js", 270],
+      ["src/repository/screens/pull-list.screen.js", 243],
+      ["src/repository/screens/pull-list.screen.js", 252],
+      ["src/search/screens/search.screen.js", 229],
+      ["src/search/screens/search.screen.js", 237]
     ]
   },
   "No open issues found!": {
     "translation": "Ne malfermitaj aferoj trovitaj!",
-    "origin": [["src/repository/screens/issue-list.screen.js", 304]]
+    "origin": [["src/repository/screens/issue-list.screen.js", 293]]
   },
   "No closed issues found!": {
     "translation": "Neniu fermita afero trovita!",
-    "origin": [["src/repository/screens/issue-list.screen.js", 315]]
+    "origin": [["src/repository/screens/issue-list.screen.js", 304]]
   },
   "New Issue": {
     "translation": "Nova temo",
     "origin": [
-      ["src/repository/screens/issue-list.screen.js", 112],
-      ["src/repository/screens/repository.screen.js", 393],
-      ["src/repository/screens/repository.screen.js", 404]
+      ["src/repository/screens/issue-list.screen.js", 111],
+      ["src/repository/screens/repository.screen.js", 390],
+      ["src/repository/screens/repository.screen.js", 401]
     ]
   },
   "{0} files": {
@@ -736,11 +740,11 @@
   },
   "No open pull requests found!": {
     "translation": "Neniu malferma tiro-petoj trovita!",
-    "origin": [["src/repository/screens/pull-list.screen.js", 278]]
+    "origin": [["src/repository/screens/pull-list.screen.js", 275]]
   },
   "No closed pull requests found!": {
     "translation": "Neniu fermita tiro-petoj!",
-    "origin": [["src/repository/screens/pull-list.screen.js", 289]]
+    "origin": [["src/repository/screens/pull-list.screen.js", 286]]
   },
   "No README.md found": {
     "translation": "No README.md found",
@@ -752,148 +756,148 @@
   },
   "Share {0}": {
     "translation": "Kunhavigi {0}",
-    "origin": [["src/repository/screens/repository.screen.js", 188]]
+    "origin": [["src/repository/screens/repository.screen.js", 187]]
   },
   "Check out {0} on GitHub. {1}": {
     "translation": "Kontrolu {0} sur GitHub. {1} ",
-    "origin": [["src/repository/screens/repository.screen.js", 193]]
+    "origin": [["src/repository/screens/repository.screen.js", 192]]
   },
   "Unstar": {
     "translation": "Senstari",
-    "origin": [["src/repository/screens/repository.screen.js", 243]]
+    "origin": [["src/repository/screens/repository.screen.js", 241]]
   },
   "Star": {
     "translation": "Stelo",
-    "origin": [["src/repository/screens/repository.screen.js", 243]]
+    "origin": [["src/repository/screens/repository.screen.js", 241]]
   },
   "Unwatch": {
     "translation": "Senrigardo",
-    "origin": [["src/repository/screens/repository.screen.js", 244]]
+    "origin": [["src/repository/screens/repository.screen.js", 242]]
   },
   "Watch": {
     "translation": "Vidi",
-    "origin": [["src/repository/screens/repository.screen.js", 244]]
+    "origin": [["src/repository/screens/repository.screen.js", 242]]
   },
   "Share": {
     "translation": "Kunhavigi",
-    "origin": [["src/repository/screens/repository.screen.js", 245]]
+    "origin": [["src/repository/screens/repository.screen.js", 243]]
   },
   "Fork": {
     "translation": "Forko",
-    "origin": [["src/repository/screens/repository.screen.js", 250]]
+    "origin": [["src/repository/screens/repository.screen.js", 248]]
   },
   "TOPICS": {
     "translation": "TOPICS",
-    "origin": [["src/repository/screens/repository.screen.js", 298]]
+    "origin": [["src/repository/screens/repository.screen.js", 295]]
   },
   "OWNER": {
     "translation": "SINJORINO",
     "origin": [
-      ["src/repository/screens/repository.screen.js", 304],
-      ["src/repository/screens/repository.screen.js", 312],
-      ["src/repository/screens/repository.screen.js", 320]
+      ["src/repository/screens/repository.screen.js", 301],
+      ["src/repository/screens/repository.screen.js", 309],
+      ["src/repository/screens/repository.screen.js", 317]
     ]
   },
   "CONTRIBUTORS": {
     "translation": "Kontaktoj",
     "origin": [
-      ["src/repository/screens/repository.screen.js", 329],
-      ["src/repository/screens/repository.screen.js", 334]
+      ["src/repository/screens/repository.screen.js", 326],
+      ["src/repository/screens/repository.screen.js", 331]
     ]
   },
   "No contributors found": {
     "translation": "Neniu kontribuantoj trovita",
-    "origin": [["src/repository/screens/repository.screen.js", 336]]
+    "origin": [["src/repository/screens/repository.screen.js", 333]]
   },
   "SOURCE": {
     "translation": "FONTO",
-    "origin": [["src/repository/screens/repository.screen.js", 341]]
+    "origin": [["src/repository/screens/repository.screen.js", 338]]
   },
   "README": {
     "translation": "LEGUMIN",
-    "origin": [["src/repository/screens/repository.screen.js", 344]]
+    "origin": [["src/repository/screens/repository.screen.js", 341]]
   },
   "View Code": {
     "translation": "Vidi Kodon",
-    "origin": [["src/repository/screens/repository.screen.js", 361]]
+    "origin": [["src/repository/screens/repository.screen.js", 358]]
   },
   "Code": {
     "translation": "Kodo",
-    "origin": [["src/repository/screens/repository.screen.js", 371]]
+    "origin": [["src/repository/screens/repository.screen.js", 368]]
   },
   "ISSUES": {
     "translation": "AFEROJ",
-    "origin": [["src/repository/screens/repository.screen.js", 384]]
+    "origin": [["src/repository/screens/repository.screen.js", 381]]
   },
   "No issues": {
     "translation": "Neniu afero",
-    "origin": [["src/repository/screens/repository.screen.js", 388]]
+    "origin": [["src/repository/screens/repository.screen.js", 385]]
   },
   "No open issues": {
     "translation": "Ne malfermaj aferoj",
-    "origin": [["src/repository/screens/repository.screen.js", 389]]
+    "origin": [["src/repository/screens/repository.screen.js", 386]]
   },
   "View All": {
     "translation": "Rigardi Ĉiuj",
     "origin": [
-      ["src/repository/screens/repository.screen.js", 393],
-      ["src/repository/screens/repository.screen.js", 432]
+      ["src/repository/screens/repository.screen.js", 390],
+      ["src/repository/screens/repository.screen.js", 429]
     ]
   },
   "Issues": {
     "translation": "Issues",
-    "origin": [["src/repository/screens/repository.screen.js", 398]]
+    "origin": [["src/repository/screens/repository.screen.js", 395]]
   },
   "PULL REQUESTS": {
     "translation": "PULKAJ PLEAS",
-    "origin": [["src/repository/screens/repository.screen.js", 424]]
+    "origin": [["src/repository/screens/repository.screen.js", 421]]
   },
   "No pull requests": {
     "translation": "Ne tiro petoj",
-    "origin": [["src/repository/screens/repository.screen.js", 428]]
+    "origin": [["src/repository/screens/repository.screen.js", 425]]
   },
   "No open pull requests": {
     "translation": "Ne malfermaj tiri petoj",
-    "origin": [["src/repository/screens/repository.screen.js", 429]]
+    "origin": [["src/repository/screens/repository.screen.js", 426]]
   },
   "Pull Requests": {
     "translation": "Peti Petojn",
-    "origin": [["src/repository/screens/repository.screen.js", 435]]
+    "origin": [["src/repository/screens/repository.screen.js", 432]]
   },
   "Repository Actions": {
     "translation": "Repository-Agoj",
-    "origin": [["src/repository/screens/repository.screen.js", 459]]
+    "origin": [["src/repository/screens/repository.screen.js", 455]]
   },
   "Users": {
     "translation": "Uzantoj",
-    "origin": [["src/search/screens/search.screen.js", 223]]
+    "origin": [["src/search/screens/search.screen.js", 222]]
   },
   "Search for any repository": {
     "translation": "Serĉado por ajna repositorio",
-    "origin": [["src/search/screens/search.screen.js", 256]]
+    "origin": [["src/search/screens/search.screen.js", 255]]
   },
   "Search for any user": {
     "translation": "Serĉado por ajna uzanto",
-    "origin": [["src/search/screens/search.screen.js", 257]]
+    "origin": [["src/search/screens/search.screen.js", 256]]
   },
   "No repositories found :(": {
     "translation": "Neniu repositorioj trovitaj :(",
-    "origin": [["src/search/screens/search.screen.js", 268]]
+    "origin": [["src/search/screens/search.screen.js", 267]]
   },
   "No users found :(": {
     "translation": "Neniu uzantoj trovitaj :(",
-    "origin": [["src/search/screens/search.screen.js", 279]]
+    "origin": [["src/search/screens/search.screen.js", 278]]
   },
   "Unfollow": {
     "translation": "Senflui",
-    "origin": [["src/user/screens/profile.screen.js", 165]]
+    "origin": [["src/user/screens/profile.screen.js", 162]]
   },
   "Follow": {
     "translation": "Sekvi",
-    "origin": [["src/user/screens/profile.screen.js", 165]]
+    "origin": [["src/user/screens/profile.screen.js", 162]]
   },
   "User Actions": {
     "translation": "Uzaj Agoj",
-    "origin": [["src/user/screens/profile.screen.js", 250]]
+    "origin": [["src/user/screens/profile.screen.js", 241]]
   }
 }

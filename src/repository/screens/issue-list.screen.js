@@ -26,7 +26,6 @@ import {
 } from '../repository.action';
 
 const mapStateToProps = state => ({
-  locale: state.auth.locale,
   repository: state.repository.repository,
   searchedOpenIssues: state.repository.searchedOpenIssues,
   searchedClosedIssues: state.repository.searchedClosedIssues,
@@ -118,7 +117,6 @@ class IssueList extends Component {
   };
 
   props: {
-    locale: string,
     i18n: Object,
     repository: Object,
     searchedOpenIssues: Array,
@@ -146,14 +144,6 @@ class IssueList extends Component {
       searchStart: false,
       searchFocus: false,
     };
-  }
-
-  componentDidMount() {
-    const { locale, navigation } = this.props;
-
-    navigation.setParams({
-      locale,
-    });
   }
 
   getList = () => {
@@ -220,7 +210,6 @@ class IssueList extends Component {
       type={this.props.navigation.state.params.type}
       issue={item}
       navigation={this.props.navigation}
-      locale={this.props.locale}
     />
   );
 

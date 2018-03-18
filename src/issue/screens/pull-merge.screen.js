@@ -12,7 +12,6 @@ import { colors, fonts, normalize } from 'config';
 import { mergePullRequest } from '../issue.action';
 
 const mapStateToProps = state => ({
-  locale: state.auth.locale,
   repository: state.repository.repository,
   issue: state.issue.issue,
   isPendingMerging: state.repository.isPendingMerging,

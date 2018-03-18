@@ -59,9 +59,9 @@ const StyledListItem = styled(ListItem).attrs({
 
 class UserOptions extends Component {
   props: {
-    locale: string,
     signOut: () => void,
     i18n: Object,
+    locale: string,
     navigation: Object,
     user: Object,
   };
@@ -77,8 +77,9 @@ class UserOptions extends Component {
   }
 
   componentWillReceiveProps(nextState) {
+    console.log('user options', nextState.locale, this.props.locale);
     if (nextState.locale !== this.props.locale) {
-      const { i18n } = this.props;
+      const { i18n } = nextState;
 
       this.setState({
         updateText: i18n.t`Check for update`,
@@ -130,7 +131,7 @@ class UserOptions extends Component {
   }
 
   render() {
-    const { locale, i18n, navigation } = this.props;
+    const { i18n, locale, navigation } = this.props;
 
     return (
       <ViewContainer>
@@ -155,7 +156,6 @@ class UserOptions extends Component {
               onPress={() =>
                 navigation.navigate('PrivacyPolicy', {
                   title: i18n.t`Privacy Policy`,
-                  locale,
                 })
               }
             />

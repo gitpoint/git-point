@@ -52,9 +52,10 @@ class LanguageSettings extends Component {
 
   componentWillReceiveProps(nextState) {
     if (nextState.locale !== this.props.locale) {
+      const { i18n } = this.props;
       const navigationParams = NavigationActions.setParams({
         params: {
-          title: this.props.i18n.t`Language`,
+          title: i18n.t`Language`,
         },
         key: nextState.navigation.state.key,
       });

@@ -12,7 +12,6 @@ type Props = {
   navigation: Object,
   loading: boolean,
   subscribed: boolean,
-  locale: string,
 };
 
 const styles = StyleSheet.create({

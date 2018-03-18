@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  locale: state.auth.locale,
   issue: state.issue.issue,
   repository: state.repository.repository,
   isEditingComment: state.issue.isEditingComment,

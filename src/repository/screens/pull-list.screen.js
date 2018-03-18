@@ -26,7 +26,6 @@ import {
 } from '../repository.action';
 
 const mapStateToProps = state => ({
-  locale: state.auth.locale,
   repository: state.repository.repository,
   searchedOpenPulls: state.repository.searchedOpenPulls,
   searchedClosedPulls: state.repository.searchedClosedPulls,
@@ -97,7 +96,6 @@ const styles = StyleSheet.create({
 class PullList extends Component {
   props: {
     i18n: Object,
-    locale: string,
     repository: Object,
     searchedOpenPulls: Array,
     searchedClosedPulls: Array,
@@ -194,7 +192,6 @@ class PullList extends Component {
       type={this.props.navigation.state.params.type}
       issue={item}
       navigation={this.props.navigation}
-      locale={this.props.locale}
     />
   );
 

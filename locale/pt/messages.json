@@ -7,21 +7,21 @@
     "translation": "BIOGRAFIA",
     "origin": [
       ["src/auth/screens/auth-profile.screen.js", 149],
-      ["src/user/screens/profile.screen.js", 213]
+      ["src/user/screens/profile.screen.js", 209]
     ]
   },
   "ORGANIZATIONS": {
     "translation": "ORGANIZAÇÕES",
     "origin": [
       ["src/auth/screens/auth-profile.screen.js", 165],
-      ["src/user/screens/profile.screen.js", 230]
+      ["src/user/screens/profile.screen.js", 221]
     ]
   },
   "No organizations": {
     "translation": "Nenhuma organização",
     "origin": [
       ["src/auth/screens/auth-profile.screen.js", 167],
-      ["src/user/screens/profile.screen.js", 232]
+      ["src/user/screens/profile.screen.js", 223]
     ]
   },
   "Can't see all your organizations?": {
@@ -142,47 +142,51 @@
   "Welcome to GitPoint": {
     "translation": "Bem-vindo ao GitPoint",
     "origin": [
-      ["src/auth/screens/events.screen.js", 575],
-      ["src/auth/screens/login.screen.js", 278],
+      ["src/auth/screens/events.screen.js", 574],
+      ["src/auth/screens/login.screen.js", 281],
       ["src/auth/screens/welcome.screen.js", 40]
     ]
   },
+  "Preparing GitPoint...": {
+    "translation": "A Preparar o GitPoint...",
+    "origin": [["src/auth/screens/login.screen.js", 222]]
+  },
   "The most feature-rich GitHub client that is 100% free": {
     "translation": "O cliente de GitHub com mais funcionalidades, 100% grátis",
-    "origin": [["src/auth/screens/login.screen.js", 281]]
+    "origin": [["src/auth/screens/login.screen.js", 284]]
   },
   "Control notifications": {
     "translation": "Controlar notificações",
-    "origin": [["src/auth/screens/login.screen.js", 295]]
+    "origin": [["src/auth/screens/login.screen.js", 298]]
   },
   "View and control all of your unread and participating notifications": {
     "translation": "Ver e controlar todas as suas notificações",
-    "origin": [["src/auth/screens/login.screen.js", 298]]
+    "origin": [["src/auth/screens/login.screen.js", 301]]
   },
   "Repositories and Users": {
     "translation": "Repositórios e Utilizadores",
-    "origin": [["src/auth/screens/login.screen.js", 314]]
+    "origin": [["src/auth/screens/login.screen.js", 317]]
   },
   "Easily obtain repository, user and organization information": {
     "translation":
       "Obter informações sobre repositórios, utilizadores e organizações",
-    "origin": [["src/auth/screens/login.screen.js", 317]]
+    "origin": [["src/auth/screens/login.screen.js", 320]]
   },
   "Issues and Pull Requests": {
     "translation": "Issues e Pull Requests",
-    "origin": [["src/auth/screens/login.screen.js", 332]]
+    "origin": [["src/auth/screens/login.screen.js", 335]]
   },
   "Communicate on conversations, merge pull requests and more": {
     "translation": "Comunicar problemas/sugestões, merge pull requests, etc",
-    "origin": [["src/auth/screens/login.screen.js", 335]]
+    "origin": [["src/auth/screens/login.screen.js", 338]]
   },
   "SIGN IN": {
     "translation": "ENTRAR",
-    "origin": [["src/auth/screens/login.screen.js", 346]]
+    "origin": [["src/auth/screens/login.screen.js", 349]]
   },
   "CANCEL": {
     "translation": "CANCELAR",
-    "origin": [["src/auth/screens/login.screen.js", 378]]
+    "origin": [["src/auth/screens/login.screen.js", 381]]
   },
   "Last updated: July 15, 2017": {
     "translation": "Última atualização: 15 de Julho de 2017",
@@ -256,27 +260,27 @@
   "Language": {
     "translation": "Idioma",
     "origin": [
-      ["src/auth/screens/user-options.screen.js", 140],
-      ["src/auth/screens/user-options.screen.js", 143]
+      ["src/auth/screens/user-options.screen.js", 141],
+      ["src/auth/screens/user-options.screen.js", 144]
     ]
   },
   "Open in Browser": {
     "translation": "Abrir no Browser",
     "origin": [
-      ["src/auth/screens/user-options.screen.js", 149],
-      ["src/issue/screens/issue-settings.screen.js", 282],
-      ["src/issue/screens/issue.screen.js", 386],
-      ["src/organization/screens/organization-profile.screen.js", 128],
+      ["src/auth/screens/user-options.screen.js", 150],
+      ["src/issue/screens/issue-settings.screen.js", 281],
+      ["src/issue/screens/issue.screen.js", 379],
+      ["src/organization/screens/organization-profile.screen.js", 124],
       ["src/repository/screens/read-me.screen.js", 99],
-      ["src/repository/screens/repository.screen.js", 246],
-      ["src/user/screens/profile.screen.js", 166]
+      ["src/repository/screens/repository.screen.js", 244],
+      ["src/user/screens/profile.screen.js", 163]
     ]
   },
   "Privacy Policy": {
     "translation": "Política de Privacidade",
     "origin": [
-      ["src/auth/screens/user-options.screen.js", 154],
-      ["src/auth/screens/user-options.screen.js", 157]
+      ["src/auth/screens/user-options.screen.js", 155],
+      ["src/auth/screens/user-options.screen.js", 158]
     ]
   },
   "Make a donation": {
@@ -289,19 +293,19 @@
   },
   "Not applicable in debug mode": {
     "translation": "Não aplicável em modo de debug",
-    "origin": [["src/auth/screens/user-options.screen.js", 103]]
+    "origin": [["src/auth/screens/user-options.screen.js", 104]]
   },
   "Checking for update...": {
     "translation": "A procurar atualizações...",
-    "origin": [["src/auth/screens/user-options.screen.js", 106]]
+    "origin": [["src/auth/screens/user-options.screen.js", 107]]
   },
   "Update is available!": {
     "translation": "Há atualizações disponíveis!",
-    "origin": [["src/auth/screens/user-options.screen.js", 115]]
+    "origin": [["src/auth/screens/user-options.screen.js", 116]]
   },
   "App is up to date": {
     "translation": "A aplicação está atualizada",
-    "origin": [["src/auth/screens/user-options.screen.js", 116]]
+    "origin": [["src/auth/screens/user-options.screen.js", 117]]
   },
   "Locked, but you can still comment...": {
     "translation": "Bloqueada , mas ainda pode comentar...",
@@ -335,15 +339,15 @@
     "translation": "Cancelar",
     "origin": [
       ["src/components/comment-list-item.component.js", 212],
-      ["src/issue/screens/issue-settings.screen.js", 296],
-      ["src/issue/screens/issue-settings.screen.js", 305],
-      ["src/issue/screens/issue-settings.screen.js", 316],
-      ["src/issue/screens/issue.screen.js", 435],
-      ["src/issue/screens/pull-merge.screen.js", 214],
-      ["src/organization/screens/organization-profile.screen.js", 191],
+      ["src/issue/screens/issue-settings.screen.js", 295],
+      ["src/issue/screens/issue-settings.screen.js", 304],
+      ["src/issue/screens/issue-settings.screen.js", 315],
+      ["src/issue/screens/issue.screen.js", 427],
+      ["src/issue/screens/pull-merge.screen.js", 213],
+      ["src/organization/screens/organization-profile.screen.js", 183],
       ["src/repository/screens/read-me.screen.js", 129],
-      ["src/repository/screens/repository.screen.js", 460],
-      ["src/user/screens/profile.screen.js", 251]
+      ["src/repository/screens/repository.screen.js", 456],
+      ["src/user/screens/profile.screen.js", 242]
     ]
   },
   "INFO": {
@@ -387,11 +391,11 @@
   },
   "#{0} opened {1} ago by {2}": {
     "translation": "#{0} aberta em {1} por {2}",
-    "origin": [["src/components/issue-list-item.component.js", 84]]
+    "origin": [["src/components/issue-list-item.component.js", 82]]
   },
   "#{0} by {1} was closed {2} ago": {
     "translation": "#{0} de {1} foi  fechada em {2} ",
-    "origin": [["src/components/issue-list-item.component.js", 87]]
+    "origin": [["src/components/issue-list-item.component.js", 85]]
   },
   "Stars": {
     "translation": "Favoritos",
@@ -400,7 +404,7 @@
         "src/components/loading-indicators/loading-repository-profile.component.js",
         94
       ],
-      ["src/components/repository-profile.component.js", 208],
+      ["src/components/repository-profile.component.js", 207],
       ["src/components/user-profile.component.js", 167],
       ["src/components/user-profile.component.js", 180]
     ]
@@ -412,32 +416,32 @@
         "src/components/loading-indicators/loading-repository-profile.component.js",
         100
       ],
-      ["src/components/repository-profile.component.js", 244]
+      ["src/components/repository-profile.component.js", 243]
     ]
   },
   "Unknown": {
     "translation": "Unknown",
-    "origin": [["src/components/repository-profile.component.js", 143]]
+    "origin": [["src/components/repository-profile.component.js", 142]]
   },
   "Repository is not found": {
     "translation": "Repository is not found",
-    "origin": [["src/components/repository-profile.component.js", 160]]
+    "origin": [["src/components/repository-profile.component.js", 159]]
   },
   "forked from <0>{0}</0>": {
     "translation": "é um fork de <0>{0}</0>",
-    "origin": [["src/components/repository-profile.component.js", 181]]
+    "origin": [["src/components/repository-profile.component.js", 180]]
   },
   "Starred": {
     "translation": "Favoritos",
-    "origin": [["src/components/repository-profile.component.js", 213]]
+    "origin": [["src/components/repository-profile.component.js", 212]]
   },
   "Watchers": {
     "translation": "Acompanhando",
-    "origin": [["src/components/repository-profile.component.js", 226]]
+    "origin": [["src/components/repository-profile.component.js", 225]]
   },
   "Watching": {
     "translation": "A Acompanhar",
-    "origin": [["src/components/repository-profile.component.js", 231]]
+    "origin": [["src/components/repository-profile.component.js", 230]]
   },
   "Merged": {
     "translation": "Merged",
@@ -447,16 +451,16 @@
     "translation": "Abertas",
     "origin": [
       ["src/components/state-badge.component.js", 38],
-      ["src/repository/screens/issue-list.screen.js", 261],
-      ["src/repository/screens/pull-list.screen.js", 235]
+      ["src/repository/screens/issue-list.screen.js", 250],
+      ["src/repository/screens/pull-list.screen.js", 232]
     ]
   },
   "Closed": {
     "translation": "Fechadas",
     "origin": [
       ["src/components/state-badge.component.js", 41],
-      ["src/repository/screens/issue-list.screen.js", 261],
-      ["src/repository/screens/pull-list.screen.js", 235]
+      ["src/repository/screens/issue-list.screen.js", 250],
+      ["src/repository/screens/pull-list.screen.js", 232]
     ]
   },
   "Repositories": {
@@ -464,7 +468,7 @@
     "origin": [
       ["src/components/user-profile.component.js", 143],
       ["src/components/user-profile.component.js", 158],
-      ["src/search/screens/search.screen.js", 223]
+      ["src/search/screens/search.screen.js", 222]
     ]
   },
   "Followers": {
@@ -489,232 +493,232 @@
   "Issue Comment": {
     "translation": "Comentário da Issue",
     "origin": [
-      ["src/issue/screens/edit-issue-comment.screen.js", 105],
-      ["src/issue/screens/new-issue.screen.js", 137]
+      ["src/issue/screens/edit-issue-comment.screen.js", 104],
+      ["src/issue/screens/new-issue.screen.js", 136]
     ]
   },
   "Write a title for your issue here": {
     "translation": "Escreva um título para a sua issue aqui",
     "origin": [
-      ["src/issue/screens/edit-issue-comment.screen.js", 108],
-      ["src/issue/screens/new-issue.screen.js", 119]
+      ["src/issue/screens/edit-issue-comment.screen.js", 107],
+      ["src/issue/screens/new-issue.screen.js", 118]
     ]
   },
   "Submit": {
     "translation": "Enviar",
     "origin": [
-      ["src/issue/screens/edit-issue-comment.screen.js", 131],
-      ["src/issue/screens/new-issue.screen.js", 160]
+      ["src/issue/screens/edit-issue-comment.screen.js", 130],
+      ["src/issue/screens/new-issue.screen.js", 159]
     ]
   },
   "Pull Request": {
     "translation": "Pull Request",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 157]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 156]]
   },
   "Issue": {
     "translation": "Issue",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 157]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 156]]
   },
   "Apply Label": {
     "translation": "Aplicar Label",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 164]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 163]]
   },
   "None yet": {
     "translation": "Nenhuma ainda",
     "origin": [
-      ["src/issue/screens/issue-settings.screen.js", 171],
-      ["src/issue/screens/issue-settings.screen.js", 219]
+      ["src/issue/screens/issue-settings.screen.js", 170],
+      ["src/issue/screens/issue-settings.screen.js", 218]
     ]
   },
   "LABELS": {
     "translation": "LABELS",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 172]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 171]]
   },
   "Assign Yourself": {
     "translation": "Atribua a você",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 206]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 205]]
   },
   "ASSIGNEES": {
     "translation": "ATRIBUÍDA A",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 220]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 219]]
   },
   "ACTIONS": {
     "translation": "AÇÕES",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 248]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 247]]
   },
   "Unlock {issueType}": {
     "translation": "Destrancar {issueType}",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 252]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 251]]
   },
   "Lock {issueType}": {
     "translation": "Bloqueada {issueType}",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 253]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 252]]
   },
   "Close {issueType}": {
     "translation": "Fechar {issueType}",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 265]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 264]]
   },
   "Reopen {issueType}": {
     "translation": "Reabrir {issueType}",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 266]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 265]]
   },
   "Are you sure?": {
     "translation": "Tem  a certeza?",
     "origin": [
-      ["src/issue/screens/issue-settings.screen.js", 295],
-      ["src/issue/screens/issue-settings.screen.js", 304]
+      ["src/issue/screens/issue-settings.screen.js", 294],
+      ["src/issue/screens/issue-settings.screen.js", 303]
     ]
   },
   "Yes": {
     "translation": "Sim",
     "origin": [
-      ["src/issue/screens/issue-settings.screen.js", 296],
-      ["src/issue/screens/issue-settings.screen.js", 305]
+      ["src/issue/screens/issue-settings.screen.js", 295],
+      ["src/issue/screens/issue-settings.screen.js", 304]
     ]
   },
   "Apply a label to this issue": {
     "translation": "Aplicar um label a esta issue",
-    "origin": [["src/issue/screens/issue-settings.screen.js", 313]]
+    "origin": [["src/issue/screens/issue-settings.screen.js", 312]]
   },
   "Edit Comment": {
     "translation": "Editar Comentário",
-    "origin": [["src/issue/screens/issue.screen.js", 280]]
+    "origin": [["src/issue/screens/issue.screen.js", 277]]
   },
   "Issue Actions": {
     "translation": "Acções sobre Issues",
-    "origin": [["src/issue/screens/issue.screen.js", 434]]
+    "origin": [["src/issue/screens/issue.screen.js", 426]]
   },
   "Settings": {
     "translation": "Configurações",
-    "origin": [["src/issue/screens/issue.screen.js", 95]]
+    "origin": [["src/issue/screens/issue.screen.js", 94]]
   },
   "You need to have an issue title!": {
     "translation": "A issue precisa de ter um título!",
-    "origin": [["src/issue/screens/new-issue.screen.js", 81]]
+    "origin": [["src/issue/screens/new-issue.screen.js", 80]]
   },
   "OK": {
     "translation": "OK",
     "origin": [
-      ["src/issue/screens/new-issue.screen.js", 82],
-      ["src/issue/screens/pull-merge.screen.js", 120]
+      ["src/issue/screens/new-issue.screen.js", 81],
+      ["src/issue/screens/pull-merge.screen.js", 119]
     ]
   },
   "Issue Title": {
     "translation": "Título da Issue",
-    "origin": [["src/issue/screens/new-issue.screen.js", 116]]
+    "origin": [["src/issue/screens/new-issue.screen.js", 115]]
   },
   "Write a comment for your issue here": {
     "translation": "Escreva um comentário para a sua issue aqui",
-    "origin": [["src/issue/screens/new-issue.screen.js", 140]]
+    "origin": [["src/issue/screens/new-issue.screen.js", 139]]
   },
   "Create a merge commit": {
     "translation": "Criar um merge ",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 92]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 91]]
   },
   "Squash and merge": {
     "translation": "Agrupar e merge",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 92]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 91]]
   },
   "merge": {
     "translation": "merge",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 116]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 115]]
   },
   "squash": {
     "translation": "Agrupar",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 116]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 115]]
   },
   "You need to have a commit title!": {
     "translation": "O commit precisa ter um título!",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 119]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 118]]
   },
   "Commit Title": {
     "translation": "Título do Commit",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 142]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 141]]
   },
   "Write a title for your commit here": {
     "translation": "Escreva um título para o seu commit aqui",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 145]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 144]]
   },
   "Commit Message": {
     "translation": "Mensagem do Commit",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 163]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 162]]
   },
   "Write a message for your commit here": {
     "translation": "Escreva uma mensagem para o seu commit aqui",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 166]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 165]]
   },
   "Merge Type": {
     "translation": "Tipo de Merge",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 184]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 183]]
   },
   "Change Merge Type": {
     "translation": "Trocar Tipo de Merge",
-    "origin": [["src/issue/screens/pull-merge.screen.js", 213]]
+    "origin": [["src/issue/screens/pull-merge.screen.js", 212]]
   },
   "Mark all as read": {
     "translation": "Marcar todos como lido",
-    "origin": [["src/notifications/screens/notifications.screen.js", 392]]
+    "origin": [["src/notifications/screens/notifications.screen.js", 389]]
   },
   "Unread": {
     "translation": "Não lidas",
-    "origin": [["src/notifications/screens/notifications.screen.js", 452]]
+    "origin": [["src/notifications/screens/notifications.screen.js", 449]]
   },
   "Participating": {
     "translation": "Participando",
-    "origin": [["src/notifications/screens/notifications.screen.js", 452]]
+    "origin": [["src/notifications/screens/notifications.screen.js", 449]]
   },
   "All": {
     "translation": "Todas",
-    "origin": [["src/notifications/screens/notifications.screen.js", 452]]
+    "origin": [["src/notifications/screens/notifications.screen.js", 449]]
   },
   "Retrieving notifications": {
     "translation": "Procurando notificações",
-    "origin": [["src/notifications/screens/notifications.screen.js", 461]]
+    "origin": [["src/notifications/screens/notifications.screen.js", 458]]
   },
   "You don't have any notifications of this type": {
     "translation": "Você não tem notificações deste tipo",
-    "origin": [["src/notifications/screens/notifications.screen.js", 482]]
+    "origin": [["src/notifications/screens/notifications.screen.js", 479]]
   },
   "MEMBERS": {
     "translation": "MEMBROS",
     "origin": [
-      ["src/organization/screens/organization-profile.screen.js", 157],
-      ["src/organization/screens/organization-profile.screen.js", 161]
+      ["src/organization/screens/organization-profile.screen.js", 153],
+      ["src/organization/screens/organization-profile.screen.js", 157]
     ]
   },
   "DESCRIPTION": {
     "translation": "DESCRIÇÃO",
-    "origin": [["src/organization/screens/organization-profile.screen.js", 169]]
+    "origin": [["src/organization/screens/organization-profile.screen.js", 165]]
   },
   "Organization Actions": {
     "translation": "Opções de Entidade",
-    "origin": [["src/organization/screens/organization-profile.screen.js", 190]]
+    "origin": [["src/organization/screens/organization-profile.screen.js", 182]]
   },
   "Searching for {query}": {
     "translation": "Procurando por {query}",
     "origin": [
-      ["src/repository/screens/issue-list.screen.js", 272],
-      ["src/repository/screens/issue-list.screen.js", 281],
-      ["src/repository/screens/pull-list.screen.js", 246],
-      ["src/repository/screens/pull-list.screen.js", 255],
-      ["src/search/screens/search.screen.js", 230],
-      ["src/search/screens/search.screen.js", 238]
+      ["src/repository/screens/issue-list.screen.js", 261],
+      ["src/repository/screens/issue-list.screen.js", 270],
+      ["src/repository/screens/pull-list.screen.js", 243],
+      ["src/repository/screens/pull-list.screen.js", 252],
+      ["src/search/screens/search.screen.js", 229],
+      ["src/search/screens/search.screen.js", 237]
     ]
   },
   "No open issues found!": {
     "translation": "Nenhuma issue aberta encontrada!",
-    "origin": [["src/repository/screens/issue-list.screen.js", 304]]
+    "origin": [["src/repository/screens/issue-list.screen.js", 293]]
   },
   "No closed issues found!": {
     "translation": "Nenhuma issue fechada encontrada!",
-    "origin": [["src/repository/screens/issue-list.screen.js", 315]]
+    "origin": [["src/repository/screens/issue-list.screen.js", 304]]
   },
   "New Issue": {
     "translation": "Nova Issue",
     "origin": [
-      ["src/repository/screens/issue-list.screen.js", 112],
-      ["src/repository/screens/repository.screen.js", 393],
-      ["src/repository/screens/repository.screen.js", 404]
+      ["src/repository/screens/issue-list.screen.js", 111],
+      ["src/repository/screens/repository.screen.js", 390],
+      ["src/repository/screens/repository.screen.js", 401]
     ]
   },
   "{0} files": {
@@ -735,11 +739,11 @@
   },
   "No open pull requests found!": {
     "translation": "Nenhum pull request aberto encontrado!",
-    "origin": [["src/repository/screens/pull-list.screen.js", 278]]
+    "origin": [["src/repository/screens/pull-list.screen.js", 275]]
   },
   "No closed pull requests found!": {
     "translation": "Nenhum pull request fechado encontrado!",
-    "origin": [["src/repository/screens/pull-list.screen.js", 289]]
+    "origin": [["src/repository/screens/pull-list.screen.js", 286]]
   },
   "No README.md found": {
     "translation": "Não foi encontrado nenhum ficheiro README.md",
@@ -751,148 +755,148 @@
   },
   "Share {0}": {
     "translation": "Compartilhar {0}",
-    "origin": [["src/repository/screens/repository.screen.js", 188]]
+    "origin": [["src/repository/screens/repository.screen.js", 187]]
   },
   "Check out {0} on GitHub. {1}": {
     "translation": "Veja {0} no GitHub. {1}",
-    "origin": [["src/repository/screens/repository.screen.js", 193]]
+    "origin": [["src/repository/screens/repository.screen.js", 192]]
   },
   "Unstar": {
     "translation": "Remover de Favorito",
-    "origin": [["src/repository/screens/repository.screen.js", 243]]
+    "origin": [["src/repository/screens/repository.screen.js", 241]]
   },
   "Star": {
     "translation": "Tornar Favorito",
-    "origin": [["src/repository/screens/repository.screen.js", 243]]
+    "origin": [["src/repository/screens/repository.screen.js", 241]]
   },
   "Unwatch": {
     "translation": "Deixar de acompanhar",
-    "origin": [["src/repository/screens/repository.screen.js", 244]]
+    "origin": [["src/repository/screens/repository.screen.js", 242]]
   },
   "Watch": {
     "translation": "Acompanhar",
-    "origin": [["src/repository/screens/repository.screen.js", 244]]
+    "origin": [["src/repository/screens/repository.screen.js", 242]]
   },
   "Share": {
     "translation": "Compartilhar",
-    "origin": [["src/repository/screens/repository.screen.js", 245]]
+    "origin": [["src/repository/screens/repository.screen.js", 243]]
   },
   "Fork": {
     "translation": "Fazer Fork",
-    "origin": [["src/repository/screens/repository.screen.js", 250]]
+    "origin": [["src/repository/screens/repository.screen.js", 248]]
   },
   "TOPICS": {
     "translation": "TÓPICOS",
-    "origin": [["src/repository/screens/repository.screen.js", 298]]
+    "origin": [["src/repository/screens/repository.screen.js", 295]]
   },
   "OWNER": {
     "translation": "PROPRIETÁRIO",
     "origin": [
-      ["src/repository/screens/repository.screen.js", 304],
-      ["src/repository/screens/repository.screen.js", 312],
-      ["src/repository/screens/repository.screen.js", 320]
+      ["src/repository/screens/repository.screen.js", 301],
+      ["src/repository/screens/repository.screen.js", 309],
+      ["src/repository/screens/repository.screen.js", 317]
     ]
   },
   "CONTRIBUTORS": {
     "translation": "CONTRIBUIDORES",
     "origin": [
-      ["src/repository/screens/repository.screen.js", 329],
-      ["src/repository/screens/repository.screen.js", 334]
+      ["src/repository/screens/repository.screen.js", 326],
+      ["src/repository/screens/repository.screen.js", 331]
     ]
   },
   "No contributors found": {
     "translation": "Nenhum contribuidor encontrado",
-    "origin": [["src/repository/screens/repository.screen.js", 336]]
+    "origin": [["src/repository/screens/repository.screen.js", 333]]
   },
   "SOURCE": {
     "translation": "CÓDIGO-FONTE",
-    "origin": [["src/repository/screens/repository.screen.js", 341]]
+    "origin": [["src/repository/screens/repository.screen.js", 338]]
   },
   "README": {
     "translation": "README",
-    "origin": [["src/repository/screens/repository.screen.js", 344]]
+    "origin": [["src/repository/screens/repository.screen.js", 341]]
   },
   "View Code": {
     "translation": "Ver Código",
-    "origin": [["src/repository/screens/repository.screen.js", 361]]
+    "origin": [["src/repository/screens/repository.screen.js", 358]]
   },
   "Code": {
     "translation": "Código",
-    "origin": [["src/repository/screens/repository.screen.js", 371]]
+    "origin": [["src/repository/screens/repository.screen.js", 368]]
   },
   "ISSUES": {
     "translation": "ISSUES",
-    "origin": [["src/repository/screens/repository.screen.js", 384]]
+    "origin": [["src/repository/screens/repository.screen.js", 381]]
   },
   "No issues": {
     "translation": "Nenhuma issue",
-    "origin": [["src/repository/screens/repository.screen.js", 388]]
+    "origin": [["src/repository/screens/repository.screen.js", 385]]
   },
   "No open issues": {
     "translation": "Nenhuma issue aberta",
-    "origin": [["src/repository/screens/repository.screen.js", 389]]
+    "origin": [["src/repository/screens/repository.screen.js", 386]]
   },
   "View All": {
     "translation": "Ver Todos",
     "origin": [
-      ["src/repository/screens/repository.screen.js", 393],
-      ["src/repository/screens/repository.screen.js", 432]
+      ["src/repository/screens/repository.screen.js", 390],
+      ["src/repository/screens/repository.screen.js", 429]
     ]
   },
   "Issues": {
     "translation": "Issues",
-    "origin": [["src/repository/screens/repository.screen.js", 398]]
+    "origin": [["src/repository/screens/repository.screen.js", 395]]
   },
   "PULL REQUESTS": {
     "translation": "PULL REQUESTS",
-    "origin": [["src/repository/screens/repository.screen.js", 424]]
+    "origin": [["src/repository/screens/repository.screen.js", 421]]
   },
   "No pull requests": {
     "translation": "Nenhum pull request",
-    "origin": [["src/repository/screens/repository.screen.js", 428]]
+    "origin": [["src/repository/screens/repository.screen.js", 425]]
   },
   "No open pull requests": {
     "translation": "Nenhum pull request aberto",
-    "origin": [["src/repository/screens/repository.screen.js", 429]]
+    "origin": [["src/repository/screens/repository.screen.js", 426]]
   },
   "Pull Requests": {
     "translation": "Pull Requests",
-    "origin": [["src/repository/screens/repository.screen.js", 435]]
+    "origin": [["src/repository/screens/repository.screen.js", 432]]
   },
   "Repository Actions": {
     "translation": "Ações do Repositório",
-    "origin": [["src/repository/screens/repository.screen.js", 459]]
+    "origin": [["src/repository/screens/repository.screen.js", 455]]
   },
   "Users": {
     "translation": "Utilizadores",
-    "origin": [["src/search/screens/search.screen.js", 223]]
+    "origin": [["src/search/screens/search.screen.js", 222]]
   },
   "Search for any repository": {
     "translation": "Procurar por qualquer repositório",
-    "origin": [["src/search/screens/search.screen.js", 256]]
+    "origin": [["src/search/screens/search.screen.js", 255]]
   },
   "Search for any user": {
     "translation": "Procurar por qualquer usuário",
-    "origin": [["src/search/screens/search.screen.js", 257]]
+    "origin": [["src/search/screens/search.screen.js", 256]]
   },
   "No repositories found :(": {
     "translation": "Nenhum repositório encontrado :(",
-    "origin": [["src/search/screens/search.screen.js", 268]]
+    "origin": [["src/search/screens/search.screen.js", 267]]
   },
   "No users found :(": {
     "translation": "Nenhum utilizador encontrado :(",
-    "origin": [["src/search/screens/search.screen.js", 279]]
+    "origin": [["src/search/screens/search.screen.js", 278]]
   },
   "Unfollow": {
     "translation": "Deixar de seguir",
-    "origin": [["src/user/screens/profile.screen.js", 165]]
+    "origin": [["src/user/screens/profile.screen.js", 162]]
   },
   "Follow": {
     "translation": "Seguir",
-    "origin": [["src/user/screens/profile.screen.js", 165]]
+    "origin": [["src/user/screens/profile.screen.js", 162]]
   },
   "User Actions": {
     "translation": "Ações do Utilizador",
-    "origin": [["src/user/screens/profile.screen.js", 250]]
+    "origin": [["src/user/screens/profile.screen.js", 241]]
   }
 }

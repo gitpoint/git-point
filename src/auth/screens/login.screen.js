@@ -28,7 +28,6 @@ import { resetNavigationTo } from 'utils';
 let stateRandom = Math.random().toString();
 
 const mapStateToProps = state => ({
-  locale: state.auth.locale,
   isLoggingIn: state.auth.isLoggingIn,
   isAuthenticated: state.auth.isAuthenticated,
   hasInitialUser: state.auth.hasInitialUser,
@@ -218,6 +217,10 @@ class Login extends Component {
   };
 
   handleOpenURL = ({ url }) => {
+    /* FIXME: can't call i18n.t inside the if (url ..) block. Lingui bug? */
+    const { i18n } = this.props;
+    const loaderText = i18n.t`Preparing GitPoint...`;
+
     if (url && url.substring(0, 11) === 'gitpoint://') {
       const [, queryStringFromUrl] = url.match(/\?(.*)/);
       const { state, code } = queryString.parse(queryStringFromUrl);
@@ -227,7 +230,7 @@ class Login extends Component {
         this.setState({
           code,
           showLoader: true,
-          loaderText: this.props.i18n.t`Preparing GitPoint...`,
+          loaderText,
         });
 
         stateRandom = Math.random().toString();

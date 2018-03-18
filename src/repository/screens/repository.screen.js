@@ -100,7 +100,6 @@ class Repository extends Component {
     // isPendingCheckForked: boolean,
     navigation: Object,
     username: string,
-    locale: string,
     i18n: Object,
     subscribed: boolean,
     subscribeToRepo: Function,
@@ -211,7 +210,6 @@ class Repository extends Component {
       issues,
       topics,
       starred,
-      locale,
       i18n,
       isPendingRepository,
       isPendingContributors,
@@ -265,7 +263,7 @@ class Repository extends Component {
         <ParallaxScroll
           renderContent={() => {
             if (isPendingRepository && !initalRepository) {
-              return <LoadingRepositoryProfile locale={locale} />;
+              return <LoadingRepositoryProfile />;
             }
 
             return (
@@ -275,7 +273,6 @@ class Repository extends Component {
                 loading={isPendingRepository}
                 navigation={navigation}
                 subscribed={isSubscribed}
-                locale={locale}
               />
             );
           }}
@@ -446,7 +443,6 @@ class Repository extends Component {
                   type="pull"
                   issue={item}
                   navigation={navigation}
-                  locale={locale}
                 />
               ))}
           </SectionList>

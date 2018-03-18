@@ -10,7 +10,6 @@ type Props = {
   type: string,
   issue: Object,
   navigation: Object,
-  locale: string,
   i18n: Object,
 };
 
@@ -63,14 +62,13 @@ const getIconName = (type, issue) => {
 };
 
 export const IssueListItem = withI18n()(
-  ({ type, issue, navigation, i18n, locale }: Props) => (
+  ({ type, issue, navigation, i18n }: Props) => (
     <TouchableHighlight
       style={issue.state === 'closed' && styles.closedIssue}
       onPress={() =>
         navigation.navigate('Issue', {
           issue,
           isPR: !!issue.pull_request,
-          locale,
         })
       }
       underlayColor={colors.greyLight}

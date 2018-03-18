@@ -34,7 +34,6 @@ import {
 } from '../issue.action';
 
 const mapStateToProps = state => ({
-  locale: state.auth.locale,
   authUser: state.auth.user,
   repository: state.repository.repository,
   contributors: state.repository.contributors,
@@ -141,7 +140,6 @@ class Issue extends Component {
     isDeletingComment: boolean,
     isPendingContributors: boolean,
     // isPostingComment: boolean,
-    locale: string,
     navigation: Object,
   };
 
@@ -234,10 +232,9 @@ class Issue extends Component {
   getContributorsLink = repository => `${repository}/contributors`;
 
   setNavigationParams = () => {
-    const { navigation, locale, repository } = this.props;
+    const { navigation, repository } = this.props;
 
     navigation.setParams({
-      locale,
       userHasPushPermission:
         repository.permissions.admin || repository.permissions.push,
     });
@@ -295,7 +292,6 @@ class Issue extends Component {
       isMerged,
       isPendingDiff,
       isPendingCheckMerge,
-      locale,
       navigation,
     } = this.props;
 
@@ -310,14 +306,13 @@ class Issue extends Component {
         onRepositoryPress={url => this.onRepositoryPress(url)}
         onLinkPress={node => this.onLinkPress(node)}
         userHasPushPermission={navigation.state.params.userHasPushPermission}
-        locale={locale}
         navigation={navigation}
       />
     );
   };
 
   renderItem = ({ item }) => {
-    const { repository, locale, navigation } = this.props;
+    const { repository, navigation } = this.props;
 
     if (item.header) {
       return this.renderHeader();
@@ -339,7 +334,6 @@ class Issue extends Component {
         onLinkPress={node => this.onLinkPress(node)}
         onDeletePress={this.deleteComment}
         onEditPress={this.editComment}
-        locale={locale}
         navigation={navigation}
       />
     );
@@ -355,7 +349,6 @@ class Issue extends Component {
       isPendingContributors,
       isPendingIssue,
       isDeletingComment,
-      locale,
       i18n,
       navigation,
     } = this.props;
@@ -421,7 +414,6 @@ class Issue extends Component {
                   navigation.state.params.userHasPushPermission
                 }
                 issueLocked={issue.locked}
-                locale={locale}
                 onSubmit={this.postComment}
               />
             </KeyboardAvoidingView>

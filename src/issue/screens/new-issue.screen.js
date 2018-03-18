@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  locale: state.auth.locale,
   repository: state.repository.repository,
   isPendingSubmitting: state.issue.isPendingSubmitting,
 });

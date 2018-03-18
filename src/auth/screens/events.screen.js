@@ -535,7 +535,6 @@ class Events extends Component {
         userEvent.payload.issue ||
         this.formatPullRequestObject(userEvent.payload.pull_request),
       isPR: !!userEvent.payload.pull_request,
-      locale: this.props.locale,
     });
   };
 

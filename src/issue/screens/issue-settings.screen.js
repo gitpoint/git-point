@@ -18,7 +18,6 @@ import { getLabels } from 'repository';
 import { editIssue, changeIssueLockStatus } from '../issue.action';
 
 const mapStateToProps = state => ({
-  locale: state.auth.locale,
   authUser: state.auth.user,
   repository: state.repository.repository,
   labels: state.repository.labels,
