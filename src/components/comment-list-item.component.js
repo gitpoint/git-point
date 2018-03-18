@@ -175,7 +175,7 @@ class CommentListItemComponent extends Component {
           )}
 
           <DateContainer>
-            <DateLabel>{relativeTimeToNow(comment.created_at)}</DateLabel>
+            <DateLabel>{relativeTimeToNow(comment.created_at, i18n)}</DateLabel>
           </DateContainer>
         </Header>
 

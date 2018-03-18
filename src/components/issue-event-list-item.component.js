@@ -307,43 +307,38 @@ export class IssueEventListItem extends Component {
   }
 }
 
-class Event extends Component {
-  props: {
-    iconName: String,
-    iconColor: String,
-    iconBackgroundColor: String,
-    text: React.Element<*>,
-    createdAt: String,
-  };
-
-  render() {
-    const {
-      text,
-      createdAt,
-      iconName,
-      iconColor = '#586069',
-      iconBackgroundColor = '#E6EBF1',
-    } = this.props;
-
-    return (
-      <Container>
-        <Icon
-          name={iconName}
-          type="octicon"
-          size={16}
-          color={iconColor}
-          backgroundColor={iconBackgroundColor}
-        />
-        <ContentContainer>
-          <EventTextContainer>{text}</EventTextContainer>
-          <DateContainer>
-            <Date>{relativeTimeToNow(createdAt)}</Date>
-          </DateContainer>
-        </ContentContainer>
-      </Container>
-    );
-  }
-}
+type EventProps = {
+  iconName: String,
+  iconColor: String,
+  iconBackgroundColor: String,
+  text: React.Element<*>,
+  i18n: Object,
+  createdAt: String,
+};
+const Event = ({
+  i18n,
+  text,
+  createdAt,
+  iconName,
+  iconColor = '#586069',
+  iconBackgroundColor = '#E6EBF1',
+}: EventProps) => (
+  <Container>
+    <Icon
+      name={iconName}
+      type="octicon"
+      size={16}
+      color={iconColor}
+      backgroundColor={iconBackgroundColor}
+    />
+    <ContentContainer>
+      <EventTextContainer>{text}</EventTextContainer>
+      <DateContainer>
+        <Date>{relativeTimeToNow(createdAt, i18n)}</Date>
+      </DateContainer>
+    </ContentContainer>
+  </Container>
+);
 
 class LabelGroup extends Component {
   props: {

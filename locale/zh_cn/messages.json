@@ -142,7 +142,7 @@
   "Welcome to GitPoint": {
     "translation": "欢迎来到GitPoint",
     "origin": [
-      ["src/auth/screens/events.screen.js", 577],
+      ["src/auth/screens/events.screen.js", 576],
       ["src/auth/screens/login.screen.js", 281],
       ["src/auth/screens/welcome.screen.js", 40]
     ]
@@ -394,7 +394,7 @@
   },
   "#{0} by {1} was closed {2} ago": {
     "translation": "{1} 在 {2} 前关闭了问题 #{0}。",
-    "origin": [["src/components/issue-list-item.component.js", 85]]
+    "origin": [["src/components/issue-list-item.component.js", 86]]
   },
   "Stars": {
     "translation": "Stars",
@@ -403,7 +403,7 @@
         "src/components/loading-indicators/loading-repository-profile.component.js",
         94
       ],
-      ["src/components/repository-profile.component.js", 207],
+      ["src/components/repository-profile.component.js", 214],
       ["src/components/user-profile.component.js", 167],
       ["src/components/user-profile.component.js", 180]
     ]
@@ -415,32 +415,39 @@
         "src/components/loading-indicators/loading-repository-profile.component.js",
         100
       ],
-      ["src/components/repository-profile.component.js", 243]
+      ["src/components/repository-profile.component.js", 253]
+    ]
+  },
+  "suffix-for-thousands": {
+    "translation": "千",
+    "origin": [
+      ["src/components/repository-list-item.component.js", 132],
+      ["src/components/repository-profile.component.js", 130]
     ]
   },
   "Unknown": {
     "translation": "",
-    "origin": [["src/components/repository-profile.component.js", 142]]
+    "origin": [["src/components/repository-profile.component.js", 149]]
   },
   "Repository is not found": {
     "translation": "",
-    "origin": [["src/components/repository-profile.component.js", 159]]
+    "origin": [["src/components/repository-profile.component.js", 166]]
   },
   "forked from <0>{0}</0>": {
     "translation": "派生于 <0>{0}</0>",
-    "origin": [["src/components/repository-profile.component.js", 180]]
+    "origin": [["src/components/repository-profile.component.js", 187]]
   },
   "Starred": {
     "translation": "已星标",
-    "origin": [["src/components/repository-profile.component.js", 212]]
+    "origin": [["src/components/repository-profile.component.js", 219]]
   },
   "Watchers": {
     "translation": "关注者",
-    "origin": [["src/components/repository-profile.component.js", 225]]
+    "origin": [["src/components/repository-profile.component.js", 235]]
   },
   "Watching": {
     "translation": "关注中",
-    "origin": [["src/components/repository-profile.component.js", 230]]
+    "origin": [["src/components/repository-profile.component.js", 240]]
   },
   "Merged": {
     "translation": "已合并",
@@ -901,6 +908,6 @@
   "{token, select, lessThanXSeconds {{count}s} xSeconds {{count}s} halfAMinute {30s} lessThanXMinutes {{count}m} xMinutes {{count}m} aboutXHours {{count}h} xHours {{count}h} xDays {{count}d} aboutXMonths {{count}mo} xMonths {{count}mo} aboutXYears {{count}y} xYears {{count}y} overXYears {{count}y} almostXYears {{count}y} other {?}}": {
     "translation":
       "{token, select, lessThanXSeconds {{count}秒} xSeconds {{count}秒} halfAMinute {30秒} lessThanXMinutes {{count}分} xMinutes {{count}分} aboutXHours {{count}时} xHours {{count}时} xDays {{count}日} aboutXMonths {{count}月} xMonths {{count}月} aboutXYears {{count}年} xYears {{count}年} overXYears {{count}年} almostXYears {{count}年} other {?}}",
-    "origin": [["src/utils/localization-helper.js", 56]]
+    "origin": [["src/utils/localization-helper.js", 55]]
   }
 }

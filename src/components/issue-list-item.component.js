@@ -80,11 +80,12 @@ export const IssueListItem = withI18n()(
           subtitle={
             issue.state === 'open'
               ? i18n.t`#${issue.number} opened ${relativeTimeToNow(
-                  issue.created_at
+                  issue.created_at,
+                  i18n
                 )} ago by ${issue.user.login}`
               : i18n.t`#${issue.number} by ${
                   issue.user.login
-                } was closed ${relativeTimeToNow(issue.created_at)} ago`
+                } was closed ${relativeTimeToNow(issue.created_at, i18n)} ago`
           }
           leftIcon={{
             name: getIconName(type, issue),

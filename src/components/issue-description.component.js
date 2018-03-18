@@ -144,7 +144,7 @@ class IssueDescriptionComponent extends Component {
         <HeaderContainer>
           <IssueTitle
             title={issue.title}
-            subtitle={relativeTimeToNow(issue.created_at)}
+            subtitle={relativeTimeToNow(issue.created_at, i18n)}
             leftIcon={{
               name: issue.pull_request ? 'git-pull-request' : 'issue-opened',
               size: 36,

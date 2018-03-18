@@ -4,6 +4,7 @@ import { ListItem, Icon } from 'react-native-elements';
 
 import { emojifyText, abbreviateNumber } from 'utils';
 import { colors, languageColors, fonts, normalize } from 'config';
+import { withI18n } from '@lingui/react/cjs/react.production.min';
 
 type Props = {
   repository: Object,
@@ -63,7 +64,7 @@ const ExtraInfoForksText = ExtraInfoText.extend`
   margin-right: 13;
 `;
 
-const renderTitle = (repository, showFullName) => (
+const renderTitle = (repository, showFullName, thousandsSuffix) => (
   <ListItemWrapper>
     <RepoContainer>
       <TitleWrapper>
@@ -87,7 +88,7 @@ const renderTitle = (repository, showFullName) => (
       <Icon name="star" type="octicon" size={15} color={colors.greyDark} />
 
       <ExtraInfoText>
-        {abbreviateNumber(repository.stargazers_count)}
+        {abbreviateNumber(repository.stargazers_count, thousandsSuffix)}
       </ExtraInfoText>
 
       <Icon
@@ -98,7 +99,7 @@ const renderTitle = (repository, showFullName) => (
       />
 
       <ExtraInfoForksText>
-        {abbreviateNumber(repository.forks_count)}
+        {abbreviateNumber(repository.forks_count, thousandsSuffix)}
       </ExtraInfoForksText>
 
       {repository.language !== null && (
@@ -126,21 +127,27 @@ const Repository = styled(ListItem).attrs({
   },
 })``;
 
-export const RepositoryListItem = ({
-  repository,
-  showFullName,
-  navigation,
-}: Props) => (
-  <Repository
-    key={repository.id}
-    title={renderTitle(repository, showFullName)}
-    rightIcon={{
-      name: repository.fork ? 'repo-forked' : 'repo',
-      color: colors.grey,
-      type: 'octicon',
-    }}
-    onPress={() => navigation.navigate('Repository', { repository })}
-  />
+export const RepositoryListItem = withI18n()(
+  ({ repository, showFullName, navigation, i18n }: Props) => {
+    const thousandsSuffix = i18n._(
+      'suffix-for-thousands',
+      {},
+      { defaults: 'k' }
+    );
+
+    return (
+      <Repository
+        key={repository.id}
+        title={renderTitle(repository, showFullName, thousandsSuffix)}
+        rightIcon={{
+          name: repository.fork ? 'repo-forked' : 'repo',
+          color: colors.grey,
+          type: 'octicon',
+        }}
+        onPress={() => navigation.navigate('Repository', { repository })}
+      />
+    );
+  }
 );
 
 RepositoryListItem.defaultProps = {
