@@ -37,7 +37,7 @@
     "origin": [["src/auth/screens/events.screen.js", 147]]
   },
   "<0/> commented on commit": {
-    "translation": "",
+    "translation": "<0/> comemtou no commit",
     "origin": [["src/auth/screens/events.screen.js", 199]]
   },
   "<0/> created branch <1/> at <2/>": {
@@ -727,7 +727,7 @@
     ]
   },
   "{0} files": {
-    "translation": "",
+    "translation": "{0} arquivos",
     "origin": [["src/repository/screens/pull-diff.screen.js", 98]]
   },
   "NEW": {
@@ -759,11 +759,11 @@
     "origin": [["src/repository/screens/read-me.screen.js", 128]]
   },
   "Share {0}": {
-    "translation": "",
+    "translation": "Compartir {0}",
     "origin": [["src/repository/screens/repository.screen.js", 188]]
   },
   "Check out {0} on GitHub. {1}": {
-    "translation": "",
+    "translation": "Revisa {0} en GitHub. {1}",
     "origin": [["src/repository/screens/repository.screen.js", 193]]
   },
   "Unstar": {
