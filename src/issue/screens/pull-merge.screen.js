@@ -117,7 +117,7 @@ class PullMerge extends Component {
 
     if (commitTitle === '') {
       Alert.alert(i18n.t`You need to have a commit title!`, null, [
-        { text: i18n.t`Ok` },
+        { text: i18n.t`OK` },
       ]);
     } else {
       mergePullRequest(

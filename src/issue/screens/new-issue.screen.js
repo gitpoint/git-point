@@ -79,7 +79,7 @@ class NewIssue extends Component {
 
     if (issueTitle === '') {
       Alert.alert(i18n.t`You need to have an issue title!`, null, [
-        { text: i18n.t`Ok` },
+        { text: i18n.t`OK` },
       ]);
     } else {
       submitNewIssue(owner, repoName, issueTitle, issueComment).then(issue => {

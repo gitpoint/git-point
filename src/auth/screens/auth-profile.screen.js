@@ -171,7 +171,7 @@ class AuthProfile extends Component {
           {!isPending && (
             <View>
               <SectionList
-                title={i18n.t`Organizations`}
+                title={i18n.t`ORGANIZATIONS`}
                 noItems={orgs.length === 0}
                 noItemsMessage={i18n.t`No organizations`}
               >

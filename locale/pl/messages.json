@@ -1,6 +1,6 @@
 {
   "Options": {
-    "translation": "Options",
+    "translation": "Opcje",
     "origin": [
       [
         "src/auth/screens/auth-profile.screen.js",
@@ -22,7 +22,7 @@
     ]
   },
   "ORGANIZATIONS": {
-    "translation": "ORGANISATIONS",
+    "translation": "ORGANIZACJE",
     "origin": [
       [
         "src/auth/screens/auth-profile.screen.js",
@@ -35,7 +35,7 @@
     ]
   },
   "No organizations": {
-    "translation": "Aucune organisation",
+    "translation": "Brak organizacji",
     "origin": [
       [
         "src/auth/screens/auth-profile.screen.js",
@@ -48,7 +48,7 @@
     ]
   },
   "Can't see all your organizations?": {
-    "translation": "Vous ne voyez pas toutes vos organisations ?",
+    "translation": "Nie widzisz wszystkich swoich organizacji?",
     "origin": [
       [
         "src/auth/screens/auth-profile.screen.js",
@@ -57,7 +57,7 @@
     ]
   },
   "You may have to request approval for them.": {
-    "translation": "Vous devez peut être demander une accréditation pour celles-ci.",
+    "translation": "Być może musisz wystąpić o ich zatwierdzenie.",
     "origin": [
       [
         "src/auth/screens/auth-profile.screen.js",
@@ -322,7 +322,7 @@
     ]
   },
   "Welcome to GitPoint": {
-    "translation": "Bienvenue dans GitPoint",
+    "translation": "Witaj w GitPoint",
     "origin": [
       [
         "src/auth/screens/events.screen.js",
@@ -339,7 +339,7 @@
     ]
   },
   "The most feature-rich GitHub client that is 100% free": {
-    "translation": "Le client GitHub le plus riche en fonctionnalités tout en étant 100% gratuit",
+    "translation": "Najlepsza integracja z GitHubem jest 100% za darmo",
     "origin": [
       [
         "src/auth/screens/login.screen.js",
@@ -348,7 +348,7 @@
     ]
   },
   "Control notifications": {
-    "translation": "Contrôler les notifications",
+    "translation": "Kontrola notyfikacji",
     "origin": [
       [
         "src/auth/screens/login.screen.js",
@@ -357,7 +357,7 @@
     ]
   },
   "View and control all of your unread and participating notifications": {
-    "translation": "Voir et contrôler toutes vos notifications de participations non lues",
+    "translation": "Przeglądanie i kontrola wszystkich nieprzeczytanych notifykacji i konwersjacji",
     "origin": [
       [
         "src/auth/screens/login.screen.js",
@@ -366,7 +366,7 @@
     ]
   },
   "Repositories and Users": {
-    "translation": "Dépôts et Utilisateurs",
+    "translation": "Repozytoria i Użytkownicy",
     "origin": [
       [
         "src/auth/screens/login.screen.js",
@@ -375,7 +375,7 @@
     ]
   },
   "Easily obtain repository, user and organization information": {
-    "translation": "Obtenez facilement des informations sur les dépôts, les utilisateurs et les organisations",
+    "translation": "W łatwy sposób otrzymasz informację o repozytorium, użytkowniku i organizacji",
     "origin": [
       [
         "src/auth/screens/login.screen.js",
@@ -384,7 +384,7 @@
     ]
   },
   "Issues and Pull Requests": {
-    "translation": "Tickets et Pull Requests",
+    "translation": "Problemy i Pull Requesty",
     "origin": [
       [
         "src/auth/screens/login.screen.js",
@@ -393,7 +393,7 @@
     ]
   },
   "Communicate on conversations, merge pull requests and more": {
-    "translation": "Communiquez dans les conversations, fusionnez les pull requests et plus",
+    "translation": "Powiadom o konwersjacji, zmergowanym pull requeście i więcej",
     "origin": [
       [
         "src/auth/screens/login.screen.js",
@@ -402,7 +402,7 @@
     ]
   },
   "SIGN IN": {
-    "translation": "CONNEXION",
+    "translation": "ZALOGUJ",
     "origin": [
       [
         "src/auth/screens/login.screen.js",
@@ -411,7 +411,7 @@
     ]
   },
   "CANCEL": {
-    "translation": "ANNULER",
+    "translation": "ANULUJ",
     "origin": [
       [
         "src/auth/screens/login.screen.js",
@@ -420,7 +420,7 @@
     ]
   },
   "Last updated: July 15, 2017": {
-    "translation": "Dernière mise à jour : 15 Juillet 2017",
+    "translation": "Ostatnia Wersja: 15 Lipca, 2017",
     "origin": [
       [
         "src/auth/screens/privacy-policy.screen.js",
@@ -429,7 +429,7 @@
     ]
   },
   "We're glad you decided to use GitPoint. This Privacy Policy is here to inform you about what we do — and do not do — with our user's data.": {
-    "translation": "Nous sommes ravis que vous ayez décidé d'utiliser GitPoint. Cette politique de confidentialité est là pour vous informer de ce que nous faisons - et ne faisons pas - de vos données utilisateur.",
+    "translation": "Cieszymy się, że korzystasz z GitPoint! Nasza Polityka Prywatności ma po pierwsze pomóc Ci zrozumieć co robimy — a czego nie robimy — z danymi naszych użytkowników.",
     "origin": [
       [
         "src/auth/screens/privacy-policy.screen.js",
@@ -438,7 +438,7 @@
     ]
   },
   "USER DATA": {
-    "translation": "DONNÉES UTILISATEUR",
+    "translation": "DANE UŻYTKOWNIKÓW",
     "origin": [
       [
         "src/auth/screens/privacy-policy.screen.js",
@@ -447,7 +447,7 @@
     ]
   },
   "We do not do anything with your GitHub information. After authenticating, the user's OAuth token is persisted directly on their device storage. It is not possible for us to retrieve that information. We never view a user's access token nor store it whatsoever.": {
-    "translation": "Nous ne faisons rien de vos informations GitHub. Après authentification, le jeton OAuth de l'utilisateur est enregistré directement sur le stockage de l'appareil. Il nous est impossible de récupérer cette information. Nous ne lisons jamais le jeton d'accès utilisateur, ni le stockons d'une quelconque manière.",
+    "translation": "Twoje dane z GitHuba nie są przez nas przetwarzane. Po autentykacji, token OAuth jest zapisany bezpośrednio na nośniku Twojego urządzenia. Nie jest możliwe odczytanie ponowne tej informacji przez nas. Nigdy nie czytamy bezpośrednio tokena użytkownika i nie przetwarzamy go w inny sposób.",
     "origin": [
       [
         "src/auth/screens/privacy-policy.screen.js",
@@ -456,7 +456,7 @@
     ]
   },
   "This means that in no way, shape or form do we ever view, use or share a user's GitHub data. If private data ever becomes visible at any point we will not record or view it. If it happens to be accidentally recorded, we will delete it immediately using secure erase methods. Again, we've set up authentication specifically so that this never happens.": {
-    "translation": "Cela signifique que jamais, nous ne lisons, utilisons, ou partageons d'une quelconque manière les données GitHub de l'utilisateur. Si des données privées venaient à un moment donné à être visibles, nous ne les enregistrerons et regarderons pas. Si jamais cela venait à se faire par accident, nous les supprimerons immédiatement en utilisant une méthode de suppression sécurisée. Encore une fois, nous avons mis en place l'authentification de manière à ce que cela n'arrive jamais.",
+    "translation": "Oznacza to, że w żaden pośredni albo bezpośredni sposób, nie używamy, przekazujemy lub udostępniamy informacji o użytkowniku GitHuba. Jeżeli niepubliczne informacje zostaną w jakikolwiek sposób uwidocznione lub udostępnione, nie będziemy ich przechowywać ani przetwarzać. Jeżeli nastąpi przypadkowe zapisanie takich informacji, usuniemy je bezzwłocznie, używając bezpiecznych metod usuwania informacji. Podkreślamy, że wybraliśmy specjalnie sposób autentykacji uniemożliwiający bezpośredni dostęp do danych użytkowników.",
     "origin": [
       [
         "src/auth/screens/privacy-policy.screen.js",
@@ -465,7 +465,7 @@
     ]
   },
   "ANALYTICS INFORMATION": {
-    "translation": "INFORMATIONS ANALYTIQUES",
+    "translation": "INFORMACJE O UŻYWANIU APLIKACJI",
     "origin": [
       [
         "src/auth/screens/privacy-policy.screen.js",
@@ -474,7 +474,7 @@
     ]
   },
   "We currently use Google Analytics and iTunes App Analytics to help us measure traffic and usage trends for the GitPoint. These tools collect information sent by your device including device and platform version, region and referrer. This information cannot reasonably be used to identify any particular individual user and no personal information is extracted.": {
-    "translation": "Nous utilisons actuellement Google Analytics et iTunes App Analytics pour mesurer le trafic et les tendances d'utilisation de GitPoint. Ces outils collectent les informations envoyées par votre appareil, dont la version de l'appareil et de son système d'exploitation, votre position et votre référent. Ces informations ne peuvent être utilisées pour vous identifier de manière nominative et aucune donnée personnelle n'est extraite.",
+    "translation": "W bieżącej wersji aplikacji używamy Google Analytics i iTunes App Analytics, aby monitorować ruch i trendy użytkowania aplikacji GitPoint. Narzędzia te zbierają informacje wysłane z Twojego urządzenia, w tym wersje urządzenia i system, rejon i informacje o aplikacji klienckiej. Informacje te, użyte bez innych informacji, nie umożliwiają bezpośredniej identyfikacji użytkowników ani pozyskania częściowej informacji o użytkownikach.",
     "origin": [
       [
         "src/auth/screens/privacy-policy.screen.js",
@@ -483,7 +483,7 @@
     ]
   },
   "If we happen to include another third party platform to collect stack traces, error logs or more analytics information, we'll make sure that user data remains anonymized and encrypted.": {
-    "translation": "Si jamais nous venions à inclure un autre service de collecte de suivi de pile, journaux d'erreurs ou d'autres informations analytiques, nous nous assurerons que les données utilisateurs restent anonymes et chiffrées.",
+    "translation": "Jeżeli w przyszłości dołączymy inną usługę zewnętrznego dostawcy w celu zbierania logów, błędów programu oraz innych informacji dotyczących aplikacji, zapewnimy, że informacja użytkownika pozostanie anonimowa i zaszyfrowana.",
     "origin": [
       [
         "src/auth/screens/privacy-policy.screen.js",
@@ -492,7 +492,7 @@
     ]
   },
   "OPEN SOURCE": {
-    "translation": "OPEN SOURCE",
+    "translation": "KOD OTWARTEGO ŹRÓDŁA",
     "origin": [
       [
         "src/auth/screens/privacy-policy.screen.js",
@@ -501,7 +501,7 @@
     ]
   },
   "GitPoint is open source and the history of contributions to the platform will always be visible to the public.": {
-    "translation": "GitPoint est open source et l'historique des contributions à la plateforme restera toujours visible de manière publique.",
+    "translation": "GitPoint jest aplikacją o otwartych kodzie, a historia kontrybucji będzie zawsze dostępna publicznie.",
     "origin": [
       [
         "src/auth/screens/privacy-policy.screen.js",
@@ -510,7 +510,7 @@
     ]
   },
   "With each contribution to the app, code review is always performed to prevent anybody from including malicious code of any kind.": {
-    "translation": "A chaque contribution reçue pour la plateforme, une revue de code est toujours effectuée afin d'empêcher quiconque de glisser un code malveillant de tout type.",
+    "translation": "Przy każdej kontrybucji do kodu aplikacji, przeprowadzamy przegląd kodu, aby zapobiec dodaniu kodu o niepożądanym lub złośliwym działaniu.",
     "origin": [
       [
         "src/auth/screens/privacy-policy.screen.js",
@@ -519,7 +519,7 @@
     ]
   },
   "CONTACT": {
-    "translation": "CONTACT",
+    "translation": "KONTAKT",
     "origin": [
       [
         "src/auth/screens/privacy-policy.screen.js",
@@ -528,7 +528,7 @@
     ]
   },
   "Thank you for reading our Privacy Policy. We hope you enjoy using GitPoint as much as we enjoyed building it.": {
-    "translation": "Merci d'avoir pris le temps de lire notre politique de confidentialité. Nous espérons que vous apprécierez l'utilisation de GitPoint autant que nous avons apprécié son développement.",
+    "translation": "Dziękujemy za przeczytanie naszej Polityki Prywatności. Mamy nadzieję, że sprawdzi Ci taką samą przyjemność, jaką nam daje podczas jego tworzenia.",
     "origin": [
       [
         "src/auth/screens/privacy-policy.screen.js",
@@ -546,7 +546,7 @@
     ]
   },
   "Not applicable in debug mode": {
-    "translation": "Non applicable en mode débogage",
+    "translation": "Niedostępne w trybie debug",
     "origin": [
       [
         "src/auth/screens/user-options.screen.js",
@@ -555,7 +555,7 @@
     ]
   },
   "Checking for update...": {
-    "translation": "Recherche de mises à jour...",
+    "translation": "Sprawdzanie nowszych wersji...",
     "origin": [
       [
         "src/auth/screens/user-options.screen.js",
@@ -564,7 +564,7 @@
     ]
   },
   "Update is available!": {
-    "translation": "Une mise à jour est disponible !",
+    "translation": "Nowsza wersja dostępna!",
     "origin": [
       [
         "src/auth/screens/user-options.screen.js",
@@ -573,7 +573,7 @@
     ]
   },
   "App is up to date": {
-    "translation": "L'application est à jour",
+    "translation": "To jest ostatnia wersja",
     "origin": [
       [
         "src/auth/screens/user-options.screen.js",
@@ -582,7 +582,7 @@
     ]
   },
   "Language": {
-    "translation": "Langue",
+    "translation": "Język",
     "origin": [
       [
         "src/auth/screens/user-options.screen.js",
@@ -595,7 +595,7 @@
     ]
   },
   "Open in Browser": {
-    "translation": "Ouvrir dans le navigateur",
+    "translation": "Otwórz W Przeglądarce",
     "origin": [
       [
         "src/auth/screens/user-options.screen.js",
@@ -628,7 +628,7 @@
     ]
   },
   "Privacy Policy": {
-    "translation": "Politique de confidentialité",
+    "translation": "Polityka Prywatności",
     "origin": [
       [
         "src/auth/screens/user-options.screen.js",
@@ -641,7 +641,7 @@
     ]
   },
   "Make a donation": {
-    "translation": "Faire un don",
+    "translation": "Zrób darowiznę",
     "origin": [
       [
         "src/auth/screens/user-options.screen.js",
@@ -650,7 +650,7 @@
     ]
   },
   "Sign Out": {
-    "translation": "Déconnexion",
+    "translation": "Wyloguj Się",
     "origin": [
       [
         "src/auth/screens/user-options.screen.js",
@@ -659,7 +659,7 @@
     ]
   },
   "Locked, but you can still comment...": {
-    "translation": "Verrouillé, mais vous pouvez encore commenter...",
+    "translation": "Zablokowane, ale wciąż możesz dodać komentarz...",
     "origin": [
       [
         "src/components/comment-input.component.js",
@@ -668,7 +668,7 @@
     ]
   },
   "Add a comment...": {
-    "translation": "Ajouter un commentaire...",
+    "translation": "Dodaj komentarz...",
     "origin": [
       [
         "src/components/comment-input.component.js",
@@ -677,7 +677,7 @@
     ]
   },
   "Issue is locked": {
-    "translation": "Ce ticket est verrouillé",
+    "translation": "Problem jest zablokowany",
     "origin": [
       [
         "src/components/comment-input.component.js",
@@ -686,7 +686,7 @@
     ]
   },
   "Edit": {
-    "translation": "Editer",
+    "translation": "Edytuj",
     "origin": [
       [
         "src/components/comment-list-item.component.js",
@@ -695,7 +695,7 @@
     ]
   },
   "Delete": {
-    "translation": "Supprimer",
+    "translation": "Usuń",
     "origin": [
       [
         "src/components/comment-list-item.component.js",
@@ -704,7 +704,7 @@
     ]
   },
   "No description provided.": {
-    "translation": "Aucune description fournie.",
+    "translation": "Brak opisu.",
     "origin": [
       [
         "src/components/comment-list-item.component.js",
@@ -713,7 +713,7 @@
     ]
   },
   "Comment Actions": {
-    "translation": "Actions sur le commentaire",
+    "translation": "Dodaj komentarz akcji",
     "origin": [
       [
         "src/components/comment-list-item.component.js",
@@ -722,7 +722,7 @@
     ]
   },
   "Cancel": {
-    "translation": "Annuler",
+    "translation": "Anuluj",
     "origin": [
       [
         "src/components/comment-list-item.component.js",
@@ -776,7 +776,7 @@
     ]
   },
   "Company": {
-    "translation": "Société",
+    "translation": "Firma",
     "origin": [
       [
         "src/components/entity-info.component.js",
@@ -785,7 +785,7 @@
     ]
   },
   "Location": {
-    "translation": "Emplacement",
+    "translation": "Lokalizacja",
     "origin": [
       [
         "src/components/entity-info.component.js",
@@ -803,7 +803,7 @@
     ]
   },
   "Website": {
-    "translation": "Site web",
+    "translation": "Strona",
     "origin": [
       [
         "src/components/entity-info.component.js",
@@ -830,7 +830,7 @@
     ]
   },
   "Assignees": {
-    "translation": "Assignés",
+    "translation": "Przypisany",
     "origin": [
       [
         "src/components/issue-description.component.js",
@@ -839,7 +839,7 @@
     ]
   },
   "Merge Pull Request": {
-    "translation": "Fusionner la pull request",
+    "translation": "Merge Pull Request",
     "origin": [
       [
         "src/components/issue-description.component.js",
@@ -870,7 +870,7 @@
     ]
   },
   "Stars": {
-    "translation": "Favoris",
+    "translation": "Polubione",
     "origin": [
       [
         "src/components/loading-indicators/loading-repository-profile.component.js",
@@ -891,7 +891,7 @@
     ]
   },
   "Forks": {
-    "translation": "Forks",
+    "translation": "Forki",
     "origin": [
       [
         "src/components/loading-indicators/loading-repository-profile.component.js",
@@ -931,7 +931,7 @@
     ]
   },
   "Starred": {
-    "translation": "Favoris",
+    "translation": "Polubiony",
     "origin": [
       [
         "src/components/repository-profile.component.js",
@@ -940,7 +940,7 @@
     ]
   },
   "Watchers": {
-    "translation": "Abonnés",
+    "translation": "Obserwujący",
     "origin": [
       [
         "src/components/repository-profile.component.js",
@@ -949,7 +949,7 @@
     ]
   },
   "Watching": {
-    "translation": "Abonné",
+    "translation": "Obserwowany",
     "origin": [
       [
         "src/components/repository-profile.component.js",
@@ -958,7 +958,7 @@
     ]
   },
   "Merged": {
-    "translation": "Fusionné",
+    "translation": "Zmergowany",
     "origin": [
       [
         "src/components/state-badge.component.js",
@@ -967,7 +967,7 @@
     ]
   },
   "Open": {
-    "translation": "Ouverts",
+    "translation": "Otwarte",
     "origin": [
       [
         "src/components/state-badge.component.js",
@@ -984,7 +984,7 @@
     ]
   },
   "Closed": {
-    "translation": "Fermés",
+    "translation": "Zamknięte",
     "origin": [
       [
         "src/components/state-badge.component.js",
@@ -1001,7 +1001,7 @@
     ]
   },
   "Repositories": {
-    "translation": "Dépôts",
+    "translation": "Repozytoria",
     "origin": [
       [
         "src/components/user-profile.component.js",
@@ -1018,7 +1018,7 @@
     ]
   },
   "Followers": {
-    "translation": "Followers",
+    "translation": "Obserwujący",
     "origin": [
       [
         "src/components/user-profile.component.js",
@@ -1031,7 +1031,7 @@
     ]
   },
   "Following": {
-    "translation": "Following",
+    "translation": "Obserwowani",
     "origin": [
       [
         "src/components/user-profile.component.js",
@@ -1048,7 +1048,7 @@
     ]
   },
   "Follows you": {
-    "translation": "Vous suit",
+    "translation": "Obserwuje Cię",
     "origin": [
       [
         "src/components/user-profile.component.js",
@@ -1057,7 +1057,7 @@
     ]
   },
   "Issue Comment": {
-    "translation": "Commentaire du ticket",
+    "translation": "Komentarz do problemu",
     "origin": [
       [
         "src/issue/screens/edit-issue-comment.screen.js",
@@ -1070,7 +1070,7 @@
     ]
   },
   "Write a title for your issue here": {
-    "translation": "Écrivez le titre du ticket ici",
+    "translation": "Tutaj wpisz tytuł Twojego problemu",
     "origin": [
       [
         "src/issue/screens/edit-issue-comment.screen.js",
@@ -1083,7 +1083,7 @@
     ]
   },
   "Submit": {
-    "translation": "Envoyer",
+    "translation": "Wyślij",
     "origin": [
       [
         "src/issue/screens/edit-issue-comment.screen.js",
@@ -1096,7 +1096,7 @@
     ]
   },
   "Pull Request": {
-    "translation": "Pull Request",
+    "translation": "Pull Requesty",
     "origin": [
       [
         "src/issue/screens/issue-settings.screen.js",
@@ -1105,7 +1105,7 @@
     ]
   },
   "Issue": {
-    "translation": "Ticket",
+    "translation": "Problem",
     "origin": [
       [
         "src/issue/screens/issue-settings.screen.js",
@@ -1114,7 +1114,7 @@
     ]
   },
   "Apply Label": {
-    "translation": "Appliquer le libellé",
+    "translation": "Dodaj Etykietę",
     "origin": [
       [
         "src/issue/screens/issue-settings.screen.js",
@@ -1123,7 +1123,7 @@
     ]
   },
   "None yet": {
-    "translation": "Aucun pour le moment",
+    "translation": "Brak",
     "origin": [
       [
         "src/issue/screens/issue-settings.screen.js",
@@ -1136,7 +1136,7 @@
     ]
   },
   "LABELS": {
-    "translation": "LIBELLÉS",
+    "translation": "ETYKIETY",
     "origin": [
       [
         "src/issue/screens/issue-settings.screen.js",
@@ -1145,7 +1145,7 @@
     ]
   },
   "Assign Yourself": {
-    "translation": "S'assigner",
+    "translation": "Przypisz Siebie",
     "origin": [
       [
         "src/issue/screens/issue-settings.screen.js",
@@ -1154,7 +1154,7 @@
     ]
   },
   "ASSIGNEES": {
-    "translation": "ASSIGNÉS",
+    "translation": "PRZYPISANY",
     "origin": [
       [
         "src/issue/screens/issue-settings.screen.js",
@@ -1163,7 +1163,7 @@
     ]
   },
   "ACTIONS": {
-    "translation": "ACTIONS",
+    "translation": "AKCJE",
     "origin": [
       [
         "src/issue/screens/issue-settings.screen.js",
@@ -1208,7 +1208,7 @@
     ]
   },
   "Are you sure?": {
-    "translation": "Êtes-vous certain ?",
+    "translation": "Czy na pewno?",
     "origin": [
       [
         "src/issue/screens/issue-settings.screen.js",
@@ -1221,7 +1221,7 @@
     ]
   },
   "Yes": {
-    "translation": "Oui",
+    "translation": "tak",
     "origin": [
       [
         "src/issue/screens/issue-settings.screen.js",
@@ -1234,7 +1234,7 @@
     ]
   },
   "Apply a label to this issue": {
-    "translation": "Appliquer un libellé à ce ticket",
+    "translation": "Dodaj etykietę do tego problemu",
     "origin": [
       [
         "src/issue/screens/issue-settings.screen.js",
@@ -1243,7 +1243,7 @@
     ]
   },
   "Edit Comment": {
-    "translation": "Editer le commentaire",
+    "translation": "Edytuj Komentarz",
     "origin": [
       [
         "src/issue/screens/issue.screen.js",
@@ -1252,7 +1252,7 @@
     ]
   },
   "Issue Actions": {
-    "translation": "Issue Actions",
+    "translation": "Problemy Dostępne Akcje",
     "origin": [
       [
         "src/issue/screens/issue.screen.js",
@@ -1261,7 +1261,7 @@
     ]
   },
   "Settings": {
-    "translation": "Réglages",
+    "translation": "Ustawienia",
     "origin": [
       [
         "src/issue/screens/issue.screen.js",
@@ -1270,7 +1270,7 @@
     ]
   },
   "You need to have an issue title!": {
-    "translation": "Vous devez fournir un titre pour le ticket !",
+    "translation": "Musisz zmienić tytuł problemu!",
     "origin": [
       [
         "src/issue/screens/new-issue.screen.js",
@@ -1292,7 +1292,7 @@
     ]
   },
   "Issue Title": {
-    "translation": "Titre du ticket",
+    "translation": "Tytuł Problemu",
     "origin": [
       [
         "src/issue/screens/new-issue.screen.js",
@@ -1301,7 +1301,7 @@
     ]
   },
   "Write a comment for your issue here": {
-    "translation": "Écrivez un commentaire pour votre ticket ici",
+    "translation": "Tutaj wpisz komentarz do Twojego problemu",
     "origin": [
       [
         "src/issue/screens/new-issue.screen.js",
@@ -1310,7 +1310,7 @@
     ]
   },
   "Create a merge commit": {
-    "translation": "Créer un commit de fusion",
+    "translation": "Utwórz komit z mergem",
     "origin": [
       [
         "src/issue/screens/pull-merge.screen.js",
@@ -1319,7 +1319,7 @@
     ]
   },
   "Squash and merge": {
-    "translation": "Squasher et fusionner",
+    "translation": "Squashuj i zmerguj",
     "origin": [
       [
         "src/issue/screens/pull-merge.screen.js",
@@ -1328,7 +1328,7 @@
     ]
   },
   "merge": {
-    "translation": "fusionner",
+    "translation": "merge",
     "origin": [
       [
         "src/issue/screens/pull-merge.screen.js",
@@ -1337,7 +1337,7 @@
     ]
   },
   "squash": {
-    "translation": "squasher",
+    "translation": "squash",
     "origin": [
       [
         "src/issue/screens/pull-merge.screen.js",
@@ -1346,7 +1346,7 @@
     ]
   },
   "You need to have a commit title!": {
-    "translation": "Vous devez fournir un titre de commit !",
+    "translation": "Podaj tytuł komitu!",
     "origin": [
       [
         "src/issue/screens/pull-merge.screen.js",
@@ -1355,7 +1355,7 @@
     ]
   },
   "Commit Title": {
-    "translation": "Titre de commit",
+    "translation": "Tytuł Komitu",
     "origin": [
       [
         "src/issue/screens/pull-merge.screen.js",
@@ -1364,7 +1364,7 @@
     ]
   },
   "Write a title for your commit here": {
-    "translation": "Écrivez un titre de commit ici",
+    "translation": "Tutaj podaj tytuł komitu",
     "origin": [
       [
         "src/issue/screens/pull-merge.screen.js",
@@ -1373,7 +1373,7 @@
     ]
   },
   "Commit Message": {
-    "translation": "Message de commit",
+    "translation": "Treść komitu",
     "origin": [
       [
         "src/issue/screens/pull-merge.screen.js",
@@ -1382,7 +1382,7 @@
     ]
   },
   "Write a message for your commit here": {
-    "translation": "Écrivez un message pour votre commit ici",
+    "translation": "Tutaj wpisz treść komitu",
     "origin": [
       [
         "src/issue/screens/pull-merge.screen.js",
@@ -1391,7 +1391,7 @@
     ]
   },
   "Merge Type": {
-    "translation": "Type de fusion",
+    "translation": "Typu merga",
     "origin": [
       [
         "src/issue/screens/pull-merge.screen.js",
@@ -1400,7 +1400,7 @@
     ]
   },
   "Change Merge Type": {
-    "translation": "Changer le type de fusion",
+    "translation": "Zmień Typ Merga",
     "origin": [
       [
         "src/issue/screens/pull-merge.screen.js",
@@ -1409,7 +1409,7 @@
     ]
   },
   "Mark all as read": {
-    "translation": "Marquer tous comme lus",
+    "translation": "Oznacz wszystkie jako przeczytane",
     "origin": [
       [
         "src/notifications/screens/notifications.screen.js",
@@ -1418,7 +1418,7 @@
     ]
   },
   "Unread": {
-    "translation": "Non lus",
+    "translation": "Nieprzeczytane",
     "origin": [
       [
         "src/notifications/screens/notifications.screen.js",
@@ -1427,7 +1427,7 @@
     ]
   },
   "Participating": {
-    "translation": "Participant",
+    "translation": "Partycypujący",
     "origin": [
       [
         "src/notifications/screens/notifications.screen.js",
@@ -1436,7 +1436,7 @@
     ]
   },
   "All": {
-    "translation": "Tous",
+    "translation": "Wszystko",
     "origin": [
       [
         "src/notifications/screens/notifications.screen.js",
@@ -1445,7 +1445,7 @@
     ]
   },
   "Retrieving notifications": {
-    "translation": "Récupération des notifications",
+    "translation": "Pobieranie notyfikacji",
     "origin": [
       [
         "src/notifications/screens/notifications.screen.js",
@@ -1454,7 +1454,7 @@
     ]
   },
   "You don't have any notifications of this type": {
-    "translation": "Vous n'avez aucune notification de ce type",
+    "translation": "Nie masz więcej notyfikacji tego rodzaju",
     "origin": [
       [
         "src/notifications/screens/notifications.screen.js",
@@ -1463,7 +1463,7 @@
     ]
   },
   "MEMBERS": {
-    "translation": "MEMBRES",
+    "translation": "CZŁONKOWIE",
     "origin": [
       [
         "src/organization/screens/organization-profile.screen.js",
@@ -1476,7 +1476,7 @@
     ]
   },
   "DESCRIPTION": {
-    "translation": "DESCRIPTION",
+    "translation": "OPIS",
     "origin": [
       [
         "src/organization/screens/organization-profile.screen.js",
@@ -1485,7 +1485,7 @@
     ]
   },
   "Organization Actions": {
-    "translation": "Actions sur l'organisation",
+    "translation": "Organizacja Dostępne Akcje",
     "origin": [
       [
         "src/organization/screens/organization-profile.screen.js",
@@ -1523,7 +1523,7 @@
     ]
   },
   "No open issues found!": {
-    "translation": "Aucun ticket ouvert trouvé !",
+    "translation": "Brak otwartych problemów!",
     "origin": [
       [
         "src/repository/screens/issue-list.screen.js",
@@ -1532,7 +1532,7 @@
     ]
   },
   "No closed issues found!": {
-    "translation": "Aucun ticket fermé trouvé !",
+    "translation": "Brak zamkniętych problemów!",
     "origin": [
       [
         "src/repository/screens/issue-list.screen.js",
@@ -1550,7 +1550,7 @@
     ]
   },
   "NEW": {
-    "translation": "NOUVEAU",
+    "translation": "NOWY",
     "origin": [
       [
         "src/repository/screens/pull-diff.screen.js",
@@ -1559,7 +1559,7 @@
     ]
   },
   "DELETED": {
-    "translation": "SUPPRIMÉ",
+    "translation": "USUNIĘTY",
     "origin": [
       [
         "src/repository/screens/pull-diff.screen.js",
@@ -1568,7 +1568,7 @@
     ]
   },
   "File renamed without any changes": {
-    "translation": "Fichier renommé sans aucune modification",
+    "translation": "Nazwa pliku zmieniona bez innych zmian",
     "origin": [
       [
         "src/repository/screens/pull-diff.screen.js",
@@ -1577,7 +1577,7 @@
     ]
   },
   "No open pull requests found!": {
-    "translation": "Aucune pull request ouvert trouvé !",
+    "translation": "Brak otwartych pull requestów!",
     "origin": [
       [
         "src/repository/screens/pull-list.screen.js",
@@ -1586,7 +1586,7 @@
     ]
   },
   "No closed pull requests found!": {
-    "translation": "Aucune pull request fermé trouvé !",
+    "translation": "Brak zamkniętych pull requestów!",
     "origin": [
       [
         "src/repository/screens/pull-list.screen.js",
@@ -1595,7 +1595,7 @@
     ]
   },
   "No README.md found": {
-    "translation": "Pas de README.md trouvé",
+    "translation": "Brak README.md",
     "origin": [
       [
         "src/repository/screens/read-me.screen.js",
@@ -1604,7 +1604,7 @@
     ]
   },
   "README Actions": {
-    "translation": "Actions sur le README",
+    "translation": "README Dostępne Akcje",
     "origin": [
       [
         "src/repository/screens/read-me.screen.js",
@@ -1631,7 +1631,7 @@
     ]
   },
   "Unstar": {
-    "translation": "Supprimer des favoris",
+    "translation": "Usuń Polubienie",
     "origin": [
       [
         "src/repository/screens/repository.screen.js",
@@ -1640,7 +1640,7 @@
     ]
   },
   "Star": {
-    "translation": "Ajouter au favoris",
+    "translation": "Polub",
     "origin": [
       [
         "src/repository/screens/repository.screen.js",
@@ -1649,7 +1649,7 @@
     ]
   },
   "Unwatch": {
-    "translation": "Ne plus surveiller",
+    "translation": "Przestań obserwować",
     "origin": [
       [
         "src/repository/screens/repository.screen.js",
@@ -1658,7 +1658,7 @@
     ]
   },
   "Watch": {
-    "translation": "Surveiller",
+    "translation": "Obserwuj",
     "origin": [
       [
         "src/repository/screens/repository.screen.js",
@@ -1667,7 +1667,7 @@
     ]
   },
   "Share": {
-    "translation": "Partager",
+    "translation": "Udostępnij",
     "origin": [
       [
         "src/repository/screens/repository.screen.js",
@@ -1676,7 +1676,7 @@
     ]
   },
   "Fork": {
-    "translation": "Forker",
+    "translation": "Sforkuj",
     "origin": [
       [
         "src/repository/screens/repository.screen.js",
@@ -1694,7 +1694,7 @@
     ]
   },
   "OWNER": {
-    "translation": "PROPRIÉTAIRE",
+    "translation": "Właściciel",
     "origin": [
       [
         "src/repository/screens/repository.screen.js",
@@ -1711,7 +1711,7 @@
     ]
   },
   "CONTRIBUTORS": {
-    "translation": "CONTRIBUTEURS",
+    "translation": "Kontrybutorzy",
     "origin": [
       [
         "src/repository/screens/repository.screen.js",
@@ -1724,7 +1724,7 @@
     ]
   },
   "No contributors found": {
-    "translation": "Aucun contributeur trouvé",
+    "translation": "Brak kontrybutorów",
     "origin": [
       [
         "src/repository/screens/repository.screen.js",
@@ -1733,7 +1733,7 @@
     ]
   },
   "SOURCE": {
-    "translation": "SOURCE",
+    "translation": "ŹRÓDŁO",
     "origin": [
       [
         "src/repository/screens/repository.screen.js",
@@ -1751,7 +1751,7 @@
     ]
   },
   "View Code": {
-    "translation": "Voir le code",
+    "translation": "Zobacz Kod",
     "origin": [
       [
         "src/repository/screens/repository.screen.js",
@@ -1760,7 +1760,7 @@
     ]
   },
   "Code": {
-    "translation": "Code",
+    "translation": "Kod",
     "origin": [
       [
         "src/repository/screens/repository.screen.js",
@@ -1769,7 +1769,7 @@
     ]
   },
   "ISSUES": {
-    "translation": "TICKETS",
+    "translation": "PROBLEMY",
     "origin": [
       [
         "src/repository/screens/repository.screen.js",
@@ -1778,7 +1778,7 @@
     ]
   },
   "No issues": {
-    "translation": "Aucun ticket",
+    "translation": "Brak problemów",
     "origin": [
       [
         "src/repository/screens/repository.screen.js",
@@ -1787,7 +1787,7 @@
     ]
   },
   "No open issues": {
-    "translation": "Aucun ticket ouvert",
+    "translation": "Brak otwartych problemów",
     "origin": [
       [
         "src/repository/screens/repository.screen.js",
@@ -1796,7 +1796,7 @@
     ]
   },
   "View All": {
-    "translation": "Voir tous",
+    "translation": "Zobacz Wszystko",
     "origin": [
       [
         "src/repository/screens/repository.screen.js",
@@ -1809,7 +1809,7 @@
     ]
   },
   "New Issue": {
-    "translation": "Nouveau ticket",
+    "translation": "Nowy Problem",
     "origin": [
       [
         "src/repository/screens/repository.screen.js",
@@ -1822,7 +1822,7 @@
     ]
   },
   "Issues": {
-    "translation": "Tickets",
+    "translation": "Problemy",
     "origin": [
       [
         "src/repository/screens/repository.screen.js",
@@ -1831,7 +1831,7 @@
     ]
   },
   "PULL REQUESTS": {
-    "translation": "PULL REQUESTS",
+    "translation": "PULL REQUESTY",
     "origin": [
       [
         "src/repository/screens/repository.screen.js",
@@ -1840,7 +1840,7 @@
     ]
   },
   "No pull requests": {
-    "translation": "Aucune pull request",
+    "translation": "Brak pull requestów",
     "origin": [
       [
         "src/repository/screens/repository.screen.js",
@@ -1849,7 +1849,7 @@
     ]
   },
   "No open pull requests": {
-    "translation": "Aucune pull request ouverte",
+    "translation": "Brak otwartych pull requestów",
     "origin": [
       [
         "src/repository/screens/repository.screen.js",
@@ -1858,7 +1858,7 @@
     ]
   },
   "Pull Requests": {
-    "translation": "Pull Requests",
+    "translation": "Pull Requesty",
     "origin": [
       [
         "src/repository/screens/repository.screen.js",
@@ -1867,7 +1867,7 @@
     ]
   },
   "Repository Actions": {
-    "translation": "Actions sur le dépôt",
+    "translation": "Akcje Repozytorium",
     "origin": [
       [
         "src/repository/screens/repository.screen.js",
@@ -1876,7 +1876,7 @@
     ]
   },
   "Users": {
-    "translation": "Utilisateurs",
+    "translation": "Użytkownicy",
     "origin": [
       [
         "src/search/screens/search.screen.js",
@@ -1903,7 +1903,7 @@
     ]
   },
   "No repositories found :(": {
-    "translation": "Aucun dépôt trouvé :(",
+    "translation": "Nie znaleziono repozytorium :(",
     "origin": [
       [
         "src/search/screens/search.screen.js",
@@ -1912,7 +1912,7 @@
     ]
   },
   "No users found :(": {
-    "translation": "Aucun utilisateur trouvé :(",
+    "translation": "Nie znaleziono użytkownika :(",
     "origin": [
       [
         "src/search/screens/search.screen.js",
@@ -1921,7 +1921,7 @@
     ]
   },
   "Unfollow": {
-    "translation": "Ne plus suivre",
+    "translation": "Przestań obserwować",
     "origin": [
       [
         "src/user/screens/profile.screen.js",
@@ -1930,7 +1930,7 @@
     ]
   },
   "Follow": {
-    "translation": "Suivre",
+    "translation": "Obserwuj",
     "origin": [
       [
         "src/user/screens/profile.screen.js",
@@ -1939,7 +1939,7 @@
     ]
   },
   "User Actions": {
-    "translation": "Actions utilisateur",
+    "translation": "Akcje użytkownika",
     "origin": [
       [
         "src/user/screens/profile.screen.js",
