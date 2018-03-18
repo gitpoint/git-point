@@ -142,7 +142,7 @@
   "Welcome to GitPoint": {
     "translation": "Bonvenon al GitPoint",
     "origin": [
-      ["src/auth/screens/events.screen.js", 574],
+      ["src/auth/screens/events.screen.js", 577],
       ["src/auth/screens/login.screen.js", 281],
       ["src/auth/screens/welcome.screen.js", 40]
     ]
@@ -899,5 +899,10 @@
   "User Actions": {
     "translation": "Uzaj Agoj",
     "origin": [["src/user/screens/profile.screen.js", 241]]
+  },
+  "{token, select, lessThanXSeconds {{count}s} xSeconds {{count}s} halfAMinute {30s} lessThanXMinutes {{count}m} xMinutes {{count}m} aboutXHours {{count}h} xHours {{count}h} xDays {{count}d} aboutXMonths {{count}mo} xMonths {{count}mo} aboutXYears {{count}y} xYears {{count}y} overXYears {{count}y} almostXYears {{count}y} other {?}}": {
+    "translation":
+      "{token, select, lessThanXSeconds {{count}s} xSeconds {{count}s} halfAMinute {30s} lessThanXMinutes {{count}m} xMinutes {{count}m} aboutXHours {{count}h} xHours {{count}h} xDays {{count}d} aboutXMonths {{count}mo} xMonths {{count}mo} aboutXYears {{count}y} xYears {{count}y} overXYears {{count}y} almostXYears {{count}y} other {?}}",
+    "origin": [["src/utils/localization-helper.js", 56]]
   }
 }

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FlatList, View } from 'react-native';
-import { Trans } from '@lingui/react';
+import { Trans, withI18n } from '@lingui/react';
 
 import { LoadingUserListItem, UserListItem, ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
@@ -552,7 +552,9 @@ class Events extends Component {
     return (
       <DescriptionContainer>
         {this.getDescription(userEvent)}{' '}
-        <Datestamp>{relativeTimeToNow(userEvent.created_at)}</Datestamp>
+        <Datestamp>
+          {relativeTimeToNow(userEvent.created_at, this.props.i18n)}
+        </Datestamp>
       </DescriptionContainer>
     );
   }
@@ -619,5 +621,5 @@ class Events extends Component {
 }
 
 export const EventsScreen = connect(mapStateToProps, mapDispatchToProps)(
-  Events
+  withI18n()(Events)
 );

@@ -142,7 +142,7 @@
   "Welcome to GitPoint": {
     "translation": "欢迎来到GitPoint",
     "origin": [
-      ["src/auth/screens/events.screen.js", 574],
+      ["src/auth/screens/events.screen.js", 577],
       ["src/auth/screens/login.screen.js", 281],
       ["src/auth/screens/welcome.screen.js", 40]
     ]
@@ -897,5 +897,10 @@
   "User Actions": {
     "translation": "用户操作",
     "origin": [["src/user/screens/profile.screen.js", 241]]
+  },
+  "{token, select, lessThanXSeconds {{count}s} xSeconds {{count}s} halfAMinute {30s} lessThanXMinutes {{count}m} xMinutes {{count}m} aboutXHours {{count}h} xHours {{count}h} xDays {{count}d} aboutXMonths {{count}mo} xMonths {{count}mo} aboutXYears {{count}y} xYears {{count}y} overXYears {{count}y} almostXYears {{count}y} other {?}}": {
+    "translation":
+      "{token, select, lessThanXSeconds {{count}秒} xSeconds {{count}秒} halfAMinute {30秒} lessThanXMinutes {{count}分} xMinutes {{count}分} aboutXHours {{count}时} xHours {{count}时} xDays {{count}日} aboutXMonths {{count}月} xMonths {{count}月} aboutXYears {{count}年} xYears {{count}年} overXYears {{count}年} almostXYears {{count}年} other {?}}",
+    "origin": [["src/utils/localization-helper.js", 56]]
   }
 }

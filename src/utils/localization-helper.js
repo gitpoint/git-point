@@ -44,8 +44,7 @@ export async function saveLocale(locale) {
 }
 
 /** Wrapper for date-fns' distanceInWordsStrict applaying current locale. */
-export function relativeTimeToNow(date) {
-  const locale = getLocale();
+export function relativeTimeToNow(date, i18n) {
   // Custom locale config to get our own translations for relative time and
   // avoid date-fns translations.
   // Overrides date-fns `distanceInWords` function.
@@ -53,7 +52,24 @@ export function relativeTimeToNow(date) {
   const localeConfig = {
     distanceInWords: {
       localize: (token, count) => {
-        return translate(`common.relativeTime.${token}`, locale, { count });
+        return i18n.select({
+          value: token,
+          lessThanXSeconds: `${count}s`,
+          xSeconds: `${count}s`,
+          halfAMinute: '30s',
+          lessThanXMinutes: `${count}m`,
+          xMinutes: `${count}m`,
+          aboutXHours: `${count}h`,
+          xHours: `${count}h`,
+          xDays: `${count}d`,
+          aboutXMonths: `${count}mo`,
+          xMonths: `${count}mo`,
+          aboutXYears: `${count}y`,
+          xYears: `${count}y`,
+          overXYears: `${count}y`,
+          almostXYears: `${count}y`,
+          other: '?',
+        });
       },
     },
   };
