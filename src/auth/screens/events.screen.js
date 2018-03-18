@@ -412,27 +412,27 @@ class Events extends Component {
       case 'opened':
         return (
           <Trans>
-            <T c={actor} /> opened pull request <T c={pr} /> in <T c={repo} />
+            <T c={actor} /> opened pull request <T c={pr} /> at <T c={repo} />
           </Trans>
         );
       case 'reopened':
         return (
           <Trans>
-            <T c={actor} /> reopened pull request <T c={pr} /> in <T c={repo} />
+            <T c={actor} /> reopened pull request <T c={pr} /> at <T c={repo} />
           </Trans>
         );
       case 'closed':
         if (userEvent.payload.pull_request.merged) {
           return (
             <Trans>
-              <T c={actor} /> merged pull request <T c={pr} /> in <T c={repo} />
+              <T c={actor} /> merged pull request <T c={pr} /> at <T c={repo} />
             </Trans>
           );
         }
 
         return (
           <Trans>
-            <T c={actor} /> closed pull request <T c={pr} /> in <T c={repo} />
+            <T c={actor} /> closed pull request <T c={pr} /> at <T c={repo} />
           </Trans>
         );
 
@@ -466,11 +466,11 @@ class Events extends Component {
 
     return (
       <Trans>
-        <T c={actor} /> pushed to{' '}
+        <T c={actor} /> pushed to
         <LinkBranchDescription>
           {' '}
           {userEvent.payload.ref.replace('refs/heads/', '')}{' '}
-        </LinkBranchDescription>{' '}
+        </LinkBranchDescription>
         in <T c={repo} />
       </Trans>
     );
