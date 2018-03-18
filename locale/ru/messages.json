@@ -262,14 +262,14 @@
   "Language": {
     "translation": "Язык",
     "origin": [
-      ["src/auth/screens/user-options.screen.js", 141],
-      ["src/auth/screens/user-options.screen.js", 144]
+      ["src/auth/screens/user-options.screen.js", 140],
+      ["src/auth/screens/user-options.screen.js", 143]
     ]
   },
   "Open in Browser": {
     "translation": "Открыть в браузере",
     "origin": [
-      ["src/auth/screens/user-options.screen.js", 150],
+      ["src/auth/screens/user-options.screen.js", 149],
       ["src/issue/screens/issue-settings.screen.js", 281],
       ["src/issue/screens/issue.screen.js", 379],
       ["src/organization/screens/organization-profile.screen.js", 124],
@@ -281,33 +281,33 @@
   "Privacy Policy": {
     "translation": "Политика конфиденциальности",
     "origin": [
-      ["src/auth/screens/user-options.screen.js", 155],
-      ["src/auth/screens/user-options.screen.js", 158]
+      ["src/auth/screens/user-options.screen.js", 154],
+      ["src/auth/screens/user-options.screen.js", 157]
     ]
   },
   "Make a donation": {
     "translation": "Сделать пожертвование",
-    "origin": [["src/auth/screens/user-options.screen.js", 163]]
+    "origin": [["src/auth/screens/user-options.screen.js", 162]]
   },
   "Sign Out": {
     "translation": "Выйти",
-    "origin": [["src/auth/screens/user-options.screen.js", 169]]
+    "origin": [["src/auth/screens/user-options.screen.js", 168]]
   },
   "Not applicable in debug mode": {
     "translation": "Не поддерживается в режиме отладки",
-    "origin": [["src/auth/screens/user-options.screen.js", 104]]
+    "origin": [["src/auth/screens/user-options.screen.js", 103]]
   },
   "Checking for update...": {
     "translation": "Проверка обновления...",
-    "origin": [["src/auth/screens/user-options.screen.js", 107]]
+    "origin": [["src/auth/screens/user-options.screen.js", 106]]
   },
   "Update is available!": {
     "translation": "Доступно обновление!",
-    "origin": [["src/auth/screens/user-options.screen.js", 116]]
+    "origin": [["src/auth/screens/user-options.screen.js", 115]]
   },
   "App is up to date": {
     "translation": "Приложение обновлено",
-    "origin": [["src/auth/screens/user-options.screen.js", 117]]
+    "origin": [["src/auth/screens/user-options.screen.js", 116]]
   },
   "Locked, but you can still comment...": {
     "translation": "Заблокировано, но вы все ещё можете прокомментировать...",
