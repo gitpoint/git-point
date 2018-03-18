@@ -545,39 +545,12 @@
       ]
     ]
   },
-  "Not applicable in debug mode": {
-    "translation": "Не підтримується в режимі налагодження",
+  "Check for update": {
+    "translation": "Перевірити оновлення",
     "origin": [
       [
         "src/auth/screens/user-options.screen.js",
-        99
-      ]
-    ]
-  },
-  "Checking for update...": {
-    "translation": "Перевірка оновлення...",
-    "origin": [
-      [
-        "src/auth/screens/user-options.screen.js",
-        102
-      ]
-    ]
-  },
-  "Update is available!": {
-    "translation": "Доступне оновлення!",
-    "origin": [
-      [
-        "src/auth/screens/user-options.screen.js",
-        111
-      ]
-    ]
-  },
-  "App is up to date": {
-    "translation": "Програму оновлено",
-    "origin": [
-      [
-        "src/auth/screens/user-options.screen.js",
-        112
+        75
       ]
     ]
   },
@@ -586,11 +559,11 @@
     "origin": [
       [
         "src/auth/screens/user-options.screen.js",
-        136
+        140
       ],
       [
         "src/auth/screens/user-options.screen.js",
-        139
+        143
       ]
     ]
   },
@@ -599,7 +572,7 @@
     "origin": [
       [
         "src/auth/screens/user-options.screen.js",
-        145
+        149
       ],
       [
         "src/issue/screens/issue-settings.screen.js",
@@ -632,11 +605,11 @@
     "origin": [
       [
         "src/auth/screens/user-options.screen.js",
-        150
+        154
       ],
       [
         "src/auth/screens/user-options.screen.js",
-        153
+        157
       ]
     ]
   },
@@ -645,7 +618,7 @@
     "origin": [
       [
         "src/auth/screens/user-options.screen.js",
-        159
+        163
       ]
     ]
   },
@@ -654,7 +627,43 @@
     "origin": [
       [
         "src/auth/screens/user-options.screen.js",
-        165
+        169
+      ]
+    ]
+  },
+  "Not applicable in debug mode": {
+    "translation": "Не підтримується в режимі налагодження",
+    "origin": [
+      [
+        "src/auth/screens/user-options.screen.js",
+        103
+      ]
+    ]
+  },
+  "Checking for update...": {
+    "translation": "Перевірка оновлення...",
+    "origin": [
+      [
+        "src/auth/screens/user-options.screen.js",
+        106
+      ]
+    ]
+  },
+  "Update is available!": {
+    "translation": "Доступне оновлення!",
+    "origin": [
+      [
+        "src/auth/screens/user-options.screen.js",
+        115
+      ]
+    ]
+  },
+  "App is up to date": {
+    "translation": "Програму оновлено",
+    "origin": [
+      [
+        "src/auth/screens/user-options.screen.js",
+        116
       ]
     ]
   },
