@@ -1540,6 +1540,23 @@
       ]
     ]
   },
+  "New Issue": {
+    "translation": "Yeni Issue",
+    "origin": [
+      [
+        "src/repository/screens/issue-list.screen.js",
+        112
+      ],
+      [
+        "src/repository/screens/repository.screen.js",
+        393
+      ],
+      [
+        "src/repository/screens/repository.screen.js",
+        404
+      ]
+    ]
+  },
   "{0} files": {
     "translation": "",
     "origin": [
@@ -1805,19 +1822,6 @@
       [
         "src/repository/screens/repository.screen.js",
         432
-      ]
-    ]
-  },
-  "New Issue": {
-    "translation": "Yeni Issue",
-    "origin": [
-      [
-        "src/repository/screens/repository.screen.js",
-        393
-      ],
-      [
-        "src/repository/screens/repository.screen.js",
-        404
       ]
     ]
   },
