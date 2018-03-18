@@ -20,7 +20,8 @@
     "start:ios:tron":
       "TRON_ENABLED=true concurrently -r 'react-native start --reset-cache' 'yarn start:ios:no-packager'",
     "start:ios:no-packager": "react-native run-ios --no-packager",
-    "i18n:extract": "lingui extract",
+    "i18n:extract":
+      "lingui extract && prettier --write \"locale/*/messages.json\" --loglevel silent",
     "i18n:compile": "lingui compile",
     "clean": "rm -rf node_modules",
     "clean:android": "cd android && ./gradlew clean && cd -",

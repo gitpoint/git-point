@@ -69,20 +69,24 @@ class UserOptions extends Component {
   constructor(props) {
     super(props);
 
+    const { i18n } = props;
+
     this.state = {
-      updateText: props.i18n.t`Check for update`,
+      updateText: i18n.t`Check for update`,
     };
   }
 
   componentWillReceiveProps(nextState) {
     if (nextState.locale !== this.props.locale) {
+      const { i18n } = this.props;
+
       this.setState({
-        updateText: this.props.i18n.t`Check for update`,
+        updateText: i18n.t`Check for update`,
       });
 
       const navigationParams = NavigationActions.setParams({
         params: {
-          title: this.props.i18n.t`Options`,
+          title: i18n.t`Options`,
         },
         key: nextState.navigation.state.key,
       });
