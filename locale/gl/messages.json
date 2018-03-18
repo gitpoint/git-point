@@ -422,11 +422,11 @@
     ]
   },
   "Unknown": {
-    "translation": "Unknown",
+    "translation": "",
     "origin": [["src/components/repository-profile.component.js", 142]]
   },
   "Repository is not found": {
-    "translation": "Repository is not found",
+    "translation": "",
     "origin": [["src/components/repository-profile.component.js", 159]]
   },
   "forked from <0>{0}</0>": {
