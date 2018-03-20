@@ -28,4 +28,45 @@ describe('API v3 test', () => {
       ).resolves.toEqual(expected);
     });
   });
+
+  describe('v3 parameters', () => {
+    const accessToken = '12345abcdef98765432';
+
+    it('should return the expected default params object', () => {
+      const expected = {
+        headers: {
+          Accept: 'application/vnd.github.v3+json',
+          Authorization: 'token 12345abcdef98765432',
+          'Cache-Control': 'no-cache',
+        },
+        method: 'GET',
+      };
+
+      expect(v3.parameters(accessToken)).toEqual(expected);
+    });
+
+    it('should return the expected params object when called with args', () => {
+      const mercyPreview = 'application/vnd.github.mercy-preview+json';
+      const body = {
+        client_id: '1234',
+        client_secret: 'abc1234',
+        code: '001',
+        state: 'state string',
+      };
+      const expected = {
+        headers: {
+          Accept: 'application/vnd.github.mercy-preview+json',
+          Authorization: 'token 12345abcdef98765432',
+          'Cache-Control': 'no-cache',
+        },
+        body:
+          '{"client_id":"1234","client_secret":"abc1234","code":"001","state":"state string"}',
+        method: 'POST',
+      };
+
+      expect(v3.parameters(accessToken, 'POST', mercyPreview, body)).toEqual(
+        expected
+      );
+    });
+  });
 });
