@@ -1,4 +1,5 @@
 import { v3 } from '../../../src/api';
+import { open } from '../../data/api/pull-request';
 
 describe('API v3 test', () => {
   describe('v3 call', () => {
@@ -6,7 +7,7 @@ describe('API v3 test', () => {
       global.fetch = jest.fn().mockImplementation(() =>
         Promise.resolve({
           status: 200,
-          json: () => Promise.resolve({}),
+          json: () => Promise.resolve(open),
         })
       );
     });
@@ -19,6 +20,12 @@ describe('API v3 test', () => {
       expect(global.fetch).toHaveBeenCalledWith(expectedUrl, expectedParams);
     });
 
-    it('should return the expected response object', () => {});
+    it('should return the expected response object', async () => {
+      const expected = open;
+
+      expect(
+        await v3.call('https://api.github.com', 'parameters')
+      ).resolves.toEqual(expected);
+    });
   });
 });
