@@ -69,4 +69,43 @@ describe('API v3 test', () => {
       );
     });
   });
+
+  describe('v3 delete', () => {
+    const accessToken = '12345abcdef98765432';
+
+    beforeEach(() => {
+      global.fetch = jest.fn().mockImplementation(() =>
+        Promise.resolve({
+          status: 200,
+          json: () => Promise.resolve('successful response'),
+        })
+      );
+    });
+
+    it('should call fetch with the expected params', () => {
+      const expectedUrl = 'https://api.github.com';
+      const expected = {
+        headers: {
+          Accept: 'application/vnd.github.v3+json',
+          Authorization: 'token 12345abcdef98765432',
+          'Cache-Control': 'no-cache',
+        },
+        method: 'DELETE',
+      };
+
+      expect(global.fetch).not.toHaveBeenCalled();
+
+      v3.delete('https://api.github.com', accessToken);
+
+      expect(global.fetch).toHaveBeenCalledWith(expectedUrl, expected);
+    });
+
+    it('should return expected response', () => {
+      const expected = 'successful response';
+
+      expect(v3.delete('https://api.github.com', accessToken)).resolves.toEqual(
+        expected
+      );
+    });
+  });
 });
