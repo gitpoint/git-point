@@ -1,5 +1,6 @@
 import { v3 } from '../../../src/api';
 import { open } from '../../data/api/pull-request';
+import { notification } from '../../data/api/notification';
 
 describe('API v3 test', () => {
   describe('v3 call', () => {
@@ -67,6 +68,34 @@ describe('API v3 test', () => {
       expect(v3.parameters(accessToken, 'POST', mercyPreview, body)).toEqual(
         expected
       );
+    });
+  });
+
+  describe('v3 count', () => {
+    const accessToken = '12345abcdef98765432';
+
+    beforeEach(() => {
+      global.fetch = jest.fn().mockImplementation(() =>
+        Promise.resolve({
+          status: 200,
+          json: () => Promise.resolve([notification]),
+          headers: {
+            get: jest.fn().mockImplementation(() => null),
+          },
+        })
+      );
+    });
+
+    it('should be called with expected url and accessToken params', () => {
+      const expectedUrl = 'https://api.github.com?per_page=1';
+      const expectedBody = v3.parameters(accessToken);
+      v3.count('https://api.github.com', accessToken);
+
+      expect(global.fetch).toHaveBeenCalledWith(expectedUrl, expectedBody);
+    });
+
+    it('should return number', async () => {
+      expect(await v3.count('https://api.github.com', accessToken)).toEqual(1);
     });
   });
 
