@@ -19,7 +19,7 @@ export class Client {
 
   authHeaders = {};
 
-  fetch = async (
+  call = async (
     url,
     params = {},
     { method = this.Method.GET, body = {}, headers = {} } = {}
@@ -133,7 +133,7 @@ export class Client {
      * @param {string} userId
      */
     getEventsReceived: async (userId, params) => {
-      return this.fetch(`users/${userId}/received_events`, params).then(
+      return this.call(`users/${userId}/received_events`, params).then(
         response => ({
           response,
           nextPageUrl: this.getNextPageUrl(response),
