@@ -100,17 +100,18 @@ export class Client {
     return response
       .json()
       .then(data => data.length)
-      .catch(() => 0);
+      .catch(() => {
+        // TODO: Properly handle the error and show it if needed.
+        return 0;
+      });
   };
 
   getNextPageUrl = response => {
-    const link = response.headers.get('link');
-
-    if (!link) {
-      return null;
-    }
-
-    const nextLink = link.split(',').find(s => s.indexOf('rel="next"') > -1);
+    const { headers } = response;
+    const link = headers.get('link');
+    const nextLink = link
+      ? link.split(',').find(s => s.indexOf('rel="next"') > -1)
+      : null;
 
     if (!nextLink) {
       return null;
