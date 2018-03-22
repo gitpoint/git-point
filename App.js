@@ -16,12 +16,16 @@ import codePush from 'react-native-code-push';
 
 import { colors, getStatusBarConfig } from 'config';
 import { getCurrentLocale, configureLocale } from 'utils';
+
+import I18nLoader from './I18nLoader';
+import catalogs from './locale';
+
 import { GitPoint } from './routes';
 import { configureStore } from './root.store';
 
 const Container = styled.View`
   align-items: center;
-  background-color: ${colors.white}
+  background-color: ${colors.white};
   flex: 1;
   justify-content: center;
 `;
@@ -46,6 +50,7 @@ class App extends Component {
     super();
 
     this.state = {
+      language: 'en',
       rehydrated: false,
     };
     this.statusBarHandler = this.statusBarHandler.bind(this);
@@ -63,8 +68,8 @@ class App extends Component {
         transforms: [encryptor],
         whitelist: ['auth'],
       },
-      () => {
-        this.setState({ rehydrated: true });
+      (err, { auth }) => {
+        this.setState({ rehydrated: true, language: auth.locale });
       }
     );
 
@@ -112,7 +117,9 @@ class App extends Component {
   }
 
   render() {
-    if (!this.state.rehydrated) {
+    const { rehydrated, language } = this.state;
+
+    if (!rehydrated) {
       return (
         <Container>
           <Logo source={require('./src/assets/logo-black.png')} />
@@ -122,9 +129,11 @@ class App extends Component {
 
     return (
       <Provider store={configureStore}>
-        <GitPoint onNavigationStateChange={this.statusBarHandler}>
-          <StatusBar />
-        </GitPoint>
+        <I18nLoader language={language} catalogs={catalogs}>
+          <GitPoint onNavigationStateChange={this.statusBarHandler}>
+            <StatusBar />
+          </GitPoint>
+        </I18nLoader>
       </Provider>
     );
   }

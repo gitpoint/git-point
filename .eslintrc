@@ -143,6 +143,7 @@
     "react/jsx-no-bind": "error",
     "react/no-multi-comp": "off",
     "react/prefer-stateless-function": "off",
+    "react/no-unescaped-entities": "off",
     "react/sort-comp": [
       "error",
       {

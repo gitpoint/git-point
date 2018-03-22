@@ -7,8 +7,9 @@ import styled from 'styled-components';
 import { GithubHtmlView } from 'components';
 import { Icon } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
+import { Trans, withI18n } from '@lingui/react';
 
-import { translate, relativeTimeToNow } from 'utils';
+import { relativeTimeToNow } from 'utils';
 import { colors, fonts, normalize } from 'config';
 
 const Container = styled.View`
@@ -87,7 +88,7 @@ class CommentListItemComponent extends Component {
     onLinkPress: Function,
     onEditPress: Function,
     onDeletePress: Function,
-    locale: string,
+    i18n: Object,
     navigation: Object,
     authUser: Object,
   };
@@ -112,18 +113,18 @@ class CommentListItemComponent extends Component {
     Object.prototype.hasOwnProperty.call(this.props.comment, 'repository_url');
 
   commentActionSheetOptions = comment => {
-    const { locale } = this.props;
-    const actions = [translate('issue.comment.editAction', locale)];
+    const { i18n } = this.props;
+    const actions = [i18n.t`Edit`];
 
     if (!comment.repository_url) {
-      actions.push(translate('issue.comment.deleteAction', locale));
+      actions.push(i18n.t`Delete`);
     }
 
     return actions;
   };
 
   render() {
-    const { comment, locale, navigation, authUser, onLinkPress } = this.props;
+    const { comment, i18n, navigation, authUser, onLinkPress } = this.props;
 
     const commentPresent = comment.body_html && comment.body_html !== '';
 
@@ -174,7 +175,7 @@ class CommentListItemComponent extends Component {
           )}
 
           <DateContainer>
-            <DateLabel>{relativeTimeToNow(comment.created_at)}</DateLabel>
+            <DateLabel>{relativeTimeToNow(comment.created_at, i18n)}</DateLabel>
           </DateContainer>
         </Header>
 
@@ -186,7 +187,7 @@ class CommentListItemComponent extends Component {
             />
           ) : (
             <CommentTextNone>
-              {translate('issue.main.noDescription', locale)}
+              <Trans>No description provided.</Trans>
             </CommentTextNone>
           )}
 
@@ -207,11 +208,8 @@ class CommentListItemComponent extends Component {
           ref={o => {
             this.ActionSheet = o;
           }}
-          title={translate('issue.comment.commentActions', locale)}
-          options={[
-            ...this.commentActionSheetOptions(comment),
-            translate('common.cancel', locale),
-          ]}
+          title={i18n.t`Comment Actions`}
+          options={[...this.commentActionSheetOptions(comment), i18n.t`Cancel`]}
           cancelButtonIndex={this.commentActionSheetOptions(comment).length}
           onPress={this.handlePress}
         />
@@ -221,5 +219,5 @@ class CommentListItemComponent extends Component {
 }
 
 export const CommentListItem = connect(mapStateToProps)(
-  CommentListItemComponent
+  withI18n()(CommentListItemComponent)
 );

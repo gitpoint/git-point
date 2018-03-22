@@ -7,9 +7,11 @@ import { ListItem } from 'react-native-elements';
 import { colors, fonts } from 'config';
 import { changeLocale } from 'auth';
 import { bindActionCreators } from 'redux';
-import { emojifyText, translate } from 'utils';
+import { emojifyText } from 'utils';
 import { NavigationActions } from 'react-navigation';
 import { ViewContainer } from 'components';
+import { withI18n } from '@lingui/react';
+
 import languages from './language-settings';
 
 const ListTitle = styled.Text`
@@ -44,14 +46,16 @@ const StyledListItem = styled(ListItem).attrs({
 class LanguageSettings extends Component {
   props: {
     locale: string,
+    i18n: Object,
     changeLocale: () => void,
   };
 
   componentWillReceiveProps(nextState) {
     if (nextState.locale !== this.props.locale) {
+      const { i18n } = this.props;
       const navigationParams = NavigationActions.setParams({
         params: {
-          title: translate('auth.userOptions.language', nextState.locale),
+          title: i18n.t`Language`,
         },
         key: nextState.navigation.state.key,
       });
@@ -110,4 +114,4 @@ const mapDispatchToProps = dispatch =>
 export const LanguageSettingsScreen = connect(
   mapStateToProps,
   mapDispatchToProps
-)(LanguageSettings);
+)(withI18n()(LanguageSettings));

@@ -11,14 +11,14 @@ import {
   Platform,
 } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
+import { withI18n, Trans } from '@lingui/react';
+
 import {
   ViewContainer,
   IssueListItem,
   LoadingContainer,
   SearchBar,
 } from 'components';
-
-import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
 import {
   searchOpenRepoPulls,
@@ -26,7 +26,6 @@ import {
 } from '../repository.action';
 
 const mapStateToProps = state => ({
-  locale: state.auth.locale,
   repository: state.repository.repository,
   searchedOpenPulls: state.repository.searchedOpenPulls,
   searchedClosedPulls: state.repository.searchedClosedPulls,
@@ -96,7 +95,7 @@ const styles = StyleSheet.create({
 
 class PullList extends Component {
   props: {
-    locale: string,
+    i18n: Object,
     repository: Object,
     searchedOpenPulls: Array,
     searchedClosedPulls: Array,
@@ -193,13 +192,12 @@ class PullList extends Component {
       type={this.props.navigation.state.params.type}
       issue={item}
       navigation={this.props.navigation}
-      locale={this.props.locale}
     />
   );
 
   render() {
     const {
-      locale,
+      i18n,
       searchedOpenPulls,
       searchedClosedPulls,
       isPendingSearchOpenPulls,
@@ -218,7 +216,8 @@ class PullList extends Component {
                 showsCancelButton={searchFocus}
                 onFocus={() => this.setState({ searchFocus: true })}
                 onCancelButtonPress={() =>
-                  this.setState({ searchStart: false, query: '' })}
+                  this.setState({ searchStart: false, query: '' })
+                }
                 onSearchButtonPress={text => {
                   this.search(text);
                 }}
@@ -230,10 +229,7 @@ class PullList extends Component {
           <ButtonGroup
             onPress={this.switchQueryType}
             selectedIndex={searchType}
-            buttons={[
-              translate('repository.pullList.openButton', locale),
-              translate('repository.pullList.closedButton', locale),
-            ]}
+            buttons={[i18n.t`Open`, i18n.t`Closed`]}
             textStyle={styles.buttonGroupText}
             selectedTextStyle={styles.buttonGroupTextSelected}
             containerStyle={styles.buttonGroupContainer}
@@ -244,9 +240,7 @@ class PullList extends Component {
           searchType === 0 && (
             <LoadingContainer
               animating={isPendingSearchOpenPulls && searchType === 0}
-              text={translate('repository.pullList.searchingMessage', locale, {
-                query,
-              })}
+              text={i18n.t`Searching for ${query}`}
               style={styles.marginSpacing}
             />
           )}
@@ -255,9 +249,7 @@ class PullList extends Component {
           searchType === 1 && (
             <LoadingContainer
               animating={isPendingSearchClosedPulls && searchType === 1}
-              text={translate('repository.pullList.searchingMessage', locale, {
-                query,
-              })}
+              text={i18n.t`Searching for ${query}`}
               style={styles.marginSpacing}
             />
           )}
@@ -280,7 +272,7 @@ class PullList extends Component {
           searchType === 0 && (
             <View style={styles.marginSpacing}>
               <Text style={styles.searchTitle}>
-                {translate('repository.pullList.noOpenPulls', locale)}
+                <Trans>No open pull requests found!</Trans>
               </Text>
             </View>
           )}
@@ -291,7 +283,7 @@ class PullList extends Component {
           searchType === 1 && (
             <View style={styles.marginSpacing}>
               <Text style={styles.searchTitle}>
-                {translate('repository.pullList.noOpenPulls', locale)}
+                <Trans>No closed pull requests found!</Trans>
               </Text>
             </View>
           )}
@@ -301,5 +293,5 @@ class PullList extends Component {
 }
 
 export const PullListScreen = connect(mapStateToProps, mapDispatchToProps)(
-  PullList
+  withI18n()(PullList)
 );

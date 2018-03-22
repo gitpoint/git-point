@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FlatList, View, ScrollView, Platform } from 'react-native';
 import { ButtonGroup, Card, Icon } from 'react-native-elements';
+import { withI18n, Trans } from '@lingui/react';
 
 import { v3 } from 'api';
 import {
@@ -15,7 +16,7 @@ import {
   NotificationListItem,
 } from 'components';
 import { colors, fonts, normalize } from 'config';
-import { isIphoneX, translate } from 'utils';
+import { isIphoneX } from 'utils';
 import {
   getUnreadNotifications,
   getParticipatingNotifications,
@@ -31,7 +32,6 @@ const mapStateToProps = state => ({
   participating: state.notifications.participating,
   all: state.notifications.all,
   issue: state.issue.issue,
-  locale: state.auth.locale,
   isPendingUnread: state.notifications.isPendingUnread,
   isPendingParticipating: state.notifications.isPendingParticipating,
   isPendingAll: state.notifications.isPendingAll,
@@ -155,7 +155,7 @@ class Notifications extends Component {
     unread: Array,
     participating: Array,
     all: Array,
-    locale: string,
+    i18n: Object,
     isPendingUnread: boolean,
     isPendingParticipating: boolean,
     isPendingAll: boolean,
@@ -353,7 +353,6 @@ class Notifications extends Component {
     navigation.navigate('Issue', {
       issueURL: notification.subject.url.replace(/pulls\/(\d+)$/, 'issues/$1'),
       isPR: notification.subject.type === 'PullRequest',
-      locale: this.props.locale,
     });
   }
 
@@ -370,6 +369,7 @@ class Notifications extends Component {
       markAsRead,
       markRepoAsRead,
       markAllNotificationsAsRead,
+      i18n,
     } = this.props;
     const { type } = this.state;
     const notifications = this.notifications().filter(
@@ -386,7 +386,7 @@ class Notifications extends Component {
               <Button
                 icon={{ name: 'check', type: 'octicon' }}
                 onPress={() => markAllNotificationsAsRead()}
-                title={translate('notifications.main.markAllAsRead')}
+                title={i18n.t`Mark all as read`}
               />
             </MarkAllAsReadButtonContainer>
           )}
@@ -431,7 +431,7 @@ class Notifications extends Component {
 
   render() {
     const { type, contentBlockHeight } = this.state;
-    const { locale } = this.props;
+    const { i18n } = this.props;
     const sortedRepos = this.getSortedRepos();
 
     const isRetrievingNotifications =
@@ -446,11 +446,7 @@ class Notifications extends Component {
             <StyledButtonGroup
               onPress={this.switchType}
               selectedIndex={type}
-              buttons={[
-                translate('notifications.main.unreadButton', locale),
-                translate('notifications.main.participatingButton', locale),
-                translate('notifications.main.allButton', locale),
-              ]}
+              buttons={[i18n.t`Unread`, i18n.t`Participating`, i18n.t`All`]}
             />
           </ButtonGroupWrapper>
 
@@ -459,10 +455,7 @@ class Notifications extends Component {
               <TextContainer height={contentBlockHeight}>
                 <LoadingContainer
                   animating={isRetrievingNotifications}
-                  text={translate(
-                    'notifications.main.retrievingMessage',
-                    locale
-                  )}
+                  text={i18n.t`Retrieving notifications`}
                   center
                 />
               </TextContainer>
@@ -483,7 +476,9 @@ class Notifications extends Component {
                   !isLoadingNewNotifications && (
                     <TextContainer height={contentBlockHeight}>
                       <NoneTitle>
-                        {translate('notifications.main.noneMessage', locale)}
+                        <Trans>
+                          You don't have any notifications of this type
+                        </Trans>
                       </NoneTitle>
                     </TextContainer>
                   )
@@ -498,5 +493,5 @@ class Notifications extends Component {
 }
 
 export const NotificationsScreen = connect(mapStateToProps, mapDispatchToProps)(
-  Notifications
+  withI18n()(Notifications)
 );

@@ -6,7 +6,8 @@ import { RefreshControl } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { createStructuredSelector } from 'reselect';
 import ActionSheet from 'react-native-actionsheet';
-import { getAuthLocale } from 'auth';
+import { withI18n } from '@lingui/react';
+
 import {
   ViewContainer,
   UserProfile,
@@ -16,7 +17,7 @@ import {
   ParallaxScroll,
   EntityInfo,
 } from 'components';
-import { emojifyText, translate, openURLInView } from 'utils';
+import { emojifyText, openURLInView } from 'utils';
 import { colors, fonts } from 'config';
 import {
   // actions
@@ -38,7 +39,6 @@ const selectors = createStructuredSelector({
   isPendingOrg: getOrganizationIsPendingOrg,
   isPendingRepos: getOrganizationIsPendingRepos,
   isPendingMembers: getOrganizationIsPendingMembers,
-  locale: getAuthLocale,
 });
 
 const actionCreators = {
@@ -67,7 +67,7 @@ class OrganizationProfile extends Component {
     // isPendingRepos: boolean,
     isPendingMembers: boolean,
     navigation: Object,
-    locale: string,
+    i18n: Object,
   };
 
   state: {
@@ -117,11 +117,11 @@ class OrganizationProfile extends Component {
       isPendingOrg,
       isPendingMembers,
       navigation,
-      locale,
+      i18n,
     } = this.props;
     const { refreshing } = this.state;
     const initialOrganization = this.props.navigation.state.params.organization;
-    const organizationActions = [translate('common.openInBrowser', locale)];
+    const organizationActions = [i18n.t`Open in Browser`];
 
     return (
       <ViewContainer>
@@ -150,15 +150,11 @@ class OrganizationProfile extends Component {
           showMenu
           menuAction={() => this.showMenuActionSheet()}
         >
-          {isPendingMembers && (
-            <LoadingMembersList
-              title={translate('organization.main.membersTitle', locale)}
-            />
-          )}
+          {isPendingMembers && <LoadingMembersList title={i18n.t`MEMBERS`} />}
 
           {!isPendingMembers && (
             <MembersList
-              title={translate('organization.main.membersTitle', locale)}
+              title={i18n.t`MEMBERS`}
               members={members}
               navigation={navigation}
             />
@@ -166,9 +162,7 @@ class OrganizationProfile extends Component {
 
           {!!organization.description &&
             organization.description !== '' && (
-              <SectionList
-                title={translate('organization.main.descriptionTitle', locale)}
-              >
+              <SectionList title={i18n.t`DESCRIPTION`}>
                 <DescriptionListItem
                   subtitle={emojifyText(organization.description)}
                   hideChevron
@@ -177,11 +171,7 @@ class OrganizationProfile extends Component {
             )}
 
           {!isPendingOrg && (
-            <EntityInfo
-              entity={organization}
-              navigation={navigation}
-              locale={locale}
-            />
+            <EntityInfo entity={organization} navigation={navigation} />
           )}
         </ParallaxScroll>
 
@@ -189,8 +179,8 @@ class OrganizationProfile extends Component {
           ref={o => {
             this.ActionSheet = o;
           }}
-          title={translate('organization.organizationActions', locale)}
-          options={[...organizationActions, translate('common.cancel', locale)]}
+          title={i18n.t`Organization Actions`}
+          options={[...organizationActions, i18n.t`Cancel`]}
           cancelButtonIndex={1}
           onPress={this.handleActionSheetPress}
         />
@@ -200,5 +190,5 @@ class OrganizationProfile extends Component {
 }
 
 export const OrganizationProfileScreen = connect(selectors, actions)(
-  OrganizationProfile
+  withI18n()(OrganizationProfile)
 );

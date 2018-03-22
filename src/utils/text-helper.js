@@ -1,15 +1,10 @@
 import emoji from 'node-emoji';
-import I18n from 'locale';
-
-import { translate } from 'utils';
 
 export const emojifyText = text => {
   return emoji.emojify(text);
 };
 
-export const abbreviateNumber = count => {
-  const thousandUnit = translate('common.abbreviations.thousand', I18n.locale);
-
+export const abbreviateNumber = (count, thousandUnit) => {
   if (count > 999) {
     return count % 1000 < 50
       ? (count / 1000).toFixed(0) + thousandUnit

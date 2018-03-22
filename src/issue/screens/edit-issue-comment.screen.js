@@ -10,9 +10,9 @@ import {
   Dimensions,
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import { withI18n } from '@lingui/react';
 
 import { ViewContainer, SectionList, LoadingModal } from 'components';
-import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
 import { editIssueBody, editIssueComment } from '../issue.action';
 
@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  locale: state.auth.locale,
   issue: state.issue.issue,
   repository: state.repository.repository,
   isEditingComment: state.issue.isEditingComment,
@@ -59,7 +58,7 @@ class EditIssueComment extends Component {
   props: {
     editIssueBody: Function,
     editIssueComment: Function,
-    locale: string,
+    i18n: Object,
     repository: Object,
     navigation: Object,
     issue: Object,
@@ -95,23 +94,24 @@ class EditIssueComment extends Component {
   };
 
   render() {
-    const { locale, isEditingComment } = this.props;
+    const { i18n, isEditingComment } = this.props;
     const { issueComment } = this.state;
 
     return (
       <ViewContainer>
         {isEditingComment && <LoadingModal />}
         <ScrollView>
-          <SectionList title={translate('issue.newIssue.issueComment', locale)}>
+          <SectionList title={i18n.t`Issue Comment`}>
             <TextInput
               underlineColorAndroid={'transparent'}
-              placeholder={translate('issue.newIssue.writeAComment', locale)}
+              placeholder={i18n.t`Write a title for your issue here`}
               multiline
               onChangeText={text => this.setState({ issueComment: text })}
               onContentSizeChange={event =>
                 this.setState({
                   issueCommentHeight: event.nativeEvent.contentSize.height,
-                })}
+                })
+              }
               placeholderTextColor={colors.grey}
               style={[
                 styles.textInput,
@@ -127,7 +127,7 @@ class EditIssueComment extends Component {
           <SectionList>
             <View style={styles.listItemContainer}>
               <ListItem
-                title={translate('common.submit', locale)}
+                title={i18n.t`Submit`}
                 hideChevron
                 underlayColor={colors.greyLight}
                 titleStyle={styles.submitTitle}
@@ -144,4 +144,4 @@ class EditIssueComment extends Component {
 export const EditIssueCommentScreen = connect(
   mapStateToProps,
   mapDispatchToProps
-)(EditIssueComment);
+)(withI18n()(EditIssueComment));

@@ -1,0 +1,917 @@
+{
+  "Options": {
+    "translation": "Ayarlar",
+    "origin": [["src/auth/screens/auth-profile.screen.js", 134]]
+  },
+  "BIO": {
+    "translation": "Biyografi",
+    "origin": [
+      ["src/auth/screens/auth-profile.screen.js", 149],
+      ["src/user/screens/profile.screen.js", 209]
+    ]
+  },
+  "ORGANIZATIONS": {
+    "translation": "ORGANİZASYONLAR",
+    "origin": [
+      ["src/auth/screens/auth-profile.screen.js", 165],
+      ["src/user/screens/profile.screen.js", 221]
+    ]
+  },
+  "No organizations": {
+    "translation": "Organizasyon yok",
+    "origin": [
+      ["src/auth/screens/auth-profile.screen.js", 167],
+      ["src/user/screens/profile.screen.js", 223]
+    ]
+  },
+  "Can't see all your organizations?": {
+    "translation": "Tüm organizasyonlarınızı göremiyor musunuz?",
+    "origin": [["src/auth/screens/auth-profile.screen.js", 177]]
+  },
+  "You may have to request approval for them.": {
+    "translation": "Onlar için onay istemeniz gerekebilir",
+    "origin": [["src/auth/screens/auth-profile.screen.js", 184]]
+  },
+  "Unknown event type: {0}": {
+    "translation": "",
+    "origin": [["src/auth/screens/events.screen.js", 147]]
+  },
+  "<0/> commented on commit": {
+    "translation": "<0/> commit'e yorum yapıldı",
+    "origin": [["src/auth/screens/events.screen.js", 199]]
+  },
+  "<0/> created branch <1/> at <2/>": {
+    "translation": "<0/> dal oluşturuldu <1/> de <2/>",
+    "origin": [["src/auth/screens/events.screen.js", 215]]
+  },
+  "<0/> created tag <1/> at <2/>": {
+    "translation": "<0/> etiket oluşturuldu <1/> de <2/>",
+    "origin": [["src/auth/screens/events.screen.js", 221]]
+  },
+  "<0/> created repository <1/>": {
+    "translation": "<0/> repository oluşturuldu <1/>",
+    "origin": [["src/auth/screens/events.screen.js", 227]]
+  },
+  "<0/> deleted branch <1/> at <2/>": {
+    "translation": "<0/> dal silindi <1/> de <2/>",
+    "origin": [["src/auth/screens/events.screen.js", 246]]
+  },
+  "<0/> deleted tag <1/> at <2/>": {
+    "translation": "<0/> etiket silindi <1/> de <2/>",
+    "origin": [["src/auth/screens/events.screen.js", 252]]
+  },
+  "<0/> forked <1/> at <2/>": {
+    "translation": "<0/> fork edildi <1/> de <2/>",
+    "origin": [["src/auth/screens/events.screen.js", 273]]
+  },
+  "<0/> created the <1/> wiki": {
+    "translation": "",
+    "origin": [["src/auth/screens/events.screen.js", 287]]
+  },
+  "<0/> edited the <1/> wiki": {
+    "translation": "",
+    "origin": [["src/auth/screens/events.screen.js", 294]]
+  },
+  "<0/> commented on pull request <1/> at <2/>": {
+    "translation": "<0/> pull request yorum yaptı <1/> de <2/>",
+    "origin": [
+      ["src/auth/screens/events.screen.js", 313],
+      ["src/auth/screens/events.screen.js", 454]
+    ]
+  },
+  "<0/> commented on issue <1/> at <2/>": {
+    "translation": "<0/> issue yorum yaptı <1/> de <2/>",
+    "origin": [["src/auth/screens/events.screen.js", 321]]
+  },
+  "<0/> opened issue <1/> at <2/>": {
+    "translation": "<0/> açıldı issue <1/> de <2/>",
+    "origin": [["src/auth/screens/events.screen.js", 339]]
+  },
+  "<0/> reopened issue <1/> at <2/>": {
+    "translation": "<0/> yeniden açıldı issue <1/> de <2/>",
+    "origin": [["src/auth/screens/events.screen.js", 345]]
+  },
+  "<0/> closed issue <1/> at <2/>": {
+    "translation": "<0/> kapandı issue <1/> de <2/>",
+    "origin": [["src/auth/screens/events.screen.js", 351]]
+  },
+  "<0/> edited <1/> at <2/>": {
+    "translation": "<0/> düzenlendi <1/> de <2/>",
+    "origin": [["src/auth/screens/events.screen.js", 373]]
+  },
+  "<0/> removed <1/> at <2/>": {
+    "translation": "<0/> silindi <1/> de <2/>",
+    "origin": [["src/auth/screens/events.screen.js", 380]]
+  },
+  "<0/> added <1/> at <2/>": {
+    "translation": "<0/> eklendi <1/> de <2/>",
+    "origin": [["src/auth/screens/events.screen.js", 387]]
+  },
+  "<0/> made <1/> public": {
+    "translation": "<0/> made <1/> public",
+    "origin": [["src/auth/screens/events.screen.js", 402]]
+  },
+  "<0/> opened pull request <1/> at <2/>": {
+    "translation": "<0/> pull request açıldı <1/> de <2/>",
+    "origin": [["src/auth/screens/events.screen.js", 416]]
+  },
+  "<0/> reopened pull request <1/> at <2/>": {
+    "translation": "<0/> pull request yeniden açıldı <1/> de <2/>",
+    "origin": [["src/auth/screens/events.screen.js", 422]]
+  },
+  "<0/> merged pull request <1/> at <2/>": {
+    "translation": "",
+    "origin": [["src/auth/screens/events.screen.js", 429]]
+  },
+  "<0/> closed pull request <1/> at <2/>": {
+    "translation": "<0/> pull request kapandı <1/> de <2/>",
+    "origin": [["src/auth/screens/events.screen.js", 436]]
+  },
+  "<0/> pushed to <1>{0}</1> at <2/>": {
+    "translation": "<0/> 'a push edildi <1>{0}</1> de <2/>",
+    "origin": [["src/auth/screens/events.screen.js", 470]]
+  },
+  "<0/> published release {id}": {
+    "translation": "<0/> release yayımlandı {id}",
+    "origin": [["src/auth/screens/events.screen.js", 487]]
+  },
+  "<0/> starred <1/>": {
+    "translation": "<0/> yıldızlı <1/>",
+    "origin": [["src/auth/screens/events.screen.js", 502]]
+  },
+  "Welcome to GitPoint": {
+    "translation": "GitPoint'e Hoşgeldiniz",
+    "origin": [
+      ["src/auth/screens/events.screen.js", 576],
+      ["src/auth/screens/login.screen.js", 281],
+      ["src/auth/screens/welcome.screen.js", 40]
+    ]
+  },
+  "Preparing GitPoint...": {
+    "translation": "GitPoint Hazırlanıyor...",
+    "origin": [["src/auth/screens/login.screen.js", 222]]
+  },
+  "The most feature-rich GitHub client that is 100% free": {
+    "translation":
+      "En zengin özelliklere sahip GitHub client'ı ve 100% ücretsiz",
+    "origin": [["src/auth/screens/login.screen.js", 284]]
+  },
+  "Control notifications": {
+    "translation": "Bildirimleri Kontrol Et",
+    "origin": [["src/auth/screens/login.screen.js", 298]]
+  },
+  "View and control all of your unread and participating notifications": {
+    "translation":
+      "Okunmamış ve katılımcı olduğunuz bildirimlerinizin tümünü görüntüleyin ve kontrol edin",
+    "origin": [["src/auth/screens/login.screen.js", 301]]
+  },
+  "Repositories and Users": {
+    "translation": "Repository'ler ve Kullanıcılar",
+    "origin": [["src/auth/screens/login.screen.js", 317]]
+  },
+  "Easily obtain repository, user and organization information": {
+    "translation":
+      "Repository'leri, kullanıcıları ve organizasyon bilgilerini kolayca edinin",
+    "origin": [["src/auth/screens/login.screen.js", 320]]
+  },
+  "Issues and Pull Requests": {
+    "translation": "Issue'lar ve Pull Request'ler",
+    "origin": [["src/auth/screens/login.screen.js", 335]]
+  },
+  "Communicate on conversations, merge pull requests and more": {
+    "translation":
+      "Sohbet ederek iletişim kurun, pull request'leri merge edin ve daha fazlası",
+    "origin": [["src/auth/screens/login.screen.js", 338]]
+  },
+  "SIGN IN": {
+    "translation": "GİRİŞ YAP",
+    "origin": [["src/auth/screens/login.screen.js", 349]]
+  },
+  "CANCEL": {
+    "translation": "İPTAL",
+    "origin": [["src/auth/screens/login.screen.js", 381]]
+  },
+  "Last updated: July 15, 2017": {
+    "translation": "Son Güncelleme: Temmuz 15, 2017",
+    "origin": [["src/auth/screens/privacy-policy.screen.js", 60]]
+  },
+  "We're glad you decided to use GitPoint. This Privacy Policy is here to inform you about what we do — and do not do — with our user's data.": {
+    "translation":
+      "GitPoint'i kullanmaya karar verdiğiniz için mutluyuz. Bu Gizlilik Politikası, burada kullanıcılarımızın verileri ile ne yapıp ne yapmadığımızı size bildirmek için hazırlanmıştır.",
+    "origin": [["src/auth/screens/privacy-policy.screen.js", 64]]
+  },
+  "USER DATA": {
+    "translation": "KULLANICI VERİSİ",
+    "origin": [["src/auth/screens/privacy-policy.screen.js", 73]]
+  },
+  "We do not do anything with your GitHub information. After authenticating, the user's OAuth token is persisted directly on their device storage. It is not possible for us to retrieve that information. We never view a user's access token nor store it whatsoever.": {
+    "translation":
+      "GitHub bilgilerinizle hiçbir şey yapmıyoruz. Kimlik doğrulamasından sonra, kullanıcının OAuth belirteci doğrudan kendi cihaz depolama biriminde kalır. Bu bilgileri geri almamız mümkün değildir. Bir kullanıcının erişim simgesini hiçbir zaman görüntülemiyoruz ve ne olursa olsun saklamıyoruz.",
+    "origin": [["src/auth/screens/privacy-policy.screen.js", 77]]
+  },
+  "This means that in no way, shape or form do we ever view, use or share a user's GitHub data. If private data ever becomes visible at any point we will not record or view it. If it happens to be accidentally recorded, we will delete it immediately using secure erase methods. Again, we've set up authentication specifically so that this never happens.": {
+    "translation":
+      "Bu, bir kullanıcının GitHub verilerini hiçbir şekilde görüntüleyemememiz, kullanmamamız veya paylaşmamamız anlamına gelir. Özel veriler, herhangi bir noktada görünür hale gelirse, kaydetmeyeceğiz veya görüntülemeyeceğiz. Yanlışlıkla kaydedilmişse, güvenli silme yöntemlerini kullanarak derhal silecektir. Yine, kimlik doğrulamasını özel olarak bu şekilde asla gerçekleşmeyecek şekilde kurduk.",
+    "origin": [["src/auth/screens/privacy-policy.screen.js", 87]]
+  },
+  "ANALYTICS INFORMATION": {
+    "translation": "ANALİTİK BİLGİLER",
+    "origin": [["src/auth/screens/privacy-policy.screen.js", 99]]
+  },
+  "We currently use Google Analytics and iTunes App Analytics to help us measure traffic and usage trends for the GitPoint. These tools collect information sent by your device including device and platform version, region and referrer. This information cannot reasonably be used to identify any particular individual user and no personal information is extracted.": {
+    "translation":
+      "Şu anda, GitPoint için trafik ve kullanım bilgilerini ölçmemize yardımcı olması için Google Analytics'i ve iTunes App Analytics'i kullanıyoruz. Bu araçlar, aygıt ve platform sürümü, bölge ve yönlendiren de dahil olmak üzere aygıtınız tarafından gönderilen bilgileri toplar. Bu bilgi belirli bir kullanıcıyı tanımlamak için makul bir şekilde kullanılamaz ve hiçbir kişisel bilgi çıkarılamaz.",
+    "origin": [["src/auth/screens/privacy-policy.screen.js", 103]]
+  },
+  "If we happen to include another third party platform to collect stack traces, error logs or more analytics information, we'll make sure that user data remains anonymized and encrypted.": {
+    "translation":
+      "Yığın izlerini, hata günlüklerini veya daha fazla analitik bilgi toplamak için başka bir üçüncü taraf platformu eklersek, kullanıcı verilerinin anonim ve şifrelenip korunup korunmadığından emin oluruz.",
+    "origin": [["src/auth/screens/privacy-policy.screen.js", 115]]
+  },
+  "OPEN SOURCE": {
+    "translation": "AÇIK KAYNAK",
+    "origin": [["src/auth/screens/privacy-policy.screen.js", 126]]
+  },
+  "GitPoint is open source and the history of contributions to the platform will always be visible to the public.": {
+    "translation":
+      "GitPoint açık kaynaktır ve platforma yapılan katkı geçmişi daima halk tarafından görülecektir.",
+    "origin": [["src/auth/screens/privacy-policy.screen.js", 130]]
+  },
+  "With each contribution to the app, code review is always performed to prevent anybody from including malicious code of any kind.": {
+    "translation":
+      "Uygulamaya yapılan her katkı ile kod incelemesi, her zaman herkese, her türlü kötü niyetli kodu eklemez.",
+    "origin": [["src/auth/screens/privacy-policy.screen.js", 137]]
+  },
+  "CONTACT": {
+    "translation": "İLETİŞİM",
+    "origin": [["src/auth/screens/privacy-policy.screen.js", 146]]
+  },
+  "Thank you for reading our Privacy Policy. We hope you enjoy using GitPoint as much as we enjoyed building it.": {
+    "translation":
+      "Gizlilik Politikamızı okuduğunuz için teşekkür ederiz. Umarız gitPoint'i keyifle kullandığımız kadar beğenirsiniz.",
+    "origin": [["src/auth/screens/privacy-policy.screen.js", 150]]
+  },
+  "If you have any questions about this Privacy Policy or GitPoint in general, please file an issue in the <0>GitPoint repository</0>": {
+    "translation":
+      "Genel olarak bu Gizlilik Politikası veya GitPoint ile ilgili herhangi bir sorunuz varsa lütfen; <0>GitPoint repository'si</0>",
+    "origin": [["src/auth/screens/privacy-policy.screen.js", 157]]
+  },
+  "Check for update": {
+    "translation": "Güncellemeleri kontrol et",
+    "origin": [["src/auth/screens/user-options.screen.js", 75]]
+  },
+  "Language": {
+    "translation": "Dil",
+    "origin": [
+      ["src/auth/screens/user-options.screen.js", 140],
+      ["src/auth/screens/user-options.screen.js", 143]
+    ]
+  },
+  "Open in Browser": {
+    "translation": "",
+    "origin": [
+      ["src/auth/screens/user-options.screen.js", 149],
+      ["src/issue/screens/issue-settings.screen.js", 281],
+      ["src/issue/screens/issue.screen.js", 379],
+      ["src/organization/screens/organization-profile.screen.js", 124],
+      ["src/repository/screens/read-me.screen.js", 99],
+      ["src/repository/screens/repository.screen.js", 244],
+      ["src/user/screens/profile.screen.js", 163]
+    ]
+  },
+  "Privacy Policy": {
+    "translation": "Gizlilik Politikası",
+    "origin": [
+      ["src/auth/screens/user-options.screen.js", 154],
+      ["src/auth/screens/user-options.screen.js", 157]
+    ]
+  },
+  "Make a donation": {
+    "translation": "Bağış yap",
+    "origin": [["src/auth/screens/user-options.screen.js", 162]]
+  },
+  "Sign Out": {
+    "translation": "Çıkış Yap",
+    "origin": [["src/auth/screens/user-options.screen.js", 168]]
+  },
+  "Not applicable in debug mode": {
+    "translation": "Hata ayıklama modunda uygulanamaz",
+    "origin": [["src/auth/screens/user-options.screen.js", 103]]
+  },
+  "Checking for update...": {
+    "translation": "Güncellemeler kontrol ediliyor...",
+    "origin": [["src/auth/screens/user-options.screen.js", 106]]
+  },
+  "Update is available!": {
+    "translation": "Güncelleme mevcut!",
+    "origin": [["src/auth/screens/user-options.screen.js", 115]]
+  },
+  "App is up to date": {
+    "translation": "Uygulama güncel",
+    "origin": [["src/auth/screens/user-options.screen.js", 116]]
+  },
+  "Locked, but you can still comment...": {
+    "translation": "Kilitli, ancak yine de yorum yapabilirsiniz...",
+    "origin": [["src/components/comment-input.component.js", 103]]
+  },
+  "Add a comment...": {
+    "translation": "Yorum ekle...",
+    "origin": [["src/components/comment-input.component.js", 104]]
+  },
+  "Issue is locked": {
+    "translation": "Issue kilitli",
+    "origin": [["src/components/comment-input.component.js", 125]]
+  },
+  "Edit": {
+    "translation": "Düzenle",
+    "origin": [["src/components/comment-list-item.component.js", 117]]
+  },
+  "Delete": {
+    "translation": "Sil",
+    "origin": [["src/components/comment-list-item.component.js", 120]]
+  },
+  "No description provided.": {
+    "translation": "Açıklama sağlanmadı.",
+    "origin": [["src/components/comment-list-item.component.js", 190]]
+  },
+  "Comment Actions": {
+    "translation": "Yorum Hareketleri",
+    "origin": [["src/components/comment-list-item.component.js", 211]]
+  },
+  "Cancel": {
+    "translation": "Vazgeç",
+    "origin": [
+      ["src/components/comment-list-item.component.js", 212],
+      ["src/issue/screens/issue-settings.screen.js", 295],
+      ["src/issue/screens/issue-settings.screen.js", 304],
+      ["src/issue/screens/issue-settings.screen.js", 315],
+      ["src/issue/screens/issue.screen.js", 427],
+      ["src/issue/screens/pull-merge.screen.js", 213],
+      ["src/organization/screens/organization-profile.screen.js", 183],
+      ["src/repository/screens/read-me.screen.js", 129],
+      ["src/repository/screens/repository.screen.js", 456],
+      ["src/user/screens/profile.screen.js", 242]
+    ]
+  },
+  "INFO": {
+    "translation": "BİLGİ",
+    "origin": [["src/components/entity-info.component.js", 74]]
+  },
+  "Company": {
+    "translation": "Şirket",
+    "origin": [["src/components/entity-info.component.js", 78]]
+  },
+  "Location": {
+    "translation": "Konum",
+    "origin": [["src/components/entity-info.component.js", 95]]
+  },
+  "Email": {
+    "translation": "Email",
+    "origin": [["src/components/entity-info.component.js", 111]]
+  },
+  "Website": {
+    "translation": "Website",
+    "origin": [["src/components/entity-info.component.js", 127]]
+  },
+  "Oops! it seems that you are not connected to the internet!": {
+    "translation": "Oops! it seems that you are not connected to the internet!",
+    "origin": [["src/components/error-screen.js", 25]]
+  },
+  "Diff": {
+    "translation": "Farklar",
+    "origin": [["src/components/issue-description.component.js", 181]]
+  },
+  "Assignees": {
+    "translation": "Atananlar",
+    "origin": [["src/components/issue-description.component.js", 200]]
+  },
+  "Merge Pull Request": {
+    "translation": "Merge Pull Request",
+    "origin": [
+      ["src/components/issue-description.component.js", 220],
+      ["src/components/issue-description.component.js", 223]
+    ]
+  },
+  "#{0} opened {1} ago by {2}": {
+    "translation": "",
+    "origin": [["src/components/issue-list-item.component.js", 82]]
+  },
+  "#{0} by {1} was closed {2} ago": {
+    "translation": "",
+    "origin": [["src/components/issue-list-item.component.js", 86]]
+  },
+  "Stars": {
+    "translation": "Stars",
+    "origin": [
+      [
+        "src/components/loading-indicators/loading-repository-profile.component.js",
+        94
+      ],
+      ["src/components/repository-profile.component.js", 214],
+      ["src/components/user-profile.component.js", 167],
+      ["src/components/user-profile.component.js", 180]
+    ]
+  },
+  "Forks": {
+    "translation": "Forks",
+    "origin": [
+      [
+        "src/components/loading-indicators/loading-repository-profile.component.js",
+        100
+      ],
+      ["src/components/repository-profile.component.js", 253]
+    ]
+  },
+  "suffix-for-thousands": {
+    "translation": "",
+    "origin": [
+      ["src/components/repository-list-item.component.js", 132],
+      ["src/components/repository-profile.component.js", 130]
+    ]
+  },
+  "Unknown": {
+    "translation": "",
+    "origin": [["src/components/repository-profile.component.js", 149]]
+  },
+  "Repository is not found": {
+    "translation": "",
+    "origin": [["src/components/repository-profile.component.js", 166]]
+  },
+  "forked from <0>{0}</0>": {
+    "translation": "buradan fork edildi: <0>{0}</0>",
+    "origin": [["src/components/repository-profile.component.js", 187]]
+  },
+  "Starred": {
+    "translation": "Starred",
+    "origin": [["src/components/repository-profile.component.js", 219]]
+  },
+  "Watchers": {
+    "translation": "İzleyenler",
+    "origin": [["src/components/repository-profile.component.js", 235]]
+  },
+  "Watching": {
+    "translation": "İzleniyor",
+    "origin": [["src/components/repository-profile.component.js", 240]]
+  },
+  "Merged": {
+    "translation": "Merged",
+    "origin": [["src/components/state-badge.component.js", 35]]
+  },
+  "Open": {
+    "translation": "Açık",
+    "origin": [
+      ["src/components/state-badge.component.js", 38],
+      ["src/repository/screens/issue-list.screen.js", 250],
+      ["src/repository/screens/pull-list.screen.js", 232]
+    ]
+  },
+  "Closed": {
+    "translation": "Kapalı",
+    "origin": [
+      ["src/components/state-badge.component.js", 41],
+      ["src/repository/screens/issue-list.screen.js", 250],
+      ["src/repository/screens/pull-list.screen.js", 232]
+    ]
+  },
+  "Repositories": {
+    "translation": "Repository'ler",
+    "origin": [
+      ["src/components/user-profile.component.js", 143],
+      ["src/components/user-profile.component.js", 158],
+      ["src/search/screens/search.screen.js", 222]
+    ]
+  },
+  "Followers": {
+    "translation": "Takipçiler",
+    "origin": [
+      ["src/components/user-profile.component.js", 190],
+      ["src/components/user-profile.component.js", 205]
+    ]
+  },
+  "Following": {
+    "translation": "Takip",
+    "origin": [
+      ["src/components/user-profile.component.js", 210],
+      ["src/components/user-profile.component.js", 222],
+      ["src/components/user-profile.component.js", 237]
+    ]
+  },
+  "Follows you": {
+    "translation": "Seni takip ediyor",
+    "origin": [["src/components/user-profile.component.js", 242]]
+  },
+  "Issue Comment": {
+    "translation": "Issue Yorumu",
+    "origin": [
+      ["src/issue/screens/edit-issue-comment.screen.js", 104],
+      ["src/issue/screens/new-issue.screen.js", 136]
+    ]
+  },
+  "Write a title for your issue here": {
+    "translation": "Buraya issue için bir başlık yazınız",
+    "origin": [
+      ["src/issue/screens/edit-issue-comment.screen.js", 107],
+      ["src/issue/screens/new-issue.screen.js", 118]
+    ]
+  },
+  "Submit": {
+    "translation": "Gönder",
+    "origin": [
+      ["src/issue/screens/edit-issue-comment.screen.js", 130],
+      ["src/issue/screens/new-issue.screen.js", 159]
+    ]
+  },
+  "Pull Request": {
+    "translation": "Pull Request",
+    "origin": [["src/issue/screens/issue-settings.screen.js", 156]]
+  },
+  "Issue": {
+    "translation": "Issue",
+    "origin": [["src/issue/screens/issue-settings.screen.js", 156]]
+  },
+  "Apply Label": {
+    "translation": "Etiketi Uygula",
+    "origin": [["src/issue/screens/issue-settings.screen.js", 163]]
+  },
+  "None yet": {
+    "translation": "Henüz yok",
+    "origin": [
+      ["src/issue/screens/issue-settings.screen.js", 170],
+      ["src/issue/screens/issue-settings.screen.js", 218]
+    ]
+  },
+  "LABELS": {
+    "translation": "ETİKETLER",
+    "origin": [["src/issue/screens/issue-settings.screen.js", 171]]
+  },
+  "Assign Yourself": {
+    "translation": "Kendini Ata",
+    "origin": [["src/issue/screens/issue-settings.screen.js", 205]]
+  },
+  "ASSIGNEES": {
+    "translation": "ATANANLAR",
+    "origin": [["src/issue/screens/issue-settings.screen.js", 219]]
+  },
+  "ACTIONS": {
+    "translation": "HAREKETLER",
+    "origin": [["src/issue/screens/issue-settings.screen.js", 247]]
+  },
+  "Unlock {issueType}": {
+    "translation": "Kilidini aç {issueType}",
+    "origin": [["src/issue/screens/issue-settings.screen.js", 251]]
+  },
+  "Lock {issueType}": {
+    "translation": "Kilitle {issueType}",
+    "origin": [["src/issue/screens/issue-settings.screen.js", 252]]
+  },
+  "Close {issueType}": {
+    "translation": "Kapat {issueType}",
+    "origin": [["src/issue/screens/issue-settings.screen.js", 264]]
+  },
+  "Reopen {issueType}": {
+    "translation": "Yeniden aç {issueType}",
+    "origin": [["src/issue/screens/issue-settings.screen.js", 265]]
+  },
+  "Are you sure?": {
+    "translation": "Emin misiniz?",
+    "origin": [
+      ["src/issue/screens/issue-settings.screen.js", 294],
+      ["src/issue/screens/issue-settings.screen.js", 303]
+    ]
+  },
+  "Yes": {
+    "translation": "Evet",
+    "origin": [
+      ["src/issue/screens/issue-settings.screen.js", 295],
+      ["src/issue/screens/issue-settings.screen.js", 304]
+    ]
+  },
+  "Apply a label to this issue": {
+    "translation": "Bu issue'ya bir etiket uygulayın",
+    "origin": [["src/issue/screens/issue-settings.screen.js", 312]]
+  },
+  "Edit Comment": {
+    "translation": "Yorumu Düzenle",
+    "origin": [["src/issue/screens/issue.screen.js", 277]]
+  },
+  "Issue Actions": {
+    "translation": "Issue Actions",
+    "origin": [["src/issue/screens/issue.screen.js", 426]]
+  },
+  "Settings": {
+    "translation": "Ayarlar",
+    "origin": [["src/issue/screens/issue.screen.js", 94]]
+  },
+  "You need to have an issue title!": {
+    "translation": "Bir konu başlığı gerekiyor!",
+    "origin": [["src/issue/screens/new-issue.screen.js", 80]]
+  },
+  "OK": {
+    "translation": "TAMAM",
+    "origin": [
+      ["src/issue/screens/new-issue.screen.js", 81],
+      ["src/issue/screens/pull-merge.screen.js", 119]
+    ]
+  },
+  "Issue Title": {
+    "translation": "Issue Başlığı",
+    "origin": [["src/issue/screens/new-issue.screen.js", 115]]
+  },
+  "Write a comment for your issue here": {
+    "translation": "Buraya issue için bir yorum yazınız",
+    "origin": [["src/issue/screens/new-issue.screen.js", 139]]
+  },
+  "Create a merge commit": {
+    "translation": "Create a merge commit",
+    "origin": [["src/issue/screens/pull-merge.screen.js", 91]]
+  },
+  "Squash and merge": {
+    "translation": "Squash and merge",
+    "origin": [["src/issue/screens/pull-merge.screen.js", 91]]
+  },
+  "merge": {
+    "translation": "merge",
+    "origin": [["src/issue/screens/pull-merge.screen.js", 115]]
+  },
+  "squash": {
+    "translation": "squash",
+    "origin": [["src/issue/screens/pull-merge.screen.js", 115]]
+  },
+  "You need to have a commit title!": {
+    "translation": "Bir commit başlığı girmelisiniz!",
+    "origin": [["src/issue/screens/pull-merge.screen.js", 118]]
+  },
+  "Commit Title": {
+    "translation": "Commit Title",
+    "origin": [["src/issue/screens/pull-merge.screen.js", 141]]
+  },
+  "Write a title for your commit here": {
+    "translation": "Buraya commit için bir başlık yazınız",
+    "origin": [["src/issue/screens/pull-merge.screen.js", 144]]
+  },
+  "Commit Message": {
+    "translation": "Commit Message",
+    "origin": [["src/issue/screens/pull-merge.screen.js", 162]]
+  },
+  "Write a message for your commit here": {
+    "translation": "Buraya commit için bir mesaj yazınız",
+    "origin": [["src/issue/screens/pull-merge.screen.js", 165]]
+  },
+  "Merge Type": {
+    "translation": "Merge Type",
+    "origin": [["src/issue/screens/pull-merge.screen.js", 183]]
+  },
+  "Change Merge Type": {
+    "translation": "Merge Tipini Seçiniz",
+    "origin": [["src/issue/screens/pull-merge.screen.js", 212]]
+  },
+  "Mark all as read": {
+    "translation": "Hepsini okundu olarak işaretle",
+    "origin": [["src/notifications/screens/notifications.screen.js", 389]]
+  },
+  "Unread": {
+    "translation": "Okunmamış",
+    "origin": [["src/notifications/screens/notifications.screen.js", 449]]
+  },
+  "Participating": {
+    "translation": "Katılımda",
+    "origin": [["src/notifications/screens/notifications.screen.js", 449]]
+  },
+  "All": {
+    "translation": "Tümü",
+    "origin": [["src/notifications/screens/notifications.screen.js", 449]]
+  },
+  "Retrieving notifications": {
+    "translation": "Bildirim alınıyor",
+    "origin": [["src/notifications/screens/notifications.screen.js", 458]]
+  },
+  "You don't have any notifications of this type": {
+    "translation": "Bu türde hiçbir bildirime sahip değilsiniz",
+    "origin": [["src/notifications/screens/notifications.screen.js", 479]]
+  },
+  "MEMBERS": {
+    "translation": "ÜYELER",
+    "origin": [
+      ["src/organization/screens/organization-profile.screen.js", 153],
+      ["src/organization/screens/organization-profile.screen.js", 157]
+    ]
+  },
+  "DESCRIPTION": {
+    "translation": "AÇIKLAMA",
+    "origin": [["src/organization/screens/organization-profile.screen.js", 165]]
+  },
+  "Organization Actions": {
+    "translation": "Organization Actions",
+    "origin": [["src/organization/screens/organization-profile.screen.js", 182]]
+  },
+  "Searching for {query}": {
+    "translation": "{query} aranıyor",
+    "origin": [
+      ["src/repository/screens/issue-list.screen.js", 261],
+      ["src/repository/screens/issue-list.screen.js", 270],
+      ["src/repository/screens/pull-list.screen.js", 243],
+      ["src/repository/screens/pull-list.screen.js", 252],
+      ["src/search/screens/search.screen.js", 229],
+      ["src/search/screens/search.screen.js", 237]
+    ]
+  },
+  "No open issues found!": {
+    "translation": "Açık issue bulunamadı!",
+    "origin": [["src/repository/screens/issue-list.screen.js", 293]]
+  },
+  "No closed issues found!": {
+    "translation": "Kapalı issue bulunamadı!",
+    "origin": [["src/repository/screens/issue-list.screen.js", 304]]
+  },
+  "New Issue": {
+    "translation": "Yeni Issue",
+    "origin": [
+      ["src/repository/screens/issue-list.screen.js", 111],
+      ["src/repository/screens/repository.screen.js", 390],
+      ["src/repository/screens/repository.screen.js", 401]
+    ]
+  },
+  "{0} files": {
+    "translation": "{0} dosya",
+    "origin": [["src/repository/screens/pull-diff.screen.js", 98]]
+  },
+  "NEW": {
+    "translation": "YENİ",
+    "origin": [["src/repository/screens/pull-diff.screen.js", 161]]
+  },
+  "DELETED": {
+    "translation": "SİLİNDİ",
+    "origin": [["src/repository/screens/pull-diff.screen.js", 173]]
+  },
+  "File renamed without any changes": {
+    "translation":
+      "Dosya herhangi bir değişiklik yapılmaksızın yeniden adlandırıldı",
+    "origin": [["src/repository/screens/pull-diff.screen.js", 199]]
+  },
+  "No open pull requests found!": {
+    "translation": "Açık pull request bulunamadı!",
+    "origin": [["src/repository/screens/pull-list.screen.js", 275]]
+  },
+  "No closed pull requests found!": {
+    "translation": "Kapalı pull request bulunamadı!",
+    "origin": [["src/repository/screens/pull-list.screen.js", 286]]
+  },
+  "No README.md found": {
+    "translation": "README.md bulunamadı",
+    "origin": [["src/repository/screens/read-me.screen.js", 119]]
+  },
+  "README Actions": {
+    "translation": "README Actions",
+    "origin": [["src/repository/screens/read-me.screen.js", 128]]
+  },
+  "Share {0}": {
+    "translation": "Paylaş {0}",
+    "origin": [["src/repository/screens/repository.screen.js", 187]]
+  },
+  "Check out {0} on GitHub. {1}": {
+    "translation": "GitHub'daki {0}'i kontrol edin. {1}",
+    "origin": [["src/repository/screens/repository.screen.js", 192]]
+  },
+  "Unstar": {
+    "translation": "Unstar",
+    "origin": [["src/repository/screens/repository.screen.js", 241]]
+  },
+  "Star": {
+    "translation": "Star",
+    "origin": [["src/repository/screens/repository.screen.js", 241]]
+  },
+  "Unwatch": {
+    "translation": "İzleme",
+    "origin": [["src/repository/screens/repository.screen.js", 242]]
+  },
+  "Watch": {
+    "translation": "İzle",
+    "origin": [["src/repository/screens/repository.screen.js", 242]]
+  },
+  "Share": {
+    "translation": "Paylaş",
+    "origin": [["src/repository/screens/repository.screen.js", 243]]
+  },
+  "Fork": {
+    "translation": "Fork",
+    "origin": [["src/repository/screens/repository.screen.js", 248]]
+  },
+  "TOPICS": {
+    "translation": "",
+    "origin": [["src/repository/screens/repository.screen.js", 295]]
+  },
+  "OWNER": {
+    "translation": "SAHİBİ",
+    "origin": [
+      ["src/repository/screens/repository.screen.js", 301],
+      ["src/repository/screens/repository.screen.js", 309],
+      ["src/repository/screens/repository.screen.js", 317]
+    ]
+  },
+  "CONTRIBUTORS": {
+    "translation": "KATKIDA BULUNANLAR",
+    "origin": [
+      ["src/repository/screens/repository.screen.js", 326],
+      ["src/repository/screens/repository.screen.js", 331]
+    ]
+  },
+  "No contributors found": {
+    "translation": "katkıda bulunan bulunamadı",
+    "origin": [["src/repository/screens/repository.screen.js", 333]]
+  },
+  "SOURCE": {
+    "translation": "KAYNAK",
+    "origin": [["src/repository/screens/repository.screen.js", 338]]
+  },
+  "README": {
+    "translation": "BENİ OKU",
+    "origin": [["src/repository/screens/repository.screen.js", 341]]
+  },
+  "View Code": {
+    "translation": "View Code",
+    "origin": [["src/repository/screens/repository.screen.js", 358]]
+  },
+  "Code": {
+    "translation": "Code",
+    "origin": [["src/repository/screens/repository.screen.js", 368]]
+  },
+  "ISSUES": {
+    "translation": "ISSUE'LER",
+    "origin": [["src/repository/screens/repository.screen.js", 381]]
+  },
+  "No issues": {
+    "translation": "issue yok",
+    "origin": [["src/repository/screens/repository.screen.js", 385]]
+  },
+  "No open issues": {
+    "translation": "Açık issue yok",
+    "origin": [["src/repository/screens/repository.screen.js", 386]]
+  },
+  "View All": {
+    "translation": "Tümünü Göster",
+    "origin": [
+      ["src/repository/screens/repository.screen.js", 390],
+      ["src/repository/screens/repository.screen.js", 429]
+    ]
+  },
+  "Issues": {
+    "translation": "Issue'ler",
+    "origin": [["src/repository/screens/repository.screen.js", 395]]
+  },
+  "PULL REQUESTS": {
+    "translation": "PULL REQUEST'LER",
+    "origin": [["src/repository/screens/repository.screen.js", 421]]
+  },
+  "No pull requests": {
+    "translation": "Pull request Yok",
+    "origin": [["src/repository/screens/repository.screen.js", 425]]
+  },
+  "No open pull requests": {
+    "translation": "Açık pull request'ler",
+    "origin": [["src/repository/screens/repository.screen.js", 426]]
+  },
+  "Pull Requests": {
+    "translation": "Pull Request'ler",
+    "origin": [["src/repository/screens/repository.screen.js", 432]]
+  },
+  "Repository Actions": {
+    "translation": "Repository Hareketleri",
+    "origin": [["src/repository/screens/repository.screen.js", 455]]
+  },
+  "Users": {
+    "translation": "Kullanıcılar",
+    "origin": [["src/search/screens/search.screen.js", 222]]
+  },
+  "Search for any repository": {
+    "translation": "Herhangi bir repository ara",
+    "origin": [["src/search/screens/search.screen.js", 255]]
+  },
+  "Search for any user": {
+    "translation": "Herhangi bir kullanıcı ara",
+    "origin": [["src/search/screens/search.screen.js", 256]]
+  },
+  "No repositories found :(": {
+    "translation": "Repository Bulunamadı :(",
+    "origin": [["src/search/screens/search.screen.js", 267]]
+  },
+  "No users found :(": {
+    "translation": "Kullanıcı Bulunamadı :(",
+    "origin": [["src/search/screens/search.screen.js", 278]]
+  },
+  "Unfollow": {
+    "translation": "Takibi bırak",
+    "origin": [["src/user/screens/profile.screen.js", 162]]
+  },
+  "Follow": {
+    "translation": "Takip et",
+    "origin": [["src/user/screens/profile.screen.js", 162]]
+  },
+  "User Actions": {
+    "translation": "Kullanıcı Hareketleri",
+    "origin": [["src/user/screens/profile.screen.js", 241]]
+  },
+  "{token, select, lessThanXSeconds {{count}s} xSeconds {{count}s} halfAMinute {30s} lessThanXMinutes {{count}m} xMinutes {{count}m} aboutXHours {{count}h} xHours {{count}h} xDays {{count}d} aboutXMonths {{count}mo} xMonths {{count}mo} aboutXYears {{count}y} xYears {{count}y} overXYears {{count}y} almostXYears {{count}y} other {?}}": {
+    "translation": "",
+    "origin": [["src/utils/localization-helper.js", 55]]
+  }
+}

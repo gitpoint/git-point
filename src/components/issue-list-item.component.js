@@ -3,13 +3,14 @@ import { StyleSheet, TouchableHighlight, View, Text } from 'react-native';
 import { ListItem, Icon } from 'react-native-elements';
 
 import { colors, fonts, normalize } from 'config';
-import { translate, relativeTimeToNow } from 'utils';
+import { relativeTimeToNow } from 'utils';
+import { withI18n } from '@lingui/react';
 
 type Props = {
   type: string,
   issue: Object,
   navigation: Object,
-  locale: string,
+  i18n: Object,
 };
 
 const styles = StyleSheet.create({
@@ -60,48 +61,47 @@ const getIconName = (type, issue) => {
   return 'git-pull-request';
 };
 
-export const IssueListItem = ({ type, issue, navigation, locale }: Props) => (
-  <TouchableHighlight
-    style={issue.state === 'closed' && styles.closedIssue}
-    onPress={() =>
-      navigation.navigate('Issue', {
-        issue,
-        isPR: !!issue.pull_request,
-        locale,
-      })}
-    underlayColor={colors.greyLight}
-  >
-    <View style={styles.container}>
-      <ListItem
-        containerStyle={styles.listItemContainer}
-        title={issue.title}
-        subtitle={
-          issue.state === 'open'
-            ? translate('issue.main.openIssueSubTitle', locale, {
-                number: issue.number,
-                user: issue.user.login,
-                time: relativeTimeToNow(issue.created_at),
-              })
-            : translate('issue.main.closedIssueSubTitle', locale, {
-                number: issue.number,
-                user: issue.user.login,
-                time: relativeTimeToNow(issue.closed_at),
-              })
-        }
-        leftIcon={{
-          name: getIconName(type, issue),
-          size: 36,
-          color: issue.state === 'open' ? colors.green : colors.red,
-          type: 'octicon',
-        }}
-        hideChevron
-        titleStyle={styles.title}
-        subtitleStyle={styles.subtitle}
-      />
-      <View style={styles.commentsContainer}>
-        <Icon name="comment" type="octicon" size={18} color={colors.grey} />
-        <Text style={styles.comments}>{issue.comments}</Text>
+export const IssueListItem = withI18n()(
+  ({ type, issue, navigation, i18n }: Props) => (
+    <TouchableHighlight
+      style={issue.state === 'closed' && styles.closedIssue}
+      onPress={() =>
+        navigation.navigate('Issue', {
+          issue,
+          isPR: !!issue.pull_request,
+        })
+      }
+      underlayColor={colors.greyLight}
+    >
+      <View style={styles.container}>
+        <ListItem
+          containerStyle={styles.listItemContainer}
+          title={issue.title}
+          subtitle={
+            issue.state === 'open'
+              ? i18n.t`#${issue.number} opened ${relativeTimeToNow(
+                  issue.created_at,
+                  i18n
+                )} ago by ${issue.user.login}`
+              : i18n.t`#${issue.number} by ${
+                  issue.user.login
+                } was closed ${relativeTimeToNow(issue.created_at, i18n)} ago`
+          }
+          leftIcon={{
+            name: getIconName(type, issue),
+            size: 36,
+            color: issue.state === 'open' ? colors.green : colors.red,
+            type: 'octicon',
+          }}
+          hideChevron
+          titleStyle={styles.title}
+          subtitleStyle={styles.subtitle}
+        />
+        <View style={styles.commentsContainer}>
+          <Icon name="comment" type="octicon" size={18} color={colors.grey} />
+          <Text style={styles.comments}>{issue.comments}</Text>
+        </View>
       </View>
-    </View>
-  </TouchableHighlight>
+    </TouchableHighlight>
+  )
 );

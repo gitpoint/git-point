@@ -1,16 +1,11 @@
 {
-  "presets": [
-    "react-native",
-    "flow"
-  ],
+  "presets": ["react-native", "flow", "@lingui/babel-preset-react"],
   "retainLines": true,
   "plugins": [
     [
       "module-resolver",
       {
-        "root": [
-          "./src"
-        ],
+        "root": ["./src"],
         "alias": {
           "api": "api",
           "auth": "auth",

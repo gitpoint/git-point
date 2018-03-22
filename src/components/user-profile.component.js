@@ -1,9 +1,9 @@
 /* eslint-disable no-prototype-builtins */
 import React, { Component } from 'react';
 import { colors, fonts, normalize } from 'config';
-import { translate } from 'utils';
 import { ImageZoom } from 'components';
 import styled, { css } from 'styled-components';
+import { withI18n, Trans } from '@lingui/react';
 
 type Props = {
   type: string,
@@ -12,7 +12,7 @@ type Props = {
   starCount: string,
   isFollowing: boolean,
   isFollower: boolean,
-  locale: string,
+  i18n: Object,
   navigation: Object,
 };
 
@@ -97,7 +97,7 @@ const maxLoadingConstraints = {
   maxStars: 15,
 };
 
-export class UserProfile extends Component {
+class UserProfileComponent extends Component {
   props: Props;
 
   getUserUri = () => {
@@ -117,7 +117,7 @@ export class UserProfile extends Component {
       starCount,
       isFollowing,
       isFollower,
-      locale,
+      i18n,
       navigation,
     } = this.props;
 
@@ -140,7 +140,7 @@ export class UserProfile extends Component {
                 nativeId="touchable-repository-list"
                 onPress={() =>
                   navigation.navigate('RepositoryList', {
-                    title: translate('user.repositoryList.title', locale),
+                    title: i18n.t`Repositories`,
                     user,
                     repoCount: Math.min(
                       maxLoadingConstraints.maxPublicRepos,
@@ -154,7 +154,9 @@ export class UserProfile extends Component {
                     ? user.public_repos + (user.total_private_repos || 0)
                     : ' '}
                 </UnitNumber>
-                <UnitText>{translate('common.repositories', locale)}</UnitText>
+                <UnitText>
+                  <Trans>Repositories</Trans>
+                </UnitText>
               </Unit>
 
               {type !== 'org' && (
@@ -162,10 +164,7 @@ export class UserProfile extends Component {
                   nativeId="touchable-star-count-list"
                   onPress={() =>
                     navigation.navigate('StarredRepositoryList', {
-                      title: translate(
-                        'user.starredRepositoryList.title',
-                        locale
-                      ),
+                      title: i18n.t`Stars`,
                       user,
                       repoCount: Math.min(
                         maxLoadingConstraints.maxStars,
@@ -178,7 +177,7 @@ export class UserProfile extends Component {
                     {!isNaN(parseInt(starCount, 10)) ? starCount : ' '}
                   </UnitNumber>
                   <UnitText>
-                    {translate('user.starredRepositoryList.text', locale)}
+                    <Trans>Stars</Trans>
                   </UnitText>
                 </Unit>
               )}
@@ -188,7 +187,7 @@ export class UserProfile extends Component {
                   nativeId="touchable-followers-list"
                   onPress={() =>
                     navigation.navigate('FollowerList', {
-                      title: translate('user.followers.title', locale),
+                      title: i18n.t`Followers`,
                       user,
                       followerCount: Math.min(
                         maxLoadingConstraints.maxFollowers,
@@ -203,12 +202,12 @@ export class UserProfile extends Component {
                       : ' '}
                   </UnitNumber>
                   <UnitText>
-                    {translate('user.followers.text', locale)}
+                    <Trans>Followers</Trans>
                   </UnitText>
                   {isFollowing && (
                     <UnitStatusWrapper>
                       <UnitStatus>
-                        {translate('user.following.followingYou', locale)}
+                        <Trans>Following</Trans>
                       </UnitStatus>
                     </UnitStatusWrapper>
                   )}
@@ -220,7 +219,7 @@ export class UserProfile extends Component {
                   nativeId="touchable-following-list"
                   onPress={() =>
                     navigation.navigate('FollowingList', {
-                      title: translate('user.following.title', locale),
+                      title: i18n.t`Following`,
                       user,
                       followingCount: Math.min(
                         maxLoadingConstraints.maxFollowing,
@@ -235,12 +234,12 @@ export class UserProfile extends Component {
                       : ' '}
                   </UnitNumber>
                   <UnitText>
-                    {translate('user.following.text', locale)}
+                    <Trans>Following</Trans>
                   </UnitText>
                   {isFollower && (
                     <UnitStatusWrapper>
                       <UnitStatus>
-                        {translate('user.followers.followsYou')}
+                        <Trans>Follows you</Trans>
                       </UnitStatus>
                     </UnitStatusWrapper>
                   )}
@@ -253,3 +252,5 @@ export class UserProfile extends Component {
     );
   }
 }
+
+export const UserProfile = withI18n()(UserProfileComponent);

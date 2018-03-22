@@ -11,14 +11,14 @@ import {
   Platform,
 } from 'react-native';
 import { ButtonGroup, Icon } from 'react-native-elements';
+import { withI18n } from '@lingui/react';
+
 import {
   ViewContainer,
   IssueListItem,
   LoadingContainer,
   SearchBar,
 } from 'components';
-
-import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
 import {
   searchOpenRepoIssues,
@@ -26,7 +26,6 @@ import {
 } from '../repository.action';
 
 const mapStateToProps = state => ({
-  locale: state.auth.locale,
   repository: state.repository.repository,
   searchedOpenIssues: state.repository.searchedOpenIssues,
   searchedClosedIssues: state.repository.searchedClosedIssues,
@@ -96,8 +95,8 @@ const styles = StyleSheet.create({
 });
 
 class IssueList extends Component {
-  static navigationOptions = ({ navigation }) => {
-    const { state, navigate } = navigation;
+  static navigationOptions = ({ navigation, i18n }) => {
+    const { navigate } = navigation;
 
     return {
       headerRight: (
@@ -109,15 +108,16 @@ class IssueList extends Component {
           underlayColor={colors.transparent}
           onPress={() =>
             navigate('NewIssue', {
-              title: translate('issue.newIssue.title', state.params.locale),
-            })}
+              title: i18n.t`New Issue`,
+            })
+          }
         />
       ),
     };
   };
 
   props: {
-    locale: string,
+    i18n: Object,
     repository: Object,
     searchedOpenIssues: Array,
     searchedClosedIssues: Array,
@@ -144,14 +144,6 @@ class IssueList extends Component {
       searchStart: false,
       searchFocus: false,
     };
-  }
-
-  componentDidMount() {
-    const { locale, navigation } = this.props;
-
-    navigation.setParams({
-      locale,
-    });
   }
 
   getList = () => {
@@ -218,13 +210,12 @@ class IssueList extends Component {
       type={this.props.navigation.state.params.type}
       issue={item}
       navigation={this.props.navigation}
-      locale={this.props.locale}
     />
   );
 
   render() {
     const {
-      locale,
+      i18n,
       searchedOpenIssues,
       searchedClosedIssues,
       isPendingSearchOpenIssues,
@@ -243,7 +234,8 @@ class IssueList extends Component {
                 showsCancelButton={searchFocus}
                 onFocus={() => this.setState({ searchFocus: true })}
                 onCancelButtonPress={() =>
-                  this.setState({ searchStart: false, query: '' })}
+                  this.setState({ searchStart: false, query: '' })
+                }
                 onSearchButtonPress={text => {
                   this.search(text);
                 }}
@@ -255,10 +247,7 @@ class IssueList extends Component {
           <ButtonGroup
             onPress={this.switchQueryType}
             selectedIndex={searchType}
-            buttons={[
-              translate('repository.issueList.openButton', locale),
-              translate('repository.issueList.closedButton', locale),
-            ]}
+            buttons={[i18n.t`Open`, i18n.t`Closed`]}
             textStyle={styles.buttonGroupText}
             selectedTextStyle={styles.buttonGroupTextSelected}
             containerStyle={styles.buttonGroupContainer}
@@ -269,9 +258,7 @@ class IssueList extends Component {
           searchType === 0 && (
             <LoadingContainer
               animating={isPendingSearchOpenIssues && searchType === 0}
-              text={translate('repository.issueList.searchingMessage', locale, {
-                query,
-              })}
+              text={i18n.t`Searching for ${query}`}
               style={styles.marginSpacing}
             />
           )}
@@ -280,9 +267,7 @@ class IssueList extends Component {
           searchType === 1 && (
             <LoadingContainer
               animating={isPendingSearchClosedIssues && searchType === 1}
-              text={translate('repository.issueList.searchingMessage', locale, {
-                query,
-              })}
+              text={i18n.t`Searching for ${query}`}
               style={styles.marginSpacing}
             />
           )}
@@ -305,7 +290,7 @@ class IssueList extends Component {
           searchType === 0 && (
             <View style={styles.marginSpacing}>
               <Text style={styles.searchTitle}>
-                {translate('repository.issueList.noOpenIssues', locale)}
+                {i18n.t`No open issues found!`}
               </Text>
             </View>
           )}
@@ -316,7 +301,7 @@ class IssueList extends Component {
           searchType === 1 && (
             <View style={styles.marginSpacing}>
               <Text style={styles.searchTitle}>
-                {translate('repository.issueList.noClosedIssues', locale)}
+                {i18n.t`No closed issues found!`}
               </Text>
             </View>
           )}
@@ -326,5 +311,5 @@ class IssueList extends Component {
 }
 
 export const IssueListScreen = connect(mapStateToProps, mapDispatchToProps)(
-  IssueList
+  withI18n()(IssueList)
 );

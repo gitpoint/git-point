@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
+import { withI18n } from '@lingui/react';
 
 import {
   ViewContainer,
@@ -21,7 +22,7 @@ import {
   IssueEventListItem,
 } from 'components';
 import { v3 } from 'api';
-import { translate, formatEventsToRender, openURLInView } from 'utils';
+import { formatEventsToRender, openURLInView } from 'utils';
 import { colors } from 'config';
 import { getRepository, getContributors } from 'repository';
 import {
@@ -33,7 +34,6 @@ import {
 } from '../issue.action';
 
 const mapStateToProps = state => ({
-  locale: state.auth.locale,
   authUser: state.auth.user,
   repository: state.repository.repository,
   contributors: state.repository.contributors,
@@ -77,7 +77,7 @@ const compareCreatedAt = (a, b) => {
 };
 
 class Issue extends Component {
-  static navigationOptions = ({ navigation }) => {
+  static navigationOptions = ({ navigation, i18n }) => {
     const getHeaderIcon = () => {
       const { state, navigate } = navigation;
 
@@ -91,7 +91,7 @@ class Issue extends Component {
             underlayColor={colors.transparent}
             onPress={() =>
               navigate('IssueSettings', {
-                title: translate('issue.settings.title', state.params.locale),
+                title: i18n.t`Settings`,
                 issue: state.params.issue,
               })
             }
@@ -124,6 +124,7 @@ class Issue extends Component {
     deleteIssueComment: Function,
     diff: string,
     issue: Object,
+    i18n: Object,
     pr: Object,
     isMerged: boolean,
     authUser: Object,
@@ -139,7 +140,6 @@ class Issue extends Component {
     isDeletingComment: boolean,
     isPendingContributors: boolean,
     // isPostingComment: boolean,
-    locale: string,
     navigation: Object,
   };
 
@@ -232,10 +232,9 @@ class Issue extends Component {
   getContributorsLink = repository => `${repository}/contributors`;
 
   setNavigationParams = () => {
-    const { navigation, locale, repository } = this.props;
+    const { navigation, repository } = this.props;
 
     navigation.setParams({
-      locale,
       userHasPushPermission:
         repository.permissions.admin || repository.permissions.push,
     });
@@ -271,11 +270,11 @@ class Issue extends Component {
   };
 
   editComment = comment => {
-    const { state, navigate } = this.props.navigation;
-    const { repository } = this.props;
+    const { navigate } = this.props.navigation;
+    const { i18n, repository } = this.props;
 
     navigate('EditIssueComment', {
-      title: translate('issue.comment.editCommentTitle', state.params.locale),
+      title: i18n.t`Edit Comment`,
       comment,
       repository,
     });
@@ -293,7 +292,6 @@ class Issue extends Component {
       isMerged,
       isPendingDiff,
       isPendingCheckMerge,
-      locale,
       navigation,
     } = this.props;
 
@@ -308,14 +306,13 @@ class Issue extends Component {
         onRepositoryPress={url => this.onRepositoryPress(url)}
         onLinkPress={node => this.onLinkPress(node)}
         userHasPushPermission={navigation.state.params.userHasPushPermission}
-        locale={locale}
         navigation={navigation}
       />
     );
   };
 
   renderItem = ({ item }) => {
-    const { repository, locale, navigation } = this.props;
+    const { repository, navigation } = this.props;
 
     if (item.header) {
       return this.renderHeader();
@@ -337,7 +334,6 @@ class Issue extends Component {
         onLinkPress={node => this.onLinkPress(node)}
         onDeletePress={this.deleteComment}
         onEditPress={this.editComment}
-        locale={locale}
         navigation={navigation}
       />
     );
@@ -353,7 +349,7 @@ class Issue extends Component {
       isPendingContributors,
       isPendingIssue,
       isDeletingComment,
-      locale,
+      i18n,
       navigation,
     } = this.props;
 
@@ -380,7 +376,7 @@ class Issue extends Component {
       ...new Set([...participantNames, ...contributorNames]),
     ].filter(item => !!item);
 
-    const issuesActions = [translate('common.openInBrowser', locale)];
+    const issuesActions = [i18n.t`Open in Browser`];
 
     return (
       <ViewContainer>
@@ -418,7 +414,6 @@ class Issue extends Component {
                   navigation.state.params.userHasPushPermission
                 }
                 issueLocked={issue.locked}
-                locale={locale}
                 onSubmit={this.postComment}
               />
             </KeyboardAvoidingView>
@@ -428,8 +423,8 @@ class Issue extends Component {
           ref={o => {
             this.ActionSheet = o;
           }}
-          title={translate('issue.main.issueActions', locale)}
-          options={[...issuesActions, translate('common.cancel', locale)]}
+          title={i18n.t`Issue Actions`}
+          options={[...issuesActions, i18n.t`Cancel`]}
           cancelButtonIndex={1}
           onPress={this.handleActionSheetPress}
         />
@@ -438,4 +433,6 @@ class Issue extends Component {
   }
 }
 
-export const IssueScreen = connect(mapStateToProps, mapDispatchToProps)(Issue);
+export const IssueScreen = connect(mapStateToProps, mapDispatchToProps)(
+  withI18n()(Issue)
+);

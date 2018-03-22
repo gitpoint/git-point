@@ -17,17 +17,17 @@ import { Button, Icon } from 'react-native-elements';
 import Swiper from 'react-native-swiper';
 import queryString from 'query-string';
 import CookieManager from 'react-native-cookies';
+import { withI18n, Trans } from '@lingui/react';
 
 import { ViewContainer, ErrorScreen } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { CLIENT_ID } from 'api';
 import { auth, getUser } from 'auth';
-import { translate, resetNavigationTo } from 'utils';
+import { resetNavigationTo } from 'utils';
 
 let stateRandom = Math.random().toString();
 
 const mapStateToProps = state => ({
-  locale: state.auth.locale,
   isLoggingIn: state.auth.isLoggingIn,
   isAuthenticated: state.auth.isAuthenticated,
   hasInitialUser: state.auth.hasInitialUser,
@@ -154,7 +154,7 @@ class Login extends Component {
     isAuthenticated: boolean,
     isLoggingIn: boolean,
     hasInitialUser: boolean,
-    locale: string,
+    i18n: Object,
     auth: Function,
     getUser: Function,
     navigation: Object,
@@ -168,7 +168,7 @@ class Login extends Component {
       modalVisible: false,
       cancelDisabled: false,
       showLoader: true,
-      loaderText: translate('auth.login.connectingToGitHub', this.locale),
+      loaderText: this.props.i18n.t`Connecting to GitHub...`,
       asyncStorageChecked: false,
     };
   }
@@ -217,6 +217,10 @@ class Login extends Component {
   };
 
   handleOpenURL = ({ url }) => {
+    /* FIXME: can't call i18n.t inside the if (url ..) block. Lingui bug? */
+    const { i18n } = this.props;
+    const loaderText = i18n.t`Preparing GitPoint...`;
+
     if (url && url.substring(0, 11) === 'gitpoint://') {
       const [, queryStringFromUrl] = url.match(/\?(.*)/);
       const { state, code } = queryString.parse(queryStringFromUrl);
@@ -226,7 +230,7 @@ class Login extends Component {
         this.setState({
           code,
           showLoader: true,
-          loaderText: translate('auth.login.preparingGitPoint', this.locale),
+          loaderText,
         });
 
         stateRandom = Math.random().toString();
@@ -258,7 +262,7 @@ class Login extends Component {
   }
 
   render() {
-    const { locale, isLoggingIn, hasInitialUser } = this.props;
+    const { i18n, isLoggingIn, hasInitialUser } = this.props;
 
     return (
       <ViewContainer>
@@ -274,10 +278,12 @@ class Login extends Component {
                 source={require('../../assets/logo.png')}
               />
               <Text style={styles.title}>
-                {translate('auth.login.welcomeTitle', locale)}
+                <Trans>Welcome to GitPoint</Trans>
               </Text>
               <Text style={styles.message}>
-                {translate('auth.login.welcomeMessage', locale)}
+                <Trans>
+                  The most feature-rich GitHub client that is 100% free
+                </Trans>
               </Text>
             </View>
             <View style={[styles.slide, styles.slide2]}>
@@ -289,10 +295,13 @@ class Login extends Component {
                 type="octicon"
               />
               <Text style={styles.title}>
-                {translate('auth.login.notificationsTitle', locale)}
+                <Trans>Control notifications</Trans>
               </Text>
               <Text style={styles.message}>
-                {translate('auth.login.notificationsMessage', locale)}
+                <Trans>
+                  View and control all of your unread and participating
+                  notifications
+                </Trans>
               </Text>
             </View>
             <View style={[styles.slide, styles.slide3]}>
@@ -305,10 +314,12 @@ class Login extends Component {
                 type="octicon"
               />
               <Text style={styles.title}>
-                {translate('auth.login.reposTitle', locale)}
+                <Trans>Repositories and Users</Trans>
               </Text>
               <Text style={styles.message}>
-                {translate('auth.login.reposMessage', locale)}
+                <Trans>
+                  Easily obtain repository, user and organization information
+                </Trans>
               </Text>
             </View>
             <View style={[styles.slide, styles.slide4]}>
@@ -321,10 +332,12 @@ class Login extends Component {
                 type="octicon"
               />
               <Text style={styles.title}>
-                {translate('auth.login.issuesTitle', locale)}
+                <Trans>Issues and Pull Requests</Trans>
               </Text>
               <Text style={styles.message}>
-                {translate('auth.login.issuesMessage', locale)}
+                <Trans>
+                  Communicate on conversations, merge pull requests and more
+                </Trans>
               </Text>
             </View>
           </Swiper>
@@ -333,7 +346,7 @@ class Login extends Component {
           <View style={styles.signInContainer}>
             <Button
               raised
-              title={translate('auth.login.signInButton', locale)}
+              title={i18n.t`SIGN IN`}
               containerViewStyle={styles.buttonContainer}
               buttonStyle={styles.button}
               textStyle={styles.buttonText}
@@ -354,7 +367,7 @@ class Login extends Component {
                   source={{
                     uri: `https://github.com/login/oauth/authorize?response_type=token&client_id=${CLIENT_ID}&redirect_uri=gitpoint://welcome&scope=user%20repo&state=${stateRandom}`,
                   }}
-                  renderError={() => <ErrorScreen locale={locale} />}
+                  renderError={() => <ErrorScreen />}
                   onLoadStart={e => this.toggleCancelButton(e, true)}
                   onLoadEnd={e => this.toggleCancelButton(e, false)}
                   onNavigationStateChange={e => this.onNavigationStateChange(e)}
@@ -365,7 +378,7 @@ class Login extends Component {
               </View>
               <View style={styles.miniSection}>
                 <Button
-                  title={translate('auth.login.cancel', locale)}
+                  title={i18n.t`CANCEL`}
                   buttonStyle={styles.button}
                   disabled={this.state.cancelDisabled}
                   textStyle={styles.buttonText}
@@ -393,4 +406,6 @@ class Login extends Component {
   }
 }
 
-export const LoginScreen = connect(mapStateToProps, mapDispatchToProps)(Login);
+export const LoginScreen = connect(mapStateToProps, mapDispatchToProps)(
+  withI18n()(Login)
+);

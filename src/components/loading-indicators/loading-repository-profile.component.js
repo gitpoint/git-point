@@ -3,9 +3,10 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Animated } from 'react-native';
 import { Icon } from 'react-native-elements';
+import { Trans } from '@lingui/react';
 
 import { colors, fonts, normalize } from 'config';
-import { loadingAnimation, translate } from 'utils';
+import { loadingAnimation } from 'utils';
 
 const styles = StyleSheet.create({
   container: {
@@ -58,10 +59,6 @@ const styles = StyleSheet.create({
 });
 
 export class LoadingRepositoryProfile extends Component {
-  props: {
-    locale: string,
-  };
-
   state: {
     fadeAnimValue: Animated,
   };
@@ -78,8 +75,6 @@ export class LoadingRepositoryProfile extends Component {
   }
 
   render() {
-    const { locale } = this.props;
-
     return (
       <View style={styles.container}>
         <View>
@@ -96,13 +91,13 @@ export class LoadingRepositoryProfile extends Component {
           <View style={styles.details}>
             <View style={styles.unit}>
               <Text style={styles.unitText}>
-                {translate('repository.main.starsTitle', locale)}
+                <Trans>Stars</Trans>
               </Text>
             </View>
 
             <View style={styles.unit}>
               <Text style={styles.unitText}>
-                {translate('repository.main.forksTitle', locale)}
+                <Trans>Forks</Trans>
               </Text>
             </View>
           </View>

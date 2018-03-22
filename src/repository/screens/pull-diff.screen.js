@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 import { View, ScrollView, Text, FlatList, StyleSheet } from 'react-native';
 import { Card } from 'react-native-elements';
 import Parse from 'parse-diff';
+import { Trans } from '@lingui/react';
 
 import { ViewContainer, DiffBlocks, CodeLine } from 'components';
-import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
 
 const styles = StyleSheet.create({
@@ -80,7 +80,7 @@ class PullDiff extends Component {
 
   renderHeader = () => {
     const { navigation } = this.props;
-    const { locale, diff } = navigation.state.params;
+    const { diff } = navigation.state.params;
 
     const filesChanged = Parse(diff);
 
@@ -95,9 +95,7 @@ class PullDiff extends Component {
     return (
       <View style={styles.header}>
         <Text style={[styles.headerItem, styles.headerText]}>
-          {translate('repository.pullDiff.numFilesChanged', locale, {
-            numFilesChanged: filesChanged.length,
-          })}
+          <Trans>{filesChanged.length} files</Trans>
         </Text>
 
         <DiffBlocks
@@ -111,8 +109,6 @@ class PullDiff extends Component {
   };
 
   renderItem = ({ item }) => {
-    const { navigation } = this.props;
-    const { locale } = navigation.state.params;
     const filename = item.deleted ? item.from : item.to;
     const chunks = item.chunks.map((chunk, index) => {
       return (
@@ -162,7 +158,7 @@ class PullDiff extends Component {
           {item.new && (
             <Text style={styles.fileTitle}>
               <Text style={styles.newIndicator}>
-                {translate('repository.pullDiff.new', locale)}
+                <Trans>NEW</Trans>
                 {'\n'}
               </Text>
               <Text style={[styles.fileTitle, styles.codeStyle]}>
@@ -174,7 +170,7 @@ class PullDiff extends Component {
           {item.deleted && (
             <Text style={styles.fileTitle}>
               <Text style={styles.deletedIndicator}>
-                {translate('repository.pullDiff.deleted', locale)}
+                <Trans>DELETED</Trans>
                 {'\n'}
               </Text>
               <Text style={[styles.fileTitle, styles.codeStyle]}>
@@ -200,7 +196,7 @@ class PullDiff extends Component {
           !item.deleted &&
           item.from !== item.to && (
             <Text style={styles.noChangesMessage}>
-              {translate('repository.pullDiff.fileRenamed', locale)}
+              <Trans>File renamed without any changes</Trans>
             </Text>
           )}
       </Card>
