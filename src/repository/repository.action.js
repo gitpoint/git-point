@@ -3,9 +3,10 @@ import {
   fetchSearch,
   fetchChangeStarStatusRepo,
   fetchForkRepo,
+  fetchRepoTopics,
+  isWatchingRepo,
   watchRepo,
   unWatchRepo,
-  isWatchingRepo,
   v3,
 } from 'api';
 import {
@@ -14,6 +15,7 @@ import {
   GET_REPOSITORY_CONTENTS,
   GET_REPOSITORY_FILE,
   GET_REPOSITORY_ISSUES,
+  GET_REPOSITORY_TOPICS,
   GET_REPO_README_STATUS,
   GET_REPO_STARRED_STATUS,
   FORK_REPO_STATUS,
@@ -34,7 +36,14 @@ export const getRepository = url => {
     dispatch({ type: GET_REPOSITORY.PENDING });
 
     return v3
-      .getJson(url, accessToken)
+      .get(url, accessToken)
+      .then(response => {
+        return response
+          .json()
+          .then(
+            json => (response.status === 200 ? json : Promise.reject(json))
+          );
+      })
       .then(data => {
         dispatch({
           type: GET_REPOSITORY.SUCCESS,
@@ -211,6 +220,28 @@ export const checkRepoSubscribed = url => {
   };
 };
 
+export const getTopics = (owner, repo) => {
+  return (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: GET_REPOSITORY_TOPICS.PENDING });
+
+    fetchRepoTopics(owner, repo, accessToken)
+      .then(data => {
+        dispatch({
+          type: GET_REPOSITORY_TOPICS.SUCCESS,
+          payload: data.names,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: GET_REPOSITORY_TOPICS.ERROR,
+          payload: error,
+        });
+      });
+  };
+};
+
 export const unSubscribeToRepo = (owner, repo) => (dispatch, getState) => {
   const accessToken = getState().auth.accessToken;
 
@@ -243,6 +274,7 @@ export const getRepositoryInfo = url => {
         '?state=all&per_page=100'
       );
 
+      dispatch(getTopics(repo.owner.login, repo.name));
       dispatch(getContributors(contributorsUrl));
       dispatch(getIssues(issuesUrl));
       dispatch(

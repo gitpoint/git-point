@@ -20,6 +20,7 @@ export const de = {
         'Unterhalte dich in Konversationen, merge Pull Requests und vieles mehr',
       signInButton: 'EINLOGGEN',
     },
+    networkError: 'Oops! it seems that you are not connected to the internet!',
     welcome: {
       welcomeTitle: 'Willkommen bei GitPoint',
     },
@@ -163,6 +164,10 @@ export const de = {
     repositoryList: {
       title: 'Repositories',
     },
+    starredRepositoryList: {
+      title: 'Stars',
+      text: 'Stars',
+    },
     followers: {
       title: 'Follower',
       text: 'Follower',
@@ -176,13 +181,15 @@ export const de = {
   },
   repository: {
     main: {
+      notFoundRepo: 'Repository is not found',
+      unknownLanguage: 'Unknown',
       shareRepositoryTitle: 'Teile {{repoName}}',
       shareRepositoryMessage:
         'Schau mal bei {{repoName}} auf GitHub vorbei. {{repoUrl}}',
       repoActions: 'Repository Aktionen',
       forkAction: 'Fork',
       starAction: 'Star',
-      unstarAction: 'Unstart',
+      unstarAction: 'Unstar',
       shareAction: 'Teilen',
       unwatchAction: 'Unwatch',
       watchAction: 'Watch',
@@ -206,6 +213,7 @@ export const de = {
       starred: 'Starred',
       watching: 'Watching',
       watchers: 'Watchers',
+      topicsTitle: 'TOPICS',
     },
     codeList: {
       title: 'Code',
@@ -329,18 +337,20 @@ export const de = {
     ok: 'OK',
     submit: 'Bestätigen',
     relativeTime: {
-      past: '%s',
-      s: '%ds',
-      m: '%dm',
-      mm: '%dm',
-      h: '%dh',
-      hh: '%dh',
-      d: '%dd',
-      dd: '%dd',
-      M: '%dmo',
-      MM: '%dmo',
-      y: '%dy',
-      yy: '%dy',
+      lessThanXSeconds: '{{count}}s',
+      xSeconds: '{{count}}s',
+      halfAMinute: '30s',
+      lessThanXMinutes: '{{count}}m',
+      xMinutes: '{{count}}m',
+      aboutXHours: '{{count}}h',
+      xHours: '{{count}}h',
+      xDays: '{{count}}d',
+      aboutXMonths: '{{count}}mo',
+      xMonths: '{{count}}mo',
+      aboutXYears: '{{count}}y',
+      xYears: '{{count}}y',
+      overXYears: '{{count}}y',
+      almostXYears: '{{count}}y',
     },
     abbreviations: {
       thousand: 't',

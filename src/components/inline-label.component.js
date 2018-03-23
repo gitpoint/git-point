@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 
 import { fonts, normalize } from 'config';
-import { getFontColorByBackground } from 'utils';
+import { emojifyText, getFontColorByBackground } from 'utils';
 
 const InlineLabelText = styled.Text`
   font-size: ${normalize(10)};
-  ${{ ...fonts.fontPrimarySemiBold }};
-  padding-horizontal: 5;
-  margin-top: 2;
-  margin-left: 2;
-  margin-right: 2;
-  margin-bottom: 2;
+  ${fonts.fontPrimarySemiBold};
+  padding-left: 5;
+  padding-right: 5;
+  margin: 2px;
   border-width: 1;
   overflow: hidden;
   border-radius: 3;
@@ -36,7 +34,7 @@ export class InlineLabel extends Component {
         color={color}
         borderColor={color}
       >
-        {name}
+        {emojifyText(name)}
       </InlineLabelText>
     );
   }

@@ -16,6 +16,7 @@ export const nl = {
       issuesMessage: 'Neem deel aan conversaties, merge pull requests en meer',
       signInButton: 'AANMELDEN',
     },
+    networkError: 'Oops! it seems that you are not connected to the internet!',
     welcome: {
       welcomeTitle: 'Welkom bij GitPoint',
     },
@@ -158,6 +159,10 @@ export const nl = {
     repositoryList: {
       title: 'Repositories',
     },
+    starredRepositoryList: {
+      title: 'Sterren',
+      text: 'Sterren',
+    },
     followers: {
       title: 'Volgers',
       text: 'Volgers',
@@ -171,6 +176,8 @@ export const nl = {
   },
   repository: {
     main: {
+      notFoundRepo: 'Repository is not found',
+      unknownLanguage: 'Unknown',
       shareRepositoryTitle: 'Deel {{repoName}}',
       shareRepositoryMessage: 'Bekijk {{repoName}} op GitHub. {{repoUrl}}',
       repoActions: 'Repository Acties',
@@ -197,6 +204,7 @@ export const nl = {
       starsTitle: 'Sterren',
       forksTitle: 'Forks',
       forkedFromMessage: 'forked from',
+      topicsTitle: 'TOPICS',
       starred: 'Starred',
       watching: 'Watching',
       watchers: 'Watchers',
@@ -323,18 +331,20 @@ export const nl = {
     ok: 'OKE',
     submit: 'Versturen',
     relativeTime: {
-      past: '%s',
-      s: '%ds',
-      m: '%dm',
-      mm: '%dm',
-      h: '%dh',
-      hh: '%dh',
-      d: '%dd',
-      dd: '%dd',
-      M: '%dmo',
-      MM: '%dmo',
-      y: '%dy',
-      yy: '%dy',
+      lessThanXSeconds: '{{count}}s',
+      xSeconds: '{{count}}s',
+      halfAMinute: '30s',
+      lessThanXMinutes: '{{count}}m',
+      xMinutes: '{{count}}m',
+      aboutXHours: '{{count}}h',
+      xHours: '{{count}}h',
+      xDays: '{{count}}d',
+      aboutXMonths: '{{count}}mo',
+      xMonths: '{{count}}mo',
+      aboutXYears: '{{count}}y',
+      xYears: '{{count}}y',
+      overXYears: '{{count}}y',
+      almostXYears: '{{count}}y',
     },
     abbreviations: {
       thousand: 'k',

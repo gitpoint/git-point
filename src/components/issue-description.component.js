@@ -1,27 +1,19 @@
 import React, { Component } from 'react';
-import { StyleSheet, ActivityIndicator } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Parse from 'parse-diff';
-import moment from 'moment/min/moment-with-locales.min';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 
 import {
   StateBadge,
   MembersList,
-  LabelButton,
+  InlineLabel,
   DiffBlocks,
   Button,
 } from 'components';
-import { translate } from 'utils';
-import { colors, styledFonts, normalize } from 'config';
+import { translate, relativeTimeToNow } from 'utils';
+import { colors, fonts, normalize } from 'config';
 import { v3 } from 'api';
-
-const styles = StyleSheet.create({
-  badge: {
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-  },
-});
 
 const HeaderContainer = styled.View`
   flex-direction: row;
@@ -35,19 +27,32 @@ const ContainerBorderBottom = styled.View`
   border-bottom-color: ${colors.greyLight};
 `;
 
-const ListItemStyled = styled(ListItem)`
-  color: ${colors.primaryDark}
-  font-family: ${styledFonts.fontPrimarySemiBold}
-`;
+const RepoLink = styled(ListItem).attrs({
+  titleStyle: {
+    color: colors.primaryDark,
+    ...fonts.fontPrimarySemiBold,
+    fontSize: normalize(10),
+  },
+  leftIconContainerStyle: {
+    flex: 0,
+  },
+  containerStyle: {
+    borderBottomColor: colors.greyLight,
+    borderBottomWidth: 1,
+  },
+})``;
 
-const ListItemURL = ListItemStyled.extend`
-  font-size: ${normalize(10)};
-`;
-
-const ListItemIssueTitle = ListItemStyled.extend`
-  border-bottom-width: 0;
-  flex: 1;
-`;
+const IssueTitle = styled(ListItem).attrs({
+  titleStyle: {
+    color: colors.primaryDark,
+    ...fonts.fontPrimarySemiBold,
+  },
+  containerStyle: {
+    borderBottomWidth: 0,
+    flex: 1,
+  },
+  titleNumberOfLines: 0,
+})``;
 
 const DiffBlocksContainer = styled.View`
   flex-direction: row;
@@ -58,8 +63,7 @@ const DiffBlocksContainer = styled.View`
 `;
 
 const LabelButtonGroup = styled.View`
-  flex-wrap: wrap;
-  flex-direction: row;
+  flex-flow: row wrap;
   margin-left: 54;
   padding-bottom: 15;
 `;
@@ -70,11 +74,10 @@ const AssigneesSection = styled.View`
 `;
 
 const MergeButtonContainer = styled.View`
-  flex: 1;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding-vertical: 15;
+  padding-top: 15;
+  padding-bottom: 15;
 `;
 
 export class IssueDescription extends Component {
@@ -94,7 +97,7 @@ export class IssueDescription extends Component {
   renderLabelButtons = labels => {
     return labels
       .slice(0, 3)
-      .map(label => <LabelButton key={label.id} label={label} />);
+      .map(label => <InlineLabel key={label.id} label={label} />);
   };
 
   render() {
@@ -124,7 +127,7 @@ export class IssueDescription extends Component {
     return (
       <ContainerBorderBottom>
         {issue.repository_url && (
-          <ListItemURL
+          <RepoLink
             title={issue.repository_url.replace(`${v3.root}/repos/`, '')}
             leftIcon={{
               name: 'repo',
@@ -138,9 +141,9 @@ export class IssueDescription extends Component {
         )}
 
         <HeaderContainer>
-          <ListItemIssueTitle
+          <IssueTitle
             title={issue.title}
-            subtitle={moment(issue.created_at).fromNow()}
+            subtitle={relativeTimeToNow(issue.created_at)}
             leftIcon={{
               name: issue.pull_request ? 'git-pull-request' : 'issue-opened',
               size: 36,
@@ -154,7 +157,6 @@ export class IssueDescription extends Component {
             (issue.pull_request &&
               !isPendingCheckMerge && (
                 <StateBadge
-                  style={styles.badge}
                   issue={issue}
                   isMerged={isMerged && issue.pull_request}
                   locale={locale}

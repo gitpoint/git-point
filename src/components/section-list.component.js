@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 import { List, ListItem, Button } from 'react-native-elements';
+import styled from 'styled-components';
 
 import { colors, fonts } from 'config';
 
@@ -10,32 +11,50 @@ type Props = {
   children?: React.Element<*>,
   showButton: boolean,
   buttonTitle: string,
-  noOuterBorders: boolean,
   noItems: boolean,
   noItemsMessage: string,
   buttonAction: Function,
 };
 
-const styles = StyleSheet.create({
-  section: {
-    marginTop: 15,
+const Section = styled.View`
+  margin-top: 15;
+`;
+const Header = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+const SectionTitle = styled.Text`
+  color: ${colors.black};
+  padding: 15px;
+  ${fonts.fontPrimaryBold};
+`;
+const TitleView = styled.View`
+  padding: 15px;
+`;
+const StyledList = styled(List).attrs({
+  containerStyle: {
+    marginTop: 0,
+    borderBottomColor: colors.grey,
+    borderBottomWidth: 1,
   },
-  topHeader: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  sectionTitle: {
-    color: colors.black,
-    padding: 15,
-    ...fonts.fontPrimaryBold,
-  },
-  listTitle: {
+})``;
+const StyledListItem = styled(ListItem).attrs({
+  titleStyle: {
     color: colors.black,
     ...fonts.fontPrimary,
   },
-  button: {
+})``;
+const LoadingIcon = styled(ActivityIndicator)`
+  margin: 20px 0;
+`;
+const StyledButton = styled(Button).attrs({
+  textStyle: {
+    ...fonts.fontPrimaryBold,
+  },
+  fontSize: 13,
+  color: colors.primaryDark,
+  buttonStyle: {
     backgroundColor: colors.white,
     borderColor: colors.primaryDark,
     borderWidth: 1,
@@ -43,17 +62,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 10,
   },
-  list: {
-    marginTop: 0,
-  },
-  noOuterBorders: {
-    borderTopWidth: 0,
-    borderBottomWidth: 0,
-  },
-  loadingIcon: {
-    marginVertical: 20,
-  },
-});
+})``;
 
 export const SectionList = ({
   loading,
@@ -61,7 +70,6 @@ export const SectionList = ({
   showButton,
   buttonTitle,
   buttonAction,
-  noOuterBorders,
   noItems,
   noItemsMessage,
   children,
@@ -69,17 +77,9 @@ export const SectionList = ({
   let listDisplay;
 
   if (loading) {
-    listDisplay = (
-      <ActivityIndicator animating={loading} style={styles.loadingIcon} />
-    );
+    listDisplay = <LoadingIcon animating={loading} />;
   } else if (noItems) {
-    listDisplay = (
-      <ListItem
-        title={noItemsMessage}
-        titleStyle={styles.listTitle}
-        hideChevron
-      />
-    );
+    listDisplay = <StyledListItem title={noItemsMessage} hideChevron />;
   } else {
     listDisplay = children;
   }
@@ -87,34 +87,23 @@ export const SectionList = ({
   let sectionTitle = '';
 
   if (typeof title === 'string') {
-    sectionTitle = <Text style={styles.sectionTitle}>{title}</Text>;
+    sectionTitle = <SectionTitle>{title}</SectionTitle>;
   } else {
-    sectionTitle = <View style={{ padding: 15 }}>{title}</View>;
+    sectionTitle = <TitleView>{title}</TitleView>;
   }
 
   return (
-    <View style={styles.section}>
-      <View style={styles.topHeader}>
+    <Section>
+      <Header>
         {sectionTitle}
 
         {showButton &&
           !loading && (
-            <Button
-              title={buttonTitle}
-              textStyle={fonts.fontPrimarySemiBold}
-              fontSize={13}
-              color={showButton ? colors.primaryDark : colors.white}
-              buttonStyle={styles.button}
-              onPress={buttonAction}
-            />
+            <StyledButton title={buttonTitle} onPress={buttonAction} />
           )}
-      </View>
-      <List
-        containerStyle={[styles.list, noOuterBorders && styles.noOuterBorders]}
-      >
-        {listDisplay}
-      </List>
-    </View>
+      </Header>
+      <StyledList>{listDisplay}</StyledList>
+    </Section>
   );
 };
 

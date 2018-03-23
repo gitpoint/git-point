@@ -17,6 +17,7 @@ export const gl = {
         'Comunícate en conversas, efectúa merge de pull requests e moito máis',
       signInButton: 'ENTRAR',
     },
+    networkError: 'Oops! it seems that you are not connected to the internet!',
     welcome: {
       welcomeTitle: 'Benvido a GitPoint',
     },
@@ -160,6 +161,10 @@ export const gl = {
     repositoryList: {
       title: 'Repositorios',
     },
+    starredRepositoryList: {
+      title: 'Favoritos',
+      text: 'Favoritos',
+    },
     followers: {
       title: 'Seguidores',
       text: 'Seguidores',
@@ -173,6 +178,8 @@ export const gl = {
   },
   repository: {
     main: {
+      notFoundRepo: 'Repository is not found',
+      unknownLanguage: 'Unknown',
       shareRepositoryTitle: 'Compartir {{repoName}}',
       shareRepositoryMessage: 'Revisa {{repoName}} en GitHub. {{repoUrl}}',
       repoActions: 'Accións do Repositorio',
@@ -202,6 +209,7 @@ export const gl = {
       starred: 'Engadido a favoritos',
       watching: 'Vixiando',
       watchers: 'Vixiantes',
+      topicsTitle: 'TOPICS',
     },
     codeList: {
       title: 'Código',
@@ -324,18 +332,20 @@ export const gl = {
     ok: 'OK',
     submit: 'Enviar',
     relativeTime: {
-      past: '%s',
-      s: '%ds',
-      m: '%dm',
-      mm: '%dm',
-      h: '%dh',
-      hh: '%dh',
-      d: '%dd',
-      dd: '%dd',
-      M: '%dmo',
-      MM: '%dmo',
-      y: '%dy',
-      yy: '%dy',
+      lessThanXSeconds: '{{count}}s',
+      xSeconds: '{{count}}s',
+      halfAMinute: '30s',
+      lessThanXMinutes: '{{count}}m',
+      xMinutes: '{{count}}m',
+      aboutXHours: '{{count}}h',
+      xHours: '{{count}}h',
+      xDays: '{{count}}d',
+      aboutXMonths: '{{count}}mo',
+      xMonths: '{{count}}mo',
+      aboutXYears: '{{count}}y',
+      xYears: '{{count}}y',
+      overXYears: '{{count}}y',
+      almostXYears: '{{count}}y',
     },
     abbreviations: {
       thousand: 'k',

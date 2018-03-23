@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
-  StyleSheet,
-  Text,
   RefreshControl,
   View,
   ActivityIndicator,
@@ -43,38 +42,28 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-const styles = StyleSheet.create({
-  listTitle: {
-    color: colors.black,
-    ...fonts.fontPrimary,
+const Note = styled.Text`
+  font-size: ${normalize(11)};
+  color: ${colors.primaryDark};
+  ${fonts.fontPrimaryLight};
+  text-align: center;
+  padding: 10px;
+`;
+
+const NoteLink = styled.Text`
+  ${fonts.fontPrimarySemiBold};
+`;
+
+const BioListItem = styled(ListItem).attrs({
+  containerStyle: {
+    borderBottomColor: colors.greyLight,
+    borderBottomWidth: 1,
   },
-  listSubTitle: {
+  titleStyle: {
     color: colors.greyDark,
     ...fonts.fontPrimary,
   },
-  update: {
-    flex: 1,
-    alignItems: 'center',
-    marginVertical: 40,
-  },
-  updateText: {
-    color: colors.greyDark,
-    ...fonts.fontPrimary,
-  },
-  updateTextSub: {
-    fontSize: normalize(11),
-  },
-  note: {
-    fontSize: normalize(11),
-    color: colors.primaryDark,
-    ...fonts.fontPrimaryLight,
-    textAlign: 'center',
-    padding: 10,
-  },
-  noteLink: {
-    ...fonts.fontPrimarySemiBold,
-  },
-});
+})``;
 
 class AuthProfile extends Component {
   props: {
@@ -158,9 +147,9 @@ class AuthProfile extends Component {
             user.bio &&
             user.bio !== '' && (
               <SectionList title={translate('common.bio', locale)}>
-                <ListItem
-                  subtitle={emojifyText(user.bio)}
-                  subtitleStyle={styles.listSubTitle}
+                <BioListItem
+                  titleNumberOfLines={0}
+                  title={emojifyText(user.bio)}
                   hideChevron
                 />
               </SectionList>
@@ -189,11 +178,10 @@ class AuthProfile extends Component {
                     navigation={navigation}
                   />
                 ))}
-                <Text style={styles.note}>
+                <Note>
                   {translate('auth.profile.orgsRequestApprovalTop', locale)}
                   {'\n'}
-                  <Text
-                    style={styles.noteLink}
+                  <NoteLink
                     onPress={() =>
                       openURLInView('https://github.com/settings/applications')}
                   >
@@ -201,8 +189,8 @@ class AuthProfile extends Component {
                       'auth.profile.orgsRequestApprovalBottom',
                       locale
                     )}
-                  </Text>
-                </Text>
+                  </NoteLink>
+                </Note>
               </SectionList>
             </View>
           )}

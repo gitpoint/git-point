@@ -17,6 +17,7 @@ export const pl = {
         'Powiadom o konwersjacji, zmergowanym pull requeście i więcej',
       signInButton: 'ZALOGUJ',
     },
+    networkError: 'Oops! it seems that you are not connected to the internet!',
     welcome: {
       welcomeTitle: 'Witaj w GitPoint',
     },
@@ -160,6 +161,10 @@ export const pl = {
     repositoryList: {
       title: 'Repozytoria',
     },
+    starredRepositoryList: {
+      title: 'Polubione',
+      text: 'Polubione',
+    },
     followers: {
       title: 'Obserwujący',
       text: 'Obserwujący',
@@ -173,6 +178,8 @@ export const pl = {
   },
   repository: {
     main: {
+      notFoundRepo: 'Repository is not found',
+      unknownLanguage: 'Unknown',
       shareRepositoryTitle: 'Udostępnij {{repoName}}',
       shareRepositoryMessage: 'Check out {{repoName}} do GitHub. {{repoUrl}}',
       repoActions: 'Akcje Repozytorium',
@@ -202,6 +209,7 @@ export const pl = {
       starred: 'Polubiony',
       watching: 'Obserwowany',
       watchers: 'Obserwujący',
+      topicsTitle: 'TOPICS',
     },
     codeList: {
       title: 'Kod',
@@ -325,18 +333,20 @@ export const pl = {
     ok: 'OK',
     submit: 'Wyślij',
     relativeTime: {
-      past: '%s',
-      s: '%ds',
-      m: '%dm',
-      mm: '%dm',
-      h: '%dh',
-      hh: '%dh',
-      d: '%dd',
-      dd: '%dd',
-      M: '%dmo',
-      MM: '%dmo',
-      y: '%dy',
-      yy: '%dy',
+      lessThanXSeconds: '{{count}}s',
+      xSeconds: '{{count}}s',
+      halfAMinute: '30s',
+      lessThanXMinutes: '{{count}}m',
+      xMinutes: '{{count}}m',
+      aboutXHours: '{{count}}h',
+      xHours: '{{count}}h',
+      xDays: '{{count}}d',
+      aboutXMonths: '{{count}}mo',
+      xMonths: '{{count}}mo',
+      aboutXYears: '{{count}}y',
+      xYears: '{{count}}y',
+      overXYears: '{{count}}y',
+      almostXYears: '{{count}}y',
     },
     abbreviations: {
       thousand: 'ts',

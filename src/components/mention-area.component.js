@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import fuzzysort from 'fuzzysort';
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 import { TouchableOpacity, Animated, ScrollView } from 'react-native';
 
 import { animations, fonts, normalize } from 'config';
@@ -11,22 +11,16 @@ const StyledAnimatedView = styled(Animated.View)`
 
 const SuggestionsRowContainer = styled.View`
   flex-direction: row;
-  padding-top: 5;
-  padding-left: 5;
-  padding-right: 15;
-  padding-bottom: 15;
+  padding: 5px 15px;
 `;
 
 const UserDetailsBox = styled.View`
   flex: 1;
-  margin-left: 5;
-  margin-right: 5;
-  margin-top: 5;
-  margin-bottom: 5;
+  margin: 5px;
 `;
 
 const DisplayNameText = styled.Text`
-  fontsize: ${normalize(12)};
+  font-size: ${normalize(12)};
   ${fonts.fontPrimary};
 `;
 

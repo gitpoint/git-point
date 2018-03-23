@@ -48,6 +48,10 @@ const styles = {
   code: codeStyle,
   span: textStyle,
   p: { ...textStyle, margin: 0, padding: 0 },
+  sub: {
+    ...textStyle,
+    fontSize: normalize(9),
+  },
   h1: {
     ...fonts.fontPrimarySemiBold,
     ...hrStyle,
@@ -239,7 +243,7 @@ export class GithubHtmlView extends Component {
           <View key={index}>{defaultRenderer(node.children, node)}</View>
         ),
         code: (node, index, siblings, parent, defaultRenderer) => {
-          if (parent.name === 'pre') {
+          if (parent && parent.name === 'pre') {
             return (
               <SyntaxHighlighter
                 key={index}
@@ -296,7 +300,8 @@ export class GithubHtmlView extends Component {
               <Text
                 style={linkStyle}
                 onPress={() =>
-                  onLinkPress({ ...node, attribs: { href: node.attribs.src } })}
+                  onLinkPress({ ...node, attribs: { href: node.attribs.src } })
+                }
               >
                 [{node.attribs.alt}]
                 {'\n'}
@@ -384,13 +389,13 @@ export class GithubHtmlView extends Component {
       };
 
       if (_node.type === 'text') {
-        if (_node.data === '\n') {
+        if (_node.data.trim() === '' && _node.data.includes('\n')) {
           return (
             <Text
               key={_index}
               style={{ height: 8, fontSize: normalize(8), width: 2 }}
             >
-              {_node.data}
+              {'\n'}
             </Text>
           );
         }
