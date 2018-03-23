@@ -105,7 +105,7 @@
     "@commitlint/cli": "^3.1.0",
     "all-contributors-cli": "^4.10.1",
     "babel-eslint": "^7.1.1",
-    "babel-jest": "^21.2.0",
+    "babel-jest": "^22.4.3",
     "babel-plugin-module-resolver": "^2.7.1",
     "babel-plugin-transform-inline-environment-variables": "^6.8.0",
     "babel-preset-flow": "^6.23.0",
