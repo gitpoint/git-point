@@ -24,9 +24,9 @@ describe('API v3 test', () => {
     it('should return the expected response object', async () => {
       const expected = open;
 
-      expect(
-        await v3.call('https://api.github.com', 'parameters')
-      ).resolves.toEqual(expected);
+      expect(v3.call('https://api.github.com', 'parameters')).resolves.toEqual(
+        expected
+      );
     });
   });
 

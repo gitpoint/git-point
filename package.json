@@ -125,7 +125,7 @@
     "eslint-plugin-react-native": "^2.3.2",
     "flow-bin": "^0.47.0",
     "husky": "^0.14.3",
-    "jest": "^21.2.1",
+    "jest": "^22.4.3",
     "keys-diff": "^1.0.5",
     "lint-staged": "^3.2.6",
     "minicat": "^1.0.0",
