@@ -348,7 +348,7 @@ export const tr = {
       almostXYears: '{{count}}y',
     },
     abbreviations: {
-      thousand: 'k',
+      thousand: 'b',
     },
     openInBrowser: 'Tarayıcıda Aç',
   },
