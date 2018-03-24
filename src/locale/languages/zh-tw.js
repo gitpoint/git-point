@@ -171,6 +171,8 @@ export const zhTW = {
   },
   repository: {
     main: {
+      notFoundRepo: 'Repository is not found',
+      unknownLanguage: 'Unknown',
       shareRepositoryTitle: '分享 {{repoName}}',
       shareRepositoryMessage: '快來看看 GitHub上 的 {{repoName}} {{repoUrl}}',
       repoActions: '版本庫操作',

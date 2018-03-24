@@ -113,6 +113,18 @@ const styles = StyleSheet.create({
   },
 });
 
+const iconName = repository => {
+  let icon = '';
+
+  if (!repository.name) {
+    icon = 'stop';
+  } else {
+    icon = repository.fork ? 'repo-forked' : 'repo';
+  }
+
+  return icon;
+};
+
 export const RepositoryProfile = ({
   repository,
   starred,
@@ -133,7 +145,8 @@ export const RepositoryProfile = ({
         )}
 
       <Text style={[styles.languageInfoTitle]}>
-        {repository.language || ' '}
+        {repository.language ||
+          translate('repository.main.unknownLanguage', locale)}
       </Text>
     </View>
 
@@ -143,13 +156,15 @@ export const RepositoryProfile = ({
           styles.icon,
           repository.fork ? { marginLeft: 17 } : { marginLeft: 13 },
         ]}
-        name={repository.fork ? 'repo-forked' : 'repo'}
+        name={iconName(repository)}
         type="octicon"
         size={45}
         color={colors.greyLight}
       />
 
-      <Text style={styles.title}>{repository.name || ' '}</Text>
+      <Text style={styles.title}>
+        {repository.name || translate('repository.main.notFoundRepo', locale)}
+      </Text>
 
       <Text
         numberOfLines={repository.fork ? 1 : 3}
@@ -179,7 +194,8 @@ export const RepositoryProfile = ({
                 onPress={() =>
                   navigation.navigate('Repository', {
                     repository: repository.parent,
-                  })}
+                  })
+                }
               >
                 {' '}
                 {repository.parent.full_name}

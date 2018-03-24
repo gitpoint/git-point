@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { StyleSheet, RefreshControl, Share } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
+import Toast from 'react-native-simple-toast';
 
 import {
   ViewContainer,
@@ -39,6 +40,7 @@ const mapStateToProps = state => ({
   starred: state.repository.starred,
   forked: state.repository.forked,
   subscribed: state.repository.subscribed,
+  hasRepoExist: state.repository.hasRepoExist,
   hasReadMe: state.repository.hasReadMe,
   isPendingRepository: state.repository.isPendingRepository,
   isPendingContributors: state.repository.isPendingContributors,
@@ -49,6 +51,7 @@ const mapStateToProps = state => ({
   isPendingTopics: state.repository.isPendingTopics,
   isPendingSubscribe: state.repository.isPendingSubscribe,
   topics: state.repository.topics,
+  error: state.repository.error,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -82,6 +85,7 @@ class Repository extends Component {
     // repositoryName: string,
     repository: Object,
     contributors: Array,
+    hasRepoExist: boolean,
     hasReadMe: boolean,
     issues: Array,
     starred: boolean,
@@ -102,6 +106,7 @@ class Repository extends Component {
     subscribeToRepo: Function,
     unSubscribeToRepo: Function,
     topics: Array,
+    error: Object,
   };
 
   state: {
@@ -122,6 +127,12 @@ class Repository extends Component {
     } = this.props.navigation.state.params;
 
     this.props.getRepositoryInfo(repo ? repo.url : repoUrl);
+  }
+
+  componentDidUpdate() {
+    if (!this.props.hasRepoExist && this.props.error.message) {
+      Toast.showWithGravity(this.props.error.message, Toast.LONG, Toast.CENTER);
+    }
   }
 
   showMenuActionSheet = () => {
@@ -167,7 +178,7 @@ class Repository extends Component {
     } = this.props.navigation.state.params;
 
     this.setState({ refreshing: true });
-    this.props.getRepositoryInfo(repo ? repo.url : repoUrl).then(() => {
+    this.props.getRepositoryInfo(repo ? repo.url : repoUrl).finally(() => {
       this.setState({ refreshing: false });
     });
   };
@@ -198,6 +209,7 @@ class Repository extends Component {
     const {
       repository,
       contributors,
+      hasRepoExist,
       hasReadMe,
       issues,
       topics,
@@ -284,7 +296,9 @@ class Repository extends Component {
             />
           }
           stickyTitle={repository.name}
-          showMenu={!isPendingRepository && !isPendingCheckStarred}
+          showMenu={
+            hasRepoExist && !isPendingRepository && !isPendingCheckStarred
+          }
           menuAction={this.showMenuActionSheet}
           navigation={navigation}
           navigateBack
@@ -317,7 +331,8 @@ class Repository extends Component {
               </SectionList>
             )}
 
-          {initalRepository &&
+          {hasRepoExist &&
+            initalRepository &&
             initalRepository.owner && (
               <SectionList
                 title={translate('repository.main.ownerTitle', locale)}
@@ -361,7 +376,8 @@ class Repository extends Component {
                 onPress={() =>
                   navigation.navigate('ReadMe', {
                     repository,
-                  })}
+                  })
+                }
                 underlayColor={colors.greyLight}
               />
             )}
@@ -378,8 +394,10 @@ class Repository extends Component {
                 navigation.navigate('RepositoryCodeList', {
                   title: translate('repository.codeList.title', locale),
                   topLevel: true,
-                })}
+                })
+              }
               underlayColor={colors.greyLight}
+              disabled={!hasRepoExist}
             />
           </SectionList>
 
@@ -443,7 +461,8 @@ class Repository extends Component {
                 title: translate('repository.pullList.title', locale),
                 type: 'pull',
                 issues: pulls,
-              })}
+              })
+            }
           >
             {openPulls
               .slice(0, 3)
