@@ -4,6 +4,7 @@ export const nl = {
       connectingToGitHub: 'Verbinding maken met GitHub ...', // google translate
       preparingGitPoint: 'GitPoint voorbereiden ...', // google translate
       cancel: 'ANNULEER', // google translate
+      troubles: "Can't login?",
       welcomeTitle: 'Welkom bij GitPoint',
       welcomeMessage: 'De meest complete GitHub client die geen geld kost',
       notificationsTitle: 'Beheer notificaties',

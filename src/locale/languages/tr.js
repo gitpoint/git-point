@@ -4,6 +4,7 @@ export const tr = {
       connectingToGitHub: "GitHub'a Bağlanılıyor...",
       preparingGitPoint: 'GitPoint Hazırlanıyor...',
       cancel: 'İPTAL',
+      troubles: "Can't login?",
       welcomeTitle: "GitPoint'e Hoşgeldiniz",
       welcomeMessage:
         "En zengin özelliklere sahip GitHub client'ı ve 100% ücretsiz",

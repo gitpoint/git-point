@@ -7,6 +7,7 @@ export const zhCN = {
       connectingToGitHub: '正在连接GitHub...',
       preparingGitPoint: 'GitPoint准备中...',
       cancel: '取消',
+      troubles: "Can't login?",
       welcomeTitle: '欢迎来到GitPoint',
       welcomeMessage: '完全免费，功能最强大的GitHub客户端!',
       notificationsTitle: '通知设定',

@@ -4,6 +4,7 @@ export const eo = {
       connectingToGitHub: 'Konektante al GitHub...',
       preparingGitPoint: 'Prepari GitPoint...',
       cancel: 'CANCELO',
+      troubles: "Can't login?",
       welcomeTitle: 'Bonvenon al GitPoint',
       welcomeMessage:
         'La plej karakterizaĵo riĉa GitHub-kliento, kiu estas 100% libera',
