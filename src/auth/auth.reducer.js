@@ -4,7 +4,6 @@ import {
   LOGOUT,
   GET_AUTH_USER,
   GET_AUTH_ORGS,
-  GET_EVENTS,
   CHANGE_LOCALE,
   GET_AUTH_STAR_COUNT,
 } from './auth.type';
@@ -114,23 +113,6 @@ export const authReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         isPendingOrgs: false,
-        error: action.payload,
-      };
-    case GET_EVENTS.PENDING:
-      return {
-        ...state,
-        isPendingEvents: true,
-      };
-    case GET_EVENTS.SUCCESS:
-      return {
-        ...state,
-        isPendingEvents: false,
-        events: action.payload,
-      };
-    case GET_EVENTS.ERROR:
-      return {
-        ...state,
-        isPendingEvents: false,
         error: action.payload,
       };
     case CHANGE_LOCALE.SUCCESS:

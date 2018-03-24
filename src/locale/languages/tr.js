@@ -203,7 +203,7 @@ export const tr = {
       noPullRequestsMessage: 'Pull request Yok',
       noOpenPullRequestsMessage: "Açık pull request'ler",
       starsTitle: 'Yıldızlar',
-      forksTitle: 'Fork\'lar',
+      forksTitle: "Fork'lar",
       forkedFromMessage: 'buradan fork edildi:',
       starred: 'Yıldızlandı',
       watching: 'İzleniyor',
@@ -290,7 +290,8 @@ export const tr = {
         pullRequest: 'Pull Request',
       },
       openIssueSubTitle: '#{{number}} {{time}} önce {{user}} tarafından açıldı',
-      closedIssueSubTitle: '#{{number}} {{time}} önce {{user}} tarafından kapatıldı.',
+      closedIssueSubTitle:
+        '#{{number}} {{time}} önce {{user}} tarafından kapatıldı.',
       issueActions: 'Issue Actions',
     },
     newIssue: {

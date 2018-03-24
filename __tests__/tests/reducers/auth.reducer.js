@@ -6,7 +6,6 @@ import {
   GET_AUTH_ORGS,
   GET_AUTH_STAR_COUNT,
   GET_AUTH_USER,
-  GET_EVENTS,
   LOGIN,
   LOGOUT,
 } from 'auth/auth.type';
@@ -228,49 +227,6 @@ describe('Auth Reducer', () => {
     };
     const action = {
       type: GET_AUTH_ORGS.ERROR,
-      payload: authError,
-    };
-
-    expect(authReducer(initialState, action)).toEqual(expectedState);
-  });
-
-  /**
-   * Get events for user.
-   */
-  it('should set isPendingEvents: true when GET_AUTH_ORGS.PENDING action is dispatched', () => {
-    const expectedState = {
-      ...initialState,
-      isPendingEvents: true,
-    };
-    const action = {
-      type: GET_EVENTS.PENDING,
-    };
-
-    expect(authReducer(initialState, action)).toEqual(expectedState);
-  });
-
-  it('should set events from payload of GET_AUTH_ORGS.SUCCESS action and set isPendingEvents: false', () => {
-    const expectedState = {
-      ...initialState,
-      isPendingEvents: false,
-      events,
-    };
-    const action = {
-      type: GET_EVENTS.SUCCESS,
-      payload: events,
-    };
-
-    expect(authReducer(initialState, action)).toEqual(expectedState);
-  });
-
-  it('should set an error from payload of GET_AUTH_ORGS.ERROR action and set isPendingEvents: false', () => {
-    const expectedState = {
-      ...initialState,
-      isPendingEvents: false,
-      error: authError,
-    };
-    const action = {
-      type: GET_EVENTS.ERROR,
       payload: authError,
     };
 

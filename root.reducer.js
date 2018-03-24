@@ -6,6 +6,7 @@ import { organizationReducer } from 'organization';
 import { issueReducer } from 'issue';
 import { searchReducer } from 'search';
 import { notificationsReducer } from 'notifications';
+import { entities, pagination } from 'api/reducers';
 
 export const rootReducer = combineReducers({
   auth: authReducer,
@@ -15,4 +16,6 @@ export const rootReducer = combineReducers({
   issue: issueReducer,
   search: searchReducer,
   notifications: notificationsReducer,
+  entities,
+  pagination,
 });
