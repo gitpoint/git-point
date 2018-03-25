@@ -7,6 +7,7 @@ export const en = {
       connectingToGitHub: 'Connecting to GitHub...',
       preparingGitPoint: 'Preparing GitPoint...',
       cancel: 'CANCEL',
+      troubles: "Can't login?",
       welcomeTitle: 'Welcome to GitPoint',
       welcomeMessage: 'The most feature-rich GitHub client that is 100% free',
       notificationsTitle: 'Control notifications',

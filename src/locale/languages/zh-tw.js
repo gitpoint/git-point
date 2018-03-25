@@ -4,6 +4,7 @@ export const zhTW = {
       connectingToGitHub: '連線至 GitHub...',
       preparingGitPoint: 'GitPoint 準備中...',
       cancel: '取消',
+      troubles: "Can't login?",
       welcomeTitle: '歡迎使用 GitPoint',
       welcomeMessage: '完全免費，功能最強大的 GitHub 應用程式！',
       notificationsTitle: '通知設定',

@@ -5,6 +5,7 @@ export const fr = {
       connectingToGitHub: 'Connexion à GitHub...',
       preparingGitPoint: 'Configuration de GitPoint...',
       cancel: 'ANNULER',
+      troubles: 'Problème de connexion ?',
       welcomeTitle: 'Bienvenue dans GitPoint',
       welcomeMessage:
         'Le client GitHub le plus riche en fonctionnalités tout en étant 100% gratuit',

@@ -4,6 +4,7 @@ export const ru = {
       connectingToGitHub: 'Подключение к GitHub...',
       preparingGitPoint: 'Подготовка GitPoint...',
       cancel: 'ОТМЕНА',
+      troubles: "Can't login?",
       welcomeTitle: 'Добро пожаловать в GitPoint',
       welcomeMessage: 'Самый многофункциональный бесплатный GitHub-клиент',
       notificationsTitle: 'Управление уведомлениями',
