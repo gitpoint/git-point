@@ -31,9 +31,6 @@ const mapStateToProps = (state, ownProps) => {
     starredReposPagination,
     starredRepos,
     userId,
-    // old
-    starredRepositories: state.user.starredRepositories,
-    isPendingStarredRepositories: state.user.isPendingStarredRepositories,
   };
 };
 
