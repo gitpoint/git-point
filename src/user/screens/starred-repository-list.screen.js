@@ -1,88 +1,48 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { FlatList, View, ActivityIndicator } from 'react-native';
+import { bindActionCreators } from 'redux';
+import { FlatList } from 'react-native';
 
-import { RestClient } from 'api';
+import { getStarredRepositories } from 'user';
+
 import {
   ViewContainer,
   RepositoryListItem,
   LoadingRepositoryListItem,
 } from 'components';
 
-const mapStateToProps = (state, ownProps) => {
-  const {
-    auth: { user },
-    pagination: { ACTIVITY_GET_STARRED_REPOS_FOR_USER },
-    entities: { repos },
-  } = state;
+const mapStateToProps = state => ({
+  user: state.user.user,
+  starredRepositories: state.user.starredRepositories,
+  isPendingStarredRepositories: state.user.isPendingStarredRepositories,
+});
 
-  const userId = ownProps.navigation.state.params.user.login;
-
-  const starredReposPagination = ACTIVITY_GET_STARRED_REPOS_FOR_USER[
-    userId
-  ] || {
-    ids: [],
-    isFetching: true,
-  };
-  const starredRepos = starredReposPagination.ids.map(id => repos[id]);
-
-  return {
-    user,
-    starredReposPagination,
-    starredRepos,
-    userId,
-    // old
-    starredRepositories: state.user.starredRepositories,
-    isPendingStarredRepositories: state.user.isPendingStarredRepositories,
-  };
-};
-
-const mapDispatchToProps = {
-  getStarredReposForUser: RestClient.activity.getStarredReposForUser,
-};
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ getStarredRepositories }, dispatch);
 
 class StarredRepositoryList extends Component {
   props: {
-    userId: String,
-    starredRepos: Array,
-    starredReposPagination: Object,
-    getStarredReposForUser: Function,
+    user: Object,
+    starredRepositories: Array,
     navigation: Object,
+    isPendingStarredRepositories: boolean,
+    getStarredRepositories: Function,
   };
 
   componentWillMount() {
-    const { getStarredReposForUser, userId } = this.props;
+    const user = this.props.navigation.state.params.user;
 
-    getStarredReposForUser(userId);
+    this.props.getStarredRepositories(user);
   }
-
-  renderFooter = () => {
-    if (this.props.starredReposPagination.nextPageUrl === null) {
-      return null;
-    }
-
-    return (
-      <View
-        style={{
-          paddingVertical: 20,
-        }}
-      >
-        <ActivityIndicator animating size="large" />
-      </View>
-    );
-  };
 
   render() {
     const {
-      starredReposPagination,
-      starredRepos,
-      userId,
+      starredRepositories,
       navigation,
+      isPendingStarredRepositories,
     } = this.props;
 
     const repoCount = navigation.state.params.repoCount;
-    const isPendingStarredRepositories =
-      starredRepos.length === 0 && starredReposPagination.isFetching;
 
     return (
       <ViewContainer>
@@ -92,18 +52,7 @@ class StarredRepositoryList extends Component {
           )}
         {!isPendingStarredRepositories && (
           <FlatList
-            data={starredRepos}
-            onRefresh={() =>
-              this.props.getStarredReposForUser(userId, {
-                forceRefresh: true,
-              })
-            }
-            refreshing={!starredRepos && starredReposPagination.isFetching}
-            onEndReached={() =>
-              this.props.getStarredReposForUser(userId, { loadMore: true })
-            }
-            onEndReachedThreshold={0.5}
-            ListFooterComponent={this.renderFooter}
+            data={starredRepositories}
             renderItem={({ item }) => (
               <RepositoryListItem repository={item} navigation={navigation} />
             )}
