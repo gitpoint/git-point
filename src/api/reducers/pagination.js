@@ -78,4 +78,7 @@ const paginate = types => {
 // Updates the pagination data for different actions.
 export const pagination = combineReducers({
   ACTIVITY_GET_EVENTS_RECEIVED: paginate(Actions.ACTIVITY_GET_EVENTS_RECEIVED),
+  ACTIVITY_GET_STARRED_REPOS_FOR_USER: paginate(
+    Actions.ACTIVITY_GET_STARRED_REPOS_FOR_USER
+  ),
 });

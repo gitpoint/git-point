@@ -141,5 +141,12 @@ export class Client {
         })
       );
     },
+    getStarredReposForUser: async (userId, params) => {
+      return this.call(`users/${userId}/starred`, params).then(response => ({
+        response,
+        nextPageUrl: this.getNextPageUrl(response),
+        schema: Schemas.REPO_ARRAY,
+      }));
+    },
   };
 }
