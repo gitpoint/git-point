@@ -1,6 +1,6 @@
 import { AsyncStorage } from 'react-native';
 
-import { uniqby } from 'lodash';
+import { uniqBy } from 'lodash';
 import { delay, configureLocale, saveLocale } from 'utils';
 
 import {
@@ -119,7 +119,7 @@ export const getOrgs = () => {
 
         dispatch({
           type: GET_AUTH_ORGS.SUCCESS,
-          payload: uniqby(orgs, 'login').sort(
+          payload: uniqBy(orgs, 'login').sort(
             (org1, org2) => org1.login > org2.login
           ),
         });
