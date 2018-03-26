@@ -4,6 +4,6 @@ export const repoSchema = new schema.Entity(
   'repos',
   {},
   {
-    idAttribute: repo => repo.full_name,
+    idAttribute: repo => repo.full_name.toLowerCase(),
   }
 );
