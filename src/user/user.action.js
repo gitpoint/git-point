@@ -12,7 +12,6 @@ import {
   GET_IS_FOLLOWING,
   GET_IS_FOLLOWER,
   GET_REPOSITORIES,
-  GET_STARRED_REPOSITORIES,
   GET_FOLLOWERS,
   GET_FOLLOWING,
   SEARCH_USER_REPOS,
@@ -196,30 +195,6 @@ export const getRepositories = user => {
       .catch(error => {
         dispatch({
           type: GET_REPOSITORIES.ERROR,
-          payload: error,
-        });
-      });
-  };
-};
-
-export const getStarredRepositories = user => {
-  return (dispatch, getState) => {
-    const url = `/users/${user.login}/starred?per_page=50`;
-    const accessToken = getState().auth.accessToken;
-
-    dispatch({ type: GET_STARRED_REPOSITORIES.PENDING });
-
-    v3
-      .getJson(url, accessToken)
-      .then(data => {
-        dispatch({
-          type: GET_STARRED_REPOSITORIES.SUCCESS,
-          payload: data,
-        });
-      })
-      .catch(error => {
-        dispatch({
-          type: GET_STARRED_REPOSITORIES.ERROR,
           payload: error,
         });
       });
