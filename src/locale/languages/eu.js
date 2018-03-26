@@ -4,6 +4,7 @@ export const eu = {
       connectingToGitHub: 'GitHubera konektatzen...',
       preparingGitPoint: 'GitPoint prestatzen...',
       cancel: 'EZEZTATU',
+      troubles: "Can't login?",
       welcomeTitle: 'Ongi etorri GitPointera',
       welcomeMessage:
         'Funtzionalitate gehien dituen GitHub bezeroa,%100 doakoa',

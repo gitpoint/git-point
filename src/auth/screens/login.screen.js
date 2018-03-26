@@ -22,7 +22,7 @@ import { ViewContainer, ErrorScreen } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { CLIENT_ID } from 'api';
 import { auth, getUser } from 'auth';
-import { translate, resetNavigationTo } from 'utils';
+import { openURLInView, translate, resetNavigationTo } from 'utils';
 
 let stateRandom = Math.random().toString();
 
@@ -103,6 +103,11 @@ const styles = StyleSheet.create({
     flex: 2,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  troublesLink: {
+    color: colors.greyLight,
+    paddingTop: 20,
+    fontStyle: 'italic',
   },
   signInContainer: {
     position: 'absolute',
@@ -259,6 +264,7 @@ class Login extends Component {
 
   render() {
     const { locale, isLoggingIn, hasInitialUser } = this.props;
+    const loginUrl = `https://github.com/login/oauth/authorize?response_type=token&client_id=${CLIENT_ID}&redirect_uri=gitpoint://welcome&scope=user%20repo&state=${stateRandom}`;
 
     return (
       <ViewContainer>
@@ -352,7 +358,7 @@ class Login extends Component {
               <View style={styles.browserSection}>
                 <WebView
                   source={{
-                    uri: `https://github.com/login/oauth/authorize?response_type=token&client_id=${CLIENT_ID}&redirect_uri=gitpoint://welcome&scope=user%20repo&state=${stateRandom}`,
+                    uri: loginUrl,
                   }}
                   renderError={() => <ErrorScreen locale={locale} />}
                   onLoadStart={e => this.toggleCancelButton(e, true)}
@@ -371,6 +377,14 @@ class Login extends Component {
                   textStyle={styles.buttonText}
                   onPress={() => this.setModalVisible(!this.state.modalVisible)}
                 />
+                {Platform.OS === 'android' && (
+                  <Text
+                    style={styles.troublesLink}
+                    onPress={() => openURLInView(loginUrl)}
+                  >
+                    {translate('auth.login.troubles', locale)}
+                  </Text>
+                )}
               </View>
             </View>
           </Modal>
