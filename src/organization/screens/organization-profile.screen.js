@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { RefreshControl } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import { createStructuredSelector } from 'reselect';
 import ActionSheet from 'react-native-actionsheet';
-import { getAuthLocale } from 'auth';
+import { RestClient } from 'api';
 import {
   ViewContainer,
   UserProfile,
@@ -18,35 +16,6 @@ import {
 } from 'components';
 import { emojifyText, translate, openURLInView } from 'utils';
 import { colors, fonts } from 'config';
-import {
-  // actions
-  fetchOrganizations,
-  fetchOrganizationMembers,
-  // Selectors
-  getOrganization,
-  getOrganizationRepositories,
-  getOrganizationMembers,
-  getOrganizationIsPendingOrg,
-  getOrganizationIsPendingRepos,
-  getOrganizationIsPendingMembers,
-} from '../index';
-
-const selectors = createStructuredSelector({
-  organization: getOrganization,
-  repositories: getOrganizationRepositories,
-  members: getOrganizationMembers,
-  isPendingOrg: getOrganizationIsPendingOrg,
-  isPendingRepos: getOrganizationIsPendingRepos,
-  isPendingMembers: getOrganizationIsPendingMembers,
-  locale: getAuthLocale,
-});
-
-const actionCreators = {
-  fetchOrganizations,
-  fetchOrganizationMembers,
-};
-
-const actions = dispatch => bindActionCreators(actionCreators, dispatch);
 
 const DescriptionListItem = styled(ListItem).attrs({
   subtitleStyle: {
@@ -57,17 +26,14 @@ const DescriptionListItem = styled(ListItem).attrs({
 
 class OrganizationProfile extends Component {
   props: {
-    fetchOrganizations: Function,
-    // getOrgReposByDispatch: Function,
-    fetchOrganizationMembers: Function,
-    organization: Object,
-    // repositories: Array,
-    members: Array,
-    isPendingOrg: boolean,
-    // isPendingRepos: boolean,
-    isPendingMembers: boolean,
+    org: Object,
+    orgId: String,
+    orgMembers: Array,
+    orgMembersPagination: Object,
     navigation: Object,
     locale: string,
+    getOrgById: Function,
+    getOrgMembers: Function,
   };
 
   state: {
@@ -82,22 +48,24 @@ class OrganizationProfile extends Component {
   }
 
   componentDidMount() {
-    const organization = this.props.navigation.state.params.organization;
+    const { org, orgId, getOrgById, getOrgMembers } = this.props;
 
-    this.props.fetchOrganizations(organization.login);
-    this.props.fetchOrganizationMembers(organization.login);
+    if (!org.name) {
+      getOrgById(orgId);
+    }
+    getOrgMembers(orgId);
   }
 
-  getOrgData = () => {
-    const organization = this.props.navigation.state.params.organization;
+  componentWillReceiveProps() {
+    this.setState({ refreshing: false });
+  }
 
+  refresh = () => {
     this.setState({ refreshing: true });
-    Promise.all([
-      this.props.fetchOrganizations(organization.login),
-      this.props.fetchOrganizationMembers(organization.login),
-    ]).then(() => {
-      this.setState({ refreshing: false });
-    });
+    const { orgId, getOrgById, getOrgMembers } = this.props;
+
+    getOrgById(orgId);
+    getOrgMembers(orgId, { forceRefresh: true });
   };
 
   showMenuActionSheet = () => {
@@ -106,22 +74,24 @@ class OrganizationProfile extends Component {
 
   handleActionSheetPress = index => {
     if (index === 0) {
-      openURLInView(this.props.organization.html_url);
+      openURLInView(this.props.org.html_url);
     }
   };
 
   render() {
     const {
-      organization,
-      members,
-      isPendingOrg,
-      isPendingMembers,
+      org,
+      orgMembers,
+      orgMembersPagination,
       navigation,
       locale,
     } = this.props;
     const { refreshing } = this.state;
     const initialOrganization = this.props.navigation.state.params.organization;
     const organizationActions = [translate('common.openInBrowser', locale)];
+
+    const isPendingMembers =
+      orgMembers.length === 0 && orgMembersPagination.isFetching;
 
     return (
       <ViewContainer>
@@ -131,20 +101,17 @@ class OrganizationProfile extends Component {
               type="org"
               initialUser={initialOrganization}
               user={
-                initialOrganization.login === organization.login
-                  ? organization
+                initialOrganization.login === org.login
+                  ? org
                   : initialOrganization
               }
               navigation={navigation}
             />
           )}
           refreshControl={
-            <RefreshControl
-              onRefresh={this.getOrgData}
-              refreshing={refreshing}
-            />
+            <RefreshControl onRefresh={this.refresh} refreshing={refreshing} />
           }
-          stickyTitle={organization.name}
+          stickyTitle={org.name}
           navigateBack
           navigation={navigation}
           showMenu
@@ -159,29 +126,25 @@ class OrganizationProfile extends Component {
           {!isPendingMembers && (
             <MembersList
               title={translate('organization.main.membersTitle', locale)}
-              members={members}
+              members={orgMembers}
               navigation={navigation}
             />
           )}
 
-          {!!organization.description &&
-            organization.description !== '' && (
+          {!!org.description &&
+            org.description !== '' && (
               <SectionList
                 title={translate('organization.main.descriptionTitle', locale)}
               >
                 <DescriptionListItem
-                  subtitle={emojifyText(organization.description)}
+                  subtitle={emojifyText(org.description)}
                   hideChevron
                 />
               </SectionList>
             )}
 
-          {!isPendingOrg && (
-            <EntityInfo
-              entity={organization}
-              navigation={navigation}
-              locale={locale}
-            />
+          {org && (
+            <EntityInfo entity={org} navigation={navigation} locale={locale} />
           )}
         </ParallaxScroll>
 
@@ -199,6 +162,38 @@ class OrganizationProfile extends Component {
   }
 }
 
-export const OrganizationProfileScreen = connect(selectors, actions)(
-  OrganizationProfile
-);
+const mapStateToProps = (state, ownProps) => {
+  const {
+    auth: { user, locale },
+    pagination: { ORGS_GET_MEMBERS },
+    entities: { orgs, users },
+  } = state;
+
+  const orgId = ownProps.navigation.state.params.organization.login;
+  const org = orgs[orgId] || ownProps.navigation.state.params.organization;
+
+  const orgMembersPagination = ORGS_GET_MEMBERS[orgId] || {
+    ids: [],
+    isFetching: true,
+  };
+  const orgMembers = orgMembersPagination.ids.map(id => users[id]);
+
+  return {
+    user,
+    org,
+    orgId,
+    orgMembers,
+    orgMembersPagination,
+    locale,
+  };
+};
+
+const mapDispatchToProps = {
+  getOrgById: RestClient.orgs.getById,
+  getOrgMembers: RestClient.orgs.getMembers,
+};
+
+export const OrganizationProfileScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(OrganizationProfile);

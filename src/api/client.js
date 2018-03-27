@@ -152,13 +152,13 @@ export class Client {
 
   orgs = {
     getById: async (orgId, params) => {
-      return this.fetch(`orgs/${orgId}`, params).then(response => ({
+      return this.call(`orgs/${orgId}`, params).then(response => ({
         response,
         schema: Schemas.ORG,
       }));
     },
     getMembers: async (orgId, params) => {
-      return this.fetch(`orgs/${orgId}/members`, params).then(response => ({
+      return this.call(`orgs/${orgId}/members`, params).then(response => ({
         response,
         nextPageUrl: this.getNextPageUrl(response),
         schema: Schemas.USER_ARRAY,
