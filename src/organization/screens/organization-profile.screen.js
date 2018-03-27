@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { RefreshControl } from 'react-native';
+import { RefreshControl, ActivityIndicator, View } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
 import { RestClient } from 'api';
@@ -78,9 +78,26 @@ class OrganizationProfile extends Component {
     }
   };
 
+  renderLoadingMembers = () => {
+    if (this.props.orgMembersPagination.nextPageUrl === null) {
+      return null;
+    }
+
+    return (
+      <View
+        style={{
+          padding: 5,
+        }}
+      >
+        <ActivityIndicator animating size="small" />
+      </View>
+    );
+  };
+
   render() {
     const {
       org,
+      orgId,
       orgMembers,
       orgMembersPagination,
       navigation,
@@ -128,6 +145,11 @@ class OrganizationProfile extends Component {
               title={translate('organization.main.membersTitle', locale)}
               members={orgMembers}
               navigation={navigation}
+              onEndReached={() =>
+                this.props.getOrgMembers(orgId, { loadMore: true })
+              }
+              onEndReachedThreshold={0.5}
+              ListFooterComponent={this.renderLoadingMembers}
             />
           )}
 
