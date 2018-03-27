@@ -750,6 +750,36 @@
         "code",
         "design"
       ]
+    },
+    {
+      "login": "jjlljj",
+      "name": "James Logue",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/16650066?v=4",
+      "profile": "https://github.com/jjlljj",
+      "contributions": [
+        "code",
+        "test"
+      ]
+    },
+    {
+      "login": "etcetera8",
+      "name": "parker lindley",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/22607072?v=4",
+      "profile": "https://github.com/etcetera8",
+      "contributions": [
+        "code",
+        "test"
+      ]
+    },
+    {
+      "login": "soytjan",
+      "name": "Amanda Tjan",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/22456673?v=4",
+      "profile": "https://github.com/soytjan",
+      "contributions": [
+        "code",
+        "test"
+      ]
     }
   ]
 }

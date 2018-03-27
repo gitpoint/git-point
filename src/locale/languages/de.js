@@ -7,6 +7,7 @@ export const de = {
       connectingToGitHub: 'Verbinde mit GitHub...',
       preparingGitPoint: 'Bereite GitPoint vor...',
       cancel: 'ABBRECHEN',
+      troubles: "Can't login?",
       welcomeTitle: 'Willkommen bei GitPoint',
       welcomeMessage:
         'Der umfangreichste GitHub Client der zu 100% kostenlos ist',

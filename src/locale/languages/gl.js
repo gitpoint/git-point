@@ -4,6 +4,7 @@ export const gl = {
       connectingToGitHub: 'Conectando con GitHub...',
       preparingGitPoint: 'Preparando GitPoint...',
       cancel: 'CANCELAR',
+      troubles: "Can't login?",
       welcomeTitle: 'Benvido a GitPoint',
       welcomeMessage: 'O cliente de GitHub con máis funcións que é 100% gratis',
       notificationsTitle: 'Controlar notificacións',

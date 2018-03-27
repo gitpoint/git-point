@@ -3,31 +3,38 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { Text, FlatList, View } from 'react-native';
+import { Text, FlatList, View, ActivityIndicator } from 'react-native';
 
 import { LoadingUserListItem, UserListItem, ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { emojifyText, translate, relativeTimeToNow } from 'utils';
-import { getUserEvents } from 'auth';
 import { getNotificationsCount } from 'notifications';
+import { RestClient } from 'api';
 
-const mapStateToProps = state => ({
-  user: state.auth.user,
-  userEvents: state.auth.events,
-  locale: state.auth.locale,
-  isPendingEvents: state.auth.isPendingEvents,
-  accessToken: state.auth.accessToken,
-});
+const mapStateToProps = state => {
+  const {
+    auth: { user, locale },
+    pagination: { ACTIVITY_GET_EVENTS_RECEIVED },
+    entities: { events },
+  } = state;
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      getUserEvents,
-      getNotificationsCount,
-    },
-    dispatch
-  );
+  const userEventsPagination = ACTIVITY_GET_EVENTS_RECEIVED[user.login] || {
+    ids: [],
+  };
+  const userEvents = userEventsPagination.ids.map(id => events[id]);
+
+  return {
+    user,
+    userEventsPagination,
+    userEvents,
+    locale,
+  };
+};
+
+const mapDispatchToProps = {
+  getUserEvents: RestClient.activity.getEventsReceived,
+  getNotificationsCount,
+};
 
 const DescriptionContainer = styled.Text`
   justify-content: center;
@@ -99,7 +106,7 @@ class Events extends Component {
   }
 
   getUserEvents = ({ user, accessToken } = this.props) => {
-    this.props.getUserEvents(user.login);
+    this.props.getUserEvents(user.login, { forceRefresh: true });
     this.props.getNotificationsCount(accessToken);
   };
 
@@ -496,17 +503,43 @@ class Events extends Component {
     );
   }
 
+  renderFooter = () => {
+    if (this.props.userEventsPagination.nextPageUrl === null) {
+      return null;
+    }
+
+    return (
+      <View
+        style={{
+          paddingVertical: 20,
+        }}
+      >
+        <ActivityIndicator animating size="large" />
+      </View>
+    );
+  };
+
   render() {
-    const { isPendingEvents, userEvents, locale, navigation } = this.props;
+    const {
+      user,
+      userEventsPagination,
+      userEvents,
+      locale,
+      navigation,
+    } = this.props;
     const linebreaksPattern = /(\r\n|\n|\r)/gm;
     let content;
 
-    if (isPendingEvents && !userEvents) {
+    if (userEventsPagination.isFetching && !userEvents) {
       content = [...Array(15)].map((item, index) => {
         // eslint-disable-next-line react/no-array-index-key
         return <LoadingUserListItem key={index} />;
       });
-    } else if (!isPendingEvents && userEvents && userEvents.length === 0) {
+    } else if (
+      !userEventsPagination.isFetching &&
+      userEvents &&
+      userEvents.length === 0
+    ) {
       content = (
         <TextContainer>
           <NoneTitle>
@@ -520,7 +553,12 @@ class Events extends Component {
           removeClippedSubviews={false}
           data={userEvents}
           onRefresh={this.getUserEvents}
-          refreshing={isPendingEvents}
+          refreshing={!userEvents && userEventsPagination.isFetching}
+          onEndReached={() =>
+            this.props.getUserEvents(user.login, { loadMore: true })
+          }
+          onEndReachedThreshold={0.5}
+          ListFooterComponent={this.renderFooter}
           keyExtractor={this.keyExtractor}
           renderItem={({ item }) => (
             <View>

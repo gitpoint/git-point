@@ -4,6 +4,7 @@ export const pl = {
       connectingToGitHub: 'Łączenie z GitHubem...',
       preparingGitPoint: 'Przygotowanie GitPoint...',
       cancel: 'ANULUJ',
+      troubles: "Can't login?",
       welcomeTitle: 'Witaj w GitPoint',
       welcomeMessage: 'Najlepsza integracja z GitHubem jest 100% za darmo',
       notificationsTitle: 'Kontrola notyfikacji',
