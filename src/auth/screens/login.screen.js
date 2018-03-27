@@ -168,9 +168,14 @@ class Login extends Component {
       modalVisible: false,
       cancelDisabled: false,
       showLoader: true,
-      loaderText: this.props.i18n.t`Connecting to GitHub...`,
       asyncStorageChecked: false,
     };
+  }
+
+  componentWillMount() {
+    const { i18n } = this.props;
+
+    this.setState({ loaderText: i18n.t`Connecting to GitHub...` });
   }
 
   componentDidMount() {
