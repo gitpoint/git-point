@@ -6,3 +6,4 @@ export const ACTIVITY_GET_EVENTS_RECEIVED = createPaginationActionSet(
 export const ACTIVITY_GET_STARRED_REPOS_FOR_USER = createPaginationActionSet(
   'ACTIVITY_GET_STARRED_REPOS_FOR_USER'
 );
+export const ORGS_GET_MEMBERS = createPaginationActionSet('ORGS_GET_MEMBERS');

@@ -4,6 +4,9 @@ import { merge } from 'lodash';
 export const entities = (
   state = {
     events: {},
+    orgs: {},
+    repos: {},
+    users: {},
   },
   action
 ) => {
