@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { RefreshControl, ActivityIndicator, View } from 'react-native';
+import { RefreshControl, ActivityIndicator } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
 import { RestClient } from 'api';
@@ -23,6 +23,10 @@ const DescriptionListItem = styled(ListItem).attrs({
     ...fonts.fontPrimary,
   },
 })``;
+
+const LoadingMembersContainer = styled.View`
+  padding: 5px;
+`;
 
 class OrganizationProfile extends Component {
   props: {
@@ -84,13 +88,9 @@ class OrganizationProfile extends Component {
     }
 
     return (
-      <View
-        style={{
-          padding: 5,
-        }}
-      >
+      <LoadingMembersContainer>
         <ActivityIndicator animating size="small" />
-      </View>
+      </LoadingMembersContainer>
     );
   };
 
