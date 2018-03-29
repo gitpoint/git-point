@@ -3,6 +3,7 @@ import { Image, Modal, Dimensions } from 'react-native';
 import { Icon } from 'react-native-elements';
 import styled from 'styled-components';
 import PhotoView from 'react-native-photo-view';
+import SvgUri from 'react-native-svg-from-uri';
 
 import { colors } from 'config';
 
@@ -52,6 +53,7 @@ export class ImageZoom extends Component {
     super();
     this.state = {
       imgZoom: false,
+      imgFailed: false,
     };
 
     this.openModal = this.openModal.bind(this);
@@ -94,13 +96,21 @@ export class ImageZoom extends Component {
       );
     }
 
+    if (this.state.imgFailed) {
+      return <SvgUri style={style} source={uri} />;
+    }
+
     return (
       <Touchable
         nativeId="image-zoom-clickable-img"
         onPress={this.openModal}
         underlayColor="transparent"
       >
-        <Image style={style} source={uri} />
+        <Image
+          style={style}
+          source={uri}
+          onError={() => this.setState({ imgFailed: true })}
+        />
       </Touchable>
     );
   }
