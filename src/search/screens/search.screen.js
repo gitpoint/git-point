@@ -22,6 +22,12 @@ import { colors, fonts, normalize } from 'config';
 import { isIphoneX, translate } from 'utils';
 import { RestClient } from 'api';
 
+const NAV_QUERY_PARAM = 'q';
+const SearchTypes = {
+  REPOS: 0,
+  USERS: 1,
+};
+
 const mapStateToProps = (state, ownProps) => {
   const {
     auth: { locale },
@@ -29,7 +35,7 @@ const mapStateToProps = (state, ownProps) => {
     entities: { repos, users },
   } = state;
 
-  const searchQuery = ownProps.navigation.getParam('q');
+  const searchQuery = ownProps.navigation.getParam(NAV_QUERY_PARAM);
 
   const searchedReposPagination = SEARCH_REPOS[searchQuery] || {
     ids: [],
@@ -135,7 +141,7 @@ class Search extends Component {
     this.state = {
       query: '',
       currentQuery: {},
-      searchType: 0,
+      searchType: SearchTypes.REPOS,
       searchStart: false,
       searchFocus: false,
     };
@@ -162,8 +168,8 @@ class Search extends Component {
         },
         query: searchedQuery,
       });
-      this.props.navigation.setParams({ q: searchedQuery });
-      if (selectedSearchType === 0) {
+      this.props.navigation.setParams({ [NAV_QUERY_PARAM]: searchedQuery });
+      if (selectedSearchType === SearchTypes.REPOS) {
         searchRepos(searchedQuery);
       } else {
         searchUsers(searchedQuery);
@@ -187,7 +193,7 @@ class Search extends Component {
   };
 
   renderItem = ({ item }) => {
-    if (this.state.searchType === 0) {
+    if (this.state.searchType === SearchTypes.REPOS) {
       return (
         <RepositoryListItem
           repository={item}
@@ -204,7 +210,9 @@ class Search extends Component {
 
     if (
       this.props[
-        searchType === 0 ? 'searchedReposPagination' : 'searchedUsersPagination'
+        searchType === SearchTypes.REPOS
+          ? 'searchedReposPagination'
+          : 'searchedUsersPagination'
       ].nextPageUrl === null
     ) {
       return null;
@@ -240,13 +248,13 @@ class Search extends Component {
       searchStart &&
       !isPendingSearchRepos &&
       searchedRepos.length === 0 &&
-      searchType === 0;
+      searchType === SearchTypes.REPOS;
 
     const noUsersFound =
       searchStart &&
       !isPendingSearchUsers &&
       searchedUsers.length === 0 &&
-      searchType === 1;
+      searchType === SearchTypes.USERS;
 
     const isPending = isPendingSearchUsers || isPendingSearchRepos;
     const noResults = !noUsersFound && !noReposFound;
@@ -283,7 +291,9 @@ class Search extends Component {
         {isPendingSearchRepos &&
           searchType === 0 && (
             <LoadingContainer
-              animating={isPendingSearchRepos && searchType === 0}
+              animating={
+                isPendingSearchRepos && searchType === SearchTypes.REPOS
+              }
               text={translate('search.main.searchingMessage', locale, {
                 query,
               })}
@@ -293,7 +303,9 @@ class Search extends Component {
         {isPendingSearchUsers &&
           searchType === 1 && (
             <LoadingContainer
-              animating={isPendingSearchUsers && searchType === 1}
+              animating={
+                isPendingSearchUsers && searchType === SearchTypes.USERS
+              }
               text={translate('search.main.searchingMessage', locale, {
                 query,
               })}
@@ -304,21 +316,27 @@ class Search extends Component {
           noResults && (
             <ListContainer noBorderTopWidth={isPending}>
               <FlatList
-                data={searchType === 0 ? searchedRepos : searchedUsers}
+                data={
+                  searchType === SearchTypes.REPOS
+                    ? searchedRepos
+                    : searchedUsers
+                }
                 onRefresh={() =>
-                  this.props[searchType === 0 ? 'searchRepos' : 'searchUsers'](
-                    query,
-                    {
-                      forceRefresh: true,
-                    }
-                  )
+                  this.props[
+                    searchType === SearchTypes.REPOS
+                      ? 'searchRepos'
+                      : 'searchUsers'
+                  ](query, {
+                    forceRefresh: true,
+                  })
                 }
                 refreshing={isPendingSearchRepos || isPendingSearchUsers}
                 onEndReached={() =>
-                  this.props[searchType === 0 ? 'searchRepos' : 'searchUsers'](
-                    query,
-                    { loadMore: true }
-                  )
+                  this.props[
+                    searchType === SearchTypes.REPOS
+                      ? 'searchRepos'
+                      : 'searchUsers'
+                  ](query, { loadMore: true })
                 }
                 onEndReachedThreshold={0.5}
                 ListFooterComponent={this.renderFooter}
@@ -333,7 +351,7 @@ class Search extends Component {
             <SearchInfoText>
               {translate('search.main.searchMessage', locale, {
                 type:
-                  searchType === 0
+                  searchType === SearchTypes.REPOS
                     ? translate('search.main.repository', locale)
                     : translate('search.main.user', locale),
               })}
@@ -344,7 +362,7 @@ class Search extends Component {
         {searchStart &&
           !isPendingSearchRepos &&
           searchedRepos.length === 0 &&
-          searchType === 0 && (
+          searchType === SearchTypes.REPOS && (
             <TextContainer>
               <SearchInfoText>
                 {translate('search.main.noRepositoriesFound', locale)}
@@ -355,7 +373,7 @@ class Search extends Component {
         {searchStart &&
           !isPendingSearchUsers &&
           searchedUsers.length === 0 &&
-          searchType === 1 && (
+          searchType === SearchTypes.USERS && (
             <TextContainer>
               <SearchInfoText>
                 {translate('search.main.noUsersFound', locale)}
