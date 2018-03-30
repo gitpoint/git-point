@@ -149,4 +149,23 @@ export class Client {
       }));
     },
   };
+
+  search = {
+    repos: async (q, params) => {
+      return this.call(`search/repositories?q=${q}`, params).then(response => ({
+        response,
+        nextPageUrl: this.getNextPageUrl(response),
+        schema: Schemas.REPO_ARRAY,
+        normalizrKey: 'items',
+      }));
+    },
+    users: async (q, params) => {
+      return this.call(`search/users?q=${q}`, params).then(response => ({
+        response,
+        nextPageUrl: this.getNextPageUrl(response),
+        schema: Schemas.USER_ARRAY,
+        normalizrKey: 'items',
+      }));
+    },
+  };
 }

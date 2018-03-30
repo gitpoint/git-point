@@ -81,4 +81,6 @@ export const pagination = combineReducers({
   ACTIVITY_GET_STARRED_REPOS_FOR_USER: paginate(
     Actions.ACTIVITY_GET_STARRED_REPOS_FOR_USER
   ),
+  SEARCH_REPOS: paginate(Actions.SEARCH_REPOS),
+  SEARCH_USERS: paginate(Actions.SEARCH_USERS),
 });

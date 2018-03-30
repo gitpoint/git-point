@@ -1,8 +1,13 @@
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { FlatList, Dimensions, Platform } from 'react-native';
+import {
+  View,
+  ActivityIndicator,
+  FlatList,
+  Dimensions,
+  Platform,
+} from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
 
 import {
@@ -15,24 +20,43 @@ import {
 import styled from 'styled-components';
 import { colors, fonts, normalize } from 'config';
 import { isIphoneX, translate } from 'utils';
-import { searchRepos, searchUsers } from '../index';
+import { RestClient } from 'api';
 
-const mapStateToProps = state => ({
-  users: state.search.users,
-  repos: state.search.repos,
-  locale: state.auth.locale,
-  isPendingSearchUsers: state.search.isPendingSearchUsers,
-  isPendingSearchRepos: state.search.isPendingSearchRepos,
-});
+const mapStateToProps = (state, ownProps) => {
+  const {
+    auth: { locale },
+    pagination: { SEARCH_REPOS, SEARCH_USERS },
+    entities: { repos, users },
+  } = state;
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      searchRepos,
-      searchUsers,
-    },
-    dispatch
-  );
+  const searchQuery = ownProps.navigation.getParam('q');
+
+  const searchedReposPagination = SEARCH_REPOS[searchQuery] || {
+    ids: [],
+    isFetching: false,
+  };
+  const searchedRepos = searchedReposPagination.ids.map(id => repos[id]);
+
+  const searchedUsersPagination = SEARCH_USERS[searchQuery] || {
+    ids: [],
+    isFetching: false,
+  };
+  const searchedUsers = searchedUsersPagination.ids.map(id => users[id]);
+
+  return {
+    locale,
+    searchedReposPagination,
+    searchedRepos,
+    searchedUsersPagination,
+    searchedUsers,
+    searchQuery,
+  };
+};
+
+const mapDispatchToProps = {
+  searchRepos: RestClient.search.repos,
+  searchUsers: RestClient.search.users,
+};
 
 const SearchBarWrapper = styled.View`
   flex-direction: row;
@@ -90,11 +114,11 @@ class Search extends Component {
   props: {
     searchRepos: Function,
     searchUsers: Function,
-    users: Array,
-    repos: Array,
+    searchedUsers: Array,
+    searchedUsersPagination: Object,
+    searchedRepos: Array,
+    searchedReposPagination: Object,
     locale: string,
-    isPendingSearchUsers: boolean,
-    isPendingSearchRepos: boolean,
     navigation: Object,
   };
 
@@ -127,19 +151,22 @@ class Search extends Component {
     const selectedSearchType =
       selectedType !== null ? selectedType : this.state.searchType;
 
-    if (query !== '') {
+    if (query.trim() !== '') {
+      const searchedQuery = query.toLowerCase();
+
       this.setState({
         searchStart: true,
         currentQuery: {
           ...this.state.currentQuery,
-          [selectedSearchType]: query,
+          [selectedSearchType]: searchedQuery,
         },
-        query,
+        query: searchedQuery,
       });
+      this.props.navigation.setParams({ q: searchedQuery });
       if (selectedSearchType === 0) {
-        searchRepos(query);
+        searchRepos(searchedQuery);
       } else {
-        searchUsers(query);
+        searchUsers(searchedQuery);
       }
     }
   }
@@ -172,25 +199,53 @@ class Search extends Component {
     return <UserListItem user={item} navigation={this.props.navigation} />;
   };
 
+  renderFooter = () => {
+    const { searchType } = this.state;
+
+    if (
+      this.props[
+        searchType === 0 ? 'searchedReposPagination' : 'searchedUsersPagination'
+      ].nextPageUrl === null
+    ) {
+      return null;
+    }
+
+    return (
+      <View
+        style={{
+          paddingVertical: 20,
+        }}
+      >
+        <ActivityIndicator animating size="large" />
+      </View>
+    );
+  };
+
   render() {
     const {
-      users,
-      repos,
+      searchedRepos,
+      searchedReposPagination,
+      searchedUsers,
+      searchedUsersPagination,
       locale,
-      isPendingSearchUsers,
-      isPendingSearchRepos,
     } = this.props;
+
+    const isPendingSearchRepos =
+      searchedRepos.length === 0 && searchedReposPagination.isFetching;
+    const isPendingSearchUsers =
+      searchedUsers.length === 0 && searchedUsersPagination.isFetching;
+
     const { query, searchType, searchStart } = this.state;
     const noReposFound =
       searchStart &&
       !isPendingSearchRepos &&
-      repos.length === 0 &&
+      searchedRepos.length === 0 &&
       searchType === 0;
 
     const noUsersFound =
       searchStart &&
       !isPendingSearchUsers &&
-      users.length === 0 &&
+      searchedUsers.length === 0 &&
       searchType === 1;
 
     const isPending = isPendingSearchUsers || isPendingSearchRepos;
@@ -249,7 +304,24 @@ class Search extends Component {
           noResults && (
             <ListContainer noBorderTopWidth={isPending}>
               <FlatList
-                data={searchType === 0 ? repos : users}
+                data={searchType === 0 ? searchedRepos : searchedUsers}
+                onRefresh={() =>
+                  this.props[searchType === 0 ? 'searchRepos' : 'searchUsers'](
+                    query,
+                    {
+                      forceRefresh: true,
+                    }
+                  )
+                }
+                refreshing={isPendingSearchRepos || isPendingSearchUsers}
+                onEndReached={() =>
+                  this.props[searchType === 0 ? 'searchRepos' : 'searchUsers'](
+                    query,
+                    { loadMore: true }
+                  )
+                }
+                onEndReachedThreshold={0.5}
+                ListFooterComponent={this.renderFooter}
                 keyExtractor={this.keyExtractor}
                 renderItem={this.renderItem}
               />
@@ -271,7 +343,7 @@ class Search extends Component {
 
         {searchStart &&
           !isPendingSearchRepos &&
-          repos.length === 0 &&
+          searchedRepos.length === 0 &&
           searchType === 0 && (
             <TextContainer>
               <SearchInfoText>
@@ -282,7 +354,7 @@ class Search extends Component {
 
         {searchStart &&
           !isPendingSearchUsers &&
-          users.length === 0 &&
+          searchedUsers.length === 0 &&
           searchType === 1 && (
             <TextContainer>
               <SearchInfoText>
