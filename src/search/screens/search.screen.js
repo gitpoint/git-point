@@ -37,24 +37,28 @@ const mapStateToProps = (state, ownProps) => {
 
   const searchQuery = ownProps.navigation.getParam(NAV_QUERY_PARAM);
 
-  const searchedReposPagination = SEARCH_REPOS[searchQuery] || {
+  const reposSearchResultsPagination = SEARCH_REPOS[searchQuery] || {
     ids: [],
     isFetching: false,
   };
-  const searchedRepos = searchedReposPagination.ids.map(id => repos[id]);
+  const reposSearchResults = reposSearchResultsPagination.ids.map(
+    id => repos[id]
+  );
 
-  const searchedUsersPagination = SEARCH_USERS[searchQuery] || {
+  const usersSearchResultsPagination = SEARCH_USERS[searchQuery] || {
     ids: [],
     isFetching: false,
   };
-  const searchedUsers = searchedUsersPagination.ids.map(id => users[id]);
+  const usersSearchResults = usersSearchResultsPagination.ids.map(
+    id => users[id]
+  );
 
   return {
     locale,
-    searchedReposPagination,
-    searchedRepos,
-    searchedUsersPagination,
-    searchedUsers,
+    reposSearchResultsPagination,
+    reposSearchResults,
+    usersSearchResultsPagination,
+    usersSearchResults,
     searchQuery,
   };
 };
@@ -120,10 +124,10 @@ class Search extends Component {
   props: {
     searchRepos: Function,
     searchUsers: Function,
-    searchedUsers: Array,
-    searchedUsersPagination: Object,
-    searchedRepos: Array,
-    searchedReposPagination: Object,
+    usersSearchResults: Array,
+    usersSearchResultsPagination: Object,
+    reposSearchResults: Array,
+    reposSearchResultsPagination: Object,
     locale: string,
     navigation: Object,
   };
@@ -211,8 +215,8 @@ class Search extends Component {
     if (
       this.props[
         searchType === SearchTypes.REPOS
-          ? 'searchedReposPagination'
-          : 'searchedUsersPagination'
+          ? 'reposSearchResultsPagination'
+          : 'usersSearchResultsPagination'
       ].nextPageUrl === null
     ) {
       return null;
@@ -231,29 +235,31 @@ class Search extends Component {
 
   render() {
     const {
-      searchedRepos,
-      searchedReposPagination,
-      searchedUsers,
-      searchedUsersPagination,
+      reposSearchResults,
+      reposSearchResultsPagination,
+      usersSearchResults,
+      usersSearchResultsPagination,
       locale,
     } = this.props;
 
     const isPendingSearchRepos =
-      searchedRepos.length === 0 && searchedReposPagination.isFetching;
+      reposSearchResults.length === 0 &&
+      reposSearchResultsPagination.isFetching;
     const isPendingSearchUsers =
-      searchedUsers.length === 0 && searchedUsersPagination.isFetching;
+      usersSearchResults.length === 0 &&
+      usersSearchResultsPagination.isFetching;
 
     const { query, searchType, searchStart } = this.state;
     const noReposFound =
       searchStart &&
       !isPendingSearchRepos &&
-      searchedRepos.length === 0 &&
+      reposSearchResults.length === 0 &&
       searchType === SearchTypes.REPOS;
 
     const noUsersFound =
       searchStart &&
       !isPendingSearchUsers &&
-      searchedUsers.length === 0 &&
+      usersSearchResults.length === 0 &&
       searchType === SearchTypes.USERS;
 
     const isPending = isPendingSearchUsers || isPendingSearchRepos;
@@ -318,8 +324,8 @@ class Search extends Component {
               <FlatList
                 data={
                   searchType === SearchTypes.REPOS
-                    ? searchedRepos
-                    : searchedUsers
+                    ? reposSearchResults
+                    : usersSearchResults
                 }
                 onRefresh={() =>
                   this.props[
@@ -361,7 +367,7 @@ class Search extends Component {
 
         {searchStart &&
           !isPendingSearchRepos &&
-          searchedRepos.length === 0 &&
+          reposSearchResults.length === 0 &&
           searchType === SearchTypes.REPOS && (
             <TextContainer>
               <SearchInfoText>
@@ -372,7 +378,7 @@ class Search extends Component {
 
         {searchStart &&
           !isPendingSearchUsers &&
-          searchedUsers.length === 0 &&
+          usersSearchResults.length === 0 &&
           searchType === SearchTypes.USERS && (
             <TextContainer>
               <SearchInfoText>
