@@ -155,6 +155,19 @@ class Search extends Component {
     this.renderItem = this.renderItem.bind(this);
   }
 
+  getNoResultsFound = (type = this.state.searchType) => {
+    const { locale } = this.props;
+
+    switch (type) {
+      case SearchTypes.REPOS:
+        return translate('search.main.noRepositoriesFound', locale);
+      case SearchTypes.USERS:
+        return translate('search.main.noUsersFound', locale);
+      default:
+        return null;
+    }
+  };
+
   getSearchPagination = (type = this.state.searchType) => {
     switch (type) {
       case SearchTypes.REPOS:
@@ -265,36 +278,17 @@ class Search extends Component {
   };
 
   render() {
-    const {
-      reposSearchResults,
-      reposSearchResultsPagination,
-      usersSearchResults,
-      usersSearchResultsPagination,
-      locale,
-    } = this.props;
+    const { locale } = this.props;
 
-    const isPendingSearchRepos =
-      reposSearchResults.length === 0 &&
-      reposSearchResultsPagination.isFetching;
-    const isPendingSearchUsers =
-      usersSearchResults.length === 0 &&
-      usersSearchResultsPagination.isFetching;
+    const isPendingSearch =
+      this.getSearchResults().length === 0 &&
+      this.getSearchPagination().isFetching;
 
     const { query, searchType, searchStart } = this.state;
-    const noReposFound =
-      searchStart &&
-      !isPendingSearchRepos &&
-      reposSearchResults.length === 0 &&
-      searchType === SearchTypes.REPOS;
 
-    const noUsersFound =
-      searchStart &&
-      !isPendingSearchUsers &&
-      usersSearchResults.length === 0 &&
-      searchType === SearchTypes.USERS;
-
-    const isPending = isPendingSearchUsers || isPendingSearchRepos;
-    const noResults = !noUsersFound && !noReposFound;
+    const noResults =
+      this.getSearchResults().length === 0 &&
+      !this.getSearchPagination().isFetching;
 
     return (
       <ViewContainer>
@@ -325,33 +319,18 @@ class Search extends Component {
           ]}
         />
 
-        {isPendingSearchRepos &&
-          searchType === SearchTypes.REPOS && (
-            <LoadingContainer
-              animating={
-                isPendingSearchRepos && searchType === SearchTypes.REPOS
-              }
-              text={translate('search.main.searchingMessage', locale, {
-                query,
-              })}
-            />
-          )}
-
-        {isPendingSearchUsers &&
-          searchType === SearchTypes.USERS && (
-            <LoadingContainer
-              animating={
-                isPendingSearchUsers && searchType === SearchTypes.USERS
-              }
-              text={translate('search.main.searchingMessage', locale, {
-                query,
-              })}
-            />
-          )}
+        {isPendingSearch && (
+          <LoadingContainer
+            animating={isPendingSearch}
+            text={translate('search.main.searchingMessage', locale, {
+              query,
+            })}
+          />
+        )}
 
         {searchStart &&
-          noResults && (
-            <ListContainer noBorderTopWidth={isPending}>
+          !noResults && (
+            <ListContainer noBorderTopWidth={isPendingSearch}>
               <FlatList
                 data={this.getSearchResults()}
                 onRefresh={() =>
@@ -359,7 +338,7 @@ class Search extends Component {
                     forceRefresh: true,
                   })
                 }
-                refreshing={isPendingSearchRepos || isPendingSearchUsers}
+                refreshing={isPendingSearch}
                 onEndReached={() =>
                   this.getSearcher()(query, { loadMore: true })
                 }
@@ -385,24 +364,10 @@ class Search extends Component {
         )}
 
         {searchStart &&
-          !isPendingSearchRepos &&
-          reposSearchResults.length === 0 &&
-          searchType === SearchTypes.REPOS && (
+          !isPendingSearch &&
+          this.getSearchResults().length === 0 && (
             <TextContainer>
-              <SearchInfoText>
-                {translate('search.main.noRepositoriesFound', locale)}
-              </SearchInfoText>
-            </TextContainer>
-          )}
-
-        {searchStart &&
-          !isPendingSearchUsers &&
-          usersSearchResults.length === 0 &&
-          searchType === SearchTypes.USERS && (
-            <TextContainer>
-              <SearchInfoText>
-                {translate('search.main.noUsersFound', locale)}
-              </SearchInfoText>
+              <SearchInfoText>{this.getNoResultsFound()}</SearchInfoText>
             </TextContainer>
           )}
       </ViewContainer>
