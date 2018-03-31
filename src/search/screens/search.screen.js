@@ -155,9 +155,46 @@ class Search extends Component {
     this.renderItem = this.renderItem.bind(this);
   }
 
-  search(query, selectedType = null) {
-    const { searchRepos, searchUsers } = this.props;
+  getSearchPagination = (type = this.state.searchType) => {
+    switch (type) {
+      case SearchTypes.REPOS:
+        return this.props.reposSearchResultsPagination;
 
+      case SearchTypes.USERS:
+        return this.props.usersSearchResultsPagination;
+
+      default:
+        return null;
+    }
+  };
+
+  getSearchResults = (type = this.state.searchType) => {
+    switch (type) {
+      case SearchTypes.REPOS:
+        return this.props.reposSearchResults;
+
+      case SearchTypes.USERS:
+        return this.props.usersSearchResults;
+
+      default:
+        return null;
+    }
+  };
+
+  getSearcher = (type = this.state.searchType) => {
+    switch (type) {
+      case SearchTypes.REPOS:
+        return this.props.searchRepos;
+
+      case SearchTypes.USERS:
+        return this.props.searchUsers;
+
+      default:
+        return null;
+    }
+  };
+
+  search(query, selectedType = null) {
     const selectedSearchType =
       selectedType !== null ? selectedType : this.state.searchType;
 
@@ -173,11 +210,8 @@ class Search extends Component {
         query: searchedQuery,
       });
       this.props.navigation.setParams({ [NAV_QUERY_PARAM]: searchedQuery });
-      if (selectedSearchType === SearchTypes.REPOS) {
-        searchRepos(searchedQuery);
-      } else {
-        searchUsers(searchedQuery);
-      }
+
+      this.getSearcher(selectedSearchType)(searchedQuery);
     }
   }
 
@@ -197,28 +231,25 @@ class Search extends Component {
   };
 
   renderItem = ({ item }) => {
-    if (this.state.searchType === SearchTypes.REPOS) {
-      return (
-        <RepositoryListItem
-          repository={item}
-          navigation={this.props.navigation}
-        />
-      );
-    }
+    switch (this.state.searchType) {
+      case SearchTypes.REPOS:
+        return (
+          <RepositoryListItem
+            repository={item}
+            navigation={this.props.navigation}
+          />
+        );
 
-    return <UserListItem user={item} navigation={this.props.navigation} />;
+      case SearchTypes.USERS:
+        return <UserListItem user={item} navigation={this.props.navigation} />;
+
+      default:
+        return null;
+    }
   };
 
   renderFooter = () => {
-    const { searchType } = this.state;
-
-    if (
-      this.props[
-        searchType === SearchTypes.REPOS
-          ? 'reposSearchResultsPagination'
-          : 'usersSearchResultsPagination'
-      ].nextPageUrl === null
-    ) {
+    if (this.getSearchPagination().nextPageUrl === null) {
       return null;
     }
 
@@ -295,7 +326,7 @@ class Search extends Component {
         />
 
         {isPendingSearchRepos &&
-          searchType === 0 && (
+          searchType === SearchTypes.REPOS && (
             <LoadingContainer
               animating={
                 isPendingSearchRepos && searchType === SearchTypes.REPOS
@@ -307,7 +338,7 @@ class Search extends Component {
           )}
 
         {isPendingSearchUsers &&
-          searchType === 1 && (
+          searchType === SearchTypes.USERS && (
             <LoadingContainer
               animating={
                 isPendingSearchUsers && searchType === SearchTypes.USERS
@@ -322,27 +353,15 @@ class Search extends Component {
           noResults && (
             <ListContainer noBorderTopWidth={isPending}>
               <FlatList
-                data={
-                  searchType === SearchTypes.REPOS
-                    ? reposSearchResults
-                    : usersSearchResults
-                }
+                data={this.getSearchResults()}
                 onRefresh={() =>
-                  this.props[
-                    searchType === SearchTypes.REPOS
-                      ? 'searchRepos'
-                      : 'searchUsers'
-                  ](query, {
+                  this.getSearcher()(query, {
                     forceRefresh: true,
                   })
                 }
                 refreshing={isPendingSearchRepos || isPendingSearchUsers}
                 onEndReached={() =>
-                  this.props[
-                    searchType === SearchTypes.REPOS
-                      ? 'searchRepos'
-                      : 'searchUsers'
-                  ](query, { loadMore: true })
+                  this.getSearcher()(query, { loadMore: true })
                 }
                 onEndReachedThreshold={0.5}
                 ListFooterComponent={this.renderFooter}
