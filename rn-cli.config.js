@@ -2,7 +2,6 @@
 
 const android = require('react-native/local-cli/core/android');
 const ios = require('react-native/local-cli/core/ios');
-const windows = require('react-native/local-cli/core/windows');
 const findAssets = require('react-native/local-cli/core/findAssets');
 const wrapCommands = require('react-native/local-cli/core/wrapCommands');
 
@@ -27,7 +26,6 @@ const config = {
     return Object.assign({}, rnpm, {
       ios: ios.dependencyConfig(folder, rnpm.ios || {}),
       android: android.dependencyConfig(folder, rnpm.android || {}),
-      windows: windows.dependencyConfig(folder, rnpm.windows || {}),
       assets: findAssets(folder, rnpm.assets),
       commands: wrapCommands(rnpm.commands),
       params: rnpm.params || [],
