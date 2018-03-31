@@ -261,7 +261,11 @@ class Search extends Component {
     }
   };
 
-  renderFooter = () => {
+  renderFooter = isPendingSearch => {
+    if (isPendingSearch) {
+      return null;
+    }
+
     if (this.getSearchPagination().nextPageUrl === null) {
       return null;
     }
@@ -343,7 +347,7 @@ class Search extends Component {
                   this.getSearcher()(query, { loadMore: true })
                 }
                 onEndReachedThreshold={0.5}
-                ListFooterComponent={this.renderFooter}
+                ListFooterComponent={() => this.renderFooter(isPendingSearch)}
                 keyExtractor={this.keyExtractor}
                 renderItem={this.renderItem}
               />
