@@ -1,8 +1,13 @@
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { FlatList, Dimensions, Platform } from 'react-native';
+import {
+  View,
+  ActivityIndicator,
+  FlatList,
+  Dimensions,
+  Platform,
+} from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
 
 import {
@@ -15,24 +20,53 @@ import {
 import styled from 'styled-components';
 import { colors, fonts, normalize } from 'config';
 import { isIphoneX, translate } from 'utils';
-import { searchRepos, searchUsers } from '../index';
+import { RestClient } from 'api';
 
-const mapStateToProps = state => ({
-  users: state.search.users,
-  repos: state.search.repos,
-  locale: state.auth.locale,
-  isPendingSearchUsers: state.search.isPendingSearchUsers,
-  isPendingSearchRepos: state.search.isPendingSearchRepos,
-});
+const NAV_QUERY_PARAM = 'q';
+const SearchTypes = {
+  REPOS: 0,
+  USERS: 1,
+};
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      searchRepos,
-      searchUsers,
-    },
-    dispatch
+const mapStateToProps = (state, ownProps) => {
+  const {
+    auth: { locale },
+    pagination: { SEARCH_REPOS, SEARCH_USERS },
+    entities: { repos, users },
+  } = state;
+
+  const searchQuery = ownProps.navigation.getParam(NAV_QUERY_PARAM);
+
+  const reposSearchResultsPagination = SEARCH_REPOS[searchQuery] || {
+    ids: [],
+    isFetching: false,
+  };
+  const reposSearchResults = reposSearchResultsPagination.ids.map(
+    id => repos[id]
   );
+
+  const usersSearchResultsPagination = SEARCH_USERS[searchQuery] || {
+    ids: [],
+    isFetching: false,
+  };
+  const usersSearchResults = usersSearchResultsPagination.ids.map(
+    id => users[id]
+  );
+
+  return {
+    locale,
+    reposSearchResultsPagination,
+    reposSearchResults,
+    usersSearchResultsPagination,
+    usersSearchResults,
+    searchQuery,
+  };
+};
+
+const mapDispatchToProps = {
+  searchRepos: RestClient.search.repos,
+  searchUsers: RestClient.search.users,
+};
 
 const SearchBarWrapper = styled.View`
   flex-direction: row;
@@ -90,11 +124,11 @@ class Search extends Component {
   props: {
     searchRepos: Function,
     searchUsers: Function,
-    users: Array,
-    repos: Array,
+    usersSearchResults: Array,
+    usersSearchResultsPagination: Object,
+    reposSearchResults: Array,
+    reposSearchResultsPagination: Object,
     locale: string,
-    isPendingSearchUsers: boolean,
-    isPendingSearchRepos: boolean,
     navigation: Object,
   };
 
@@ -111,7 +145,7 @@ class Search extends Component {
     this.state = {
       query: '',
       currentQuery: {},
-      searchType: 0,
+      searchType: SearchTypes.REPOS,
       searchStart: false,
       searchFocus: false,
     };
@@ -121,26 +155,76 @@ class Search extends Component {
     this.renderItem = this.renderItem.bind(this);
   }
 
-  search(query, selectedType = null) {
-    const { searchRepos, searchUsers } = this.props;
+  getNoResultsFound = (type = this.state.searchType) => {
+    const { locale } = this.props;
 
+    switch (type) {
+      case SearchTypes.REPOS:
+        return translate('search.main.noRepositoriesFound', locale);
+      case SearchTypes.USERS:
+        return translate('search.main.noUsersFound', locale);
+      default:
+        return null;
+    }
+  };
+
+  getSearchPagination = (type = this.state.searchType) => {
+    switch (type) {
+      case SearchTypes.REPOS:
+        return this.props.reposSearchResultsPagination;
+
+      case SearchTypes.USERS:
+        return this.props.usersSearchResultsPagination;
+
+      default:
+        return null;
+    }
+  };
+
+  getSearchResults = (type = this.state.searchType) => {
+    switch (type) {
+      case SearchTypes.REPOS:
+        return this.props.reposSearchResults;
+
+      case SearchTypes.USERS:
+        return this.props.usersSearchResults;
+
+      default:
+        return null;
+    }
+  };
+
+  getSearcher = (type = this.state.searchType) => {
+    switch (type) {
+      case SearchTypes.REPOS:
+        return this.props.searchRepos;
+
+      case SearchTypes.USERS:
+        return this.props.searchUsers;
+
+      default:
+        return null;
+    }
+  };
+
+  search(query, selectedType = null) {
     const selectedSearchType =
       selectedType !== null ? selectedType : this.state.searchType;
 
-    if (query !== '') {
+    if (query.trim() !== '') {
+      const searchedQuery = query.toLowerCase();
+
       this.setState({
         searchStart: true,
         currentQuery: {
           ...this.state.currentQuery,
-          [selectedSearchType]: query,
+          [selectedSearchType]: searchedQuery,
         },
-        query,
+        query: searchedQuery,
       });
-      if (selectedSearchType === 0) {
-        searchRepos(query);
-      } else {
-        searchUsers(query);
-      }
+      this.props.navigation.setParams({ [NAV_QUERY_PARAM]: searchedQuery });
+
+      this.getSearcher(selectedSearchType)(searchedQuery);
     }
   }
 
@@ -160,41 +244,55 @@ class Search extends Component {
   };
 
   renderItem = ({ item }) => {
-    if (this.state.searchType === 0) {
-      return (
-        <RepositoryListItem
-          repository={item}
-          navigation={this.props.navigation}
-        />
-      );
+    switch (this.state.searchType) {
+      case SearchTypes.REPOS:
+        return (
+          <RepositoryListItem
+            repository={item}
+            navigation={this.props.navigation}
+          />
+        );
+
+      case SearchTypes.USERS:
+        return <UserListItem user={item} navigation={this.props.navigation} />;
+
+      default:
+        return null;
+    }
+  };
+
+  renderFooter = isPendingSearch => {
+    if (isPendingSearch) {
+      return null;
     }
 
-    return <UserListItem user={item} navigation={this.props.navigation} />;
+    if (this.getSearchPagination().nextPageUrl === null) {
+      return null;
+    }
+
+    return (
+      <View
+        style={{
+          paddingVertical: 20,
+        }}
+      >
+        <ActivityIndicator animating size="large" />
+      </View>
+    );
   };
 
   render() {
-    const {
-      users,
-      repos,
-      locale,
-      isPendingSearchUsers,
-      isPendingSearchRepos,
-    } = this.props;
+    const { locale } = this.props;
+
+    const isPendingSearch =
+      this.getSearchResults().length === 0 &&
+      this.getSearchPagination().isFetching;
+
     const { query, searchType, searchStart } = this.state;
-    const noReposFound =
-      searchStart &&
-      !isPendingSearchRepos &&
-      repos.length === 0 &&
-      searchType === 0;
 
-    const noUsersFound =
-      searchStart &&
-      !isPendingSearchUsers &&
-      users.length === 0 &&
-      searchType === 1;
-
-    const isPending = isPendingSearchUsers || isPendingSearchRepos;
-    const noResults = !noUsersFound && !noReposFound;
+    const noResults =
+      this.getSearchResults().length === 0 &&
+      !this.getSearchPagination().isFetching;
 
     return (
       <ViewContainer>
@@ -225,31 +323,31 @@ class Search extends Component {
           ]}
         />
 
-        {isPendingSearchRepos &&
-          searchType === 0 && (
-            <LoadingContainer
-              animating={isPendingSearchRepos && searchType === 0}
-              text={translate('search.main.searchingMessage', locale, {
-                query,
-              })}
-            />
-          )}
-
-        {isPendingSearchUsers &&
-          searchType === 1 && (
-            <LoadingContainer
-              animating={isPendingSearchUsers && searchType === 1}
-              text={translate('search.main.searchingMessage', locale, {
-                query,
-              })}
-            />
-          )}
+        {isPendingSearch && (
+          <LoadingContainer
+            animating={isPendingSearch}
+            text={translate('search.main.searchingMessage', locale, {
+              query,
+            })}
+          />
+        )}
 
         {searchStart &&
-          noResults && (
-            <ListContainer noBorderTopWidth={isPending}>
+          !noResults && (
+            <ListContainer noBorderTopWidth={isPendingSearch}>
               <FlatList
-                data={searchType === 0 ? repos : users}
+                data={this.getSearchResults()}
+                onRefresh={() =>
+                  this.getSearcher()(query, {
+                    forceRefresh: true,
+                  })
+                }
+                refreshing={isPendingSearch}
+                onEndReached={() =>
+                  this.getSearcher()(query, { loadMore: true })
+                }
+                onEndReachedThreshold={0.5}
+                ListFooterComponent={() => this.renderFooter(isPendingSearch)}
                 keyExtractor={this.keyExtractor}
                 renderItem={this.renderItem}
               />
@@ -261,7 +359,7 @@ class Search extends Component {
             <SearchInfoText>
               {translate('search.main.searchMessage', locale, {
                 type:
-                  searchType === 0
+                  searchType === SearchTypes.REPOS
                     ? translate('search.main.repository', locale)
                     : translate('search.main.user', locale),
               })}
@@ -270,24 +368,10 @@ class Search extends Component {
         )}
 
         {searchStart &&
-          !isPendingSearchRepos &&
-          repos.length === 0 &&
-          searchType === 0 && (
+          !isPendingSearch &&
+          this.getSearchResults().length === 0 && (
             <TextContainer>
-              <SearchInfoText>
-                {translate('search.main.noRepositoriesFound', locale)}
-              </SearchInfoText>
-            </TextContainer>
-          )}
-
-        {searchStart &&
-          !isPendingSearchUsers &&
-          users.length === 0 &&
-          searchType === 1 && (
-            <TextContainer>
-              <SearchInfoText>
-                {translate('search.main.noUsersFound', locale)}
-              </SearchInfoText>
+              <SearchInfoText>{this.getNoResultsFound()}</SearchInfoText>
             </TextContainer>
           )}
       </ViewContainer>
