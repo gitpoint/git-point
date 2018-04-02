@@ -61,9 +61,7 @@ export class Client {
       }
     }
 
-    return fetch(finalUrl, parameters)
-      .then(response => response)
-      .catch(error => error);
+    return fetch(finalUrl, parameters);
   };
 
   /* eslint-disable no-unused-vars */
