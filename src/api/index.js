@@ -213,31 +213,6 @@ export const fetchUserOrgs = (user, accessToken) =>
 export const fetchReadMe = (user, repository, accessToken) =>
   v3.getHtml(`/repos/${user}/${repository}/readme?ref=master`, accessToken);
 
-export const fetchEditIssue = (
-  owner,
-  repoName,
-  issueNum,
-  editParams,
-  accessToken
-) =>
-  v3.patchFull(
-    `/repos/${owner}/${repoName}/issues/${issueNum}`,
-    accessToken,
-    editParams
-  );
-
-export const fetchChangeIssueLockStatus = (
-  owner,
-  repoName,
-  issueNum,
-  currentStatus,
-  accessToken
-) =>
-  v3[currentStatus ? 'delete' : 'put'](
-    `/repos/${owner}/${repoName}/issues/${issueNum}/lock`,
-    accessToken
-  );
-
 export const fetchNotifications = (participating, all, accessToken) =>
   v3.getJson(
     `/notifications?participating=${participating}&all=${all}`,
