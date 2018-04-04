@@ -23,6 +23,7 @@ export const createDispatchProxy = (Provider: Client) => {
             );
           }
 
+          // 1. Guess the action name from the called method
           const actionName = actionNameForCall(namespace, method);
           const action = Actions[actionName];
 
@@ -32,30 +33,33 @@ export const createDispatchProxy = (Provider: Client) => {
             );
           }
 
-          // 1. Analyze the call
+          // 2. Get all the call parameters from the client
           const callType: CallParameters = endpoint[method](...args);
 
+          // 3. Get special instructions from the SpecialParameter
           const { loadMore = false, forceRefresh = false } = callType.params;
 
-          // 2. If a pagination is involved, get it
-          const pagination = getState().pagination[actionName];
+          // 4. If a pagination is involved in the call, get its key
           const paginationKey = callType.paginationArgs
             ? getPaginationKey(callType.paginationArgs)
             : null;
 
-          // 3. Reset requested for a pagination? Dispatch it.
-          if (callType.type === 'paginated' && forceRefresh) {
-            dispatch({
-              id: paginationKey,
-              type: action.RESET,
-            });
-          }
+          // 5. Is this a paginated call ?
+          if (callType.type === 'list') {
+            // Were we instructed to reset the pagination? If so, dispatch it
+            if (forceRefresh) {
+              dispatch({
+                id: paginationKey,
+                type: action.RESET,
+              });
+            }
 
-          // 4. Give the cache a chance, or prepare for next page
-          if (pagination) {
+            // Retrieve the pagination and its state
+            const pagination = getState().pagination[actionName];
             const { pageCount = 0, isFetching = false, nextPageUrl } =
               pagination[paginationKey] || {};
 
+            // Should we block the call?
             if (
               !forceRefresh &&
               (isFetching || // Already fetching, don't retrigger a call
@@ -65,23 +69,27 @@ export const createDispatchProxy = (Provider: Client) => {
               return Promise.resolve();
             }
 
+            // Call should be performed.
+            // Were we instructed to get the next page? If so override the endpoint
             if (loadMore) {
-              // next page explicitely requested, override the endpoint
               callType.endpoint = nextPageUrl;
             }
           }
 
-          // Get accessToken from state
+          // 6. Set the accessToken from state for the next call
           client.setAuthHeaders(getState().auth.accessToken);
 
+          // 7. Call will now take place
           dispatch({
             id: paginationKey,
             type: action.PENDING,
           });
 
+          // 8. Perform the actual call, then act accordingly in the store.
           return client
             .call(callType.endpoint, callType.params, callType.fetchParameters)
             .then(response => {
+              // Something went wrong, bail to .catch()
               if (!response.ok) {
                 return response.json().then(error => {
                   return Promise.reject(
@@ -94,7 +102,10 @@ export const createDispatchProxy = (Provider: Client) => {
                 });
               }
 
-              if (callType.type === 'delete') {
+              // 9. Did we just delete a pagination item? If so, remove its id
+              // from its related pagination and bail, since we don't need to
+              // parse the JSON
+              if (callType.type === 'delete' && action.pagination) {
                 dispatch({
                   pagination: {
                     name: action.pagination.actionName,
@@ -113,14 +124,15 @@ export const createDispatchProxy = (Provider: Client) => {
                 return Promise.resolve();
               }
 
+              // 10. Parse the JSON from the answer
               return response.json().then(json => {
-                // Treat the JSON & normalize it
                 const normalizedJson = normalize(
                   callType.normalizrKey ? json[callType.normalizrKey] : json,
                   callType.schema
                 );
 
-                // Successful POST, append the new entity in the pagination if any
+                // 11-1. Did we just create a pagination item? If so, append it to its
+                // related pagination
                 if (callType.type === 'create' && action.pagination) {
                   dispatch({
                     ...normalizedJson,
@@ -134,7 +146,10 @@ export const createDispatchProxy = (Provider: Client) => {
                   });
                 }
 
-                if (pagination) {
+                // 11-2. Or did we instead get a next page of results for a pagination?
+                // If so, prepare the structure that will be merged in the existing
+                // pagination state.
+                if (callType.type === 'list') {
                   normalizedJson.pagination = {
                     name: actionName,
                     key: paginationKey,
@@ -145,7 +160,7 @@ export const createDispatchProxy = (Provider: Client) => {
                   delete normalizedJson.result;
                 }
 
-                // Success, let's dispatch it
+                // 12. All done, dispatch success.
                 dispatch({
                   ...normalizedJson,
                   id: paginationKey,
@@ -156,14 +171,12 @@ export const createDispatchProxy = (Provider: Client) => {
               });
             })
             .catch(error => {
-              displayError(error.toString());
-
               dispatch({
                 id: paginationKey,
                 type: action.ERROR,
               });
 
-              return error;
+              return displayError(error.toString());
             });
         },
       });
