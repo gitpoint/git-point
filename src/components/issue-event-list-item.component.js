@@ -87,6 +87,7 @@ export class IssueEventListItem extends Component {
   props: {
     repository: Object,
     event: Object,
+    actor: Object,
     navigation: Object,
   };
 
@@ -95,7 +96,7 @@ export class IssueEventListItem extends Component {
   };
 
   render() {
-    const { repository, event } = this.props;
+    const { repository, event, actor } = this.props;
 
     switch (event.event) {
       case 'review_requested':
@@ -132,7 +133,7 @@ export class IssueEventListItem extends Component {
             iconName="tag"
             text={
               <EventTextContainer>
-                <ActorLink actor={event.actor} onPress={this.onPressUser} />
+                <ActorLink actor={actor} onPress={this.onPressUser} />
                 <Text>
                   {' '}
                   {event.event === 'unlabeled' ? 'removed' : 'added'}{' '}
@@ -153,8 +154,8 @@ export class IssueEventListItem extends Component {
             iconBackgroundColor={colors.darkerRed}
             text={
               <Text>
-                <ActorLink actor={event.actor} onPress={this.onPressUser} />{' '}
-                closed this
+                <ActorLink actor={actor} onPress={this.onPressUser} /> closed
+                this
               </Text>
             }
             createdAt={event.created_at}
@@ -168,8 +169,8 @@ export class IssueEventListItem extends Component {
             iconColor={colors.white}
             text={
               <Text>
-                <ActorLink actor={event.actor} onPress={this.onPressUser} />{' '}
-                reopened this
+                <ActorLink actor={actor} onPress={this.onPressUser} /> reopened
+                this
               </Text>
             }
             createdAt={event.created_at}
@@ -183,8 +184,8 @@ export class IssueEventListItem extends Component {
             iconBackgroundColor={colors.purple}
             text={
               <Text>
-                <ActorLink actor={event.actor} onPress={this.onPressUser} />{' '}
-                merged <Bold>{event.commit_id.slice(0, 7)}</Bold>
+                <ActorLink actor={actor} onPress={this.onPressUser} /> merged{' '}
+                <Bold>{event.commit_id.slice(0, 7)}</Bold>
               </Text>
             }
             createdAt={event.created_at}
@@ -197,9 +198,9 @@ export class IssueEventListItem extends Component {
             iconName="pencil"
             text={
               <Text>
-                <ActorLink actor={event.actor} onPress={this.onPressUser} />{' '}
-                changed the title from <Bold>{event.rename.from.trim()}</Bold>{' '}
-                to <Bold>{event.rename.to.trim()}</Bold>
+                <ActorLink actor={actor} onPress={this.onPressUser} /> changed
+                the title from <Bold>{event.rename.from.trim()}</Bold> to{' '}
+                <Bold>{event.rename.to.trim()}</Bold>
               </Text>
             }
             createdAt={event.created_at}
@@ -234,7 +235,7 @@ export class IssueEventListItem extends Component {
             iconName="milestone"
             text={
               <Text>
-                <ActorLink actor={event.actor} onPress={this.onPressUser} />{' '}
+                <ActorLink actor={actor} onPress={this.onPressUser} />{' '}
                 {milestoneAction} the <Bold>{event.milestone.title}</Bold>{' '}
                 milestone
               </Text>
@@ -252,7 +253,7 @@ export class IssueEventListItem extends Component {
             iconBackgroundColor="black"
             text={
               <Text>
-                <ActorLink actor={event.actor} onPress={this.onPressUser} />{' '}
+                <ActorLink actor={actor} onPress={this.onPressUser} />{' '}
                 {event.event} this conversation
               </Text>
             }
@@ -271,7 +272,7 @@ export class IssueEventListItem extends Component {
             iconBackgroundColor={isRestored ? undefined : colors.greyBlue}
             text={
               <Text>
-                <ActorLink actor={event.actor} onPress={this.onPressUser} />{' '}
+                <ActorLink actor={actor} onPress={this.onPressUser} />{' '}
                 {headRefAction} this branch
               </Text>
             }
@@ -288,9 +289,8 @@ export class IssueEventListItem extends Component {
             iconBackgroundColor={colors.greyBlue}
             text={
               <Text>
-                <ActorLink actor={event.actor} onPress={this.onPressUser} />{' '}
-                marked this as{' '}
-                {event.event === 'unmarked_as_duplicate' ? 'not ' : ''}a
+                <ActorLink actor={actor} onPress={this.onPressUser} /> marked
+                this as {event.event === 'unmarked_as_duplicate' ? 'not ' : ''}a
                 duplicate
               </Text>
             }

@@ -10,6 +10,7 @@ import ActionSheet from 'react-native-actionsheet';
 
 import { translate, relativeTimeToNow } from 'utils';
 import { colors, fonts, normalize } from 'config';
+import { type userSchema } from 'api/schemas';
 
 const Container = styled.View`
   padding: 10px 10px 0 0;
@@ -84,6 +85,7 @@ const mapStateToProps = state => ({
 class CommentListItemComponent extends Component {
   props: {
     comment: Object,
+    user: userSchema,
     onLinkPress: Function,
     onEditPress: Function,
     onDeletePress: Function,
@@ -99,7 +101,7 @@ class CommentListItemComponent extends Component {
 
     if (index === 0) {
       onEditPress(comment);
-    } else if (index === 1) {
+    } else if (index === 1 && !comment.repository_url) {
       onDeletePress(comment);
     }
   };
@@ -123,52 +125,54 @@ class CommentListItemComponent extends Component {
   };
 
   render() {
-    const { comment, locale, navigation, authUser, onLinkPress } = this.props;
+    const {
+      comment,
+      user,
+      locale,
+      navigation,
+      authUser,
+      onLinkPress,
+    } = this.props;
 
     const commentPresent = comment.body_html && comment.body_html !== '';
 
-    const isActionMenuEnabled =
-      comment.user && authUser.login === comment.user.login;
+    const isActionMenuEnabled = user && authUser.login === user.login;
 
     return (
       <Container>
         <Header>
-          {comment.user && (
+          {user && (
             <AvatarContainer
               onPress={() =>
                 navigation.navigate(
-                  authUser.login === comment.user.login
-                    ? 'AuthProfile'
-                    : 'Profile',
+                  authUser.login === user.login ? 'AuthProfile' : 'Profile',
                   {
-                    user: comment.user,
+                    user,
                   }
                 )
               }
             >
               <Avatar
                 source={{
-                  uri: comment.user.avatar_url,
+                  uri: user.avatar_url,
                 }}
               />
             </AvatarContainer>
           )}
 
-          {comment.user && (
+          {user && (
             <TitleSubtitleContainer>
               <LinkDescription
                 onPress={() =>
                   navigation.navigate(
-                    authUser.login === comment.user.login
-                      ? 'AuthProfile'
-                      : 'Profile',
+                    authUser.login === user.login ? 'AuthProfile' : 'Profile',
                     {
-                      user: comment.user,
+                      user,
                     }
                   )
                 }
               >
-                {comment.user.login}
+                {user.login}
               </LinkDescription>
             </TitleSubtitleContainer>
           )}

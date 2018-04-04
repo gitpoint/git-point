@@ -1,16 +1,17 @@
+// @flow
 import * as Actions from 'api/actions';
 import { normalize } from 'normalizr';
 import 'proxy-polyfill';
 
 import {
-  getActionKeyFromArgs,
-  splitArgs,
+  getPaginationKey,
   displayError,
   actionNameForCall,
 } from 'utils/api-helpers';
+import { type CallParameters, Client } from '../client';
 
-export const createDispatchProxy = Provider => {
-  const client = new Provider();
+export const createDispatchProxy = (Provider: Client) => {
+  const client: Client = new Provider();
 
   return new Proxy(client, {
     get: (c, namespace) => {
@@ -22,7 +23,6 @@ export const createDispatchProxy = Provider => {
             );
           }
 
-          // Used as a key for state.pagination
           const actionName = actionNameForCall(namespace, method);
           const action = Actions[actionName];
 
@@ -32,16 +32,29 @@ export const createDispatchProxy = Provider => {
             );
           }
 
-          const { pureArgs, extraArg } = splitArgs(endpoint[method], args);
-          const paginator = getState().pagination[actionName];
-          const actionKey = getActionKeyFromArgs(pureArgs);
+          // 1. Analyze the call
+          const callType: CallParameters = endpoint[method](...args);
 
-          let finalArgs = args;
+          const { loadMore = false, forceRefresh = false } = callType.params;
 
-          if (paginator) {
-            const { loadMore = false, forceRefresh = false } = extraArg;
+          // 2. If a pagination is involved, get it
+          const pagination = getState().pagination[actionName];
+          const paginationKey = callType.paginationArgs
+            ? getPaginationKey(callType.paginationArgs)
+            : null;
+
+          // 3. Reset requested for a pagination? Dispatch it.
+          if (callType.type === 'paginated' && forceRefresh) {
+            dispatch({
+              id: paginationKey,
+              type: action.RESET,
+            });
+          }
+
+          // 4. Give the cache a chance, or prepare for next page
+          if (pagination) {
             const { pageCount = 0, isFetching = false, nextPageUrl } =
-              paginator[actionKey] || {};
+              pagination[paginationKey] || {};
 
             if (
               !forceRefresh &&
@@ -53,65 +66,80 @@ export const createDispatchProxy = Provider => {
             }
 
             if (loadMore) {
-              // next page explicitely requested
-              extraArg.url = nextPageUrl;
-            } else if (forceRefresh) {
-              // reset the pagination
-              dispatch({
-                id: actionKey,
-                type: action.RESET,
-              });
+              // next page explicitely requested, override the endpoint
+              callType.endpoint = nextPageUrl;
             }
-
-            finalArgs = [...pureArgs, extraArg];
           }
 
           // Get accessToken from state
           client.setAuthHeaders(getState().auth.accessToken);
 
           dispatch({
-            id: actionKey,
+            id: paginationKey,
             type: action.PENDING,
           });
 
-          return endpoint[method](...finalArgs)
-            .then(struct => {
-              if (!struct.response.ok) {
-                return struct.response.json().then(error => {
+          return client
+            .call(callType.endpoint, callType.params, callType.fetchParameters)
+            .then(response => {
+              if (!response.ok) {
+                return response.json().then(error => {
                   return Promise.reject(
                     [
                       `Call: client.${namespace}.${method}()`,
-                      `Url: ${struct.response.url}`,
-                      `Error: [${struct.response.status}] ${error.message}`,
+                      `Url: ${response.url}`,
+                      `Error: [${response.status}] ${error.message}`,
                     ].join('\n')
                   );
                 });
               }
 
-              // Successful PUT or PATCH request, there will be no JSON, simply dispatch success
-              // TODO: We need a better test here
-              if (struct.response.status === 205) {
+              if (callType.type === 'delete') {
                 dispatch({
-                  id: actionKey,
+                  pagination: {
+                    name: action.pagination.actionName,
+                    id: paginationKey,
+                    entityId: callType.entityId,
+                  },
+                  id: paginationKey,
+                  type: action.pagination.REMOVE,
+                });
+
+                dispatch({
+                  id: paginationKey,
                   type: action.SUCCESS,
                 });
 
                 return Promise.resolve();
               }
 
-              return struct.response.json().then(json => {
+              return response.json().then(json => {
                 // Treat the JSON & normalize it
                 const normalizedJson = normalize(
-                  struct.normalizrKey ? json[struct.normalizrKey] : json,
-                  struct.schema
+                  callType.normalizrKey ? json[callType.normalizrKey] : json,
+                  callType.schema
                 );
 
-                if (paginator) {
+                // Successful POST, append the new entity in the pagination if any
+                if (callType.type === 'create' && action.pagination) {
+                  dispatch({
+                    ...normalizedJson,
+                    pagination: {
+                      name: action.pagination.actionName,
+                      key: paginationKey,
+                      ids: [normalizedJson.result],
+                    },
+                    id: paginationKey,
+                    type: action.pagination.APPEND,
+                  });
+                }
+
+                if (pagination) {
                   normalizedJson.pagination = {
                     name: actionName,
-                    key: actionKey,
+                    key: paginationKey,
                     ids: normalizedJson.result,
-                    nextPageUrl: struct.nextPageUrl,
+                    nextPageUrl: client.getNextPageUrl(response),
                   };
 
                   delete normalizedJson.result;
@@ -120,7 +148,7 @@ export const createDispatchProxy = Provider => {
                 // Success, let's dispatch it
                 dispatch({
                   ...normalizedJson,
-                  id: actionKey,
+                  id: paginationKey,
                   type: action.SUCCESS,
                 });
 
@@ -131,7 +159,7 @@ export const createDispatchProxy = Provider => {
               displayError(error.toString());
 
               dispatch({
-                id: actionKey,
+                id: paginationKey,
                 type: action.ERROR,
               });
 

@@ -1,7 +1,5 @@
-// @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import {
   ScrollView,
   StyleSheet,
@@ -10,11 +8,11 @@ import {
   Dimensions,
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import { RestClient } from 'api';
 
 import { ViewContainer, SectionList, LoadingModal } from 'components';
 import { translate } from 'utils';
 import { colors, fonts, normalize } from 'config';
-import { editIssueBody, editIssueComment } from '../issue.action';
 
 const styles = StyleSheet.create({
   textInput: {
@@ -40,29 +38,20 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  locale: state.auth.locale,
-  issue: state.issue.issue,
-  repository: state.repository.repository,
   isEditingComment: state.issue.isEditingComment,
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      editIssueBody,
-      editIssueComment,
-    },
-    dispatch
-  );
+const mapDispatchToProps = {
+  editIssue: RestClient.issues.edit,
+  editIssueComment: RestClient.issues.editComment,
+};
 
 class EditIssueComment extends Component {
   props: {
-    editIssueBody: Function,
+    editIssue: Function,
     editIssueComment: Function,
     locale: string,
-    repository: Object,
     navigation: Object,
-    issue: Object,
     isEditingComment: boolean,
   };
 
@@ -81,15 +70,14 @@ class EditIssueComment extends Component {
   }
 
   editComment = () => {
-    const { issue, navigation } = this.props;
-    const { repository, comment } = this.props.navigation.state.params;
+    const { navigation } = this.props;
+    const { repoId, issueNumber, comment } = this.props.navigation.state.params;
 
-    const repoName = repository.name;
-    const owner = repository.owner.login;
     const text = this.state.issueComment;
+
     const action = comment.repository_url
-      ? this.props.editIssueBody(owner, repoName, issue.number, text)
-      : this.props.editIssueComment(comment.id, owner, repoName, text);
+      ? this.props.editIssue(repoId, issueNumber, { body: text })
+      : this.props.editIssueComment(repoId, issueNumber, comment.id, text);
 
     action.then(() => navigation.goBack());
   };
@@ -111,7 +99,8 @@ class EditIssueComment extends Component {
               onContentSizeChange={event =>
                 this.setState({
                   issueCommentHeight: event.nativeEvent.contentSize.height,
-                })}
+                })
+              }
               placeholderTextColor={colors.grey}
               style={[
                 styles.textInput,
