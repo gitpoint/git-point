@@ -1,14 +1,10 @@
 import {
   fetchMergeStatus,
-  fetchEditIssue,
-  fetchChangeIssueLockStatus,
   fetchMergePullRequest,
   fetchSubmitNewIssue,
   v3,
 } from 'api';
 import {
-  EDIT_ISSUE,
-  CHANGE_LOCK_STATUS,
   GET_ISSUE_DIFF,
   GET_ISSUE_MERGE_STATUS,
   GET_PULL_REQUEST_FROM_URL,
@@ -92,66 +88,6 @@ const getPullRequestDetails = issue => {
     dispatch(getPullRequest(issue.pull_request.url));
     dispatch(getDiff(issue.pull_request.url));
     dispatch(getMergeStatus(repoFullName, issue.number));
-  };
-};
-
-export const editIssue = (
-  owner,
-  repoName,
-  issueNum,
-  editParams,
-  updateParams
-) => {
-  return (dispatch, getState) => {
-    const accessToken = getState().auth.accessToken;
-
-    dispatch({ type: EDIT_ISSUE.PENDING });
-
-    return fetchEditIssue(owner, repoName, issueNum, editParams, accessToken)
-      .then(() => {
-        dispatch({
-          type: EDIT_ISSUE.SUCCESS,
-          payload: updateParams,
-        });
-      })
-      .catch(error => {
-        dispatch({
-          type: EDIT_ISSUE.ERROR,
-          payload: error,
-        });
-      });
-  };
-};
-
-export const changeIssueLockStatus = (
-  owner,
-  repoName,
-  issueNum,
-  currentStatus
-) => {
-  return (dispatch, getState) => {
-    const accessToken = getState().auth.accessToken;
-
-    dispatch({ type: CHANGE_LOCK_STATUS.PENDING });
-
-    return fetchChangeIssueLockStatus(
-      owner,
-      repoName,
-      issueNum,
-      currentStatus,
-      accessToken
-    )
-      .then(() => {
-        dispatch({
-          type: CHANGE_LOCK_STATUS.SUCCESS,
-        });
-      })
-      .catch(error => {
-        dispatch({
-          type: CHANGE_LOCK_STATUS.ERROR,
-          payload: error,
-        });
-      });
   };
 };
 

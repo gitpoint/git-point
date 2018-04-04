@@ -5,6 +5,7 @@ import { userSchema } from './users';
 import { issueSchema } from './issues';
 import { issueCommentSchema } from './issue-comments';
 import { issueEventSchema } from './issue-events';
+import { issueLabelSchema } from './issue-labels';
 
 export default {
   EVENT: eventSchema,
@@ -21,4 +22,6 @@ export default {
   ISSUE_COMMENT_ARRAY: [issueCommentSchema],
   ISSUE_EVENT: issueEventSchema,
   ISSUE_EVENT_ARRAY: [issueEventSchema],
+  ISSUE_LABEL: issueLabelSchema,
+  ISSUE_LABEL_ARRAY: [issueLabelSchema],
 };

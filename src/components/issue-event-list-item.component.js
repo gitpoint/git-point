@@ -145,7 +145,13 @@ export class IssueEventListItem extends Component {
           />
         );
       case 'label-group':
-        return <LabelGroup group={event} onPressUser={this.onPressUser} />;
+        return (
+          <LabelGroup
+            group={event}
+            actor={actor}
+            onPressUser={this.onPressUser}
+          />
+        );
       case 'closed':
         return (
           <Event
@@ -347,17 +353,14 @@ class Event extends Component {
 
 class LabelGroup extends Component {
   props: {
+    actor: Object,
     group: Object,
     onPressUser: Function,
   };
 
   render() {
-    const {
-      actor,
-      labeled,
-      unlabeled,
-      created_at: createdAt,
-    } = this.props.group;
+    const { labeled, unlabeled, created_at: createdAt } = this.props.group;
+    const { actor } = this.props;
 
     const toInlineLabel = (type, { label }, index) => (
       <InlineLabel key={type + index} label={label} />

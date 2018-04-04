@@ -15,6 +15,7 @@ export const createDispatchProxy = (Provider: Client) => {
 
   return new Proxy(client, {
     get: (c, namespace) => {
+      // $FlowFixMe
       return new Proxy(client[namespace], {
         get: (endpoint, method) => (...args) => (dispatch, getState) => {
           if (!endpoint[method]) {
@@ -102,20 +103,33 @@ export const createDispatchProxy = (Provider: Client) => {
                 });
               }
 
-              // 9. Did we just delete a pagination item? If so, remove its id
-              // from its related pagination and bail, since we don't need to
-              // parse the JSON
-              if (callType.type === 'delete' && action.pagination) {
-                dispatch({
-                  pagination: {
-                    name: action.pagination.actionName,
+              // 9. Did we just delete something?
+              if (callType.type === 'delete') {
+                if (action.pagination) {
+                  // Was it a pagination item? If so, remove its id
+                  // from its related pagination
+                  dispatch({
+                    pagination: {
+                      name: action.pagination.actionName,
+                      id: paginationKey,
+                      entityId: callType.entityId,
+                    },
                     id: paginationKey,
-                    entityId: callType.entityId,
-                  },
+                    type: action.pagination.REMOVE,
+                  });
+                }
+
+                // bail since we don't need to parse the JSON
+                dispatch({
                   id: paginationKey,
-                  type: action.pagination.REMOVE,
+                  type: action.SUCCESS,
                 });
 
+                return Promise.resolve();
+              }
+
+              // 9-1. Or did we change a status? no JSON
+              if (callType.type === 'put') {
                 dispatch({
                   id: paginationKey,
                   type: action.SUCCESS,

@@ -1,6 +1,4 @@
 import {
-  EDIT_ISSUE,
-  CHANGE_LOCK_STATUS,
   GET_ISSUE_DIFF,
   GET_ISSUE_MERGE_STATUS,
   GET_PULL_REQUEST_FROM_URL,
@@ -33,42 +31,6 @@ const initialState = {
 
 export const issueReducer = (state = initialState, action = {}) => {
   switch (action.type) {
-    case EDIT_ISSUE.PENDING:
-      return {
-        ...state,
-        isEditingIssue: true,
-      };
-    case EDIT_ISSUE.SUCCESS: {
-      return {
-        ...state,
-        issue: { ...state.issue, ...action.payload },
-        isEditingIssue: false,
-      };
-    }
-    case EDIT_ISSUE.ERROR:
-      return {
-        ...state,
-        error: action.payload,
-        isEditingIssue: false,
-      };
-    case CHANGE_LOCK_STATUS.PENDING:
-      return {
-        ...state,
-        isChangingLockStatus: true,
-      };
-    case CHANGE_LOCK_STATUS.SUCCESS: {
-      return {
-        ...state,
-        issue: { ...state.issue, locked: !state.issue.locked },
-        isChangingLockStatus: false,
-      };
-    }
-    case CHANGE_LOCK_STATUS.ERROR:
-      return {
-        ...state,
-        error: action.payload,
-        isChangingLockStatus: false,
-      };
     case GET_ISSUE_DIFF.PENDING:
       return {
         ...state,

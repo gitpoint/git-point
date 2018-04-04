@@ -24,7 +24,6 @@ import {
 import { RestClient, v3 } from 'api';
 import { translate, formatEventsToRender, openURLInView } from 'utils';
 import { colors } from 'config';
-import { getRepository, getContributors } from 'repository';
 
 const getRepoAndIssueFromUrl = url => {
   const re = /https:\/\/api.github.com\/repos\/(.*)\/issues\/(\d+)$/;
@@ -35,13 +34,22 @@ const getRepoAndIssueFromUrl = url => {
 
 const mapStateToProps = (state, ownProps) => {
   const {
-    entities: { issues, users, issue_comments, issue_events },
-    pagination: { ISSUES_GET_COMMENTS, ISSUES_GET_EVENTS },
+    entities: {
+      issues,
+      users,
+      repos,
+      issue_comments,
+      issue_events,
+      issue_labels,
+    },
+    pagination: { ISSUES_GET_COMMENTS, ISSUES_GET_EVENTS, REPOS_GET_LABELS },
   } = state;
 
   const { repoId, issueNumber } = getRepoAndIssueFromUrl(
     ownProps.navigation.state.params.issue.url
   );
+
+  const repository = repos[repoId];
 
   const issueFQN = `${repoId}-${issueNumber}`;
 
@@ -59,53 +67,57 @@ const mapStateToProps = (state, ownProps) => {
   };
   const issueEvents = issueEventsPagination.ids.map(id => issue_events[id]);
 
+  const repoLabelsPagination = REPOS_GET_LABELS[repoId] || {
+    ids: [],
+    isFetching: true,
+  };
+  const repoLabels = repoLabelsPagination.ids.reduce((map, id) => {
+    /* eslint-disable no-param-reassign */
+    map[id] = issue_labels[id];
+
+    return map;
+  }, {});
+
   const issue = issues[issueFQN] || ownProps.navigation.state.params.issue;
 
   return {
     issue,
     repoId,
+    repository,
     issueNumber,
     issueCommentsPagination,
     issueComments,
     issueEventsPagination,
     issueEvents,
+    repoLabelsPagination,
+    repoLabels,
+    allLabels: issue_labels,
     users,
     // old
 
     locale: state.auth.locale,
     authUser: state.auth.user,
-    repository: state.repository.repository,
     contributors: state.repository.contributors,
     //    issue: state.issue.issue,
     diff: state.issue.diff,
     pr: state.issue.pr,
     isMerged: state.issue.isMerged,
-    comments: state.issue.comments,
-    events: state.issue.events,
     isPendingDiff: state.issue.isPendingDiff,
     isPendingCheckMerge: state.issue.isPendingCheckMerge,
-    isPostingComment: state.issue.isPostingComment,
     isPendingContributors: state.repository.isPendingContributors,
-    isDeletingComment: state.issue.isDeletingComment,
   };
 };
 
-const mapDispatchToProps = /*dispatch =>*/ {
-  /*...bindActionCreators(
-      {
-        getRepository,
-        getContributors,
-        postIssueComment,
-        deleteIssueComment,
-      },
-      dispatch
-    ),*/
+const mapDispatchToProps = {
+  getRepository: RestClient.repos.get,
+  getContributors: RestClient.repos.getContributors,
   createComment: RestClient.issues.createComment,
   editComment: RestClient.issues.editComment,
   deleteComment: RestClient.issues.deleteComment,
   getIssue: RestClient.issues.get,
   getIssueComments: RestClient.issues.getComments,
   getIssueEvents: RestClient.issues.getEvents,
+  getRepoLabels: RestClient.repos.getLabels,
 };
 
 const compareCreatedAt = (a, b) => {
@@ -135,6 +147,8 @@ class Issue extends Component {
               navigate('IssueSettings', {
                 title: translate('issue.settings.title', state.params.locale),
                 issue: state.params.issue,
+                repoId: state.params.repoId,
+                issueNumber: state.params.issueNumber,
               })
             }
           />
@@ -164,32 +178,32 @@ class Issue extends Component {
     issueComments: Array,
     issueEventsPagination: Object,
     issueEvents: Array,
+    repoLabelsPagination: Object,
+    repoLabels: Object,
     users: Array,
+    repository: Object,
+
     // API
     getIssue: Function,
     getIssueEvents: Function,
     getIssueComments: Function,
+    getRepoLabels: Function,
     createComment: Function,
     deleteComment: Function,
-    editComment: Function,
-
-    // old
     getRepository: Function,
     getContributors: Function,
-    getIssueFromUrl: Function,
+
+    // old
 
     diff: string,
     issue: Object,
     pr: Object,
     isMerged: boolean,
     authUser: Object,
-    repository: Object,
     contributors: Array,
     isPendingDiff: boolean,
     isPendingCheckMerge: boolean,
-    isDeletingComment: boolean,
     isPendingContributors: boolean,
-    // isPostingComment: boolean,
     locale: string,
     navigation: Object,
   };
@@ -250,50 +264,39 @@ class Issue extends Component {
     const {
       repoId,
       issueNumber,
-      navigation,
-      repository,
-      /* getRepository,
+      getRepository,
       getContributors,
-      getIssueFromUrl,*/
       getIssue,
       getIssueEvents,
       getIssueComments,
     } = this.props;
 
-    getIssue(repoId, issueNumber);
+    getIssue(repoId, issueNumber).then(() => {
+      this.setNavigationParams();
+    });
     getIssueEvents(repoId, issueNumber);
     getIssueComments(repoId, issueNumber);
-    /*
-    const params = navigation.state.params;
-    const issueURL = params.issueURL || params.issue.url;
-    const issueRepository = issueURL
-      .replace(`${v3.root}/repos/`, '')
-      .replace(/([^/]+\/[^/]+)\/issues\/\d+$/, '$1');
 
-        if (repository.full_name !== issueRepository) {
-          return Promise.all([
-            getRepository(issue.repository_url),
-            getContributors(this.getContributorsLink(issue.repository_url)),
-          ]);
-        }
-
-        return [];
-      })
-      .then(() => {
-        const { issue, repository } = this.props;
-
-        this.setNavigationParams();
-
-      });*/
+    Promise.all([getRepository(repoId), getContributors(repoId)]).then(() => {
+      this.setNavigationParams();
+    });
   };
 
-  getContributorsLink = repository => `${repository}/contributors`;
-
   setNavigationParams = () => {
-    const { navigation, locale, repository } = this.props;
+    const {
+      navigation,
+      locale,
+      issue,
+      repository,
+      repoId,
+      issueNumber,
+    } = this.props;
 
     navigation.setParams({
+      repoId,
+      issueNumber,
       locale,
+      issue,
       userHasPushPermission:
         repository.permissions.admin || repository.permissions.push,
     });
@@ -306,11 +309,19 @@ class Issue extends Component {
       getIssue,
       getIssueEvents,
       getIssueComments,
+      getRepoLabels,
+      getRepository,
+      getContributors,
     } = this.props;
 
     getIssue(repoId, issueNumber, { forceRefresh });
     getIssueEvents(repoId, issueNumber, { forceRefresh });
     getIssueComments(repoId, issueNumber, { forceRefresh });
+    getRepoLabels(repoId, { forceRefresh });
+
+    Promise.all([getRepository(repoId), getContributors(repoId)]).then(() => {
+      this.setNavigationParams();
+    });
   };
 
   showActionSheet = () => this.ActionSheet.show();
@@ -358,6 +369,7 @@ class Issue extends Component {
   renderHeader = () => {
     const {
       issue,
+      repoLabels,
       pr,
       diff,
       isMerged,
@@ -365,12 +377,15 @@ class Issue extends Component {
       isPendingCheckMerge,
       locale,
       navigation,
+      users,
     } = this.props;
 
     return (
       <IssueDescription
         issue={issue}
         diff={diff}
+        assignees={issue.assignees.map(login => users[login])}
+        labels={issue.labels.map(labelId => repoLabels[labelId])}
         isMergeable={pr.mergeable}
         isMerged={isMerged}
         isPendingDiff={isPendingDiff}
@@ -440,20 +455,22 @@ class Issue extends Component {
       repoId,
       issueNumber,
 
+      issue,
+
       issueEvents,
       issueEventsPagination,
       issueComments,
       issueCommentsPagination,
+      repoLabels,
+      repoLabelsPagination,
 
       getIssueComments,
       getIssueEvents,
 
       // Old
-      issue,
       contributors,
 
       isPendingContributors,
-      isDeletingComment,
       locale,
       navigation,
     } = this.props;
@@ -464,12 +481,15 @@ class Issue extends Component {
     const isPendingComments =
       issueComments.length === 0 && issueCommentsPagination.isFetching;
 
+    const isPendingLabels =
+      Object.values(repoLabels).length === 0 && repoLabelsPagination.isFetching;
+
     const isPendingIssue = issue.comment_html !== undefined;
 
     const isLoadingData = !!(
       isPendingComments ||
       isPendingIssue ||
-      isDeletingComment
+      isPendingLabels
     );
     const isShowLoadingContainer =
       isPendingComments || isPendingIssue || isPendingEvents;
@@ -501,8 +521,7 @@ class Issue extends Component {
           <LoadingContainer animating={isShowLoadingContainer} center />
         )}
 
-        {!isPendingComments &&
-          !isPendingIssue &&
+        {!isLoadingData &&
           issue && (
             <KeyboardAvoidingView
               style={{ flex: 1 }}

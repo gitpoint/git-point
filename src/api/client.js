@@ -95,10 +95,6 @@ export class Client {
       parameters.body = JSON.stringify(body);
     }
 
-    if (method === this.Method.PUT) {
-      parameters.headers['Content-Length'] = 0;
-    }
-
     return fetch(finalUrl, parameters);
   };
 
@@ -107,7 +103,20 @@ export class Client {
     params: {},
     ...config,
     fetchParameters: merge(
-      { method: this.Method.GET, Accept: this.Accept.JSON },
+      { method: this.Method.GET, headers: { Accept: this.Accept.JSON } },
+      fetchParameters
+    ),
+  });
+
+  put = ({ fetchParameters, ...config }: CallParameters): CallType => ({
+    type: 'put',
+    params: {},
+    ...config,
+    fetchParameters: merge(
+      {
+        method: this.Method.PUT,
+        headers: { Accept: this.Accept.JSON, 'Content-Length': 0 },
+      },
       fetchParameters
     ),
   });
@@ -117,7 +126,7 @@ export class Client {
     params: {},
     ...config,
     fetchParameters: merge(
-      { method: this.Method.GET, Accept: this.Accept.JSON },
+      { method: this.Method.GET, headers: { Accept: this.Accept.JSON } },
       fetchParameters
     ),
   });
@@ -127,7 +136,7 @@ export class Client {
     params: {},
     ...config,
     fetchParameters: merge(
-      { method: this.Method.POST, Accept: this.Accept.JSON },
+      { method: this.Method.POST, headers: { Accept: this.Accept.JSON } },
       fetchParameters
     ),
   });
@@ -137,7 +146,7 @@ export class Client {
     params: {},
     ...config,
     fetchParameters: merge(
-      { method: this.Method.PATCH, Accept: this.Accept.JSON },
+      { method: this.Method.PATCH, headers: { Accept: this.Accept.JSON } },
       fetchParameters
     ),
   });
@@ -147,7 +156,7 @@ export class Client {
     params: {},
     ...config,
     fetchParameters: merge(
-      { method: this.Method.DELETE, Accept: this.Accept.JSON },
+      { method: this.Method.DELETE, headers: { Accept: this.Accept.JSON } },
       fetchParameters
     ),
   });
@@ -304,6 +313,20 @@ export class Client {
         },
       }),
 
+    lock: (repoId: string, number: string, params: SpecialParameters = {}) =>
+      this.put({
+        endpoint: `repos/${repoId}/issues/${number}/lock`,
+        params,
+        schema: Schemas.ISSUE,
+      }),
+
+    unlock: (repoId: string, number: string, params: SpecialParameters = {}) =>
+      this.delete({
+        endpoint: `repos/${repoId}/issues/${number}/lock`,
+        params,
+        schema: Schemas.ISSUE,
+      }),
+
     getComments: (
       repoId: string,
       number: number,
@@ -378,6 +401,29 @@ export class Client {
         schema: Schemas.ISSUE_COMMENT,
         paginationArgs: [repoId, number],
         entityId: id,
+      }),
+  };
+
+  repos = {
+    get: (repoId: string, params: SpecialParameters = {}) =>
+      this.get({
+        endpoint: `repos/${repoId}`,
+        params,
+        schema: Schemas.REPO,
+      }),
+    getContributors: (repoId: string, params: SpecialParameters = {}) =>
+      this.list({
+        endpoint: `repos/${repoId}/contributors`,
+        params,
+        schema: Schemas.USER_ARRAY,
+        paginationArgs: [repoId],
+      }),
+    getLabels: (repoId: string, params: SpecialParameters = {}) =>
+      this.list({
+        endpoint: `repos/${repoId}/labels`,
+        params,
+        schema: Schemas.ISSUE_LABEL_ARRAY,
+        paginationArgs: [repoId],
       }),
   };
 }

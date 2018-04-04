@@ -83,6 +83,8 @@ const MergeButtonContainer = styled.View`
 export class IssueDescription extends Component {
   props: {
     issue: Object,
+    assignees: Array,
+    labels: Array,
     diff: string,
     isMergeable: boolean,
     isMerged: boolean,
@@ -110,6 +112,8 @@ export class IssueDescription extends Component {
       isPendingCheckMerge,
       onRepositoryPress,
       userHasPushPermission,
+      assignees,
+      labels,
       locale,
       navigation,
     } = this.props;
@@ -181,24 +185,25 @@ export class IssueDescription extends Component {
                       title: translate('repository.pullDiff.title', locale),
                       locale,
                       diff,
-                    })}
+                    })
+                  }
                 />
               )}
           </DiffBlocksContainer>
         )}
 
-        {issue.labels &&
-          issue.labels.length > 0 && (
+        {labels &&
+          labels.length > 0 && (
             <LabelButtonGroup>
-              {this.renderLabelButtons(issue.labels)}
+              {this.renderLabelButtons(labels)}
             </LabelButtonGroup>
           )}
-        {issue.assignees &&
-          issue.assignees.length > 0 && (
+        {assignees &&
+          assignees.length > 0 && (
             <AssigneesSection>
               <MembersList
                 title={translate('issue.main.assignees', locale)}
-                members={issue.assignees}
+                members={assignees}
                 containerStyle={{ marginTop: 0, paddingTop: 0, paddingLeft: 0 }}
                 smallTitle
                 navigation={navigation}
@@ -218,7 +223,8 @@ export class IssueDescription extends Component {
                 onPress={() =>
                   navigation.navigate('PullMerge', {
                     title: translate('issue.pullMerge.title', locale),
-                  })}
+                  })
+                }
                 title={translate('issue.main.mergeButton', locale)}
               />
             </MergeButtonContainer>

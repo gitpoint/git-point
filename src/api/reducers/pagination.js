@@ -100,4 +100,7 @@ export const pagination = combineReducers({
 
   ISSUES_GET_COMMENTS: paginate(Actions.ISSUES_GET_COMMENTS),
   ISSUES_GET_EVENTS: paginate(Actions.ISSUES_GET_EVENTS),
+
+  REPOS_GET_LABELS: paginate(Actions.REPOS_GET_LABELS),
+  REPOS_GET_CONTRIBUTORS: paginate(Actions.REPOS_GET_CONTRIBUTORS),
 });

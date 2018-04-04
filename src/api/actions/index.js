@@ -17,6 +17,12 @@ export const ORGS_GET_BY_ID = createActionSet('ORGS_GET_BY_ID');
 export const SEARCH_REPOS = createPaginationActionSet('SEARCH_REPOS');
 export const SEARCH_USERS = createPaginationActionSet('SEARCH_USERS');
 
+export const REPOS_GET = createActionSet('REPOS_GET');
+export const REPOS_GET_CONTRIBUTORS = createPaginationActionSet(
+  'REPOS_GET_CONTRIBUTORS'
+);
+export const REPOS_GET_LABELS = createPaginationActionSet('REPOS_GET_LABELS');
+
 export const ISSUES_GET = createActionSet('ISSUES_GET');
 export const ISSUES_GET_EVENTS = createPaginationActionSet('ISSUES_GET_EVENTS');
 export const ISSUES_GET_COMMENTS = createPaginationActionSet(
@@ -36,4 +42,6 @@ export const ISSUES_EDIT_COMMENT = createPaginationItemActionSet(
   ISSUES_GET_COMMENTS
 );
 
-export const ISSUES_EDIT = createActionSet('ISSUE_EDIT_COMMENT');
+export const ISSUES_EDIT = createActionSet('ISSUE_EDIT');
+export const ISSUES_LOCK = createActionSet('ISSUE_LOCK');
+export const ISSUES_UNLOCK = createActionSet('ISSUE_UNLOCK');
