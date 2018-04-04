@@ -117,23 +117,50 @@ export const createDispatchProxy = (Provider: Client) => {
                     id: paginationKey,
                     type: action.pagination.REMOVE,
                   });
-                }
+                  // bail since we don't need to parse the JSON
+                  dispatch({
+                    id: paginationKey,
+                    type: action.SUCCESS,
+                  });
+                } else if (callType.changeEntity) {
+                  const { type, id, changes } = callType.changeEntity;
 
-                // bail since we don't need to parse the JSON
-                dispatch({
-                  id: paginationKey,
-                  type: action.SUCCESS,
-                });
+                  dispatch({
+                    type: action.SUCCESS,
+                    entities: {
+                      [type]: {
+                        [id]: {
+                          ...changes,
+                        },
+                      },
+                    },
+                  });
+                }
 
                 return Promise.resolve();
               }
 
               // 9-1. Or did we change a status? no JSON
               if (callType.type === 'put') {
-                dispatch({
-                  id: paginationKey,
-                  type: action.SUCCESS,
-                });
+                if (callType.changeEntity) {
+                  const { type, id, changes } = callType.changeEntity;
+
+                  dispatch({
+                    type: action.SUCCESS,
+                    entities: {
+                      [type]: {
+                        [id]: {
+                          ...changes,
+                        },
+                      },
+                    },
+                  });
+                } else {
+                  dispatch({
+                    id: paginationKey,
+                    type: action.SUCCESS,
+                  });
+                }
 
                 return Promise.resolve();
               }

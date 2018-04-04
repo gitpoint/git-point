@@ -318,6 +318,13 @@ export class Client {
         endpoint: `repos/${repoId}/issues/${number}/lock`,
         params,
         schema: Schemas.ISSUE,
+        changeEntity: {
+          type: 'issues',
+          id: `${repoId}-${number}`,
+          changes: {
+            locked: true,
+          },
+        },
       }),
 
     unlock: (repoId: string, number: string, params: SpecialParameters = {}) =>
@@ -325,6 +332,13 @@ export class Client {
         endpoint: `repos/${repoId}/issues/${number}/lock`,
         params,
         schema: Schemas.ISSUE,
+        changeEntity: {
+          type: 'issues',
+          id: `${repoId}-${number}`,
+          changes: {
+            locked: false,
+          },
+        },
       }),
 
     getComments: (
