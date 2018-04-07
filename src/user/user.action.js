@@ -173,7 +173,7 @@ export const changeFollowStatus = (user, isFollowing) => {
   };
 };
 
-export const getRepositories = user => {
+export const getRepositories = (user, repoType = 'all') => {
   return (dispatch, getState) => {
     const { accessToken, user: authUser } = getState().auth;
     const isAuthUser = user.login === authUser.login;
@@ -181,8 +181,8 @@ export const getRepositories = user => {
     dispatch({ type: GET_REPOSITORIES.PENDING });
 
     const url = isAuthUser
-      ? '/user/repos?affiliation=owner&sort=updated&per_page=50'
-      : `/users/${user.login}/repos?sort=updated&per_page=50`;
+      ? `/user/repos?type=${repoType}&sort=updated&per_page=50`
+      : `/users/${user.login}/repos?type=${repoType}&sort=updated&per_page=50`;
 
     v3
       .getJson(url, accessToken)

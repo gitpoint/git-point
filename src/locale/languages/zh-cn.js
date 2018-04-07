@@ -157,6 +157,11 @@ export const zhCN = {
     },
     repositoryList: {
       title: '仓库列表',
+      allReposButton: 'All',
+      ownedReposButton: 'Owner',
+      memberReposButton: 'Member',
+      privateReposButton: 'Private',
+      publicReposButton: 'Public',
     },
     starredRepositoryList: {
       title: 'Stars',

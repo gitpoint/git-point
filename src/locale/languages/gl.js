@@ -161,6 +161,11 @@ export const gl = {
     },
     repositoryList: {
       title: 'Repositorios',
+      allReposButton: 'All',
+      ownedReposButton: 'Owner',
+      memberReposButton: 'Member',
+      privateReposButton: 'Private',
+      publicReposButton: 'Public',
     },
     starredRepositoryList: {
       title: 'Favoritos',

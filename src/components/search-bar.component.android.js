@@ -10,6 +10,7 @@ type Props = {
   onFocus: Function,
   onCancelButtonPress: Function,
   onSearchButtonPress: Function,
+  autoFocus?: boolean,
 };
 
 const styles = StyleSheet.create({
@@ -26,6 +27,7 @@ export const SearchBar = ({
   showsCancelButton,
   placeholder,
   onFocus,
+  autoFocus,
   onCancelButtonPress,
   onSearchButtonPress,
 }: Props) => (
@@ -49,6 +51,7 @@ export const SearchBar = ({
     }}
     height={40}
     autoCorrect={false}
+    inputProps={{ autoFocus }}
     returnKeyType="search"
   />
 );
@@ -58,4 +61,5 @@ SearchBar.defaultProps = {
   textFieldBackgroundColor: undefined,
   showsCancelButton: false,
   placeholder: '',
+  autoFocus: false,
 };
