@@ -61,9 +61,7 @@ export class Client {
       }
     }
 
-    return fetch(finalUrl, parameters)
-      .then(response => response)
-      .catch(error => error);
+    return fetch(finalUrl, parameters);
   };
 
   /* eslint-disable no-unused-vars */
@@ -146,6 +144,39 @@ export class Client {
         response,
         nextPageUrl: this.getNextPageUrl(response),
         schema: Schemas.REPO_ARRAY,
+      }));
+    },
+  };
+  search = {
+    repos: async (q, params) => {
+      return this.call(`search/repositories?q=${q}`, params).then(response => ({
+        response,
+        nextPageUrl: this.getNextPageUrl(response),
+        schema: Schemas.REPO_ARRAY,
+        normalizrKey: 'items',
+      }));
+    },
+    users: async (q, params) => {
+      return this.call(`search/users?q=${q}`, params).then(response => ({
+        response,
+        nextPageUrl: this.getNextPageUrl(response),
+        schema: Schemas.USER_ARRAY,
+        normalizrKey: 'items',
+      }));
+    },
+  };
+  orgs = {
+    getById: async (orgId, params) => {
+      return this.call(`orgs/${orgId}`, params).then(response => ({
+        response,
+        schema: Schemas.ORG,
+      }));
+    },
+    getMembers: async (orgId, params) => {
+      return this.call(`orgs/${orgId}/members`, params).then(response => ({
+        response,
+        nextPageUrl: this.getNextPageUrl(response),
+        schema: Schemas.USER_ARRAY,
       }));
     },
   };

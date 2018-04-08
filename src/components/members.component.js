@@ -72,8 +72,6 @@ const MembersFlatList = styled(FlatList).attrs({
   },
   data: props => props.data,
   showsHorizontalScrollIndicator: false,
-  renderItem: props => props.renderItem,
-  keyExtractor: props => props.keyExtractor,
   horizontal: true,
 })``;
 
@@ -106,6 +104,7 @@ const MembersListComponent = ({
   smallTitle,
   navigation,
   authUser,
+  ...other
 }: Props) => (
   <Container noMargin={noMargin}>
     <SectionTitle isTitleSmall={smallTitle}>{title}</SectionTitle>
@@ -118,6 +117,7 @@ const MembersListComponent = ({
       )}
     <View>
       <MembersFlatList
+        {...other}
         data={members}
         renderItem={({ item, index }) => (
           <AvatarContainer

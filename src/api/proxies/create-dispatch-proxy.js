@@ -1,5 +1,6 @@
 import * as Actions from 'api/actions';
 import { normalize } from 'normalizr';
+import 'proxy-polyfill';
 
 import {
   getActionKeyFromArgs,
@@ -11,7 +12,7 @@ import {
 export const createDispatchProxy = Provider => {
   const client = new Provider();
 
-  return new Proxy(createDispatchProxy, {
+  return new Proxy(client, {
     get: (c, namespace) => {
       return new Proxy(client[namespace], {
         get: (endpoint, method) => (...args) => (dispatch, getState) => {
