@@ -9,7 +9,7 @@ export const en = {
       cancel: 'CANCEL',
       troubles: "Can't login?",
       welcomeTitle: 'Welcome to GitPoint',
-      welcomeMessage: 'The most feature-rich GitHub client that is 100% free',
+      welcomeMessage: 'One of the most feature-rich GitHub clients that is 100% free',
       notificationsTitle: 'Control notifications',
       notificationsMessage:
         'View and control all of your unread and participating notifications',
