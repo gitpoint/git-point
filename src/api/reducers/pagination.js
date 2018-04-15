@@ -6,8 +6,8 @@ import * as Actions from '../actions';
 // Creates a reducer managing pagination, given the action types to handle,
 // and a function telling how to extract the key from an action.
 const paginate = types => {
-  if (typeof types !== 'object' || Object.keys(types).length !== 4) {
-    throw new Error('Expected types to be an object of 4 props.');
+  if (typeof types !== 'object' || Object.keys(types).length !== 5) {
+    throw new Error('Expected types to be an object of 5 props.');
   }
 
   const updatePagination = (

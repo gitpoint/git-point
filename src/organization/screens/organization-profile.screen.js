@@ -22,6 +22,7 @@ const DescriptionListItem = styled(ListItem).attrs({
     color: colors.greyDark,
     ...fonts.fontPrimary,
   },
+  subtitleNumberOfLines: 0,
 })``;
 
 const LoadingMembersContainer = styled.View`

@@ -19,3 +19,25 @@ export const loadingAnimation = state => {
 
   return Animated.sequence(animatedTimings);
 };
+
+export const infiniteAnimation = (state, fromValue, toValue, onEnd) => {
+  const animatedTimings = [];
+  const duration = 1000;
+
+  animatedTimings.push(
+    Animated.timing(state, {
+      toValue: fromValue,
+      duration,
+    })
+  );
+  animatedTimings.push(
+    Animated.timing(state, {
+      toValue,
+      duration,
+    })
+  );
+
+  return Animated.sequence(animatedTimings).start(() => {
+    onEnd();
+  });
+};
