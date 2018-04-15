@@ -8,7 +8,7 @@ export const translate = (key, locale, interpolation = null) =>
   I18n.t(key, { locale, ...interpolation });
 
 export const t = (key, locale, interpolation = null) => {
-  let translation = I18n.t(key, { locale, ...interpolation });
+  let translation = translate(key, locale, interpolation);
 
   if (translation === '') {
     translation = key;
