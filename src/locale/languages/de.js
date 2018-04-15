@@ -1,29 +1,41 @@
 module.exports = {
-  '{actor} commented on commit': '',
-  '{actor} created branch {ref} at {repo}': '',
-  '{actor} created tag {ref} at {repo}': '',
-  '{actor} created repository {repo}': '',
-  '{actor} deleted branch {ref} at {repo}': '',
-  '{actor} deleted tag {ref} at {repo}': '',
-  '{actor} forked {repo} at {fork}': '',
+  '{actor} commented on commit': '{actor} kommentierte den commit',
+  '{actor} created branch {ref} at {repo}':
+    '{actor} hat Branch erstellt {ref} bei {repo}',
+  '{actor} created tag {ref} at {repo}':
+    '{actor} hat Tag erstellt {ref} bei {repo}',
+  '{actor} created repository {repo}': '{actor} hat Repository erstellt {repo}',
+  '{actor} deleted branch {ref} at {repo}':
+    '{actor} hat Branch gelöscht {ref} bei {repo}',
+  '{actor} deleted tag {ref} at {repo}':
+    '{actor} hat Tag gelöscht {ref} bei {repo}',
+  '{actor} forked {repo} at {fork}': '{actor} forked {repo} bei {fork}',
   '{actor} created the {repo} wiki': '',
   '{actor} edited the {repo} wiki': '',
-  '{actor} commented on pull request {issue} at {repo}': '',
-  '{actor} commented on issue {issue} at {repo}': '',
-  '{actor} opened issue {issue} at {repo}': '',
-  '{actor} reopened issue {issue} at {repo}': '',
-  '{actor} closed issue {issue} at {repo}': '',
-  '{actor} edited {member} at {repo}': '',
-  '{actor} removed {member} at {repo}': '',
-  '{actor} added {member} at {repo}': '',
-  '{actor} made {repo} public': '',
-  '{actor} opened pull request {pr} at {repo}': '',
-  '{actor} reopened pull request {pr} at {repo}': '',
+  '{actor} commented on pull request {issue} at {repo}':
+    '{actor} kommentierte on Pull Request {issue} bei {repo}',
+  '{actor} commented on issue {issue} at {repo}':
+    '{actor} kommentierte on Issue {issue} bei {repo}',
+  '{actor} opened issue {issue} at {repo}':
+    '{actor} eröffnet Issue {issue} bei {repo}',
+  '{actor} reopened issue {issue} at {repo}':
+    '{actor} erneut geöffnet Issue {issue} bei {repo}',
+  '{actor} closed issue {issue} at {repo}':
+    '{actor} geschlossen Issue {issue} bei {repo}',
+  '{actor} edited {member} at {repo}': '{actor} bearbeitet {member} bei {repo}',
+  '{actor} removed {member} at {repo}': '{actor} löschte {member} bei {repo}',
+  '{actor} added {member} at {repo}': '{actor} hinzugefügt {member} bei {repo}',
+  '{actor} made {repo} public': '{actor} hat {repo} veröffentlicht',
+  '{actor} opened pull request {pr} at {repo}':
+    '{actor} eröffnet Pull Request {pr} bei {repo}',
+  '{actor} reopened pull request {pr} at {repo}':
+    '{actor} erneut geöffnet Pull Request {pr} bei {repo}',
   '{actor} merged pull request {pr} at {repo}': '',
-  '{actor} closed pull request {pr} at {repo}': '',
+  '{actor} closed pull request {pr} at {repo}':
+    '{actor} geschlossen Pull Request {pr} bei {repo}',
   '{actor} commented on pull request {pr} at {repo}': '',
   '{actor} pushed to {ref} at {repo}': '',
-  '{actor} published release {id}': '',
+  '{actor} published release {id}': '{actor} veröffentlicht Release {id}',
   '{actor} starred {repo}': '',
   'One of the most feature-rich GitHub clients that is 100% free': '',
   auth: {
