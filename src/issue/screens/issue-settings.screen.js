@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { ScrollView, StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
+import { RestClient } from 'api';
 
 import {
   ViewContainer,
@@ -13,29 +13,49 @@ import {
 } from 'components';
 import { emojifyText, translate, openURLInView } from 'utils';
 import { colors, fonts } from 'config';
-import { getLabels } from 'repository';
-import { editIssue, changeIssueLockStatus } from '../issue.action';
 
-const mapStateToProps = state => ({
-  locale: state.auth.locale,
-  authUser: state.auth.user,
-  repository: state.repository.repository,
-  labels: state.repository.labels,
-  issue: state.issue.issue,
-  isMerged: state.issue.isMerged,
-  isEditingIssue: state.issue.isEditingIssue,
-  isPendingLabels: state.repository.isPendingLabels,
-});
+const mapStateToProps = (state, ownProps) => {
+  const { repoId, issueNumber } = ownProps.navigation.state.params;
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      editIssue,
-      changeIssueLockStatus,
-      getLabels,
-    },
-    dispatch
-  );
+  const {
+    entities: { users, issues, issue_labels, repos },
+    pagination: { REPOS_GET_LABELS },
+  } = state;
+
+  const issueFQN = `${repoId}-${issueNumber}`;
+
+  const issue = issues[issueFQN];
+  const repository = repos[repoId];
+
+  const repoLabelsPagination = REPOS_GET_LABELS[repoId] || {
+    ids: [],
+    isFetching: true,
+  };
+  const repoLabels = repoLabelsPagination.ids.reduce((map, id) => {
+    /* eslint-disable no-param-reassign */
+    map[id] = issue_labels[id];
+
+    return map;
+  }, {});
+
+  return {
+    locale: state.auth.locale,
+    authUser: state.auth.user,
+    repoId,
+    users,
+    repository,
+    issueNumber,
+    issue,
+    repoLabels,
+  };
+};
+
+const mapDispatchToProps = {
+  getLabels: RestClient.repos.getLabels,
+  editIssue: RestClient.issues.edit,
+  lockIssue: RestClient.issues.lock,
+  unlockIssue: RestClient.issues.unlock,
+};
 
 const styles = StyleSheet.create({
   listItemTitle: {
@@ -54,13 +74,17 @@ const styles = StyleSheet.create({
 
 class IssueSettings extends Component {
   props: {
-    editIssue: Function,
-    changeIssueLockStatus: Function,
+    repoId: string,
+    issueNumber: number,
     getLabels: Function,
+    repoLabels: Array,
+    users: Array,
+
+    lockIssue: Function,
+    unlockIssue: Function,
+    editIssue: Function,
     locale: string,
     authUser: Object,
-    repository: Object,
-    labels: Array,
     issue: Object,
     isMerged: boolean,
     // isEditingIssue: boolean,
@@ -69,9 +93,9 @@ class IssueSettings extends Component {
   };
 
   componentDidMount() {
-    this.props.getLabels(
-      this.props.repository.labels_url.replace('{/name}', '')
-    );
+    const { repoId, getLabels } = this.props;
+
+    getLabels(repoId);
   }
 
   showChangeIssueStateActionSheet = () => {
@@ -100,59 +124,46 @@ class IssueSettings extends Component {
   };
 
   handleLockIssueActionPress = index => {
-    const { issue, repository } = this.props;
-    const repoName = repository.name;
-    const owner = repository.owner.login;
+    const { issueNumber, repoId, issue, lockIssue, unlockIssue } = this.props;
 
     if (index === 0) {
-      this.props.changeIssueLockStatus(
-        owner,
-        repoName,
-        issue.number,
-        issue.locked
-      );
+      if (issue.locked) {
+        unlockIssue(repoId, issueNumber);
+      } else {
+        lockIssue(repoId, issueNumber);
+      }
     }
   };
 
   handleAddLabelActionPress = index => {
-    const { issue, labels } = this.props;
-    const labelChoices = [...labels.map(label => label.name)];
+    const { issue, repoLabels } = this.props;
 
-    if (
-      index !== labelChoices.length &&
-      !issue.labels.some(label => label.name === labelChoices[index])
-    ) {
-      this.editIssue(
-        {
-          labels: [
-            ...issue.labels.map(label => label.name),
-            labelChoices[index],
-          ],
-        },
-        { labels: [...issue.labels, labels[index]] }
-      );
-    }
+    const existingLabels = issue.labels.map(label => repoLabels[label].name);
+
+    this.editIssue({
+      labels: [...existingLabels, Object.values(repoLabels)[index]],
+    });
   };
 
-  editIssue = (editParams, stateChangeParams) => {
-    const { issue, repository } = this.props;
-    const repoName = repository.name;
-    const owner = repository.owner.login;
-    const updateStateParams = stateChangeParams || editParams;
+  editIssue = editParams => {
+    const { repoId, issueNumber } = this.props;
 
-    return this.props.editIssue(
-      owner,
-      repoName,
-      issue.number,
-      editParams,
-      updateStateParams
-    );
+    return this.props.editIssue(repoId, issueNumber, editParams);
   };
 
   openURLInBrowser = () => openURLInView(this.props.issue.html_url);
 
   render() {
-    const { issue, isMerged, locale, authUser, navigation } = this.props;
+    const {
+      issue,
+      repoLabels,
+      isMerged,
+      locale,
+      users,
+      authUser,
+      navigation,
+    } = this.props;
+
     const issueType = issue.pull_request
       ? translate('issue.settings.pullRequestType', locale)
       : translate('issue.settings.issueType', locale);
@@ -168,82 +179,60 @@ class IssueSettings extends Component {
               borderBottomWidth: 1,
               borderBottomColor: colors.grey,
             }}
-            noItems={issue.labels.length === 0}
+            noItems={repoLabels.length === 0}
             noItemsMessage={translate('issue.settings.noneMessage', locale)}
             title={translate('issue.settings.labelsTitle', locale)}
           >
-            {issue.labels.map(item => (
+            {issue.labels.map(labelId => (
               <LabelListItem
-                label={item}
-                key={item.id}
-                removeLabel={labelToRemove =>
-                  this.editIssue(
-                    {
-                      labels: [
-                        ...issue.labels
-                          .map(label => label.name)
-                          .filter(
-                            labelName => labelName !== labelToRemove.name
-                          ),
-                      ],
-                    },
-                    {
-                      labels: issue.labels.filter(
-                        label => label.name !== labelToRemove.name
+                label={repoLabels[labelId]}
+                key={labelId}
+                removeLabel={labelToRemove => {
+                  const existingLabels = issue.labels.map(
+                    label => repoLabels[label].name
+                  );
+
+                  return this.editIssue({
+                    labels: [
+                      ...existingLabels.filter(
+                        label => label !== labelToRemove.name
                       ),
-                    }
-                  )
-                }
+                    ],
+                  });
+                }}
               />
             ))}
           </SectionList>
 
           <SectionList
             showButton={
-              !issue.assignees.some(
-                assignee => assignee.login === authUser.login
-              )
+              !issue.assignees.some(assignee => assignee === authUser.login)
             }
             buttonTitle={translate(
               'issue.settings.assignYourselfButton',
               locale
             )}
-            buttonAction={() =>
-              this.editIssue(
-                {
-                  assignees: [
-                    ...issue.assignees.map(user => user.login),
-                    authUser.login,
-                  ],
-                },
-                { assignees: [...issue.assignees, authUser] }
-              )
-            }
+            buttonAction={() => {
+              return this.editIssue({
+                assignees: [...issue.assignees, authUser.login],
+              });
+            }}
             noItems={issue.assignees.length === 0}
             noItemsMessage={translate('issue.settings.noneMessage', locale)}
             title={translate('issue.settings.assigneesTitle', locale)}
           >
             {issue.assignees.map(item => (
               <UserListItem
-                user={item}
+                user={users[item]}
                 key={item.id}
                 navigation={navigation}
                 icon="x"
                 iconAction={userToRemove =>
-                  this.editIssue(
-                    {
-                      assignees: [
-                        ...issue.assignees
-                          .map(user => user.login)
-                          .filter(user => user !== userToRemove),
-                      ],
-                    },
-                    {
-                      assignees: issue.assignees.filter(
-                        assignee => assignee.login !== userToRemove
-                      ),
-                    }
-                  )
+                  this.editIssue({
+                    assignees: [
+                      ...issue.assignees.filter(user => user !== userToRemove),
+                    ],
+                  })
                 }
               />
             ))}
@@ -330,10 +319,10 @@ class IssueSettings extends Component {
           }}
           title={translate('issue.settings.applyLabelTitle', locale)}
           options={[
-            ...this.props.labels.map(label => emojifyText(label.name)),
+            ...Object.values(repoLabels).map(label => emojifyText(label.name)),
             translate('common.cancel', locale),
           ]}
-          cancelButtonIndex={this.props.labels.length}
+          cancelButtonIndex={Object.values(repoLabels).length}
           onPress={this.handleAddLabelActionPress}
         />
       </ViewContainer>

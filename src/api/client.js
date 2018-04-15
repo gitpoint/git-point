@@ -1,4 +1,37 @@
+// @flow
+
+import { Schema } from 'normalizr';
+import { merge } from 'lodash';
+import { version } from 'package.json';
+import { Platform } from 'react-native';
+
 import Schemas from './schemas';
+
+type SpecialParameters = {
+  forceRefresh?: boolean,
+  loadMore?: boolean,
+  perPage?: number,
+};
+
+type FetchParameters = {
+  method?: string,
+  headers?: Object,
+  body?: Object,
+};
+
+export type CallParameters = {
+  endpoint: string,
+  schema: Schema,
+  params: SpecialParameters,
+  fetchParameters?: FetchParameters,
+  normalizrKey?: string,
+  paginationArgs?: Array<string | number | boolean>,
+  entityId?: String | number,
+};
+
+export type CallType = CallParameters & {
+  type: string,
+};
 
 export class Client {
   API_ROOT = 'https://api.github.com/';
@@ -17,54 +50,116 @@ export class Client {
     POST: 'POST',
   };
 
+  Accept = {
+    DIFF: 'application/vnd.github.v3.diff+json',
+    FULL: 'application/vnd.github.v3.full+json',
+    HTML: 'application/vnd.github.v3.html+json',
+    JSON: 'application/vnd.github.v3+json',
+    MERCY_PREVIEW: 'application/vnd.github.mercy-preview+json',
+    RAW: 'application/vnd.github.v3.raw+json',
+  };
+
   authHeaders = {};
 
   call = async (
-    url,
-    params = {},
-    { method = this.Method.GET, body = {}, headers = {} } = {}
+    url: string,
+    params: SpecialParameters = {},
+    fetchParameters: FetchParameters = {}
   ) => {
-    let finalUrl;
+    let finalUrl = url;
 
-    if (params.url) {
-      // a different url was provided, use it instead (paginated)
-      finalUrl = params.url;
-    } else {
-      finalUrl = url;
-      // add explicitely specified parameters
-      if (params.per_page) {
-        finalUrl = `${finalUrl}${finalUrl.includes('?') ? '&' : '?'}per_page=${
-          params.per_page
-        }`;
-      }
+    // add explicitely specified parameters
+    if (params.perPage) {
+      finalUrl = `${finalUrl}${
+        finalUrl.includes('?') ? '&' : '?'
+      }per_page=${Number(params.perPage).toString()}`;
     }
 
     if (!finalUrl.includes(this.API_ROOT)) {
       finalUrl = `${this.API_ROOT}${finalUrl}`;
     }
 
-    const parameters = {
+    const { method, headers, body } = fetchParameters;
+
+    const parameters: any = {
       method,
       headers: {
+        'User-Agent': `GitPoint/${version} ${Platform.OS}`,
         'Cache-Control': 'no-cache',
         ...this.authHeaders,
         ...headers,
       },
     };
 
-    const withBody = [this.Method.PUT, this.Method.PATCH, this.Method.POST];
-
-    if (withBody.indexOf(method) !== -1) {
+    if (body) {
       parameters.body = JSON.stringify(body);
-      if (method === this.Method.PUT) {
-        parameters.headers['Content-Length'] = 0;
-      }
     }
 
     return fetch(finalUrl, parameters);
   };
 
-  /* eslint-disable no-unused-vars */
+  get = ({ fetchParameters, ...config }: CallParameters): CallType => ({
+    type: 'get',
+    params: {},
+    ...config,
+    fetchParameters: merge(
+      { method: this.Method.GET, headers: { Accept: this.Accept.JSON } },
+      fetchParameters
+    ),
+  });
+
+  put = ({ fetchParameters, ...config }: CallParameters): CallType => ({
+    type: 'put',
+    params: {},
+    ...config,
+    fetchParameters: merge(
+      {
+        method: this.Method.PUT,
+        headers: { Accept: this.Accept.JSON, 'Content-Length': 0 },
+      },
+      fetchParameters
+    ),
+  });
+
+  list = ({ fetchParameters, ...config }: CallParameters): CallType => ({
+    type: 'list',
+    params: {},
+    ...config,
+    fetchParameters: merge(
+      { method: this.Method.GET, headers: { Accept: this.Accept.JSON } },
+      fetchParameters
+    ),
+  });
+
+  create = ({ fetchParameters, ...config }: CallParameters): CallType => ({
+    type: 'create',
+    params: {},
+    ...config,
+    fetchParameters: merge(
+      { method: this.Method.POST, headers: { Accept: this.Accept.JSON } },
+      fetchParameters
+    ),
+  });
+
+  update = ({ fetchParameters, ...config }: CallParameters): CallType => ({
+    type: 'update',
+    params: {},
+    ...config,
+    fetchParameters: merge(
+      { method: this.Method.PATCH, headers: { Accept: this.Accept.JSON } },
+      fetchParameters
+    ),
+  });
+
+  delete = ({ fetchParameters, ...config }: CallParameters): CallType => ({
+    type: 'delete',
+    params: {},
+    ...config,
+    fetchParameters: merge(
+      { method: this.Method.DELETE, headers: { Accept: this.Accept.JSON } },
+      fetchParameters
+    ),
+  });
 
   /**
    * Sets the authorization headers given an access token.
@@ -72,7 +167,7 @@ export class Client {
    * @abstract
    * @param {string} token The oAuth access token
    */
-  setAuthHeaders = token => {
+  setAuthHeaders = (token: string) => {
     this.authHeaders = { Authorization: `token ${token}` };
   };
 
@@ -82,7 +177,7 @@ export class Client {
    * @async
    * @param {Response} response
    */
-  getCount = async response => {
+  getCount = async (response: Response) => {
     if (!response.ok) {
       return 0;
     }
@@ -104,7 +199,7 @@ export class Client {
       });
   };
 
-  getNextPageUrl = response => {
+  getNextPageUrl = (response: Response) => {
     const { headers } = response;
     const link = headers.get('link');
     const nextLink = link
@@ -130,55 +225,219 @@ export class Client {
      *
      * @param {string} userId
      */
-    getEventsReceived: async (userId, params) => {
-      return this.call(`users/${userId}/received_events`, params).then(
-        response => ({
-          response,
-          nextPageUrl: this.getNextPageUrl(response),
-          schema: Schemas.EVENT_ARRAY,
-        })
-      );
-    },
-    getStarredReposForUser: async (userId, params) => {
-      return this.call(`users/${userId}/starred`, params).then(response => ({
-        response,
-        nextPageUrl: this.getNextPageUrl(response),
+    getEventsReceived: (
+      userId: string,
+      params: SpecialParameters = {}
+    ): CallParameters =>
+      this.list({
+        endpoint: `users/${userId}/received_events`,
+        params: params || {},
+        schema: Schemas.EVENT_ARRAY,
+        paginationArgs: [userId],
+      }),
+
+    getStarredReposForUser: (userId: string, params: SpecialParameters = {}) =>
+      this.list({
+        endpoint: `users/${userId}/starred`,
+        params,
         schema: Schemas.REPO_ARRAY,
-      }));
-    },
+        paginationArgs: [userId],
+      }),
   };
   search = {
-    repos: async (q, params) => {
-      return this.call(`search/repositories?q=${q}`, params).then(response => ({
-        response,
-        nextPageUrl: this.getNextPageUrl(response),
+    repos: (q: string, params: SpecialParameters = {}) =>
+      this.list({
+        endpoint: `search/repositories?q=${q}`,
+        params,
         schema: Schemas.REPO_ARRAY,
+        paginationArgs: [q],
         normalizrKey: 'items',
-      }));
-    },
-    users: async (q, params) => {
-      return this.call(`search/users?q=${q}`, params).then(response => ({
-        response,
-        nextPageUrl: this.getNextPageUrl(response),
+      }),
+
+    users: (q: string, params: SpecialParameters = {}) =>
+      this.list({
+        endpoint: `search/users?q=${q}`,
+        params,
         schema: Schemas.USER_ARRAY,
+        paginationArgs: [q],
         normalizrKey: 'items',
-      }));
-    },
+      }),
   };
   orgs = {
-    getById: async (orgId, params) => {
-      return this.call(`orgs/${orgId}`, params).then(response => ({
-        response,
+    /**
+     * Get org by id
+     */
+    getById: (orgId: string, params: SpecialParameters = {}) =>
+      this.get({
+        endpoint: `orgs/${orgId}`,
+        params,
         schema: Schemas.ORG,
-      }));
-    },
-    getMembers: async (orgId, params) => {
-      return this.call(`orgs/${orgId}/members`, params).then(response => ({
-        response,
-        nextPageUrl: this.getNextPageUrl(response),
+      }),
+    getMembers: (orgId: string, params: SpecialParameters = {}) =>
+      this.list({
+        endpoint: `orgs/${orgId}/members`,
+        params,
         schema: Schemas.USER_ARRAY,
+        paginationArgs: [orgId],
+      }),
+  };
 
-      }));
-    },
+  issues = {
+    get: (repoId: string, number: number, params: SpecialParameters = {}) =>
+      this.get({
+        endpoint: `repos/${repoId}/issues/${number}`,
+        params,
+        schema: Schemas.ISSUE,
+        fetchParameters: {
+          headers: {
+            Accept: this.Accept.FULL,
+          },
+        },
+      }),
+
+    edit: (
+      repoId: string,
+      number: string,
+      data: Object,
+      params: SpecialParameters = {}
+    ) =>
+      this.update({
+        endpoint: `repos/${repoId}/issues/${number}`,
+        params,
+        schema: Schemas.ISSUE,
+        fetchParameters: {
+          headers: {
+            Accept: this.Accept.FULL,
+          },
+          body: data,
+        },
+      }),
+
+    lock: (repoId: string, number: string, params: SpecialParameters = {}) =>
+      this.put({
+        endpoint: `repos/${repoId}/issues/${number}/lock`,
+        params,
+        schema: Schemas.ISSUE,
+        changeEntity: {
+          type: 'issues',
+          id: `${repoId}-${number}`,
+          changes: {
+            locked: true,
+          },
+        },
+      }),
+
+    unlock: (repoId: string, number: string, params: SpecialParameters = {}) =>
+      this.delete({
+        endpoint: `repos/${repoId}/issues/${number}/lock`,
+        params,
+        schema: Schemas.ISSUE,
+        changeEntity: {
+          type: 'issues',
+          id: `${repoId}-${number}`,
+          changes: {
+            locked: false,
+          },
+        },
+      }),
+
+    getComments: (
+      repoId: string,
+      number: number,
+      params: SpecialParameters = {}
+    ) =>
+      this.list({
+        endpoint: `repos/${repoId}/issues/${number}/comments`,
+        params,
+        schema: Schemas.ISSUE_COMMENT_ARRAY,
+        paginationArgs: [repoId, number],
+        fetchParameters: {
+          headers: { Accept: this.Accept.FULL },
+        },
+      }),
+
+    getEvents: (
+      repoId: string,
+      number: number,
+      params: SpecialParameters = {}
+    ) =>
+      this.list({
+        endpoint: `repos/${repoId}/issues/${number}/events`,
+        params,
+        schema: Schemas.ISSUE_EVENT_ARRAY,
+        paginationArgs: [repoId, number],
+      }),
+
+    createComment: (
+      repoId: string,
+      number: number,
+      body: string,
+      params: SpecialParameters = {}
+    ) =>
+      this.create({
+        endpoint: `repos/${repoId}/issues/${number}/comments`,
+        params,
+        schema: Schemas.ISSUE_COMMENT,
+        paginationArgs: [repoId, number],
+        fetchParameters: {
+          body: { body },
+          headers: { Accept: this.Accept.FULL },
+        },
+      }),
+
+    editComment: (
+      repoId: string,
+      number: number,
+      id: number,
+      body: string,
+      params: SpecialParameters = {}
+    ) =>
+      this.update({
+        endpoint: `repos/${repoId}/issues/comments/${id}`,
+        params,
+        schema: Schemas.ISSUE_COMMENT,
+        fetchParameters: {
+          headers: { Accept: this.Accept.FULL },
+          body: { body },
+        },
+        paginationArgs: [repoId, number],
+      }),
+
+    deleteComment: (
+      repoId: string,
+      number: number,
+      id: number,
+      params: SpecialParameters = {}
+    ) =>
+      this.delete({
+        endpoint: `repos/${repoId}/issues/comments/${id}`,
+        params,
+        schema: Schemas.ISSUE_COMMENT,
+        paginationArgs: [repoId, number],
+        entityId: id,
+      }),
+  };
+
+  repos = {
+    get: (repoId: string, params: SpecialParameters = {}) =>
+      this.get({
+        endpoint: `repos/${repoId}`,
+        params,
+        schema: Schemas.REPO,
+      }),
+    getContributors: (repoId: string, params: SpecialParameters = {}) =>
+      this.list({
+        endpoint: `repos/${repoId}/contributors`,
+        params,
+        schema: Schemas.USER_ARRAY,
+        paginationArgs: [repoId],
+      }),
+    getLabels: (repoId: string, params: SpecialParameters = {}) =>
+      this.list({
+        endpoint: `repos/${repoId}/labels`,
+        params,
+        schema: Schemas.ISSUE_LABEL_ARRAY,
+        paginationArgs: [repoId],
+      }),
   };
 }

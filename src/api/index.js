@@ -213,77 +213,6 @@ export const fetchUserOrgs = (user, accessToken) =>
 export const fetchReadMe = (user, repository, accessToken) =>
   v3.getHtml(`/repos/${user}/${repository}/readme?ref=master`, accessToken);
 
-export const fetchOrg = (orgName, accessToken) =>
-  v3.getJson(`/orgs/${orgName}`, accessToken);
-
-export const fetchOrgMembers = (orgName, accessToken) =>
-  v3.getJson(`/orgs/${orgName}/members`, accessToken);
-
-export const fetchPostIssueComment = (
-  body,
-  owner,
-  repoName,
-  issueNum,
-  accessToken
-) =>
-  v3.postFull(
-    `/repos/${owner}/${repoName}/issues/${issueNum}/comments`,
-    accessToken,
-    { body }
-  );
-
-export const fetchDeleteIssueComment = (
-  issueCommentId,
-  owner,
-  repoName,
-  accessToken
-) =>
-  v3.delete(
-    `/repos/${owner}/${repoName}/issues/comments/${issueCommentId}`,
-    accessToken
-  );
-
-export const fetchEditIssueComment = (
-  issueCommentId: number,
-  owner: string,
-  repoName: string,
-  editParams: any,
-  accessToken: string
-) =>
-  v3.patchFull(
-    `/repos/${owner}/${repoName}/issues/comments/${issueCommentId}`,
-    accessToken,
-    editParams
-  );
-
-export const fetchEditIssue = (
-  owner,
-  repoName,
-  issueNum,
-  editParams,
-  accessToken
-) =>
-  v3.patchFull(
-    `/repos/${owner}/${repoName}/issues/${issueNum}`,
-    accessToken,
-    editParams
-  );
-
-export const fetchChangeIssueLockStatus = (
-  owner,
-  repoName,
-  issueNum,
-  currentStatus,
-  accessToken
-) =>
-  v3[currentStatus ? 'delete' : 'put'](
-    `/repos/${owner}/${repoName}/issues/${issueNum}/lock`,
-    accessToken
-  );
-
-export const fetchSearch = (type, query, accessToken, params = '') =>
-  v3.getJson(`/search/${type}?q=${query}${params}`, accessToken);
-
 export const fetchNotifications = (participating, all, accessToken) =>
   v3.getJson(
     `/notifications?participating=${participating}&all=${all}`,
@@ -391,14 +320,3 @@ export const fetchRepoTopics = async (owner, repoName, accessToken) => {
 
   return response.json();
 };
-
-export const fetchIssueEvents = (
-  owner: string,
-  repoName: string,
-  issueNum: number,
-  accessToken: string
-) =>
-  v3.getJson(
-    `/repos/${owner}/${repoName}/issues/${issueNum}/events`,
-    accessToken
-  );

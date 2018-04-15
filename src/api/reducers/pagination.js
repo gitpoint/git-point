@@ -6,8 +6,8 @@ import * as Actions from '../actions';
 // Creates a reducer managing pagination, given the action types to handle,
 // and a function telling how to extract the key from an action.
 const paginate = types => {
-  if (typeof types !== 'object' || Object.keys(types).length !== 4) {
-    throw new Error('Expected types to be an object of 4 props.');
+  if (typeof types !== 'object' || Object.keys(types).length !== 7) {
+    throw new Error('Expected types to be an object of 7 props.');
   }
 
   const updatePagination = (
@@ -31,6 +31,16 @@ const paginate = types => {
           nextPageUrl: undefined,
           pageCount: 0,
           ids: [],
+        };
+      case types.APPEND:
+        return {
+          ...state,
+          ids: union(state.ids, action.pagination.ids),
+        };
+      case types.REMOVE:
+        return {
+          ...state,
+          ids: state.ids.filter(id => id !== action.pagination.entityId),
         };
       case types.SUCCESS:
         return {
@@ -57,10 +67,11 @@ const paginate = types => {
       case types.PENDING:
       case types.RESET:
       case types.SUCCESS:
+      case types.APPEND:
+      case types.REMOVE:
       case types.ERROR:
         const key = action.id;
 
-        //  console.log("PAGINATE", action);
         if (typeof key !== 'string') {
           throw new Error('Expected key to be a string.');
         }
@@ -81,7 +92,15 @@ export const pagination = combineReducers({
   ACTIVITY_GET_STARRED_REPOS_FOR_USER: paginate(
     Actions.ACTIVITY_GET_STARRED_REPOS_FOR_USER
   ),
+
   SEARCH_REPOS: paginate(Actions.SEARCH_REPOS),
   SEARCH_USERS: paginate(Actions.SEARCH_USERS),
+
   ORGS_GET_MEMBERS: paginate(Actions.ORGS_GET_MEMBERS),
+
+  ISSUES_GET_COMMENTS: paginate(Actions.ISSUES_GET_COMMENTS),
+  ISSUES_GET_EVENTS: paginate(Actions.ISSUES_GET_EVENTS),
+
+  REPOS_GET_LABELS: paginate(Actions.REPOS_GET_LABELS),
+  REPOS_GET_CONTRIBUTORS: paginate(Actions.REPOS_GET_CONTRIBUTORS),
 });
