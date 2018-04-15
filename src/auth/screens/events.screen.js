@@ -3,9 +3,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { Text, FlatList, View, ActivityIndicator } from 'react-native';
+import { Text, FlatList, View } from 'react-native';
 
-import { LoadingUserListItem, UserListItem, ViewContainer } from 'components';
+import { LoadingEventListItem, UserListItem, ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { emojifyText, translate, relativeTimeToNow } from 'utils';
 import { getNotificationsCount } from 'notifications';
@@ -508,15 +508,7 @@ class Events extends Component {
       return null;
     }
 
-    return (
-      <View
-        style={{
-          paddingVertical: 20,
-        }}
-      >
-        <ActivityIndicator animating size="large" />
-      </View>
-    );
+    return <LoadingEventListItem />;
   };
 
   render() {
@@ -530,10 +522,10 @@ class Events extends Component {
     const linebreaksPattern = /(\r\n|\n|\r)/gm;
     let content;
 
-    if (userEventsPagination.isFetching && !userEvents) {
+    if (userEventsPagination.isFetching && userEvents.length === 0) {
       content = [...Array(15)].map((item, index) => {
         // eslint-disable-next-line react/no-array-index-key
-        return <LoadingUserListItem key={index} />;
+        return <LoadingEventListItem key={index} />;
       });
     } else if (
       !userEventsPagination.isFetching &&
