@@ -1,4 +1,4 @@
-export const nl = {
+export default {
   auth: {
     login: {
       connectingToGitHub: 'Verbinding maken met GitHub ...', // google translate

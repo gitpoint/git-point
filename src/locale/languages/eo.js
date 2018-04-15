@@ -1,4 +1,4 @@
-export const eo = {
+export default {
   auth: {
     login: {
       connectingToGitHub: 'Konektante al GitHub...',

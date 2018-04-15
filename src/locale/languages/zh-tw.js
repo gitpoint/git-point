@@ -1,4 +1,4 @@
-export const zhTW = {
+export default {
   auth: {
     login: {
       connectingToGitHub: '連線至 GitHub...',

@@ -1,4 +1,4 @@
-export const ptBR = {
+export default {
   auth: {
     login: {
       connectingToGitHub: 'Conectando ao GitHub...',

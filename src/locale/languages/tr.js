@@ -1,4 +1,4 @@
-export const tr = {
+export default {
   auth: {
     login: {
       connectingToGitHub: "GitHub'a Bağlanılıyor...",

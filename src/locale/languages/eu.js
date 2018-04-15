@@ -1,4 +1,4 @@
-export const eu = {
+export default {
   auth: {
     login: {
       connectingToGitHub: 'GitHubera konektatzen...',

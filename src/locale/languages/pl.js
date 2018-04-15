@@ -1,4 +1,4 @@
-export const pl = {
+export default {
   auth: {
     login: {
       connectingToGitHub: 'Łączenie z GitHubem...',

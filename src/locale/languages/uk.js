@@ -1,4 +1,4 @@
-export const uk = {
+export default {
   auth: {
     login: {
       connectingToGitHub: 'Підключення до GitHub...',

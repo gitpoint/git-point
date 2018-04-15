@@ -1,4 +1,4 @@
-export const pt = {
+export default {
   auth: {
     login: {
       connectingToGitHub: ' GitHub...',

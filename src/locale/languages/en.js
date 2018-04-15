@@ -1,7 +1,43 @@
-// Hash: 01ae4880b9b4296907d680e9b909713c36c42491
-// Link: https://github.com/gitpoint/git-point/pull/260
-
-export const en = {
+module.exports = {
+  '{actor} commented on commit': '{actor} commented on commit',
+  '{actor} created branch {ref} at {repo}':
+    '{actor} created branch {ref} at {repo}',
+  '{actor} created tag {ref} at {repo}': '{actor} created tag {ref} at {repo}',
+  '{actor} created repository {repo}': '{actor} created repository {repo}',
+  '{actor} deleted branch {ref} at {repo}':
+    '{actor} deleted branch {ref} at {repo}',
+  '{actor} deleted tag {ref} at {repo}': '{actor} deleted tag {ref} at {repo}',
+  '{actor} forked {repo} at {fork}': '{actor} forked {repo} at {fork}',
+  '{actor} created the {repo} wiki': '{actor} created the {repo} wiki',
+  '{actor} edited the {repo} wiki': '{actor} edited the {repo} wiki',
+  '{actor} commented on pull request {issue} at {repo}':
+    '{actor} commented on pull request {issue} at {repo}',
+  '{actor} commented on issue {issue} at {repo}':
+    '{actor} commented on issue {issue} at {repo}',
+  '{actor} opened issue {issue} at {repo}':
+    '{actor} opened issue {issue} at {repo}',
+  '{actor} reopened issue {issue} at {repo}':
+    '{actor} reopened issue {issue} at {repo}',
+  '{actor} closed issue {issue} at {repo}':
+    '{actor} closed issue {issue} at {repo}',
+  '{actor} edited {member} at {repo}': '{actor} edited {member} at {repo}',
+  '{actor} removed {member} at {repo}': '{actor} removed {member} at {repo}',
+  '{actor} added {member} at {repo}': '{actor} added {member} at {repo}',
+  '{actor} made {repo} public': '{actor} made {repo} public',
+  '{actor} opened pull request {pr} at {repo}':
+    '{actor} opened pull request {pr} at {repo}',
+  '{actor} reopened pull request {pr} at {repo}':
+    '{actor} reopened pull request {pr} at {repo}',
+  '{actor} merged pull request {pr} at {repo}':
+    '{actor} merged pull request {pr} at {repo}',
+  '{actor} closed pull request {pr} at {repo}':
+    '{actor} closed pull request {pr} at {repo}',
+  '{actor} commented on pull request {pr} at {repo}':
+    '{actor} commented on pull request {pr} at {repo}',
+  '{actor} pushed to {ref} at {repo}': '{actor} pushed to {ref} at {repo}',
+  '{actor} published release {id}': '{actor} published release {id}',
+  '{actor} starred {repo}': '{actor} starred {repo}',
+  'auth.events.welcomeMessage': 'auth.events.welcomeMessage',
   auth: {
     login: {
       connectingToGitHub: 'Connecting to GitHub...',
