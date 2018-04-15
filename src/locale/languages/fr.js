@@ -25,7 +25,8 @@ module.exports = {
   '{actor} pushed to {ref} at {repo}': '',
   '{actor} published release {id}': '',
   '{actor} starred {repo}': '{actor} a mis en favori {repo}',
-  'auth.events.welcomeMessage': '',
+  'One of the most feature-rich GitHub clients that is 100% free': '',
+  'auth.events.welcomeMessage': '@@',
   auth: {
     login: {
       connectingToGitHub: 'Connexion à GitHub...',

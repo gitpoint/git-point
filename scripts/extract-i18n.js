@@ -20,10 +20,8 @@ const extractFromSource = config => {
   config.sourcePath.forEach(source => {
     const files = glob.sync(`${source}/**/*.js`, { debug: false });
 
-    console.log(files);
     files.forEach(file => {
       for (let i = 0; i < config.ignorePath.length; i++) {
-        // console.log(file, config.ignorePath[i]);
         if (file.indexOf(config.ignorePath[i]) !== -1) {
           return;
         }

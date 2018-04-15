@@ -191,8 +191,22 @@
       "./node_modules"
     ],
     "languages": [
+      "de",
+      "en",
+      "eo",
+      "es",
+      "eu",
       "fr",
-      "en"
+      "gl",
+      "nl",
+      "pl",
+      "pt",
+      "ptBr",
+      "ru",
+      "tr",
+      "uk",
+      "zhCn",
+      "zhTw"
     ],
     "messagePath": "src/locale/languages",
     "translator": "t"
