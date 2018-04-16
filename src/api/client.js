@@ -6,6 +6,7 @@ import { version } from 'package.json';
 import { Platform } from 'react-native';
 
 import Schemas from './schemas';
+import { repoQuery } from './queries';
 
 type SpecialParameters = {
   forceRefresh?: boolean,
@@ -108,6 +109,29 @@ export class Client {
     ),
   });
 
+  query = ({
+    fetchParameters,
+    query,
+    variables,
+    ...config
+  }: CallParameters): CallType => ({
+    type: 'query',
+    endpoint: 'graphql',
+    params: {},
+    ...config,
+    fetchParameters: merge(
+      {
+        method: this.Method.POST,
+        headers: { Accept: this.Accept.JSON },
+        body: {
+          query,
+          variables,
+        },
+      },
+      fetchParameters
+    ),
+  });
+
   list = ({ fetchParameters, ...config }: CallParameters): CallType => ({
     type: 'list',
     params: {},
@@ -173,6 +197,18 @@ export class Client {
       .slice(1, -1);
   };
 
+  graphql = {
+    getRepo: (repoId: string) => {
+      const [owner, name] = repoId.split('/');
+
+      return this.query({
+        query: repoQuery,
+        variables: { owner, name },
+        schema: Schemas.GQL_REPO,
+      });
+    },
+  };
+
   /**
    * The activity endpoint
    */
@@ -218,6 +254,15 @@ export class Client {
         schema: Schemas.USER_ARRAY,
         paginationArgs: [q],
         normalizrKey: 'items',
+      }),
+  };
+  repos = {
+    getContributors: (repoId: string, params: SpecialParameters = {}) =>
+      this.list({
+        endpoint: `repos/${repoId}/contributors`,
+        params,
+        schema: Schemas.USER_ARRAY,
+        paginationArgs: [repoId],
       }),
   };
   orgs = {

@@ -1,12 +1,6 @@
 import {
-  GET_REPOSITORY,
-  GET_REPOSITORY_CONTRIBUTORS,
   GET_REPOSITORY_CONTENTS,
   GET_REPOSITORY_FILE,
-  GET_REPOSITORY_ISSUES,
-  GET_REPO_README_STATUS,
-  GET_REPO_STARRED_STATUS,
-  GET_REPOSITORY_TOPICS,
   FORK_REPO_STATUS,
   CHANGE_STAR_STATUS,
   GET_REPOSITORY_README,
@@ -15,35 +9,23 @@ import {
   SEARCH_CLOSED_ISSUES,
   SEARCH_OPEN_PULLS,
   SEARCH_CLOSED_PULLS,
-  GET_REPOSITORY_SUBSCRIBED_STATUS,
 } from './repository.type';
 
 const initialState = {
-  repository: {},
-  contributors: [],
   labels: [],
   contents: {},
   fileContent: '',
-  issues: [],
   readMe: '',
   hasRepoExist: false,
-  hasReadMe: false,
-  starred: false,
   forked: false,
   subscribed: false,
   searchedOpenIssues: [],
   searchedClosedIssues: [],
   searchedOpenPulls: [],
   searchedClosedPulls: [],
-  isPendingRepository: false,
-  isPendingContributors: false,
   isPendingContents: false,
   isPendingFile: false,
-  isPendingIssues: false,
-  isPendingCheckReadMe: false,
-  isPendingCheckStarred: false,
   isPendingChangeStarred: false,
-  isPendingCheckSubscribed: false,
   isPendingReadMe: false,
   isPendingLabels: false,
   isPendingSearchOpenIssues: false,
@@ -51,57 +33,12 @@ const initialState = {
   isPendingSearchOpenPulls: false,
   isPendingSearchClosedPulls: false,
   isPendingFork: false,
-  isPendingTopics: false,
   isPendingSubscribe: false,
   error: '',
-  topics: [],
 };
 
 export const repositoryReducer = (state = initialState, action = {}) => {
   switch (action.type) {
-    case GET_REPOSITORY.PENDING:
-      return {
-        ...state,
-        contributors: [],
-        issues: [],
-        readMe: '',
-        hasRepoExist: false,
-        hasReadMe: false,
-        error: '',
-        topics: [],
-        isPendingRepository: true,
-      };
-    case GET_REPOSITORY.SUCCESS:
-      return {
-        ...state,
-        repository: action.payload,
-        hasRepoExist: true,
-        error: '',
-        isPendingRepository: false,
-      };
-    case GET_REPOSITORY.ERROR:
-      return {
-        ...initialState,
-        error: action.payload,
-      };
-    case GET_REPOSITORY_CONTRIBUTORS.PENDING:
-      return {
-        ...state,
-        isPendingContributors: true,
-      };
-    case GET_REPOSITORY_CONTRIBUTORS.SUCCESS:
-      return {
-        ...state,
-        contributors: action.payload,
-        isPendingContributors: false,
-      };
-    case GET_REPOSITORY_CONTRIBUTORS.ERROR:
-      return {
-        ...state,
-        error: action.payload,
-        isPendingContributors: false,
-        contributors: [],
-      };
     case GET_REPOSITORY_CONTENTS.PENDING:
       return {
         ...state,
@@ -139,57 +76,6 @@ export const repositoryReducer = (state = initialState, action = {}) => {
         error: action.payload,
         isPendingFile: false,
       };
-    case GET_REPOSITORY_ISSUES.PENDING:
-      return {
-        ...state,
-        isPendingIssues: true,
-      };
-    case GET_REPOSITORY_ISSUES.SUCCESS:
-      return {
-        ...state,
-        issues: action.payload,
-        isPendingIssues: false,
-      };
-    case GET_REPOSITORY_ISSUES.ERROR:
-      return {
-        ...state,
-        error: action.payload,
-        isPendingIssues: false,
-      };
-    case GET_REPO_README_STATUS.PENDING:
-      return {
-        ...state,
-        isPendingCheckReadMe: true,
-      };
-    case GET_REPO_README_STATUS.SUCCESS:
-      return {
-        ...state,
-        hasReadMe: action.payload,
-        isPendingCheckReadMe: false,
-      };
-    case GET_REPO_README_STATUS.ERROR:
-      return {
-        ...state,
-        error: action.payload,
-        isPendingCheckReadMe: false,
-      };
-    case GET_REPO_STARRED_STATUS.PENDING:
-      return {
-        ...state,
-        isPendingCheckStarred: true,
-      };
-    case GET_REPO_STARRED_STATUS.SUCCESS:
-      return {
-        ...state,
-        starred: action.payload,
-        isPendingCheckStarred: false,
-      };
-    case GET_REPO_STARRED_STATUS.ERROR:
-      return {
-        ...state,
-        error: action.payload,
-        isPendingCheckStarred: false,
-      };
     case FORK_REPO_STATUS.PENDING:
       return {
         ...state,
@@ -206,25 +92,7 @@ export const repositoryReducer = (state = initialState, action = {}) => {
         ...state,
         isPendingFork: false,
       };
-    case GET_REPOSITORY_SUBSCRIBED_STATUS.PENDING:
-      return {
-        ...state,
-        subscribed: false,
-        isPendingSubscribe: true,
-      };
-    case GET_REPOSITORY_SUBSCRIBED_STATUS.SUCCESS:
-      return {
-        ...state,
-        subscribed: action.payload,
-        isPendingSubscribe: false,
-      };
-    case GET_REPOSITORY_SUBSCRIBED_STATUS.ERROR:
-      return {
-        ...state,
-        subscribed: action.payload,
-        isPendingCheckSubscribed: false,
-        isPendingSubscribe: false,
-      };
+
     case CHANGE_STAR_STATUS.PENDING:
       return {
         ...state,
@@ -282,22 +150,7 @@ export const repositoryReducer = (state = initialState, action = {}) => {
         error: action.payload,
         isPendingLabels: false,
       };
-    case GET_REPOSITORY_TOPICS.SUCCESS:
-      return {
-        ...state,
-        topics: action.payload,
-        isPendingTopics: false,
-      };
-    case GET_REPOSITORY_TOPICS.PENDING:
-      return {
-        ...state,
-        isPendingTopics: true,
-      };
-    case GET_REPOSITORY_TOPICS.ERROR:
-      return {
-        ...state,
-        error: action.payload,
-      };
+
     case SEARCH_OPEN_ISSUES.PENDING:
       return {
         ...state,

@@ -1,12 +1,17 @@
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { StyleSheet, RefreshControl, Share } from 'react-native';
+import styled from 'styled-components';
+import {
+  StyleSheet,
+  RefreshControl,
+  Share,
+  ActivityIndicator,
+} from 'react-native';
 import { ListItem } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
 import Toast from 'react-native-simple-toast';
-
+import { RestClient } from 'api';
 import {
   ViewContainer,
   LoadingRepositoryProfile,
@@ -31,40 +36,68 @@ import {
   unSubscribeToRepo,
 } from '../repository.action';
 
+/*
 const mapStateToProps = state => ({
   username: state.auth.user.login,
   locale: state.auth.locale,
-  repository: state.repository.repository,
-  contributors: state.repository.contributors,
-  issues: state.repository.issues,
   starred: state.repository.starred,
   forked: state.repository.forked,
   subscribed: state.repository.subscribed,
   hasRepoExist: state.repository.hasRepoExist,
-  hasReadMe: state.repository.hasReadMe,
-  isPendingRepository: state.repository.isPendingRepository,
-  isPendingContributors: state.repository.isPendingContributors,
-  isPendingIssues: state.repository.isPendingIssues,
-  isPendingCheckReadMe: state.repository.isPendingCheckReadMe,
-  isPendingCheckStarred: state.repository.isPendingCheckStarred,
   isPendingFork: state.repository.isPendingFork,
-  isPendingTopics: state.repository.isPendingTopics,
   isPendingSubscribe: state.repository.isPendingSubscribe,
-  topics: state.repository.topics,
   error: state.repository.error,
-});
+});*/
 
-const mapDispatchToProps = dispatch =>
+const mapStateToProps = (state, ownProps) => {
+  const {
+    auth: { user, locale },
+    entities: { gqlRepos, users },
+    pagination: { REPOS_GET_CONTRIBUTORS },
+  } = state;
+
+  const repoId = ownProps.navigation.state.params.repository.url
+    .replace('https://api.github.com/repos/', '')
+    .toLowerCase();
+
+  const repository =
+    gqlRepos[repoId] || ownProps.navigation.state.params.repository;
+
+  const contributorsPagination = REPOS_GET_CONTRIBUTORS[repoId] || {
+    ids: [],
+    isFetching: true,
+  };
+  const contributors = contributorsPagination.ids.map(id => users[id]);
+
+  return {
+    user,
+    contributors,
+    contributorsPagination,
+    repository,
+    repoId,
+    locale,
+  };
+};
+
+/* const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getRepositoryInfo,
       changeStarStatusRepo,
       forkRepo,
       subscribeToRepo,
       unSubscribeToRepo,
     },
     dispatch
-  );
+  ); */
+
+const mapDispatchToProps = {
+  getRepoById: RestClient.graphql.getRepo,
+  getContributors: RestClient.repos.getContributors,
+};
+
+const LoadingMembersContainer = styled.View`
+  padding: 5px;
+`;
 
 const styles = StyleSheet.create({
   listTitle: {
@@ -79,24 +112,20 @@ const styles = StyleSheet.create({
 
 class Repository extends Component {
   props: {
-    getRepositoryInfo: Function,
+    getRepoById: Function,
+    getContributors: Function,
     changeStarStatusRepo: Function,
     forkRepo: Function,
     // repositoryName: string,
     repository: Object,
+    repoId: String,
     contributors: Array,
+    contributorsPagination: Object,
     hasRepoExist: boolean,
-    hasReadMe: boolean,
-    issues: Array,
     starred: boolean,
     // forked: boolean,
-    isPendingRepository: boolean,
-    isPendingContributors: boolean,
-    isPendingCheckReadMe: boolean,
     isPendingIssues: boolean,
-    isPendingCheckStarred: boolean,
     isPendingFork: boolean,
-    isPendingTopics: boolean,
     isPendingSubscribe: boolean,
     // isPendingCheckForked: boolean,
     navigation: Object,
@@ -105,7 +134,6 @@ class Repository extends Component {
     subscribed: boolean,
     subscribeToRepo: Function,
     unSubscribeToRepo: Function,
-    topics: Array,
     error: Object,
   };
 
@@ -121,16 +149,14 @@ class Repository extends Component {
   }
 
   componentDidMount() {
-    const {
-      repository: repo,
-      repositoryUrl: repoUrl,
-    } = this.props.navigation.state.params;
+    const repoId = this.props.repoId;
 
-    this.props.getRepositoryInfo(repo ? repo.url : repoUrl);
+    this.props.getRepoById(repoId);
+    this.props.getContributors(repoId);
   }
 
   componentDidUpdate() {
-    if (!this.props.hasRepoExist && this.props.error.message) {
+    if (false && !this.props.hasRepoExist && this.props.error.message) {
       Toast.showWithGravity(this.props.error.message, Toast.LONG, Toast.CENTER);
     }
   }
@@ -172,13 +198,13 @@ class Repository extends Component {
   };
 
   fetchRepoInfo = () => {
-    const {
-      repository: repo,
-      repositoryUrl: repoUrl,
-    } = this.props.navigation.state.params;
+    const { repoId } = this.props;
 
     this.setState({ refreshing: true });
-    this.props.getRepositoryInfo(repo ? repo.url : repoUrl).finally(() => {
+    Promise.all([
+      this.props.getRepoById(repoId),
+      this.props.getContributors(repoId, { forceRefresh: true }),
+    ]).then(() => {
       this.setState({ refreshing: false });
     });
   };
@@ -205,52 +231,65 @@ class Repository extends Component {
     );
   };
 
+  renderLoadingMembers = () => {
+    if (this.props.contributorsPagination.nextPageUrl === null) {
+      return null;
+    }
+
+    return (
+      <LoadingMembersContainer>
+        <ActivityIndicator animating size="small" />
+      </LoadingMembersContainer>
+    );
+  };
+
   render() {
     const {
       repository,
+      repoId,
       contributors,
-      hasRepoExist,
-      hasReadMe,
-      issues,
-      topics,
-      starred,
+      contributorsPagination,
       locale,
-      isPendingRepository,
-      isPendingContributors,
-      isPendingCheckReadMe,
       isPendingIssues,
-      isPendingCheckStarred,
       isPendingFork,
       isPendingSubscribe,
-      isPendingTopics,
       navigation,
       username,
       subscribed,
     } = this.props;
     const { refreshing } = this.state;
 
-    const initalRepository = navigation.state.params.repository;
-    const pulls = issues.filter(issue => issue.hasOwnProperty('pull_request')); // eslint-disable-line no-prototype-builtins
-    const pureIssues = issues.filter(issue => {
-      // eslint-disable-next-line no-prototype-builtins
-      return !issue.hasOwnProperty('pull_request');
-    });
+    const isPendingRepository =
+      typeof repository.openPullRequestsPreview === 'undefined';
 
-    const openPulls = pulls.filter(pull => pull.state === 'open');
-    const openIssues = pureIssues.filter(issue => issue.state === 'open');
+    const isPendingContributors =
+      contributors.length === 0 && contributorsPagination.isFetching;
+
+    const hasRepoExist = true;
+
+    const initalRepository = navigation.state.params.repository;
+
+    const openPulls = isPendingRepository
+      ? []
+      : repository.openPullRequestsPreview;
+    const openIssues = isPendingRepository ? [] : repository.openIssuesPreview;
+
     const showFork =
       repository && repository.owner && repository.owner.login !== username;
 
     const repositoryActions = [
-      starred
+      repository.isStarred
         ? translate('repository.main.unstarAction', locale)
         : translate('repository.main.starAction', locale),
-      subscribed
+      repository.subscription === 'SUBSCRIBED'
         ? translate('repository.main.unwatchAction', locale)
         : translate('repository.main.watchAction', locale),
       translate('repository.main.shareAction', locale),
       translate('common.openInBrowser', locale),
     ];
+
+    const pullRequestCount = repository.pullRequestsCount || 0;
+    const pureIssuesCount = repository.issuesCount || 0;
 
     if (showFork) {
       repositoryActions.splice(
@@ -261,12 +300,10 @@ class Repository extends Component {
     }
 
     const loader = isPendingFork ? <LoadingModal /> : null;
-    const isSubscribed =
-      isPendingRepository || isPendingSubscribe ? false : subscribed;
-    const isStarred =
-      isPendingRepository || isPendingCheckStarred ? false : starred;
+    const isSubscribed = repository.subscription === 'SUBSCRIBED';
+    const isStarred = repository.isStarred;
 
-    const showReadMe = !isPendingCheckReadMe && hasReadMe;
+    const showReadMe = !isPendingRepository && repository.hasReadme;
 
     return (
       <ViewContainer>
@@ -296,18 +333,16 @@ class Repository extends Component {
             />
           }
           stickyTitle={repository.name}
-          showMenu={
-            hasRepoExist && !isPendingRepository && !isPendingCheckStarred
-          }
+          showMenu={hasRepoExist && !isPendingRepository}
           menuAction={this.showMenuActionSheet}
           navigation={navigation}
           navigateBack
         >
-          {!isPendingTopics &&
-            topics.length > 0 && (
+          {repository.topics &&
+            repository.topics.length > 0 && (
               <TopicsList
                 title={translate('repository.main.topicsTitle', locale)}
-                topics={topics}
+                topics={repository.topics}
               />
             )}
 
@@ -359,6 +394,11 @@ class Repository extends Component {
                 locale
               )}
               navigation={navigation}
+              onEndReached={() =>
+                this.props.getContributors(repoId, { loadMore: true })
+              }
+              onEndReachedThreshold={0.5}
+              ListFooterComponent={this.renderLoadingMembers}
             />
           )}
 
@@ -394,73 +434,73 @@ class Repository extends Component {
                 navigation.navigate('RepositoryCodeList', {
                   title: translate('repository.codeList.title', locale),
                   topLevel: true,
+                  contentsUrl: repository.contents_url,
                 })
               }
               underlayColor={colors.greyLight}
-              disabled={!hasRepoExist}
+              disabled={isPendingRepository}
             />
           </SectionList>
 
-          {!repository.fork &&
-            repository.has_issues && (
-              <SectionList
-                loading={isPendingIssues}
-                title={translate('repository.main.issuesTitle', locale)}
-                noItems={openIssues.length === 0}
-                noItemsMessage={
-                  pureIssues.length === 0
-                    ? translate('repository.main.noIssuesMessage', locale)
-                    : translate('repository.main.noOpenIssuesMessage', locale)
+          {repository.hasIssuesEnabled && (
+            <SectionList
+              loading={isPendingIssues}
+              title={translate('repository.main.issuesTitle', locale)}
+              noItems={openIssues.length === 0}
+              noItemsMessage={
+                pureIssuesCount === 0
+                  ? translate('repository.main.noIssuesMessage', locale)
+                  : translate('repository.main.noOpenIssuesMessage', locale)
+              }
+              showButton
+              buttonTitle={
+                pureIssuesCount > 0
+                  ? translate('repository.main.viewAllButton', locale)
+                  : translate('repository.main.newIssueButton', locale)
+              }
+              buttonAction={() => {
+                if (pureIssuesCount > 0) {
+                  navigation.navigate('IssueList', {
+                    title: translate('repository.issueList.title', locale),
+                    type: 'issue',
+                    issues: repository.issues,
+                  });
+                } else {
+                  navigation.navigate('NewIssue', {
+                    title: translate('issue.newIssue.title', locale),
+                  });
                 }
-                showButton
-                buttonTitle={
-                  pureIssues.length > 0
-                    ? translate('repository.main.viewAllButton', locale)
-                    : translate('repository.main.newIssueButton', locale)
-                }
-                buttonAction={() => {
-                  if (pureIssues.length > 0) {
-                    navigation.navigate('IssueList', {
-                      title: translate('repository.issueList.title', locale),
-                      type: 'issue',
-                      issues: pureIssues,
-                    });
-                  } else {
-                    navigation.navigate('NewIssue', {
-                      title: translate('issue.newIssue.title', locale),
-                    });
-                  }
-                }}
-              >
-                {openIssues
-                  .slice(0, 3)
-                  .map(item => (
-                    <IssueListItem
-                      key={item.id}
-                      type="issue"
-                      issue={item}
-                      navigation={navigation}
-                    />
-                  ))}
-              </SectionList>
-            )}
+              }}
+            >
+              {openIssues
+                .slice(0, 3)
+                .map(item => (
+                  <IssueListItem
+                    key={item.id}
+                    type="issue"
+                    issue={item}
+                    navigation={navigation}
+                  />
+                ))}
+            </SectionList>
+          )}
 
           <SectionList
             loading={isPendingIssues}
             title={translate('repository.main.pullRequestTitle', locale)}
             noItems={openPulls.length === 0}
             noItemsMessage={
-              pulls.length === 0
+              pullRequestCount === 0
                 ? translate('repository.main.noPullRequestsMessage', locale)
                 : translate('repository.main.noOpenPullRequestsMessage', locale)
             }
-            showButton={pulls.length > 0}
+            showButton={pullRequestCount > 0}
             buttonTitle={translate('repository.main.viewAllButton', locale)}
             buttonAction={() =>
               navigation.navigate('PullList', {
                 title: translate('repository.pullList.title', locale),
                 type: 'pull',
-                issues: pulls,
+                issues: repository.pullRequests,
               })
             }
           >

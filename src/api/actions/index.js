@@ -10,3 +10,9 @@ export const SEARCH_REPOS = createPaginationActionSet('SEARCH_REPOS');
 export const SEARCH_USERS = createPaginationActionSet('SEARCH_USERS');
 export const ORGS_GET_MEMBERS = createPaginationActionSet('ORGS_GET_MEMBERS');
 export const ORGS_GET_BY_ID = createActionSet('ORGS_GET_BY_ID');
+
+export const GRAPHQL_GET_REPO = createActionSet('GRAPHQL_GET_REPO');
+
+export const REPOS_GET_CONTRIBUTORS = createPaginationActionSet(
+  'REPOS_GET_CONTRIBUTORS'
+);

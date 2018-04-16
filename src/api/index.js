@@ -308,8 +308,6 @@ export const fetchForkRepo = (owner, repo, accessToken) =>
 export const fetchStarCount = (owner, accessToken) =>
   v3.count(`/users/${owner}/starred`, accessToken);
 
-export const isWatchingRepo = (url, accessToken) => v3.head(url, accessToken);
-
 export const watchRepo = (owner, repo, accessToken) =>
   v3.put(`/repos/${owner}/${repo}/subscription`, accessToken, {
     subscribed: true,
@@ -382,15 +380,6 @@ export const fetchNotificationsCount = accessToken =>
 
 export const fetchRepoNotificationsCount = (owner, repoName, accessToken) =>
   v3.count(`/repos/${owner}/${repoName}/notifications?per_page=1`, accessToken);
-
-export const fetchRepoTopics = async (owner, repoName, accessToken) => {
-  const response = await v3.call(
-    `/repos/${owner}/${repoName}/topics`,
-    v3.parameters(accessToken, METHOD.GET, ACCEPT.MERCY_PREVIEW)
-  );
-
-  return response.json();
-};
 
 export const fetchIssueEvents = (
   owner: string,

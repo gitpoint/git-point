@@ -3,14 +3,12 @@ import { StyleSheet, Text, View, Platform } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 import { emojifyText, abbreviateNumber, translate } from 'utils';
-import { colors, languageColors, fonts, normalize } from 'config';
+import { colors, fonts, normalize } from 'config';
 
 type Props = {
   repository: Object,
-  starred: boolean,
   navigation: Object,
   loading: boolean,
-  subscribed: boolean,
   locale: string,
 };
 
@@ -119,7 +117,7 @@ const iconName = repository => {
   if (!repository.name) {
     icon = 'stop';
   } else {
-    icon = repository.fork ? 'repo-forked' : 'repo';
+    icon = repository.isFork ? 'repo-forked' : 'repo';
   }
 
   return icon;
@@ -127,26 +125,25 @@ const iconName = repository => {
 
 export const RepositoryProfile = ({
   repository,
-  starred,
   navigation,
   loading,
-  subscribed,
   locale,
 }: Props) => (
   <View style={styles.container}>
     <View style={styles.languageInfo}>
       {!loading &&
-        repository.language !== null && (
+        repository.primaryLanguage !== null && (
           <Icon
             name="fiber-manual-record"
             size={15}
-            color={languageColors[repository.language]}
+            color={repository.primaryLanguage.color}
           />
         )}
 
       <Text style={[styles.languageInfoTitle]}>
-        {repository.language ||
-          translate('repository.main.unknownLanguage', locale)}
+        {repository.primaryLanguage
+          ? repository.primaryLanguage.name
+          : translate('repository.main.unknownLanguage', locale)}
       </Text>
     </View>
 
@@ -154,7 +151,7 @@ export const RepositoryProfile = ({
       <Icon
         containerStyle={[
           styles.icon,
-          repository.fork ? { marginLeft: 17 } : { marginLeft: 13 },
+          repository.isFork ? { marginLeft: 17 } : { marginLeft: 13 },
         ]}
         name={iconName(repository)}
         type="octicon"
@@ -167,10 +164,10 @@ export const RepositoryProfile = ({
       </Text>
 
       <Text
-        numberOfLines={repository.fork ? 1 : 3}
+        numberOfLines={repository.isFork ? 1 : 3}
         style={[
           styles.subtitle,
-          repository.fork
+          repository.isFork
             ? styles.subtitleDescriptionWithFork
             : styles.subtitleDescriptionNoFork,
         ]}
@@ -178,7 +175,7 @@ export const RepositoryProfile = ({
         {emojifyText(repository.description) || ' '}
       </Text>
 
-      {repository.fork && (
+      {repository.isFork && (
         <Text
           nativeId="repository-fork-container"
           style={[styles.subtitle, styles.subtitleFork]}
@@ -209,14 +206,14 @@ export const RepositoryProfile = ({
     <View style={styles.details}>
       <View style={styles.unit}>
         <Text style={styles.unitNumber}>
-          {!isNaN(parseInt(repository.stargazers_count, 10))
-            ? abbreviateNumber(repository.stargazers_count)
+          {!isNaN(parseInt(repository.stargazersCount, 10))
+            ? abbreviateNumber(repository.stargazersCount)
             : ' '}
         </Text>
         <Text style={styles.unitText}>
           {translate('repository.main.starsTitle', locale)}
         </Text>
-        {starred && (
+        {repository.isStarred && (
           <View style={styles.badgeView}>
             <Text style={[styles.unitStatus, styles.badge]}>
               {translate('repository.main.starred', locale)}
@@ -227,14 +224,14 @@ export const RepositoryProfile = ({
 
       <View style={styles.unit}>
         <Text style={styles.unitNumber}>
-          {!isNaN(parseInt(repository.subscribers_count, 10))
-            ? abbreviateNumber(repository.subscribers_count)
+          {!isNaN(parseInt(repository.watchersCount, 10))
+            ? abbreviateNumber(repository.watchersCount)
             : ' '}
         </Text>
         <Text style={styles.unitText}>
           {translate('repository.main.watchers', locale)}
         </Text>
-        {subscribed && (
+        {repository.subscription === 'SUBSCRIBED' && (
           <View style={styles.badgeView}>
             <Text style={[styles.unitStatus, styles.badge]}>
               {translate('repository.main.watching', locale)}
@@ -245,8 +242,8 @@ export const RepositoryProfile = ({
 
       <View style={styles.unit}>
         <Text style={styles.unitNumber}>
-          {!isNaN(parseInt(repository.forks, 10))
-            ? abbreviateNumber(repository.forks)
+          {!isNaN(parseInt(repository.forkCount, 10))
+            ? abbreviateNumber(repository.forkCount)
             : ' '}
         </Text>
         <Text style={styles.unitText}>
