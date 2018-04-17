@@ -1,8 +1,6 @@
 import {
   GET_REPOSITORY_CONTENTS,
   GET_REPOSITORY_FILE,
-  FORK_REPO_STATUS,
-  CHANGE_STAR_STATUS,
   GET_REPOSITORY_README,
   GET_REPOSITORY_LABELS,
   SEARCH_OPEN_ISSUES,
@@ -25,15 +23,12 @@ const initialState = {
   searchedClosedPulls: [],
   isPendingContents: false,
   isPendingFile: false,
-  isPendingChangeStarred: false,
   isPendingReadMe: false,
   isPendingLabels: false,
   isPendingSearchOpenIssues: false,
   isPendingSearchClosedIssues: false,
   isPendingSearchOpenPulls: false,
   isPendingSearchClosedPulls: false,
-  isPendingFork: false,
-  isPendingSubscribe: false,
   error: '',
 };
 
@@ -75,46 +70,6 @@ export const repositoryReducer = (state = initialState, action = {}) => {
         ...state,
         error: action.payload,
         isPendingFile: false,
-      };
-    case FORK_REPO_STATUS.PENDING:
-      return {
-        ...state,
-        isPendingFork: true,
-      };
-    case FORK_REPO_STATUS.SUCCESS:
-      return {
-        ...state,
-        forked: action.payload,
-        isPendingFork: false,
-      };
-    case FORK_REPO_STATUS.ERROR:
-      return {
-        ...state,
-        isPendingFork: false,
-      };
-
-    case CHANGE_STAR_STATUS.PENDING:
-      return {
-        ...state,
-        isPendingChangeStarred: true,
-      };
-    case CHANGE_STAR_STATUS.SUCCESS:
-      return {
-        ...state,
-        starred: action.payload,
-        repository: {
-          ...state.repository,
-          stargazers_count: action.payload
-            ? state.repository.stargazers_count + 1
-            : state.repository.stargazers_count - 1,
-        },
-        isPendingChangeStarred: false,
-      };
-    case CHANGE_STAR_STATUS.ERROR:
-      return {
-        ...state,
-        error: action.payload,
-        isPendingChangeStarred: false,
       };
     case GET_REPOSITORY_README.PENDING:
       return {

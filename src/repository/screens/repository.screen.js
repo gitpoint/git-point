@@ -23,45 +23,27 @@ import {
   UserListItem,
   IssueListItem,
   LoadingMembersList,
-  LoadingModal,
   TopicsList,
 } from 'components';
 import { translate, openURLInView } from 'utils';
 import { colors, fonts } from 'config';
-import {
-  getRepositoryInfo,
-  changeStarStatusRepo,
-  forkRepo,
-  subscribeToRepo,
-  unSubscribeToRepo,
-} from '../repository.action';
-
-/*
-const mapStateToProps = state => ({
-  username: state.auth.user.login,
-  locale: state.auth.locale,
-  starred: state.repository.starred,
-  forked: state.repository.forked,
-  subscribed: state.repository.subscribed,
-  hasRepoExist: state.repository.hasRepoExist,
-  isPendingFork: state.repository.isPendingFork,
-  isPendingSubscribe: state.repository.isPendingSubscribe,
-  error: state.repository.error,
-});*/
 
 const mapStateToProps = (state, ownProps) => {
   const {
     auth: { user, locale },
-    entities: { gqlRepos, users },
+    entities: { gqlRepos, users, repos },
     pagination: { REPOS_GET_CONTRIBUTORS },
   } = state;
 
-  const repoId = ownProps.navigation.state.params.repository.url
-    .replace('https://api.github.com/repos/', '')
-    .toLowerCase();
+  const params = ownProps.navigation.state.params;
 
-  const repository =
-    gqlRepos[repoId] || ownProps.navigation.state.params.repository;
+  const repoId =
+    params.repoId ||
+    params.repository.url
+      .replace('https://api.github.com/repos/', '')
+      .toLowerCase();
+
+  const repository = gqlRepos[repoId] || repos[repoId] || params.repository;
 
   const contributorsPagination = REPOS_GET_CONTRIBUTORS[repoId] || {
     ids: [],
@@ -70,7 +52,7 @@ const mapStateToProps = (state, ownProps) => {
   const contributors = contributorsPagination.ids.map(id => users[id]);
 
   return {
-    user,
+    username: user.login,
     contributors,
     contributorsPagination,
     repository,
@@ -79,20 +61,14 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-/* const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      changeStarStatusRepo,
-      forkRepo,
-      subscribeToRepo,
-      unSubscribeToRepo,
-    },
-    dispatch
-  ); */
-
 const mapDispatchToProps = {
   getRepoById: RestClient.graphql.getRepo,
   getContributors: RestClient.repos.getContributors,
+  starRepo: RestClient.activity.starRepo,
+  unstarRepo: RestClient.activity.unstarRepo,
+  watchRepo: RestClient.activity.watchRepo,
+  unwatchRepo: RestClient.activity.unwatchRepo,
+  forkRepo: RestClient.repos.fork,
 };
 
 const LoadingMembersContainer = styled.View`
@@ -114,7 +90,10 @@ class Repository extends Component {
   props: {
     getRepoById: Function,
     getContributors: Function,
-    changeStarStatusRepo: Function,
+    starRepo: Function,
+    unstarRepo: Function,
+    watchRepo: Function,
+    unwatchRepo: Function,
     forkRepo: Function,
     // repositoryName: string,
     repository: Object,
@@ -122,18 +101,9 @@ class Repository extends Component {
     contributors: Array,
     contributorsPagination: Object,
     hasRepoExist: boolean,
-    starred: boolean,
-    // forked: boolean,
-    isPendingIssues: boolean,
-    isPendingFork: boolean,
-    isPendingSubscribe: boolean,
-    // isPendingCheckForked: boolean,
     navigation: Object,
     username: string,
     locale: string,
-    subscribed: boolean,
-    subscribeToRepo: Function,
-    unSubscribeToRepo: Function,
     error: Object,
   };
 
@@ -167,11 +137,13 @@ class Repository extends Component {
 
   handlePress = index => {
     const {
-      starred,
-      subscribed,
       repository,
-      changeStarStatusRepo,
+      repoId,
       forkRepo,
+      starRepo,
+      unstarRepo,
+      watchRepo,
+      unwatchRepo,
       navigation,
       username,
     } = this.props;
@@ -179,17 +151,23 @@ class Repository extends Component {
     const showFork = repository.owner.login !== username;
 
     if (index === 0) {
-      changeStarStatusRepo(repository.owner.login, repository.name, starred);
+      if (repository.isStarred) {
+        unstarRepo(repoId);
+      } else {
+        starRepo(repoId);
+      }
     } else if (index === 1 && showFork) {
-      forkRepo(repository.owner.login, repository.name).then(json => {
-        navigation.navigate('Repository', { repository: json });
+      forkRepo(repoId).then(() => {
+        navigation.navigate('Repository', {
+          repoId: `${username}/${repository.name}`,
+        });
       });
     } else if ((index === 2 && showFork) || (index === 1 && !showFork)) {
-      const subscribeMethod = !subscribed
-        ? this.props.subscribeToRepo
-        : this.props.unSubscribeToRepo;
-
-      subscribeMethod(repository.owner.login, repository.name);
+      if (repository.isSubscribed) {
+        unwatchRepo(repoId);
+      } else {
+        watchRepo(repoId);
+      }
     } else if ((index === 3 && showFork) || (index === 2 && !showFork)) {
       this.shareRepository(repository);
     } else if ((index === 4 && showFork) || (index === 3 && !showFork)) {
@@ -250,12 +228,8 @@ class Repository extends Component {
       contributors,
       contributorsPagination,
       locale,
-      isPendingIssues,
-      isPendingFork,
-      isPendingSubscribe,
       navigation,
       username,
-      subscribed,
     } = this.props;
     const { refreshing } = this.state;
 
@@ -281,7 +255,7 @@ class Repository extends Component {
       repository.isStarred
         ? translate('repository.main.unstarAction', locale)
         : translate('repository.main.starAction', locale),
-      repository.subscription === 'SUBSCRIBED'
+      repository.isSubscribed
         ? translate('repository.main.unwatchAction', locale)
         : translate('repository.main.watchAction', locale),
       translate('repository.main.shareAction', locale),
@@ -299,16 +273,10 @@ class Repository extends Component {
       );
     }
 
-    const loader = isPendingFork ? <LoadingModal /> : null;
-    const isSubscribed = repository.subscription === 'SUBSCRIBED';
-    const isStarred = repository.isStarred;
-
     const showReadMe = !isPendingRepository && repository.hasReadme;
 
     return (
       <ViewContainer>
-        {loader}
-
         <ParallaxScroll
           renderContent={() => {
             if (isPendingRepository && !initalRepository) {
@@ -318,10 +286,8 @@ class Repository extends Component {
             return (
               <RepositoryProfile
                 repository={isPendingRepository ? initalRepository : repository}
-                starred={isStarred}
                 loading={isPendingRepository}
                 navigation={navigation}
-                subscribed={isSubscribed}
                 locale={locale}
               />
             );
@@ -444,7 +410,6 @@ class Repository extends Component {
 
           {repository.hasIssuesEnabled && (
             <SectionList
-              loading={isPendingIssues}
               title={translate('repository.main.issuesTitle', locale)}
               noItems={openIssues.length === 0}
               noItemsMessage={
@@ -486,7 +451,6 @@ class Repository extends Component {
           )}
 
           <SectionList
-            loading={isPendingIssues}
             title={translate('repository.main.pullRequestTitle', locale)}
             noItems={openPulls.length === 0}
             noItemsMessage={

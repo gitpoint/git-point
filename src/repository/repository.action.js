@@ -1,25 +1,14 @@
-import {
-  fetchReadMe,
-  fetchSearch,
-  fetchChangeStarStatusRepo,
-  fetchForkRepo,
-  watchRepo,
-  unWatchRepo,
-  v3,
-} from 'api';
+import { fetchReadMe, fetchSearch, v3 } from 'api';
 import {
   GET_REPOSITORY_CONTENTS,
   GET_REPOSITORY_FILE,
   GET_REPOSITORY_ISSUES,
-  FORK_REPO_STATUS,
-  CHANGE_STAR_STATUS,
   GET_REPOSITORY_README,
   GET_REPOSITORY_LABELS,
   SEARCH_OPEN_ISSUES,
   SEARCH_CLOSED_ISSUES,
   SEARCH_OPEN_PULLS,
   SEARCH_CLOSED_PULLS,
-  GET_REPOSITORY_SUBSCRIBED_STATUS,
 } from './repository.type';
 
 export const getContents = (url, level) => {
@@ -86,99 +75,6 @@ export const getIssues = url => {
       .catch(error => {
         dispatch({
           type: GET_REPOSITORY_ISSUES.ERROR,
-          payload: error,
-        });
-      });
-  };
-};
-
-export const unSubscribeToRepo = (owner, repo) => (dispatch, getState) => {
-  const accessToken = getState().auth.accessToken;
-
-  dispatch({
-    type: GET_REPOSITORY_SUBSCRIBED_STATUS.PENDING,
-  });
-
-  return unWatchRepo(owner, repo, accessToken)
-    .then(data => data.json())
-    .then(() => {
-      dispatch({
-        type: GET_REPOSITORY_SUBSCRIBED_STATUS.SUCCESS,
-        payload: false,
-      });
-    })
-    .catch(() => {
-      dispatch({
-        type: GET_REPOSITORY_SUBSCRIBED_STATUS.ERROR,
-      });
-    });
-};
-
-export const changeStarStatusRepo = (owner, repo, starred) => {
-  return (dispatch, getState) => {
-    const accessToken = getState().auth.accessToken;
-
-    dispatch({ type: CHANGE_STAR_STATUS.PENDING });
-
-    fetchChangeStarStatusRepo(owner, repo, starred, accessToken)
-      .then(() => {
-        dispatch({
-          type: CHANGE_STAR_STATUS.SUCCESS,
-          payload: !starred,
-        });
-      })
-      .catch(error => {
-        dispatch({
-          type: CHANGE_STAR_STATUS.ERROR,
-          payload: error,
-        });
-      });
-  };
-};
-
-export const subscribeToRepo = (owner, repo) => (dispatch, getState) => {
-  const accessToken = getState().auth.accessToken;
-
-  dispatch({
-    type: GET_REPOSITORY_SUBSCRIBED_STATUS.PENDING,
-  });
-
-  return watchRepo(owner, repo, accessToken)
-    .then(data => data.json())
-    .then(result => {
-      dispatch({
-        type: GET_REPOSITORY_SUBSCRIBED_STATUS.SUCCESS,
-        payload: result.subscribed,
-      });
-    })
-    .catch(() => {
-      dispatch({
-        type: GET_REPOSITORY_SUBSCRIBED_STATUS.ERROR,
-      });
-    });
-};
-
-export const forkRepo = (owner, repo) => {
-  return (dispatch, getState) => {
-    const accessToken = getState().auth.accessToken;
-
-    dispatch({ type: FORK_REPO_STATUS.PENDING });
-
-    return fetchForkRepo(owner, repo, accessToken)
-      .then(data => {
-        return data.json();
-      })
-      .then(json => {
-        dispatch({
-          type: FORK_REPO_STATUS.SUCCESS,
-          payload: true,
-        });
-
-        return json;
-      })
-      .catch(error => {
-        dispatch({
-          type: FORK_REPO_STATUS.ERROR,
           payload: error,
         });
       });

@@ -33,8 +33,8 @@ export const gqlRepoSchema = new schema.Entity(
         hasReadme: repository.README !== null,
         stargazersCount: repository.stargazers.totalCount,
         watchersCount: repository.watchers.totalCount,
-        subscription: repository.viewerSubscription,
         isStarred: repository.viewerHasStarred,
+        isSubscribed: repository.viewerSubscription === 'SUBSCRIBED',
         description: repository.description,
         parent: repository.parent
           ? {

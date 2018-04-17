@@ -20,6 +20,12 @@ type FetchParameters = {
   body?: Object,
 };
 
+type UpdateEntity = {
+  type: string,
+  id: string,
+  updater: Function,
+};
+
 export type CallParameters = {
   endpoint: string,
   schema: Schema,
@@ -28,6 +34,7 @@ export type CallParameters = {
   normalizrKey?: string,
   paginationArgs?: Array<string | number | boolean>,
   entityId?: String | number,
+  updateEntity?: UpdateEntity,
 };
 
 export type CallType = CallParameters & {
@@ -99,12 +106,45 @@ export class Client {
     return fetch(finalUrl, parameters);
   };
 
+  put = ({ fetchParameters, ...config }: CallParameters): CallType => ({
+    type: 'put',
+    params: {},
+    ...config,
+    fetchParameters: merge(
+      {
+        method: this.Method.PUT,
+        headers: { Accept: this.Accept.JSON, 'Content-Length': 0 },
+      },
+      fetchParameters
+    ),
+  });
+
   get = ({ fetchParameters, ...config }: CallParameters): CallType => ({
     type: 'get',
     params: {},
     ...config,
     fetchParameters: merge(
       { method: this.Method.GET, headers: { Accept: this.Accept.JSON } },
+      fetchParameters
+    ),
+  });
+
+  delete = ({ fetchParameters, ...config }: CallParameters): CallType => ({
+    type: 'delete',
+    params: {},
+    ...config,
+    fetchParameters: merge(
+      { method: this.Method.DELETE, headers: { Accept: this.Accept.JSON } },
+      fetchParameters
+    ),
+  });
+
+  create = ({ fetchParameters, ...config }: CallParameters): CallType => ({
+    type: 'create',
+    params: {},
+    ...config,
+    fetchParameters: merge(
+      { method: this.Method.POST, headers: { Accept: this.Accept.JSON } },
       fetchParameters
     ),
   });
@@ -198,10 +238,11 @@ export class Client {
   };
 
   graphql = {
-    getRepo: (repoId: string) => {
+    getRepo: (repoId: string, params: SpecialParameters = {}) => {
       const [owner, name] = repoId.split('/');
 
       return this.query({
+        params,
         query: repoQuery,
         variables: { owner, name },
         schema: Schemas.GQL_REPO,
@@ -236,6 +277,68 @@ export class Client {
         schema: Schemas.REPO_ARRAY,
         paginationArgs: [userId],
       }),
+
+    starRepo: (repoId: string, params: SpecialParameters = {}) =>
+      this.put({
+        endpoint: `user/starred/${repoId}`,
+        params,
+        schema: Schemas.GQL_REPO,
+        updateEntity: {
+          type: 'gqlRepos',
+          id: repoId,
+          updater: gqlRepo => ({
+            isStarred: true,
+            stargazersCount: gqlRepo.stargazersCount + 1,
+          }),
+        },
+      }),
+    unstarRepo: (repoId: string, params: SpecialParameters = {}) =>
+      this.delete({
+        endpoint: `user/starred/${repoId}`,
+        params,
+        schema: Schemas.GQL_REPO,
+        updateEntity: {
+          type: 'gqlRepos',
+          id: repoId,
+          updater: gqlRepo => ({
+            isStarred: false,
+            stargazersCount: gqlRepo.stargazersCount - 1,
+          }),
+        },
+      }),
+    watchRepo: (repoId: string, params: SpecialParameters = {}) =>
+      this.put({
+        endpoint: `repos/${repoId}/subscription`,
+        params,
+        fetchParameters: {
+          body: {
+            subscribed: true,
+          },
+        },
+        schema: Schemas.GQL_REPO,
+        updateEntity: {
+          type: 'gqlRepos',
+          id: repoId,
+          updater: gqlRepo => ({
+            isSubscribed: true,
+            watchersCount: gqlRepo.watchersCount + 1,
+          }),
+        },
+      }),
+    unwatchRepo: (repoId: string, params: SpecialParameters = {}) =>
+      this.delete({
+        endpoint: `repos/${repoId}/subscription`,
+        params,
+        schema: Schemas.GQL_REPO,
+        updateEntity: {
+          type: 'gqlRepos',
+          id: repoId,
+          updater: gqlRepo => ({
+            isSubscribed: false,
+            watchersCount: gqlRepo.watchersCount - 1,
+          }),
+        },
+      }),
   };
   search = {
     repos: (q: string, params: SpecialParameters = {}) =>
@@ -263,6 +366,12 @@ export class Client {
         params,
         schema: Schemas.USER_ARRAY,
         paginationArgs: [repoId],
+      }),
+    fork: (repoId: string, params: SpecialParameters = {}) =>
+      this.create({
+        endpoint: `repos/${repoId}/forks`,
+        params,
+        schema: Schemas.REPO,
       }),
   };
   orgs = {

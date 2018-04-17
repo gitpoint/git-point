@@ -231,7 +231,7 @@ export const RepositoryProfile = ({
         <Text style={styles.unitText}>
           {translate('repository.main.watchers', locale)}
         </Text>
-        {repository.subscription === 'SUBSCRIBED' && (
+        {repository.isSubscribed && (
           <View style={styles.badgeView}>
             <Text style={[styles.unitStatus, styles.badge]}>
               {translate('repository.main.watching', locale)}
