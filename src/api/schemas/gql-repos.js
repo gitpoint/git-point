@@ -36,11 +36,13 @@ export const gqlRepoSchema = new schema.Entity(
         isStarred: repository.viewerHasStarred,
         isSubscribed: repository.viewerSubscription === 'SUBSCRIBED',
         description: repository.description,
+        html_url: repository.url,
         parent: repository.parent
           ? {
               full_name: repository.parent.nameWithOwner,
-              url: `https://api.github.com/repos/
-                ${repository.parent.nameWithOwner}`,
+              url: `https://api.github.com/repos/${
+                repository.parent.nameWithOwner
+              }`,
             }
           : null,
         primaryLanguage: repository.primaryLanguage,

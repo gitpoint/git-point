@@ -167,6 +167,12 @@ export const createDispatchProxy = (Provider: Client) => {
 
               // 10. Parse the JSON from the answer
               return response.json().then(json => {
+                if (callType.type === 'query') {
+                  if (json.errors && json.errors.length) {
+                    return Promise.reject(json.errors[0].message);
+                  }
+                }
+
                 const normalizedJson = normalize(
                   callType.normalizrKey ? json[callType.normalizrKey] : json,
                   callType.schema

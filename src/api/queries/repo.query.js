@@ -34,9 +34,9 @@ fragment PullRequestsList on PullRequestEdge {
 
 query ($owner: String!, $name: String!) {
   repository(owner: $owner, name: $name) {
+    url
     name
     nameWithOwner
-    resourcePath
     isFork
     parent {
       nameWithOwner

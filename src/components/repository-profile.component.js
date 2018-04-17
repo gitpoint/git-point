@@ -8,6 +8,8 @@ import { colors, fonts, normalize } from 'config';
 type Props = {
   repository: Object,
   navigation: Object,
+  isChangingStar: boolean,
+  isChangingSubscription: boolean,
   loading: boolean,
   locale: string,
 };
@@ -67,12 +69,17 @@ const styles = StyleSheet.create({
     ...fonts.fontPrimaryBold,
     fontSize: normalize(16),
   },
+  unitNumberLoading: {
+    textAlign: 'center',
+    fontSize: normalize(10),
+  },
   unitText: {
     textAlign: 'center',
     color: colors.white,
     fontSize: normalize(10),
     ...fonts.fontPrimary,
   },
+
   unitStatus: {
     textAlign: 'center',
     color: colors.lighterBoldGreen,
@@ -125,6 +132,8 @@ const iconName = repository => {
 
 export const RepositoryProfile = ({
   repository,
+  isChangingStar,
+  isChangingSubscription,
   navigation,
   loading,
   locale,
@@ -206,7 +215,12 @@ export const RepositoryProfile = ({
     <View style={styles.details}>
       <View style={styles.unit}>
         <Text style={styles.unitNumber}>
-          {!isNaN(parseInt(repository.stargazersCount, 10))
+          {isChangingStar && (
+            <Text style={styles.unitNumberLoading}>
+              {emojifyText(':hourglass:')}
+            </Text>
+          )}
+          {!isChangingStar && !isNaN(parseInt(repository.stargazersCount, 10))
             ? abbreviateNumber(repository.stargazersCount)
             : ' '}
         </Text>
@@ -224,7 +238,13 @@ export const RepositoryProfile = ({
 
       <View style={styles.unit}>
         <Text style={styles.unitNumber}>
-          {!isNaN(parseInt(repository.watchersCount, 10))
+          {isChangingSubscription && (
+            <Text style={styles.unitNumberLoading}>
+              {emojifyText(':hourglass:')}
+            </Text>
+          )}
+          {!isChangingSubscription &&
+          !isNaN(parseInt(repository.watchersCount, 10))
             ? abbreviateNumber(repository.watchersCount)
             : ' '}
         </Text>
