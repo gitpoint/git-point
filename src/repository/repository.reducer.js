@@ -1,4 +1,6 @@
 import {
+  GET_REPOSITORY,
+  GET_REPOSITORY_CONTRIBUTORS,
   GET_REPOSITORY_CONTENTS,
   GET_REPOSITORY_FILE,
   GET_REPOSITORY_README,
@@ -10,6 +12,8 @@ import {
 } from './repository.type';
 
 const initialState = {
+  repository: {},
+  contributors: [],
   labels: [],
   contents: {},
   fileContent: '',
@@ -21,6 +25,8 @@ const initialState = {
   searchedClosedIssues: [],
   searchedOpenPulls: [],
   searchedClosedPulls: [],
+  isPendingRepository: false,
+  isPendingContributors: false,
   isPendingContents: false,
   isPendingFile: false,
   isPendingReadMe: false,
@@ -34,6 +40,49 @@ const initialState = {
 
 export const repositoryReducer = (state = initialState, action = {}) => {
   switch (action.type) {
+    case GET_REPOSITORY.PENDING:
+      return {
+        ...state,
+        contributors: [],
+        issues: [],
+        readMe: '',
+        hasRepoExist: false,
+        hasReadMe: false,
+        error: '',
+        topics: [],
+        isPendingRepository: true,
+      };
+    case GET_REPOSITORY.SUCCESS:
+      return {
+        ...state,
+        repository: action.payload,
+        hasRepoExist: true,
+        error: '',
+        isPendingRepository: false,
+      };
+    case GET_REPOSITORY.ERROR:
+      return {
+        ...initialState,
+        error: action.payload,
+      };
+    case GET_REPOSITORY_CONTRIBUTORS.PENDING:
+      return {
+        ...state,
+        isPendingContributors: true,
+      };
+    case GET_REPOSITORY_CONTRIBUTORS.SUCCESS:
+      return {
+        ...state,
+        contributors: action.payload,
+        isPendingContributors: false,
+      };
+    case GET_REPOSITORY_CONTRIBUTORS.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isPendingContributors: false,
+        contributors: [],
+      };
     case GET_REPOSITORY_CONTENTS.PENDING:
       return {
         ...state,
