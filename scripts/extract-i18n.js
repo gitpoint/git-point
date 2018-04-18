@@ -113,10 +113,18 @@ const generateFiles = (config, messages) => {
       }
     });
 
+    const ordered = {};
+
+    Object.keys(newMessages)
+      .sort()
+      .forEach(key => {
+        ordered[key] = newMessages[key];
+      });
+
     // Write the new message file
     fs.writeFile(
       filepath,
-      `module.exports = ${JSON.stringify(newMessages, null, 2)};`,
+      `module.exports = ${JSON.stringify(ordered, null, 2)};`,
       'utf8',
       err => {
         if (err) throw err;
