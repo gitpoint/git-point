@@ -11,7 +11,7 @@ export const t = (key, locale, interpolation = null) => {
     translation = key;
   }
 
-  const componentPlaceholdersReg = /({([^}]+)})/g;
+  const componentPlaceholdersReg = /({?{([^}]+)}}?)/g;
 
   const retval = [];
 
@@ -22,14 +22,16 @@ export const t = (key, locale, interpolation = null) => {
   /* eslint-disable no-cond-assign */
   while ((match = componentPlaceholdersReg.exec(translation))) {
     ongoing += translation.substring(lastIndex, match.index);
-    if (typeof interpolation[match[2]] === 'undefined') {
-      ongoing += this.config.missingPlaceholder;
-    } else if (typeof interpolation[match[2]] === 'object') {
+    const value = interpolation[match[2]];
+
+    if (typeof value === 'undefined') {
+      ongoing += '/!\\';
+    } else if (typeof value === 'object') {
       retval.push(ongoing);
-      retval.push(interpolation[match[2]]);
+      retval.push(value);
       ongoing = '';
-    } else if (typeof interpolation[match[2]] === 'string') {
-      ongoing += interpolation[match[2]];
+    } else if (typeof value === 'string' || typeof value === 'number') {
+      ongoing += value;
     }
     lastIndex = match.index + match[0].length;
   }
