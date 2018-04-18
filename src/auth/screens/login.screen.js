@@ -22,7 +22,7 @@ import { ViewContainer, ErrorScreen } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { CLIENT_ID } from 'api';
 import { auth, getUser } from 'auth';
-import { openURLInView, translate, resetNavigationTo } from 'utils';
+import { openURLInView, t, resetNavigationTo } from 'utils';
 
 let stateRandom = Math.random().toString();
 
@@ -173,7 +173,7 @@ class Login extends Component {
       modalVisible: false,
       cancelDisabled: false,
       showLoader: true,
-      loaderText: translate('auth.login.connectingToGitHub', this.locale),
+      loaderText: t('Connecting to GitHub...', this.locale),
       asyncStorageChecked: false,
     };
   }
@@ -231,7 +231,7 @@ class Login extends Component {
         this.setState({
           code,
           showLoader: true,
-          loaderText: translate('auth.login.preparingGitPoint', this.locale),
+          loaderText: t('Preparing GitPoint...', this.locale),
         });
 
         stateRandom = Math.random().toString();
@@ -280,10 +280,13 @@ class Login extends Component {
                 source={require('../../assets/logo.png')}
               />
               <Text style={styles.title}>
-                {translate('auth.login.welcomeTitle', locale)}
+                {t('Welcome to GitPoint', locale)}
               </Text>
               <Text style={styles.message}>
-                {translate('auth.login.welcomeMessage', locale)}
+                {t(
+                  'One of the most feature-rich GitHub clients that is 100% free',
+                  locale
+                )}
               </Text>
             </View>
             <View style={[styles.slide, styles.slide2]}>
@@ -295,10 +298,13 @@ class Login extends Component {
                 type="octicon"
               />
               <Text style={styles.title}>
-                {translate('auth.login.notificationsTitle', locale)}
+                {t('Control notifications', locale)}
               </Text>
               <Text style={styles.message}>
-                {translate('auth.login.notificationsMessage', locale)}
+                {t(
+                  'View and control all of your unread and participating notifications',
+                  locale
+                )}
               </Text>
             </View>
             <View style={[styles.slide, styles.slide3]}>
@@ -311,10 +317,13 @@ class Login extends Component {
                 type="octicon"
               />
               <Text style={styles.title}>
-                {translate('auth.login.reposTitle', locale)}
+                {t('Repositories and Users', locale)}
               </Text>
               <Text style={styles.message}>
-                {translate('auth.login.reposMessage', locale)}
+                {t(
+                  'Easily obtain repository, user and organization information',
+                  locale
+                )}
               </Text>
             </View>
             <View style={[styles.slide, styles.slide4]}>
@@ -327,10 +336,13 @@ class Login extends Component {
                 type="octicon"
               />
               <Text style={styles.title}>
-                {translate('auth.login.issuesTitle', locale)}
+                {t('Issues and Pull Requests', locale)}
               </Text>
               <Text style={styles.message}>
-                {translate('auth.login.issuesMessage', locale)}
+                {t(
+                  'Communicate on conversations, merge pull requests and more',
+                  locale
+                )}
               </Text>
             </View>
           </Swiper>
@@ -339,7 +351,7 @@ class Login extends Component {
           <View style={styles.signInContainer}>
             <Button
               raised
-              title={translate('auth.login.signInButton', locale)}
+              title={t('SIGN IN', locale)}
               containerViewStyle={styles.buttonContainer}
               buttonStyle={styles.button}
               textStyle={styles.buttonText}
@@ -371,7 +383,7 @@ class Login extends Component {
               </View>
               <View style={styles.miniSection}>
                 <Button
-                  title={translate('auth.login.cancel', locale)}
+                  title={t('CANCEL', locale)}
                   buttonStyle={styles.button}
                   disabled={this.state.cancelDisabled}
                   textStyle={styles.buttonText}
@@ -382,7 +394,7 @@ class Login extends Component {
                     style={styles.troublesLink}
                     onPress={() => openURLInView(loginUrl)}
                   >
-                    {translate('auth.login.troubles', locale)}
+                    {t("Can't login?", locale)}
                   </Text>
                 )}
               </View>

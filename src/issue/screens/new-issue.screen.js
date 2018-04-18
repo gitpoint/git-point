@@ -6,7 +6,7 @@ import { ScrollView, StyleSheet, TextInput, View, Alert } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
 import { ViewContainer, SectionList, LoadingModal } from 'components';
-import { translate } from 'utils';
+import { t } from 'utils';
 import { colors, fonts, normalize } from 'config';
 import { submitNewIssue } from '../issue.action';
 
@@ -78,8 +78,8 @@ class NewIssue extends Component {
     const owner = repository.owner.login;
 
     if (issueTitle === '') {
-      Alert.alert(translate('issue.newIssue.missingTitleAlert', locale), null, [
-        { text: translate('common.ok', locale) },
+      Alert.alert(t('You need to have an issue title!', locale), null, [
+        { text: t('OK', locale) },
       ]);
     } else {
       submitNewIssue(owner, repoName, issueTitle, issueComment).then(issue => {
@@ -113,16 +113,17 @@ class NewIssue extends Component {
               hideChevron
             />
           )}
-          <SectionList title={translate('issue.newIssue.issueTitle', locale)}>
+          <SectionList title={t('Issue Title', locale)}>
             <TextInput
               underlineColorAndroid={'transparent'}
-              placeholder={translate('issue.newIssue.writeATitle', locale)}
+              placeholder={t('Write a title for your issue here', locale)}
               blurOnSubmit
               multiline
               onContentSizeChange={event =>
                 this.setState({
                   issueTitleHeight: event.nativeEvent.contentSize.height,
-                })}
+                })
+              }
               onChangeText={text => this.setState({ issueTitle: text })}
               placeholderTextColor={colors.grey}
               style={[
@@ -133,16 +134,17 @@ class NewIssue extends Component {
             />
           </SectionList>
 
-          <SectionList title={translate('issue.newIssue.issueComment', locale)}>
+          <SectionList title={t('Issue Comment', locale)}>
             <TextInput
               underlineColorAndroid={'transparent'}
-              placeholder={translate('issue.newIssue.writeAComment', locale)}
+              placeholder={t('Write a comment for your issue here', locale)}
               multiline
               onChangeText={text => this.setState({ issueComment: text })}
               onContentSizeChange={event =>
                 this.setState({
                   issueCommentHeight: event.nativeEvent.contentSize.height,
-                })}
+                })
+              }
               placeholderTextColor={colors.grey}
               style={[
                 styles.textInput,
@@ -155,7 +157,7 @@ class NewIssue extends Component {
           <SectionList>
             <View style={styles.listItemContainer}>
               <ListItem
-                title={translate('common.submit', locale)}
+                title={t('Submit', locale)}
                 hideChevron
                 underlayColor={colors.greyLight}
                 titleStyle={styles.submitTitle}

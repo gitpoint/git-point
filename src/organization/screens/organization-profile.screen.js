@@ -14,7 +14,7 @@ import {
   ParallaxScroll,
   EntityInfo,
 } from 'components';
-import { emojifyText, translate, openURLInView } from 'utils';
+import { emojifyText, t, openURLInView } from 'utils';
 import { colors, fonts } from 'config';
 
 const DescriptionListItem = styled(ListItem).attrs({
@@ -106,7 +106,7 @@ class OrganizationProfile extends Component {
     } = this.props;
     const { refreshing } = this.state;
     const initialOrganization = this.props.navigation.state.params.organization;
-    const organizationActions = [translate('common.openInBrowser', locale)];
+    const organizationActions = [t('Open in Browser', locale)];
 
     const isPendingMembers =
       orgMembers.length === 0 && orgMembersPagination.isFetching;
@@ -136,14 +136,12 @@ class OrganizationProfile extends Component {
           menuAction={() => this.showMenuActionSheet()}
         >
           {isPendingMembers && (
-            <LoadingMembersList
-              title={translate('organization.main.membersTitle', locale)}
-            />
+            <LoadingMembersList title={t('MEMBERS', locale)} />
           )}
 
           {!isPendingMembers && (
             <MembersList
-              title={translate('organization.main.membersTitle', locale)}
+              title={t('MEMBERS', locale)}
               members={orgMembers}
               navigation={navigation}
               onEndReached={() =>
@@ -156,9 +154,7 @@ class OrganizationProfile extends Component {
 
           {!!org.description &&
             org.description !== '' && (
-              <SectionList
-                title={translate('organization.main.descriptionTitle', locale)}
-              >
+              <SectionList title={t('DESCRIPTION', locale)}>
                 <DescriptionListItem
                   subtitle={emojifyText(org.description)}
                   hideChevron
@@ -175,8 +171,8 @@ class OrganizationProfile extends Component {
           ref={o => {
             this.ActionSheet = o;
           }}
-          title={translate('organization.organizationActions', locale)}
-          options={[...organizationActions, translate('common.cancel', locale)]}
+          title={t('Organization Actions', locale)}
+          options={[...organizationActions, t('Cancel', locale)]}
           cancelButtonIndex={1}
           onPress={this.handleActionSheetPress}
         />

@@ -3,7 +3,7 @@ import { StyleSheet, TouchableHighlight, View, Text } from 'react-native';
 import { ListItem, Icon } from 'react-native-elements';
 
 import { colors, fonts, normalize } from 'config';
-import { translate, relativeTimeToNow } from 'utils';
+import { t, relativeTimeToNow } from 'utils';
 
 type Props = {
   type: string,
@@ -68,7 +68,8 @@ export const IssueListItem = ({ type, issue, navigation, locale }: Props) => (
         issue,
         isPR: !!issue.pull_request,
         locale,
-      })}
+      })
+    }
     underlayColor={colors.greyLight}
   >
     <View style={styles.container}>
@@ -77,12 +78,12 @@ export const IssueListItem = ({ type, issue, navigation, locale }: Props) => (
         title={issue.title}
         subtitle={
           issue.state === 'open'
-            ? translate('issue.main.openIssueSubTitle', locale, {
+            ? t('#{{number}} opened {{time}} ago by {{user}}', locale, {
                 number: issue.number,
                 user: issue.user.login,
                 time: relativeTimeToNow(issue.created_at),
               })
-            : translate('issue.main.closedIssueSubTitle', locale, {
+            : t('#{{number}} by {{user}} was closed {{time}} ago', locale, {
                 number: issue.number,
                 user: issue.user.login,
                 time: relativeTimeToNow(issue.closed_at),

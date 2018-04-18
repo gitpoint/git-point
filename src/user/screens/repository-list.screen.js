@@ -139,7 +139,8 @@ class RepositoryList extends Component {
                   showsCancelButton={searchFocus}
                   onFocus={() => this.setState({ searchFocus: true })}
                   onCancelButtonPress={() =>
-                    this.setState({ searchStart: false, query: '' })}
+                    this.setState({ searchStart: false, query: '' })
+                  }
                   onSearchButtonPress={query => {
                     this.search(query);
                   }}

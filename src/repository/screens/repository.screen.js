@@ -21,7 +21,7 @@ import {
   LoadingModal,
   TopicsList,
 } from 'components';
-import { translate, openURLInView } from 'utils';
+import { t, openURLInView } from 'utils';
 import { colors, fonts } from 'config';
 import {
   getRepositoryInfo,
@@ -185,14 +185,14 @@ class Repository extends Component {
 
   shareRepository = repository => {
     const { locale } = this.props;
-    const title = translate('repository.main.shareRepositoryTitle', locale, {
+    const title = t('Share {{repoName}}', locale, {
       repoName: repository.name,
     });
 
     Share.share(
       {
         title,
-        message: translate('repository.main.shareRepositoryMessage', locale, {
+        message: t('Check out {{repoName}} on GitHub. {{repoUrl}}', locale, {
           repoName: repository.name,
           repoUrl: repository.html_url,
         }),
@@ -242,22 +242,14 @@ class Repository extends Component {
       repository && repository.owner && repository.owner.login !== username;
 
     const repositoryActions = [
-      starred
-        ? translate('repository.main.unstarAction', locale)
-        : translate('repository.main.starAction', locale),
-      subscribed
-        ? translate('repository.main.unwatchAction', locale)
-        : translate('repository.main.watchAction', locale),
-      translate('repository.main.shareAction', locale),
-      translate('common.openInBrowser', locale),
+      starred ? t('Unstar', locale) : t('Star', locale),
+      subscribed ? t('Unwatch', locale) : t('Watch', locale),
+      t('Share', locale),
+      t('Open in Browser', locale),
     ];
 
     if (showFork) {
-      repositoryActions.splice(
-        1,
-        0,
-        translate('repository.main.forkAction', locale)
-      );
+      repositoryActions.splice(1, 0, t('Fork', locale));
     }
 
     const loader = isPendingFork ? <LoadingModal /> : null;
@@ -305,28 +297,22 @@ class Repository extends Component {
         >
           {!isPendingTopics &&
             topics.length > 0 && (
-              <TopicsList
-                title={translate('repository.main.topicsTitle', locale)}
-                topics={topics}
-              />
+              <TopicsList title={t('TOPICS', locale)} topics={topics} />
             )}
 
           {initalRepository &&
             !initalRepository.owner &&
             isPendingRepository && (
-              <SectionList
-                title={translate('repository.main.ownerTitle', locale)}
-              >
+              <SectionList title={t('OWNER', locale)}>
                 <LoadingUserListItem />
               </SectionList>
             )}
 
           {!(initalRepository && initalRepository.owner) &&
-            (repository && repository.owner) &&
+            repository &&
+            repository.owner &&
             !isPendingRepository && (
-              <SectionList
-                title={translate('repository.main.ownerTitle', locale)}
-              >
+              <SectionList title={t('OWNER', locale)}>
                 <UserListItem user={repository.owner} navigation={navigation} />
               </SectionList>
             )}
@@ -334,9 +320,7 @@ class Repository extends Component {
           {hasRepoExist &&
             initalRepository &&
             initalRepository.owner && (
-              <SectionList
-                title={translate('repository.main.ownerTitle', locale)}
-              >
+              <SectionList title={t('OWNER', locale)}>
                 <UserListItem
                   user={initalRepository.owner}
                   navigation={navigation}
@@ -345,27 +329,22 @@ class Repository extends Component {
             )}
 
           {(isPendingRepository || isPendingContributors) && (
-            <LoadingMembersList
-              title={translate('repository.main.contributorsTitle', locale)}
-            />
+            <LoadingMembersList title={t('CONTRIBUTORS', locale)} />
           )}
 
           {!isPendingContributors && (
             <MembersList
-              title={translate('repository.main.contributorsTitle', locale)}
+              title={t('CONTRIBUTORS', locale)}
               members={contributors}
-              noMembersMessage={translate(
-                'repository.main.noContributorsMessage',
-                locale
-              )}
+              noMembersMessage={t('No contributors found', locale)}
               navigation={navigation}
             />
           )}
 
-          <SectionList title={translate('repository.main.sourceTitle', locale)}>
+          <SectionList title={t('SOURCE', locale)}>
             {showReadMe && (
               <ListItem
-                title={translate('repository.main.readMe', locale)}
+                title={t('README', locale)}
                 leftIcon={{
                   name: 'book',
                   color: colors.grey,
@@ -382,7 +361,7 @@ class Repository extends Component {
               />
             )}
             <ListItem
-              title={translate('repository.main.viewSource', locale)}
+              title={t('View Code', locale)}
               titleStyle={styles.listTitle}
               containerStyle={styles.listContainerStyle}
               leftIcon={{
@@ -392,7 +371,7 @@ class Repository extends Component {
               }}
               onPress={() =>
                 navigation.navigate('RepositoryCodeList', {
-                  title: translate('repository.codeList.title', locale),
+                  title: t('Code', locale),
                   topLevel: true,
                 })
               }
@@ -405,29 +384,29 @@ class Repository extends Component {
             repository.has_issues && (
               <SectionList
                 loading={isPendingIssues}
-                title={translate('repository.main.issuesTitle', locale)}
+                title={t('ISSUES', locale)}
                 noItems={openIssues.length === 0}
                 noItemsMessage={
                   pureIssues.length === 0
-                    ? translate('repository.main.noIssuesMessage', locale)
-                    : translate('repository.main.noOpenIssuesMessage', locale)
+                    ? t('No issues', locale)
+                    : t('No open issues', locale)
                 }
                 showButton
                 buttonTitle={
                   pureIssues.length > 0
-                    ? translate('repository.main.viewAllButton', locale)
-                    : translate('repository.main.newIssueButton', locale)
+                    ? t('View All', locale)
+                    : t('New Issue', locale)
                 }
                 buttonAction={() => {
                   if (pureIssues.length > 0) {
                     navigation.navigate('IssueList', {
-                      title: translate('repository.issueList.title', locale),
+                      title: t('Issues', locale),
                       type: 'issue',
                       issues: pureIssues,
                     });
                   } else {
                     navigation.navigate('NewIssue', {
-                      title: translate('issue.newIssue.title', locale),
+                      title: t('New Issue', locale),
                     });
                   }
                 }}
@@ -447,18 +426,18 @@ class Repository extends Component {
 
           <SectionList
             loading={isPendingIssues}
-            title={translate('repository.main.pullRequestTitle', locale)}
+            title={t('PULL REQUESTS', locale)}
             noItems={openPulls.length === 0}
             noItemsMessage={
               pulls.length === 0
-                ? translate('repository.main.noPullRequestsMessage', locale)
-                : translate('repository.main.noOpenPullRequestsMessage', locale)
+                ? t('No pull requests', locale)
+                : t('No open pull requests', locale)
             }
             showButton={pulls.length > 0}
-            buttonTitle={translate('repository.main.viewAllButton', locale)}
+            buttonTitle={t('View All', locale)}
             buttonAction={() =>
               navigation.navigate('PullList', {
-                title: translate('repository.pullList.title', locale),
+                title: t('Pull Requests', locale),
                 type: 'pull',
                 issues: pulls,
               })
@@ -482,8 +461,8 @@ class Repository extends Component {
           ref={o => {
             this.ActionSheet = o;
           }}
-          title={translate('repository.main.repoActions', locale)}
-          options={[...repositoryActions, translate('common.cancel', locale)]}
+          title={t('Repository Actions', locale)}
+          options={[...repositoryActions, t('Cancel', locale)]}
           cancelButtonIndex={repositoryActions.length}
           onPress={this.handlePress}
         />
