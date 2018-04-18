@@ -1,4 +1,43 @@
-export const eu = {
+module.exports = {
+  '{actor} commented on commit': '{actor} commit iruzkinduta',
+  '{actor} created branch {ref} at {repo}':
+    '{actor} adarra sortuta {ref} at {repo}',
+  '{actor} created tag {ref} at {repo}':
+    '{actor} etiketa sortuta {ref} at {repo}',
+  '{actor} created repository {repo}': '{actor} biltegi sortuta {repo}',
+  '{actor} deleted branch {ref} at {repo}':
+    '{actor} adarra ezabatuta {ref} at {repo}',
+  '{actor} deleted tag {ref} at {repo}':
+    '{actor} etiketa ezabatuta {ref} at {repo}',
+  '{actor} forked {repo} at {fork}': '{actor} fork egin da {repo} at {fork}',
+  '{actor} created the {repo} wiki': '',
+  '{actor} edited the {repo} wiki': '',
+  '{actor} commented on pull request {issue} at {repo}':
+    '{actor} pull request iruzkindu {issue} at {repo}',
+  '{actor} commented on issue {issue} at {repo}':
+    '{actor} issue iruzkindu {issue} at {repo}',
+  '{actor} opened issue {issue} at {repo}':
+    '{actor} irekita issue {issue} at {repo}',
+  '{actor} reopened issue {issue} at {repo}':
+    '{actor} berriro irekita issue {issue} at {repo}',
+  '{actor} closed issue {issue} at {repo}':
+    '{actor} itxita issue {issue} at {repo}',
+  '{actor} edited {member} at {repo}': '{actor} aldatuta {member} at {repo}',
+  '{actor} removed {member} at {repo}': '{actor} ezabatuta {member} at {repo}',
+  '{actor} added {member} at {repo}': '{actor} gehituta {member} at {repo}',
+  '{actor} made {repo} public': '{actor} egin {repo} publikoa',
+  '{actor} opened pull request {pr} at {repo}':
+    '{actor} pull request irekita {pr} at {repo}',
+  '{actor} reopened pull request {pr} at {repo}':
+    '{actor} pull request berriro irekita {pr} at {repo}',
+  '{actor} merged pull request {pr} at {repo}': '',
+  '{actor} closed pull request {pr} at {repo}':
+    '{actor} pull request itxita {pr} at {repo}',
+  '{actor} commented on pull request {pr} at {repo}': '',
+  '{actor} pushed to {ref} at {repo}': '{actor} bidalita {ref} at {repo}',
+  '{actor} published release {id}': '{actor} Oharra publikatuta {id}',
+  '{actor} starred {repo}': '{actor} gogoko bezala jarrita {repo}',
+  'One of the most feature-rich GitHub clients that is 100% free': '',
   auth: {
     login: {
       connectingToGitHub: 'GitHubera konektatzen...',

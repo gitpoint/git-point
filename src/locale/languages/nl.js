@@ -1,9 +1,49 @@
-export const nl = {
+module.exports = {
+  '{actor} commented on commit':
+    '{actor} heeft een reactie geplaatst op commit',
+  '{actor} created branch {ref} at {repo}':
+    '{actor} branch aangemaakt {ref} op {repo}',
+  '{actor} created tag {ref} at {repo}':
+    '{actor} tag aangemaakt {ref} op {repo}',
+  '{actor} created repository {repo}': '{actor} repository aangemaakt {repo}',
+  '{actor} deleted branch {ref} at {repo}':
+    '{actor} branch verwijderd {ref} op {repo}',
+  '{actor} deleted tag {ref} at {repo}':
+    '{actor} tag verwijderd {ref} op {repo}',
+  '{actor} forked {repo} at {fork}': '{actor} forked {repo} op {fork}',
+  '{actor} created the {repo} wiki': '',
+  '{actor} edited the {repo} wiki': '',
+  '{actor} commented on pull request {issue} at {repo}':
+    '{actor} heeft een opmerking gemaakt op pull request {issue} op {repo}',
+  '{actor} commented on issue {issue} at {repo}':
+    '{actor} heeft een opmerking gemaakt op issue {issue} op {repo}',
+  '{actor} opened issue {issue} at {repo}':
+    '{actor} geopend issue {issue} op {repo}',
+  '{actor} reopened issue {issue} at {repo}':
+    '{actor} heropend issue {issue} op {repo}',
+  '{actor} closed issue {issue} at {repo}':
+    '{actor} gesloten issue {issue} op {repo}',
+  '{actor} edited {member} at {repo}': '{actor} bijgewerkt {member} op {repo}',
+  '{actor} removed {member} at {repo}': '{actor} verwijderd {member} op {repo}',
+  '{actor} added {member} at {repo}': '{actor} toegevoegd {member} op {repo}',
+  '{actor} made {repo} public': '{actor} heeft {repo} openbaar gemaakt',
+  '{actor} opened pull request {pr} at {repo}':
+    '{actor} heeft pull request geopend {pr} op {repo}',
+  '{actor} reopened pull request {pr} at {repo}':
+    '{actor} heeft pull request heropend {pr} op {repo}',
+  '{actor} merged pull request {pr} at {repo}': '',
+  '{actor} closed pull request {pr} at {repo}':
+    '{actor} heeft pull request gesloten {pr} op {repo}',
+  '{actor} commented on pull request {pr} at {repo}': '',
+  '{actor} pushed to {ref} at {repo}': '',
+  '{actor} published release {id}': '{actor} gepubliceerd release {id}',
+  '{actor} starred {repo}': '{actor} heeft een ster gegeven aan {repo}',
+  'One of the most feature-rich GitHub clients that is 100% free': '',
   auth: {
     login: {
-      connectingToGitHub: 'Verbinding maken met GitHub ...', // google translate
-      preparingGitPoint: 'GitPoint voorbereiden ...', // google translate
-      cancel: 'ANNULEER', // google translate
+      connectingToGitHub: 'Verbinding maken met GitHub ...',
+      preparingGitPoint: 'GitPoint voorbereiden ...',
+      cancel: 'ANNULEER',
       troubles: "Can't login?",
       welcomeTitle: 'Welkom bij GitPoint',
       welcomeMessage: 'De meest complete GitHub client die geen geld kost',

@@ -1,7 +1,41 @@
-// Hash: 01ae4880b9b4296907d680e9b909713c36c42491
-// Link: https://github.com/gitpoint/git-point/pull/260
-
-export const zhCN = {
+module.exports = {
+  '{actor} commented on commit': '{actor} 评论提交',
+  '{actor} created branch {ref} at {repo}':
+    '{actor} 创建了 分支 {ref} 在 {repo}',
+  '{actor} created tag {ref} at {repo}': '{actor} 创建了 标签 {ref} 在 {repo}',
+  '{actor} created repository {repo}': '{actor} 创建了 仓库 {repo}',
+  '{actor} deleted branch {ref} at {repo}':
+    '{actor} 删除了 分支 {ref} 在 {repo}',
+  '{actor} deleted tag {ref} at {repo}': '{actor} 删除了 标签 {ref} 在 {repo}',
+  '{actor} forked {repo} at {fork}': '{actor} 派生了 {repo} 在 {fork}',
+  '{actor} created the {repo} wiki': '',
+  '{actor} edited the {repo} wiki': '',
+  '{actor} commented on pull request {issue} at {repo}':
+    '{actor} 评论了 了 合并请求 {issue} 在 {repo}',
+  '{actor} commented on issue {issue} at {repo}':
+    '{actor} 评论了 了 问题 {issue} 在 {repo}',
+  '{actor} opened issue {issue} at {repo}':
+    '{actor} 打开了 问题 {issue} 在 {repo}',
+  '{actor} reopened issue {issue} at {repo}':
+    '{actor} 重新打开了 问题 {issue} 在 {repo}',
+  '{actor} closed issue {issue} at {repo}':
+    '{actor} 关闭了 问题 {issue} 在 {repo}',
+  '{actor} edited {member} at {repo}': '{actor} 编辑了 {member} 在 {repo}',
+  '{actor} removed {member} at {repo}': '{actor} 移除了 {member} 在 {repo}',
+  '{actor} added {member} at {repo}': '{actor} 添加了 {member} 在 {repo}',
+  '{actor} made {repo} public': '{actor} 使得 {repo} 公开',
+  '{actor} opened pull request {pr} at {repo}':
+    '{actor} 打开了 合并请求 {pr} 在 {repo}',
+  '{actor} reopened pull request {pr} at {repo}':
+    '"{actor} 重新打开了 合并请求 {pr} 在 {repo}',
+  '{actor} merged pull request {pr} at {repo}': '',
+  '{actor} closed pull request {pr} at {repo}':
+    '{actor} 关闭了 合并请求 {pr} 在 {repo}',
+  '{actor} commented on pull request {pr} at {repo}': '',
+  '{actor} pushed to {ref} at {repo}': '{actor} 推送向 {ref} 在 {repo}',
+  '{actor} published release {id}': '{actor} 发布了 发布 {id}',
+  '{actor} starred {repo}': '{actor} 星标了 {repo}',
+  'One of the most feature-rich GitHub clients that is 100% free': '',
   auth: {
     login: {
       connectingToGitHub: '正在连接GitHub...',

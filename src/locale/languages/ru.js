@@ -1,4 +1,42 @@
-export const ru = {
+module.exports = {
+  '{actor} commented on commit': '{actor} прокомментировал коммит',
+  '{actor} created branch {ref} at {repo}':
+    '{actor} создал ветку {ref} на {repo}',
+  '{actor} created tag {ref} at {repo}': '{actor} создал тег {ref} на {repo}',
+  '{actor} created repository {repo}': '{actor} создал репозиторий {repo}',
+  '{actor} deleted branch {ref} at {repo}':
+    '{actor} удалил ветку {ref} на {repo}',
+  '{actor} deleted tag {ref} at {repo}': '{actor} удалил тег {ref} на {repo}',
+  '{actor} forked {repo} at {fork}': '{actor} клонировал {repo} на {fork}',
+  '{actor} created the {repo} wiki': '',
+  '{actor} edited the {repo} wiki': '',
+  '{actor} commented on pull request {issue} at {repo}':
+    '{actor} прокомментировал pull-запрос {issue} на {repo}',
+  '{actor} commented on issue {issue} at {repo}':
+    '{actor} прокомментировал задачу {issue} на {repo}',
+  '{actor} opened issue {issue} at {repo}':
+    '{actor} открыл задачу {issue} на {repo}',
+  '{actor} reopened issue {issue} at {repo}':
+    '{actor} заново открыл задачу {issue} на {repo}',
+  '{actor} closed issue {issue} at {repo}':
+    '{actor} закрыл задачу {issue} на {repo}',
+  '{actor} edited {member} at {repo}':
+    '{actor} отредактировал {member} на {repo}',
+  '{actor} removed {member} at {repo}': '{actor} удалил {member} на {repo}',
+  '{actor} added {member} at {repo}': '{actor} добавил {member} на {repo}',
+  '{actor} made {repo} public': '{actor} сделал {repo} открытым',
+  '{actor} opened pull request {pr} at {repo}':
+    '{actor} открыл pull-запрос {pr} на {repo}',
+  '{actor} reopened pull request {pr} at {repo}':
+    '{actor} заново открыл pull-запрос {pr} на {repo}',
+  '{actor} merged pull request {pr} at {repo}': '',
+  '{actor} closed pull request {pr} at {repo}':
+    '{actor} закрыл pull-запрос {pr} на {repo}',
+  '{actor} commented on pull request {pr} at {repo}': '',
+  '{actor} pushed to {ref} at {repo}': '{actor} отправил в {ref} на {repo}',
+  '{actor} published release {id}': '{actor} отправил релиз {id}',
+  '{actor} starred {repo}': '{actor} отметил {repo}',
+  'One of the most feature-rich GitHub clients that is 100% free': '',
   auth: {
     login: {
       connectingToGitHub: 'Подключение к GitHub...',

@@ -1,4 +1,43 @@
-export const pl = {
+module.exports = {
+  '{actor} commented on commit': '{actor} komentarz do komita',
+  '{actor} created branch {ref} at {repo}':
+    '{actor} utworzenie branch {ref} na {repo}',
+  '{actor} created tag {ref} at {repo}':
+    '{actor} utworzenie tag {ref} na {repo}',
+  '{actor} created repository {repo}': '{actor} utworzenie repozytorium {repo}',
+  '{actor} deleted branch {ref} at {repo}':
+    '{actor} usunięcie branch {ref} na {repo}',
+  '{actor} deleted tag {ref} at {repo}':
+    '{actor} usunięcie tag {ref} na {repo}',
+  '{actor} forked {repo} at {fork}': '{actor} sforkował {repo} na {fork}',
+  '{actor} created the {repo} wiki': '',
+  '{actor} edited the {repo} wiki': '',
+  '{actor} commented on pull request {issue} at {repo}':
+    '{actor} dodał komentarz w pull request {issue} na {repo}',
+  '{actor} commented on issue {issue} at {repo}':
+    '{actor} dodał komentarz w problem {issue} na {repo}',
+  '{actor} opened issue {issue} at {repo}':
+    '{actor} otworzył problem {issue} na {repo}',
+  '{actor} reopened issue {issue} at {repo}':
+    '{actor} otworzył ponownie problem {issue} na {repo}',
+  '{actor} closed issue {issue} at {repo}':
+    '{actor} zamknął problem {issue} na {repo}',
+  '{actor} edited {member} at {repo}': '{actor} zedytował {member} na {repo}',
+  '{actor} removed {member} at {repo}': '{actor} usunął {member} na {repo}',
+  '{actor} added {member} at {repo}': '{actor} dodał {member} na {repo}',
+  '{actor} made {repo} public': '{actor} utworzenie {repo} publiczny',
+  '{actor} opened pull request {pr} at {repo}':
+    '{actor} otworzył pull request {pr} na {repo}',
+  '{actor} reopened pull request {pr} at {repo}':
+    '{actor} otworzył ponownie pull request {pr} na {repo}',
+  '{actor} merged pull request {pr} at {repo}': '',
+  '{actor} closed pull request {pr} at {repo}':
+    '{actor} zamknął pull request {pr} na {repo}',
+  '{actor} commented on pull request {pr} at {repo}': '',
+  '{actor} pushed to {ref} at {repo}': '{actor} wypchnął z {ref} na {repo}',
+  '{actor} published release {id}': '{actor} dodał release {id}',
+  '{actor} starred {repo}': '{actor} oznaczył gwiazdką {repo}',
+  'One of the most feature-rich GitHub clients that is 100% free': '',
   auth: {
     login: {
       connectingToGitHub: 'Łączenie z GitHubem...',

@@ -1,5 +1,46 @@
-/* sync(c5b90da) */
-export const fr = {
+module.exports = {
+  '{actor} commented on commit': '{actor} a commenté le commit',
+  '{actor} created branch {ref} at {repo}':
+    '{actor} a créé la branche {ref} dans {repo}',
+  '{actor} created tag {ref} at {repo}':
+    '{actor} a créé le tag {ref} dans {repo}',
+  '{actor} created repository {repo}': '{actor} a créé le dépôt {repo}',
+  '{actor} deleted branch {ref} at {repo}':
+    '{actor} a supprimé la branche {ref} dans {repo}',
+  '{actor} deleted tag {ref} at {repo}':
+    '{actor} a supprimé le tag {ref} dans {repo}',
+  '{actor} forked {repo} at {fork}': '{actor} a forké {repo} dans {fork}',
+  '{actor} created the {repo} wiki': '{actor} a créé le wiki de {repo}',
+  '{actor} edited the {repo} wiki': '{actor} a édité le wiki de {repo}',
+  '{actor} commented on pull request {issue} at {repo}':
+    '{actor} a commenté la pull request {issue} dans {repo}',
+  '{actor} commented on issue {issue} at {repo}':
+    '{actor} a commenté le ticket {issue} dans {repo}',
+  '{actor} opened issue {issue} at {repo}':
+    '{actor} a ouvert le ticket {issue} dans {repo}',
+  '{actor} reopened issue {issue} at {repo}':
+    '{actor} a réouvert le ticket {issue} dans {repo}',
+  '{actor} closed issue {issue} at {repo}':
+    '{actor} a fermé le ticket {issue} dans {repo}',
+  '{actor} edited {member} at {repo}': '{actor} a édité {member} dans {repo}',
+  '{actor} removed {member} at {repo}': '{actor} a enlevé {member} dans {repo}',
+  '{actor} added {member} at {repo}': '{actor} a ajouté {member} dans {repo}',
+  '{actor} made {repo} public': '{actor} a rendu {repo} public',
+  '{actor} opened pull request {pr} at {repo}':
+    '{actor} a ouvert la pull request {pr} dans {repo}',
+  '{actor} reopened pull request {pr} at {repo}':
+    '{actor} a réouvert la pull request {pr} dans {repo}',
+  '{actor} merged pull request {pr} at {repo}':
+    '{actor} a mergé la pull request {pr} dans {repo}',
+  '{actor} closed pull request {pr} at {repo}':
+    '{actor} a fermé la pull request {pr} dans {repo}',
+  '{actor} commented on pull request {pr} at {repo}':
+    '{actor} a commenté la pull request {pr} dans {repo}',
+  '{actor} pushed to {ref} at {repo}':
+    '{actor} a poussé dans {ref} dans {repo}',
+  '{actor} published release {id}': '{actor} a publié la release {id}',
+  '{actor} starred {repo}': '{actor} a mis en favori {repo}',
+  'One of the most feature-rich GitHub clients that is 100% free': '',
   auth: {
     login: {
       connectingToGitHub: 'Connexion à GitHub...',

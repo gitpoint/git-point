@@ -19,6 +19,7 @@
     "link": "react-native link",
     "ios": "react-native run-ios",
     "android": "react-native run-android",
+    "i18n:extract": "node ./scripts/extract-i18n.js && prettier --loglevel silent --write src/locale/**/*.js",
     "commitmsg": "minicat $GIT_PARAMS | commitlint",
     "precommit": "lint-staged",
     "eslint": "eslint .",
@@ -110,6 +111,8 @@
     "babel-plugin-transform-inline-environment-variables": "^6.8.0",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react-native": "1.9.1",
+    "babylon": "^6.18.0",
+    "chalk": "^2.3.2",
     "concurrently": "^3.5.0",
     "coveralls": "^3.0.0",
     "cz-conventional-changelog": "^2.0.0",
@@ -126,9 +129,9 @@
     "eslint-plugin-react": "^7.1.0",
     "eslint-plugin-react-native": "^2.3.2",
     "flow-bin": "0.65.0",
+    "glob": "^7.1.2",
     "husky": "^0.14.3",
     "jest": "^22.4.3",
-    "keys-diff": "^1.0.5",
     "lint-staged": "^3.2.6",
     "minicat": "^1.0.0",
     "opencollective": "^1.0.3",
@@ -139,6 +142,7 @@
     "react-test-renderer": "16.3.0-alpha.1",
     "reactotron-react-native": "^1.14.0",
     "reactotron-redux": "^1.13.0",
+    "recursive-keys": "^0.9.0",
     "stylelint": "^8.2.0",
     "stylelint-config-standard": "^18.0.0",
     "stylelint-config-styled-components": "^0.1.1",
@@ -177,5 +181,34 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gitpoint/git-point"
+  },
+  "i18n": {
+    "sourceLanguage": "en",
+    "sourcePath": [
+      "./src/"
+    ],
+    "ignorePath": [
+      "./node_modules"
+    ],
+    "languages": [
+      "de",
+      "en",
+      "eo",
+      "es",
+      "eu",
+      "fr",
+      "gl",
+      "nl",
+      "pl",
+      "pt",
+      "ptBr",
+      "ru",
+      "tr",
+      "uk",
+      "zhCn",
+      "zhTw"
+    ],
+    "messagePath": "src/locale/languages",
+    "translator": "t"
   }
 }

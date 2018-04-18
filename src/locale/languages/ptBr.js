@@ -1,4 +1,41 @@
-export const ptBR = {
+module.exports = {
+  '{actor} commented on commit': '{actor} comentou no commit',
+  '{actor} created branch {ref} at {repo}':
+    '{actor} criou branch {ref} em {repo}',
+  '{actor} created tag {ref} at {repo}': '{actor} criou tag {ref} em {repo}',
+  '{actor} created repository {repo}': '{actor} criou repositório {repo}',
+  '{actor} deleted branch {ref} at {repo}':
+    '{actor} apagou branch {ref} em {repo}',
+  '{actor} deleted tag {ref} at {repo}': '{actor} apagou tag {ref} em {repo}',
+  '{actor} forked {repo} at {fork}': '{actor} fez fork de {repo} em {fork}',
+  '{actor} created the {repo} wiki': '',
+  '{actor} edited the {repo} wiki': '',
+  '{actor} commented on pull request {issue} at {repo}':
+    '{actor} comentou em pull request {issue} em {repo}',
+  '{actor} commented on issue {issue} at {repo}':
+    '{actor} comentou em issue {issue} em {repo}',
+  '{actor} opened issue {issue} at {repo}':
+    '{actor} aberto issue {issue} em {repo}',
+  '{actor} reopened issue {issue} at {repo}':
+    '{actor} reaberto issue {issue} em {repo}',
+  '{actor} closed issue {issue} at {repo}':
+    '{actor} fechado issue {issue} em {repo}',
+  '{actor} edited {member} at {repo}': '{actor} editado {member} em {repo}',
+  '{actor} removed {member} at {repo}': '{actor} removeu {member} em {repo}',
+  '{actor} added {member} at {repo}': '{actor} adicionado {member} em {repo}',
+  '{actor} made {repo} public': '{actor} tornou {repo} público',
+  '{actor} opened pull request {pr} at {repo}':
+    '{actor} aberto pull request {pr} em {repo}',
+  '{actor} reopened pull request {pr} at {repo}':
+    '{actor} reaberto pull request {pr} em {repo}',
+  '{actor} merged pull request {pr} at {repo}': '',
+  '{actor} closed pull request {pr} at {repo}':
+    '{actor} fechado pull request {pr} em {repo}',
+  '{actor} commented on pull request {pr} at {repo}': '',
+  '{actor} pushed to {ref} at {repo}': '{actor} deu push em {ref} em {repo}',
+  '{actor} published release {id}': '{actor} publicado release {id}',
+  '{actor} starred {repo}': '{actor} favoritado {repo}',
+  'One of the most feature-rich GitHub clients that is 100% free': '',
   auth: {
     login: {
       connectingToGitHub: 'Conectando ao GitHub...',

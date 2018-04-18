@@ -1,4 +1,42 @@
-export const uk = {
+module.exports = {
+  '{actor} commented on commit': '{actor} прокоментував коміт',
+  '{actor} created branch {ref} at {repo}':
+    '{actor} створив гілку {ref} на {repo}',
+  '{actor} created tag {ref} at {repo}': '{actor} створив тег {ref} на {repo}',
+  '{actor} created repository {repo}': '{actor} створив репозиторій {repo}',
+  '{actor} deleted branch {ref} at {repo}':
+    '{actor} видалив гілку {ref} на {repo}',
+  '{actor} deleted tag {ref} at {repo}': '{actor} видалив тег {ref} на {repo}',
+  '{actor} forked {repo} at {fork}': '{actor} клонував {repo} на {fork}',
+  '{actor} created the {repo} wiki': '',
+  '{actor} edited the {repo} wiki': '',
+  '{actor} commented on pull request {issue} at {repo}':
+    '{actor} прокоментував pull-запит {issue} на {repo}',
+  '{actor} commented on issue {issue} at {repo}':
+    '{actor} прокоментував задачу {issue} на {repo}',
+  '{actor} opened issue {issue} at {repo}':
+    '{actor} відкрив задачу {issue} на {repo}',
+  '{actor} reopened issue {issue} at {repo}':
+    '{actor} заново відкрив задачу {issue} на {repo}',
+  '{actor} closed issue {issue} at {repo}':
+    '{actor} закрив задачу {issue} на {repo}',
+  '{actor} edited {member} at {repo}':
+    '{actor} відредагував {member} на {repo}',
+  '{actor} removed {member} at {repo}': '{actor} видалив {member} на {repo}',
+  '{actor} added {member} at {repo}': '{actor} додав {member} на {repo}',
+  '{actor} made {repo} public': '{actor} створив {repo} відкритим',
+  '{actor} opened pull request {pr} at {repo}':
+    '{actor} відкрив pull-запит {pr} на {repo}',
+  '{actor} reopened pull request {pr} at {repo}':
+    '{actor} заново відкрив pull-запит {pr} на {repo}',
+  '{actor} merged pull request {pr} at {repo}': '',
+  '{actor} closed pull request {pr} at {repo}':
+    '{actor} закрив pull-запит {pr} на {repo}',
+  '{actor} commented on pull request {pr} at {repo}': '',
+  '{actor} pushed to {ref} at {repo}': '{actor} відправив в {ref} на {repo}',
+  '{actor} published release {id}': '{actor} опублікував реліз {id}',
+  '{actor} starred {repo}': '{actor} відмітив {repo}',
+  'One of the most feature-rich GitHub clients that is 100% free': '',
   auth: {
     login: {
       connectingToGitHub: 'Підключення до GitHub...',

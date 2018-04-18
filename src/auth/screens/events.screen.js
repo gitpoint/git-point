@@ -7,7 +7,7 @@ import { Text, FlatList, View } from 'react-native';
 
 import { LoadingEventListItem, UserListItem, ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
-import { emojifyText, translate, relativeTimeToNow } from 'utils';
+import { emojifyText, t, relativeTimeToNow } from 'utils';
 import { getNotificationsCount } from 'notifications';
 import { RestClient } from 'api';
 
@@ -110,286 +110,46 @@ class Events extends Component {
     this.props.getNotificationsCount(accessToken);
   };
 
-  getAction = userEvent => {
-    const { locale } = this.props;
-    const eventType = userEvent.type;
-    /* eslint-disable prefer-const */
-    let { action, ref_type: object } = userEvent.payload;
-
-    switch (eventType) {
-      case 'CommitCommentEvent':
-        return translate('auth.events.commitCommentEvent', locale);
-      case 'CreateEvent':
-        return translate('auth.events.createEvent', locale, {
-          object: translate(`auth.events.objects.${object}`, locale),
-        });
-      case 'DeleteEvent':
-        return translate('auth.events.deleteEvent', locale, {
-          object: translate(`auth.events.objects.${object}`, locale),
-        });
-      case 'ForkEvent':
-        return translate('auth.events.actions.forked', locale);
-      case 'GollumEvent':
-        action = userEvent.payload.pages[0].action;
-
-        return translate(`auth.events.actions.${action}`, locale);
-      case 'IssueCommentEvent': {
-        const eventsByActions = {
-          created: 'issueCommentEvent',
-          edited: 'issueEditedEvent',
-          deleted: 'issueRemovedEvent',
-        };
-        const event = eventsByActions[action];
-
-        if (!event) {
-          return null;
-        }
-
-        if (action === 'created') {
-          action = 'commented';
-        }
-
-        const issueData = {
-          type: userEvent.payload.issue.pull_request
-            ? translate('auth.events.types.pullRequest', locale)
-            : translate('auth.events.types.issue', locale),
-          action: translate(`auth.events.actions.${action}`, locale),
-        };
-
-        return translate(`auth.events.${event}`, locale, issueData);
-      }
-      case 'IssuesEvent':
-        return translate('auth.events.issuesEvent', locale, {
-          action: translate(`auth.events.actions.${action}`, locale),
-        });
-      case 'MemberEvent':
-        return translate(`auth.events.actions.${action}`, locale);
-      case 'PublicEvent':
-        return translate('auth.events.publicEvent.action', locale);
-      case 'PullRequestEvent':
-        return translate('auth.events.pullRequestEvent', locale, {
-          action: translate(`auth.events.actions.${action}`, locale),
-        });
-      case 'PullRequestReviewEvent':
-        return translate('auth.events.pullRequestReviewEvent', locale, {
-          payload: translate(`auth.events.actions.${action}`, locale),
-        });
-      case 'PullRequestReviewCommentEvent': {
-        if (action === 'created') {
-          return translate(
-            'auth.events.pullRequestReviewCommentEvent',
-            locale,
-            {
-              action: translate('auth.events.actions.commented', locale),
-            }
-          );
-        } else if (action === 'edited') {
-          return translate('auth.events.pullRequestReviewEditedEvent', locale, {
-            action: translate(`auth.events.actions.${action}`, locale),
-          });
-        } else if (action === 'deleted') {
-          return translate(
-            'auth.events.pullRequestReviewDeletedEvent',
-            locale,
-            {
-              action: translate(`auth.events.actions.${action}`, locale),
-            }
-          );
-        }
-
-        return null;
-      }
-      case 'PushEvent':
-        return translate('auth.events.actions.pushedTo', locale);
-      case 'ReleaseEvent':
-        return translate('auth.events.releaseEvent', locale, {
-          action: translate(`auth.events.actions.${action}`, locale),
-        });
-      case 'RepositoryEvent':
-        return translate(`auth.events.actions.${action}`, locale);
-      case 'WatchEvent':
-        return translate('auth.events.actions.starred', locale);
-      default:
-        return null;
-    }
-  };
-
-  getItem(userEvent) {
-    const eventType = userEvent.type;
-
-    switch (eventType) {
-      case 'CreateEvent': {
-        if (
-          userEvent.payload.ref_type === 'branch' ||
-          userEvent.payload.ref_type === 'tag'
-        ) {
-          return (
-            <LinkBranchDescription>
-              {' '}
-              {userEvent.payload.ref}{' '}
-            </LinkBranchDescription>
-          );
-        } else if (userEvent.payload.ref_type === 'repository') {
-          return (
-            <LinkDescription
-              onPress={() => this.navigateToRepository(userEvent)}
-            >
-              {userEvent.repo.name}
-            </LinkDescription>
-          );
-        }
-
-        return null;
-      }
-      case 'DeleteEvent':
-        return (
-          <DeletedLinkBranchDescription>
-            {' '}
-            {userEvent.payload.ref}{' '}
-          </DeletedLinkBranchDescription>
-        ); // can only be branch or tag
-      case 'ForkEvent':
-      case 'WatchEvent':
-      case 'PublicEvent':
-        return (
-          <LinkDescription onPress={() => this.navigateToRepository(userEvent)}>
-            {userEvent.repo.name}
-          </LinkDescription>
-        );
-      case 'GollumEvent':
-        return (
-          <Text>
-            the{' '}
-            <LinkDescription
-              onPress={() => this.navigateToRepository(userEvent)}
-            >
-              {userEvent.repo.name}
-            </LinkDescription>{' '}
-            wiki
-          </Text>
-        );
-      case 'IssueCommentEvent':
-      case 'IssuesEvent':
-        return (
-          <LinkDescription onPress={() => this.navigateToIssue(userEvent)}>
-            {userEvent.payload.issue.title}
-          </LinkDescription>
-        );
-      case 'MemberEvent':
-        return (
-          <LinkDescription onPress={() => this.navigateToProfile(userEvent)}>
-            {userEvent.payload.member.login}
-          </LinkDescription>
-        );
-      case 'PullRequestEvent':
-      case 'PullRequestReviewEvent':
-      case 'PullRequestReviewCommentEvent':
-        return (
-          <LinkDescription onPress={() => this.navigateToIssue(userEvent)}>
-            {userEvent.payload.pull_request.title}
-          </LinkDescription>
-        );
-      case 'PushEvent':
-        return (
-          <LinkBranchDescription>
-            {' '}
-            {userEvent.payload.ref.replace('refs/heads/', '')}{' '}
-          </LinkBranchDescription>
-        );
-      case 'ReleaseEvent':
-        return `${userEvent.payload.release.id}`;
-      case 'RepositoryEvent':
-        return (
-          <LinkDescription
-            onPress={() => {
-              if (userEvent.action !== 'deleted') {
-                this.navigateToRepository(userEvent);
-              }
-            }}
-          >
-            {userEvent.repo.name}
-          </LinkDescription>
-        );
-      default:
-        return null;
-    }
+  getIssueLink(userEvent) {
+    return (
+      <LinkDescription onPress={() => this.navigateToIssue(userEvent)}>
+        {userEvent.payload.issue.title}
+      </LinkDescription>
+    );
   }
 
-  getConnector = userEvent => {
-    const { locale } = this.props;
-    const eventType = userEvent.type;
+  getPullRequestLink(userEvent) {
+    return (
+      <LinkDescription onPress={() => this.navigateToIssue(userEvent)}>
+        {userEvent.payload.pull_request.title}
+      </LinkDescription>
+    );
+  }
 
-    switch (eventType) {
-      case 'CreateEvent': {
-        if (
-          userEvent.payload.ref_type === 'branch' ||
-          userEvent.payload.ref_type === 'tag'
-        ) {
-          return translate('auth.events.atConnector', locale);
-        }
+  getRepoLink(userEvent) {
+    return (
+      <LinkDescription onPress={() => this.navigateToRepository(userEvent)}>
+        {userEvent.repo.name}
+      </LinkDescription>
+    );
+  }
 
-        return null;
-      }
-      case 'ForkEvent':
-      case 'MemberEvent':
-        return translate('auth.events.toConnector', locale);
-      case 'DeleteEvent':
-      case 'IssueCommentEvent':
-      case 'IssuesEvent':
-      case 'PushEvent':
-      case 'PullRequestEvent':
-      case 'PullRequestReviewCommentEvent':
-        return translate('auth.events.atConnector', locale);
-      case 'PublicEvent':
-        return translate('auth.events.publicEvent.connector', locale);
-      default:
-        return null;
+  getActorLink(userEvent) {
+    return (
+      <LinkDescription onPress={() => this.navigateToProfile(userEvent, true)}>
+        {userEvent.actor.login}
+      </LinkDescription>
+    );
+  }
+
+  getDescription(userEvent) {
+    const handler = `handle${userEvent.type}`;
+
+    if (typeof this[handler] === 'function') {
+      return this[handler](userEvent);
     }
-  };
 
-  getSecondItem(userEvent) {
-    const eventType = userEvent.type;
-
-    switch (eventType) {
-      case 'CreateEvent': {
-        if (
-          userEvent.payload.ref_type === 'branch' ||
-          userEvent.payload.ref_type === 'tag'
-        ) {
-          return (
-            <LinkDescription
-              onPress={() => this.navigateToRepository(userEvent)}
-            >
-              {userEvent.repo.name}
-            </LinkDescription>
-          );
-        }
-
-        return null;
-      }
-      case 'DeleteEvent':
-      case 'IssueCommentEvent':
-      case 'IssuesEvent':
-      case 'PushEvent':
-      case 'PullRequestEvent':
-      case 'MemberEvent':
-      case 'PullRequestReviewCommentEvent':
-        return (
-          <LinkDescription onPress={() => this.navigateToRepository(userEvent)}>
-            {userEvent.repo.name}
-          </LinkDescription>
-        );
-      case 'ForkEvent':
-        return (
-          <LinkDescription
-            onPress={() => this.navigateToRepository(userEvent, true)}
-          >
-            {userEvent.payload.forkee.full_name}
-          </LinkDescription>
-        );
-      default:
-        return null;
-    }
+    return <Text>Unknown event type: {userEvent.type}</Text>;
   }
 
   getIcon = userEvent => {
@@ -430,14 +190,354 @@ class Events extends Component {
         return 'git-commit';
       case 'ReleaseEvent':
         return 'tag';
-      case 'RepositoryEvent':
-        return 'repo';
       case 'WatchEvent':
         return 'star';
       default:
         return null;
     }
   };
+
+  handleCommitCommentEvent(userEvent) {
+    const actor = this.getActorLink(userEvent);
+
+    return t('{actor} commented on commit', this.props.locale, {
+      actor,
+    });
+  }
+
+  handleCreateEvent(userEvent) {
+    const actor = this.getActorLink(userEvent);
+    const repo = this.getRepoLink(userEvent);
+    const ref = userEvent.payload.ref && (
+      <LinkBranchDescription>{userEvent.payload.ref}</LinkBranchDescription>
+    );
+
+    switch (userEvent.payload.ref_type) {
+      case 'branch':
+        return t('{actor} created branch {ref} at {repo}', this.props.locale, {
+          actor,
+          ref,
+          repo,
+        });
+      case 'tag':
+        return t('{actor} created tag {ref} at {repo}', this.props.locale, {
+          actor,
+          ref,
+          repo,
+        });
+      case 'repository':
+        return t('{actor} created repository {repo}', this.props.locale, {
+          actor,
+          repo,
+        });
+
+      default:
+        return null;
+    }
+  }
+
+  handleDeleteEvent(userEvent) {
+    const actor = this.getActorLink(userEvent);
+    const repo = this.getRepoLink(userEvent);
+    const ref = userEvent.payload.ref && (
+      <DeletedLinkBranchDescription>
+        {userEvent.payload.ref}
+      </DeletedLinkBranchDescription>
+    );
+
+    switch (userEvent.payload.ref_type) {
+      case 'branch':
+        return t('{actor} deleted branch {ref} at {repo}', this.props.locale, {
+          actor,
+          ref,
+          repo,
+        });
+      case 'tag':
+        return t('{actor} deleted tag {ref} at {repo}', this.props.locale, {
+          actor,
+          ref,
+          repo,
+        });
+      default:
+        return null;
+    }
+  }
+
+  handleForkEvent(userEvent) {
+    const actor = this.getActorLink(userEvent);
+    const repo = this.getRepoLink(userEvent);
+    const fork = (
+      <LinkDescription
+        onPress={() => this.navigateToRepository(userEvent, true)}
+      >
+        {userEvent.payload.forkee.full_name}
+      </LinkDescription>
+    );
+
+    return t('{actor} forked {repo} at {fork}', this.props.locale, {
+      actor,
+      repo,
+      fork,
+    });
+  }
+
+  handleGollumEvent(userEvent) {
+    const actor = this.getActorLink(userEvent);
+    const repo = this.getRepoLink(userEvent);
+    const page = userEvent.payload.pages[0];
+
+    switch (page.action) {
+      case 'created':
+        return t('{actor} created the {repo} wiki', this.props.locale, {
+          actor,
+          repo,
+        });
+
+      case 'edited':
+        return t('{actor} edited the {repo} wiki', this.props.locale, {
+          actor,
+          repo,
+        });
+
+      default:
+        return null;
+    }
+  }
+
+  handleIssueCommentEvent(userEvent) {
+    const actor = this.getActorLink(userEvent);
+    const repo = this.getRepoLink(userEvent);
+    const issue = this.getIssueLink(userEvent);
+
+    switch (userEvent.payload.action) {
+      case 'created':
+        if (userEvent.payload.issue.pull_request) {
+          return t(
+            '{actor} commented on pull request {issue} at {repo}',
+            this.props.locale,
+            {
+              actor,
+              issue,
+              repo,
+            }
+          );
+        }
+
+        return t(
+          '{actor} commented on issue {issue} at {repo}',
+          this.props.locale,
+          {
+            actor,
+            issue,
+            repo,
+          }
+        );
+
+      default:
+        return null;
+    }
+  }
+
+  handleIssuesEvent(userEvent) {
+    const actor = this.getActorLink(userEvent);
+    const repo = this.getRepoLink(userEvent);
+    const issue = this.getIssueLink(userEvent);
+
+    switch (userEvent.payload.action) {
+      case 'opened':
+        return t('{actor} opened issue {issue} at {repo}', this.props.locale, {
+          actor,
+          issue,
+          repo,
+        });
+
+      case 'reopened':
+        return t(
+          '{actor} reopened issue {issue} at {repo}',
+          this.props.locale,
+          {
+            actor,
+            issue,
+            repo,
+          }
+        );
+
+      case 'closed':
+        return t('{actor} closed issue {issue} at {repo}', this.props.locale, {
+          actor,
+          issue,
+          repo,
+        });
+
+      default:
+        return null;
+    }
+  }
+
+  handleMemberEvent(userEvent) {
+    const actor = this.getActorLink(userEvent);
+    const repo = this.getRepoLink(userEvent);
+    const member = userEvent.payload.member && (
+      <LinkDescription onPress={() => this.navigateToProfile(userEvent)}>
+        {userEvent.payload.member.login}
+      </LinkDescription>
+    );
+
+    switch (userEvent.payload.action) {
+      case 'edited':
+        return t('{actor} edited {member} at {repo}', this.props.locale, {
+          actor,
+          member,
+          repo,
+        });
+
+      case 'deleted':
+        return t('{actor} removed {member} at {repo}', this.props.locale, {
+          actor,
+          member,
+          repo,
+        });
+
+      case 'added':
+        return t('{actor} added {member} at {repo}', this.props.locale, {
+          actor,
+          member,
+          repo,
+        });
+
+      default:
+        return null;
+    }
+  }
+
+  handlePublicEvent(userEvent) {
+    const actor = this.getActorLink(userEvent);
+    const repo = this.getRepoLink(userEvent);
+
+    return t('{actor} made {repo} public', this.props.locale, {
+      actor,
+      repo,
+    });
+  }
+
+  handlePullRequestEvent(userEvent) {
+    const actor = this.getActorLink(userEvent);
+    const repo = this.getRepoLink(userEvent);
+    const pr = this.getPullRequestLink(userEvent);
+
+    switch (userEvent.payload.action) {
+      case 'opened':
+        return t(
+          '{actor} opened pull request {pr} at {repo}',
+          this.props.locale,
+          {
+            actor,
+            pr,
+            repo,
+          }
+        );
+
+      case 'reopened':
+        return t(
+          '{actor} reopened pull request {pr} at {repo}',
+          this.props.locale,
+          {
+            actor,
+            pr,
+            repo,
+          }
+        );
+      case 'closed':
+        if (userEvent.payload.pull_request.merged) {
+          return t(
+            '{actor} merged pull request {pr} at {repo}',
+            this.props.locale,
+            {
+              actor,
+              pr,
+              repo,
+            }
+          );
+        }
+
+        return t(
+          '{actor} closed pull request {pr} at {repo}',
+          this.props.locale,
+          {
+            actor,
+            pr,
+            repo,
+          }
+        );
+
+      default:
+        return null;
+    }
+  }
+
+  handlePullRequestReviewCommentEvent(userEvent) {
+    const actor = this.getActorLink(userEvent);
+    const repo = this.getRepoLink(userEvent);
+    const pr = this.getPullRequestLink(userEvent);
+
+    switch (userEvent.payload.action) {
+      case 'created':
+        return t(
+          '{actor} commented on pull request {pr} at {repo}',
+          this.props.locale,
+          {
+            actor,
+            pr,
+            repo,
+          }
+        );
+
+      default:
+        return null;
+    }
+  }
+
+  handlePushEvent(userEvent) {
+    const actor = this.getActorLink(userEvent);
+    const repo = this.getRepoLink(userEvent);
+    const ref = (
+      <LinkBranchDescription>
+        {userEvent.payload.ref.replace('refs/heads/', '')}
+      </LinkBranchDescription>
+    );
+
+    return t('{actor} pushed to {ref} at {repo}', this.props.locale, {
+      actor,
+      ref,
+      repo,
+    });
+  }
+
+  handleRelease(userEvent) {
+    const actor = this.getActorLink(userEvent);
+    const id = userEvent.payload.release.id;
+
+    switch (userEvent.payload.action) {
+      case 'published':
+        return t('{actor} published release {id}', this.props.locale, {
+          actor,
+          id,
+        });
+
+      default:
+        return null;
+    }
+  }
+
+  handleWatchEvent(userEvent) {
+    const actor = this.getActorLink(userEvent);
+    const repo = this.getRepoLink(userEvent);
+
+    return t('{actor} starred {repo}', this.props.locale, {
+      actor,
+      repo,
+    });
+  }
 
   formatPullRequestObject = issue => ({
     ...issue,
@@ -469,7 +569,6 @@ class Events extends Component {
         userEvent.payload.issue ||
         this.formatPullRequestObject(userEvent.payload.pull_request),
       isPR: !!userEvent.payload.pull_request,
-      locale: this.props.locale,
     });
   };
 
@@ -486,18 +585,7 @@ class Events extends Component {
   renderDescription(userEvent) {
     return (
       <DescriptionContainer>
-        <LinkDescription
-          onPress={() => this.navigateToProfile(userEvent, true)}
-        >
-          {userEvent.actor.login}{' '}
-        </LinkDescription>
-        <Text>{this.getAction(userEvent)} </Text>
-        {this.getItem(userEvent)}
-        {this.getAction(userEvent) && ' '}
-        {this.getConnector(userEvent)}
-        {this.getItem(userEvent) && ' '}
-        {this.getSecondItem(userEvent)}
-        {this.getItem(userEvent) && this.getConnector(userEvent) && ' '}
+        {this.getDescription(userEvent)}{' '}
         <Datestamp>{relativeTimeToNow(userEvent.created_at)}</Datestamp>
       </DescriptionContainer>
     );
@@ -535,7 +623,10 @@ class Events extends Component {
       content = (
         <TextContainer>
           <NoneTitle>
-            {translate('auth.events.welcomeMessage', locale)}
+            {t(
+              'One of the most feature-rich GitHub clients that is 100% free',
+              locale
+            )}
           </NoneTitle>
         </TextContainer>
       );

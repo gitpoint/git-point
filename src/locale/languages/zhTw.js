@@ -1,4 +1,41 @@
-export const zhTW = {
+module.exports = {
+  '{actor} commented on commit': '{actor} 在 commit 上評論',
+  '{actor} created branch {ref} at {repo}':
+    '{actor} 建立了分支 {ref} 在 {repo}',
+  '{actor} created tag {ref} at {repo}': '{actor} 建立了tag {ref} 在 {repo}',
+  '{actor} created repository {repo}': '{actor} 建立了版本庫 {repo}',
+  '{actor} deleted branch {ref} at {repo}':
+    '{actor} 刪除了分支 {ref} 在 {repo}',
+  '{actor} deleted tag {ref} at {repo}': '{actor} 刪除了tag {ref} 在 {repo}',
+  '{actor} forked {repo} at {fork}': '{actor} fork 了 {repo} 在 {fork}',
+  '{actor} created the {repo} wiki': '',
+  '{actor} edited the {repo} wiki': '',
+  '{actor} commented on pull request {issue} at {repo}':
+    '{actor} 在合併請求留下了評論 {issue} 在 {repo}',
+  '{actor} commented on issue {issue} at {repo}':
+    '{actor} 在議題留下了評論 {issue} 在 {repo}',
+  '{actor} opened issue {issue} at {repo}':
+    '{actor} 打開了議題 {issue} 在 {repo}',
+  '{actor} reopened issue {issue} at {repo}':
+    '{actor} 重新打開了議題 {issue} 在 {repo}',
+  '{actor} closed issue {issue} at {repo}':
+    '{actor} 關閉了議題 {issue} 在 {repo}',
+  '{actor} edited {member} at {repo}': '{actor} 編輯了 {member} 在 {repo}',
+  '{actor} removed {member} at {repo}': '{actor} 移除了 {member} 在 {repo}',
+  '{actor} added {member} at {repo}': '{actor} 新增了 {member} 在 {repo}',
+  '{actor} made {repo} public': '{actor} 使得 {repo} 公開',
+  '{actor} opened pull request {pr} at {repo}':
+    '{actor} 打開了合併請求 {pr} 在 {repo}',
+  '{actor} reopened pull request {pr} at {repo}':
+    '{actor} 重新打開了合併請求 {pr} 在 {repo}',
+  '{actor} merged pull request {pr} at {repo}': '',
+  '{actor} closed pull request {pr} at {repo}':
+    '{actor} 關閉了合併請求 {pr} 在 {repo}',
+  '{actor} commented on pull request {pr} at {repo}': '',
+  '{actor} pushed to {ref} at {repo}': '{actor} 推送至 {ref} 在 {repo}',
+  '{actor} published release {id}': '{actor} 發佈了發佈 {id}',
+  '{actor} starred {repo}': '{actor} 給星 {repo}',
+  'One of the most feature-rich GitHub clients that is 100% free': '',
   auth: {
     login: {
       connectingToGitHub: '連線至 GitHub...',

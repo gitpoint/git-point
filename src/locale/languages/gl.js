@@ -1,4 +1,45 @@
-export const gl = {
+module.exports = {
+  '{actor} commented on commit': '{actor} comemtou no commit',
+  '{actor} created branch {ref} at {repo}':
+    '{actor} creaches branch {ref} en {repo}',
+  '{actor} created tag {ref} at {repo}':
+    '{actor} creaches etiqueta {ref} en {repo}',
+  '{actor} created repository {repo}': '{actor} creaches repositorio {repo}',
+  '{actor} deleted branch {ref} at {repo}':
+    '{actor} eliminaches branch {ref} en {repo}',
+  '{actor} deleted tag {ref} at {repo}':
+    '{actor} eliminaches etiuqeta {ref} en {repo}',
+  '{actor} forked {repo} at {fork}':
+    '{actor} fixo unha fork de {repo} en {fork}',
+  '{actor} created the {repo} wiki': '',
+  '{actor} edited the {repo} wiki': '',
+  '{actor} commented on pull request {issue} at {repo}':
+    '{actor} comentou en pull request {issue} en {repo}',
+  '{actor} commented on issue {issue} at {repo}':
+    '{actor} comentou en issue {issue} en {repo}',
+  '{actor} opened issue {issue} at {repo}':
+    '{actor} abriu issue {issue} en {repo}',
+  '{actor} reopened issue {issue} at {repo}':
+    '{actor} reabriu issue {issue} en {repo}',
+  '{actor} closed issue {issue} at {repo}':
+    '{actor} fechou issue {issue} en {repo}',
+  '{actor} edited {member} at {repo}': '{actor} editou {member} en {repo}',
+  '{actor} removed {member} at {repo}': '{actor} quitou {member} en {repo}',
+  '{actor} added {member} at {repo}': '{actor} engadiu {member} en {repo}',
+  '{actor} made {repo} public': '{actor} feito {repo} público',
+  '{actor} opened pull request {pr} at {repo}':
+    '{actor} abriu pull request {pr} en {repo}',
+  '{actor} reopened pull request {pr} at {repo}':
+    '{actor} reabriu pull request {pr} en {repo}',
+  '{actor} merged pull request {pr} at {repo}': '',
+  '{actor} closed pull request {pr} at {repo}':
+    '{actor} fechou pull request {pr} en {repo}',
+  '{actor} commented on pull request {pr} at {repo}': '',
+  '{actor} pushed to {ref} at {repo}':
+    '{actor} fixo un push para {ref} en {repo}',
+  '{actor} published release {id}': '{actor} publicou release {id}',
+  '{actor} starred {repo}': '{actor} engadiu a favoritos {repo}',
+  'One of the most feature-rich GitHub clients that is 100% free': '',
   auth: {
     login: {
       connectingToGitHub: 'Conectando con GitHub...',

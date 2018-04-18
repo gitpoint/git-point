@@ -1,4 +1,44 @@
-export const eo = {
+module.exports = {
+  '{actor} commented on commit': '{actor} komentis fari',
+  '{actor} created branch {ref} at {repo}':
+    '{actor} kreita branĉo {ref} ĉe {repo}',
+  '{actor} created tag {ref} at {repo}':
+    '{actor} kreita etikedo {ref} ĉe {repo}',
+  '{actor} created repository {repo}': '{actor} kreita repositorio {repo}',
+  '{actor} deleted branch {ref} at {repo}':
+    '{actor} forigita branĉo {ref} ĉe {repo}',
+  '{actor} deleted tag {ref} at {repo}':
+    '{actor} forigita etikedo {ref} ĉe {repo}',
+  '{actor} forked {repo} at {fork}': '{actor} forkis {repo} ĉe {fork}',
+  '{actor} created the {repo} wiki': '',
+  '{actor} edited the {repo} wiki': '',
+  '{actor} commented on pull request {issue} at {repo}':
+    '{actor} komentis sur tiri peton {issue} ĉe {repo}',
+  '{actor} commented on issue {issue} at {repo}':
+    '{actor} komentis sur afero {issue} ĉe {repo}',
+  '{actor} opened issue {issue} at {repo}':
+    '{actor} malfermita afero {issue} ĉe {repo}',
+  '{actor} reopened issue {issue} at {repo}':
+    '{actor} remalfermita afero {issue} ĉe {repo}',
+  '{actor} closed issue {issue} at {repo}':
+    '{actor} fermita afero {issue} ĉe {repo}',
+  '{actor} edited {member} at {repo}': '{actor} redaktita {member} ĉe {repo}',
+  '{actor} removed {member} at {repo}': '{actor} forigita {member} ĉe {repo}',
+  '{actor} added {member} at {repo}': '{actor} aldonita {member} ĉe {repo}',
+  '{actor} made {repo} public': '{actor} farita {repo} publika',
+  '{actor} opened pull request {pr} at {repo}':
+    '{actor} malfermita tiri peton {pr} ĉe {repo}',
+  '{actor} reopened pull request {pr} at {repo}':
+    '{actor} remalfermita tiri peton {pr} ĉe {repo}',
+  '{actor} merged pull request {pr} at {repo}': '',
+  '{actor} closed pull request {pr} at {repo}':
+    '{actor} fermita tiri peton {pr} ĉe {repo}',
+  '{actor} commented on pull request {pr} at {repo}':
+    '{actor} komentis sur tiri peton {pr} ĉe {repo}',
+  '{actor} pushed to {ref} at {repo}': '{actor} puŝita al {ref} ĉe {repo}',
+  '{actor} published release {id}': '{actor} publikigita liberigo {id}',
+  '{actor} starred {repo}': '{actor} frakasita {repo}',
+  'One of the most feature-rich GitHub clients that is 100% free': '',
   auth: {
     login: {
       connectingToGitHub: 'Konektante al GitHub...',

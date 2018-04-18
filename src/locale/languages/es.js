@@ -1,7 +1,43 @@
-// Hash: 01ae4880b9b4296907d680e9b909713c36c42491
-// Link: https://github.com/gitpoint/git-point/pull/260
-
-export const es = {
+module.exports = {
+  '{actor} commented on commit': '{actor} commit comentado',
+  '{actor} created branch {ref} at {repo}':
+    '{actor} rama creado {ref} at {repo}',
+  '{actor} created tag {ref} at {repo}':
+    '{actor} etiqueta creado {ref} at {repo}',
+  '{actor} created repository {repo}': '{actor} repositorio creado {repo}',
+  '{actor} deleted branch {ref} at {repo}':
+    '{actor} rama eliminado {ref} at {repo}',
+  '{actor} deleted tag {ref} at {repo}':
+    '{actor} etiqueta eliminado {ref} at {repo}',
+  '{actor} forked {repo} at {fork}': '{actor} hizo fork de {repo} at {fork}',
+  '{actor} created the {repo} wiki': '',
+  '{actor} edited the {repo} wiki': '',
+  '{actor} commented on pull request {issue} at {repo}':
+    '{actor} comentó en pull request {issue} at {repo}',
+  '{actor} commented on issue {issue} at {repo}':
+    '{actor} comentó en issue {issue} at {repo}',
+  '{actor} opened issue {issue} at {repo}':
+    '{actor} abrió issue {issue} at {repo}',
+  '{actor} reopened issue {issue} at {repo}':
+    '{actor} reabrió issue {issue} at {repo}',
+  '{actor} closed issue {issue} at {repo}':
+    '{actor} cerró issue {issue} at {repo}',
+  '{actor} edited {member} at {repo}': '{actor} editó {member} at {repo}',
+  '{actor} removed {member} at {repo}': '{actor} eliminó {member} at {repo}',
+  '{actor} added {member} at {repo}': '{actor} añadió {member} at {repo}',
+  '{actor} made {repo} public': '{actor} hacer {repo} público',
+  '{actor} opened pull request {pr} at {repo}':
+    '{actor} abrió pull request {pr} at {repo}',
+  '{actor} reopened pull request {pr} at {repo}':
+    '{actor} reabrió pull request {pr} at {repo}',
+  '{actor} merged pull request {pr} at {repo}': '',
+  '{actor} closed pull request {pr} at {repo}':
+    '{actor} cerró pull request {pr} at {repo}',
+  '{actor} commented on pull request {pr} at {repo}': '',
+  '{actor} pushed to {ref} at {repo}': '{actor} enviado a {ref} at {repo}',
+  '{actor} published release {id}': '{actor} publicó lanzamiento {id}',
+  '{actor} starred {repo}': '{actor} marcó como favorito {repo}',
+  'One of the most feature-rich GitHub clients that is 100% free': '',
   auth: {
     login: {
       connectingToGitHub: 'Conectando a GitHub...',

@@ -1,4 +1,43 @@
-export const tr = {
+module.exports = {
+  '{actor} commented on commit': "{actor} commit'e yorum yapıldı",
+  '{actor} created branch {ref} at {repo}':
+    '{actor} dal oluşturuldu {ref} de {repo}',
+  '{actor} created tag {ref} at {repo}':
+    '{actor} etiket oluşturuldu {ref} de {repo}',
+  '{actor} created repository {repo}': '{actor} repository oluşturuldu {repo}',
+  '{actor} deleted branch {ref} at {repo}':
+    '{actor} dal silindi {ref} de {repo}',
+  '{actor} deleted tag {ref} at {repo}':
+    '{actor} etiket silindi {ref} de {repo}',
+  '{actor} forked {repo} at {fork}': '{actor} fork edildi {repo} de {fork}',
+  '{actor} created the {repo} wiki': '',
+  '{actor} edited the {repo} wiki': '',
+  '{actor} commented on pull request {issue} at {repo}':
+    '{actor} pull request yorum yaptı {issue} de {repo}',
+  '{actor} commented on issue {issue} at {repo}':
+    '{actor} issue yorum yaptı {issue} de {repo}',
+  '{actor} opened issue {issue} at {repo}':
+    '{actor} açıldı issue {issue} de {repo}',
+  '{actor} reopened issue {issue} at {repo}':
+    '{actor} yeniden açıldı issue {issue} de {repo}',
+  '{actor} closed issue {issue} at {repo}':
+    '{actor} kapandı issue {issue} de {repo}',
+  '{actor} edited {member} at {repo}': '{actor} düzenlendi {member} de {repo}',
+  '{actor} removed {member} at {repo}': '{actor} silindi {member} de {repo}',
+  '{actor} added {member} at {repo}': '{actor} eklendi {member} de {repo}',
+  '{actor} made {repo} public': '{actor} made {repo} public',
+  '{actor} opened pull request {pr} at {repo}':
+    '{actor} pull request açıldı {pr} de {repo}',
+  '{actor} reopened pull request {pr} at {repo}':
+    '{actor} pull request yeniden açıldı {pr} de {repo}',
+  '{actor} merged pull request {pr} at {repo}': '',
+  '{actor} closed pull request {pr} at {repo}':
+    '{actor} pull request kapandı {pr} de {repo}',
+  '{actor} commented on pull request {pr} at {repo}': '',
+  '{actor} pushed to {ref} at {repo}': "{actor} 'a push edildi {ref} de {repo}",
+  '{actor} published release {id}': '{actor} release yayımlandı {id}',
+  '{actor} starred {repo}': '{actor} yıldızlı {repo}',
+  'One of the most feature-rich GitHub clients that is 100% free': '',
   auth: {
     login: {
       connectingToGitHub: "GitHub'a Bağlanılıyor...",
