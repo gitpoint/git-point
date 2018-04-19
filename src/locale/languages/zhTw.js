@@ -105,8 +105,7 @@ module.exports = {
   OWNER: '擁有者',
   'One of the most feature-rich GitHub clients that is 100% free':
     '完全免費，功能最強大的 GitHub 應用程式！',
-  'Oops! it seems that you are not connected to the internet!':
-    'Oops! it seems that you are not connected to the internet!',
+  'Oops! it seems that you are not connected to the internet!': '',
   Open: '未處理',
   'Open in Browser': '在瀏覽器中打開',
   Options: '設定',

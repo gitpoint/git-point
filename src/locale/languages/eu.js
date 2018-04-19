@@ -109,8 +109,7 @@ module.exports = {
   OWNER: 'JABEA',
   'One of the most feature-rich GitHub clients that is 100% free':
     'Funtzionalitate gehien dituen GitHub bezeroa,%100 doakoa',
-  'Oops! it seems that you are not connected to the internet!':
-    'Oops! it seems that you are not connected to the internet!',
+  'Oops! it seems that you are not connected to the internet!': '',
   Open: 'Ireki',
   'Open in Browser': 'Nabigatzailean ireki',
   Options: 'Aukerak',

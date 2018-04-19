@@ -107,8 +107,7 @@ module.exports = {
   OWNER: 'SINJORINO',
   'One of the most feature-rich GitHub clients that is 100% free':
     'La plej karakterizaĵo riĉa GitHub-kliento, kiu estas 100% libera',
-  'Oops! it seems that you are not connected to the internet!':
-    'Oops! it seems that you are not connected to the internet!',
+  'Oops! it seems that you are not connected to the internet!': '',
   Open: 'Malfermi',
   'Open in Browser': 'Open in Browser',
   Options: 'Opcioj',

@@ -108,8 +108,7 @@ module.exports = {
   OWNER: 'SAHİBİ',
   'One of the most feature-rich GitHub clients that is 100% free':
     "En zengin özelliklere sahip GitHub client'ı ve 100% ücretsiz",
-  'Oops! it seems that you are not connected to the internet!':
-    'Oops! it seems that you are not connected to the internet!',
+  'Oops! it seems that you are not connected to the internet!': '',
   Open: 'Açık',
   'Open in Browser': 'Tarayıcıda Aç',
   Options: 'Ayarlar',
