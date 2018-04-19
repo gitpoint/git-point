@@ -11,7 +11,7 @@ export const t = (key, locale, interpolation = null) => {
     translation = key;
   }
 
-  const componentPlaceholdersReg = /({?{([^}]+)}}?)/g;
+  const componentPlaceholdersReg = /({([^}]+)})/g;
 
   const retval = [];
 
@@ -98,6 +98,10 @@ export function relativeTimeToNow(date) {
     distanceInWords: {
       localize: (token, count) => {
         switch (token) {
+          case 'lessThanXSeconds':
+            return t('{lessThanXSeconds}s', locale, {
+              lessThanXSeconds: count,
+            });
           case 'xSeconds':
             return t('{xSeconds}s', locale, { xSeconds: count });
           case 'halfAMinute':
