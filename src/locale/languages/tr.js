@@ -18,7 +18,7 @@ module.exports = {
   CANCEL: 'İPTAL',
   CONTACT: 'İLETİŞİM',
   CONTRIBUTORS: 'KATKIDA BULUNANLAR',
-  "Can't login?": "Can't login?",
+  "Can't login?": '',
   "Can't see all your organizations?":
     'Tüm organizasyonlarınızı göremiyor musunuz?',
   Cancel: 'Vazgeç',
