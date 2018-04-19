@@ -185,14 +185,14 @@ class Repository extends Component {
 
   shareRepository = repository => {
     const { locale } = this.props;
-    const title = t('Share {{repoName}}', locale, {
+    const title = t('Share {repoName}', locale, {
       repoName: repository.name,
     });
 
     Share.share(
       {
         title,
-        message: t('Check out {{repoName}} on GitHub. {{repoUrl}}', locale, {
+        message: t('Check out {repoName} on GitHub. {repoUrl}', locale, {
           repoName: repository.name,
           repoUrl: repository.html_url,
         }),

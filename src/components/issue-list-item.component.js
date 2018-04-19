@@ -78,12 +78,12 @@ export const IssueListItem = ({ type, issue, navigation, locale }: Props) => (
         title={issue.title}
         subtitle={
           issue.state === 'open'
-            ? t('#{{number}} opened {{time}} ago by {{user}}', locale, {
+            ? t('#{number} opened {time} ago by {user}', locale, {
                 number: issue.number,
                 user: issue.user.login,
                 time: relativeTimeToNow(issue.created_at),
               })
-            : t('#{{number}} by {{user}} was closed {{time}} ago', locale, {
+            : t('#{number} by {user} was closed {time} ago', locale, {
                 number: issue.number,
                 user: issue.user.login,
                 time: relativeTimeToNow(issue.closed_at),

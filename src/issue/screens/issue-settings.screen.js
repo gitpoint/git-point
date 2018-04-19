@@ -250,10 +250,10 @@ class IssueSettings extends Component {
             <ListItem
               title={
                 issue.locked
-                  ? t('Unlock {{issueType}}', locale, {
+                  ? t('Unlock {issueType}', locale, {
                       issueType,
                     })
-                  : t('Lock {{issueType}}', locale, {
+                  : t('Lock {issueType}', locale, {
                       issueType,
                     })
               }
@@ -267,10 +267,10 @@ class IssueSettings extends Component {
               <ListItem
                 title={
                   issue.state === 'open'
-                    ? t('Close {{issueType}}', locale, {
+                    ? t('Close {issueType}', locale, {
                         issueType,
                       })
-                    : t('Reopen {{issueType}}', locale, {
+                    : t('Reopen {issueType}', locale, {
                         issueType,
                       })
                 }

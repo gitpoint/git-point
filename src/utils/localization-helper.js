@@ -99,33 +99,33 @@ export function relativeTimeToNow(date) {
       localize: (token, count) => {
         switch (token) {
           case 'xSeconds':
-            return t('{{xSeconds}}s', locale, { xSeconds: count });
+            return t('{xSeconds}s', locale, { xSeconds: count });
           case 'halfAMinute':
-            return t('{{halfAMinute}}s', locale, { halfAMinute: count });
+            return t('{halfAMinute}s', locale, { halfAMinute: count });
           case 'lessThanXMinutes':
-            return t('{{lessThanXMinutes}}m', locale, {
+            return t('{lessThanXMinutes}m', locale, {
               lessThanXMinutes: count,
             });
           case 'xMinutes':
-            return t('{{xMinutes}}m', locale, { xMinutes: count });
+            return t('{xMinutes}m', locale, { xMinutes: count });
           case 'aboutXHours':
-            return t('{{aboutXHours}}h', locale, { aboutXHours: count });
+            return t('{aboutXHours}h', locale, { aboutXHours: count });
           case 'xHours':
-            return t('{{xHours}}h', locale, { xHours: count });
+            return t('{xHours}h', locale, { xHours: count });
           case 'xDays':
-            return t('{{xDays}}d', locale, { xDays: count });
+            return t('{xDays}d', locale, { xDays: count });
           case 'aboutXMonths':
-            return t('{{aboutXMonths}}mo', locale, { aboutXMonths: count });
+            return t('{aboutXMonths}mo', locale, { aboutXMonths: count });
           case 'xMonths':
-            return t('{{xMonths}}mo', locale, { xMonths: count });
+            return t('{xMonths}mo', locale, { xMonths: count });
           case 'aboutXYears':
-            return t('{{aboutXYears}}y', locale, { aboutXYears: count });
+            return t('{aboutXYears}y', locale, { aboutXYears: count });
           case 'xYears':
-            return t('{{xYears}}y', locale, { xYears: count });
+            return t('{xYears}y', locale, { xYears: count });
           case 'overXYears':
-            return t('{{overXYears}}y', locale, { overXYears: count });
+            return t('{overXYears}y', locale, { overXYears: count });
           case 'almostXYears':
-            return t('{{almostXYears}}y', locale, { almostXYears: count });
+            return t('{almostXYears}y', locale, { almostXYears: count });
           default:
             return '?';
         }

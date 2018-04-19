@@ -95,7 +95,7 @@ class PullDiff extends Component {
     return (
       <View style={styles.header}>
         <Text style={[styles.headerItem, styles.headerText]}>
-          {t('{{numFilesChanged}} files', locale, {
+          {t('{numFilesChanged} files', locale, {
             numFilesChanged: filesChanged.length,
           })}
         </Text>

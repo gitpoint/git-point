@@ -323,7 +323,7 @@ class Search extends Component {
         {isPendingSearch && (
           <LoadingContainer
             animating={isPendingSearch}
-            text={t('Searching for {{query}}', locale, {
+            text={t('Searching for {query}', locale, {
               query,
             })}
           />
@@ -354,7 +354,7 @@ class Search extends Component {
         {!searchStart && (
           <TextContainer>
             <SearchInfoText>
-              {t('Search for any {{type}}', locale, {
+              {t('Search for any {type}', locale, {
                 type:
                   searchType === SearchTypes.REPOS
                     ? t('repository', locale)
