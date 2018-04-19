@@ -1,14 +1,15 @@
+import React from 'react';
 import { AsyncStorage } from 'react-native';
 import distanceInWords from 'date-fns/distance_in_words';
 
 import { common } from 'config';
 import I18n from 'locale';
 
-export const t = (key, locale, interpolation = null) => {
-  let translation = I18n.t(key, locale, interpolation);
+export const t = (message, locale, interpolation = null) => {
+  let translation = I18n.t(message, locale, interpolation);
 
   if (translation === '') {
-    translation = key;
+    translation = message;
   }
 
   const componentPlaceholdersReg = /({([^}]+)})/g;
@@ -18,17 +19,19 @@ export const t = (key, locale, interpolation = null) => {
   let ongoing = '';
   let match = false;
   let lastIndex = 0;
+  let key = 0;
 
   /* eslint-disable no-cond-assign */
   while ((match = componentPlaceholdersReg.exec(translation))) {
+    key += 1;
     ongoing += translation.substring(lastIndex, match.index);
     const value = interpolation[match[2]];
 
     if (typeof value === 'undefined') {
-      ongoing += '/!\\';
+      ongoing += '[unknown placeholder]';
     } else if (typeof value === 'object') {
       retval.push(ongoing);
-      retval.push(value);
+      retval.push(React.cloneElement(value, { key }));
       ongoing = '';
     } else if (typeof value === 'string' || typeof value === 'number') {
       ongoing += value;
