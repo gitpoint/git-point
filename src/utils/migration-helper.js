@@ -5,7 +5,7 @@ export const toOldUserFormat = user => {
   };
 };
 
-export const toOldIssueFormat = (issue, repoId) => {
+export const toOldIssueFormat = (issue, repoId, isPr = false) => {
   return {
     ...issue,
     user: toOldUserFormat(issue.author),
@@ -13,6 +13,7 @@ export const toOldIssueFormat = (issue, repoId) => {
     created_at: issue.createdAt,
     closed_at: issue.closedAt,
     state: issue.state.toLowerCase(),
+    pull_request: isPr ? {} : null,
     url: `https://api.github.com/repos/${repoId}/issues/${issue.number}`,
   };
 };
