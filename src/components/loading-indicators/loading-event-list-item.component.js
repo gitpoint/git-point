@@ -5,7 +5,7 @@ import { colors } from 'config';
 import { infiniteAnimation } from 'utils';
 
 const Container = styled.View`
-  padding: 10px 10px 0;
+  padding: 10px;
   border-bottom-width: 1px;
   border-bottom-color: #ededed;
   background-color: transparent;
@@ -13,7 +13,6 @@ const Container = styled.View`
 
 const Wrapper = styled.View`
   flex-direction: row;
-  margin-left: 10px;
   align-items: center;
 `;
 
