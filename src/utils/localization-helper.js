@@ -17,28 +17,29 @@ export const t = (message, locale, interpolation = null) => {
   const retval = [];
 
   let ongoing = '';
-  let match = false;
   let lastIndex = 0;
   let key = 0;
 
-  /* eslint-disable no-cond-assign */
-  while ((match = componentPlaceholdersReg.exec(translation))) {
-    key += 1;
-    ongoing += translation.substring(lastIndex, match.index);
-    const value = interpolation[match[2]];
-    const type = typeof value;
+  translation.replace(
+    componentPlaceholdersReg,
+    (match, placeholder, name, index) => {
+      key += 1;
+      ongoing += translation.substring(lastIndex, index);
+      const value = interpolation[name];
+      const type = typeof value;
 
-    if (type === 'undefined') {
-      ongoing += '[unknown placeholder]';
-    } else if (type === 'object') {
-      retval.push(ongoing);
-      retval.push(React.cloneElement(value, { key }));
-      ongoing = '';
-    } else if (type === 'string' || type === 'number') {
-      ongoing += value;
+      if (type === 'undefined') {
+        ongoing += '[unknown placeholder]';
+      } else if (type === 'object') {
+        retval.push(ongoing);
+        retval.push(React.cloneElement(value, { key }));
+        ongoing = '';
+      } else if (type === 'string' || type === 'number') {
+        ongoing += value;
+      }
+      lastIndex = index + match.length;
     }
-    lastIndex = match.index + match[0].length;
-  }
+  );
 
   if (lastIndex < translation.length) {
     ongoing += translation.substring(lastIndex);
