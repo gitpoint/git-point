@@ -180,9 +180,11 @@ class Events extends Component {
       } else if (userEvent.action === 'closed') {
         return 'issue-closed';
       }
+
+      return 'issue-opened';
     }
 
-    return 'issue-opened';
+    return null;
   };
 
   handleCommitCommentEvent(userEvent) {
