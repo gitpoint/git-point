@@ -7,13 +7,15 @@ import { RepositoryProfile } from 'components';
 const defaultProps = {
   repository: {
     isFork: true,
-    parent: true,
+    parent: {
+      nameWithOwner: 'foo/bar',
+    },
     primaryLanguage: {
       name: 'JavaScript',
       color: '#FFCC00',
     },
-    isStarred: false,
-    isSubscribed: false,
+    viewerHasStarred: false,
+    viewerSubscription: 'UNSUBSCRIBED',
   },
   navigation: {
     navigate() {},
@@ -78,7 +80,7 @@ describe('<RepositoryProfile />', () => {
       .simulate('press');
 
     expect(navigateMock).toHaveBeenCalledWith('Repository', {
-      repository: true,
+      repoId: 'foo/bar',
     });
   });
 });

@@ -1,34 +1,28 @@
-export const repoQuery = `fragment IssuesList on IssueEdge {
-  node {
-    state
-    title
-    number
-    createdAt
-    closedAt
-    resourcePath
-    author {
-      login
-    }
-    comments {
-      totalCount
-    }
+export const repoQuery = `fragment IssuesList on Issue {
+  state
+  title
+  number
+  createdAt
+  closedAt
+  author {
+    login
+  }
+  comments {
+    totalCount
   }
 }
 
-fragment PullRequestsList on PullRequestEdge {
-  node {
-    state
-    title
-    number
-    createdAt
-    closedAt
-    resourcePath
-    author {
-      login
-    }
-    comments {
-      totalCount
-    }
+fragment PullRequestsList on PullRequest {
+  state
+  title
+  number
+  createdAt
+  closedAt
+  author {
+    login
+  }
+  comments {
+    totalCount
   }
 }
 
@@ -36,10 +30,10 @@ query ($owner: String!, $name: String!) {
   repository(owner: $owner, name: $name) {
     url
     name
-    fullName: nameWithOwner
+     nameWithOwner
     isFork
     parent {
-      fullName: nameWithOwner
+       nameWithOwner
       url
     }
     defaultBranchRef {
@@ -50,11 +44,10 @@ query ($owner: String!, $name: String!) {
       color
     }
     languages(first: 20, orderBy: {field: SIZE, direction: DESC}) {
-      edges {
-        node {
-          name
-          color
-        }
+      totalCount
+      nodes {
+        name
+        color
       }
     }
     README: object(expression: "HEAD:README.md") {
@@ -66,30 +59,29 @@ query ($owner: String!, $name: String!) {
       totalCount
     }
     viewerHasStarred
-    watchers(first: 10) {
+    watchers(first: 1) {
       totalCount
     }
     viewerSubscription
     forkCount
     description
     repositoryTopics(first: 10) {
-      edges {
-        node {
-          topic {
-            name
-          }
+      totalCount
+      nodes {
+        topic {
+          name
         }
       }
     }
-    openIssues: issues(first: 3, states: OPEN, orderBy: {field: CREATED_AT, direction: DESC}) {
+    openIssuesPreview: issues(first: 3, states: OPEN, orderBy: {field: CREATED_AT, direction: DESC}) {
       totalCount
-      edges {
+      nodes {
         ...IssuesList
       }
     }
-    openPullRequests: pullRequests(first: 3, states: OPEN, orderBy: {field: CREATED_AT, direction: DESC}) {
+    openPullRequestsPreview: pullRequests(first: 3, states: OPEN, orderBy: {field: CREATED_AT, direction: DESC}) {
       totalCount
-      edges {
+      nodes {
         ...PullRequestsList
       }
     }
@@ -106,13 +98,13 @@ query ($owner: String!, $name: String!) {
     }
     issues: issues(first: 50, orderBy: {field: CREATED_AT, direction: DESC}) {
       totalCount
-      edges {
+      nodes {
         ...IssuesList
       }
     }
     pullRequests: pullRequests(first: 50, orderBy: {field: CREATED_AT, direction: DESC}) {
       totalCount
-      edges {
+      nodes {
         ...PullRequestsList
       }
     }

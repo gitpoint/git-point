@@ -287,8 +287,11 @@ export class Client {
           type: 'gqlRepos',
           id: repoId,
           updater: gqlRepo => ({
-            isStarred: true,
-            stargazersCount: gqlRepo.stargazersCount + 1,
+            viewerHasStarred: true,
+            stargazers: {
+              ...gqlRepo.stargazers,
+              totalCount: gqlRepo.stargazers.totalCount + 1,
+            },
           }),
         },
       }),
@@ -301,8 +304,11 @@ export class Client {
           type: 'gqlRepos',
           id: repoId,
           updater: gqlRepo => ({
-            isStarred: false,
-            stargazersCount: gqlRepo.stargazersCount - 1,
+            viewerHasStarred: false,
+            stargazers: {
+              ...gqlRepo.stargazers,
+              totalCount: gqlRepo.stargazers.totalCount - 1,
+            },
           }),
         },
       }),
@@ -320,8 +326,11 @@ export class Client {
           type: 'gqlRepos',
           id: repoId,
           updater: gqlRepo => ({
-            isSubscribed: true,
-            watchersCount: gqlRepo.watchersCount + 1,
+            viewerSubscription: 'SUBSCRIBED',
+            watchers: {
+              ...gqlRepo.watchers,
+              totalCount: gqlRepo.watchers.totalCount + 1,
+            },
           }),
         },
       }),
@@ -334,8 +343,11 @@ export class Client {
           type: 'gqlRepos',
           id: repoId,
           updater: gqlRepo => ({
-            isSubscribed: false,
-            watchersCount: gqlRepo.watchersCount - 1,
+            viewerSubscription: 'UNSUBSCRIBED',
+            watchers: {
+              ...gqlRepo.watchers,
+              totalCount: gqlRepo.watchers.totalCount - 1,
+            },
           }),
         },
       }),

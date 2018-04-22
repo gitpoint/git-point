@@ -172,8 +172,7 @@ export const RepositoryProfile = ({
       />
 
       <Text style={styles.title}>
-        {repository.primaryLanguage ||
-          translate('repository.main.notFoundRepo', locale)}
+        {repository.name || translate('repository.main.notFoundRepo', locale)}
       </Text>
 
       {!hasError && (
@@ -205,12 +204,12 @@ export const RepositoryProfile = ({
                 style={{ ...fonts.fontPrimaryBold }}
                 onPress={() =>
                   navigation.navigate('Repository', {
-                    repository: repository.parent,
+                    repoId: repository.parent.nameWithOwner,
                   })
                 }
               >
                 {' '}
-                {repository.parent.fullName}
+                {repository.parent.nameWithOwner}
               </Text>
             </Text>
           )}
@@ -226,8 +225,10 @@ export const RepositoryProfile = ({
               {emojifyText(':hourglass:')}
             </Text>
           )}
-          {!isChangingStar && !isNaN(parseInt(repository.stargazersCount, 10))
-            ? abbreviateNumber(repository.stargazersCount)
+          {!isChangingStar &&
+          repository.stargazers &&
+          !isNaN(parseInt(repository.stargazers.totalCount, 10))
+            ? abbreviateNumber(repository.stargazers.totalCount)
             : ' '}
         </Text>
         {!hasError && (
@@ -235,7 +236,7 @@ export const RepositoryProfile = ({
             {translate('repository.main.starsTitle', locale)}
           </Text>
         )}
-        {repository.isStarred && (
+        {repository.viewerHasStarred && (
           <View style={styles.badgeView}>
             <Text style={[styles.unitStatus, styles.badge]}>
               {translate('repository.main.starred', locale)}
@@ -252,8 +253,9 @@ export const RepositoryProfile = ({
             </Text>
           )}
           {!isChangingSubscription &&
-          !isNaN(parseInt(repository.watchersCount, 10))
-            ? abbreviateNumber(repository.watchersCount)
+          repository.watchers &&
+          !isNaN(parseInt(repository.watchers.totalCount, 10))
+            ? abbreviateNumber(repository.watchers.totalCount)
             : ' '}
         </Text>
         {!hasError && (
@@ -261,7 +263,7 @@ export const RepositoryProfile = ({
             {translate('repository.main.watchers', locale)}
           </Text>
         )}
-        {repository.isSubscribed && (
+        {repository.viewerSubscription === 'SUBSCRIBED' && (
           <View style={styles.badgeView}>
             <Text style={[styles.unitStatus, styles.badge]}>
               {translate('repository.main.watching', locale)}

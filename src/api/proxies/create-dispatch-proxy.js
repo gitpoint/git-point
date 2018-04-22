@@ -171,6 +171,8 @@ export const createDispatchProxy = (Provider: Client) => {
                   if (json.errors && json.errors.length) {
                     return Promise.reject(json.errors[0].message);
                   }
+
+                  callType.normalizrKey = 'data';
                 }
 
                 const normalizedJson = normalize(
