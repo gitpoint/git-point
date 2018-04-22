@@ -11,6 +11,7 @@ type Props = {
   isChangingStar: boolean,
   isChangingSubscription: boolean,
   loading: boolean,
+  hasError: boolean,
   locale: string,
 };
 
@@ -136,11 +137,13 @@ export const RepositoryProfile = ({
   isChangingSubscription,
   navigation,
   loading,
+  hasError,
   locale,
 }: Props) => (
   <View style={styles.container}>
     <View style={styles.languageInfo}>
-      {!loading &&
+      {!hasError &&
+        !loading &&
         repository.primaryLanguage !== null && (
           <Icon
             name="fiber-manual-record"
@@ -169,20 +172,23 @@ export const RepositoryProfile = ({
       />
 
       <Text style={styles.title}>
-        {repository.name || translate('repository.main.notFoundRepo', locale)}
+        {repository.primaryLanguage ||
+          translate('repository.main.notFoundRepo', locale)}
       </Text>
 
-      <Text
-        numberOfLines={repository.isFork ? 1 : 3}
-        style={[
-          styles.subtitle,
-          repository.isFork
-            ? styles.subtitleDescriptionWithFork
-            : styles.subtitleDescriptionNoFork,
-        ]}
-      >
-        {emojifyText(repository.description) || ' '}
-      </Text>
+      {!hasError && (
+        <Text
+          numberOfLines={repository.isFork ? 1 : 3}
+          style={[
+            styles.subtitle,
+            repository.isFork
+              ? styles.subtitleDescriptionWithFork
+              : styles.subtitleDescriptionNoFork,
+          ]}
+        >
+          {emojifyText(repository.description) || ' '}
+        </Text>
+      )}
 
       {repository.isFork && (
         <Text
@@ -204,7 +210,7 @@ export const RepositoryProfile = ({
                 }
               >
                 {' '}
-                {repository.parent.full_name}
+                {repository.parent.fullName}
               </Text>
             </Text>
           )}
@@ -224,9 +230,11 @@ export const RepositoryProfile = ({
             ? abbreviateNumber(repository.stargazersCount)
             : ' '}
         </Text>
-        <Text style={styles.unitText}>
-          {translate('repository.main.starsTitle', locale)}
-        </Text>
+        {!hasError && (
+          <Text style={styles.unitText}>
+            {translate('repository.main.starsTitle', locale)}
+          </Text>
+        )}
         {repository.isStarred && (
           <View style={styles.badgeView}>
             <Text style={[styles.unitStatus, styles.badge]}>
@@ -248,9 +256,11 @@ export const RepositoryProfile = ({
             ? abbreviateNumber(repository.watchersCount)
             : ' '}
         </Text>
-        <Text style={styles.unitText}>
-          {translate('repository.main.watchers', locale)}
-        </Text>
+        {!hasError && (
+          <Text style={styles.unitText}>
+            {translate('repository.main.watchers', locale)}
+          </Text>
+        )}
         {repository.isSubscribed && (
           <View style={styles.badgeView}>
             <Text style={[styles.unitStatus, styles.badge]}>
@@ -266,9 +276,11 @@ export const RepositoryProfile = ({
             ? abbreviateNumber(repository.forkCount)
             : ' '}
         </Text>
-        <Text style={styles.unitText}>
-          {translate('repository.main.forksTitle', locale)}
-        </Text>
+        {!hasError && (
+          <Text style={styles.unitText}>
+            {translate('repository.main.forksTitle', locale)}
+          </Text>
+        )}
       </View>
     </View>
   </View>

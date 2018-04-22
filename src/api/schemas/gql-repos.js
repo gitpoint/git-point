@@ -20,12 +20,12 @@ export const gqlRepoSchema = new schema.Entity(
   {},
   {
     idAttribute: ({ data: { repository } }) => {
-      return repository.nameWithOwner.toLowerCase();
+      return repository.fullName.toLowerCase();
     },
     processStrategy: ({ data: { repository } }) => {
       return {
         name: repository.name,
-        fullName: repository.nameWithOwner,
+        fullName: repository.fullName,
         isFork: repository.isFork,
         forkedFrom: repository.parent ? repository.parent.nameWithOwner : null,
         forkCount: repository.forkCount,
@@ -39,10 +39,8 @@ export const gqlRepoSchema = new schema.Entity(
         html_url: repository.url,
         parent: repository.parent
           ? {
-              full_name: repository.parent.nameWithOwner,
-              url: `https://api.github.com/repos/${
-                repository.parent.nameWithOwner
-              }`,
+              fullName: repository.parent.fullName,
+              url: `https://api.github.com/repos/${repository.parent.fullName}`,
             }
           : null,
         primaryLanguage: repository.primaryLanguage,
@@ -58,20 +56,20 @@ export const gqlRepoSchema = new schema.Entity(
         hasIssuesEnabled: repository.hasIssuesEnabled,
         openIssuesPreview: formatIssues(
           repository.openIssues,
-          repository.nameWithOwner
+          repository.fullName
         ),
         openPullRequestsPreview: formatIssues(
           repository.openPullRequests,
-          repository.nameWithOwner,
+          repository.fullName,
           true
         ),
-        issues: formatIssues(repository.issues, repository.nameWithOwner),
+        issues: formatIssues(repository.issues, repository.fullName),
         pullRequests: formatIssues(
           repository.pullRequests,
-          repository.nameWithOwner
+          repository.fullName
         ),
         contents_url: `https://api.github.com/repos/${
-          repository.nameWithOwner
+          repository.fullName
         }/contents`,
       };
     },

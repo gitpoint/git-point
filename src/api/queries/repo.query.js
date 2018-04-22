@@ -36,10 +36,10 @@ query ($owner: String!, $name: String!) {
   repository(owner: $owner, name: $name) {
     url
     name
-    nameWithOwner
+    fullName: nameWithOwner
     isFork
     parent {
-      nameWithOwner
+      fullName: nameWithOwner
       url
     }
     defaultBranchRef {
