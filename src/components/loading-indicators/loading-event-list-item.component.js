@@ -6,7 +6,7 @@ import { infiniteAnimation } from 'utils';
 
 const Container = styled.View`
   padding: 10px;
-  border-bottom-width: 1px;
+  border-bottom-width: 1;
   border-bottom-color: #ededed;
   background-color: transparent;
 `;
@@ -17,24 +17,24 @@ const Wrapper = styled.View`
 `;
 
 const Avatar = styled(Animated.View)`
-  width: 34px;
-  height: 34px;
+  width: 34;
+  height: 34;
   background-color: ${colors.greyDark};
-  border-radius: 17px;
-  margin-right: 10px;
+  border-radius: 17;
+  margin-right: 10;
 `;
 
 const Icon = styled(Animated.View)`
-  width: 16px;
-  height: 16px;
+  width: 16;
+  height: 16;
   background-color: ${colors.greyDark};
-  margin-left: 10px;
-  margin-right: 5px;
-  border-radius: 8px;
+  margin-left: 10;
+  margin-right: 5;
+  border-radius: 8;
 `;
 
 const TextBar = styled(Animated.View)`
-  height: 7px;
+  height: 7;
   flex: 1;
   background-color: ${colors.greyDark};
 `;
