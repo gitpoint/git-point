@@ -26,14 +26,15 @@ export const t = (message, locale, interpolation = null) => {
     key += 1;
     ongoing += translation.substring(lastIndex, match.index);
     const value = interpolation[match[2]];
+    const type = typeof value;
 
-    if (typeof value === 'undefined') {
+    if (type === 'undefined') {
       ongoing += '[unknown placeholder]';
-    } else if (typeof value === 'object') {
+    } else if (type === 'object') {
       retval.push(ongoing);
       retval.push(React.cloneElement(value, { key }));
       ongoing = '';
-    } else if (typeof value === 'string' || typeof value === 'number') {
+    } else if (type === 'string' || type === 'number') {
       ongoing += value;
     }
     lastIndex = match.index + match[0].length;
