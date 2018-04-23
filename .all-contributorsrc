@@ -780,6 +780,15 @@
         "code",
         "test"
       ]
-    }
+    },
+    {
+      "login": "meetmangukiya",
+      "name": "Meet Mangukiya",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/7620533",
+      "profile": "https://github.com/meetmangukiya",
+      "contributions": [
+        "build",
+      ],
+    },
   ]
 }
