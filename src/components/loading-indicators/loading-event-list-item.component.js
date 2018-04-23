@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Animated } from 'react-native';
 import styled from 'styled-components';
 import { colors } from 'config';
-import { infiniteAnimation } from 'utils';
+import { FadeAnimationProps, withFadeAnimation } from 'utils';
 
 const Container = styled.View`
   padding: 10px;
@@ -39,40 +39,16 @@ const TextBar = styled(Animated.View)`
   background-color: ${colors.greyDark};
 `;
 
-export class LoadingEventListItem extends Component {
-  constructor() {
-    super();
-    this.fadeFrom = 0.3;
-    this.fadeTo = 0.6;
-    this.state = {
-      fadeAnimValue: new Animated.Value(this.fadeTo),
-    };
-  }
+const LoadingEventListItemComponent = ({ opacity }: FadeAnimationProps) => (
+  <Container>
+    <Wrapper>
+      <Avatar style={{ opacity }} />
+      <TextBar style={{ opacity }} />
+      <Icon style={{ opacity }} />
+    </Wrapper>
+  </Container>
+);
 
-  componentDidMount() {
-    this.runAnimation();
-  }
-
-  runAnimation() {
-    infiniteAnimation(
-      this.state.fadeAnimValue,
-      this.fadeFrom,
-      this.fadeTo,
-      () => {
-        this.runAnimation();
-      }
-    );
-  }
-
-  render() {
-    return (
-      <Container>
-        <Wrapper>
-          <Avatar style={{ opacity: this.state.fadeAnimValue }} />
-          <TextBar style={{ opacity: this.state.fadeAnimValue }} />
-          <Icon style={{ opacity: this.state.fadeAnimValue }} />
-        </Wrapper>
-      </Container>
-    );
-  }
-}
+export const LoadingEventListItem = withFadeAnimation(
+  LoadingEventListItemComponent
+);

@@ -1,6 +1,6 @@
 export * from './action-helper';
 export * from './api-helpers';
-export * from './loading-animation';
+export * from './animation-helpers';
 export * from './text-helper';
 export * from './method-helpers';
 export * from './color-helpers';
