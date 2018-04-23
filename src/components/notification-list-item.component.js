@@ -87,7 +87,8 @@ export class NotificationListItem extends Component {
   getTitleComponentProps = () => {
     const { notification, navigationAction } = this.props;
 
-    return notification.subject.type === SubjectType.commit
+    return notification.subject.type === SubjectType.commit ||
+      notification.subject.type === SubjectType.release
       ? {}
       : {
           onPress: () => navigationAction(notification),
