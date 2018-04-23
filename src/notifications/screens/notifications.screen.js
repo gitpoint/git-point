@@ -346,7 +346,6 @@ class Notifications extends Component {
     const { markAsRead, navigation } = this.props;
 
     markAsRead(notification.id);
-
     navigation.navigate('Issue', {
       issueURL: notification.subject.url.replace(/pulls\/(\d+)$/, 'issues/$1'),
       isPR: notification.subject.type === 'PullRequest',
