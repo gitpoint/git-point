@@ -103,14 +103,84 @@ export const createDispatchProxy = (Provider: Client) => {
                 });
               }
 
-              // 9. Parse the JSON from the answer
+              // 9. Did we just delete something?
+              if (callType.type === 'delete') {
+                if (action.pagination) {
+                  // Was it a pagination item? If so, remove its id
+                  // from its related pagination
+                  dispatch({
+                    pagination: {
+                      name: action.pagination.actionName,
+                      id: paginationKey,
+                      entityId: callType.entityId,
+                    },
+                    id: paginationKey,
+                    type: action.pagination.REMOVE,
+                  });
+                  // bail since we don't need to parse the JSON
+                  dispatch({
+                    id: paginationKey,
+                    type: action.SUCCESS,
+                  });
+                } else if (callType.updateEntity) {
+                  const { type, id, updater } = callType.updateEntity;
+
+                  const entity = getState().entities[type][id];
+
+                  dispatch({
+                    type: action.SUCCESS,
+                    entities: {
+                      [type]: {
+                        [id]: updater(entity),
+                      },
+                    },
+                  });
+                }
+
+                return Promise.resolve();
+              }
+
+              // 9-1. Or did we change a status? no JSON
+              if (callType.type === 'put') {
+                if (callType.updateEntity) {
+                  const { type, id, updater } = callType.updateEntity;
+
+                  const entity = getState().entities[type][id];
+
+                  dispatch({
+                    type: action.SUCCESS,
+                    entities: {
+                      [type]: {
+                        [id]: updater(entity),
+                      },
+                    },
+                  });
+                } else {
+                  dispatch({
+                    id: paginationKey,
+                    type: action.SUCCESS,
+                  });
+                }
+
+                return Promise.resolve();
+              }
+
+              // 10. Parse the JSON from the answer
               return response.json().then(json => {
+                if (callType.type === 'query') {
+                  if (json.errors && json.errors.length) {
+                    return Promise.reject(json.errors[0].message);
+                  }
+
+                  callType.normalizrKey = 'data';
+                }
+
                 const normalizedJson = normalize(
                   callType.normalizrKey ? json[callType.normalizrKey] : json,
                   callType.schema
                 );
 
-                // 10. Did we get a next page of results for a pagination?
+                // 11. Did we get a next page of results for a pagination?
                 // If so, prepare the structure that will be merged in the existing
                 // pagination state.
                 if (callType.type === 'list') {
@@ -124,7 +194,7 @@ export const createDispatchProxy = (Provider: Client) => {
                   delete normalizedJson.result;
                 }
 
-                // 11. All done, dispatch success.
+                // 12. All done, dispatch success.
                 dispatch({
                   ...normalizedJson,
                   id: paginationKey,

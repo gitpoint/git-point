@@ -9,7 +9,6 @@ import { colors, fonts, normalize } from 'config';
 import { getContents } from '../repository.action';
 
 const mapStateToProps = state => ({
-  repository: state.repository.repository,
   contents: state.repository.contents,
   isPendingContents: state.repository.isPendingContents,
 });
@@ -49,7 +48,6 @@ const styles = StyleSheet.create({
 class RepositoryCodeList extends Component {
   props: {
     getContents: Function,
-    repository: Object,
     contents: Array,
     isPendingContents: boolean,
     navigation: Object,
@@ -58,7 +56,7 @@ class RepositoryCodeList extends Component {
   componentDidMount() {
     const navigationParams = this.props.navigation.state.params;
     const url = navigationParams.topLevel
-      ? this.props.repository.contents_url.replace('{+path}', '')
+      ? navigationParams.contentsUrl
       : navigationParams.content.url;
     const level = navigationParams.topLevel
       ? 'top'
