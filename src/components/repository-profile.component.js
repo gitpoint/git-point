@@ -229,11 +229,7 @@ export const RepositoryProfile = ({
             ? abbreviateNumber(repository.stargazers.totalCount)
             : ' '}
         </Text>
-        {!hasError && (
-          <Text style={styles.unitText}>
-            {t('Stars', locale)}
-          </Text>
-        )}
+        {!hasError && <Text style={styles.unitText}>{t('Stars', locale)}</Text>}
         {repository.viewerHasStarred && (
           <View style={styles.badgeView}>
             <Text style={[styles.unitStatus, styles.badge]}>
@@ -257,9 +253,7 @@ export const RepositoryProfile = ({
             : ' '}
         </Text>
         {!hasError && (
-          <Text style={styles.unitText}>
-            {t('Watchers', locale)}
-          </Text>
+          <Text style={styles.unitText}>{t('Watchers', locale)}</Text>
         )}
         {repository.viewerSubscription === 'SUBSCRIBED' && (
           <View style={styles.badgeView}>
@@ -276,9 +270,7 @@ export const RepositoryProfile = ({
             ? abbreviateNumber(repository.forkCount)
             : ' '}
         </Text>
-        {!hasError && (
-          <Text style={styles.unitText}>{t('Forks', locale)}</Text>
-        )}
+        {!hasError && <Text style={styles.unitText}>{t('Forks', locale)}</Text>}
       </View>
     </View>
   </View>

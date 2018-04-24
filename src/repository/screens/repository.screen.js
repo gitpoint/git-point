@@ -24,12 +24,7 @@ import {
   LoadingMembersList,
   TopicsList,
 } from 'components';
-import {
-  t,
-  openURLInView,
-  toOldIssueFormat,
-  toOldUserFormat,
-} from 'utils';
+import { t, openURLInView, toOldIssueFormat, toOldUserFormat } from 'utils';
 import { colors, fonts } from 'config';
 
 const mapStateToProps = (state, ownProps) => {
@@ -264,9 +259,7 @@ class Repository extends Component {
 
     const repositoryActions = repository
       ? [
-          repository.viewerHasStarred
-            ? t('Unstar', locale)
-            : t('Star', locale),
+          repository.viewerHasStarred ? t('Unstar', locale) : t('Star', locale),
           repository.viewerSubscription === 'SUBSCRIBED'
             ? t('Unwatch', locale)
             : t('Watch', locale),
@@ -342,9 +335,7 @@ class Repository extends Component {
 
           {!hasError &&
             !isPendingRepository && (
-              <SectionList
-                title={t('OWNER', locale)}
-              >
+              <SectionList title={t('OWNER', locale)}>
                 <UserListItem
                   user={toOldUserFormat(repository.owner)}
                   navigation={navigation}
@@ -354,9 +345,7 @@ class Repository extends Component {
 
           {!hasError &&
             (isPendingRepository || isPendingContributors) && (
-              <LoadingMembersList
-                title={t('CONTRIBUTORS', locale)}
-              />
+              <LoadingMembersList title={t('CONTRIBUTORS', locale)} />
             )}
 
           {!hasError &&
@@ -375,9 +364,7 @@ class Repository extends Component {
             )}
 
           {!hasError && (
-            <SectionList
-              title={t('SOURCE', locale)}
-            >
+            <SectionList title={t('SOURCE', locale)}>
               {showReadMe && (
                 <ListItem
                   title={t('README', locale)}
@@ -417,7 +404,6 @@ class Repository extends Component {
               />
             </SectionList>
           )}
-
 
           {!hasError &&
             !isPendingRepository &&
