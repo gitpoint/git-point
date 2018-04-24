@@ -6,24 +6,27 @@ import { RepositoryProfile } from 'components';
 
 const defaultProps = {
   repository: {
-    fork: true,
-    parent: true,
-    language: 'en',
+    isFork: true,
+    parent: {
+      nameWithOwner: 'foo/bar',
+    },
+    primaryLanguage: {
+      name: 'JavaScript',
+      color: '#FFCC00',
+    },
+    viewerHasStarred: false,
+    viewerSubscription: 'UNSUBSCRIBED',
   },
-  starred: false,
   navigation: {
     navigate() {},
   },
   loading: false,
-  subscribed: false,
   locale: 'en',
 };
 
 describe('<RepositoryProfile />', () => {
   it('should render the Icon component if loading is false and repository language is not null', () => {
-    const wrapper = shallow(
-      <RepositoryProfile {...defaultProps} language={false} />
-    );
+    const wrapper = shallow(<RepositoryProfile {...defaultProps} />);
     const icon = wrapper.find({ name: 'fiber-manual-record' });
 
     expect(icon.length).toBeTruthy();
@@ -44,7 +47,7 @@ describe('<RepositoryProfile />', () => {
         {...defaultProps}
         repository={{
           ...defaultProps.repository,
-          language: null,
+          primaryLanguage: null,
         }}
       />
     );
@@ -53,7 +56,7 @@ describe('<RepositoryProfile />', () => {
     expect(icon.length).toBeFalsy();
   });
 
-  it('should render repository fork text container if repository.fork is true', () => {
+  it('should render repository fork text container if repository.isFork is true', () => {
     const wrapper = shallow(<RepositoryProfile {...defaultProps} />);
     const repositoryContainer = wrapper.find({
       nativeId: 'repository-fork-container',
@@ -77,7 +80,7 @@ describe('<RepositoryProfile />', () => {
       .simulate('press');
 
     expect(navigateMock).toHaveBeenCalledWith('Repository', {
-      repository: true,
+      repoId: 'foo/bar',
     });
   });
 });

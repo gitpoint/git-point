@@ -6,6 +6,7 @@ import { version } from 'package.json';
 import { Platform } from 'react-native';
 
 import Schemas from './schemas';
+import { repoQuery } from './queries';
 
 type SpecialParameters = {
   forceRefresh?: boolean,
@@ -19,6 +20,12 @@ type FetchParameters = {
   body?: Object,
 };
 
+type UpdateEntity = {
+  type: string,
+  id: string,
+  updater: Function,
+};
+
 export type CallParameters = {
   endpoint: string,
   schema: Schema,
@@ -27,6 +34,7 @@ export type CallParameters = {
   normalizrKey?: string,
   paginationArgs?: Array<string | number | boolean>,
   entityId?: String | number,
+  updateEntity?: UpdateEntity,
 };
 
 export type CallType = CallParameters & {
@@ -98,12 +106,68 @@ export class Client {
     return fetch(finalUrl, parameters);
   };
 
+  put = ({ fetchParameters, ...config }: CallParameters): CallType => ({
+    type: 'put',
+    params: {},
+    ...config,
+    fetchParameters: merge(
+      {
+        method: this.Method.PUT,
+        headers: { Accept: this.Accept.JSON, 'Content-Length': 0 },
+      },
+      fetchParameters
+    ),
+  });
+
   get = ({ fetchParameters, ...config }: CallParameters): CallType => ({
     type: 'get',
     params: {},
     ...config,
     fetchParameters: merge(
       { method: this.Method.GET, headers: { Accept: this.Accept.JSON } },
+      fetchParameters
+    ),
+  });
+
+  delete = ({ fetchParameters, ...config }: CallParameters): CallType => ({
+    type: 'delete',
+    params: {},
+    ...config,
+    fetchParameters: merge(
+      { method: this.Method.DELETE, headers: { Accept: this.Accept.JSON } },
+      fetchParameters
+    ),
+  });
+
+  create = ({ fetchParameters, ...config }: CallParameters): CallType => ({
+    type: 'create',
+    params: {},
+    ...config,
+    fetchParameters: merge(
+      { method: this.Method.POST, headers: { Accept: this.Accept.JSON } },
+      fetchParameters
+    ),
+  });
+
+  query = ({
+    fetchParameters,
+    query,
+    variables,
+    ...config
+  }: CallParameters): CallType => ({
+    type: 'query',
+    endpoint: 'graphql',
+    params: {},
+    ...config,
+    fetchParameters: merge(
+      {
+        method: this.Method.POST,
+        headers: { Accept: this.Accept.JSON },
+        body: {
+          query,
+          variables,
+        },
+      },
       fetchParameters
     ),
   });
@@ -173,6 +237,19 @@ export class Client {
       .slice(1, -1);
   };
 
+  graphql = {
+    getRepo: (repoId: string, params: SpecialParameters = {}) => {
+      const [owner, name] = repoId.split('/');
+
+      return this.query({
+        params,
+        query: repoQuery,
+        variables: { owner, name },
+        schema: Schemas.GQL_REPO,
+      });
+    },
+  };
+
   /**
    * The activity endpoint
    */
@@ -200,6 +277,80 @@ export class Client {
         schema: Schemas.REPO_ARRAY,
         paginationArgs: [userId],
       }),
+
+    starRepo: (repoId: string, params: SpecialParameters = {}) =>
+      this.put({
+        endpoint: `user/starred/${repoId}`,
+        params,
+        schema: Schemas.GQL_REPO,
+        updateEntity: {
+          type: 'gqlRepos',
+          id: repoId,
+          updater: gqlRepo => ({
+            viewerHasStarred: true,
+            stargazers: {
+              ...gqlRepo.stargazers,
+              totalCount: gqlRepo.stargazers.totalCount + 1,
+            },
+          }),
+        },
+      }),
+    unstarRepo: (repoId: string, params: SpecialParameters = {}) =>
+      this.delete({
+        endpoint: `user/starred/${repoId}`,
+        params,
+        schema: Schemas.GQL_REPO,
+        updateEntity: {
+          type: 'gqlRepos',
+          id: repoId,
+          updater: gqlRepo => ({
+            viewerHasStarred: false,
+            stargazers: {
+              ...gqlRepo.stargazers,
+              totalCount: gqlRepo.stargazers.totalCount - 1,
+            },
+          }),
+        },
+      }),
+    watchRepo: (repoId: string, params: SpecialParameters = {}) =>
+      this.put({
+        endpoint: `repos/${repoId}/subscription`,
+        params,
+        fetchParameters: {
+          body: {
+            subscribed: true,
+          },
+        },
+        schema: Schemas.GQL_REPO,
+        updateEntity: {
+          type: 'gqlRepos',
+          id: repoId,
+          updater: gqlRepo => ({
+            viewerSubscription: 'SUBSCRIBED',
+            watchers: {
+              ...gqlRepo.watchers,
+              totalCount: gqlRepo.watchers.totalCount + 1,
+            },
+          }),
+        },
+      }),
+    unwatchRepo: (repoId: string, params: SpecialParameters = {}) =>
+      this.delete({
+        endpoint: `repos/${repoId}/subscription`,
+        params,
+        schema: Schemas.GQL_REPO,
+        updateEntity: {
+          type: 'gqlRepos',
+          id: repoId,
+          updater: gqlRepo => ({
+            viewerSubscription: 'UNSUBSCRIBED',
+            watchers: {
+              ...gqlRepo.watchers,
+              totalCount: gqlRepo.watchers.totalCount - 1,
+            },
+          }),
+        },
+      }),
   };
   search = {
     repos: (q: string, params: SpecialParameters = {}) =>
@@ -218,6 +369,21 @@ export class Client {
         schema: Schemas.USER_ARRAY,
         paginationArgs: [q],
         normalizrKey: 'items',
+      }),
+  };
+  repos = {
+    getContributors: (repoId: string, params: SpecialParameters = {}) =>
+      this.list({
+        endpoint: `repos/${repoId}/contributors`,
+        params,
+        schema: Schemas.USER_ARRAY,
+        paginationArgs: [repoId],
+      }),
+    fork: (repoId: string, params: SpecialParameters = {}) =>
+      this.create({
+        endpoint: `repos/${repoId}/forks`,
+        params,
+        schema: Schemas.REPO,
       }),
   };
   orgs = {
