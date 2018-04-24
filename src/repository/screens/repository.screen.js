@@ -2,12 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import {
-  StyleSheet,
-  RefreshControl,
-  Share,
-  ActivityIndicator,
-} from 'react-native';
+import { RefreshControl, Share, ActivityIndicator } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
 import { RestClient } from 'api';
@@ -79,16 +74,16 @@ const LoadingMembersContainer = styled.View`
   padding: 5px;
 `;
 
-const styles = StyleSheet.create({
-  listTitle: {
+const SectionListItem = styled(ListItem).attrs({
+  titleStyle: {
     color: colors.black,
     ...fonts.fontPrimary,
   },
-  listContainerStyle: {
+  containerStyle: {
     borderBottomColor: colors.greyLight,
     borderBottomWidth: 1,
   },
-});
+})``;
 
 class Repository extends Component {
   props: {
@@ -388,15 +383,13 @@ class Repository extends Component {
               title={translate('repository.main.sourceTitle', locale)}
             >
               {showReadMe && (
-                <ListItem
+                <SectionListItem
                   title={translate('repository.main.readMe', locale)}
                   leftIcon={{
                     name: 'book',
                     color: colors.grey,
                     type: 'octicon',
                   }}
-                  titleStyle={styles.listTitle}
-                  containerStyle={styles.listContainerStyle}
                   onPress={() =>
                     navigation.navigate('ReadMe', {
                       repository,
@@ -405,10 +398,8 @@ class Repository extends Component {
                   underlayColor={colors.greyLight}
                 />
               )}
-              <ListItem
+              <SectionListItem
                 title={translate('repository.main.viewSource', locale)}
-                titleStyle={styles.listTitle}
-                containerStyle={styles.listContainerStyle}
                 leftIcon={{
                   name: 'code',
                   color: colors.grey,
