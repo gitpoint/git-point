@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { colors, fonts, normalize } from 'config';
-import { translate } from 'utils';
+import { t } from 'utils';
 import styled from 'styled-components';
 
 const ViewWrapper = styled.View`
@@ -28,7 +28,10 @@ export class ErrorScreen extends Component {
     return (
       <ViewWrapper>
         <TextStyled>
-          {translate('auth.networkError', this.props.locale)}
+          {t(
+            'Oops! it seems that you are not connected to the internet!',
+            this.props.locale
+          )}
         </TextStyled>
       </ViewWrapper>
     );

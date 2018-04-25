@@ -6,7 +6,7 @@ import { Icon } from 'react-native-elements';
 import styled from 'styled-components';
 
 import { MentionArea } from 'components';
-import { translate } from 'utils';
+import { t } from 'utils';
 import { colors, fonts, normalize } from 'config';
 
 const Container = styled.View`
@@ -100,16 +100,18 @@ export class CommentInput extends Component {
               underlineColorAndroid="transparent"
               placeholder={
                 issueLocked && userHasPushPermission
-                  ? translate('issue.main.lockedCommentInput', locale)
-                  : translate('issue.main.commentInput', locale)
+                  ? t('Locked, but you can still comment...', locale)
+                  : t('Add a comment...', locale)
               }
               multiline
               blurOnSubmit={false}
               onChangeText={text => this.setState({ text })}
               onContentSizeChange={event =>
-                this.setState({ height: event.nativeEvent.contentSize.height })}
+                this.setState({ height: event.nativeEvent.contentSize.height })
+              }
               onSubmitEditing={event =>
-                this.handleSubmitEditing(event.nativeEvent.text)}
+                this.handleSubmitEditing(event.nativeEvent.text)
+              }
               placeholderTextColor={colors.grey}
               style={{
                 height: Math.max(inputMinHeight, this.state.height),
@@ -120,7 +122,7 @@ export class CommentInput extends Component {
 
           {!userCanPost && (
             <TextInputText style={{ color: colors.grey }}>
-              {translate('issue.main.lockedIssue', locale)}
+              {t('Issue is locked', locale)}
             </TextInputText>
           )}
 

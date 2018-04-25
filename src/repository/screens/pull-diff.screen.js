@@ -5,7 +5,7 @@ import { Card } from 'react-native-elements';
 import Parse from 'parse-diff';
 
 import { ViewContainer, DiffBlocks, CodeLine } from 'components';
-import { translate } from 'utils';
+import { t } from 'utils';
 import { colors, fonts, normalize } from 'config';
 
 const styles = StyleSheet.create({
@@ -95,7 +95,7 @@ class PullDiff extends Component {
     return (
       <View style={styles.header}>
         <Text style={[styles.headerItem, styles.headerText]}>
-          {translate('repository.pullDiff.numFilesChanged', locale, {
+          {t('{numFilesChanged} files', locale, {
             numFilesChanged: filesChanged.length,
           })}
         </Text>
@@ -162,7 +162,7 @@ class PullDiff extends Component {
           {item.new && (
             <Text style={styles.fileTitle}>
               <Text style={styles.newIndicator}>
-                {translate('repository.pullDiff.new', locale)}
+                {t('NEW', locale)}
                 {'\n'}
               </Text>
               <Text style={[styles.fileTitle, styles.codeStyle]}>
@@ -174,7 +174,7 @@ class PullDiff extends Component {
           {item.deleted && (
             <Text style={styles.fileTitle}>
               <Text style={styles.deletedIndicator}>
-                {translate('repository.pullDiff.deleted', locale)}
+                {t('DELETED', locale)}
                 {'\n'}
               </Text>
               <Text style={[styles.fileTitle, styles.codeStyle]}>
@@ -200,7 +200,7 @@ class PullDiff extends Component {
           !item.deleted &&
           item.from !== item.to && (
             <Text style={styles.noChangesMessage}>
-              {translate('repository.pullDiff.fileRenamed', locale)}
+              {t('File renamed without any changes', locale)}
             </Text>
           )}
       </Card>

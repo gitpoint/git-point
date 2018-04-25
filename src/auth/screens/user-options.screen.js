@@ -10,7 +10,7 @@ import CookieManager from 'react-native-cookies';
 
 import { ViewContainer, SectionList } from 'components';
 import { colors, fonts, normalize } from 'config';
-import { resetNavigationTo, openURLInView, translate } from 'utils';
+import { resetNavigationTo, openURLInView, t } from 'utils';
 import { version } from 'package.json';
 import codePush from 'react-native-code-push';
 import { signOut } from 'auth';
@@ -57,11 +57,11 @@ const StyledListItem = styled(ListItem).attrs({
 })``;
 
 const updateText = locale => ({
-  check: translate('auth.profile.codePushCheck', locale),
-  checking: translate('auth.profile.codePushChecking', locale),
-  updated: translate('auth.profile.codePushUpdated', locale),
-  available: translate('auth.profile.codePushAvailable', locale),
-  notApplicable: translate('auth.profile.codePushNotApplicable', locale),
+  check: t('Check for update', locale),
+  checking: t('Checking for update...', locale),
+  updated: t('App is up to date', locale),
+  available: t('Update is available!', locale),
+  notApplicable: t('Not applicable in debug mode', locale),
 });
 
 class UserOptions extends Component {
@@ -88,7 +88,7 @@ class UserOptions extends Component {
 
       const navigationParams = NavigationActions.setParams({
         params: {
-          title: translate('auth.userOptions.title', nextState.locale),
+          title: t('Options', nextState.locale),
         },
         key: nextState.navigation.state.key,
       });
@@ -137,33 +137,36 @@ class UserOptions extends Component {
         <ScrollView>
           <SectionList>
             <StyledListItem
-              title={translate('auth.userOptions.language', locale)}
+              title={t('Language', locale)}
               onPress={() =>
                 navigation.navigate('LanguageSettings', {
-                  title: translate('auth.userOptions.language', locale),
+                  title: t('Language', locale),
                   locale,
-                })}
+                })
+              }
             />
             <StyledListItem
-              title={translate('common.openInBrowser', locale)}
+              title={t('Open in Browser', locale)}
               onPress={() => openURLInView(this.props.user.html_url)}
             />
 
             <StyledListItem
-              title={translate('auth.userOptions.privacyPolicy', locale)}
+              title={t('Privacy Policy', locale)}
               onPress={() =>
                 navigation.navigate('PrivacyPolicy', {
-                  title: translate('auth.privacyPolicy.title', locale),
+                  title: t('Privacy Policy', locale),
                   locale,
-                })}
+                })
+              }
             />
             <StyledListItem
-              title={translate('auth.userOptions.donate', locale)}
+              title={t('Make a donation', locale)}
               onPress={() =>
-                openURLInView('https://opencollective.com/git-point')}
+                openURLInView('https://opencollective.com/git-point')
+              }
             />
             <StyledListItem
-              title={translate('auth.userOptions.signOut', locale)}
+              title={t('Sign Out', locale)}
               hideChevron
               onPress={() => this.signOutUser()}
               signOut

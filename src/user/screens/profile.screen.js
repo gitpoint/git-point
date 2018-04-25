@@ -20,7 +20,7 @@ import {
   UserListItem,
   EntityInfo,
 } from 'components';
-import { emojifyText, translate, openURLInView } from 'utils';
+import { emojifyText, t, openURLInView } from 'utils';
 import { colors, fonts } from 'config';
 import {
   getUserInfo,
@@ -159,10 +159,8 @@ class Profile extends Component {
       isPendingCheckFollowing ||
       isPendingCheckFollower;
     const userActions = [
-      isFollowing
-        ? translate('user.profile.unfollow', locale)
-        : translate('user.profile.follow', locale),
-      translate('common.openInBrowser', locale),
+      isFollowing ? t('Unfollow', locale) : t('Follow', locale),
+      t('Open in Browser', locale),
     ];
 
     return (
@@ -209,7 +207,7 @@ class Profile extends Component {
               <View>
                 {!!user.bio &&
                   user.bio !== '' && (
-                    <SectionList title={translate('common.bio', locale)}>
+                    <SectionList title={t('BIO', locale)}>
                       <BioListItem
                         titleNumberOfLines={0}
                         title={emojifyText(user.bio)}
@@ -226,9 +224,9 @@ class Profile extends Component {
                 />
 
                 <SectionList
-                  title={translate('common.orgs', locale)}
+                  title={t('ORGANIZATIONS', locale)}
                   noItems={orgs.length === 0}
-                  noItemsMessage={translate('common.noOrgsMessage', locale)}
+                  noItemsMessage={t('No organizations', locale)}
                 >
                   {orgs.map(item => (
                     <UserListItem
@@ -246,8 +244,8 @@ class Profile extends Component {
           ref={o => {
             this.ActionSheet = o;
           }}
-          title={translate('user.profile.userActions', locale)}
-          options={[...userActions, translate('common.cancel', locale)]}
+          title={t('User Actions', locale)}
+          options={[...userActions, t('Cancel', locale)]}
           cancelButtonIndex={2}
           onPress={this.handlePress}
         />

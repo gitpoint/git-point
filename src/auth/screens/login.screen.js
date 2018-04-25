@@ -12,7 +12,7 @@ import { ViewContainer, ErrorScreen } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { CLIENT_ID } from 'api';
 import { auth, getUser } from 'auth';
-import { openURLInView, translate, resetNavigationTo } from 'utils';
+import { openURLInView, t, resetNavigationTo } from 'utils';
 import styled from 'styled-components';
 
 let stateRandom = Math.random().toString();
@@ -182,7 +182,7 @@ class Login extends Component {
       modalVisible: false,
       cancelDisabled: false,
       showLoader: true,
-      loaderText: translate('auth.login.connectingToGitHub', this.locale),
+      loaderText: t('Connecting to GitHub...', this.locale),
       asyncStorageChecked: false,
     };
   }
@@ -240,7 +240,7 @@ class Login extends Component {
         this.setState({
           code,
           showLoader: true,
-          loaderText: translate('auth.login.preparingGitPoint', this.locale),
+          loaderText: t('Preparing GitPoint...', this.locale),
         });
 
         stateRandom = Math.random().toString();
@@ -286,37 +286,49 @@ class Login extends Component {
             <SlideWelcome>
               <GitPointLogo />
               <SlideTitle>
-                {translate('auth.login.welcomeTitle', locale)}
+                 {t('Welcome to GitPoint', locale)}
               </SlideTitle>
               <SlideText>
-                {translate('auth.login.welcomeMessage', locale)}
+                {t(
+                  'One of the most feature-rich GitHub clients that is 100% free',
+                  locale
+                )}
               </SlideText>
             </SlideWelcome>
             <SlideNotifications>
               <SlideIcon name="bell" />
               <SlideTitle>
-                {translate('auth.login.notificationsTitle', locale)}
+                {t('Control notifications', locale)}
               </SlideTitle>
               <SlideText>
-                {translate('auth.login.notificationsMessage', locale)}
+                {t(
+                  'View and control all of your unread and participating notifications',
+                  locale
+                )}
               </SlideText>
             </SlideNotifications>
             <SlideReposAndUsers>
               <SlideIcon name="repo" />
               <SlideTitle>
-                {translate('auth.login.reposTitle', locale)}
+                {t('Repositories and Users', locale)}
               </SlideTitle>
               <SlideText>
-                {translate('auth.login.reposMessage', locale)}
+                {t(
+                  'Easily obtain repository, user and organization information',
+                  locale
+                )}
               </SlideText>
             </SlideReposAndUsers>
             <SlideIssuesAndPrs>
               <SlideIcon name="git-pull-request" />
               <SlideTitle>
-                {translate('auth.login.issuesTitle', locale)}
+                {t('Issues and Pull Requests', locale)}
               </SlideTitle>
               <SlideText>
-                {translate('auth.login.issuesMessage', locale)}
+                {t(
+                  'Communicate on conversations, merge pull requests and more',
+                  locale
+                )}
               </SlideText>
             </SlideIssuesAndPrs>
           </Swiper>
@@ -325,7 +337,7 @@ class Login extends Component {
           <SignInContainer>
             <SignInButton
               raised
-              title={translate('auth.login.signInButton', locale)}
+              title={t('SIGN IN', locale)}
               onPress={() => this.setModalVisible(true)}
             />
           </SignInContainer>
@@ -353,13 +365,13 @@ class Login extends Component {
               </BrowserSection>
               <MiniSection>
                 <BaseButton
-                  title={translate('auth.login.cancel', locale)}
+                  title={t('CANCEL', locale)}
                   disabled={this.state.cancelDisabled}
                   onPress={() => this.setModalVisible(!this.state.modalVisible)}
                 />
                 {Platform.OS === 'android' && (
                   <TroublesLink onPress={() => openURLInView(loginUrl)}>
-                    {translate('auth.login.troubles', locale)}
+                    {t("Can't login?", locale)}
                   </TroublesLink>
                 )}
               </MiniSection>

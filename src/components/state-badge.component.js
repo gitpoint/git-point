@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { colors, fonts, normalize } from 'config';
-import { translate } from 'utils';
+import { t } from 'utils';
 
 type Props = {
   issue: Object,
@@ -38,13 +38,13 @@ export const StateBadge = ({
 
   if (isMerged) {
     issueState = 'merged';
-    issueText = translate('issue.main.states.merged', locale);
+    issueText = t('Merged', locale);
   } else if (issue && issue.state === 'open') {
     issueState = 'open';
-    issueText = translate('issue.main.states.open', locale);
+    issueText = t('Open', locale);
   } else if (issue && issue.state === 'closed') {
     issueState = 'closed';
-    issueText = translate('issue.main.states.closed', locale);
+    issueText = t('Closed', locale);
   }
 
   const stateColor = {
