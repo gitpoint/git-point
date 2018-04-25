@@ -30,10 +30,10 @@ query ($owner: String!, $name: String!) {
   repository(owner: $owner, name: $name) {
     url
     name
-     nameWithOwner
+    nameWithOwner
     isFork
     parent {
-       nameWithOwner
+      nameWithOwner
       url
     }
     defaultBranchRef {
@@ -95,6 +95,7 @@ query ($owner: String!, $name: String!) {
     owner {
       login
       avatarUrl
+      type: __typename
     }
     issues: issues(first: 50, orderBy: {field: CREATED_AT, direction: DESC}) {
       totalCount
