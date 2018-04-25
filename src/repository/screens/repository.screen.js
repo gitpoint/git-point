@@ -41,11 +41,7 @@ const mapStateToProps = (state, ownProps) => {
 
   const params = ownProps.navigation.state.params;
 
-  const repoId =
-    params.repoId ||
-    params.repository.url
-      .replace('https://api.github.com/repos/', '')
-      .toLowerCase();
+  const repoId = params.repoId;
 
   const repository = gqlRepos[repoId] || repos[repoId] || params.repository;
 
