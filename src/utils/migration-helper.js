@@ -17,3 +17,6 @@ export const toOldIssueFormat = (issue, repoId, isPr = false) => {
     url: `https://api.github.com/repos/${repoId}/issues/${issue.number}`,
   };
 };
+
+export const getRepoIdFromUrl = url =>
+  url.replace(/https:\/\/api.github.com\/repos\/(.+)\/(.+)\/?/, '$1/$2');

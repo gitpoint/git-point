@@ -7,7 +7,6 @@ import { bindActionCreators } from 'redux';
 import { FlatList, View, ScrollView, Platform } from 'react-native';
 import { ButtonGroup, Card, Icon } from 'react-native-elements';
 
-import { v3 } from 'api';
 import {
   Button,
   ViewContainer,
@@ -264,7 +263,7 @@ class Notifications extends Component {
     const { navigation } = this.props;
 
     navigation.navigate('Repository', {
-      repositoryUrl: `${v3.root}/repos/${fullName}`,
+      repoId: fullName,
     });
   };
 
@@ -361,7 +360,7 @@ class Notifications extends Component {
     const { navigation } = this.props;
 
     navigation.navigate('Repository', {
-      repositoryUrl: `${v3.root}/repos/${fullName}`,
+      repoId: fullName,
     });
   };
 
