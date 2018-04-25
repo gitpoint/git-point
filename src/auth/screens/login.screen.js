@@ -2,17 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {
-  ActivityIndicator,
-  View,
-  StyleSheet,
-  Text,
-  Linking,
-  Image,
-  WebView,
-  Platform,
-  Modal,
-} from 'react-native';
+import { ActivityIndicator, Linking, WebView, Platform } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import Swiper from 'react-native-swiper';
 import queryString from 'query-string';
@@ -23,6 +13,7 @@ import { colors, fonts, normalize } from 'config';
 import { CLIENT_ID } from 'api';
 import { auth, getUser } from 'auth';
 import { openURLInView, translate, resetNavigationTo } from 'utils';
+import styled from 'styled-components';
 
 let stateRandom = Math.random().toString();
 
@@ -42,13 +33,116 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+const Modal = styled.Modal`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ModalWrapper = styled.View`
+  flex: 1;
+  padding-top: 20;
+  background-color: #1f2327;
+`;
+
+const Slide = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  padding-horizontal: 50;
+`;
+
+const SlideWelcome = Slide.extend`
+  background-color: ${colors.lightBlue};
+`;
+
+const SlideNotifications = Slide.extend`
+  background-color: ${colors.lightPurple};
+`;
+
+const SlideReposAndUsers = Slide.extend`
+  background-color: ${colors.orange};
+`;
+const SlideIssuesAndPrs = Slide.extend`
+  background-color: ${colors.darkGreen};
+`;
+
+const SlideTitle = styled.Text`
+  font-size: ${normalize(20)};
+  text-align: center;
+  color: ${colors.white};
+  ${fonts.fontPrimarySemiBold};
+  margin-top: 45;
+  margin-bottom: 15;
+`;
+
+const SlideText = styled.Text`
+  font-size: ${normalize(14)};
+  text-align: center;
+  color: ${colors.white};
+  ${fonts.fontPrimaryLight};
+`;
+
+const SlideIcon = styled(Icon).attrs({
+  size: 85,
+  type: 'octicon',
+  color: colors.white,
+  containerStyle: {
+    paddingLeft: 20,
   },
-  button: {
+})``;
+
+const GitPointLogo = styled.Image.attrs({
+  source: require('../../assets/logo.png'),
+})`
+  width: 90;
+  height: 90;
+`;
+
+const SignInContainer = styled.View`
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 80;
+  justify-content: center;
+  align-items: center;
+`;
+
+const TroublesLink = styled.Text`
+  color: ${colors.greyLight};
+  padding-top: 20;
+  font-style: italic;
+`;
+
+const BrowserLoader = styled.View`
+  flex: 1;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background-color: ${colors.githubDark};
+`;
+
+const BrowserLoadingLabel = styled.Text`
+  font-size: ${normalize(20)};
+  color: ${colors.white};
+  ${fonts.fontPrimarySemiBold};
+  padding-bottom: 20;
+`;
+
+const MiniSection = styled.View`
+  flex: 1.5;
+  justify-content: center;
+  align-items: center;
+`;
+
+const BrowserSection = styled.View`
+  flex: 5;
+`;
+
+const BaseButton = styled(Button).attrs({
+  buttonStyle: {
     backgroundColor: colors.transparent,
     borderRadius: 5,
     borderWidth: 2,
@@ -57,102 +151,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     shadowColor: colors.transparent,
   },
-  buttonContainer: {
-    backgroundColor: colors.transparent,
-  },
-  buttonText: {
+  textStyle: {
     ...fonts.fontPrimaryBold,
     fontSize: normalize(12),
   },
-  browserDismiss: {
-    flex: 1,
+})``;
+
+const SignInButton = BaseButton.extend.attrs({
+  containerViewStyle: {
+    backgroundColor: colors.transparent,
   },
-  browserLoader: {
-    flex: 1,
-    position: 'absolute',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100%',
-    width: '100%',
-    backgroundColor: colors.githubDark,
-  },
-  browserLoadingLabel: {
-    fontSize: normalize(20),
-    color: colors.white,
-    ...fonts.fontPrimarySemiBold,
-    paddingBottom: 20,
-  },
-  browserSection: {
-    flex: 5,
-  },
-  logo: {
-    width: 90,
-    height: 90,
-  },
-  miniSection: {
-    flex: 1.5,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContainer: {
-    flex: 1,
-    paddingTop: 20,
-    backgroundColor: '#1f2327',
-  },
-  contentSection: {
-    flex: 2,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  troublesLink: {
-    color: colors.greyLight,
-    paddingTop: 20,
-    fontStyle: 'italic',
-  },
-  signInContainer: {
-    position: 'absolute',
-    right: 0,
-    left: 0,
-    bottom: 80,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  slide: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 50,
-  },
-  slide1: {
-    backgroundColor: colors.lightBlue,
-  },
-  slide2: {
-    backgroundColor: colors.lightPurple,
-  },
-  slide3: {
-    backgroundColor: colors.orange,
-  },
-  slide4: {
-    backgroundColor: colors.darkGreen,
-  },
-  title: {
-    fontSize: normalize(20),
-    textAlign: 'center',
-    color: colors.white,
-    ...fonts.fontPrimarySemiBold,
-    marginTop: 45,
-    marginBottom: 15,
-  },
-  message: {
-    fontSize: normalize(14),
-    textAlign: 'center',
-    color: colors.white,
-    ...fonts.fontPrimaryLight,
-  },
-  iconMargin: {
-    marginLeft: 20,
-  },
-});
+})``;
 
 class Login extends Component {
   props: {
@@ -255,10 +264,10 @@ class Login extends Component {
 
   renderLoading() {
     return (
-      <View style={styles.browserLoader}>
-        <Text style={styles.browserLoadingLabel}>{this.state.loaderText}</Text>
+      <BrowserLoader>
+        <BrowserLoadingLabel>{this.state.loaderText}</BrowserLoadingLabel>
         <ActivityIndicator color={colors.white} size="large" />
-      </View>
+      </BrowserLoader>
     );
   }
 
@@ -274,88 +283,61 @@ class Login extends Component {
             dotColor="#FFFFFF55"
             activeDotColor={colors.white}
           >
-            <View style={[styles.slide, styles.slide1]}>
-              <Image
-                style={styles.logo}
-                source={require('../../assets/logo.png')}
-              />
-              <Text style={styles.title}>
+            <SlideWelcome>
+              <GitPointLogo />
+              <SlideTitle>
                 {translate('auth.login.welcomeTitle', locale)}
-              </Text>
-              <Text style={styles.message}>
+              </SlideTitle>
+              <SlideText>
                 {translate('auth.login.welcomeMessage', locale)}
-              </Text>
-            </View>
-            <View style={[styles.slide, styles.slide2]}>
-              <Icon
-                style={styles.icon}
-                color={colors.white}
-                size={85}
-                name="bell"
-                type="octicon"
-              />
-              <Text style={styles.title}>
+              </SlideText>
+            </SlideWelcome>
+            <SlideNotifications>
+              <SlideIcon name="bell" />
+              <SlideTitle>
                 {translate('auth.login.notificationsTitle', locale)}
-              </Text>
-              <Text style={styles.message}>
+              </SlideTitle>
+              <SlideText>
                 {translate('auth.login.notificationsMessage', locale)}
-              </Text>
-            </View>
-            <View style={[styles.slide, styles.slide3]}>
-              <Icon
-                containerStyle={styles.iconMargin}
-                style={styles.icon}
-                color={colors.white}
-                size={85}
-                name="repo"
-                type="octicon"
-              />
-              <Text style={styles.title}>
+              </SlideText>
+            </SlideNotifications>
+            <SlideReposAndUsers>
+              <SlideIcon name="repo" />
+              <SlideTitle>
                 {translate('auth.login.reposTitle', locale)}
-              </Text>
-              <Text style={styles.message}>
+              </SlideTitle>
+              <SlideText>
                 {translate('auth.login.reposMessage', locale)}
-              </Text>
-            </View>
-            <View style={[styles.slide, styles.slide4]}>
-              <Icon
-                containerStyle={styles.iconMargin}
-                style={styles.icon}
-                color={colors.white}
-                size={85}
-                name="git-pull-request"
-                type="octicon"
-              />
-              <Text style={styles.title}>
+              </SlideText>
+            </SlideReposAndUsers>
+            <SlideIssuesAndPrs>
+              <SlideIcon name="git-pull-request" />
+              <SlideTitle>
                 {translate('auth.login.issuesTitle', locale)}
-              </Text>
-              <Text style={styles.message}>
+              </SlideTitle>
+              <SlideText>
                 {translate('auth.login.issuesMessage', locale)}
-              </Text>
-            </View>
+              </SlideText>
+            </SlideIssuesAndPrs>
           </Swiper>
         )}
         {this.shouldDisplayIntro() && (
-          <View style={styles.signInContainer}>
-            <Button
+          <SignInContainer>
+            <SignInButton
               raised
               title={translate('auth.login.signInButton', locale)}
-              containerViewStyle={styles.buttonContainer}
-              buttonStyle={styles.button}
-              textStyle={styles.buttonText}
               onPress={() => this.setModalVisible(true)}
             />
-          </View>
+          </SignInContainer>
         )}
         {this.shouldDisplayIntro() && (
           <Modal
             animationType="slide"
             onRequestClose={() => null}
             visible={this.state.modalVisible}
-            style={styles.container}
           >
-            <View style={styles.modalContainer}>
-              <View style={styles.browserSection}>
+            <ModalWrapper>
+              <BrowserSection>
                 <WebView
                   source={{
                     uri: loginUrl,
@@ -368,39 +350,32 @@ class Login extends Component {
                   startInLoadingState
                   javaScriptEnabled
                 />
-              </View>
-              <View style={styles.miniSection}>
-                <Button
+              </BrowserSection>
+              <MiniSection>
+                <BaseButton
                   title={translate('auth.login.cancel', locale)}
-                  buttonStyle={styles.button}
                   disabled={this.state.cancelDisabled}
-                  textStyle={styles.buttonText}
                   onPress={() => this.setModalVisible(!this.state.modalVisible)}
                 />
                 {Platform.OS === 'android' && (
-                  <Text
-                    style={styles.troublesLink}
-                    onPress={() => openURLInView(loginUrl)}
-                  >
+                  <TroublesLink onPress={() => openURLInView(loginUrl)}>
                     {translate('auth.login.troubles', locale)}
-                  </Text>
+                  </TroublesLink>
                 )}
-              </View>
-            </View>
+              </MiniSection>
+            </ModalWrapper>
           </Modal>
         )}
         {isLoggingIn &&
           !hasInitialUser && (
-            <View style={styles.browserLoader}>
-              <Text style={styles.browserLoadingLabel}>
-                {this.state.loaderText}
-              </Text>
+            <BrowserLoader>
+              <BrowserLoadingLabel>{this.state.loaderText}</BrowserLoadingLabel>
               <ActivityIndicator
                 animating={isLoggingIn}
                 color={colors.white}
                 size="large"
               />
-            </View>
+            </BrowserLoader>
           )}
       </ViewContainer>
     );
