@@ -466,7 +466,7 @@ class Repository extends Component {
                     title: t('Pull Requests', locale),
                     type: 'pull',
                     issues: repository.pullRequests.nodes.map(issue =>
-                      toOldIssueFormat(issue)
+                      toOldIssueFormat(issue, repoId, true)
                     ),
                   })
                 }
