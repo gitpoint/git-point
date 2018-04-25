@@ -7,8 +7,8 @@ const minV3 = repo => ({
   nameWithOwner: repo.name,
   // TODO: Remove me once the transition is done
   '----------------': '-------------------',
-  full_name: repo.full_name,
-  url: `https://api.github.com/repos/${repo.full_name}`,
+  full_name: repo.name,
+  url: `https://api.github.com/repos/${repo.name}`,
 });
 
 const fullV3 = repo => {
