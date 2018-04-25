@@ -131,9 +131,7 @@ class Events extends Component {
     const repoId = isFork ? userEvent.payload.forkee : userEvent.repo;
 
     return (
-      <LinkDescription
-        onPress={() => this.navigateToRepository(userEvent, isFork)}
-      >
+      <LinkDescription onPress={() => this.navigateToRepository(repoId)}>
         {this.props.repos[repoId].nameWithOwner}
       </LinkDescription>
     );
@@ -549,9 +547,9 @@ class Events extends Component {
     },
   });
 
-  navigateToRepository = (userEvent, isForkEvent) => {
+  navigateToRepository = repoId => {
     this.props.navigation.navigate('Repository', {
-      repoId: !isForkEvent ? userEvent.repo : userEvent.payload.forkee,
+      repoId,
     });
   };
 
