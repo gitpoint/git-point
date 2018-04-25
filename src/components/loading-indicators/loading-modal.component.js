@@ -1,24 +1,23 @@
 import React from 'react';
-import { StyleSheet, View, Modal, ActivityIndicator } from 'react-native';
+import { Modal, ActivityIndicator } from 'react-native';
+import styled from 'styled-components';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
+const Container = styled.View`
+  flex: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  align-items: center;
+`;
 
 export const LoadingModal = () => (
   <Modal transparent onRequestClose={() => null}>
-    <View style={styles.container}>
+    <Container>
       <ActivityIndicator />
-    </View>
+    </Container>
   </Modal>
 );
