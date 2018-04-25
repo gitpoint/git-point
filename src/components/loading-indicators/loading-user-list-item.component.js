@@ -1,62 +1,44 @@
-import React, { Component } from 'react';
-import { StyleSheet, Animated, View } from 'react-native';
-
+import React from 'react';
+import { Animated } from 'react-native';
+import styled from 'styled-components';
 import { colors } from 'config';
-import { loadingAnimation } from 'utils';
+import { FadeAnimationProps, withFadeAnimation } from 'utils';
 
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: 10,
-    paddingRight: 10,
-    paddingBottom: 10,
-    borderBottomColor: '#ededed',
-    borderBottomWidth: 1,
-    backgroundColor: 'transparent',
-  },
-  wrapper: {
-    flexDirection: 'row',
-    marginLeft: 10,
-    alignItems: 'center',
-  },
-  avatar: {
-    width: 34,
-    height: 34,
-    backgroundColor: colors.greyDark,
-    borderRadius: 17,
-    marginRight: 10,
-  },
-  textBar: {
-    height: 7,
-    width: 80,
-    backgroundColor: colors.greyDark,
-  },
-});
+const Container = styled.View`
+  padding: 10px;
+  border-bottom-width: 1;
+  border-bottom-color: #ededed;
+  background-color: transparent;
+`;
 
-export class LoadingUserListItem extends Component {
-  constructor() {
-    super();
-    this.state = {
-      fadeAnimValue: new Animated.Value(0),
-    };
-  }
+const Wrapper = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
 
-  componentDidMount() {
-    loadingAnimation(this.state.fadeAnimValue).start();
-  }
+const Avatar = styled(Animated.View)`
+  width: 34;
+  height: 34;
+  background-color: ${colors.greyDark};
+  border-radius: 17;
+  margin-right: 10;
+`;
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.wrapper}>
-          <Animated.View
-            style={[styles.avatar, { opacity: this.state.fadeAnimValue }]}
-          />
+const TextBar = styled(Animated.View)`
+  height: 7;
+  width: 80;
+  background-color: ${colors.greyDark};
+`;
 
-          <Animated.View
-            style={[styles.textBar, { opacity: this.state.fadeAnimValue }]}
-          />
-        </View>
-      </View>
-    );
-  }
-}
+const LoadingUserListItemComponent = ({ opacity }: FadeAnimationProps) => (
+  <Container>
+    <Wrapper>
+      <Avatar style={{ opacity }} />
+      <TextBar style={{ opacity }} />
+    </Wrapper>
+  </Container>
+);
+
+export const LoadingUserListItem = withFadeAnimation(
+  LoadingUserListItemComponent
+);
