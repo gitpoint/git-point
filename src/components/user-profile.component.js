@@ -1,7 +1,7 @@
 /* eslint-disable no-prototype-builtins */
 import React, { Component } from 'react';
 import { colors, fonts, normalize } from 'config';
-import { translate } from 'utils';
+import { t } from 'utils';
 import { ImageZoom } from 'components';
 import styled, { css } from 'styled-components';
 
@@ -140,7 +140,7 @@ export class UserProfile extends Component {
                 nativeId="touchable-repository-list"
                 onPress={() =>
                   navigation.navigate('RepositoryList', {
-                    title: translate('user.repositoryList.title', locale),
+                    title: t('Repositories', locale),
                     user,
                     repoCount: Math.min(
                       maxLoadingConstraints.maxPublicRepos,
@@ -154,7 +154,7 @@ export class UserProfile extends Component {
                     ? user.public_repos + (user.total_private_repos || 0)
                     : ' '}
                 </UnitNumber>
-                <UnitText>{translate('common.repositories', locale)}</UnitText>
+                <UnitText>{t('Repositories', locale)}</UnitText>
               </Unit>
 
               {type !== 'org' && (
@@ -162,10 +162,7 @@ export class UserProfile extends Component {
                   nativeId="touchable-star-count-list"
                   onPress={() =>
                     navigation.navigate('StarredRepositoryList', {
-                      title: translate(
-                        'user.starredRepositoryList.title',
-                        locale
-                      ),
+                      title: t('Stars', locale),
                       user,
                       repoCount: Math.min(
                         maxLoadingConstraints.maxStars,
@@ -177,9 +174,7 @@ export class UserProfile extends Component {
                   <UnitNumber>
                     {!isNaN(parseInt(starCount, 10)) ? starCount : ' '}
                   </UnitNumber>
-                  <UnitText>
-                    {translate('user.starredRepositoryList.text', locale)}
-                  </UnitText>
+                  <UnitText>{t('Stars', locale)}</UnitText>
                 </Unit>
               )}
 
@@ -188,7 +183,7 @@ export class UserProfile extends Component {
                   nativeId="touchable-followers-list"
                   onPress={() =>
                     navigation.navigate('FollowerList', {
-                      title: translate('user.followers.title', locale),
+                      title: t('Followers', locale),
                       user,
                       followerCount: Math.min(
                         maxLoadingConstraints.maxFollowers,
@@ -202,14 +197,10 @@ export class UserProfile extends Component {
                       ? user.followers
                       : ' '}
                   </UnitNumber>
-                  <UnitText>
-                    {translate('user.followers.text', locale)}
-                  </UnitText>
+                  <UnitText>{t('Followers', locale)}</UnitText>
                   {isFollowing && (
                     <UnitStatusWrapper>
-                      <UnitStatus>
-                        {translate('user.following.followingYou', locale)}
-                      </UnitStatus>
+                      <UnitStatus>{t('Following', locale)}</UnitStatus>
                     </UnitStatusWrapper>
                   )}
                 </Unit>
@@ -220,7 +211,7 @@ export class UserProfile extends Component {
                   nativeId="touchable-following-list"
                   onPress={() =>
                     navigation.navigate('FollowingList', {
-                      title: translate('user.following.title', locale),
+                      title: t('Following', locale),
                       user,
                       followingCount: Math.min(
                         maxLoadingConstraints.maxFollowing,
@@ -234,14 +225,10 @@ export class UserProfile extends Component {
                       ? user.following
                       : ' '}
                   </UnitNumber>
-                  <UnitText>
-                    {translate('user.following.text', locale)}
-                  </UnitText>
+                  <UnitText>{t('Following', locale)}</UnitText>
                   {isFollower && (
                     <UnitStatusWrapper>
-                      <UnitStatus>
-                        {translate('user.followers.followsYou')}
-                      </UnitStatus>
+                      <UnitStatus>{t('Follows you')}</UnitStatus>
                     </UnitStatusWrapper>
                   )}
                 </Unit>

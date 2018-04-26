@@ -8,7 +8,7 @@ import { GithubHtmlView } from 'components';
 import { Icon } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
 
-import { translate, relativeTimeToNow } from 'utils';
+import { t, relativeTimeToNow } from 'utils';
 import { colors, fonts, normalize } from 'config';
 
 const Container = styled.View`
@@ -113,10 +113,10 @@ class CommentListItemComponent extends Component {
 
   commentActionSheetOptions = comment => {
     const { locale } = this.props;
-    const actions = [translate('issue.comment.editAction', locale)];
+    const actions = [t('Edit', locale)];
 
     if (!comment.repository_url) {
-      actions.push(translate('issue.comment.deleteAction', locale));
+      actions.push(t('Delete', locale));
     }
 
     return actions;
@@ -186,7 +186,7 @@ class CommentListItemComponent extends Component {
             />
           ) : (
             <CommentTextNone>
-              {translate('issue.main.noDescription', locale)}
+              {t('No description provided.', locale)}
             </CommentTextNone>
           )}
 
@@ -207,10 +207,10 @@ class CommentListItemComponent extends Component {
           ref={o => {
             this.ActionSheet = o;
           }}
-          title={translate('issue.comment.commentActions', locale)}
+          title={t('Comment Actions', locale)}
           options={[
             ...this.commentActionSheetOptions(comment),
-            translate('common.cancel', locale),
+            t('Cancel', locale),
           ]}
           cancelButtonIndex={this.commentActionSheetOptions(comment).length}
           onPress={this.handlePress}

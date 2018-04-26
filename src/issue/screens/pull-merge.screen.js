@@ -7,7 +7,7 @@ import { ListItem, Icon } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
 
 import { ViewContainer, SectionList } from 'components';
-import { translate } from 'utils';
+import { t } from 'utils';
 import { colors, fonts, normalize } from 'config';
 import { mergePullRequest } from '../issue.action';
 
@@ -89,10 +89,7 @@ class PullMerge extends Component {
   mergeMethodMessages = () => {
     const { locale } = this.props;
 
-    return [
-      translate('issue.pullMerge.createMergeCommit', locale),
-      translate('issue.pullMerge.squashAndMerge', locale),
-    ];
+    return [t('Create a merge commit', locale), t('Squash and merge', locale)];
   };
 
   showActionSheet = () => {
@@ -116,17 +113,12 @@ class PullMerge extends Component {
       navigation,
     } = this.props;
     const { mergeMethod, commitTitle, commitMessage } = this.state;
-    const mergeMethodTypes = [
-      translate('issue.pullMerge.merge', locale),
-      translate('issue.pullMerge.squash', locale),
-    ];
+    const mergeMethodTypes = [t('merge', locale), t('squash', locale)];
 
     if (commitTitle === '') {
-      Alert.alert(
-        translate('issue.pullMerge.missingTitleAlert', locale),
-        null,
-        [{ text: translate('common.ok', locale) }]
-      );
+      Alert.alert(t('You need to have a commit title!', locale), null, [
+        { text: t('OK', locale) },
+      ]);
     } else {
       mergePullRequest(
         repository.full_name,
@@ -147,16 +139,17 @@ class PullMerge extends Component {
     return (
       <ViewContainer>
         <ScrollView>
-          <SectionList title={translate('issue.pullMerge.commitTitle', locale)}>
+          <SectionList title={t('Commit Title', locale)}>
             <TextInput
               underlineColorAndroid={'transparent'}
-              placeholder={translate('issue.pullMerge.writeATitle', locale)}
+              placeholder={t('Write a title for your commit here', locale)}
               blurOnSubmit
               multiline
               onContentSizeChange={event =>
                 this.setState({
                   commitTitleHeight: event.nativeEvent.contentSize.height,
-                })}
+                })
+              }
               onChangeText={text => this.setState({ commitTitle: text })}
               placeholderTextColor={colors.grey}
               style={[
@@ -167,19 +160,18 @@ class PullMerge extends Component {
             />
           </SectionList>
 
-          <SectionList
-            title={translate('issue.pullMerge.commitMessage', locale)}
-          >
+          <SectionList title={t('Commit Message', locale)}>
             <TextInput
               underlineColorAndroid={'transparent'}
-              placeholder={translate('issue.pullMerge.writeAMessage', locale)}
+              placeholder={t('Write a message for your commit here', locale)}
               blurOnSubmit
               multiline
               onChangeText={text => this.setState({ commitMessage: text })}
               onContentSizeChange={event =>
                 this.setState({
                   commitMessageHeight: event.nativeEvent.contentSize.height,
-                })}
+                })
+              }
               placeholderTextColor={colors.grey}
               style={[
                 styles.textInput,
@@ -189,7 +181,7 @@ class PullMerge extends Component {
             />
           </SectionList>
 
-          <SectionList title={translate('issue.pullMerge.mergeType', locale)}>
+          <SectionList title={t('Merge Type', locale)}>
             <View style={styles.mergeListItemContainer}>
               <View style={styles.listItemContainer}>
                 <ListItem
@@ -218,11 +210,8 @@ class PullMerge extends Component {
           ref={o => {
             this.ActionSheet = o;
           }}
-          title={translate('issue.pullMerge.changeMergeType', locale)}
-          options={[
-            ...this.mergeMethodMessages(),
-            translate('common.cancel', locale),
-          ]}
+          title={t('Change Merge Type', locale)}
+          options={[...this.mergeMethodMessages(), t('Cancel', locale)]}
           cancelButtonIndex={this.mergeMethodMessages().length}
           onPress={this.handlePress}
         />

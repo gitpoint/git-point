@@ -19,7 +19,7 @@ import {
 } from 'components';
 import styled from 'styled-components';
 import { colors, fonts, normalize } from 'config';
-import { isIphoneX, translate } from 'utils';
+import { isIphoneX, t } from 'utils';
 import { RestClient } from 'api';
 
 const NAV_QUERY_PARAM = 'q';
@@ -160,9 +160,9 @@ class Search extends Component {
 
     switch (type) {
       case SearchTypes.REPOS:
-        return translate('search.main.noRepositoriesFound', locale);
+        return t('No repositories found :(', locale);
       case SearchTypes.USERS:
-        return translate('search.main.noUsersFound', locale);
+        return t('No users found :(', locale);
       default:
         return null;
     }
@@ -317,16 +317,13 @@ class Search extends Component {
         <StyledButtonGroup
           onPress={this.switchQueryType}
           selectedIndex={this.state.searchType}
-          buttons={[
-            translate('search.main.repositoryButton', locale),
-            translate('search.main.userButton', locale),
-          ]}
+          buttons={[t('Repositories', locale), t('Users', locale)]}
         />
 
         {isPendingSearch && (
           <LoadingContainer
             animating={isPendingSearch}
-            text={translate('search.main.searchingMessage', locale, {
+            text={t('Searching for {query}', locale, {
               query,
             })}
           />
@@ -357,11 +354,11 @@ class Search extends Component {
         {!searchStart && (
           <TextContainer>
             <SearchInfoText>
-              {translate('search.main.searchMessage', locale, {
+              {t('Search for any {type}', locale, {
                 type:
                   searchType === SearchTypes.REPOS
-                    ? translate('search.main.repository', locale)
-                    : translate('search.main.user', locale),
+                    ? t('repository', locale)
+                    : t('user', locale),
               })}
             </SearchInfoText>
           </TextContainer>

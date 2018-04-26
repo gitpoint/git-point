@@ -14,7 +14,7 @@ import {
   NotificationListItem,
 } from 'components';
 import { colors, fonts, normalize } from 'config';
-import { isIphoneX, translate } from 'utils';
+import { isIphoneX, t } from 'utils';
 import {
   getUnreadNotifications,
   getParticipatingNotifications,
@@ -385,7 +385,7 @@ class Notifications extends Component {
               <Button
                 icon={{ name: 'check', type: 'octicon' }}
                 onPress={() => markAllNotificationsAsRead()}
-                title={translate('notifications.main.markAllAsRead')}
+                title={t('Mark all as read')}
               />
             </MarkAllAsReadButtonContainer>
           )}
@@ -446,9 +446,9 @@ class Notifications extends Component {
               onPress={this.switchType}
               selectedIndex={type}
               buttons={[
-                translate('notifications.main.unreadButton', locale),
-                translate('notifications.main.participatingButton', locale),
-                translate('notifications.main.allButton', locale),
+                t('Unread', locale),
+                t('Participating', locale),
+                t('All', locale),
               ]}
             />
           </ButtonGroupWrapper>
@@ -458,10 +458,7 @@ class Notifications extends Component {
               <TextContainer height={contentBlockHeight}>
                 <LoadingContainer
                   animating={isRetrievingNotifications}
-                  text={translate(
-                    'notifications.main.retrievingMessage',
-                    locale
-                  )}
+                  text={t('Retrieving notifications', locale)}
                   center
                 />
               </TextContainer>
@@ -482,7 +479,10 @@ class Notifications extends Component {
                   !isLoadingNewNotifications && (
                     <TextContainer height={contentBlockHeight}>
                       <NoneTitle>
-                        {translate('notifications.main.noneMessage', locale)}
+                        {t(
+                          "You don't have any notifications of this type",
+                          locale
+                        )}
                       </NoneTitle>
                     </TextContainer>
                   )

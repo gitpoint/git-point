@@ -7,7 +7,7 @@ import ActionSheet from 'react-native-actionsheet';
 
 import { MarkdownWebView, ViewContainer, LoadingContainer } from 'components';
 import { normalize, colors } from 'config';
-import { translate, openURLInView } from 'utils';
+import { t, openURLInView } from 'utils';
 import { getReadMe } from '../repository.action';
 
 const mapStateToProps = state => ({
@@ -96,7 +96,7 @@ class ReadMe extends Component {
     if (this.isJsonString(readMe)) {
       noReadMe = JSON.parse(readMe).message;
     }
-    const readmeActions = [translate('common.openInBrowser', locale)];
+    const readmeActions = [t('Open in Browser', locale)];
 
     return (
       <ViewContainer>
@@ -107,15 +107,16 @@ class ReadMe extends Component {
           !noReadMe && (
             <MarkdownWebView
               html={readMe}
-              baseUrl={`${this.props.navigation.state.params.repository
-                .html_url}/raw/master/`}
+              baseUrl={`${
+                this.props.navigation.state.params.repository.html_url
+              }/raw/master/`}
             />
           )}
         {!isPendingReadMe &&
           noReadMe && (
             <View style={styles.textContainer}>
               <Text style={styles.noReadMeTitle}>
-                {translate('repository.readMe.noReadMeFound', locale)}
+                {t('No README.md found', locale)}
               </Text>
             </View>
           )}
@@ -124,8 +125,8 @@ class ReadMe extends Component {
           ref={o => {
             this.ActionSheet = o;
           }}
-          title={translate('repository.readMe.readMeActions', locale)}
-          options={[...readmeActions, translate('common.cancel', locale)]}
+          title={t('README Actions', locale)}
+          options={[...readmeActions, t('Cancel', locale)]}
           cancelButtonIndex={1}
           onPress={this.handleActionSheetPress}
         />
