@@ -11,7 +11,7 @@ import {
   DiffBlocks,
   Button,
 } from 'components';
-import { translate, relativeTimeToNow } from 'utils';
+import { t, relativeTimeToNow } from 'utils';
 import { colors, fonts, normalize } from 'config';
 import { v3 } from 'api';
 
@@ -178,10 +178,11 @@ export class IssueDescription extends Component {
                   showNumbers
                   onPress={() =>
                     navigation.navigate('PullDiff', {
-                      title: translate('repository.pullDiff.title', locale),
+                      title: t('Diff', locale),
                       locale,
                       diff,
-                    })}
+                    })
+                  }
                 />
               )}
           </DiffBlocksContainer>
@@ -197,7 +198,7 @@ export class IssueDescription extends Component {
           issue.assignees.length > 0 && (
             <AssigneesSection>
               <MembersList
-                title={translate('issue.main.assignees', locale)}
+                title={t('Assignees', locale)}
                 members={issue.assignees}
                 containerStyle={{ marginTop: 0, paddingTop: 0, paddingLeft: 0 }}
                 smallTitle
@@ -217,9 +218,10 @@ export class IssueDescription extends Component {
                 disabled={!isMergeable}
                 onPress={() =>
                   navigation.navigate('PullMerge', {
-                    title: translate('issue.pullMerge.title', locale),
-                  })}
-                title={translate('issue.main.mergeButton', locale)}
+                    title: t('Merge Pull Request', locale),
+                  })
+                }
+                title={t('Merge Pull Request', locale)}
               />
             </MergeButtonContainer>
           )}

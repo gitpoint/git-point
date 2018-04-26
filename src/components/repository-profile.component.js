@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Platform } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-import { emojifyText, abbreviateNumber, translate } from 'utils';
+import { emojifyText, abbreviateNumber, t } from 'utils';
 import { colors, fonts, normalize } from 'config';
 
 type Props = {
@@ -155,7 +155,7 @@ export const RepositoryProfile = ({
       <Text style={[styles.languageInfoTitle]}>
         {repository.primaryLanguage
           ? repository.primaryLanguage.name
-          : translate('repository.main.unknownLanguage', locale)}
+          : t('Unknown', locale)}
       </Text>
     </View>
 
@@ -172,7 +172,7 @@ export const RepositoryProfile = ({
       />
 
       <Text style={styles.title}>
-        {repository.name || translate('repository.main.notFoundRepo', locale)}
+        {repository.name || t('Repository is not found', locale)}
       </Text>
 
       {!hasError && (
@@ -196,9 +196,7 @@ export const RepositoryProfile = ({
         >
           {repository.parent && (
             <Text>
-              <Text>
-                {translate('repository.main.forkedFromMessage', locale)}
-              </Text>
+              <Text>{t('forked from', locale)}</Text>
               <Text
                 nativeId="repository-navigate-container"
                 style={{ ...fonts.fontPrimaryBold }}
@@ -231,15 +229,11 @@ export const RepositoryProfile = ({
             ? abbreviateNumber(repository.stargazers.totalCount)
             : ' '}
         </Text>
-        {!hasError && (
-          <Text style={styles.unitText}>
-            {translate('repository.main.starsTitle', locale)}
-          </Text>
-        )}
+        {!hasError && <Text style={styles.unitText}>{t('Stars', locale)}</Text>}
         {repository.viewerHasStarred && (
           <View style={styles.badgeView}>
             <Text style={[styles.unitStatus, styles.badge]}>
-              {translate('repository.main.starred', locale)}
+              {t('Starred', locale)}
             </Text>
           </View>
         )}
@@ -259,14 +253,12 @@ export const RepositoryProfile = ({
             : ' '}
         </Text>
         {!hasError && (
-          <Text style={styles.unitText}>
-            {translate('repository.main.watchers', locale)}
-          </Text>
+          <Text style={styles.unitText}>{t('Watchers', locale)}</Text>
         )}
         {repository.viewerSubscription === 'SUBSCRIBED' && (
           <View style={styles.badgeView}>
             <Text style={[styles.unitStatus, styles.badge]}>
-              {translate('repository.main.watching', locale)}
+              {t('Watching', locale)}
             </Text>
           </View>
         )}
@@ -278,11 +270,7 @@ export const RepositoryProfile = ({
             ? abbreviateNumber(repository.forkCount)
             : ' '}
         </Text>
-        {!hasError && (
-          <Text style={styles.unitText}>
-            {translate('repository.main.forksTitle', locale)}
-          </Text>
-        )}
+        {!hasError && <Text style={styles.unitText}>{t('Forks', locale)}</Text>}
       </View>
     </View>
   </View>

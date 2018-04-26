@@ -12,7 +12,7 @@ import {
 import { ListItem } from 'react-native-elements';
 
 import { ViewContainer, SectionList, LoadingModal } from 'components';
-import { translate } from 'utils';
+import { t } from 'utils';
 import { colors, fonts, normalize } from 'config';
 import { editIssueBody, editIssueComment } from '../issue.action';
 
@@ -102,16 +102,17 @@ class EditIssueComment extends Component {
       <ViewContainer>
         {isEditingComment && <LoadingModal />}
         <ScrollView>
-          <SectionList title={translate('issue.newIssue.issueComment', locale)}>
+          <SectionList title={t('Issue Comment', locale)}>
             <TextInput
               underlineColorAndroid={'transparent'}
-              placeholder={translate('issue.newIssue.writeAComment', locale)}
+              placeholder={t('Write a comment for your issue here', locale)}
               multiline
               onChangeText={text => this.setState({ issueComment: text })}
               onContentSizeChange={event =>
                 this.setState({
                   issueCommentHeight: event.nativeEvent.contentSize.height,
-                })}
+                })
+              }
               placeholderTextColor={colors.grey}
               style={[
                 styles.textInput,
@@ -127,7 +128,7 @@ class EditIssueComment extends Component {
           <SectionList>
             <View style={styles.listItemContainer}>
               <ListItem
-                title={translate('common.submit', locale)}
+                title={t('Submit', locale)}
                 hideChevron
                 underlayColor={colors.greyLight}
                 titleStyle={styles.submitTitle}

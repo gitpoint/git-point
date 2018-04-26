@@ -1,4 +1,5 @@
 import { Animated } from 'react-native';
+import React from 'react';
 
 export const loadingAnimation = state => {
   const duration = 500;
@@ -20,24 +21,49 @@ export const loadingAnimation = state => {
   return Animated.sequence(animatedTimings);
 };
 
-export const infiniteAnimation = (state, fromValue, toValue, onEnd) => {
-  const animatedTimings = [];
-  const duration = 1000;
+export const withFadeAnimation = WrappedComponent => {
+  return class extends React.Component {
+    constructor() {
+      super();
+      this.fadeFrom = 0.3;
+      this.fadeTo = 0.6;
+      this.state = {
+        fadeAnimValue: new Animated.Value(this.fadeTo),
+      };
+    }
 
-  animatedTimings.push(
-    Animated.timing(state, {
-      toValue: fromValue,
-      duration,
-    })
-  );
-  animatedTimings.push(
-    Animated.timing(state, {
-      toValue,
-      duration,
-    })
-  );
+    componentDidMount() {
+      this.runAnimation();
+    }
 
-  return Animated.sequence(animatedTimings).start(() => {
-    onEnd();
-  });
+    runAnimation() {
+      const animatedTimings = [];
+      const duration = 1000;
+
+      animatedTimings.push(
+        Animated.timing(this.state.fadeAnimValue, {
+          toValue: this.fadeFrom,
+          duration,
+        })
+      );
+      animatedTimings.push(
+        Animated.timing(this.state.fadeAnimValue, {
+          toValue: this.fadeTo,
+          duration,
+        })
+      );
+
+      return Animated.sequence(animatedTimings).start(() => {
+        this.runAnimation();
+      });
+    }
+
+    render() {
+      return <WrappedComponent opacity={this.state.fadeAnimValue} />;
+    }
+  };
+};
+
+export type FadeAnimationProps = {
+  opacity: number,
 };

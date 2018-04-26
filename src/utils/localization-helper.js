@@ -1,17 +1,15 @@
+import React from 'react';
 import { AsyncStorage } from 'react-native';
 import distanceInWords from 'date-fns/distance_in_words';
 
 import { common } from 'config';
 import I18n from 'locale';
 
-export const translate = (key, locale, interpolation = null) =>
-  I18n.t(key, { locale, ...interpolation });
-
-export const t = (key, locale, interpolation = null) => {
-  let translation = translate(key, locale, interpolation);
+export const t = (message, locale, interpolation = null) => {
+  let translation = I18n.t(message, locale, interpolation);
 
   if (translation === '') {
-    translation = key;
+    translation = message;
   }
 
   const componentPlaceholdersReg = /({([^}]+)})/g;
@@ -19,23 +17,29 @@ export const t = (key, locale, interpolation = null) => {
   const retval = [];
 
   let ongoing = '';
-  let match = false;
   let lastIndex = 0;
+  let key = 0;
 
-  /* eslint-disable no-cond-assign */
-  while ((match = componentPlaceholdersReg.exec(translation))) {
-    ongoing += translation.substring(lastIndex, match.index);
-    if (typeof interpolation[match[2]] === 'undefined') {
-      ongoing += this.config.missingPlaceholder;
-    } else if (typeof interpolation[match[2]] === 'object') {
-      retval.push(ongoing);
-      retval.push(interpolation[match[2]]);
-      ongoing = '';
-    } else if (typeof interpolation[match[2]] === 'string') {
-      ongoing += interpolation[match[2]];
+  translation.replace(
+    componentPlaceholdersReg,
+    (match, placeholder, name, index) => {
+      key += 1;
+      ongoing += translation.substring(lastIndex, index);
+      const value = interpolation[name];
+      const type = typeof value;
+
+      if (type === 'undefined') {
+        ongoing += '[unknown placeholder]';
+      } else if (type === 'object') {
+        retval.push(ongoing);
+        retval.push(React.cloneElement(value, { key }));
+        ongoing = '';
+      } else if (type === 'string' || type === 'number') {
+        ongoing += value;
+      }
+      lastIndex = index + match.length;
     }
-    lastIndex = match.index + match[0].length;
-  }
+  );
 
   if (lastIndex < translation.length) {
     ongoing += translation.substring(lastIndex);
@@ -43,6 +47,10 @@ export const t = (key, locale, interpolation = null) => {
 
   if (ongoing.length) {
     retval.push(ongoing);
+  }
+
+  if (retval.length === 1) {
+    return retval[0];
   }
 
   return retval;
@@ -93,8 +101,44 @@ export function relativeTimeToNow(date) {
   // https://github.com/date-fns/date-fns/blob/v1.29.0/src/locale/en/build_distance_in_words_locale/index.js
   const localeConfig = {
     distanceInWords: {
-      localize: (token, count) =>
-        translate(`common.relativeTime.${token}`, locale, { count }),
+      localize: (token, count) => {
+        switch (token) {
+          case 'lessThanXSeconds':
+            return t('{lessThanXSeconds}s', locale, {
+              lessThanXSeconds: count,
+            });
+          case 'xSeconds':
+            return t('{xSeconds}s', locale, { xSeconds: count });
+          case 'halfAMinute':
+            return t('{halfAMinute}s', locale, { halfAMinute: count });
+          case 'lessThanXMinutes':
+            return t('{lessThanXMinutes}m', locale, {
+              lessThanXMinutes: count,
+            });
+          case 'xMinutes':
+            return t('{xMinutes}m', locale, { xMinutes: count });
+          case 'aboutXHours':
+            return t('{aboutXHours}h', locale, { aboutXHours: count });
+          case 'xHours':
+            return t('{xHours}h', locale, { xHours: count });
+          case 'xDays':
+            return t('{xDays}d', locale, { xDays: count });
+          case 'aboutXMonths':
+            return t('{aboutXMonths}mo', locale, { aboutXMonths: count });
+          case 'xMonths':
+            return t('{xMonths}mo', locale, { xMonths: count });
+          case 'aboutXYears':
+            return t('{aboutXYears}y', locale, { aboutXYears: count });
+          case 'xYears':
+            return t('{xYears}y', locale, { xYears: count });
+          case 'overXYears':
+            return t('{overXYears}y', locale, { overXYears: count });
+          case 'almostXYears':
+            return t('{almostXYears}y', locale, { almostXYears: count });
+          default:
+            return '?';
+        }
+      },
     },
   };
 

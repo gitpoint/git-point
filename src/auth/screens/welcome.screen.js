@@ -5,7 +5,7 @@ import { ActivityIndicator } from 'react-native';
 
 import { ViewContainer } from 'components';
 import { colors, fonts, normalize } from 'config';
-import { translate } from 'utils';
+import { t } from 'utils';
 
 const mapStateToProps = state => ({
   locale: state.auth.locale,
@@ -38,9 +38,7 @@ class Welcome extends Component {
     return (
       <ViewContainer>
         <Container>
-          <WelcomeMessage>
-            {translate('auth.welcome.welcomeTitle', locale)}
-          </WelcomeMessage>
+          <WelcomeMessage>{t('Welcome to GitPoint', locale)}</WelcomeMessage>
           <ActivityIndicator animating={isLoggingIn} color={colors.white} />
         </Container>
       </ViewContainer>

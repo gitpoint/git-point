@@ -7,7 +7,7 @@ import { ListItem } from 'react-native-elements';
 import { colors, fonts } from 'config';
 import { changeLocale } from 'auth';
 import { bindActionCreators } from 'redux';
-import { emojifyText, translate } from 'utils';
+import { emojifyText, t } from 'utils';
 import { NavigationActions } from 'react-navigation';
 import { ViewContainer } from 'components';
 import languages from './language-settings';
@@ -51,7 +51,7 @@ class LanguageSettings extends Component {
     if (nextState.locale !== this.props.locale) {
       const navigationParams = NavigationActions.setParams({
         params: {
-          title: translate('auth.userOptions.language', nextState.locale),
+          title: t('Language', nextState.locale),
         },
         key: nextState.navigation.state.key,
       });

@@ -155,46 +155,36 @@ class Events extends Component {
   getIcon = userEvent => {
     const eventType = userEvent.type;
 
-    switch (eventType) {
-      case 'CommitCommentEvent':
-        return 'comment-discussion';
-      case 'CreateEvent':
-        return 'git-branch';
-      case 'DeleteEvent':
-        return 'trashcan';
-      case 'ForkEvent':
-        return 'repo-forked';
-      case 'GollumEvent':
-        return 'book';
-      case 'IssueCommentEvent':
-        return 'comment-discussion';
-      case 'IssuesEvent':
-        if (userEvent.action === 'reopened') {
-          return 'issue-reopened';
-        } else if (userEvent.action === 'closed') {
-          return 'issue-closed';
-        }
+    const icons = {
+      CommitCommentEvent: 'comment-discussion',
+      CreateEvent: 'git-branch',
+      DeleteEvent: 'trashcan',
+      ForkEvent: 'repo-forked',
+      GollumEvent: 'book',
+      IssueCommentEvent: 'comment-discussion',
+      MemberEvent: 'person',
+      PublicEvent: 'globe',
+      PullRequestEvent: 'git-pull-request',
+      PullRequestReviewEvent: 'git-pull-request',
+      PullRequestReviewCommentEvent: 'comment-discussion',
+      PushEvent: 'git-commit',
+      ReleaseEvent: 'tag',
+      WatchEvent: 'star',
+    };
 
-        return 'issue-opened';
-      case 'MemberEvent':
-        return 'person';
-      case 'PublicEvent':
-        return 'globe';
-      case 'PullRequestEvent':
-        return 'git-pull-request';
-      case 'PullRequestReviewEvent':
-        return 'git-pull-request';
-      case 'PullRequestReviewCommentEvent':
-        return 'comment-discussion';
-      case 'PushEvent':
-        return 'git-commit';
-      case 'ReleaseEvent':
-        return 'tag';
-      case 'WatchEvent':
-        return 'star';
-      default:
-        return null;
+    if (icons[eventType]) return icons[eventType];
+
+    if (eventType === 'IssuesEvent') {
+      if (userEvent.action === 'reopened') {
+        return 'issue-reopened';
+      } else if (userEvent.action === 'closed') {
+        return 'issue-closed';
+      }
+
+      return 'issue-opened';
     }
+
+    return null;
   };
 
   handleCommitCommentEvent(userEvent) {
