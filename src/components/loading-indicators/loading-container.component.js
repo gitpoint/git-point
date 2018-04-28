@@ -14,7 +14,7 @@ const Container = styled.View`
   background-color: ${colors.white};
   flex: 1;
   align-items: center;
-  justify-content: ${props => (props.center ? 'center' : 'initial')};
+  justify-content: ${props => (props.center ? 'center' : 'flex-start')};
 `;
 
 const Message = styled.Text`
