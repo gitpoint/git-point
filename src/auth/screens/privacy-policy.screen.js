@@ -5,7 +5,6 @@ import { ScrollView } from 'react-native';
 import { ViewContainer } from 'components';
 import { t } from 'utils';
 import { colors, fonts, normalize } from 'config';
-import { v3 } from 'api';
 
 const Container = styled.View`
   flex: 1;
@@ -139,7 +138,7 @@ export class PrivacyPolicyScreen extends Component {
                 <Link
                   onPress={() =>
                     navigation.navigate('Repository', {
-                      repositoryUrl: `${v3.root}/repos/gitpoint/git-point`,
+                      repoId: 'gitpoint/git-point',
                     })
                   }
                 >

@@ -1,7 +1,7 @@
 import { schema } from 'normalizr';
 
 export const gqlRepoSchema = new schema.Entity(
-  'gqlRepos',
+  'repos',
   {},
   {
     idAttribute: ({ repository }) => {

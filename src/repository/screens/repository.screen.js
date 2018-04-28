@@ -30,19 +30,13 @@ import { colors, fonts } from 'config';
 const mapStateToProps = (state, ownProps) => {
   const {
     auth: { user, locale },
-    entities: { gqlRepos, users, repos },
+    entities: { users, repos },
     pagination: { REPOS_GET_CONTRIBUTORS },
   } = state;
 
-  const params = ownProps.navigation.state.params;
+  const repoId = ownProps.navigation.state.params.repoId;
 
-  const repoId =
-    params.repoId ||
-    params.repository.url
-      .replace('https://api.github.com/repos/', '')
-      .toLowerCase();
-
-  const repository = gqlRepos[repoId] || repos[repoId] || params.repository;
+  const repository = repos[repoId];
 
   const contributorsPagination = REPOS_GET_CONTRIBUTORS[repoId] || {
     ids: [],

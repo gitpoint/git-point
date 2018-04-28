@@ -15,7 +15,7 @@ const mapStateToProps = state => {
   const {
     auth: { user, locale },
     pagination: { ACTIVITY_GET_EVENTS_RECEIVED },
-    entities: { events },
+    entities: { events, repos },
   } = state;
 
   const userEventsPagination = ACTIVITY_GET_EVENTS_RECEIVED[user.login] || {
@@ -25,6 +25,7 @@ const mapStateToProps = state => {
 
   return {
     user,
+    repos,
     userEventsPagination,
     userEvents,
     locale,
@@ -126,10 +127,12 @@ class Events extends Component {
     );
   }
 
-  getRepoLink(userEvent) {
+  getRepoLink(userEvent, isFork = false) {
+    const repoId = isFork ? userEvent.payload.forkee : userEvent.repo;
+
     return (
-      <LinkDescription onPress={() => this.navigateToRepository(userEvent)}>
-        {userEvent.repo.name}
+      <LinkDescription onPress={() => this.navigateToRepository(repoId)}>
+        {this.props.repos[repoId].nameWithOwner}
       </LinkDescription>
     );
   }
@@ -256,13 +259,7 @@ class Events extends Component {
   handleForkEvent(userEvent) {
     const actor = this.getActorLink(userEvent);
     const repo = this.getRepoLink(userEvent);
-    const fork = (
-      <LinkDescription
-        onPress={() => this.navigateToRepository(userEvent, true)}
-      >
-        {userEvent.payload.forkee.full_name}
-      </LinkDescription>
-    );
+    const fork = this.getRepoLink(userEvent, true);
 
     return t('{actor} forked {repo} at {fork}', this.props.locale, {
       actor,
@@ -540,16 +537,9 @@ class Events extends Component {
     },
   });
 
-  navigateToRepository = (userEvent, isForkEvent) => {
+  navigateToRepository = repoId => {
     this.props.navigation.navigate('Repository', {
-      repository: !isForkEvent
-        ? {
-            ...userEvent.repo,
-            name: userEvent.repo.name.substring(
-              userEvent.repo.name.indexOf('/') + 1
-            ),
-          }
-        : userEvent.payload.forkee,
+      repoId,
     });
   };
 

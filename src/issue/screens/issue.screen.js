@@ -21,7 +21,7 @@ import {
   IssueEventListItem,
 } from 'components';
 import { v3 } from 'api';
-import { t, formatEventsToRender, openURLInView } from 'utils';
+import { t, formatEventsToRender, openURLInView, getRepoIdFromUrl } from 'utils';
 import { colors } from 'config';
 import { getRepository, getContributors } from 'repository';
 import {
@@ -179,7 +179,7 @@ class Issue extends Component {
     const { navigation } = this.props;
 
     navigation.navigate('Repository', {
-      repositoryUrl: url,
+      repoId: getRepoIdFromUrl(url),
     });
   };
 
