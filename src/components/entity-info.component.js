@@ -34,9 +34,6 @@ const StyledListItem = styled(ListItem).attrs({
 const getBlogLink = url =>
   url.substr(0, 4) === 'http' ? url : `http://${url}`;
 
-const getLocationLink = location =>
-  `https://www.google.com/maps/place/${location.split(' ').join('+')}`;
-
 const getCompanyFormatted = company => {
   const companyFormatted = company.replace(/ /g, '');
 
@@ -50,6 +47,10 @@ const companyInOrgs = (company, orgs) =>
     org =>
       org.login.toLowerCase() === getCompanyFormatted(company).toLowerCase()
   );
+
+const getUsersByLocation = (location, navigation) => {
+  navigation.navigate('SearchUsersByLocation', { location });
+};
 
 const navigateToCompany = (company, orgs, navigation) => {
   if (companyInOrgs(company, orgs)) {
@@ -96,7 +97,7 @@ export const EntityInfo = ({ entity, orgs, locale, navigation }: Props) => {
               type: 'octicon',
             }}
             subtitle={entity.location}
-            onPress={() => Communications.web(getLocationLink(entity.location))}
+            onPress={() => getUsersByLocation(entity.location, navigation)}
           />
         )}
 
