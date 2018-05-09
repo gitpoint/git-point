@@ -7,6 +7,7 @@ type Props = {
   textFieldBackgroundColor?: string,
   showsCancelButton?: boolean,
   placeholder?: string,
+  searchText?: string,
   onFocus: Function,
   onCancelButtonPress: Function,
   onSearchButtonPress: Function,
@@ -23,6 +24,7 @@ const styles = StyleSheet.create({
 export const SearchBar = ({
   textColor,
   textFieldBackgroundColor,
+  searchText,
   showsCancelButton,
   placeholder,
   onFocus,
@@ -31,6 +33,7 @@ export const SearchBar = ({
 }: Props) => (
   <MDSearchBar
     textStyle={textColor ? { color: textColor } : null}
+    text={searchText}
     inputStyle={{
       ...StyleSheet.flatten(styles.textInput),
       ...(textFieldBackgroundColor
@@ -56,6 +59,7 @@ export const SearchBar = ({
 SearchBar.defaultProps = {
   textColor: undefined,
   textFieldBackgroundColor: undefined,
+  searchText: undefined,
   showsCancelButton: false,
   placeholder: '',
 };

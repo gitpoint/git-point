@@ -6,6 +6,7 @@ type Props = {
   textFieldBackgroundColor?: string,
   showsCancelButton?: boolean,
   placeholder?: string,
+  searchText?: string,
   onFocus: Function,
   onCancelButtonPress: Function,
   onSearchButtonPress: Function,
@@ -19,6 +20,7 @@ export const SearchBar = ({
   onFocus,
   onCancelButtonPress,
   onSearchButtonPress,
+  searchText,
 }: Props) => (
   <RNSearchBar
     ref={ref => {
@@ -26,6 +28,7 @@ export const SearchBar = ({
     }}
     textColor={textColor}
     textFieldBackgroundColor={textFieldBackgroundColor}
+    text={searchText}
     showsCancelButton={showsCancelButton}
     placeholder={placeholder}
     onFocus={onFocus}
@@ -48,6 +51,7 @@ export const SearchBar = ({
 SearchBar.defaultProps = {
   textColor: '',
   textFieldBackgroundColor: '',
+  searchText: '',
   showsCancelButton: false,
   placeholder: '',
 };

@@ -20,13 +20,6 @@ describe('<EntityInfo />', () => {
     expect(wrapper.find({ title: 'Location' }).prop('subtitle')).toEqual(
       organization.location
     );
-    wrapper.find({ title: 'Location' }).simulate('press');
-    expect(Communications.web).toBeCalledWith(
-      `https://www.google.com/maps/place/${organization.location.replace(
-        / /g,
-        '+'
-      )}`
-    );
 
     expect(wrapper.find({ title: 'Email' }).prop('subtitle')).toEqual(
       organization.email
@@ -63,10 +56,6 @@ describe('<EntityInfo />', () => {
 
     expect(wrapper.find({ title: 'Location' }).prop('subtitle')).toEqual(
       user.location
-    );
-    wrapper.find({ title: 'Location' }).simulate('press');
-    expect(Communications.web).toBeCalledWith(
-      `https://www.google.com/maps/place/${user.location.replace(/ /g, '+')}`
     );
 
     expect(wrapper.find({ title: 'Email' }).prop('subtitle')).toEqual(
@@ -113,13 +102,6 @@ describe('<EntityInfo />', () => {
     expect(wrapper.find({ title: 'Location' }).prop('subtitle')).toEqual(
       noCompany.location
     );
-    wrapper.find({ title: 'Location' }).simulate('press');
-    expect(Communications.web).toBeCalledWith(
-      `https://www.google.com/maps/place/${noCompany.location.replace(
-        / /g,
-        '+'
-      )}`
-    );
 
     expect(wrapper.find({ title: 'Email' }).prop('subtitle')).toEqual(
       noCompany.email
@@ -158,13 +140,6 @@ describe('<EntityInfo />', () => {
 
     expect(wrapper.find({ title: 'Location' }).prop('subtitle')).toEqual(
       noTaggedCompany.location
-    );
-    wrapper.find({ title: 'Location' }).simulate('press');
-    expect(Communications.web).toBeCalledWith(
-      `https://www.google.com/maps/place/${noCompany.location.replace(
-        / /g,
-        '+'
-      )}`
     );
 
     expect(wrapper.find({ title: 'Email' }).prop('subtitle')).toEqual(
@@ -252,10 +227,6 @@ describe('<EntityInfo />', () => {
     expect(wrapper.find({ title: 'Location' }).prop('subtitle')).toEqual(
       noEmail.location
     );
-    wrapper.find({ title: 'Location' }).simulate('press');
-    expect(Communications.web).toBeCalledWith(
-      `https://www.google.com/maps/place/${noEmail.location.replace(/ /g, '+')}`
-    );
 
     expect(wrapper.find({ title: 'Email' }).length).toEqual(0);
 
@@ -290,13 +261,6 @@ describe('<EntityInfo />', () => {
 
     expect(wrapper.find({ title: 'Location' }).prop('subtitle')).toEqual(
       noHttpInBlog.location
-    );
-    wrapper.find({ title: 'Location' }).simulate('press');
-    expect(Communications.web).toBeCalledWith(
-      `https://www.google.com/maps/place/${noHttpInBlog.location.replace(
-        / /g,
-        '+'
-      )}`
     );
 
     expect(wrapper.find({ title: 'Email' }).prop('subtitle')).toEqual(

@@ -139,9 +139,8 @@ class Search extends Component {
     searchFocus: boolean,
   };
 
-  constructor() {
-    super();
-
+  constructor(props) {
+    super(props);
     this.state = {
       query: '',
       currentQuery: {},
@@ -154,6 +153,19 @@ class Search extends Component {
     this.search = this.search.bind(this);
     this.renderItem = this.renderItem.bind(this);
   }
+
+  componentDidMount() {
+    this.setQueryAsLocation();
+  }
+
+  setQueryAsLocation = () => {
+    const { params } = this.props.navigation.state;
+
+    if (params) {
+      this.switchQueryType(1);
+      this.search(`location:${params.location}`, 1);
+    }
+  };
 
   getNoResultsFound = (type = this.state.searchType) => {
     const { locale } = this.props;
@@ -283,7 +295,7 @@ class Search extends Component {
 
   render() {
     const { locale } = this.props;
-
+    const { params } = this.props.navigation.state;
     const isPendingSearch =
       this.getSearchResults().length === 0 &&
       this.getSearchPagination().isFetching;
@@ -294,11 +306,20 @@ class Search extends Component {
       this.getSearchResults().length === 0 &&
       !this.getSearchPagination().isFetching;
 
+    let isLocation = '';
+
+    if (params) {
+      if (params.location) {
+        isLocation = `location:${params.location}`;
+      }
+    }
+
     return (
       <ViewContainer>
         <SearchBarWrapper>
           <SearchContainer>
             <SearchBar
+              searchText={isLocation}
               textColor={colors.primaryDark}
               textFieldBackgroundColor={colors.greyLight}
               showsCancelButton={this.state.searchFocus}
