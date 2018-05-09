@@ -295,6 +295,7 @@ class Search extends Component {
 
   render() {
     const { locale } = this.props;
+    const { params } = this.props.navigation.state;
     const isPendingSearch =
       this.getSearchResults().length === 0 &&
       this.getSearchPagination().isFetching;
@@ -305,12 +306,20 @@ class Search extends Component {
       this.getSearchResults().length === 0 &&
       !this.getSearchPagination().isFetching;
 
+    let isLocation = '';
+
+    if (params) {
+      if (params.location) {
+        isLocation = `location:${params.location}`;
+      }
+    }
+
     return (
       <ViewContainer>
         <SearchBarWrapper>
           <SearchContainer>
             <SearchBar
-              text={'test'}
+              searchText={isLocation}
               textColor={colors.primaryDark}
               textFieldBackgroundColor={colors.greyLight}
               showsCancelButton={this.state.searchFocus}
