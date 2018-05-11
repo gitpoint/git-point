@@ -77,7 +77,7 @@ module.exports = {
   Location: 'Standort',
   'Lock {issueType}': 'Sperre {issueType}',
   'Locked, but you can still comment...':
-    'Gepserrt, du kannst trotzdem kommentieren...',
+    'Gesperrt, du kannst trotzdem kommentieren...',
   MEMBERS: 'MITGLIEDER',
   'Make a donation': 'Spenden',
   'Mark all as read': 'Alle als gelesen markieren',
@@ -85,7 +85,7 @@ module.exports = {
   'Merge Type': 'Merge Typ',
   Merged: 'Merged',
   NEW: 'NEU',
-  'New Issue': 'Neues Issue',
+  'New Issue': 'Neuer Issue',
   'No README.md found': 'Keine README.md Datei gefunden.',
   'No closed issues found!': 'Keine geschlossenen Issues gefunden!',
   'No contributors found': 'Keine Beitragenden gefunden',
@@ -107,7 +107,7 @@ module.exports = {
   OWNER: 'BESITZER',
   'One of the most feature-rich GitHub clients that is 100% free':
     'Der umfangreichste GitHub Client der zu 100% kostenlos ist',
-  'Oops! it seems that you are not connected to the internet!': '',
+  'Oops! it seems that you are not connected to the internet!': 'Oops! Es scheint keine Internetverbindung zu geben.',
   Open: 'Offen',
   'Open in Browser': 'In Browser öffnen',
   Options: 'Optionen',
@@ -172,13 +172,13 @@ module.exports = {
   'With each contribution to the app, code review is always performed to prevent anybody from including malicious code of any kind.':
     'Jeder Beitrag zu unserer App wird von uns sorgfältig überprüft um das Einbinden von gefährlichen Programmen zu verhindern.',
   'Write a comment for your issue here':
-    'Hier kommt der Kommentar für dein Issue hin',
+    'Hier kommt der Kommentar für deinen Issue hin',
   'Write a message for your commit here':
     'Hier kommt die Nachricht für deinen Commit hin',
   'Write a title for your commit here':
     'Hier kommt der Titel für deinen Commit hin',
   'Write a title for your issue here':
-    'Hier kommte der Titel für dein Issue hin',
+    'Hier kommt der Titel für deinen Issue hin',
   Yes: 'Ja',
   "You don't have any notifications of this type":
     'Du hast keine Benachrichtungen dieser Art',
