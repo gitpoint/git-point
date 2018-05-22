@@ -57,6 +57,7 @@ const IconStyled = styled(Icon).attrs({
 const SubjectType = {
   commit: 'Commit',
   pull: 'PullRequest',
+  release: 'Release',
 };
 
 export class NotificationListItem extends Component {
@@ -76,6 +77,8 @@ export class NotificationListItem extends Component {
         return 'git-commit';
       case SubjectType.pull:
         return 'git-pull-request';
+      case SubjectType.release:
+        return 'tag';
       default:
         return 'issue-opened';
     }
@@ -84,7 +87,8 @@ export class NotificationListItem extends Component {
   getTitleComponentProps = () => {
     const { notification, navigationAction } = this.props;
 
-    return notification.subject.type === SubjectType.commit
+    return notification.subject.type === SubjectType.commit ||
+      notification.subject.type === SubjectType.release
       ? {}
       : {
           onPress: () => navigationAction(notification),

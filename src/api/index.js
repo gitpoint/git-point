@@ -299,24 +299,8 @@ export const fetchMarkRepoNotificationAsRead = (repoFullName, accessToken) =>
 export const fetchMarkAllNotificationsAsRead = accessToken =>
   v3.put('/notifications', accessToken);
 
-export const fetchChangeStarStatusRepo = (owner, repo, starred, accessToken) =>
-  v3[starred ? 'delete' : 'put'](`/user/starred/${owner}/${repo}`, accessToken);
-
-export const fetchForkRepo = (owner, repo, accessToken) =>
-  v3.post(`/repos/${owner}/${repo}/forks`, accessToken);
-
 export const fetchStarCount = (owner, accessToken) =>
   v3.count(`/users/${owner}/starred`, accessToken);
-
-export const isWatchingRepo = (url, accessToken) => v3.head(url, accessToken);
-
-export const watchRepo = (owner, repo, accessToken) =>
-  v3.put(`/repos/${owner}/${repo}/subscription`, accessToken, {
-    subscribed: true,
-  });
-
-export const unWatchRepo = (owner, repo, accessToken) =>
-  v3.delete(`/repos/${owner}/${repo}/subscription`, accessToken);
 
 export const fetchChangeFollowStatus = (user, isFollowing, accessToken) =>
   v3[isFollowing ? 'delete' : 'put'](`/user/following/${user}`, accessToken);
@@ -382,15 +366,6 @@ export const fetchNotificationsCount = accessToken =>
 
 export const fetchRepoNotificationsCount = (owner, repoName, accessToken) =>
   v3.count(`/repos/${owner}/${repoName}/notifications?per_page=1`, accessToken);
-
-export const fetchRepoTopics = async (owner, repoName, accessToken) => {
-  const response = await v3.call(
-    `/repos/${owner}/${repoName}/topics`,
-    v3.parameters(accessToken, METHOD.GET, ACCEPT.MERCY_PREVIEW)
-  );
-
-  return response.json();
-};
 
 export const fetchIssueEvents = (
   owner: string,

@@ -25,7 +25,7 @@ export default [
     name: 'Português de Portugal',
   },
   {
-    code: 'pt-br',
+    code: 'ptBr',
     emojiCode: ':flag-br:',
     name: 'Português do Brasil',
   },
@@ -60,12 +60,12 @@ export default [
     name: 'Español',
   },
   {
-    code: 'zh-cn',
+    code: 'zhCn',
     emojiCode: ':flag-cn:',
     name: '简体中文',
   },
   {
-    code: 'zh-tw',
+    code: 'zhTw',
     emojiCode: ':flag-tw:',
     name: '正體中文',
   },

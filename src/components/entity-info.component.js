@@ -6,7 +6,7 @@ import Communications from 'react-native-communications';
 
 import { SectionList } from 'components';
 import { colors, fonts } from 'config';
-import { translate } from 'utils';
+import { t } from 'utils';
 
 type Props = {
   entity: Object,
@@ -71,11 +71,11 @@ export const EntityInfo = ({ entity, orgs, locale, navigation }: Props) => {
   }
 
   return (
-    <SectionList title={translate('common.info', locale)}>
+    <SectionList title={t('INFO', locale)}>
       {!!entity.company &&
         entity.company !== '' && (
           <StyledListItem
-            title={translate('common.company', locale)}
+            title={t('Company', locale)}
             leftIcon={{
               name: 'organization',
               color: colors.grey,
@@ -90,7 +90,7 @@ export const EntityInfo = ({ entity, orgs, locale, navigation }: Props) => {
       {!!entity.location &&
         entity.location !== '' && (
           <StyledListItem
-            title={translate('common.location', locale)}
+            title={t('Location', locale)}
             leftIcon={{
               name: 'location',
               color: colors.grey,
@@ -104,7 +104,7 @@ export const EntityInfo = ({ entity, orgs, locale, navigation }: Props) => {
       {!!entity.email &&
         entity.email !== '' && (
           <StyledListItem
-            title={translate('common.email', locale)}
+            title={t('Email', locale)}
             leftIcon={{
               name: 'mail',
               color: colors.grey,
@@ -120,7 +120,7 @@ export const EntityInfo = ({ entity, orgs, locale, navigation }: Props) => {
       {!!entity.blog &&
         entity.blog !== '' && (
           <StyledListItem
-            title={translate('common.website', locale)}
+            title={t('Website', locale)}
             leftIcon={{
               name: 'link',
               color: colors.grey,

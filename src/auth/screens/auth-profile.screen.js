@@ -21,7 +21,7 @@ import {
 } from 'components';
 import { colors, fonts, normalize } from 'config';
 import { getUser, getOrgs, getStarCount } from 'auth';
-import { emojifyText, openURLInView, translate } from 'utils';
+import { emojifyText, openURLInView, t } from 'utils';
 
 const mapStateToProps = state => ({
   user: state.auth.user,
@@ -135,7 +135,7 @@ class AuthProfile extends Component {
           menuIcon="gear"
           menuAction={() =>
             navigation.navigate('UserOptions', {
-              title: translate('auth.userOptions.title', locale),
+              title: t('Options', locale),
             })
           }
         >
@@ -151,7 +151,7 @@ class AuthProfile extends Component {
             user.bio &&
             !isPending &&
             user.bio !== '' && (
-              <SectionList title={translate('common.bio', locale)}>
+              <SectionList title={t('BIO', locale)}>
                 <BioListItem
                   titleNumberOfLines={0}
                   title={emojifyText(user.bio)}
@@ -172,9 +172,9 @@ class AuthProfile extends Component {
           {!isPending && (
             <View>
               <SectionList
-                title={translate('common.orgs', locale)}
+                title={t('ORGANIZATIONS', locale)}
                 noItems={orgs.length === 0}
-                noItemsMessage={translate('common.noOrgsMessage', locale)}
+                noItemsMessage={t('No organizations', locale)}
               >
                 {orgs.map(item => (
                   <UserListItem
@@ -184,17 +184,14 @@ class AuthProfile extends Component {
                   />
                 ))}
                 <Note>
-                  {translate('auth.profile.orgsRequestApprovalTop', locale)}
+                  {t("Can't see all your organizations?", locale)}
                   {'\n'}
                   <NoteLink
                     onPress={() =>
                       openURLInView('https://github.com/settings/applications')
                     }
                   >
-                    {translate(
-                      'auth.profile.orgsRequestApprovalBottom',
-                      locale
-                    )}
+                    {t('You may have to request approval for them.', locale)}
                   </NoteLink>
                 </Note>
               </SectionList>

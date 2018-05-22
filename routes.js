@@ -10,7 +10,7 @@ import { Icon } from 'react-native-elements';
 
 import { NotificationIcon } from 'components';
 import { colors } from 'config';
-import { translate } from 'utils';
+import { t } from 'utils';
 
 // Auth
 import {
@@ -143,8 +143,7 @@ const sharedRoutes = {
       const issueNumberRegex = /issues\/([0-9]+)(#|$)/;
       const { issue, issueURL, isPR, locale } = navigation.state.params;
       const number = issue ? issue.number : issueURL.match(issueNumberRegex)[1];
-      const langKey = isPR ? 'pullRequest' : 'issue';
-      const langTitle = translate(`issue.main.screenTitles.${langKey}`, locale);
+      const langTitle = isPR ? t('Pull Request', locale) : t('Issue', locale);
 
       return {
         title: `${langTitle} #${number}`,

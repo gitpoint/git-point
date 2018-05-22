@@ -18,7 +18,7 @@ import {
   SearchBar,
 } from 'components';
 
-import { translate } from 'utils';
+import { t } from 'utils';
 import { colors, fonts, normalize } from 'config';
 import {
   searchOpenRepoIssues,
@@ -109,8 +109,9 @@ class IssueList extends Component {
           underlayColor={colors.transparent}
           onPress={() =>
             navigate('NewIssue', {
-              title: translate('issue.newIssue.title', state.params.locale),
-            })}
+              title: t('New Issue', state.params.locale),
+            })
+          }
         />
       ),
     };
@@ -243,7 +244,8 @@ class IssueList extends Component {
                 showsCancelButton={searchFocus}
                 onFocus={() => this.setState({ searchFocus: true })}
                 onCancelButtonPress={() =>
-                  this.setState({ searchStart: false, query: '' })}
+                  this.setState({ searchStart: false, query: '' })
+                }
                 onSearchButtonPress={text => {
                   this.search(text);
                 }}
@@ -255,10 +257,7 @@ class IssueList extends Component {
           <ButtonGroup
             onPress={this.switchQueryType}
             selectedIndex={searchType}
-            buttons={[
-              translate('repository.issueList.openButton', locale),
-              translate('repository.issueList.closedButton', locale),
-            ]}
+            buttons={[t('Open', locale), t('Closed', locale)]}
             textStyle={styles.buttonGroupText}
             selectedTextStyle={styles.buttonGroupTextSelected}
             containerStyle={styles.buttonGroupContainer}
@@ -269,7 +268,7 @@ class IssueList extends Component {
           searchType === 0 && (
             <LoadingContainer
               animating={isPendingSearchOpenIssues && searchType === 0}
-              text={translate('repository.issueList.searchingMessage', locale, {
+              text={t('Searching for {query}', locale, {
                 query,
               })}
               style={styles.marginSpacing}
@@ -280,7 +279,7 @@ class IssueList extends Component {
           searchType === 1 && (
             <LoadingContainer
               animating={isPendingSearchClosedIssues && searchType === 1}
-              text={translate('repository.issueList.searchingMessage', locale, {
+              text={t('Searching for {query}', locale, {
                 query,
               })}
               style={styles.marginSpacing}
@@ -305,7 +304,7 @@ class IssueList extends Component {
           searchType === 0 && (
             <View style={styles.marginSpacing}>
               <Text style={styles.searchTitle}>
-                {translate('repository.issueList.noOpenIssues', locale)}
+                {t('No open issues found!', locale)}
               </Text>
             </View>
           )}
@@ -316,7 +315,7 @@ class IssueList extends Component {
           searchType === 1 && (
             <View style={styles.marginSpacing}>
               <Text style={styles.searchTitle}>
-                {translate('repository.issueList.noClosedIssues', locale)}
+                {t('No closed issues found!', locale)}
               </Text>
             </View>
           )}

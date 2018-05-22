@@ -139,7 +139,9 @@ export const RepositoryListItem = ({
       color: colors.grey,
       type: 'octicon',
     }}
-    onPress={() => navigation.navigate('Repository', { repository })}
+    onPress={() =>
+      navigation.navigate('Repository', { repoId: repository.full_name })
+    }
   />
 );
 

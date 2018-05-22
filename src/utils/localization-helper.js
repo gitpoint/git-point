@@ -1,11 +1,60 @@
+import React from 'react';
 import { AsyncStorage } from 'react-native';
 import distanceInWords from 'date-fns/distance_in_words';
 
 import { common } from 'config';
 import I18n from 'locale';
 
-export const translate = (key, locale, interpolation = null) =>
-  I18n.t(key, { locale, ...interpolation });
+export const t = (message, locale, interpolation = null) => {
+  let translation = I18n.t(message, locale, interpolation);
+
+  if (translation === '') {
+    translation = message;
+  }
+
+  const componentPlaceholdersReg = /({([^}]+)})/g;
+
+  const retval = [];
+
+  let ongoing = '';
+  let lastIndex = 0;
+  let key = 0;
+
+  translation.replace(
+    componentPlaceholdersReg,
+    (match, placeholder, name, index) => {
+      key += 1;
+      ongoing += translation.substring(lastIndex, index);
+      const value = interpolation[name];
+      const type = typeof value;
+
+      if (type === 'undefined') {
+        ongoing += '[unknown placeholder]';
+      } else if (type === 'object') {
+        retval.push(ongoing);
+        retval.push(React.cloneElement(value, { key }));
+        ongoing = '';
+      } else if (type === 'string' || type === 'number') {
+        ongoing += value;
+      }
+      lastIndex = index + match.length;
+    }
+  );
+
+  if (lastIndex < translation.length) {
+    ongoing += translation.substring(lastIndex);
+  }
+
+  if (ongoing.length) {
+    retval.push(ongoing);
+  }
+
+  if (retval.length === 1) {
+    return retval[0];
+  }
+
+  return retval;
+};
 
 export const getLocale = () => {
   // If for some reason a locale cannot be determined, fall back to defaultLocale.
@@ -53,7 +102,42 @@ export function relativeTimeToNow(date) {
   const localeConfig = {
     distanceInWords: {
       localize: (token, count) => {
-        return translate(`common.relativeTime.${token}`, locale, { count });
+        switch (token) {
+          case 'lessThanXSeconds':
+            return t('{lessThanXSeconds}s', locale, {
+              lessThanXSeconds: count,
+            });
+          case 'xSeconds':
+            return t('{xSeconds}s', locale, { xSeconds: count });
+          case 'halfAMinute':
+            return t('{halfAMinute}s', locale, { halfAMinute: count });
+          case 'lessThanXMinutes':
+            return t('{lessThanXMinutes}m', locale, {
+              lessThanXMinutes: count,
+            });
+          case 'xMinutes':
+            return t('{xMinutes}m', locale, { xMinutes: count });
+          case 'aboutXHours':
+            return t('{aboutXHours}h', locale, { aboutXHours: count });
+          case 'xHours':
+            return t('{xHours}h', locale, { xHours: count });
+          case 'xDays':
+            return t('{xDays}d', locale, { xDays: count });
+          case 'aboutXMonths':
+            return t('{aboutXMonths}mo', locale, { aboutXMonths: count });
+          case 'xMonths':
+            return t('{xMonths}mo', locale, { xMonths: count });
+          case 'aboutXYears':
+            return t('{aboutXYears}y', locale, { aboutXYears: count });
+          case 'xYears':
+            return t('{xYears}y', locale, { xYears: count });
+          case 'overXYears':
+            return t('{overXYears}y', locale, { overXYears: count });
+          case 'almostXYears':
+            return t('{almostXYears}y', locale, { almostXYears: count });
+          default:
+            return '?';
+        }
       },
     },
   };

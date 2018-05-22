@@ -18,7 +18,7 @@ import {
   SearchBar,
 } from 'components';
 
-import { translate } from 'utils';
+import { t } from 'utils';
 import { colors, fonts, normalize } from 'config';
 import {
   searchOpenRepoPulls,
@@ -218,7 +218,8 @@ class PullList extends Component {
                 showsCancelButton={searchFocus}
                 onFocus={() => this.setState({ searchFocus: true })}
                 onCancelButtonPress={() =>
-                  this.setState({ searchStart: false, query: '' })}
+                  this.setState({ searchStart: false, query: '' })
+                }
                 onSearchButtonPress={text => {
                   this.search(text);
                 }}
@@ -230,10 +231,7 @@ class PullList extends Component {
           <ButtonGroup
             onPress={this.switchQueryType}
             selectedIndex={searchType}
-            buttons={[
-              translate('repository.pullList.openButton', locale),
-              translate('repository.pullList.closedButton', locale),
-            ]}
+            buttons={[t('Open', locale), t('Closed', locale)]}
             textStyle={styles.buttonGroupText}
             selectedTextStyle={styles.buttonGroupTextSelected}
             containerStyle={styles.buttonGroupContainer}
@@ -244,7 +242,7 @@ class PullList extends Component {
           searchType === 0 && (
             <LoadingContainer
               animating={isPendingSearchOpenPulls && searchType === 0}
-              text={translate('repository.pullList.searchingMessage', locale, {
+              text={t('Searching for {query}', locale, {
                 query,
               })}
               style={styles.marginSpacing}
@@ -255,7 +253,7 @@ class PullList extends Component {
           searchType === 1 && (
             <LoadingContainer
               animating={isPendingSearchClosedPulls && searchType === 1}
-              text={translate('repository.pullList.searchingMessage', locale, {
+              text={t('Searching for {query}', locale, {
                 query,
               })}
               style={styles.marginSpacing}
@@ -280,7 +278,7 @@ class PullList extends Component {
           searchType === 0 && (
             <View style={styles.marginSpacing}>
               <Text style={styles.searchTitle}>
-                {translate('repository.pullList.noOpenPulls', locale)}
+                {t('No open pull requests found!', locale)}
               </Text>
             </View>
           )}
@@ -291,7 +289,7 @@ class PullList extends Component {
           searchType === 1 && (
             <View style={styles.marginSpacing}>
               <Text style={styles.searchTitle}>
-                {translate('repository.pullList.noOpenPulls', locale)}
+                {t('No open pull requests found!', locale)}
               </Text>
             </View>
           )}

@@ -21,7 +21,12 @@ import {
   IssueEventListItem,
 } from 'components';
 import { v3 } from 'api';
-import { translate, formatEventsToRender, openURLInView } from 'utils';
+import {
+  t,
+  formatEventsToRender,
+  openURLInView,
+  getRepoIdFromUrl,
+} from 'utils';
 import { colors } from 'config';
 import { getRepository, getContributors } from 'repository';
 import {
@@ -91,7 +96,7 @@ class Issue extends Component {
             underlayColor={colors.transparent}
             onPress={() =>
               navigate('IssueSettings', {
-                title: translate('issue.settings.title', state.params.locale),
+                title: t('Settings', state.params.locale),
                 issue: state.params.issue,
               })
             }
@@ -179,7 +184,7 @@ class Issue extends Component {
     const { navigation } = this.props;
 
     navigation.navigate('Repository', {
-      repositoryUrl: url,
+      repoId: getRepoIdFromUrl(url),
     });
   };
 
@@ -275,7 +280,7 @@ class Issue extends Component {
     const { repository } = this.props;
 
     navigate('EditIssueComment', {
-      title: translate('issue.comment.editCommentTitle', state.params.locale),
+      title: t('Edit Comment', state.params.locale),
       comment,
       repository,
     });
@@ -380,7 +385,7 @@ class Issue extends Component {
       ...new Set([...participantNames, ...contributorNames]),
     ].filter(item => !!item);
 
-    const issuesActions = [translate('common.openInBrowser', locale)];
+    const issuesActions = [t('Open in Browser', locale)];
 
     return (
       <ViewContainer>
@@ -428,8 +433,8 @@ class Issue extends Component {
           ref={o => {
             this.ActionSheet = o;
           }}
-          title={translate('issue.main.issueActions', locale)}
-          options={[...issuesActions, translate('common.cancel', locale)]}
+          title={t('Issue Actions', locale)}
+          options={[...issuesActions, t('Cancel', locale)]}
           cancelButtonIndex={1}
           onPress={this.handleActionSheetPress}
         />

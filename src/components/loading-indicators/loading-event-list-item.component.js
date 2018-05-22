@@ -24,21 +24,31 @@ const Avatar = styled(Animated.View)`
   margin-right: 10;
 `;
 
+const Icon = styled(Animated.View)`
+  width: 16;
+  height: 16;
+  background-color: ${colors.greyDark};
+  margin-left: 10;
+  margin-right: 5;
+  border-radius: 8;
+`;
+
 const TextBar = styled(Animated.View)`
   height: 7;
-  width: 80;
+  flex: 1;
   background-color: ${colors.greyDark};
 `;
 
-const LoadingUserListItemComponent = ({ opacity }: FadeAnimationProps) => (
+const LoadingEventListItemComponent = ({ opacity }: FadeAnimationProps) => (
   <Container>
     <Wrapper>
       <Avatar style={{ opacity }} />
       <TextBar style={{ opacity }} />
+      <Icon style={{ opacity }} />
     </Wrapper>
   </Container>
 );
 
-export const LoadingUserListItem = withFadeAnimation(
-  LoadingUserListItemComponent
+export const LoadingEventListItem = withFadeAnimation(
+  LoadingEventListItemComponent
 );

@@ -111,26 +111,24 @@ export const markRepoAsRead = repoFullName => {
 
     dispatch({ type: MARK_REPO_AS_READ.PENDING });
 
-    fetchRepoNotificationsCount(
-      owner,
-      repoName,
-      accessToken
-    ).then(repoNotificationsCount => {
-      fetchMarkRepoNotificationAsRead(repoFullName, accessToken)
-        .then(() => {
-          dispatch({
-            type: MARK_REPO_AS_READ.SUCCESS,
-            repoFullName,
-            repoNotificationsCount,
+    fetchRepoNotificationsCount(owner, repoName, accessToken).then(
+      repoNotificationsCount => {
+        fetchMarkRepoNotificationAsRead(repoFullName, accessToken)
+          .then(() => {
+            dispatch({
+              type: MARK_REPO_AS_READ.SUCCESS,
+              repoFullName,
+              repoNotificationsCount,
+            });
+          })
+          .catch(error => {
+            dispatch({
+              type: MARK_REPO_AS_READ.ERROR,
+              payload: error,
+            });
           });
-        })
-        .catch(error => {
-          dispatch({
-            type: MARK_REPO_AS_READ.ERROR,
-            payload: error,
-          });
-        });
-    });
+      }
+    );
   };
 };
 
