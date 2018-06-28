@@ -1,3 +1,9 @@
+---
+
+name: 🐛 Bug report
+about: Create a report to help us improve
+---
+
 <!--
   --- IMPORTANT ---
   This is a template for a bug report! If you want to submit a feature request,

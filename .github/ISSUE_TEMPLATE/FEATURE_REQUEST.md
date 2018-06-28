@@ -1,3 +1,9 @@
+---
+
+name: 🚀 Feature request
+about: Submit a proposal for a new feature
+---
+
 <!--
   --- IMPORTANT ---
   This is a template for a feature request! If you want to submit a bug report,
