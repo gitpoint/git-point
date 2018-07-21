@@ -51,7 +51,7 @@ module.exports = {
   Follow: '关注',
   Followers: '粉丝',
   Following: '关注',
-  'Follows you': '你已关注',
+  'Follows you': '已关注你',
   Fork: '派生',
   Forks: '派生',
   'GitPoint is open source and the history of contributions to the platform will always be visible to the public.':
