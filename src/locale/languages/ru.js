@@ -18,7 +18,7 @@ module.exports = {
   CANCEL: 'ОТМЕНА',
   CONTACT: 'КОНТАКТЫ',
   CONTRIBUTORS: 'УЧАСТНИКИ',
-  "Can't login?": '',
+  "Can't login?": 'Не можете войти?',
   "Can't see all your organizations?": 'Видите не все ваши организации?',
   Cancel: 'Отменить',
   'Change Merge Type': 'Изменить тип слияния',
@@ -56,7 +56,7 @@ module.exports = {
   Fork: 'Клонировать',
   Forks: 'Форков',
   'GitPoint is open source and the history of contributions to the platform will always be visible to the public.':
-    'GitPoint - это продукт с открытым исходным кодом, и история вкладов в приложение всегда будет видна публике.',
+    'GitPoint - это приложение с открытым исходным кодом, и история вкладов в приложение всегда будет видна публике.',
   'GitPoint repository': 'репозитории GitPoint',
   INFO: 'ИНФОРМАЦИЯ',
   ISSUES: 'ЗАДАЧИ',
@@ -107,7 +107,7 @@ module.exports = {
   OWNER: 'ВЛАДЕЛЕЦ',
   'One of the most feature-rich GitHub clients that is 100% free':
     'Самый многофункциональный бесплатный GitHub-клиент',
-  'Oops! it seems that you are not connected to the internet!': '',
+  'Oops! it seems that you are not connected to the internet!': 'Упс, кажется, вы не подключены к Интернету!',
   Open: 'Открыто',
   'Open in Browser': 'Открыть в браузере',
   Options: 'Настройки',
@@ -124,7 +124,7 @@ module.exports = {
   Repositories: 'Репозитории',
   'Repositories and Users': 'Репозитории и пользователи',
   'Repository Actions': 'Действия с репозиторием',
-  'Repository is not found': '',
+  'Repository is not found': 'Репозиторий не найден',
   'Retrieving notifications': 'Получение уведомлений',
   'SIGN IN': 'ВОЙТИ',
   SOURCE: 'КОД',
@@ -146,7 +146,7 @@ module.exports = {
     'Это означает, что мы никоим образом не можем использовать или передавать данные пользователя GitHub. Если его личные данные когда-либо становятся видимыми, мы не будем их записывать и просматривать. Если это случайно произошло, мы удалим их немедленно, используя безопасные методы удаления. Кроме того, мы специально настроили аутентификацию так, чтобы этого никогда не произшло.',
   'USER DATA': 'ДАННЫЕ ПОЛЬЗОВАТЕЛЯ',
   Unfollow: 'Отписаться',
-  Unknown: '',
+  Unknown: 'Неизвестный',
   'Unlock {issueType}': 'Разблокировать {issueType}',
   Unread: 'Не прочитано',
   Unstar: 'Снять отметку',
@@ -191,42 +191,46 @@ module.exports = {
   '{aboutXHours}h': '{aboutXHours} ч',
   '{aboutXMonths}mo': '{aboutXMonths} мес',
   '{aboutXYears}y': '{aboutXYears} г',
-  '{actor} added {member} at {repo}': '{actor} добавил {member} на {repo}',
+  '{actor} added {member} at {repo}': '{actor} добавил {member} в {repo}',
   '{actor} closed issue {issue} at {repo}':
-    '{actor} закрыл задачу {issue} на {repo}',
+    '{actor} закрыл задачу {issue} в {repo}',
   '{actor} closed pull request {pr} at {repo}':
-    '{actor} закрыл pull-запрос {pr} на {repo}',
+    '{actor} закрыл pull-запрос {pr} в {repo}',
   '{actor} commented on commit': '{actor} прокомментировал коммит',
   '{actor} commented on issue {issue} at {repo}':
-    '{actor} прокомментировал задачу {issue} на {repo}',
+    '{actor} прокомментировал задачу {issue} в {repo}',
   '{actor} commented on pull request {issue} at {repo}':
-    '{actor} прокомментировал pull-запрос {issue} на {repo}',
-  '{actor} commented on pull request {pr} at {repo}': '',
+    '{actor} прокомментировал pull-запрос {issue} в {repo}',
+  '{actor} commented on pull request {pr} at {repo}':
+    '{actor} прокомментировал pull-запрос {pr} в {repo}',
   '{actor} created branch {ref} at {repo}':
     '{actor} создал ветку {ref} на {repo}',
   '{actor} created repository {repo}': '{actor} создал репозиторий {repo}',
-  '{actor} created tag {ref} at {repo}': '{actor} создал тег {ref} на {repo}',
-  '{actor} created the {repo} wiki': '',
+  '{actor} created tag {ref} at {repo}': '{actor} создал тег {ref} в {repo}',
+  '{actor} created the {repo} wiki': 
+    '{actor} создал вики в {repo}',
   '{actor} deleted branch {ref} at {repo}':
     '{actor} удалил ветку {ref} на {repo}',
-  '{actor} deleted tag {ref} at {repo}': '{actor} удалил тег {ref} на {repo}',
-  '{actor} edited the {repo} wiki': '',
+  '{actor} deleted tag {ref} at {repo}': '{actor} удалил тег {ref} в {repo}',
+  '{actor} edited the {repo} wiki': 
+    '{actor} отредактировал вики в {repo}',
   '{actor} edited {member} at {repo}':
     '{actor} отредактировал {member} на {repo}',
-  '{actor} forked {repo} at {fork}': '{actor} клонировал {repo} на {fork}',
+  '{actor} forked {repo} at {fork}': '{actor} клонировал {repo} в {fork}',
   '{actor} made {repo} public': '{actor} сделал {repo} открытым',
-  '{actor} merged pull request {pr} at {repo}': '',
+  '{actor} merged pull request {pr} at {repo}': 
+    'actor} слил pull-запрос {pr} в {repo}',
   '{actor} opened issue {issue} at {repo}':
-    '{actor} открыл задачу {issue} на {repo}',
+    '{actor} открыл задачу {issue} в {repo}',
   '{actor} opened pull request {pr} at {repo}':
-    '{actor} открыл pull-запрос {pr} на {repo}',
+    '{actor} открыл pull-запрос {pr} в {repo}',
   '{actor} published release {id}': '{actor} отправил релиз {id}',
-  '{actor} pushed to {ref} at {repo}': '{actor} отправил в {ref} на {repo}',
-  '{actor} removed {member} at {repo}': '{actor} удалил {member} на {repo}',
+  '{actor} pushed to {ref} at {repo}': '{actor} отправил в {ref} в {repo}',
+  '{actor} removed {member} at {repo}': '{actor} удалил {member} в {repo}',
   '{actor} reopened issue {issue} at {repo}':
-    '{actor} заново открыл задачу {issue} на {repo}',
+    '{actor} заново открыл задачу {issue} в {repo}',
   '{actor} reopened pull request {pr} at {repo}':
-    '{actor} заново открыл pull-запрос {pr} на {repo}',
+    '{actor} заново открыл pull-запрос {pr} в {repo}',
   '{actor} starred {repo}': '{actor} отметил {repo}',
   '{almostXYears}y': '{almostXYears} г',
   '{halfAMinute}s': '30 c',
