@@ -107,7 +107,8 @@ module.exports = {
   OWNER: 'ВЛАДЕЛЕЦ',
   'One of the most feature-rich GitHub clients that is 100% free':
     'Самый многофункциональный бесплатный GitHub-клиент',
-  'Oops! it seems that you are not connected to the internet!': 'Упс, кажется, вы не подключены к Интернету!',
+  'Oops! it seems that you are not connected to the internet!':
+    'Упс, кажется, вы не подключены к Интернету!',
   Open: 'Открыто',
   'Open in Browser': 'Открыть в браузере',
   Options: 'Настройки',
@@ -207,18 +208,16 @@ module.exports = {
     '{actor} создал ветку {ref} на {repo}',
   '{actor} created repository {repo}': '{actor} создал репозиторий {repo}',
   '{actor} created tag {ref} at {repo}': '{actor} создал тег {ref} в {repo}',
-  '{actor} created the {repo} wiki': 
-    '{actor} создал вики в {repo}',
+  '{actor} created the {repo} wiki': '{actor} создал вики в {repo}',
   '{actor} deleted branch {ref} at {repo}':
     '{actor} удалил ветку {ref} на {repo}',
   '{actor} deleted tag {ref} at {repo}': '{actor} удалил тег {ref} в {repo}',
-  '{actor} edited the {repo} wiki': 
-    '{actor} отредактировал вики в {repo}',
+  '{actor} edited the {repo} wiki': '{actor} отредактировал вики в {repo}',
   '{actor} edited {member} at {repo}':
     '{actor} отредактировал {member} на {repo}',
   '{actor} forked {repo} at {fork}': '{actor} клонировал {repo} в {fork}',
   '{actor} made {repo} public': '{actor} сделал {repo} открытым',
-  '{actor} merged pull request {pr} at {repo}': 
+  '{actor} merged pull request {pr} at {repo}':
     'actor} смёржил пулреквест {pr} в {repo}',
   '{actor} opened issue {issue} at {repo}':
     '{actor} открыл ишью {issue} в {repo}',
