@@ -780,6 +780,16 @@
         "code",
         "test"
       ]
+    },
+    {
+      "login": "whitedogg13",
+      "name": "Richie",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/10307875?v=4",
+      "profile": "https://github.com/whitedogg13",
+      "contributions": [
+        "code"
+      ]
     }
-  ]
+  ],
+  "repoType": "github"
 }
