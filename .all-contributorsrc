@@ -780,6 +780,34 @@
         "code",
         "test"
       ]
+    },
+    {
+      "login": "JSweet314",
+      "name": "Jonathan Sweet",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/31966868?v=4",
+      "profile": "https://github.com/JSweet314",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "skenne21",
+      "name": "Sabrina Kennedy",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/30216992?v=4",
+      "profile": "https://github.com/skenne21",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "amercado1014",
+      "name": "Aldo Mercado",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/33230355?v=4",
+      "profile": "https://github.com/amercado1014",
+      "contributions": [
+        "code"
+      ]
     }
-  ]
+  ],
+  "repoType": "github"
 }
