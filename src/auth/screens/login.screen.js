@@ -182,7 +182,7 @@ class Login extends Component {
       modalVisible: false,
       cancelDisabled: false,
       showLoader: true,
-      loaderText: t('Connecting to GitHub...', this.locale),
+      loaderText: t('Connecting to GitHub...', this.props.locale),
       asyncStorageChecked: false,
     };
   }
@@ -234,13 +234,13 @@ class Login extends Component {
     if (url && url.substring(0, 11) === 'gitpoint://') {
       const [, queryStringFromUrl] = url.match(/\?(.*)/);
       const { state, code } = queryString.parse(queryStringFromUrl);
-      const { auth, getUser, navigation } = this.props;
+      const { auth, getUser, navigation, locale } = this.props;
 
       if (stateRandom === state) {
         this.setState({
           code,
           showLoader: true,
-          loaderText: t('Preparing GitPoint...', this.locale),
+          loaderText: t('Preparing GitPoint...', locale),
         });
 
         stateRandom = Math.random().toString();
@@ -285,9 +285,7 @@ class Login extends Component {
           >
             <SlideWelcome>
               <GitPointLogo />
-              <SlideTitle>
-                 {t('Welcome to GitPoint', locale)}
-              </SlideTitle>
+              <SlideTitle>{t('Welcome to GitPoint', locale)}</SlideTitle>
               <SlideText>
                 {t(
                   'One of the most feature-rich GitHub clients that is 100% free',
@@ -297,9 +295,7 @@ class Login extends Component {
             </SlideWelcome>
             <SlideNotifications>
               <SlideIcon name="bell" />
-              <SlideTitle>
-                {t('Control notifications', locale)}
-              </SlideTitle>
+              <SlideTitle>{t('Control notifications', locale)}</SlideTitle>
               <SlideText>
                 {t(
                   'View and control all of your unread and participating notifications',
@@ -309,9 +305,7 @@ class Login extends Component {
             </SlideNotifications>
             <SlideReposAndUsers>
               <SlideIcon name="repo" />
-              <SlideTitle>
-                {t('Repositories and Users', locale)}
-              </SlideTitle>
+              <SlideTitle>{t('Repositories and Users', locale)}</SlideTitle>
               <SlideText>
                 {t(
                   'Easily obtain repository, user and organization information',
@@ -321,9 +315,7 @@ class Login extends Component {
             </SlideReposAndUsers>
             <SlideIssuesAndPrs>
               <SlideIcon name="git-pull-request" />
-              <SlideTitle>
-                {t('Issues and Pull Requests', locale)}
-              </SlideTitle>
+              <SlideTitle>{t('Issues and Pull Requests', locale)}</SlideTitle>
               <SlideText>
                 {t(
                   'Communicate on conversations, merge pull requests and more',
