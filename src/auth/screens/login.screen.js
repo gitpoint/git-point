@@ -174,15 +174,15 @@ class Login extends Component {
     navigation: Object,
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       code: null,
       modalVisible: false,
       cancelDisabled: false,
       showLoader: true,
-      loaderText: t('Connecting to GitHub...', this.props.locale),
+      loaderText: t('Connecting to GitHub...', props.locale),
       asyncStorageChecked: false,
     };
   }
