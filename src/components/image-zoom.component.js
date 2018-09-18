@@ -49,8 +49,8 @@ export class ImageZoom extends Component {
     style: Object,
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       imgZoom: false,
       imgFailed: false,

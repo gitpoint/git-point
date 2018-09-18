@@ -32,8 +32,8 @@ export class LoadingMembersList extends Component {
     title: string,
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       fadeAnimValue: new Animated.Value(0),
     };

@@ -62,8 +62,8 @@ export class ParallaxScroll extends Component {
 
   state: State;
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       parallaxHeaderHeight: this.getParallaxHeaderHeight(),
     };

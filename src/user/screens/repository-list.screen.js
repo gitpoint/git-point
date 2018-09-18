@@ -70,8 +70,8 @@ class RepositoryList extends Component {
     searchFocus: boolean,
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       query: '',
