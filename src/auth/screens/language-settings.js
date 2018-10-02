@@ -79,4 +79,9 @@ export default [
     emojiCode: ':waving_white_flag:',
     name: 'Basque',
   },
+  {
+    code: 'sv',
+    emojiCode: ':flag-se:',
+    name: 'Svenska',
+  },
 ];
