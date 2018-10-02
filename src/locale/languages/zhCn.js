@@ -18,7 +18,7 @@ module.exports = {
   CANCEL: '取消',
   CONTACT: '联系方式',
   CONTRIBUTORS: '贡献者',
-  "Can't login?": '',
+  "Can't login?": '你登录不了吗?',
   "Can't see all your organizations?": '看不到你所有的组织?',
   Cancel: '取消',
   'Change Merge Type': '改变合并类型',
