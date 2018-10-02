@@ -125,7 +125,7 @@ module.exports = {
   Repositories: 'Dépôts',
   'Repositories and Users': 'Dépôts et Utilisateurs',
   'Repository Actions': 'Actions sur le dépôt',
-  'Repository is not found': 'Dépot introuvable',
+  'Repository is not found': 'Dépôt introuvable',
   'Retrieving notifications': 'Récupération des notifications',
   'SIGN IN': 'CONNEXION',
   SOURCE: 'SOURCE',
