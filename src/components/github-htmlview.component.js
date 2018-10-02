@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
-import { Dimensions, StyleSheet, View, Text, Platform } from 'react-native';
+import {
+  Dimensions,
+  StyleSheet,
+  View,
+  Text,
+  Platform,
+  TouchableOpacity,
+} from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import { TableWrapper, Table, Cell } from 'react-native-table-component';
 import SyntaxHighlighter from 'react-native-syntax-highlighter';
 import { github as GithubStyle } from 'react-syntax-highlighter/dist/styles';
 import entities from 'entities';
+import { Icon } from 'react-native-elements';
 
 import { ImageZoom, ToggleView } from 'components';
 import { colors, fonts, normalize } from 'config';
@@ -131,6 +139,30 @@ class CellWithImage extends Cell {
         {data}
       </View>
     );
+  }
+}
+
+class WithToggle extends Component {
+  props: {
+    children: Function,
+  };
+
+  state = { expand: false };
+
+  toggle = () => {
+    const { expand } = this.state;
+
+    this.setState({ expand: !expand });
+  };
+
+  render() {
+    const { expand } = this.state;
+    const _fnRender = this.props.children;
+
+    return _fnRender({
+      expand,
+      toggle: this.toggle,
+    });
   }
 }
 
@@ -384,6 +416,60 @@ export class GithubHtmlView extends Component {
             >
               {defaultRenderer(node.children, node)}
             </Text>
+          );
+        },
+        details: (node, index, siblings, parent, defaultRenderer) => {
+          const summaryTagIdx =
+            (node.children &&
+              node.children.findIndex(
+                n => n.type === 'tag' && n.name === 'summary'
+              )) ||
+            -1;
+          const summaryTag = node.children[summaryTagIdx];
+
+          if (!summaryTag || !summaryTag.children) {
+            // we have a details tag without summary, rollback to default render
+            return <View>{defaultRenderer(node.children, node)}</View>;
+          }
+
+          const childrenWithoutSummary = [...node.children]; // don't touch the original data
+
+          childrenWithoutSummary.splice(summaryTagIdx, 1);
+
+          const renderSummary = tag => {
+            if (tag.children.length === 1 && tag.children[0].type === 'text') {
+              // if we only have one text child, make it prettier
+              // by removing line break and triming space
+              return (
+                <Text>
+                  {tag.children[0].data.replace(/\s\s+/g, ' ').trim()}
+                </Text>
+              );
+            }
+
+            return defaultRenderer(tag.children, tag);
+          };
+
+          return (
+            <WithToggle>
+              {({ expand, toggle }) => (
+                <View>
+                  <TouchableOpacity
+                    style={{ flexDirection: 'row', alignItems: 'flex-start' }}
+                    onPress={toggle}
+                  >
+                    <Icon
+                      type="octicon"
+                      name={expand ? 'triangle-down' : 'triangle-right'}
+                    />
+                    <View style={{ flex: 1 }}>{renderSummary(summaryTag)}</View>
+                  </TouchableOpacity>
+
+                  {(expand && defaultRenderer(childrenWithoutSummary, node)) ||
+                    null}
+                </View>
+              )}
+            </WithToggle>
           );
         },
       };
