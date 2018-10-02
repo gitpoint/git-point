@@ -60,8 +60,8 @@ export class CommentInput extends Component {
     height: number,
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       text: '',

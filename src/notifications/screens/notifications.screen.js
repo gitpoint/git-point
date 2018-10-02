@@ -162,8 +162,8 @@ class Notifications extends Component {
     navigation: Object,
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       type: NotificationsType.UNREAD,

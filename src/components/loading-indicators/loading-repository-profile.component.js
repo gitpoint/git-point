@@ -66,8 +66,8 @@ export class LoadingRepositoryProfile extends Component {
     fadeAnimValue: Animated,
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       fadeAnimValue: new Animated.Value(0),
     };

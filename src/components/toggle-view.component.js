@@ -12,8 +12,8 @@ export class ToggleView extends Component {
     collapsed: boolean,
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       collapsed: true,
