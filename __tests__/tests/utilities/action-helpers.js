@@ -8,6 +8,7 @@ describe('Action Helpers', () => {
       PENDING: 'FOO_PENDING',
       SUCCESS: 'FOO_SUCCESS',
       ERROR: 'FOO_ERROR',
+      actionName: 'FOO',
     });
   });
 
