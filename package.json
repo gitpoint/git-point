@@ -96,7 +96,7 @@
     "redux-actions": "^2.2.1",
     "redux-devtools-extension": "^2.13.2",
     "redux-logger": "^2.7.4",
-    "redux-persist": "^4.3.1",
+    "redux-persist": "5.10.0",
     "redux-persist-transform-encrypt": "^1.0.2",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
