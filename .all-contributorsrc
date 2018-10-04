@@ -789,6 +789,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "MarioArnt",
+      "name": "Mario Arnautou",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/10983824?v=4",
+      "profile": "http://mario.arnautou.fr/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "repoType": "github"
