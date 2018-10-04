@@ -23,8 +23,8 @@ export const loadingAnimation = state => {
 
 export const withFadeAnimation = WrappedComponent => {
   return class extends React.Component {
-    constructor() {
-      super();
+    constructor(props) {
+      super(props);
       this.fadeFrom = 0.3;
       this.fadeTo = 0.6;
       this.state = {

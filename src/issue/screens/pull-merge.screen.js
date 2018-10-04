@@ -74,8 +74,8 @@ class PullMerge extends Component {
     commitMessage: string,
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       mergeMethod: 0,

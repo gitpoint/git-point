@@ -32,6 +32,8 @@ const IconContainer = styled.TouchableOpacity`
   justify-content: center;
 `;
 
+IconContainer.displayName = 'IconContainer';
+
 export const LabelListItem = ({ label, removeLabel }: Props) => (
   <LabelListItemContainer>
     <Wrapper>

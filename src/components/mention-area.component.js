@@ -39,8 +39,8 @@ export class MentionArea extends Component {
     tracking: boolean,
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       height: new Animated.Value(0),

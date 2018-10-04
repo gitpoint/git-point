@@ -98,8 +98,8 @@ class RepositoryFile extends Component {
     navigation: Object,
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       imageWidth: null,

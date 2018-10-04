@@ -60,8 +60,8 @@ class NewIssue extends Component {
     issueComment: string,
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       issueTitle: '',

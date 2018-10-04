@@ -39,8 +39,8 @@ const styles = StyleSheet.create({
 });
 
 export class LoadingRepositoryListItem extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       fadeAnimValue: new Animated.Value(0),
     };
