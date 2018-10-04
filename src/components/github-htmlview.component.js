@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Dimensions,
-  StyleSheet,
-  View,
-  Text,
-  Platform,
-  TouchableOpacity,
-} from 'react-native';
+import { Dimensions, StyleSheet, View, Text, Platform } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import { TableWrapper, Table, Cell } from 'react-native-table-component';
 import SyntaxHighlighter from 'react-native-syntax-highlighter';
@@ -139,30 +132,6 @@ class CellWithImage extends Cell {
         {data}
       </View>
     );
-  }
-}
-
-class WithToggle extends Component {
-  props: {
-    children: Function,
-  };
-
-  state = { expand: false };
-
-  toggle = () => {
-    const { expand } = this.state;
-
-    this.setState({ expand: !expand });
-  };
-
-  render() {
-    const { expand } = this.state;
-    const _fnRender = this.props.children;
-
-    return _fnRender({
-      expand,
-      toggle: this.toggle,
-    });
   }
 }
 
@@ -451,25 +420,21 @@ export class GithubHtmlView extends Component {
           };
 
           return (
-            <WithToggle>
-              {({ expand, toggle }) => (
-                <View>
-                  <TouchableOpacity
-                    style={{ flexDirection: 'row', alignItems: 'flex-start' }}
-                    onPress={toggle}
-                  >
-                    <Icon
-                      type="octicon"
-                      name={expand ? 'triangle-down' : 'triangle-right'}
-                    />
-                    <View style={{ flex: 1 }}>{renderSummary(summaryTag)}</View>
-                  </TouchableOpacity>
-
-                  {(expand && defaultRenderer(childrenWithoutSummary, node)) ||
-                    null}
+            <ToggleView
+              renderTouchable={collapsed => (
+                <View
+                  style={{ flexDirection: 'row', alignItems: 'flex-start' }}
+                >
+                  <Icon
+                    type="octicon"
+                    name={collapsed ? 'triangle-right' : 'triangle-down'}
+                  />
+                  <View style={{ flex: 1 }}>{renderSummary(summaryTag)}</View>
                 </View>
               )}
-            </WithToggle>
+            >
+              {defaultRenderer(childrenWithoutSummary, node)}
+            </ToggleView>
           );
         },
       };
