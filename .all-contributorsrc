@@ -798,6 +798,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "SpaceLenore",
+      "name": "Lenore",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/31237758?v=4",
+      "profile": "https://github.com/SpaceLenore",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "repoType": "github"
