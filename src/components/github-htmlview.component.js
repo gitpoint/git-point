@@ -388,15 +388,12 @@ export class GithubHtmlView extends Component {
           );
         },
         details: (node, index, siblings, parent, defaultRenderer) => {
-          const summaryTagIdx =
-            (node.children &&
-              node.children.findIndex(
-                n => n.type === 'tag' && n.name === 'summary'
-              )) ||
-            -1;
+          const summaryTagIdx = node.children.findIndex(
+            n => n.type === 'tag' && n.name === 'summary'
+          );
           const summaryTag = node.children[summaryTagIdx];
 
-          if (!summaryTag || !summaryTag.children) {
+          if (!summaryTag) {
             // we have a details tag without summary, rollback to default render
             return <View>{defaultRenderer(node.children, node)}</View>;
           }
