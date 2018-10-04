@@ -1,8 +1,28 @@
 export default [
   {
+    code: 'de',
+    emojiCode: ':flag-de:',
+    name: 'Deutsch',
+  },
+  {
     code: 'en',
     emojiCode: ':flag-us:',
     name: 'English',
+  },
+  {
+    code: 'eo',
+    emojiCode: ':waving_white_flag:',
+    name: 'Esperanto',
+  },
+  {
+    code: 'es',
+    emojiCode: ':flag-es:',
+    name: 'Español',
+  },
+  {
+    code: 'eu',
+    emojiCode: ':waving_white_flag:',
+    name: 'Basque',
   },
   {
     code: 'fr',
@@ -10,14 +30,19 @@ export default [
     name: 'Français',
   },
   {
+    code: 'gl',
+    emojiCode: ':waving_white_flag:',
+    name: 'Galego',
+  },
+  {
     code: 'nl',
     emojiCode: ':flag-nl:',
     name: 'Nederlands',
   },
   {
-    code: 'tr',
-    emojiCode: ':flag-tr:',
-    name: 'Türkçe',
+    code: 'pl',
+    emojiCode: ':flag-pl:',
+    name: 'Polski',
   },
   {
     code: 'pt',
@@ -35,29 +60,19 @@ export default [
     name: 'Русский',
   },
   {
-    code: 'eo',
-    emojiCode: ':waving_white_flag:',
-    name: 'Esperanto',
+    code: 'sv',
+    emojiCode: ':flag-se:',
+    name: 'Svenska',
   },
   {
-    code: 'gl',
-    emojiCode: ':waving_white_flag:',
-    name: 'Galego',
+    code: 'tr',
+    emojiCode: ':flag-tr:',
+    name: 'Türkçe',
   },
   {
-    code: 'pl',
-    emojiCode: ':flag-pl:',
-    name: 'Polski',
-  },
-  {
-    code: 'de',
-    emojiCode: ':flag-de:',
-    name: 'Deutsch',
-  },
-  {
-    code: 'es',
-    emojiCode: ':flag-es:',
-    name: 'Español',
+    code: 'uk',
+    emojiCode: ':flag-ua:',
+    name: 'Українська',
   },
   {
     code: 'zhCn',
@@ -68,20 +83,5 @@ export default [
     code: 'zhTw',
     emojiCode: ':flag-tw:',
     name: '正體中文',
-  },
-  {
-    code: 'uk',
-    emojiCode: ':flag-ua:',
-    name: 'Українська',
-  },
-  {
-    code: 'eu',
-    emojiCode: ':waving_white_flag:',
-    name: 'Basque',
-  },
-  {
-    code: 'sv',
-    emojiCode: ':flag-se:',
-    name: 'Svenska',
   },
 ];
