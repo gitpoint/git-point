@@ -60,6 +60,11 @@ export default [
     name: 'Русский',
   },
   {
+    code: 'sr',
+    emojiCode: ':flag-rs:',
+    name: 'Српски',
+  },
+  {
     code: 'sv',
     emojiCode: ':flag-se:',
     name: 'Svenska',
