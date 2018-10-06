@@ -5,7 +5,7 @@ import { GithubHtmlView } from 'components';
 import { Icon } from 'react-native-elements';
 
 describe('<GithubHtmlView />', () => {
-  it('correctly renders <details/> tag in GithubHtmlView', () => {
+  it('correctly renders <details/> tag in GithubHtmlView with correct icon', () => {
     const sourceHtml = `
       <details>
         <summary>title</summary>
@@ -17,8 +17,6 @@ describe('<GithubHtmlView />', () => {
       <GithubHtmlView source={sourceHtml} onLinkPress={() => 0} />
     );
 
-    // we should be able to find a <Icon/> with proper name,
-    // which means our custom logic for <details/> is applied
     expect(inst.root.findByType(Icon).props.name).toEqual('triangle-right');
   });
 
@@ -37,8 +35,6 @@ describe('<GithubHtmlView />', () => {
       <GithubHtmlView source={sourceHtml} onLinkPress={() => 0} />
     );
 
-    // we should be able to find the processed title text node,
-    // which means our custom logic for <details/> is applied
     expect(
       !!inst.root
         .findAllByType(Text)
@@ -48,7 +44,7 @@ describe('<GithubHtmlView />', () => {
     ).toBe(true);
   });
 
-  it('if there is no <summary/> tag, we should do fallback render', () => {
+  it('if there is no <summary/> tag, we should do fallback render which contains no icon', () => {
     const sourceHtml = `
       <details>
         <div>no summary here!!</div>
@@ -59,7 +55,6 @@ describe('<GithubHtmlView />', () => {
       <GithubHtmlView source={sourceHtml} onLinkPress={() => 0} />
     );
 
-    // fallback render in this case won't contain any Icon
     expect(inst.root.findAllByType(Icon).length).toBe(0);
   });
 
@@ -77,7 +72,6 @@ describe('<GithubHtmlView />', () => {
       <GithubHtmlView source={sourceHtml} onLinkPress={() => 0} />
     );
 
-    // should still reach here, and correct render the right arrow icon
     expect(inst.root.findByType(Icon).props.name).toEqual('triangle-right');
   });
 });
