@@ -40,6 +40,11 @@ export default [
     name: 'Nederlands',
   },
   {
+    code: 'ph',
+    emojiCode: ':flag-ph:',
+    name: 'Tagalog',
+  },
+  {
     code: 'pl',
     emojiCode: ':flag-pl:',
     name: 'Polski',
