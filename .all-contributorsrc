@@ -816,6 +816,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "cobisimo",
+      "name": "Никола Радовановић (Nikola Radovanović)",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/2192460?v=4",
+      "profile": "http://www.toptal.com/resume/nikola-radovanovic",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "repoType": "github"

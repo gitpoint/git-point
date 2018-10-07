@@ -13,6 +13,7 @@ export default {
   pt: require('./pt'),
   ptBr: require('./ptBr'),
   ru: require('./ru'),
+  sr: require('./sr'),
   sv: require('./sv'),
   tr: require('./tr'),
   uk: require('./uk'),
