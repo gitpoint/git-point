@@ -1,8 +1,8 @@
 module.exports = {
   '#{number} by {user} was closed {time} ago':
-    '#{number} by {user} was closed {time} ago',
+    '#{number} por {user} foi fechada faz {time}',
   '#{number} opened {time} ago by {user}':
-    '#{number} opened {time} ago by {user}',
+    '#{number} aberta faz {time} por {user}',
   ACTIONS: 'AÇÕES',
   'ANALYTICS INFORMATION': 'INFORMAÇÕES ANALÍTICAS',
   ASSIGNEES: 'ATRIBUÍDA A',

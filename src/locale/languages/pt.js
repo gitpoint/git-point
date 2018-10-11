@@ -1,6 +1,6 @@
 module.exports = {
   '#{number} by {user} was closed {time} ago':
-    '#{number} de {user} foi  fechada em {time} ',
+    '#{number} de {user} foi fechada em {time} ',
   '#{number} opened {time} ago by {user}':
     '#{number} aberta em {time} por {user}',
   ACTIONS: 'AÇÕES',
