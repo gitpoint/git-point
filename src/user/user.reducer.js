@@ -11,7 +11,7 @@ import {
   GET_STAR_COUNT,
 } from './user.type';
 
-const initialState = {
+export const initialState = {
   user: {},
   orgs: [],
   isFollowing: false, // auth is following user
@@ -28,6 +28,7 @@ const initialState = {
   isPendingCheckFollower: false,
   isPendingRepositories: false,
   isPendingFollowers: false,
+  isPendingChangeFollowing: false,
   isPendingFollowing: false,
   isPendingSearchUserRepos: false,
   isPendingStarredRepositories: false,
