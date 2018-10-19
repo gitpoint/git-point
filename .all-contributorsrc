@@ -825,6 +825,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "TFarla",
+      "name": "Thomas Farla",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/4613944?v=4",
+      "profile": "https://ilearned.today",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "repoType": "github"
