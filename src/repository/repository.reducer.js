@@ -11,7 +11,7 @@ import {
   SEARCH_CLOSED_PULLS,
 } from './repository.type';
 
-const initialState = {
+export const initialState = {
   repository: {},
   contributors: [],
   labels: [],

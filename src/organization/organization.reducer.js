@@ -6,7 +6,7 @@ import {
   GET_ORG_REPOS_ERROR,
 } from './organization.constants';
 
-const initialState = {
+export const initialState = {
   organization: {},
   repositories: [],
   members: [],
