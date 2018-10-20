@@ -112,7 +112,7 @@
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react-native": "1.9.1",
     "babylon": "^6.18.0",
-    "chalk": "^2.4.1",
+    "chalk": "^2.3.2",
     "concurrently": "^3.5.0",
     "coveralls": "^3.0.0",
     "cz-conventional-changelog": "^2.0.0",
