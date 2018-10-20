@@ -15,6 +15,7 @@ export default {
   ru: require('./ru'),
   sr: require('./sr'),
   sv: require('./sv'),
+  th: require('./th'),
   tr: require('./tr'),
   uk: require('./uk'),
   zhCn: require('./zhCn'),

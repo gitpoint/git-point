@@ -75,6 +75,11 @@ export default [
     name: 'Svenska',
   },
   {
+    code: 'th',
+    emojiCode: ':flag-th:',
+    name: 'ภาษาไทย',
+  },
+  {
     code: 'tr',
     emojiCode: ':flag-tr:',
     name: 'Türkçe',
