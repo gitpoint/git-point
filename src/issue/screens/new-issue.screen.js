@@ -2,35 +2,41 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { ScrollView, StyleSheet, TextInput, View, Alert } from 'react-native';
+import { Alert, ScrollView } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import styled from 'styled-components';
 
 import { ViewContainer, SectionList, LoadingModal } from 'components';
 import { t } from 'utils';
 import { colors, fonts, normalize } from 'config';
 import { submitNewIssue } from '../issue.action';
 
-const styles = StyleSheet.create({
-  textInput: {
-    fontSize: normalize(12),
-    marginHorizontal: 15,
-    flex: 1,
-    color: colors.black,
-    ...fonts.fontPrimary,
-  },
-  submitTitle: {
-    color: colors.green,
-    ...fonts.fontPrimary,
-  },
-  listItemContainer: {
-    flex: 1,
-  },
-  titleSmall: {
+const StyledListItem = styled(ListItem).attrs({
+  titleStyle: {
     color: colors.primaryDark,
     ...fonts.fontPrimarySemiBold,
     fontSize: normalize(10),
   },
-});
+})``;
+
+const StyledTextInput = styled.TextInput`
+  flex-grow: 1;
+  margin-horizontal: 15;
+  ${fonts.fontPrimary};
+  font-size: ${normalize(12)};
+  color: ${colors.black};
+`;
+
+const SubmitListItem = styled(ListItem).attrs({
+  titleStyle: {
+    color: colors.green,
+    ...fonts.fontPrimary,
+  },
+})``;
+
+const SubmitView = styled.View`
+  flex: 1;
+`;
 
 const mapStateToProps = state => ({
   locale: state.auth.locale,
@@ -94,16 +100,20 @@ class NewIssue extends Component {
 
   render() {
     const { locale, repository, isPendingSubmitting } = this.props;
-    const { issueTitle, issueComment } = this.state;
+    const {
+      issueTitle,
+      issueTitleHeight,
+      issueComment,
+      issueCommentHeight,
+    } = this.state;
 
     return (
       <ViewContainer>
         {isPendingSubmitting && <LoadingModal />}
         <ScrollView>
           {repository.full_name && (
-            <ListItem
+            <StyledListItem
               title={repository.full_name}
-              titleStyle={styles.titleSmall}
               leftIcon={{
                 name: 'repo',
                 size: 17,
@@ -114,7 +124,7 @@ class NewIssue extends Component {
             />
           )}
           <SectionList title={t('Issue Title', locale)}>
-            <TextInput
+            <StyledTextInput
               underlineColorAndroid={'transparent'}
               placeholder={t('Write a title for your issue here', locale)}
               blurOnSubmit
@@ -126,16 +136,13 @@ class NewIssue extends Component {
               }
               onChangeText={text => this.setState({ issueTitle: text })}
               placeholderTextColor={colors.grey}
-              style={[
-                styles.textInput,
-                { height: Math.max(60, this.state.issueTitleHeight) },
-              ]}
+              style={[{ height: Math.max(60, issueTitleHeight) }]}
               value={issueTitle}
             />
           </SectionList>
 
           <SectionList title={t('Issue Comment', locale)}>
-            <TextInput
+            <StyledTextInput
               underlineColorAndroid={'transparent'}
               placeholder={t('Write a comment for your issue here', locale)}
               multiline
@@ -146,24 +153,20 @@ class NewIssue extends Component {
                 })
               }
               placeholderTextColor={colors.grey}
-              style={[
-                styles.textInput,
-                { height: Math.max(60, this.state.issueCommentHeight) },
-              ]}
+              style={[{ height: Math.max(60, issueCommentHeight) }]}
               value={issueComment}
             />
           </SectionList>
 
           <SectionList>
-            <View style={styles.listItemContainer}>
-              <ListItem
+            <SubmitView>
+              <SubmitListItem
                 title={t('Submit', locale)}
                 hideChevron
                 underlayColor={colors.greyLight}
-                titleStyle={styles.submitTitle}
                 onPress={() => this.submitNewIssue()}
               />
-            </View>
+            </SubmitView>
           </SectionList>
         </ScrollView>
       </ViewContainer>
