@@ -21,7 +21,8 @@ const StyledListItem = styled(ListItem).attrs({
 
 const StyledTextInput = styled.TextInput`
   flex-grow: 1;
-  margin-horizontal: 15;
+  height: ${props => Math.max(60, props.valueHeight)}
+  margin: 0 15px;
   ${fonts.fontPrimary};
   font-size: ${normalize(12)};
   color: ${colors.black};
@@ -35,7 +36,7 @@ const SubmitListItem = styled(ListItem).attrs({
 })``;
 
 const SubmitView = styled.View`
-  flex: 1;
+  flex-grow: 1;
 `;
 
 const mapStateToProps = state => ({
@@ -136,8 +137,8 @@ class NewIssue extends Component {
               }
               onChangeText={text => this.setState({ issueTitle: text })}
               placeholderTextColor={colors.grey}
-              style={[{ height: Math.max(60, issueTitleHeight) }]}
               value={issueTitle}
+              valueHeight={issueTitleHeight}
             />
           </SectionList>
 
@@ -153,8 +154,8 @@ class NewIssue extends Component {
                 })
               }
               placeholderTextColor={colors.grey}
-              style={[{ height: Math.max(60, issueCommentHeight) }]}
               value={issueComment}
+              valueHeight={issueCommentHeight}
             />
           </SectionList>
 
