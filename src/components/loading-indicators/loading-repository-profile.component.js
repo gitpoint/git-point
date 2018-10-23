@@ -21,6 +21,17 @@ const Profile = styled.View`
   justify-content: center;
 `;
 
+const OctIcon = styled(Icon).attrs({
+  name: 'repo',
+  type: 'octicon',
+  size: 45,
+  color: colors.greyLight,
+  containerStyle: {
+    marginLeft: 10,
+    paddingBottom: 20,
+  },
+})``;
+
 const Details = styled.View`
   flex: 1;
   flex-direction: row;
@@ -66,13 +77,7 @@ export class LoadingRepositoryProfile extends Component {
       <Container>
         <View>
           <Profile>
-            <Icon
-              containerStyle={{ marginLeft: 10, paddingBottom: 20 }}
-              name={'repo'}
-              type="octicon"
-              size={45}
-              color={colors.greyLight}
-            />
+            <OctIcon />
           </Profile>
 
           <Details>
