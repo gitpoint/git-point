@@ -8,9 +8,9 @@ import {
   displayError,
   actionNameForCall,
 } from 'utils/api-helpers';
-import { type CallParameters, Client } from '../client';
+import { type CallType, Client } from '../client';
 
-export const createDispatchProxy = (Provider: Client) => {
+export const createDispatchProxy = (Provider: Class<Client>) => {
   const client: Client = new Provider();
 
   return new Proxy(client, {
@@ -35,7 +35,7 @@ export const createDispatchProxy = (Provider: Client) => {
           }
 
           // 2. Get all the call parameters from the client
-          const callType: CallParameters = endpoint[method](...args);
+          const callType: CallType = endpoint[method](...args);
 
           // 3. Get special instructions from the SpecialParameter
           const { loadMore = false, forceRefresh = false } = callType.params;

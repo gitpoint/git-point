@@ -29,6 +29,7 @@ node_modules/react-native/flow-github/
 [options]
 module.system.node.resolve_dirname=node_modules
 module.system.node.resolve_dirname=src
+module.name_mapper='^package.json$' -> '<PROJECT_ROOT>/package.json'
 emoji=true
 
 module.system=haste
