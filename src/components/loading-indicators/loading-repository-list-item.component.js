@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Animated, View } from 'react-native';
+import { Animated } from 'react-native';
 import styled from 'styled-components';
 
 import { colors } from 'config';
