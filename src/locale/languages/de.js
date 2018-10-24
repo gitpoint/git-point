@@ -249,7 +249,7 @@ module.exports = {
   '{lessThanXSeconds}s': '{lessThanXSeconds}s',
   '{numFilesChanged} files': '{numFilesChanged} Dateien',
   '{overXYears}y': '{overXYears}J',
-  '{xDays}d': 'x{Days}t',
+  '{xDays}d': '{xDays}t',
   '{xHours}h': '{xHours}h',
   '{xMinutes}m': '{xMinutes}min',
   '{xMonths}mo': '{xMonths}Mo',
