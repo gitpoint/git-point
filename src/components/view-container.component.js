@@ -7,7 +7,7 @@ type Props = {
   children?: React.Element<*>,
 };
 
-const Container = styled.View`
+export const StyledViewContainer = styled.View`
   flex: 1;
   flex-direction: column;
   justify-content: flex-start;
@@ -16,7 +16,7 @@ const Container = styled.View`
 `;
 
 export const ViewContainer = ({ children }: Props) => (
-  <Container>{children}</Container>
+  <StyledViewContainer>{children}</StyledViewContainer>
 );
 
 ViewContainer.defaultProps = {
