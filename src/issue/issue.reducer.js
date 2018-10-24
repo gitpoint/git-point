@@ -15,7 +15,7 @@ import {
   GET_ISSUE_EVENTS,
 } from './issue.type';
 
-const initialState = {
+export const initialState = {
   issue: {},
   comments: [],
   events: [],

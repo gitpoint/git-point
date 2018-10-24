@@ -120,6 +120,7 @@
         "functionPrototypeMethods": false
       }
     ],
+    "flowtype/define-flow-type": 1,
     "react/jsx-wrap-multilines": "off",
     "react/jsx-closing-bracket-location": "off",
     "react/jsx-curly-spacing": [

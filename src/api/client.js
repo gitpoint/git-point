@@ -26,8 +26,7 @@ type UpdateEntity = {
   updater: Function,
 };
 
-export type CallParameters = {
-  endpoint: string,
+type BaseCallParameters = {
   schema: Schema,
   params: SpecialParameters,
   fetchParameters?: FetchParameters,
@@ -36,8 +35,18 @@ export type CallParameters = {
   entityId?: String | number,
   updateEntity?: UpdateEntity,
 };
+type GraphQLCallParameters = {
+  ...BaseCallParameters,
+  query: string,
+  variables: Object,
+};
+export type CallParameters = {
+  ...BaseCallParameters,
+  endpoint: string,
+};
 
-export type CallType = CallParameters & {
+export type CallType = {
+  ...CallParameters,
   type: string,
 };
 
@@ -154,7 +163,7 @@ export class Client {
     query,
     variables,
     ...config
-  }: CallParameters): CallType => ({
+  }: GraphQLCallParameters): CallType => ({
     type: 'query',
     endpoint: 'graphql',
     params: {},
@@ -262,7 +271,7 @@ export class Client {
     getEventsReceived: (
       userId: string,
       params: SpecialParameters = {}
-    ): CallParameters =>
+    ): CallType =>
       this.list({
         endpoint: `users/${userId}/received_events`,
         params: params || {},
