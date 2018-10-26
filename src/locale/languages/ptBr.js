@@ -18,7 +18,7 @@ module.exports = {
   CANCEL: 'CANCELAR',
   CONTACT: 'CONTATO',
   CONTRIBUTORS: 'CONTRIBUIDORES',
-  "Can't login?": '',
+  "Can't login?": 'Não consegue entrar?',
   "Can't see all your organizations?":
     'Não consegue ver todas as suas organizações?',
   Cancel: 'Cancelar',
@@ -147,7 +147,7 @@ module.exports = {
     'Isso significa que, de forma alguma, vemos, usamos ou compartilhamos os dados do GitHub de um usuário. Se dados privados ficarem visíveis em algum momento, nunca iremos armazená-los ou vê-los. Se os dados forem acidentalmente armazenados, iremos deletá-los imediatamente, usando métodos seguros. Como dito, configuramos autenticação especificamente para que isso nunca aconteça.',
   'USER DATA': 'DADOS DO USUÁRIO',
   Unfollow: 'Deixar de seguir',
-  Unknown: '',
+  Unknown: 'Desconhecido',
   'Unlock {issueType}': 'Destrancar {issueType}',
   Unread: 'Não lidas',
   Unstar: 'Desfavoritar',
@@ -160,7 +160,7 @@ module.exports = {
   'View and control all of your unread and participating notifications':
     'Ver e controlar todas as suas notificações',
   Watch: 'Acompanhar',
-  Watchers: 'Observador',
+  Watchers: 'Observadores',
   Watching: 'Observando',
   'We currently use Google Analytics and iTunes App Analytics to help us measure traffic and usage trends for the GitPoint. These tools collect information sent by your device including device and platform version, region and referrer. This information cannot reasonably be used to identify any particular individual user and no personal information is extracted.':
     'Atualmente, usamos o Google Analytics e o iTunes App Analytics para nos ajudar a medir tráfego e tendências de utilização para o GitPoint. Essas ferramentas coletam informações enviadas pelo seu dispositivo, incluindo versão, plataforma e região. Estas informações não podem ser usadas para identificar qualquer usuário em particular e nenhuma informação pessoal é extraída.',
