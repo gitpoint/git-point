@@ -223,14 +223,14 @@ module.exports = {
     '{actor} открыл ишью {issue} в {repo}',
   '{actor} opened pull request {pr} at {repo}':
     '{actor} открыл пулреквест {pr} в {repo}',
-  '{actor} published release {id}': '{actor} отправил релиз {id}',
+  '{actor} published release {id}': '{actor} опубликовал релиз {id}',
   '{actor} pushed to {ref} at {repo}': '{actor} отправил в {ref} в {repo}',
   '{actor} removed {member} at {repo}': '{actor} удалил {member} в {repo}',
   '{actor} reopened issue {issue} at {repo}':
     '{actor} заново открыл ишью {issue} в {repo}',
   '{actor} reopened pull request {pr} at {repo}':
     '{actor} заново открыл пулреквест {pr} в {repo}',
-  '{actor} starred {repo}': '{actor} отметил {repo}',
+  '{actor} starred {repo}': '{actor} добавил {repo} в избранное',
   '{almostXYears}y': '{almostXYears} г',
   '{halfAMinute}s': '30 c',
   '{lessThanXMinutes}m': '{lessThanXMinutes} м',
