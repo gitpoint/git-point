@@ -230,7 +230,7 @@ module.exports = {
     '{actor} заново открыл ишью {issue} в {repo}',
   '{actor} reopened pull request {pr} at {repo}':
     '{actor} заново открыл пулреквест {pr} в {repo}',
-  '{actor} starred {repo}': '{actor} отметил {repo} как фаворит',
+  '{actor} starred {repo}': '{actor} добавил {repo} в избранное',
   '{almostXYears}y': '{almostXYears} г',
   '{halfAMinute}s': '30 c',
   '{lessThanXMinutes}m': '{lessThanXMinutes} м',
