@@ -99,6 +99,11 @@ export default [
     emojiCode: ':flag-tw:',
     name: '正體中文',
   },
+  {
+    code: 'ca',
+    emojiCode: ':waving_white_flag:',
+    name: 'Català',
+  },
 ].sort((a, b) => {
   // Sort the languages based on their name.
   const nameA = a.name.toUpperCase();
