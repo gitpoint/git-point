@@ -835,10 +835,20 @@
         "translation"
       ]
     },
+    {
       "login": "TFarla",
       "name": "Thomas Farla",
       "avatar_url": "https://avatars3.githubusercontent.com/u/4613944?v=4",
       "profile": "https://ilearned.today",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "samuelmeuli",
+      "name": "Samuel Meuli",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/22477950?v=4",
+      "profile": "https://samuelmeuli.com",
       "contributions": [
         "code"
       ]
