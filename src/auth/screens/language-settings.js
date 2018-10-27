@@ -1,5 +1,10 @@
 export default [
   {
+    code: 'ca',
+    emojiCode: ':waving_white_flag:',
+    name: 'Català',
+  },
+  {
     code: 'de',
     emojiCode: ':flag-de:',
     name: 'Deutsch',

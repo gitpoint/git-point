@@ -1,42 +1,45 @@
 import React, { Component } from 'react';
-import { StyleSheet, Animated, View } from 'react-native';
+import { Animated } from 'react-native';
+import styled from 'styled-components';
 
 import { colors } from 'config';
 import { loadingAnimation } from 'utils';
 
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: 20,
-    paddingRight: 20,
-    paddingBottom: 20,
-    height: 100,
-    borderBottomColor: '#ededed',
-    borderBottomWidth: 1,
-    backgroundColor: 'transparent',
-  },
-  wrapper: {
-    flex: 1,
-    flexDirection: 'column',
-    marginLeft: 10,
-  },
-  textBarTitle: {
-    height: 7,
-    width: 100,
-    backgroundColor: colors.greyDarkest,
-    marginBottom: 10,
-  },
-  textBarLine1: {
-    height: 7,
-    width: 250,
-    backgroundColor: colors.grey,
-    marginBottom: 10,
-  },
-  textBarLine2: {
-    height: 7,
-    width: 80,
-    backgroundColor: colors.grey,
-  },
-});
+const Container = styled.View`
+  padding-top: 20;
+  padding-right: 20;
+  padding-bottom: 20;
+  height: 100;
+  border-bottom-color: #ededed;
+  border-bottom-width: 1;
+  background-color: transparent;
+`;
+
+const Wrapper = styled.View`
+  flex: 1;
+  flex-direction: column;
+  margin-left: 10;
+`;
+
+const TextBarTitle = styled(Animated.View)`
+  height: 7;
+  width: 100;
+  background-color: ${colors.greyDarkest};
+  margin-bottom: 10;
+`;
+
+const TextBarLine1 = styled(Animated.View)`
+  height: 7;
+  width: 250;
+  background-color: ${colors.grey};
+  margin-bottom: 10;
+`;
+
+const TextBarLine2 = styled(Animated.View)`
+  height: 7;
+  width: 80;
+  background-color: ${colors.grey};
+`;
 
 export class LoadingRepositoryListItem extends Component {
   constructor(props) {
@@ -52,21 +55,13 @@ export class LoadingRepositoryListItem extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.wrapper}>
-          <Animated.View
-            style={[styles.textBarTitle, { opacity: this.state.fadeAnimValue }]}
-          />
-
-          <Animated.View
-            style={[styles.textBarLine1, { opacity: this.state.fadeAnimValue }]}
-          />
-
-          <Animated.View
-            style={[styles.textBarLine2, { opacity: this.state.fadeAnimValue }]}
-          />
-        </View>
-      </View>
+      <Container>
+        <Wrapper>
+          <TextBarTitle style={{ opacity: this.state.fadeAnimValue }} />
+          <TextBarLine1 style={{ opacity: this.state.fadeAnimValue }} />
+          <TextBarLine2 style={{ opacity: this.state.fadeAnimValue }} />
+        </Wrapper>
+      </Container>
     );
   }
 }
