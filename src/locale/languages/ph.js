@@ -91,6 +91,7 @@ module.exports = {
   'No contributors found': 'Walang nahanap na kontribyutor',
   'No description provided.': 'Walang deskripsyong naibigay',
   'No issues': 'Walang mga isyu',
+  'No members found': '',
   'No open issues': 'Walang nakabukas na mga isyu',
   'No open issues found!': 'Walang nahanap na nakabukas na mga isyu!',
   'No open pull requests': 'Walang nakabukas na mga pull request',

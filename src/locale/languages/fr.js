@@ -92,6 +92,7 @@ module.exports = {
   'No contributors found': 'Aucun contributeur trouvé',
   'No description provided.': 'Aucune description fournie.',
   'No issues': 'Aucun ticket',
+  'No members found': '',
   'No open issues': 'Aucun ticket ouvert',
   'No open issues found!': 'Aucun ticket ouvert trouvé !',
   'No open pull requests': 'Aucune pull request ouverte',
@@ -108,7 +109,8 @@ module.exports = {
   OWNER: 'PROPRIÉTAIRE',
   'One of the most feature-rich GitHub clients that is 100% free':
     'Le client GitHub le plus riche en fonctionnalités tout en étant 100% gratuit',
-  'Oops! it seems that you are not connected to the internet!': 'Aïe ! Il semble que vous êtes actuellement hors connexion !',
+  'Oops! it seems that you are not connected to the internet!':
+    'Aïe ! Il semble que vous êtes actuellement hors connexion !',
   Open: 'Ouvert',
   'Open in Browser': 'Ouvrir dans le navigateur',
   Options: 'Options',

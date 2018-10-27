@@ -143,7 +143,7 @@ class OrganizationProfile extends Component {
             <MembersList
               title={t('MEMBERS', locale)}
               members={orgMembers}
-              noMembersMessage={t('No contributors found', locale)}
+              noMembersMessage={t('No members found', locale)}
               navigation={navigation}
               onEndReached={() =>
                 this.props.getOrgMembers(orgId, { loadMore: true })
