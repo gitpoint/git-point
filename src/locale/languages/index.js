@@ -1,5 +1,6 @@
 /* eslint-disable quote-props */
 export default {
+  ca: require('./ca'),
   de: require('./de'),
   en: require('./en'),
   eo: require('./eo'),
