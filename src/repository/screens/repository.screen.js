@@ -413,7 +413,7 @@ class Repository extends Component {
                       title: t('Issues', locale),
                       type: 'issue',
                       issues: repository.issues.nodes.map(issue =>
-                        toOldIssueFormat(issue)
+                        toOldIssueFormat(issue, repoId)
                       ),
                     });
                   } else {
