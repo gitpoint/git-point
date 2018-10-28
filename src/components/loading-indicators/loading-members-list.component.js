@@ -1,31 +1,33 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Animated } from 'react-native';
+import { Animated } from 'react-native';
+import styled from 'styled-components';
 
 import { colors, fonts } from 'config';
 import { loadingAnimation } from 'utils';
 
-const styles = StyleSheet.create({
-  wrapper: {
-    marginTop: 15,
-    padding: 15,
-  },
-  avatarContainer: {
-    flex: 1,
-    flexDirection: 'row',
-  },
-  avatar: {
-    borderRadius: 15,
-    height: 30,
-    width: 30,
-    backgroundColor: colors.grey,
-    marginRight: 5,
-  },
-  sectionTitle: {
-    color: colors.black,
-    ...fonts.fontPrimaryBold,
-    marginBottom: 10,
-  },
-});
+const Wrapper = styled.View`
+  margin-top: 15;
+  padding: 15px;
+`;
+
+const SectionTitle = styled.Text`
+  color: ${colors.black};
+  margin-bottom: 10;
+  ${fonts.fontPrimaryBold};
+`;
+
+const AvatarContainer = styled.View`
+  flex: 1;
+  flex-direction: row;
+`;
+
+const Avatar = styled(Animated.View)`
+  border-radius: 15;
+  height: 30;
+  width: 30;
+  background-color: ${colors.grey};
+  margin-right: 5;
+`;
 
 export class LoadingMembersList extends Component {
   props: {
@@ -47,20 +49,20 @@ export class LoadingMembersList extends Component {
     const { title } = this.props;
 
     return (
-      <View style={styles.wrapper}>
-        <Text style={styles.sectionTitle}>{title}</Text>
+      <Wrapper>
+        <SectionTitle>{title}</SectionTitle>
 
-        <View style={styles.avatarContainer}>
+        <AvatarContainer>
           {[...Array(10)].map((item, index) => {
             return (
-              <Animated.View
+              <Avatar
                 key={index} // eslint-disable-line react/no-array-index-key
-                style={[styles.avatar, { opacity: this.state.fadeAnimValue }]}
+                style={{ opacity: this.state.fadeAnimValue }}
               />
             );
           })}
-        </View>
-      </View>
+        </AvatarContainer>
+      </Wrapper>
     );
   }
 }
