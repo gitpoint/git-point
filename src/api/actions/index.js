@@ -21,3 +21,7 @@ export const REPOS_GET_CONTRIBUTORS = createPaginationActionSet(
   'REPOS_GET_CONTRIBUTORS'
 );
 export const REPOS_FORK = createActionSet('REPOS_FORK');
+export const REPOS_GET_ISSUE = createActionSet('REPOS_GET_ISSUE');
+export const REPOS_GET_ISSUE_TIMELINE = createPaginationActionSet(
+  'REPOS_GET_ISSUE_TIMELINE'
+);
