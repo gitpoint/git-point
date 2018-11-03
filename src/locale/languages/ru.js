@@ -91,6 +91,7 @@ module.exports = {
   'No contributors found': 'Участники не найдены',
   'No description provided.': 'Нет описания.',
   'No issues': 'Нет ишью',
+  'No members found': 'Не найдены участники',
   'No open issues': 'Нет открытых ишью',
   'No open issues found!': 'Не найдено открытых ишью!',
   'No open pull requests': 'Нет открытых пулреквестов',

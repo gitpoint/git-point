@@ -91,6 +91,7 @@ module.exports = {
   'No contributors found': 'Neniu kontribuantoj trovita',
   'No description provided.': 'Neniu priskribo provizita.',
   'No issues': 'Neniu afero',
+  'No members found': '',
   'No open issues': 'Ne malfermaj aferoj',
   'No open issues found!': 'Ne malfermitaj aferoj trovitaj!',
   'No open pull requests': 'Ne malfermaj tiri petoj',

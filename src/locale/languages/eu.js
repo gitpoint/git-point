@@ -92,6 +92,7 @@ module.exports = {
   'No contributors found': 'Laguntzailerik ez da aurkitu',
   'No description provided.': 'Ez dago deskribapena.',
   'No issues': 'Ez daude issues',
+  'No members found': '',
   'No open issues': 'Ez daude issues irekita',
   'No open issues found!': 'Ez dira aurkitu issues!',
   'No open pull requests': 'Ez daude pull requests irekita',

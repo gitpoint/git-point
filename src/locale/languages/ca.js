@@ -91,6 +91,7 @@ module.exports = {
   'No contributors found': "No s'ha trobat cap contribuïdor",
   'No description provided.': "No s'ha trobat cap descripció",
   'No issues': 'No hi ha ninguna issue',
+  'No members found': 'No s\'ha trobat cap membre',
   'No open issues': 'No hi ha ninguna issue oberta',
   'No open issues found!': "No s'ha trobat cap issue oberta!",
   'No open pull requests': 'No hi ha ninguna pull request oberta',

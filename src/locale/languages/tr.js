@@ -92,6 +92,7 @@ module.exports = {
   'No contributors found': 'katkıda bulunan bulunamadı',
   'No description provided.': 'Açıklama yapılmadı.',
   'No issues': 'issue yok',
+  'No members found': '',
   'No open issues': 'Açık issue yok',
   'No open issues found!': 'Açık issue bulunamadı!',
   'No open pull requests': "Açık pull request'ler",

@@ -90,6 +90,7 @@ module.exports = {
   'No contributors found': 'Нема сарадника',
   'No description provided.': 'Није достављен опис.',
   'No issues': 'Без поднесака',
+  'No members found': 'Нема чланова',
   'No open issues': 'Без отворених поднесака',
   'No open issues found!': 'Нема отворених поднесака!',
   'No open pull requests': 'Без активних захтева за преузимање',

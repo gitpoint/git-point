@@ -90,6 +90,7 @@ module.exports = {
   'No contributors found': 'Учасники не знайдені',
   'No description provided.': 'Немає опису.',
   'No issues': 'Немає задач',
+  'No members found': 'Не знайдені учасники',
   'No open issues': 'Немає відкритих задач',
   'No open issues found!': 'Не знайдено відкритих задач!',
   'No open pull requests': 'Немає відкритих pull-запитів',

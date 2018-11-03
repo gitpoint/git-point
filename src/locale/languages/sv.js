@@ -91,6 +91,7 @@ module.exports = {
   'No contributors found': 'Inga contributors hittades',
   'No description provided.': 'Ingen beskrivning.',
   'No issues': 'Inga issues',
+  'No members found': '',
   'No open issues': 'Inga öppna issues',
   'No open issues found!': 'Inga öppna issues hittades!',
   'No open pull requests': 'Inga öppna pull requests',

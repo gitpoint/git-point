@@ -91,6 +91,7 @@ module.exports = {
   'No contributors found': 'ไม่เจอผู้มีส่วนร่วม',
   'No description provided.': 'ไม่มีการเขียนการบรรยายไว้',
   'No issues': 'ไม่มี issues',
+  'No members found': '',
   'No open issues': 'ไม่มี issue ใดที่เปิดไว้',
   'No open issues found!': 'ไม่เจอ issue ใดที่เปิดไว้',
   'No open pull requests': 'ไม่มี pull requests ใดที่เปิดไว้',

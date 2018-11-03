@@ -92,6 +92,7 @@ module.exports = {
   'No contributors found': 'Aucun contributeur trouvé',
   'No description provided.': 'Aucune description fournie.',
   'No issues': 'Aucun ticket',
+  'No members found': 'Aucun membre trouvé',
   'No open issues': 'Aucun ticket ouvert',
   'No open issues found!': 'Aucun ticket ouvert trouvé !',
   'No open pull requests': 'Aucune pull request ouverte',

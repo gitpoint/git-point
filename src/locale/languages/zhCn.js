@@ -89,6 +89,7 @@ module.exports = {
   'No contributors found': '没有贡献者',
   'No description provided.': '没有提供简介',
   'No issues': '没有问题',
+  'No members found': '没有找到成员',
   'No open issues': '没有未解决的问题',
   'No open issues found!': '没有待解决的问题！',
   'No open pull requests': '没有未处理的合并请求',

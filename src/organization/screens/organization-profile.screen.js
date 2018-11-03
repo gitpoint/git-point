@@ -143,6 +143,7 @@ class OrganizationProfile extends Component {
             <MembersList
               title={t('MEMBERS', locale)}
               members={orgMembers}
+              noMembersMessage={t('No members found', locale)}
               navigation={navigation}
               onEndReached={() =>
                 this.props.getOrgMembers(orgId, { loadMore: true })
@@ -189,7 +190,8 @@ const mapStateToProps = (state, ownProps) => {
   } = state;
 
   const orgId = ownProps.navigation.state.params.organization.login;
-  const org = orgs[orgId] || ownProps.navigation.state.params.organization;
+  const org =
+    orgs[orgId.toLowerCase()] || ownProps.navigation.state.params.organization;
 
   const orgMembersPagination = ORGS_GET_MEMBERS[orgId] || {
     ids: [],
