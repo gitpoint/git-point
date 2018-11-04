@@ -71,8 +71,9 @@ const mapStateToProps = (state, ownProps) => {
   const timelineItemsPagination = REPOS_GET_ISSUE_TIMELINE[issueId] || {
     ids: [],
   };
-  const timelineItems = timelineItemsPagination.ids
-      .map(id => issueTimelineItems[id]);
+  const timelineItems = timelineItemsPagination.ids.map(
+    id => issueTimelineItems[id]
+  );
 
   return {
     locale,
@@ -82,10 +83,8 @@ const mapStateToProps = (state, ownProps) => {
       REPOS_GET_CONTRIBUTORS[issueRepository] || { ids: [] }
     ).ids.map(id => users[id]),
     issue: issues[issueURL],
-    comments: timelineItems
-      .filter(item => item && item.event === 'commented'),
-    events: timelineItems
-      .filter(item => item && item.event !== 'commented'),
+    comments: timelineItems.filter(item => item && item.event === 'commented'),
+    events: timelineItems.filter(item => item && item.event !== 'commented'),
     timelineItemsPagination,
     pr,
     diff,
@@ -295,10 +294,11 @@ class Issue extends Component {
 
   editComment = comment => {
     const { state, navigate } = this.props.navigation;
-    const { repository } = this.props;
+    const { issue, repository } = this.props;
 
     navigate('EditIssueComment', {
       title: t('Edit Comment', state.params.locale),
+      issue,
       comment,
       repository,
     });
@@ -430,7 +430,8 @@ class Issue extends Component {
                 keyExtractor={this.keyExtractor}
                 renderItem={this.renderItem}
                 onEndReached={() =>
-                  repository && this.props.getIssueTimeline(
+                  repository &&
+                  this.props.getIssueTimeline(
                     repository.full_name,
                     issue.number,
                     { loadMore: true }
