@@ -109,6 +109,7 @@ query ($owner: String!, $name: String!) {
         ...PullRequestsList
       }
     }
+    viewerPermission
   }
 }
 
