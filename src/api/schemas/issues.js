@@ -10,25 +10,22 @@ export const issueSchema = new schema.Entity(
 
 const issueComment = new schema.Entity('issueComments');
 const issueEvent = new schema.Entity('issueEvents');
+const issueIgnoredEvent = new schema.Entity('issueIgnoredEvents');
 
 export const issueTimelineItemSchema = new schema.Union(
   {
     issueComment,
     issueEvent,
+    issueIgnoredEvent,
   },
   item => {
-    const tokens = item.url.split('/');
-
-    tokens.pop(); // the last is id
-
-    const type = tokens.pop();
-
-    switch (type) {
-      case 'comments':
-        return 'issueComment';
-      case 'events':
-      default:
-        return 'issueEvent';
+    if (!item.id) {
+      // i.e. 'cross-referenced'
+      return 'issueIgnoredEvents';
+    } else if (item.event === 'commented') {
+      return 'issueComment';
     }
+
+    return 'issueEvent';
   }
 );

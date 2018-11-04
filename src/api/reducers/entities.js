@@ -9,6 +9,7 @@ export const entities = (
     issues: {},
     issueComments: {},
     issueEvents: {},
+    issueIgnoredEvents: {},
     users: {},
     gqlRepos: {},
   },
