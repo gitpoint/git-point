@@ -399,6 +399,11 @@ export class Client {
       this.get({
         endpoint: `repos/${repoId}/issues/${issueId}`,
         params,
+        fetchParameters: {
+          headers: {
+            Accept: this.Accept.FULL,
+          },
+        },
         schema: Schemas.ISSUE,
       }),
     getIssueTimeline: (repoId: string, issueId: number, params: SpecialParameters = {}) =>
@@ -407,7 +412,7 @@ export class Client {
         params,
         fetchParameters: {
           headers: {
-            Accept: this.Accept.MOCKINGBIRD_PREVIEW,
+            Accept: [this.Accept.MOCKINGBIRD_PREVIEW, this.Accept.FULL].join(','),
           },
         },
         schema: [Schemas.ISSUE_TIMELINE_ITEM],

@@ -350,7 +350,7 @@ class Issue extends Component {
       return this.renderHeader();
     }
 
-    if (item.event) {
+    if (item.event && item.event !== 'commented') {
       return (
         <IssueEventListItem
           repository={repository}
