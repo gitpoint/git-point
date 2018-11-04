@@ -313,6 +313,7 @@ class Issue extends Component {
   renderHeader = () => {
     const {
       issue,
+      repository,
       pr,
       diff,
       isMerged,
@@ -325,6 +326,7 @@ class Issue extends Component {
     return (
       <IssueDescription
         issue={issue}
+        repository={repository}
         diff={diff}
         isMergeable={pr.mergeable}
         isMerged={isMerged}
