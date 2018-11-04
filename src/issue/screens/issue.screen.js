@@ -206,6 +206,7 @@ class Issue extends Component {
     ) {
       navigation.navigate('Issue', {
         issueURL: node.attribs.href
+          .replace(/(#.+)$/, '')
           .replace('https://github.com', `${v3.root}/repos`)
           .replace(/pull\/([0-9]+)$/, 'issues/$1'),
       });
@@ -430,7 +431,7 @@ class Issue extends Component {
                 keyExtractor={this.keyExtractor}
                 renderItem={this.renderItem}
                 onEndReached={() =>
-                  this.props.getIssueTimeline(
+                  repository && this.props.getIssueTimeline(
                     repository.full_name,
                     issue.number,
                     { loadMore: true }
