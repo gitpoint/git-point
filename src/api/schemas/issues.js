@@ -8,24 +8,5 @@ export const issueSchema = new schema.Entity(
   }
 );
 
-const issueComment = new schema.Entity('issueComments');
-const issueEvent = new schema.Entity('issueEvents');
-const issueIgnoredEvent = new schema.Entity('issueIgnoredEvents');
-
-export const issueTimelineItemSchema = new schema.Union(
-  {
-    issueComment,
-    issueEvent,
-    issueIgnoredEvent,
-  },
-  item => {
-    if (!item.id) {
-      // i.e. 'cross-referenced'
-      return 'issueIgnoredEvents';
-    } else if (item.event === 'commented') {
-      return 'issueComment';
-    }
-
-    return 'issueEvent';
-  }
-);
+// TODO: some events have no id field, i.e. cross-referenced
+export const issueTimelineItemSchema = new schema.Entity('issueTimelineItems');

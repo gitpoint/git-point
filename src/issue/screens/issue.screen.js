@@ -60,7 +60,7 @@ const mapStateToProps = (state, ownProps) => {
       isPostingComment,
       isDeletingComment,
     },
-    entities: { users, repos, issues, issueComments, issueEvents },
+    entities: { users, repos, issues, issueTimelineItems },
     pagination: { REPOS_GET_CONTRIBUTORS, REPOS_GET_ISSUE_TIMELINE },
   } = state;
 
@@ -71,6 +71,8 @@ const mapStateToProps = (state, ownProps) => {
   const timelineItemsPagination = REPOS_GET_ISSUE_TIMELINE[issueId] || {
     ids: [],
   };
+  const timelineItems = timelineItemsPagination.ids
+      .map(id => issueTimelineItems[id]);
 
   return {
     locale,
@@ -80,12 +82,10 @@ const mapStateToProps = (state, ownProps) => {
       REPOS_GET_CONTRIBUTORS[issueRepository] || { ids: [] }
     ).ids.map(id => users[id]),
     issue: issues[issueURL],
-    comments: timelineItemsPagination.ids
-      .filter(({ schema }) => schema === 'issueComment')
-      .map(({ id }) => issueComments[id]),
-    events: timelineItemsPagination.ids
-      .filter(({ schema }) => schema === 'issueEvent')
-      .map(({ id }) => issueEvents[id]),
+    comments: timelineItems
+      .filter(item => item && item.event === 'commented'),
+    events: timelineItems
+      .filter(item => item && item.event !== 'commented'),
     timelineItemsPagination,
     pr,
     diff,
