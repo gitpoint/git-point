@@ -41,7 +41,6 @@ const SubmitView = styled.View`
 
 const mapStateToProps = state => ({
   locale: state.auth.locale,
-  repository: state.repository.repository,
   isPendingSubmitting: state.issue.isPendingSubmitting,
 });
 
@@ -57,7 +56,6 @@ class NewIssue extends Component {
   props: {
     submitNewIssue: Function,
     locale: string,
-    repository: Object,
     navigation: Object,
     isPendingSubmitting: boolean,
   };
@@ -79,7 +77,8 @@ class NewIssue extends Component {
   }
 
   submitNewIssue = () => {
-    const { submitNewIssue, repository, locale, navigation } = this.props;
+    const { submitNewIssue, locale, navigation } = this.props;
+    const { repository } = navigation.state.params;
     const { issueTitle, issueComment } = this.state;
     const repoName = repository.name;
     const owner = repository.owner.login;
@@ -100,7 +99,8 @@ class NewIssue extends Component {
   };
 
   render() {
-    const { locale, repository, isPendingSubmitting } = this.props;
+    const { locale, navigation, isPendingSubmitting } = this.props;
+    const { repository } = navigation.state.params;
     const {
       issueTitle,
       issueTitleHeight,

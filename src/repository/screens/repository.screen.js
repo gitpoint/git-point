@@ -412,6 +412,7 @@ class Repository extends Component {
                     navigation.navigate('IssueList', {
                       title: t('Issues', locale),
                       type: 'issue',
+                      repository,
                       issues: repository.issues.nodes.map(issue =>
                         toOldIssueFormat(issue, repoId)
                       ),
@@ -419,6 +420,7 @@ class Repository extends Component {
                   } else {
                     navigation.navigate('NewIssue', {
                       title: t('New Issue', locale),
+                      repository,
                     });
                   }
                 }}
