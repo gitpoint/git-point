@@ -14,7 +14,7 @@ import ActionSheet from 'react-native-actionsheet';
 import {
   ViewContainer,
   LoadingContainer,
-  LoadingListItem,
+  LoadingCommonItem,
   IssueDescription,
   CommentListItem,
   CommentInput,
@@ -173,7 +173,6 @@ class Issue extends Component {
     authUser: Object,
     repository: Object,
     contributors: Array,
-    isPendingIssue: boolean,
     isPendingDiff: boolean,
     isPendingCheckMerge: boolean,
     isDeletingComment: boolean,
@@ -340,7 +339,7 @@ class Issue extends Component {
 
   renderFooter = () => {
     return this.props.timelineItemsPagination.nextPageUrl ? (
-      <LoadingListItem />
+      <LoadingCommonItem />
     ) : null;
   };
 
@@ -379,12 +378,12 @@ class Issue extends Component {
       repository,
       comments,
       contributors,
-      isPendingIssue,
       isDeletingComment,
       locale,
       navigation,
     } = this.props;
 
+    const isPendingIssue = !issue || !repository;
     const isLoadingData = !!(isPendingIssue || isDeletingComment);
     const isShowLoadingContainer = isPendingIssue;
     const header = { header: true, created_at: '' };
