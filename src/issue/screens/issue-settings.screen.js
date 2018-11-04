@@ -13,15 +13,14 @@ import {
 } from 'components';
 import { emojifyText, t, openURLInView } from 'utils';
 import { colors, fonts } from 'config';
+import { v3 } from 'api';
 import { getLabels } from 'repository';
 import { editIssue, changeIssueLockStatus } from '../issue.action';
 
 const mapStateToProps = state => ({
   locale: state.auth.locale,
   authUser: state.auth.user,
-  repository: state.repository.repository,
   labels: state.repository.labels,
-  issue: state.issue.issue,
   isMerged: state.issue.isMerged,
   isEditingIssue: state.issue.isEditingIssue,
   isPendingLabels: state.repository.isPendingLabels,
@@ -59,9 +58,7 @@ class IssueSettings extends Component {
     getLabels: Function,
     locale: string,
     authUser: Object,
-    repository: Object,
     labels: Array,
-    issue: Object,
     isMerged: boolean,
     // isEditingIssue: boolean,
     isPendingLabels: boolean,
@@ -70,7 +67,9 @@ class IssueSettings extends Component {
 
   componentDidMount() {
     this.props.getLabels(
-      this.props.repository.labels_url.replace('{/name}', '')
+      `${v3.root}/repos/${
+        this.props.navigation.state.params.repository.full_name
+      }/labels`
     );
   }
 
@@ -89,7 +88,8 @@ class IssueSettings extends Component {
   };
 
   handleIssueActionPress = index => {
-    const { issue, navigation } = this.props;
+    const { navigation } = this.props;
+    const { issue } = navigation.state.params;
     const newState = issue.state === 'open' ? 'close' : 'open';
 
     if (index === 0) {
@@ -100,7 +100,7 @@ class IssueSettings extends Component {
   };
 
   handleLockIssueActionPress = index => {
-    const { issue, repository } = this.props;
+    const { issue, repository } = this.props.navigation.state.params;
     const repoName = repository.name;
     const owner = repository.owner.login;
 
@@ -115,7 +115,8 @@ class IssueSettings extends Component {
   };
 
   handleAddLabelActionPress = index => {
-    const { issue, labels } = this.props;
+    const { navigation, labels } = this.props;
+    const { issue } = navigation.state.params;
     const labelChoices = [...labels.map(label => label.name)];
 
     if (
@@ -135,7 +136,7 @@ class IssueSettings extends Component {
   };
 
   editIssue = (editParams, stateChangeParams) => {
-    const { issue, repository } = this.props;
+    const { issue, repository } = this.props.navigation.state.params;
     const repoName = repository.name;
     const owner = repository.owner.login;
     const updateStateParams = stateChangeParams || editParams;
@@ -149,10 +150,12 @@ class IssueSettings extends Component {
     );
   };
 
-  openURLInBrowser = () => openURLInView(this.props.issue.html_url);
+  openURLInBrowser = () =>
+    openURLInView(this.props.navigation.state.params.issue.html_url);
 
   render() {
-    const { issue, isMerged, locale, authUser, navigation } = this.props;
+    const { isMerged, locale, authUser, navigation } = this.props;
+    const { issue } = navigation.state.params;
     const issueType = issue.pull_request
       ? t('Pull Request', locale)
       : t('Issue', locale);

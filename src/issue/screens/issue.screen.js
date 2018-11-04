@@ -133,6 +133,7 @@ class Issue extends Component {
               navigate('IssueSettings', {
                 title: t('Settings', state.params.locale),
                 issue: state.params.issue,
+                repository: state.params.repository,
               })
             }
           />
@@ -182,8 +183,6 @@ class Issue extends Component {
 
   componentDidMount() {
     this.getIssueInformation();
-
-    this.props.navigation.setParams({ showActionSheet: this.showActionSheet });
   }
 
   onLinkPress = node => {
@@ -254,12 +253,15 @@ class Issue extends Component {
   };
 
   setNavigationParams = () => {
-    const { navigation, locale, repository } = this.props;
+    const { navigation, locale, issue, repository } = this.props;
 
     navigation.setParams({
       locale,
       userHasPushPermission:
         repository.permissions.admin || repository.permissions.push,
+      issue,
+      repository,
+      showActionSheet: this.showActionSheet,
     });
   };
 
