@@ -4,6 +4,7 @@ export * from './code-line.component';
 export * from './error-screen';
 export * from './comment-input.component';
 export * from './comment-list-item.component';
+export * from './commit-list-item.component';
 export * from './diff-blocks.component';
 export * from './entity-info.component';
 export * from './issue-description.component';

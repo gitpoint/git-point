@@ -488,7 +488,7 @@ class Events extends Component {
     const actor = this.getActorLink(userEvent);
     const repo = this.getRepoLink(userEvent);
     const ref = (
-      <LinkBranchDescription>
+      <LinkBranchDescription onPress={() => this.navigateToCommitList(userEvent)}>
         {userEvent.payload.ref.replace('refs/heads/', '')}
       </LinkBranchDescription>
     );
@@ -541,6 +541,20 @@ class Events extends Component {
     this.props.navigation.navigate('Repository', {
       repoId,
     });
+  };
+
+  navigateToCommitList = userEvent => {
+    if (userEvent.payload.commits > 1) {
+      this.props.navigation.navigate('CommitList', {
+        commits: userEvent.payload.commits,
+        title: translate('repository.commitList.title', this.props.language),
+      });
+    } else {
+      this.props.navigation.navigate('Commit', {
+        commit: userEvent.payload.commits[0],
+        title: userEvent.payload.commits[0].sha.substring(0, 7),
+      });
+    }
   };
 
   navigateToIssue = userEvent => {

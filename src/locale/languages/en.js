@@ -29,6 +29,9 @@ module.exports = {
   'Close {issueType}': 'Close {issueType}',
   Closed: 'Closed',
   Code: 'Code',
+  Commits: 'Commits',
+  'No commit found!': 'No commit found!',
+  'By {contributor}': 'By {contributor}',
   'Comment Actions': 'Comment Actions',
   'Commit Message': 'Commit Message',
   'Commit Title': 'Commit Title',
@@ -157,6 +160,7 @@ module.exports = {
   Users: 'Users',
   'View All': 'View All',
   'View Code': 'View Code',
+  'View Commits': 'View Commits',
   'View and control all of your unread and participating notifications':
     'View and control all of your unread and participating notifications',
   Watch: 'Watch',

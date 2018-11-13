@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
-import { ActivityIndicator } from 'react-native';
+import {
+  Text,
+  ActivityIndicator,
+  TouchableHighlight,
+} from 'react-native';
 import { ListItem } from 'react-native-elements';
+
 import Parse from 'parse-diff';
 import styled from 'styled-components';
 
@@ -32,6 +37,22 @@ const RepoLink = styled(ListItem).attrs({
     color: colors.primaryDark,
     ...fonts.fontPrimarySemiBold,
     fontSize: normalize(10),
+  },
+  listItemContainer: {
+    borderBottomWidth: 0,
+    flex: 1,
+  },
+  diffBlocksContainer: {
+    flexDirection: 'row',
+    alignItems: 'stretch',
+    justifyContent: 'space-between',
+    paddingRight: 10,
+    paddingLeft: 10,
+    paddingBottom: 10,
+  },
+  badge: {
+    alignItems: 'flex-end',
+    justifyContent: 'center',
   },
   leftIconContainerStyle: {
     flex: 0,
@@ -85,14 +106,32 @@ export class IssueDescription extends Component {
     issue: Object,
     repository: Object,
     diff: string,
+    commits: Array,
     isMergeable: boolean,
     isMerged: boolean,
     isPendingDiff: boolean,
+    isPendingCommit: boolean,
     isPendingCheckMerge: boolean,
     onRepositoryPress: Function,
     userHasPushPermission: boolean,
     locale: string,
     navigation: Object,
+  };
+
+  navigateToCommitList = () => {
+    const { commits, locale } = this.props;
+
+    if (commits.length > 1) {
+      this.props.navigation.navigate('CommitList', {
+        title: translate('repository.commitList.title', locale),
+        commits,
+      });
+    } else {
+      this.props.navigation.navigate('Commit', {
+        commit: commits[0],
+        title: commits[0].sha.substring(0, 7),
+      });
+    }
   };
 
   renderLabelButtons = labels => {
@@ -105,10 +144,12 @@ export class IssueDescription extends Component {
     const {
       diff,
       issue,
+      commits,
       repository,
       isMergeable,
       isMerged,
       isPendingDiff,
+      isPendingCommit,
       isPendingCheckMerge,
       onRepositoryPress,
       userHasPushPermission,
@@ -168,8 +209,21 @@ export class IssueDescription extends Component {
 
         {issue.pull_request && (
           <DiffBlocksContainer>
+            {isPendingCommit && (
+              <ActivityIndicator animating={isPendingCommit} size="small" />
+            )}
+
             {isPendingDiff && (
               <ActivityIndicator animating={isPendingDiff} size="small" />
+            )}
+
+            {!isPendingCommit && (
+              <TouchableHighlight
+                onPress={() => this.navigateToCommitList()}
+                underlayColor={colors.greyLight}
+              >
+                <Text>{`${commits.length} commits`}</Text>
+              </TouchableHighlight>
             )}
 
             {!isPendingDiff &&

@@ -50,6 +50,8 @@ import {
   IssueListScreen,
   PullListScreen,
   PullDiffScreen,
+  CommitScreen,
+  CommitListScreen,
   ReadMeScreen,
 } from 'repository';
 
@@ -160,6 +162,18 @@ const sharedRoutes = {
   },
   NewIssue: {
     screen: NewIssueScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    }),
+  },
+  CommitList: {
+    screen: CommitListScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    }),
+  },
+  Commit: {
+    screen: CommitScreen,
     navigationOptions: ({ navigation }) => ({
       title: navigation.state.params.title,
     }),

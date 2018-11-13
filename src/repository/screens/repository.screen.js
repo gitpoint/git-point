@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { RefreshControl, Share, ActivityIndicator } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
-import { RestClient } from 'api';
+import { v3, RestClient } from 'api';
 import {
   ViewContainer,
   LoadingRepositoryProfile,
@@ -21,6 +21,7 @@ import {
 } from 'components';
 import { t, openURLInView, toOldIssueFormat, toOldUserFormat } from 'utils';
 import { colors, fonts } from 'config';
+import { getCommits } from '../repository.action';
 
 const mapStateToProps = (state, ownProps) => {
   const {
@@ -44,6 +45,7 @@ const mapStateToProps = (state, ownProps) => {
     contributors,
     contributorsPagination,
     repository,
+    commits: state.repository.commits,
     repoId,
     locale,
   };
@@ -57,6 +59,7 @@ const mapDispatchToProps = {
   watchRepo: RestClient.activity.watchRepo,
   unwatchRepo: RestClient.activity.unwatchRepo,
   forkRepo: RestClient.repos.fork,
+  getCommits,
 };
 
 const LoadingMembersContainer = styled.View`
@@ -78,6 +81,7 @@ class Repository extends Component {
   props: {
     getRepoById: Function,
     getContributors: Function,
+    getCommits: Function,
     starRepo: Function,
     unstarRepo: Function,
     watchRepo: Function,
@@ -86,6 +90,7 @@ class Repository extends Component {
     repository: Object,
     repoId: String,
     contributors: Array,
+    commits: Array,
     contributorsPagination: Object,
     navigation: Object,
     username: string,
@@ -111,15 +116,7 @@ class Repository extends Component {
   }
 
   componentDidMount() {
-    const { repoId, getRepoById, getContributors } = this.props;
-
-    getRepoById(repoId)
-      .then(() => {
-        getContributors(repoId);
-      })
-      .catch(error => {
-        this.setState({ hasError: true, errorMessage: error });
-      });
+    this.fetchRepoInfo();
   }
 
   showMenuActionSheet = () => {
@@ -174,14 +171,20 @@ class Repository extends Component {
 
   fetchRepoInfo = () => {
     const { repoId } = this.props;
+    const repoCommitsURL = `${v3.root}/repos/${repoId}/commits`;
 
     this.setState({ refreshing: true });
     Promise.all([
       this.props.getRepoById(repoId),
       this.props.getContributors(repoId, { forceRefresh: true }),
-    ]).then(() => {
-      this.setState({ refreshing: false });
-    });
+      this.props.getCommits(repoCommitsURL),
+    ])
+      .then(() => {
+        this.setState({ refreshing: false });
+      })
+      .catch(error => {
+        this.setState({ hasError: true, errorMessage: error });
+      });
   };
 
   shareRepository = repository => {
@@ -223,6 +226,7 @@ class Repository extends Component {
       repository,
       repoId,
       contributors,
+      commits,
       contributorsPagination,
       locale,
       navigation,
@@ -387,6 +391,24 @@ class Repository extends Component {
                 underlayColor={colors.greyLight}
                 disabled={isPendingRepository}
               />
+            {commits.length > 0 && (
+              <SectionListItem
+                title={translate('repository.main.viewCommit', locale)}
+                titleStyle={styles.listTitle}
+                containerStyle={styles.listContainerStyle}
+                leftIcon={{
+                  name: 'git-commit',
+                  color: colors.grey,
+                  type: 'octicon',
+                }}
+                onPress={() =>
+                  this.props.navigation.navigate('CommitList', {
+                    commits,
+                    title: translate('repository.commitList.title', locale),
+                  })}
+                underlayColor={colors.greyLight}
+              />
+            )}
             </SectionList>
           )}
 
