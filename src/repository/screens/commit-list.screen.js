@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FlatList, View, StyleSheet, Text } from 'react-native';
 import { ViewContainer, CommitListItem } from 'components';
-import { translate } from 'utils';
+import { t } from 'utils';
 import { normalize } from 'config';
 
 const styles = StyleSheet.create({
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 
 class CommitList extends Component {
   props: {
-    language: string,
+    locale: string,
     navigation: Object,
   };
 
@@ -28,7 +28,7 @@ class CommitList extends Component {
     <CommitListItem commit={item} navigation={this.props.navigation} />;
 
   render() {
-    const { language, navigation } = this.props;
+    const { locale, navigation } = this.props;
     const commits = navigation.state.params.commits;
 
     return (
@@ -44,7 +44,7 @@ class CommitList extends Component {
         {commits.length === 0 &&
           <View style={styles.marginSpacing}>
             <Text style={styles.noCommit}>
-              {translate('repository.commitList.noCommit', language)}
+              {t('No commit found!', locale)}
             </Text>
           </View>}
       </ViewContainer>

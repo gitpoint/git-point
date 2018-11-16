@@ -547,7 +547,8 @@ class Events extends Component {
     if (userEvent.payload.commits > 1) {
       this.props.navigation.navigate('CommitList', {
         commits: userEvent.payload.commits,
-        title: translate('repository.commitList.title', this.props.language),
+        title: t('Commits', this.props.locale),
+        locale: this.props.locale,
       });
     } else {
       this.props.navigation.navigate('Commit', {

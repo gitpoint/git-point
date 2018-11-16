@@ -10,12 +10,12 @@ import {
   LoadingContainer,
 } from 'components';
 import Parse from 'parse-diff';
-import { translate } from 'utils';
+import { t } from 'utils';
 import { colors, fonts, normalize } from 'config';
 import { getCommitDetails } from '../repository.action';
 
 const mapStateToProps = state => ({
-  language: state.auth.language,
+  locale: state.auth.locale,
   commit: state.repository.commit,
   diff: state.repository.diff,
   isPendingCommit: state.repository.isPendingCommit,
@@ -99,7 +99,7 @@ class Commit extends Component {
     isPendingCommit: boolean,
     isPendingDiff: boolean,
     getCommitDetailsByDispatch: Function,
-    language: string,
+    locale: string,
   };
 
   componentDidMount() {
@@ -114,7 +114,7 @@ class Commit extends Component {
   };
 
   renderHeader = () => {
-    const { commit, language, isPendingCommit } = this.props;
+    const { commit, locale, isPendingCommit } = this.props;
     const message = commit.commit ? commit.commit.message : 'Loading...';
     const committer = commit.author ? commit.author.login : '';
 
@@ -135,14 +135,14 @@ class Commit extends Component {
         </View>
         <View style={styles.header}>
           <Text>
-            {translate('repository.commit.byConnector', language, {
+            {t('By {contributor}', locale, {
               contributor: committer,
             })}
           </Text>
         </View>
         <View style={styles.header}>
           <Text style={[styles.headerItem, styles.headerText]}>
-            {translate('repository.commit.numFilesChanged', language, {
+            {t('{numFilesChanged} files', locale, {
               numFilesChanged: isPendingCommit ? 0 : commit.files.length,
             })}
           </Text>
@@ -159,7 +159,7 @@ class Commit extends Component {
   };
 
   renderItem = ({ item }) => {
-    const { language } = this.props;
+    const { locale } = this.props;
     const filename = item.deleted ? item.from : item.to;
     const chunks = item.chunks.map((chunk, index) => {
       return (
@@ -209,7 +209,7 @@ class Commit extends Component {
           {item.new &&
             <Text style={styles.fileTitle}>
               <Text style={styles.newIndicator}>
-                {translate('repository.commit.new', language)}
+                {t('NEW', locale)}
                 {'\n'}
               </Text>
               <Text style={[styles.fileTitle, styles.codeStyle]}>
@@ -220,7 +220,7 @@ class Commit extends Component {
           {item.deleted &&
             <Text style={styles.fileTitle}>
               <Text style={styles.deletedIndicator}>
-                {translate('repository.commit.deleted', language)}
+                {t('DELETED', locale)}
                 {'\n'}
               </Text>
               <Text style={[styles.fileTitle, styles.codeStyle]}>
@@ -242,7 +242,7 @@ class Commit extends Component {
           !item.deleted &&
           item.from !== item.to &&
           <Text style={styles.noChangesMessage}>
-            {translate('repository.commit.fileRenamed', language)}
+            {t('File renamed without any changes', locale)}
           </Text>}
       </Card>
     );

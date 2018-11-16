@@ -123,8 +123,9 @@ export class IssueDescription extends Component {
 
     if (commits.length > 1) {
       this.props.navigation.navigate('CommitList', {
-        title: translate('repository.commitList.title', locale),
+        title: t('Commits', locale),
         commits,
+        locale,
       });
     } else {
       this.props.navigation.navigate('Commit', {

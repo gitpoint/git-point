@@ -393,9 +393,7 @@ class Repository extends Component {
               />
             {commits.length > 0 && (
               <SectionListItem
-                title={translate('repository.main.viewCommit', locale)}
-                titleStyle={styles.listTitle}
-                containerStyle={styles.listContainerStyle}
+                title={t('View Commits', locale)}
                 leftIcon={{
                   name: 'git-commit',
                   color: colors.grey,
@@ -404,7 +402,8 @@ class Repository extends Component {
                 onPress={() =>
                   this.props.navigation.navigate('CommitList', {
                     commits,
-                    title: translate('repository.commitList.title', locale),
+                    title: t('Commits', locale),
+                    locale,
                   })}
                 underlayColor={colors.greyLight}
               />
