@@ -12,6 +12,7 @@ import {
 import Parse from 'parse-diff';
 import { t } from 'utils';
 import { colors, fonts, normalize } from 'config';
+import styled from 'styled-components';
 import { getCommitDetails } from '../repository.action';
 
 const mapStateToProps = state => ({
@@ -86,10 +87,17 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerText: {
-    ...fonts.fontPrimarySemiBold,
+    ...fonts.fontPrimary,
     fontSize: normalize(14),
   },
 });
+const FieldTitle = styled.Text`
+  color: ${colors.greyDark};
+`;
+const ProfileLink = styled.Text`
+  color: ${colors.black};
+  ${fonts.fontPrimarySemiBold};
+`;
 
 class Commit extends Component {
   props: {
@@ -113,33 +121,49 @@ class Commit extends Component {
     return index;
   };
 
+  navigateToProfile = user => {
+    this.props.navigation.navigate('Profile', {
+      user,
+    });
+  };
+
   renderHeader = () => {
     const { commit, locale, isPendingCommit } = this.props;
     const message = commit.commit ? commit.commit.message : 'Loading...';
-    const committer = commit.author ? commit.author.login : '';
 
     if (isPendingCommit || !commit.files) {
-      return (
-        <Text>
-          {message}
-        </Text>
-      );
+      return <Text>{message}</Text>;
     }
 
     return (
       <View style={styles.headerContainer}>
         <View style={styles.header}>
-          <Text>
-            {message}
-          </Text>
+          <Text>{message}</Text>
         </View>
-        <View style={styles.header}>
-          <Text>
-            {t('By {contributor}', locale, {
-              contributor: committer,
-            })}
-          </Text>
-        </View>
+        {!!commit.author && (
+          <View style={styles.header}>
+            <Text>
+              <FieldTitle>{t('Author: ', locale)}</FieldTitle>
+              <ProfileLink
+                onPress={() => this.navigateToProfile(commit.author)}
+              >
+                {commit.author.login}
+              </ProfileLink>
+            </Text>
+          </View>
+        )}
+        {!!commit.committer && (
+          <View style={styles.header}>
+            <Text>
+              <FieldTitle>{t('Committer: ', locale)}</FieldTitle>
+              <ProfileLink
+                onPress={() => this.navigateToProfile(commit.committer)}
+              >
+                {commit.committer.login}
+              </ProfileLink>
+            </Text>
+          </View>
+        )}
         <View style={styles.header}>
           <Text style={[styles.headerItem, styles.headerText]}>
             {t('{numFilesChanged} files', locale, {
@@ -176,13 +200,13 @@ class Commit extends Component {
               filename={filename}
             />
 
-            {chunk.changes.map((change, changesIndex) =>
+            {chunk.changes.map((change, changesIndex) => (
               <CodeLine
                 key={changesIndex}
                 change={change}
                 filename={filename}
               />
-            )}
+            ))}
           </View>
         </ScrollView>
       );
@@ -206,7 +230,7 @@ class Commit extends Component {
             <DiffBlocks additions={item.additions} deletions={item.deletions} />
           </View>
 
-          {item.new &&
+          {item.new && (
             <Text style={styles.fileTitle}>
               <Text style={styles.newIndicator}>
                 {t('NEW', locale)}
@@ -215,9 +239,10 @@ class Commit extends Component {
               <Text style={[styles.fileTitle, styles.codeStyle]}>
                 {item.to}
               </Text>
-            </Text>}
+            </Text>
+          )}
 
-          {item.deleted &&
+          {item.deleted && (
             <Text style={styles.fileTitle}>
               <Text style={styles.deletedIndicator}>
                 {t('DELETED', locale)}
@@ -226,13 +251,17 @@ class Commit extends Component {
               <Text style={[styles.fileTitle, styles.codeStyle]}>
                 {item.from}
               </Text>
-            </Text>}
+            </Text>
+          )}
 
           {!item.new &&
-            !item.deleted &&
-            <Text style={[styles.fileTitle, styles.codeStyle]}>
-              {item.from === item.to ? item.to : `${item.from} \n → ${item.to}`}
-            </Text>}
+            !item.deleted && (
+              <Text style={[styles.fileTitle, styles.codeStyle]}>
+                {item.from === item.to
+                  ? item.to
+                  : `${item.from} \n → ${item.to}`}
+              </Text>
+            )}
         </ScrollView>
 
         {item.chunks.length > 0 && chunks}
@@ -240,10 +269,11 @@ class Commit extends Component {
         {item.chunks.length === 0 &&
           !item.new &&
           !item.deleted &&
-          item.from !== item.to &&
-          <Text style={styles.noChangesMessage}>
-            {t('File renamed without any changes', locale)}
-          </Text>}
+          item.from !== item.to && (
+            <Text style={styles.noChangesMessage}>
+              {t('File renamed without any changes', locale)}
+            </Text>
+          )}
       </Card>
     );
   };
@@ -254,22 +284,24 @@ class Commit extends Component {
 
     return (
       <ViewContainer>
-        {(isPendingCommit || isPendingDiff) &&
+        {(isPendingCommit || isPendingDiff) && (
           <LoadingContainer
             animating={isPendingCommit || isPendingDiff}
             center
-          />}
+          />
+        )}
 
         {!isPendingCommit &&
-          !isPendingDiff &&
-          <FlatList
-            ListHeaderComponent={this.renderHeader}
-            removeClippedSubviews={false}
-            data={filesChanged}
-            keyExtractor={this.keyExtractor}
-            renderItem={this.renderItem}
-            disableVirtualization
-          />}
+          !isPendingDiff && (
+            <FlatList
+              ListHeaderComponent={this.renderHeader}
+              removeClippedSubviews={false}
+              data={filesChanged}
+              keyExtractor={this.keyExtractor}
+              renderItem={this.renderItem}
+              disableVirtualization
+            />
+          )}
       </ViewContainer>
     );
   }
