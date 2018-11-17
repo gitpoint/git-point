@@ -38,22 +38,6 @@ const RepoLink = styled(ListItem).attrs({
     ...fonts.fontPrimarySemiBold,
     fontSize: normalize(10),
   },
-  listItemContainer: {
-    borderBottomWidth: 0,
-    flex: 1,
-  },
-  diffBlocksContainer: {
-    flexDirection: 'row',
-    alignItems: 'stretch',
-    justifyContent: 'space-between',
-    paddingRight: 10,
-    paddingLeft: 10,
-    paddingBottom: 10,
-  },
-  badge: {
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-  },
   leftIconContainerStyle: {
     flex: 0,
   },
@@ -77,8 +61,9 @@ const IssueTitle = styled(ListItem).attrs({
 
 const DiffBlocksContainer = styled.View`
   flex-direction: row;
-  align-items: center;
-  justify-content: flex-end;
+  align-items: stretch;
+  justify-content: space-between;
+  padding-left: 10;
   padding-right: 10;
   padding-bottom: 10;
 `;
