@@ -110,6 +110,7 @@ class IssueList extends Component {
           onPress={() =>
             navigate('NewIssue', {
               title: t('New Issue', state.params.locale),
+              repository: state.params.repository,
             })
           }
         />

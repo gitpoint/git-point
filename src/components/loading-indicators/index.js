@@ -1,3 +1,4 @@
+export * from './loading-common-item.component';
 export * from './loading-container.component';
 export * from './loading-event-list-item.component';
 export * from './loading-members-list.component';

@@ -95,7 +95,7 @@ const getPullRequest = url => {
   };
 };
 
-const getPullRequestDetails = issue => {
+export const getPullRequestDetails = issue => {
   return (dispatch, getState) => {
     const repoFullName = getState().repository.repository.full_name;
 

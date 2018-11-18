@@ -13,8 +13,6 @@ import { mergePullRequest } from '../issue.action';
 
 const mapStateToProps = state => ({
   locale: state.auth.locale,
-  repository: state.repository.repository,
-  issue: state.issue.issue,
   isPendingMerging: state.repository.isPendingMerging,
 });
 
@@ -62,8 +60,6 @@ class PullMerge extends Component {
   props: {
     mergePullRequest: Function,
     locale: string,
-    repository: Object,
-    issue: Object,
     // isPendingMerging: boolean,
     navigation: Object,
   };
@@ -105,13 +101,8 @@ class PullMerge extends Component {
   };
 
   mergePullRequest = () => {
-    const {
-      repository,
-      issue,
-      mergePullRequest,
-      locale,
-      navigation,
-    } = this.props;
+    const { mergePullRequest, locale, navigation } = this.props;
+    const { issue, repository } = navigation.state.params;
     const { mergeMethod, commitTitle, commitMessage } = this.state;
     const mergeMethodTypes = [t('merge', locale), t('squash', locale)];
 

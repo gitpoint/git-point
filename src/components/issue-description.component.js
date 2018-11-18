@@ -83,6 +83,7 @@ const MergeButtonContainer = styled.View`
 export class IssueDescription extends Component {
   props: {
     issue: Object,
+    repository: Object,
     diff: string,
     isMergeable: boolean,
     isMerged: boolean,
@@ -104,6 +105,7 @@ export class IssueDescription extends Component {
     const {
       diff,
       issue,
+      repository,
       isMergeable,
       isMerged,
       isPendingDiff,
@@ -219,6 +221,8 @@ export class IssueDescription extends Component {
                 onPress={() =>
                   navigation.navigate('PullMerge', {
                     title: t('Merge Pull Request', locale),
+                    issue,
+                    repository,
                   })
                 }
                 title={t('Merge Pull Request', locale)}
