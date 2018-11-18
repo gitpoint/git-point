@@ -60,6 +60,16 @@ const getIconName = (type, issue) => {
   return 'git-pull-request';
 };
 
+const getIconColor = issue => {
+  if (issue.state === 'open') {
+    return colors.green;
+  } else if (issue.state === 'merged') {
+    return colors.purple;
+  }
+
+  return colors.red;
+};
+
 export const IssueListItem = ({ type, issue, navigation, locale }: Props) => (
   <TouchableHighlight
     style={issue.state === 'closed' && styles.closedIssue}
@@ -92,7 +102,7 @@ export const IssueListItem = ({ type, issue, navigation, locale }: Props) => (
         leftIcon={{
           name: getIconName(type, issue),
           size: 36,
-          color: issue.state === 'open' ? colors.green : colors.red,
+          color: getIconColor(issue),
           type: 'octicon',
         }}
         hideChevron

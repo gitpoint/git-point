@@ -140,7 +140,7 @@ class PullList extends Component {
     return searchType === 0
       ? navigation.state.params.issues.filter(issue => issue.state === 'open')
       : navigation.state.params.issues.filter(
-          issue => issue.state === 'closed'
+          issue => issue.state === 'closed' || issue.state === 'merged'
         );
   };
 
