@@ -14,6 +14,7 @@ module.exports = {
   'Are you sure?': 'Emin misiniz?',
   'Assign Yourself': 'Kendini Ata',
   Assignees: 'Atananlar',
+  'Author: ': '',
   BIO: 'Biyografi',
   CANCEL: 'İPTAL',
   CONTACT: 'İLETİŞİM',
@@ -33,6 +34,8 @@ module.exports = {
   'Comment Actions': 'Yorum Hareketleri',
   'Commit Message': 'Commit Mesajı',
   'Commit Title': 'Commit Başlığı',
+  Commits: '',
+  'Committer: ': '',
   'Communicate on conversations, merge pull requests and more':
     "Sohbet ederek iletişim kurun, pull request'leri merge edin ve daha fazlası",
   Company: 'Şirket',
@@ -89,6 +92,7 @@ module.exports = {
   'New Issue': 'Yeni Issue',
   'No README.md found': 'README.md bulunamadı',
   'No closed issues found!': 'Kapalı issue bulunamadı!',
+  'No commit found!': '',
   'No contributors found': 'katkıda bulunan bulunamadı',
   'No description provided.': 'Açıklama yapılmadı.',
   'No issues': 'issue yok',
@@ -158,6 +162,7 @@ module.exports = {
   Users: 'Kullanıcılar',
   'View All': 'Tümünü Göster',
   'View Code': 'View Code',
+  'View Commits': '',
   'View and control all of your unread and participating notifications':
     'Okunmamış ve katılımcı olduğunuz bildirimlerinizin tümünü görüntüleyin ve kontrol edin',
   Watch: 'İzle',

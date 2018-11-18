@@ -14,6 +14,7 @@ module.exports = {
   'Are you sure?': 'Ви впевнені?',
   'Assign Yourself': 'Призначити самому собі',
   Assignees: 'Відповідальні',
+  'Author: ': '',
   BIO: 'ДОВІДКА',
   CANCEL: 'ВІДМІНИТИ',
   CONTACT: 'КОНТАКТИ',
@@ -32,6 +33,8 @@ module.exports = {
   'Comment Actions': 'Дії З Коментарем',
   'Commit Message': 'Текст повідомленя коміту',
   'Commit Title': 'Заголовок коміту',
+  Commits: '',
+  'Committer: ': '',
   'Communicate on conversations, merge pull requests and more':
     'Спілкуйтесь, приймайте pull-запити і робіть багато іншого',
   Company: 'Компанія',
@@ -87,6 +90,7 @@ module.exports = {
   'New Issue': 'Нова задача',
   'No README.md found': 'He вдалось знайти README.md',
   'No closed issues found!': 'Не знайдено закритих задач!',
+  'No commit found!': '',
   'No contributors found': 'Учасники не знайдені',
   'No description provided.': 'Немає опису.',
   'No issues': 'Немає задач',
@@ -156,6 +160,7 @@ module.exports = {
   Users: 'Користувачі',
   'View All': 'Дивитись все',
   'View Code': 'Дивитись код',
+  'View Commits': '',
   'View and control all of your unread and participating notifications':
     'Переглядайте і керуйте всіма вашими непрочитаними і активними сповіщеннями',
   Watch: 'Спостерігати',

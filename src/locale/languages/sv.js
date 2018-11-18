@@ -14,6 +14,7 @@ module.exports = {
   'Are you sure?': 'Är du säker?',
   'Assign Yourself': 'Tilldela till dig själv',
   Assignees: 'Tilldelare',
+  'Author: ': '',
   BIO: 'BIOGRAFI',
   CANCEL: 'AVBRYT',
   CONTACT: 'KONTAKT',
@@ -32,6 +33,8 @@ module.exports = {
   'Comment Actions': 'Kommentera Handlingar',
   'Commit Message': 'Commit-meddelande',
   'Commit Title': 'Commit-titel',
+  Commits: '',
+  'Committer: ': '',
   'Communicate on conversations, merge pull requests and more':
     'Delta i konversationer, merge:a pull requests och mer',
   Company: 'Företag',
@@ -88,6 +91,7 @@ module.exports = {
   'New Issue': 'Nytt Issue',
   'No README.md found': 'Hittade ingen README.md',
   'No closed issues found!': 'Inga stängda issues hittades!',
+  'No commit found!': '',
   'No contributors found': 'Inga contributors hittades',
   'No description provided.': 'Ingen beskrivning.',
   'No issues': 'Inga issues',
@@ -158,6 +162,7 @@ module.exports = {
   Users: 'Användare',
   'View All': 'Se Alla',
   'View Code': 'Visa kod',
+  'View Commits': '',
   'View and control all of your unread and participating notifications':
     'Se och hantera alla dina olästa och medverkande notifikationer',
   Watch: 'Bevaka',

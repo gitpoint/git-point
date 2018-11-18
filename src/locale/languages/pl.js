@@ -14,6 +14,7 @@ module.exports = {
   'Are you sure?': 'Czy na pewno?',
   'Assign Yourself': 'Przypisz Siebie',
   Assignees: 'Przypisany',
+  'Author: ': '',
   BIO: 'BIO',
   CANCEL: 'ANULUJ',
   CONTACT: 'KONTAKT',
@@ -33,6 +34,8 @@ module.exports = {
   'Comment Actions': 'Dodaj komentarz akcji',
   'Commit Message': 'Treść komitu',
   'Commit Title': 'Tytuł Komitu',
+  Commits: '',
+  'Committer: ': '',
   'Communicate on conversations, merge pull requests and more':
     'Powiadom o konwersjacji, zmergowanym pull requeście i więcej',
   Company: 'Firma',
@@ -88,6 +91,7 @@ module.exports = {
   'New Issue': 'Nowy Problem',
   'No README.md found': 'Brak README.md',
   'No closed issues found!': 'Brak zamkniętych problemów!',
+  'No commit found!': '',
   'No contributors found': 'Brak kontrybutorów',
   'No description provided.': 'Brak opisu.',
   'No issues': 'Brak problemów',
@@ -157,6 +161,7 @@ module.exports = {
   Users: 'Użytkownicy',
   'View All': 'Zobacz Wszystko',
   'View Code': 'Zobacz Kod',
+  'View Commits': '',
   'View and control all of your unread and participating notifications':
     'Przeglądanie i kontrola wszystkich nieprzeczytanych notifykacji i konwersjacji',
   Watch: 'Obserwuj',

@@ -14,6 +14,7 @@ module.exports = {
   'Are you sure?': 'Да ли сте сигурни?',
   'Assign Yourself': 'Додели себи',
   Assignees: 'Заступник',
+  'Author: ': '',
   BIO: 'БИОГРАФИЈА',
   CANCEL: 'ОДУСТАНИ',
   CONTACT: 'КОНТАКТИ',
@@ -32,6 +33,8 @@ module.exports = {
   'Comment Actions': 'Акције на коментарима',
   'Commit Message': 'Порука измене',
   'Commit Title': 'Наслов измене',
+  Commits: '',
+  'Committer: ': '',
   'Communicate on conversations, merge pull requests and more':
     'Дискутујте, прихватите захтеве за преузимање и друго',
   Company: 'Фирма',
@@ -87,6 +90,7 @@ module.exports = {
   'New Issue': 'Нови поднесак',
   'No README.md found': 'Датотека README.md није пронађена',
   'No closed issues found!': 'Нема затворених поднесака!',
+  'No commit found!': '',
   'No contributors found': 'Нема сарадника',
   'No description provided.': 'Није достављен опис.',
   'No issues': 'Без поднесака',
@@ -157,6 +161,7 @@ module.exports = {
   Users: 'Корисници',
   'View All': 'Прегледај све',
   'View Code': 'Прегледај код',
+  'View Commits': '',
   'View and control all of your unread and participating notifications':
     'Преглед и контрола свих ваших непрочитаних и активних обавештења',
   Watch: 'Прати',

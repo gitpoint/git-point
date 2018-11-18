@@ -14,6 +14,7 @@ module.exports = {
   'Are you sure?': 'Ituloy?',
   'Assign Yourself': 'I-assign ang iyong sarili',
   Assignees: 'Mga in-assign',
+  'Author: ': '',
   BIO: 'BIO',
   CANCEL: 'KANSELAHIN',
   CONTACT: 'CONTACT',
@@ -32,6 +33,8 @@ module.exports = {
   'Comment Actions': 'Mga aksyon sa Komento',
   'Commit Message': 'Mensahe ng Commit',
   'Commit Title': 'Titulo ng Commit',
+  Commits: '',
+  'Committer: ': '',
   'Communicate on conversations, merge pull requests and more':
     'Makihalubilo sa mga usapin, pag-merge ng mga pull request, atbp.',
   Company: 'Kumpanya',
@@ -88,6 +91,7 @@ module.exports = {
   'New Issue': 'Bagong Isyu',
   'No README.md found': 'Walang README.md na nahanap',
   'No closed issues found!': 'Walang nahanap na mga saradong isyu!',
+  'No commit found!': '',
   'No contributors found': 'Walang nahanap na kontribyutor',
   'No description provided.': 'Walang deskripsyong naibigay',
   'No issues': 'Walang mga isyu',
@@ -159,6 +163,7 @@ module.exports = {
   Users: 'Mga User',
   'View All': 'Tignan Lahat',
   'View Code': 'Tignan ang Code',
+  'View Commits': '',
   'View and control all of your unread and participating notifications':
     'Tignan at kontrolin ang lahat ng inyong mga notipikasyon para sa mga nabasa at pinaglalahukan',
   Watch: 'Panuorin',

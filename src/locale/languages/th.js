@@ -14,6 +14,7 @@ module.exports = {
   'Are you sure?': 'คุณแน่ใจไหม?',
   'Assign Yourself': 'หมอบหมายให้ตัวเอง',
   Assignees: 'ผู้ได้รับการมอบหมาย',
+  'Author: ': '',
   BIO: 'ประวัติ',
   CANCEL: 'ยกเลิก',
   CONTACT: 'ติดต่อ',
@@ -32,6 +33,8 @@ module.exports = {
   'Comment Actions': 'การปฏิบัติการของความเห็น',
   'Commit Message': 'ข้อความ  commit',
   'Commit Title': 'หัวข้อ commit',
+  Commits: '',
+  'Committer: ': '',
   'Communicate on conversations, merge pull requests and more':
     'สื่อสารพูดคุยทั่วไป เกี่ยวกับ merge pull requests และอีกมากมาย',
   Company: 'บริษัท',
@@ -88,6 +91,7 @@ module.exports = {
   'New Issue': 'Issue  ใหม่',
   'No README.md found': 'ไม่เจอ README.md',
   'No closed issues found!': 'ไม่เจอ issues ที่ถูกปิด',
+  'No commit found!': '',
   'No contributors found': 'ไม่เจอผู้มีส่วนร่วม',
   'No description provided.': 'ไม่มีการเขียนการบรรยายไว้',
   'No issues': 'ไม่มี issues',
@@ -158,6 +162,7 @@ module.exports = {
   Users: 'ผู้ใช้',
   'View All': 'ดูทั้งหมด',
   'View Code': 'ดูโค้ด',
+  'View Commits': '',
   'View and control all of your unread and participating notifications':
     'ติดตามและควบคุมการแจ้งเตือนที่ยังไม่ได้อ่านของคุณ',
   Watch: 'ติดตาม',

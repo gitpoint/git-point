@@ -14,6 +14,7 @@ module.exports = {
   'Are you sure?': 'Вы уверены?',
   'Assign Yourself': 'Назначить на самого себя',
   Assignees: 'Ответственные',
+  'Author: ': '',
   BIO: 'СПРАВКА',
   CANCEL: 'ОТМЕНА',
   CONTACT: 'КОНТАКТЫ',
@@ -32,6 +33,8 @@ module.exports = {
   'Comment Actions': 'Действия с комментарием',
   'Commit Message': 'Текст сообщения коммита',
   'Commit Title': 'Заголовок коммита',
+  Commits: '',
+  'Committer: ': '',
   'Communicate on conversations, merge pull requests and more':
     'Общайтесь, принимайте пулреквесты и делайте многое другое',
   Company: 'Компания',
@@ -88,6 +91,7 @@ module.exports = {
   'New Issue': 'Новая ишью',
   'No README.md found': 'He yдалось найти README.md',
   'No closed issues found!': 'Не найдено закрытых ишью!',
+  'No commit found!': '',
   'No contributors found': 'Участники не найдены',
   'No description provided.': 'Нет описания.',
   'No issues': 'Нет ишью',
@@ -158,6 +162,7 @@ module.exports = {
   Users: 'Пользователи',
   'View All': 'Смотреть все',
   'View Code': 'Смотреть код',
+  'View Commits': '',
   'View and control all of your unread and participating notifications':
     'Просматривайте и управляйте всеми вашими непрочитанными и активными уведомлениями',
   Watch: 'Следить',
