@@ -14,6 +14,7 @@ module.exports = {
   'Are you sure?': 'Ziur zaude?',
   'Assign Yourself': 'Zuri egokitu',
   Assignees: 'lagapen',
+  'Author: ': '',
   BIO: 'BIO',
   CANCEL: 'EZEZTATU',
   CONTACT: 'KONTAKTUA',
@@ -33,6 +34,8 @@ module.exports = {
   'Comment Actions': 'Mezuen ekintzak',
   'Commit Message': 'Commit mezua',
   'Commit Title': 'Commit izenburua',
+  Commits: '',
+  'Committer: ': '',
   'Communicate on conversations, merge pull requests and more':
     'Elkarrizketetan komunikatu, merge-en pull requests egin eta aber',
   Company: 'Erakundea',
@@ -89,6 +92,7 @@ module.exports = {
   'New Issue': 'Issue berria',
   'No README.md found': 'Ez da README.md aurkitu',
   'No closed issues found!': 'Ez dira aurkitu issues itxita!',
+  'No commit found!': '',
   'No contributors found': 'Laguntzailerik ez da aurkitu',
   'No description provided.': 'Ez dago deskribapena.',
   'No issues': 'Ez daude issues',
@@ -159,6 +163,7 @@ module.exports = {
   Users: 'Erabiltzaileak',
   'View All': 'Dena ikusi',
   'View Code': 'Kodea ikusi',
+  'View Commits': '',
   'View and control all of your unread and participating notifications':
     'Zain dauden jakinarazpenak berrikusten eta kudeatzen ditu',
   Watch: 'Bistaratu',

@@ -7,6 +7,7 @@ import {
   EDIT_ISSUE_BODY,
   CHANGE_LOCK_STATUS,
   GET_ISSUE_DIFF,
+  GET_ISSUE_COMMITS,
   GET_ISSUE_MERGE_STATUS,
   GET_PULL_REQUEST_FROM_URL,
   MERGE_PULL_REQUEST,
@@ -21,6 +22,7 @@ export const initialState = {
   events: [],
   pr: {},
   diff: '',
+  commits: [],
   isMerged: false,
   isPendingComments: false,
   isPendingEvents: false,
@@ -30,6 +32,7 @@ export const initialState = {
   isEditingIssue: false,
   isChangingLockStatus: false,
   isPendingDiff: false,
+  isPendingCommits: false,
   isPendingCheckMerge: false,
   isPendingMerging: false,
   isPendingIssue: false,
@@ -209,6 +212,24 @@ export const issueReducer = (state = initialState, action = {}) => {
         ...state,
         error: action.payload,
         isPendingDiff: false,
+      };
+    case GET_ISSUE_COMMITS.PENDING:
+      return {
+        ...state,
+        commits: [],
+        isPendingCommits: true,
+      };
+    case GET_ISSUE_COMMITS.SUCCESS:
+      return {
+        ...state,
+        commits: action.payload,
+        isPendingCommits: false,
+      };
+    case GET_ISSUE_COMMITS.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isPendingCommits: false,
       };
     case GET_ISSUE_MERGE_STATUS.PENDING:
       return {

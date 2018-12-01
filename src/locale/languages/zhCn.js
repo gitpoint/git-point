@@ -14,6 +14,7 @@ module.exports = {
   'Are you sure?': '你确定吗？',
   'Assign Yourself': '分派给自己',
   Assignees: '被分派者',
+  'Author: ': '',
   BIO: '简介',
   CANCEL: '取消',
   CONTACT: '联系方式',
@@ -32,6 +33,8 @@ module.exports = {
   'Comment Actions': '评论操作',
   'Commit Message': '提交说明',
   'Commit Title': '提交标题',
+  Commits: '',
+  'Committer: ': '',
   'Communicate on conversations, merge pull requests and more':
     '查看问题、参与讨论以及处理合并请求',
   Company: '公司',
@@ -86,6 +89,7 @@ module.exports = {
   'New Issue': '新建问题',
   'No README.md found': '未找到README.md',
   'No closed issues found!': '没有已关闭的问题！',
+  'No commit found!': '',
   'No contributors found': '没有贡献者',
   'No description provided.': '没有提供简介',
   'No issues': '没有问题',
@@ -156,6 +160,7 @@ module.exports = {
   Users: '搜用户',
   'View All': '查看全部',
   'View Code': '查看代码',
+  'View Commits': '',
   'View and control all of your unread and participating notifications':
     '查看并设定你所有未读和参与的通知',
   Watch: '关注',

@@ -3,8 +3,11 @@ import {
   GET_REPOSITORY_CONTRIBUTORS,
   GET_REPOSITORY_CONTENTS,
   GET_REPOSITORY_FILE,
+  GET_REPOSITORY_COMMITS,
   GET_REPOSITORY_README,
   GET_REPOSITORY_LABELS,
+  GET_COMMIT,
+  GET_COMMIT_DIFF,
   SEARCH_OPEN_ISSUES,
   SEARCH_CLOSED_ISSUES,
   SEARCH_OPEN_PULLS,
@@ -17,6 +20,9 @@ export const initialState = {
   labels: [],
   contents: {},
   fileContent: '',
+  commits: [],
+  commit: {},
+  diff: '',
   readMe: '',
   hasRepoExist: false,
   forked: false,
@@ -28,6 +34,9 @@ export const initialState = {
   isPendingRepository: false,
   isPendingContributors: false,
   isPendingContents: false,
+  isPendingCommits: false,
+  isPendingCommit: false,
+  isPendingDiff: false,
   isPendingFile: false,
   isPendingReadMe: false,
   isPendingLabels: false,
@@ -119,6 +128,24 @@ export const repositoryReducer = (state = initialState, action = {}) => {
         ...state,
         error: action.payload,
         isPendingFile: false,
+      };
+    case GET_REPOSITORY_COMMITS.PENDING:
+      return {
+        ...state,
+        commits: [],
+        isPendingCommits: true,
+      };
+    case GET_REPOSITORY_COMMITS.SUCCESS:
+      return {
+        ...state,
+        commits: action.payload,
+        isPendingCommits: false,
+      };
+    case GET_REPOSITORY_COMMITS.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isPendingCommits: false,
       };
     case GET_REPOSITORY_README.PENDING:
       return {
@@ -226,6 +253,41 @@ export const repositoryReducer = (state = initialState, action = {}) => {
         ...state,
         error: action.payload,
         isPendingSearchClosedPulls: false,
+      };
+    case GET_COMMIT.PENDING:
+      return {
+        ...state,
+        commit: {},
+        isPendingCommit: true,
+      };
+    case GET_COMMIT.SUCCESS:
+      return {
+        ...state,
+        commit: action.payload,
+        isPendingCommit: false,
+      };
+    case GET_COMMIT.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isPendingCommit: false,
+      };
+    case GET_COMMIT_DIFF.PENDING:
+      return {
+        ...state,
+        isPendingDiff: true,
+      };
+    case GET_COMMIT_DIFF.SUCCESS:
+      return {
+        ...state,
+        diff: action.payload,
+        isPendingDiff: false,
+      };
+    case GET_COMMIT_DIFF.ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isPendingDiff: false,
       };
     default:
       return state;

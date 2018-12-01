@@ -31,6 +31,7 @@ import { colors } from 'config';
 import {
   getPullRequestDetails,
   postIssueComment,
+  getCommits,
   deleteIssueComment,
 } from '../issue.action';
 
@@ -89,6 +90,7 @@ const mapStateToProps = (state, ownProps) => {
     pr,
     diff,
     isMerged,
+    commits: state.issue.commits,
     isPendingDiff,
     isPendingCheckMerge,
     isPostingComment,
@@ -101,6 +103,7 @@ const mapDispatchToProps = {
   getContributors: RestClient.repos.getContributors,
   getIssue: RestClient.repos.getIssue,
   getIssueTimeline: RestClient.repos.getIssueTimeline,
+  getCommits,
   getPullRequestDetails,
   postIssueComment,
   deleteIssueComment,
@@ -162,7 +165,9 @@ class Issue extends Component {
     getIssueTimeline: Function,
     getPullRequestDetails: Function,
     postIssueComment: Function,
+    getCommits: Function,
     deleteIssueComment: Function,
+    commits: Array,
     issue: Object,
     timelineItemsPagination: Object,
     comments: Array,
@@ -174,6 +179,7 @@ class Issue extends Component {
     repository: Object,
     contributors: Array,
     isPendingDiff: boolean,
+    isPendingCommits: boolean,
     isPendingCheckMerge: boolean,
     isDeletingComment: boolean,
     // isPostingComment: boolean,
@@ -227,10 +233,15 @@ class Issue extends Component {
       getIssueTimeline,
       getRepo,
       getContributors,
+      getCommits,
       getPullRequestDetails,
     } = this.props;
 
-    const { issueRepository, issueNumber } = parseIssueNavigation(navigation);
+    const { issueURL, issueRepository, issueNumber } = parseIssueNavigation(navigation);
+    const pullRequestCommitsURL = `${issueURL.replace(
+      'issues',
+      'pulls'
+    )}/commits`;
 
     Promise.all([
       getIssue(issueRepository, issueNumber),
@@ -242,7 +253,10 @@ class Issue extends Component {
         const issue = this.props.issue;
 
         if (issue.pull_request) {
-          return getPullRequestDetails(issue);
+          return Promise.all([
+            getPullRequestDetails(issue),
+            getCommits(pullRequestCommitsURL),
+          ]);
         }
 
         return Promise.resolve();
@@ -316,8 +330,10 @@ class Issue extends Component {
       repository,
       pr,
       diff,
+      commits,
       isMerged,
       isPendingDiff,
+      isPendingCommits,
       isPendingCheckMerge,
       locale,
       navigation,
@@ -328,9 +344,11 @@ class Issue extends Component {
         issue={issue}
         repository={repository}
         diff={diff}
+        commits={commits}
         isMergeable={pr.mergeable}
         isMerged={isMerged}
         isPendingDiff={isPendingDiff}
+        isPendingCommits={isPendingCommits}
         isPendingCheckMerge={isPendingCheckMerge}
         onRepositoryPress={url => this.onRepositoryPress(url)}
         onLinkPress={node => this.onLinkPress(node)}
