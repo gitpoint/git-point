@@ -9,6 +9,7 @@ import {
   fetchEditIssueComment,
   v3,
 } from 'api';
+import { getRepoIdFromUrl } from 'utils';
 import {
   POST_ISSUE_COMMENT,
   EDIT_ISSUE,
@@ -93,8 +94,8 @@ const getPullRequest = url => {
 };
 
 export const getPullRequestDetails = issue => {
-  return (dispatch, getState) => {
-    const repoFullName = getState().repository.repository.full_name;
+  return dispatch => {
+    const repoFullName = getRepoIdFromUrl(issue.repository_url);
 
     dispatch(getPullRequest(issue.pull_request.url));
     dispatch(getDiff(issue.pull_request.url));
