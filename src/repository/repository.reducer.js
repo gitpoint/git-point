@@ -13,8 +13,6 @@ import {
 } from './repository.type';
 
 export const initialState = {
-  repository: {},
-  contributors: [],
   labels: [],
   contents: {},
   fileContent: '',
@@ -22,7 +20,6 @@ export const initialState = {
   commit: {},
   diff: '',
   readMe: '',
-  hasRepoExist: false,
   forked: false,
   subscribed: false,
   searchedOpenIssues: [],

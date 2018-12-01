@@ -16,7 +16,6 @@ import {
 export const initialState = {
   issue: {},
   comments: [],
-  events: [],
   pr: {},
   diff: '',
   commits: [],
