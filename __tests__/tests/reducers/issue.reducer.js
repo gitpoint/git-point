@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  GET_ISSUE_COMMENTS,
   POST_ISSUE_COMMENT,
   DELETE_ISSUE_COMMENT,
   EDIT_ISSUE_COMMENT,
@@ -11,9 +10,7 @@ import {
   GET_ISSUE_MERGE_STATUS,
   GET_PULL_REQUEST_FROM_URL,
   MERGE_PULL_REQUEST,
-  GET_ISSUE_FROM_URL,
   SUBMIT_NEW_ISSUE,
-  GET_ISSUE_EVENTS,
 } from 'issue/issue.type';
 import { initialState, issueReducer } from 'issue/issue.reducer';
 import { open } from '../../data/api/issue';
@@ -21,68 +18,6 @@ import { open } from '../../data/api/issue';
 describe('Issuer Reducer', () => {
   it('should have initial state', () => {
     expect(issueReducer()).toEqual(initialState);
-  });
-
-  describe('GET_ISSUE_COMMENTS', () => {
-    it('.PENDING should set pending state', () => {
-      const action = { type: GET_ISSUE_COMMENTS.PENDING };
-      const expectedState = { ...initialState, isPendingComments: true };
-
-      expect(issueReducer(initialState, action)).toEqual(expectedState);
-    });
-
-    it('.ERROR should set error state', () => {
-      const action = { type: GET_ISSUE_COMMENTS.ERROR, payload: 'error' };
-      const expectedState = {
-        ...initialState,
-        isPendingComments: false,
-        error: 'error',
-      };
-
-      expect(issueReducer(initialState, action)).toEqual(expectedState);
-    });
-
-    it('.SUCCESS should set comments', () => {
-      const action = { type: GET_ISSUE_COMMENTS.SUCCESS, payload: [{}] };
-      const expectedState = {
-        ...initialState,
-        isPendingComments: false,
-        comments: action.payload,
-      };
-
-      expect(issueReducer(initialState, action)).toEqual(expectedState);
-    });
-  });
-
-  describe('GET_ISSUE_EVENTS', () => {
-    it('.PENDING should set pending state', () => {
-      const action = { type: GET_ISSUE_EVENTS.PENDING };
-      const expectedState = { ...initialState, isPendingEvents: true };
-
-      expect(issueReducer(initialState, action)).toEqual(expectedState);
-    });
-
-    it('.ERROR should set error state', () => {
-      const action = { type: GET_ISSUE_EVENTS.ERROR, payload: 'error' };
-      const expectedState = {
-        ...initialState,
-        isPendingEvents: false,
-        error: 'error',
-      };
-
-      expect(issueReducer(initialState, action)).toEqual(expectedState);
-    });
-
-    it('.SUCCESS should set events', () => {
-      const action = { type: GET_ISSUE_EVENTS.SUCCESS, payload: [{}] };
-      const expectedState = {
-        ...initialState,
-        isPendingEvents: false,
-        events: action.payload,
-      };
-
-      expect(issueReducer(initialState, action)).toEqual(expectedState);
-    });
   });
 
   describe('POST_ISSUE_COMMENT', () => {
@@ -515,37 +450,6 @@ describe('Issuer Reducer', () => {
         ...initialState,
         isPendingPR: false,
         pr: action.payload,
-      };
-
-      expect(issueReducer(initialState, action)).toEqual(expectedState);
-    });
-  });
-
-  describe('GET_ISSUE_FROM_URL', () => {
-    it('.PENDING should set pending state', () => {
-      const action = { type: GET_ISSUE_FROM_URL.PENDING };
-      const expectedState = { ...initialState, isPendingIssue: true };
-
-      expect(issueReducer(initialState, action)).toEqual(expectedState);
-    });
-
-    it('.ERROR should set error state', () => {
-      const action = { type: GET_ISSUE_FROM_URL.ERROR, payload: 'error' };
-      const expectedState = {
-        ...initialState,
-        isPendingIssue: false,
-        error: 'error',
-      };
-
-      expect(issueReducer(initialState, action)).toEqual(expectedState);
-    });
-
-    it('.SUCCESS should set issue', () => {
-      const action = { type: GET_ISSUE_FROM_URL.SUCCESS, payload: open };
-      const expectedState = {
-        ...initialState,
-        isPendingIssue: false,
-        issue: action.payload,
       };
 
       expect(issueReducer(initialState, action)).toEqual(expectedState);

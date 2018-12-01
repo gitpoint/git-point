@@ -1,10 +1,7 @@
 import { fetchDiff, fetchReadMe, fetchSearch, v3 } from 'api';
 import {
-  GET_REPOSITORY,
-  GET_REPOSITORY_CONTRIBUTORS,
   GET_REPOSITORY_CONTENTS,
   GET_REPOSITORY_FILE,
-  GET_REPOSITORY_ISSUES,
   GET_REPOSITORY_COMMITS,
   GET_COMMIT,
   GET_COMMIT_DIFF,
@@ -15,59 +12,6 @@ import {
   SEARCH_OPEN_PULLS,
   SEARCH_CLOSED_PULLS,
 } from './repository.type';
-
-export const getRepository = url => {
-  return (dispatch, getState) => {
-    const accessToken = getState().auth.accessToken;
-
-    dispatch({ type: GET_REPOSITORY.PENDING });
-
-    return v3
-      .get(url, accessToken)
-      .then(response => {
-        return response
-          .json()
-          .then(
-            json => (response.status === 200 ? json : Promise.reject(json))
-          );
-      })
-      .then(data => {
-        dispatch({
-          type: GET_REPOSITORY.SUCCESS,
-          payload: data,
-        });
-      })
-      .catch(error => {
-        dispatch({
-          type: GET_REPOSITORY.ERROR,
-          payload: error,
-        });
-      });
-  };
-};
-
-export const getContributors = url => {
-  return (dispatch, getState) => {
-    const accessToken = getState().auth.accessToken;
-
-    dispatch({ type: GET_REPOSITORY_CONTRIBUTORS.PENDING });
-
-    v3
-      .getJson(url, accessToken)
-      .then(data => {
-        dispatch({
-          type: GET_REPOSITORY_CONTRIBUTORS.SUCCESS,
-          payload: data,
-        });
-      })
-      .catch(error => {
-        dispatch({
-          type: GET_REPOSITORY_CONTRIBUTORS.ERROR,
-          payload: error,
-        });
-      });
-  };
-};
 
 export const getContents = (url, level) => {
   return (dispatch, getState) => {
@@ -110,29 +54,6 @@ export const getRepositoryFile = url => {
       .catch(error => {
         dispatch({
           type: GET_REPOSITORY_FILE.ERROR,
-          payload: error,
-        });
-      });
-  };
-};
-
-export const getIssues = url => {
-  return (dispatch, getState) => {
-    const accessToken = getState().auth.accessToken;
-
-    dispatch({ type: GET_REPOSITORY_ISSUES.PENDING });
-
-    v3
-      .getJson(url, accessToken)
-      .then(data => {
-        dispatch({
-          type: GET_REPOSITORY_ISSUES.SUCCESS,
-          payload: data,
-        });
-      })
-      .catch(error => {
-        dispatch({
-          type: GET_REPOSITORY_ISSUES.ERROR,
           payload: error,
         });
       });

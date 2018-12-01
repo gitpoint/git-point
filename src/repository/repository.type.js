@@ -1,9 +1,5 @@
 import { createActionSet } from 'utils';
 
-export const GET_REPOSITORY = createActionSet('GET_REPOSITORY');
-export const GET_REPOSITORY_CONTRIBUTORS = createActionSet(
-  'GET_REPOSITORY_CONTRIBUTORS'
-);
 export const GET_REPOSITORY_CONTENTS = createActionSet(
   'GET_REPOSITORY_CONTENTS'
 );

@@ -1,6 +1,4 @@
 import {
-  GET_REPOSITORY,
-  GET_REPOSITORY_CONTRIBUTORS,
   GET_REPOSITORY_CONTENTS,
   GET_REPOSITORY_FILE,
   GET_REPOSITORY_README,
@@ -16,84 +14,6 @@ import { initialState, repositoryReducer } from 'repository/repository.reducer';
 describe('Repository Reducer', () => {
   it('should set initial state', () => {
     expect(repositoryReducer(undefined)).toEqual(initialState);
-  });
-
-  describe('GET_REPOSITORY', () => {
-    it('.PENDING should set state to pending', () => {
-      const action = { type: GET_REPOSITORY.PENDING };
-      const expectedState = {
-        ...initialState,
-        isPendingRepository: true,
-        contributors: [],
-        issues: [],
-        readMe: '',
-        hasRepoExist: false,
-        hasReadMe: false,
-        error: '',
-        topics: [],
-        isPendingRepository: true,
-      };
-
-      expect(repositoryReducer(initialState, action)).toEqual(expectedState);
-    });
-
-    it('.ERROR should set error state', () => {
-      const action = { type: GET_REPOSITORY.ERROR, payload: 'error' };
-      const expectedState = { ...initialState, error: action.payload };
-
-      expect(repositoryReducer(initialState, action)).toEqual(expectedState);
-    });
-
-    it('.SUCCESS should set repository', () => {
-      const action = { type: GET_REPOSITORY.SUCCESS, payload: { id: 1 } };
-      const expectedState = {
-        ...initialState,
-        repository: action.payload,
-        hasRepoExist: true,
-        error: '',
-        isPendingRepository: false,
-      };
-
-      expect(repositoryReducer(initialState, action)).toEqual(expectedState);
-    });
-  });
-
-  describe('GET_REPOSITORY_CONTRIBUTORS', () => {
-    it('.PENDING should set pending state', () => {
-      const action = { type: GET_REPOSITORY_CONTRIBUTORS.PENDING };
-      const expectedState = { ...initialState, isPendingContributors: true };
-
-      expect(repositoryReducer(initialState, action)).toEqual(expectedState);
-    });
-
-    it('.ERROR should set error state', () => {
-      const action = {
-        type: GET_REPOSITORY_CONTRIBUTORS.ERROR,
-        payload: 'error',
-      };
-      const expectedState = {
-        ...initialState,
-        error: action.payload,
-        isPendingContributors: false,
-        contributors: [],
-      };
-
-      expect(repositoryReducer(initialState, action)).toEqual(expectedState);
-    });
-
-    it('.SUCCESS should set contributors', () => {
-      const action = {
-        type: GET_REPOSITORY_CONTRIBUTORS.SUCCESS,
-        payload: [{ id: 1 }],
-      };
-      const expectedState = {
-        ...initialState,
-        isPendingContributors: false,
-        contributors: action.payload,
-      };
-
-      expect(repositoryReducer(initialState, action)).toEqual(expectedState);
-    });
   });
 
   describe('GET_REPOSITORY_CONTENTS', () => {
