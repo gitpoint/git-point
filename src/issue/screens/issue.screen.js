@@ -61,7 +61,7 @@ const mapStateToProps = (state, ownProps) => {
       isPostingComment,
       isDeletingComment,
     },
-    entities: { users, repos, issues, issueTimelineItems },
+    entities: { users, gqlRepos, issues, issueTimelineItems },
     pagination: { REPOS_GET_CONTRIBUTORS, REPOS_GET_ISSUE_TIMELINE },
   } = state;
 
@@ -79,7 +79,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     locale,
     authUser: user,
-    repository: repos[issueRepository],
+    repository: gqlRepos[issueRepository],
     contributors: (
       REPOS_GET_CONTRIBUTORS[issueRepository] || { ids: [] }
     ).ids.map(id => users[id]),

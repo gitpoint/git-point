@@ -26,13 +26,13 @@ import { getCommits } from '../repository.action';
 const mapStateToProps = (state, ownProps) => {
   const {
     auth: { user, locale },
-    entities: { users, repos },
+    entities: { users, gqlRepos },
     pagination: { REPOS_GET_CONTRIBUTORS },
   } = state;
 
   const repoId = ownProps.navigation.state.params.repoId;
 
-  const repository = repos[repoId];
+  const repository = gqlRepos[repoId];
 
   const contributorsPagination = REPOS_GET_CONTRIBUTORS[repoId] || {
     ids: [],
