@@ -19,7 +19,7 @@ export const gqlRepoSchema = new schema.Entity(
   {},
   {
     idAttribute: ({ repository }) => {
-      return repository.nameWithOwner.toLowerCase();
+      return repository.nameWithOwner;
     },
     processStrategy: ({ repository }) => ({
       ...repository,

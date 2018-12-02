@@ -190,8 +190,7 @@ const mapStateToProps = (state, ownProps) => {
   } = state;
 
   const orgId = ownProps.navigation.state.params.organization.login;
-  const org =
-    orgs[orgId.toLowerCase()] || ownProps.navigation.state.params.organization;
+  const org = orgs[orgId] || ownProps.navigation.state.params.organization;
 
   const orgMembersPagination = ORGS_GET_MEMBERS[orgId] || {
     ids: [],
