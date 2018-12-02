@@ -6,10 +6,6 @@ import {
   GET_REPOSITORY_LABELS,
   GET_COMMIT,
   GET_COMMIT_DIFF,
-  SEARCH_OPEN_ISSUES,
-  SEARCH_CLOSED_ISSUES,
-  SEARCH_OPEN_PULLS,
-  SEARCH_CLOSED_PULLS,
 } from './repository.type';
 
 export const initialState = {
@@ -22,10 +18,6 @@ export const initialState = {
   readMe: '',
   forked: false,
   subscribed: false,
-  searchedOpenIssues: [],
-  searchedClosedIssues: [],
-  searchedOpenPulls: [],
-  searchedClosedPulls: [],
   isPendingContents: false,
   isPendingCommits: false,
   isPendingCommit: false,
@@ -33,10 +25,6 @@ export const initialState = {
   isPendingFile: false,
   isPendingReadMe: false,
   isPendingLabels: false,
-  isPendingSearchOpenIssues: false,
-  isPendingSearchClosedIssues: false,
-  isPendingSearchOpenPulls: false,
-  isPendingSearchClosedPulls: false,
   error: '',
 };
 
@@ -130,79 +118,6 @@ export const repositoryReducer = (state = initialState, action = {}) => {
         ...state,
         error: action.payload,
         isPendingLabels: false,
-      };
-
-    case SEARCH_OPEN_ISSUES.PENDING:
-      return {
-        ...state,
-        searchedOpenIssues: [],
-        isPendingSearchOpenIssues: true,
-      };
-    case SEARCH_OPEN_ISSUES.SUCCESS:
-      return {
-        ...state,
-        searchedOpenIssues: action.payload,
-        isPendingSearchOpenIssues: false,
-      };
-    case SEARCH_OPEN_ISSUES.ERROR:
-      return {
-        ...state,
-        error: action.payload,
-        isPendingSearchOpenIssues: false,
-      };
-    case SEARCH_CLOSED_ISSUES.PENDING:
-      return {
-        ...state,
-        searchedClosedIssues: [],
-        isPendingSearchClosedIssues: true,
-      };
-    case SEARCH_CLOSED_ISSUES.SUCCESS:
-      return {
-        ...state,
-        searchedClosedIssues: action.payload,
-        isPendingSearchClosedIssues: false,
-      };
-    case SEARCH_CLOSED_ISSUES.ERROR:
-      return {
-        ...state,
-        error: action.payload,
-        isPendingSearchClosedIssues: false,
-      };
-    case SEARCH_OPEN_PULLS.PENDING:
-      return {
-        ...state,
-        searchedOpenPulls: [],
-        isPendingSearchOpenPulls: true,
-      };
-    case SEARCH_OPEN_PULLS.SUCCESS:
-      return {
-        ...state,
-        searchedOpenPulls: action.payload,
-        isPendingSearchOpenPulls: false,
-      };
-    case SEARCH_OPEN_PULLS.ERROR:
-      return {
-        ...state,
-        error: action.payload,
-        isPendingSearchOpenPulls: false,
-      };
-    case SEARCH_CLOSED_PULLS.PENDING:
-      return {
-        ...state,
-        searchedClosedPulls: [],
-        isPendingSearchClosedPulls: true,
-      };
-    case SEARCH_CLOSED_PULLS.SUCCESS:
-      return {
-        ...state,
-        searchedClosedPulls: action.payload,
-        isPendingSearchClosedPulls: false,
-      };
-    case SEARCH_CLOSED_PULLS.ERROR:
-      return {
-        ...state,
-        error: action.payload,
-        isPendingSearchClosedPulls: false,
       };
     case GET_COMMIT.PENDING:
       return {
