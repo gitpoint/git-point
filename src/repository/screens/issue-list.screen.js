@@ -297,7 +297,9 @@ class IssueList extends Component {
           issues.length === 0 && (
             <View style={styles.marginSpacing}>
               <Text style={styles.searchTitle}>
-                {t('No closed issues found!', locale)}
+                {searchType === SearchTypes.OPEN
+                  ? t('No open issues found!', locale)
+                  : t('No closed issues found!', locale)}
               </Text>
             </View>
           )}

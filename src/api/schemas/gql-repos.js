@@ -27,8 +27,6 @@ export const gqlRepoSchema = new schema.Entity(
       openPullRequestsPreview: fillGhostUser(
         repository.openPullRequestsPreview
       ),
-      issues: fillGhostUser(repository.issues),
-      pullRequests: fillGhostUser(repository.pullRequests),
       permissions: {
         admin: repository.viewerPermission === 'ADMIN',
         push:
