@@ -391,23 +391,24 @@ class Repository extends Component {
                 underlayColor={colors.greyLight}
                 disabled={isPendingRepository}
               />
-            {commits.length > 0 && (
-              <SectionListItem
-                title={t('View Commits', locale)}
-                leftIcon={{
-                  name: 'git-commit',
-                  color: colors.grey,
-                  type: 'octicon',
-                }}
-                onPress={() =>
-                  this.props.navigation.navigate('CommitList', {
-                    commits,
-                    title: t('Commits', locale),
-                    locale,
-                  })}
-                underlayColor={colors.greyLight}
-              />
-            )}
+              {commits.length > 0 && (
+                <SectionListItem
+                  title={t('View Commits', locale)}
+                  leftIcon={{
+                    name: 'git-commit',
+                    color: colors.grey,
+                    type: 'octicon',
+                  }}
+                  onPress={() =>
+                    this.props.navigation.navigate('CommitList', {
+                      commits,
+                      title: t('Commits', locale),
+                      locale,
+                    })
+                  }
+                  underlayColor={colors.greyLight}
+                />
+              )}
             </SectionList>
           )}
 
@@ -432,11 +433,9 @@ class Repository extends Component {
                   if (pureIssuesCount > 0) {
                     navigation.navigate('IssueList', {
                       title: t('Issues', locale),
-                      type: 'issue',
+                      searchType: 0,
+                      query: '',
                       repository,
-                      issues: repository.issues.nodes.map(issue =>
-                        toOldIssueFormat(issue, repoId)
-                      ),
                     });
                   } else {
                     navigation.navigate('NewIssue', {

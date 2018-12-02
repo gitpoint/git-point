@@ -380,6 +380,15 @@ export class Client {
         paginationArgs: [q],
         normalizrKey: 'items',
       }),
+
+    issues: (q: string, params: SpecialParameters = {}) =>
+      this.list({
+        endpoint: `search/issues?q=${q}`,
+        params,
+        schema: [Schemas.ISSUE],
+        paginationArgs: [q],
+        normalizrKey: 'items',
+      }),
   };
   repos = {
     getContributors: (repoId: string, params: SpecialParameters = {}) =>
@@ -395,7 +404,11 @@ export class Client {
         params,
         schema: Schemas.REPO,
       }),
-    getIssue: (repoId: string, issueId: number, params: SpecialParameters = {}) =>
+    getIssue: (
+      repoId: string,
+      issueId: number,
+      params: SpecialParameters = {}
+    ) =>
       this.get({
         endpoint: `repos/${repoId}/issues/${issueId}`,
         params,
@@ -406,13 +419,19 @@ export class Client {
         },
         schema: Schemas.ISSUE,
       }),
-    getIssueTimeline: (repoId: string, issueId: number, params: SpecialParameters = {}) =>
+    getIssueTimeline: (
+      repoId: string,
+      issueId: number,
+      params: SpecialParameters = {}
+    ) =>
       this.list({
         endpoint: `repos/${repoId}/issues/${issueId}/timeline`,
         params,
         fetchParameters: {
           headers: {
-            Accept: [this.Accept.MOCKINGBIRD_PREVIEW, this.Accept.FULL].join(','),
+            Accept: [this.Accept.MOCKINGBIRD_PREVIEW, this.Accept.FULL].join(
+              ','
+            ),
           },
         },
         schema: [Schemas.ISSUE_TIMELINE_ITEM],
