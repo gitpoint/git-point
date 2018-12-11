@@ -261,15 +261,6 @@ class Repository extends Component {
         ]
       : [];
 
-    const pullRequestCount =
-      !isPendingRepository && repository.pullRequests
-        ? repository.pullRequests.totalCount
-        : 0;
-    const pureIssuesCount =
-      !isPendingRepository && repository.issues
-        ? repository.issues.totalCount
-        : 0;
-
     if (showFork) {
       repositoryActions.splice(1, 0, t('Fork', locale));
     }
@@ -391,23 +382,24 @@ class Repository extends Component {
                 underlayColor={colors.greyLight}
                 disabled={isPendingRepository}
               />
-            {commits.length > 0 && (
-              <SectionListItem
-                title={t('View Commits', locale)}
-                leftIcon={{
-                  name: 'git-commit',
-                  color: colors.grey,
-                  type: 'octicon',
-                }}
-                onPress={() =>
-                  this.props.navigation.navigate('CommitList', {
-                    commits,
-                    title: t('Commits', locale),
-                    locale,
-                  })}
-                underlayColor={colors.greyLight}
-              />
-            )}
+              {commits.length > 0 && (
+                <SectionListItem
+                  title={t('View Commits', locale)}
+                  leftIcon={{
+                    name: 'git-commit',
+                    color: colors.grey,
+                    type: 'octicon',
+                  }}
+                  onPress={() =>
+                    this.props.navigation.navigate('CommitList', {
+                      commits,
+                      title: t('Commits', locale),
+                      locale,
+                    })
+                  }
+                  underlayColor={colors.greyLight}
+                />
+              )}
             </SectionList>
           )}
 
@@ -418,25 +410,23 @@ class Repository extends Component {
                 title={t('ISSUES', locale)}
                 noItems={openIssues.length === 0}
                 noItemsMessage={
-                  pureIssuesCount === 0
+                  openIssues.length === 0
                     ? t('No issues', locale)
                     : t('No open issues', locale)
                 }
                 showButton
                 buttonTitle={
-                  pureIssuesCount > 0
+                  openIssues.length > 0
                     ? t('View All', locale)
                     : t('New Issue', locale)
                 }
                 buttonAction={() => {
-                  if (pureIssuesCount > 0) {
+                  if (openIssues.length > 0) {
                     navigation.navigate('IssueList', {
                       title: t('Issues', locale),
-                      type: 'issue',
+                      searchType: 0,
+                      query: '',
                       repository,
-                      issues: repository.issues.nodes.map(issue =>
-                        toOldIssueFormat(issue, repoId)
-                      ),
                     });
                   } else {
                     navigation.navigate('NewIssue', {
@@ -463,19 +453,18 @@ class Repository extends Component {
                 title={t('PULL REQUESTS', locale)}
                 noItems={openPulls.length === 0}
                 noItemsMessage={
-                  pullRequestCount === 0
+                  openPulls.length === 0
                     ? t('No pull requests', locale)
                     : t('No open pull requests', locale)
                 }
-                showButton={pullRequestCount > 0}
+                showButton={openPulls.length > 0}
                 buttonTitle={t('View All', locale)}
                 buttonAction={() =>
                   navigation.navigate('PullList', {
                     title: t('Pull Requests', locale),
-                    type: 'pull',
-                    issues: repository.pullRequests.nodes.map(issue =>
-                      toOldIssueFormat(issue, repoId, true)
-                    ),
+                    searchType: 0,
+                    query: '',
+                    repository,
                   })
                 }
               >

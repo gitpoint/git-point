@@ -4,6 +4,6 @@ export const userSchema = new schema.Entity(
   'users',
   {},
   {
-    idAttribute: user => user.login.toLowerCase(),
+    idAttribute: user => user.login,
   }
 );

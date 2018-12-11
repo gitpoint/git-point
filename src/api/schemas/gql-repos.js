@@ -19,7 +19,7 @@ export const gqlRepoSchema = new schema.Entity(
   {},
   {
     idAttribute: ({ repository }) => {
-      return repository.nameWithOwner.toLowerCase();
+      return repository.nameWithOwner;
     },
     processStrategy: ({ repository }) => ({
       ...repository,
@@ -27,8 +27,6 @@ export const gqlRepoSchema = new schema.Entity(
       openPullRequestsPreview: fillGhostUser(
         repository.openPullRequestsPreview
       ),
-      issues: fillGhostUser(repository.issues),
-      pullRequests: fillGhostUser(repository.pullRequests),
       permissions: {
         admin: repository.viewerPermission === 'ADMIN',
         push:

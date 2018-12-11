@@ -1,5 +1,4 @@
 import {
-  GET_ISSUE_COMMENTS,
   POST_ISSUE_COMMENT,
   DELETE_ISSUE_COMMENT,
   EDIT_ISSUE_COMMENT,
@@ -11,21 +10,16 @@ import {
   GET_ISSUE_MERGE_STATUS,
   GET_PULL_REQUEST_FROM_URL,
   MERGE_PULL_REQUEST,
-  GET_ISSUE_FROM_URL,
   SUBMIT_NEW_ISSUE,
-  GET_ISSUE_EVENTS,
 } from './issue.type';
 
 export const initialState = {
   issue: {},
   comments: [],
-  events: [],
   pr: {},
   diff: '',
   commits: [],
   isMerged: false,
-  isPendingComments: false,
-  isPendingEvents: false,
   isPostingComment: false,
   isDeletingComment: false,
   isEditingComment: false,
@@ -42,40 +36,6 @@ export const initialState = {
 
 export const issueReducer = (state = initialState, action = {}) => {
   switch (action.type) {
-    case GET_ISSUE_COMMENTS.PENDING:
-      return {
-        ...state,
-        isPendingComments: true,
-      };
-    case GET_ISSUE_COMMENTS.SUCCESS:
-      return {
-        ...state,
-        comments: action.payload,
-        isPendingComments: false,
-      };
-    case GET_ISSUE_COMMENTS.ERROR:
-      return {
-        ...state,
-        error: action.payload,
-        isPendingComments: false,
-      };
-    case GET_ISSUE_EVENTS.PENDING:
-      return {
-        ...state,
-        isPendingEvents: true,
-      };
-    case GET_ISSUE_EVENTS.SUCCESS:
-      return {
-        ...state,
-        events: action.payload,
-        isPendingEvents: false,
-      };
-    case GET_ISSUE_EVENTS.ERROR:
-      return {
-        ...state,
-        error: action.payload,
-        isPendingEvents: false,
-      };
     case POST_ISSUE_COMMENT.PENDING:
       return {
         ...state,
@@ -281,26 +241,6 @@ export const issueReducer = (state = initialState, action = {}) => {
         ...state,
         error: action.payload,
         isPendingPR: false,
-      };
-    case GET_ISSUE_FROM_URL.PENDING:
-      return {
-        ...state,
-        isPendingIssue: true,
-      };
-    case GET_ISSUE_FROM_URL.SUCCESS:
-      return {
-        ...state,
-        issue: action.payload,
-        isPendingIssue: false,
-        pr: initialState.pr,
-        diff: initialState.diff,
-        isMerged: initialState.isMerged,
-      };
-    case GET_ISSUE_FROM_URL.ERROR:
-      return {
-        ...state,
-        error: action.payload,
-        isPendingIssue: false,
       };
     case SUBMIT_NEW_ISSUE.PENDING:
       return {

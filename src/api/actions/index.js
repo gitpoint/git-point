@@ -12,6 +12,7 @@ export const ACTIVITY_WATCH_REPO = createActionSet('ACTIVITY_WATCH_REPO');
 export const ACTIVITY_UNWATCH_REPO = createActionSet('ACTIVITY_UNWATCH_REPO');
 export const SEARCH_REPOS = createPaginationActionSet('SEARCH_REPOS');
 export const SEARCH_USERS = createPaginationActionSet('SEARCH_USERS');
+export const SEARCH_ISSUES = createPaginationActionSet('SEARCH_ISSUES');
 export const ORGS_GET_MEMBERS = createPaginationActionSet('ORGS_GET_MEMBERS');
 export const ORGS_GET_BY_ID = createActionSet('ORGS_GET_BY_ID');
 
