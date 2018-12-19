@@ -114,7 +114,7 @@ class NewIssue extends Component {
               android: 5,
             }),
           }),
-        ]).start(() => this.scrollViewRef.scrollToEnd());
+        ]).start(() => this.shouldScroll && this.scrollViewRef.scrollToEnd());
         break;
       case 'hide':
         Animated.parallel([
@@ -186,6 +186,12 @@ class NewIssue extends Component {
                 placeholderTextColor={colors.grey}
                 value={issueTitle}
                 valueHeight={issueTitleHeight}
+                onFocus={() => {
+                  this.shouldScroll = false;
+                }} // donot scroll to bottom when this input is focused
+                onBlur={() => {
+                  this.shouldScroll = true;
+                }} // when this input is not focused, scrollview should scroll to bottom when keyboard show up
               />
             </SectionList>
 
