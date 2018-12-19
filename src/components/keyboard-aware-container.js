@@ -8,7 +8,7 @@ type Props = {
   children: Object,
 };
 
-class KeyboardAwareContainer extends Component<Props> {
+export class KeyboardAwareContainer extends Component<Props> {
   constructor(props) {
     super(props);
     this.keyboardWillShowSub = null;
@@ -51,5 +51,3 @@ class KeyboardAwareContainer extends Component<Props> {
     return <View style={this.props.style}>{this.props.children}</View>;
   }
 }
-
-export default KeyboardAwareContainer;

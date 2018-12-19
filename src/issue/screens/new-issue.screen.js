@@ -6,11 +6,10 @@ import { Alert, ScrollView, Animated, Platform } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import styled from 'styled-components';
 
-import { SectionList, LoadingModal } from 'components';
+import { SectionList, LoadingModal, KeyboardAwareContainer } from 'components';
 import { t } from 'utils';
 import { colors, fonts, normalize } from 'config';
 import { submitNewIssue } from '../issue.action';
-import KeyboardAwareContainer from './KeyboardAwareContainer';
 
 const StyledListItem = styled(ListItem).attrs({
   titleStyle: {
