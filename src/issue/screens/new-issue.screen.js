@@ -111,7 +111,7 @@ class NewIssue extends Component {
             }),
             toValue: Platform.select({
               ios: event.endCoordinates.height,
-              android: 5,
+              android: event.endCoordinates.height,
             }),
           }),
         ]).start(() => this.shouldScroll && this.scrollViewRef.scrollToEnd());
@@ -120,7 +120,7 @@ class NewIssue extends Component {
         Animated.parallel([
           Animated.timing(this.state.keyboardHeight, {
             duration: Platform.select({
-              ios: event.duration,
+              ios: 200,
               android: 200,
             }),
             toValue: 0,

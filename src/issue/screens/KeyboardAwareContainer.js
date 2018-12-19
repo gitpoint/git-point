@@ -28,14 +28,14 @@ class KeyboardAwareContainer extends Component<Props> {
         this.props.onKeyboardStateChange('hide', e);
       }
     });
-    this.keyboardDidShowSub = Keyboard.addListener('keyboardDidShow', () => {
+    this.keyboardDidShowSub = Keyboard.addListener('keyboardDidShow', e => {
       if (Platform.OS === 'android') {
-        this.props.onKeyboardStateChange('show', { endCoordinates: {} });
+        this.props.onKeyboardStateChange('show', e);
       }
     });
-    this.keyboardDidHideSub = Keyboard.addListener('keyboardDidHide', () => {
+    this.keyboardDidHideSub = Keyboard.addListener('keyboardDidHide', e => {
       if (Platform.OS === 'android') {
-        this.props.onKeyboardStateChange('hide', { endCoordinates: {} });
+        this.props.onKeyboardStateChange('hide', e);
       }
     });
   }
