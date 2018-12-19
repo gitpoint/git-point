@@ -2,14 +2,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Alert, ScrollView } from 'react-native';
+import { Alert, ScrollView, Animated, Platform } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import styled from 'styled-components';
 
-import { ViewContainer, SectionList, LoadingModal } from 'components';
+import { SectionList, LoadingModal } from 'components';
 import { t } from 'utils';
 import { colors, fonts, normalize } from 'config';
 import { submitNewIssue } from '../issue.action';
+import KeyboardAwareContainer from './KeyboardAwareContainer';
 
 const StyledListItem = styled(ListItem).attrs({
   titleStyle: {
@@ -73,6 +74,7 @@ class NewIssue extends Component {
       issueTitleHeight: 0,
       issueComment: '',
       issueCommentHeight: 0,
+      keyboardHeight: new Animated.Value(0),
     };
   }
 
@@ -98,6 +100,39 @@ class NewIssue extends Component {
     }
   };
 
+  handleKeyboardStateChange = (state, event) => {
+    switch (state) {
+      case 'show':
+        Animated.parallel([
+          Animated.timing(this.state.keyboardHeight, {
+            duration: Platform.select({
+              ios: event.duration,
+              android: 200,
+            }),
+            toValue: Platform.select({
+              ios: event.endCoordinates.height,
+              android: 5,
+            }),
+          }),
+        ]).start(() => this.scrollViewRef.scrollToEnd());
+        break;
+      case 'hide':
+        Animated.parallel([
+          Animated.timing(this.state.keyboardHeight, {
+            duration: Platform.select({
+              ios: event.duration,
+              android: 200,
+            }),
+            toValue: 0,
+          }),
+        ]).start();
+        break;
+
+      default:
+        break;
+    }
+  };
+
   render() {
     const { locale, navigation, isPendingSubmitting } = this.props;
     const { repository } = navigation.state.params;
@@ -106,71 +141,85 @@ class NewIssue extends Component {
       issueTitleHeight,
       issueComment,
       issueCommentHeight,
+      keyboardHeight,
     } = this.state;
 
     return (
-      <ViewContainer>
+      <KeyboardAwareContainer
+        style={{ flex: 1 }}
+        onKeyboardStateChange={(state, event) =>
+          this.handleKeyboardStateChange(state, event)
+        }
+      >
         {isPendingSubmitting && <LoadingModal />}
-        <ScrollView>
-          {repository.full_name && (
-            <StyledListItem
-              title={repository.full_name}
-              leftIcon={{
-                name: 'repo',
-                size: 17,
-                color: colors.grey,
-                type: 'octicon',
-              }}
-              hideChevron
-            />
-          )}
-          <SectionList title={t('Issue Title', locale)}>
-            <StyledTextInput
-              underlineColorAndroid={'transparent'}
-              placeholder={t('Write a title for your issue here', locale)}
-              blurOnSubmit
-              multiline
-              onContentSizeChange={event =>
-                this.setState({
-                  issueTitleHeight: event.nativeEvent.contentSize.height,
-                })
-              }
-              onChangeText={text => this.setState({ issueTitle: text })}
-              placeholderTextColor={colors.grey}
-              value={issueTitle}
-              valueHeight={issueTitleHeight}
-            />
-          </SectionList>
-
-          <SectionList title={t('Issue Comment', locale)}>
-            <StyledTextInput
-              underlineColorAndroid={'transparent'}
-              placeholder={t('Write a comment for your issue here', locale)}
-              multiline
-              onChangeText={text => this.setState({ issueComment: text })}
-              onContentSizeChange={event =>
-                this.setState({
-                  issueCommentHeight: event.nativeEvent.contentSize.height,
-                })
-              }
-              placeholderTextColor={colors.grey}
-              value={issueComment}
-              valueHeight={issueCommentHeight}
-            />
-          </SectionList>
-
-          <SectionList>
-            <SubmitView>
-              <SubmitListItem
-                title={t('Submit', locale)}
+        <Animated.View style={{ flex: 1, paddingBottom: keyboardHeight }}>
+          <ScrollView
+            ref={ref => {
+              this.scrollViewRef = ref;
+            }}
+            onContentSizeChange={() => this.scrollViewRef.scrollToEnd()}
+          >
+            {repository.full_name && (
+              <StyledListItem
+                title={repository.full_name}
+                leftIcon={{
+                  name: 'repo',
+                  size: 17,
+                  color: colors.grey,
+                  type: 'octicon',
+                }}
                 hideChevron
-                underlayColor={colors.greyLight}
-                onPress={() => this.submitNewIssue()}
               />
-            </SubmitView>
-          </SectionList>
-        </ScrollView>
-      </ViewContainer>
+            )}
+            <SectionList title={t('Issue Title', locale)}>
+              <StyledTextInput
+                underlineColorAndroid={'transparent'}
+                placeholder={t('Write a title for your issue here', locale)}
+                blurOnSubmit
+                multiline
+                onContentSizeChange={event =>
+                  this.setState({
+                    issueTitleHeight: event.nativeEvent.contentSize.height,
+                  })
+                }
+                onChangeText={text => this.setState({ issueTitle: text })}
+                placeholderTextColor={colors.grey}
+                value={issueTitle}
+                valueHeight={issueTitleHeight}
+              />
+            </SectionList>
+
+            <SectionList title={t('Issue Comment', locale)}>
+              <StyledTextInput
+                underlineColorAndroid={'transparent'}
+                placeholder={t('Write a comment for your issue here', locale)}
+                multiline
+                onChangeText={text => this.setState({ issueComment: text })}
+                onContentSizeChange={event => {
+                  this.scrollViewRef.scrollToEnd();
+                  this.setState({
+                    issueCommentHeight: event.nativeEvent.contentSize.height,
+                  });
+                }}
+                placeholderTextColor={colors.grey}
+                value={issueComment}
+                valueHeight={issueCommentHeight}
+              />
+            </SectionList>
+
+            <SectionList>
+              <SubmitView>
+                <SubmitListItem
+                  title={t('Submit', locale)}
+                  hideChevron
+                  underlayColor={colors.greyLight}
+                  onPress={() => this.submitNewIssue()}
+                />
+              </SubmitView>
+            </SectionList>
+          </ScrollView>
+        </Animated.View>
+      </KeyboardAwareContainer>
     );
   }
 }
