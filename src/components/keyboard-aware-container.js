@@ -13,41 +13,39 @@ export class KeyboardAwareContainer extends Component<Props> {
     super(props);
     this.keyboardWillShowSub = null;
     this.keyboardWillHideSub = null;
-    this.keyboardDidHideSub = null;
-    this.keyboardDidShowSub = null;
   }
 
   componentWillMount() {
-    this.keyboardWillShowSub = Keyboard.addListener('keyboardWillShow', e => {
-      if (Platform.OS === 'ios') {
+    const keyboardShowEventName =
+      Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow';
+    const keyboardHideEventName =
+      Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide';
+
+    this.keyboardWillShowSub = Keyboard.addListener(
+      keyboardShowEventName,
+      e => {
         this.props.onKeyboardStateChange('show', e);
       }
-    });
-    this.keyboardWillHideSub = Keyboard.addListener('keyboardWillHide', e => {
-      if (Platform.OS === 'ios') {
+    );
+
+    this.keyboardWillHideSub = Keyboard.addListener(
+      keyboardHideEventName,
+      e => {
         this.props.onKeyboardStateChange('hide', e);
       }
-    });
-    this.keyboardDidShowSub = Keyboard.addListener('keyboardDidShow', e => {
-      if (Platform.OS === 'android') {
-        this.props.onKeyboardStateChange('show', e);
-      }
-    });
-    this.keyboardDidHideSub = Keyboard.addListener('keyboardDidHide', e => {
-      if (Platform.OS === 'android') {
-        this.props.onKeyboardStateChange('hide', e);
-      }
-    });
+    );
   }
 
   componentWillUnmount() {
     this.keyboardWillShowSub.remove();
     this.keyboardWillHideSub.remove();
-    this.keyboardDidShowSub.remove();
-    this.keyboardDidHideSub.remove();
   }
 
   render() {
     return <View style={this.props.style}>{this.props.children}</View>;
   }
 }
+
+KeyboardAwareContainer.defaultProps = {
+  style: {},
+};

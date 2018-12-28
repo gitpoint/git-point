@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Alert, ScrollView, Animated, Platform } from 'react-native';
+import { Alert, ScrollView, Animated } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import styled from 'styled-components';
 
@@ -102,29 +102,16 @@ class NewIssue extends Component {
   handleKeyboardStateChange = (state, event) => {
     switch (state) {
       case 'show':
-        Animated.parallel([
-          Animated.timing(this.state.keyboardHeight, {
-            duration: Platform.select({
-              ios: event.duration,
-              android: 200,
-            }),
-            toValue: Platform.select({
-              ios: event.endCoordinates.height,
-              android: event.endCoordinates.height,
-            }),
-          }),
-        ]).start(() => this.shouldScroll && this.scrollViewRef.scrollToEnd());
+        Animated.timing(this.state.keyboardHeight, {
+          duration: 200,
+          toValue: event.endCoordinates.height,
+        }).start(() => this.shouldScroll && this.scrollViewRef.scrollToEnd());
         break;
       case 'hide':
-        Animated.parallel([
-          Animated.timing(this.state.keyboardHeight, {
-            duration: Platform.select({
-              ios: 200,
-              android: 200,
-            }),
-            toValue: 0,
-          }),
-        ]).start();
+        Animated.timing(this.state.keyboardHeight, {
+          duration: 200,
+          toValue: 0,
+        }).start();
         break;
 
       default:
@@ -187,10 +174,10 @@ class NewIssue extends Component {
                 valueHeight={issueTitleHeight}
                 onFocus={() => {
                   this.shouldScroll = false;
-                }} // donot scroll to bottom when this input is focused
+                }} // do not scroll to bottom when this input is focused
                 onBlur={() => {
                   this.shouldScroll = true;
-                }} // when this input is not focused, scrollview should scroll to bottom when keyboard show up
+                }} // when this input is not focused, scrollview should scroll to bottom when keyboard shows up
               />
             </SectionList>
 
@@ -201,7 +188,6 @@ class NewIssue extends Component {
                 multiline
                 onChangeText={text => this.setState({ issueComment: text })}
                 onContentSizeChange={event => {
-                  this.scrollViewRef.scrollToEnd();
                   this.setState({
                     issueCommentHeight: event.nativeEvent.contentSize.height,
                   });
@@ -229,6 +215,7 @@ class NewIssue extends Component {
   }
 }
 
-export const NewIssueScreen = connect(mapStateToProps, mapDispatchToProps)(
-  NewIssue
-);
+export const NewIssueScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NewIssue);
