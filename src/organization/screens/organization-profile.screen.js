@@ -68,8 +68,8 @@ class OrganizationProfile extends Component {
     getOrgMembers(orgId);
   }
 
-  componentWillReceiveProps() {
-    this.setState({ refreshing: false });
+  static getDerivedStateFromProps() {
+    return { refreshing: false };
   }
 
   refresh = () => {
@@ -162,15 +162,14 @@ class OrganizationProfile extends Component {
             />
           )}
 
-          {!!org.description &&
-            org.description !== '' && (
-              <SectionList title={t('DESCRIPTION', locale)}>
-                <DescriptionListItem
-                  subtitle={emojifyText(org.description)}
-                  hideChevron
-                />
-              </SectionList>
-            )}
+          {!!org.description && org.description !== '' && (
+            <SectionList title={t('DESCRIPTION', locale)}>
+              <DescriptionListItem
+                subtitle={emojifyText(org.description)}
+                hideChevron
+              />
+            </SectionList>
+          )}
 
           {org && (
             <EntityInfo entity={org} navigation={navigation} locale={locale} />

@@ -184,18 +184,18 @@ class Notifications extends Component {
     this.getNotifications();
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     const pendingType = this.getPendingType();
 
     if (
-      !nextProps.isPendingMarkAllNotificationsAsRead &&
-      this.props.isPendingMarkAllNotificationsAsRead &&
+      !this.props.isPendingMarkAllNotificationsAsRead &&
+      prevProps.isPendingMarkAllNotificationsAsRead &&
       !this.isLoading()
     ) {
       this.getNotificationsForCurrentType()();
     }
 
-    if (!nextProps[pendingType] && this.props[pendingType]) {
+    if (!this.props[pendingType] && prevProps[pendingType]) {
       this.props.getNotificationsCount();
     }
   }
@@ -385,16 +385,15 @@ class Notifications extends Component {
 
     return (
       <View>
-        {isFirstItem &&
-          isFirstTab && (
-            <MarkAllAsReadButtonContainer>
-              <Button
-                icon={{ name: 'check', type: 'octicon' }}
-                onPress={() => markAllNotificationsAsRead()}
-                title={t('Mark all as read')}
-              />
-            </MarkAllAsReadButtonContainer>
-          )}
+        {isFirstItem && isFirstTab && (
+          <MarkAllAsReadButtonContainer>
+            <Button
+              icon={{ name: 'check', type: 'octicon' }}
+              onPress={() => markAllNotificationsAsRead()}
+              title={t('Mark all as read')}
+            />
+          </MarkAllAsReadButtonContainer>
+        )}
 
         <RepositoryContainer>
           <HeaderContainer>
@@ -504,6 +503,7 @@ class Notifications extends Component {
   }
 }
 
-export const NotificationsScreen = connect(mapStateToProps, mapDispatchToProps)(
-  Notifications
-);
+export const NotificationsScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Notifications);

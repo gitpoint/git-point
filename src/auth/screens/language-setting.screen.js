@@ -45,19 +45,23 @@ class LanguageSettings extends Component {
   props: {
     locale: string,
     changeLocale: () => void,
+    navigation: object,
   };
 
-  componentWillReceiveProps(nextState) {
-    if (nextState.locale !== this.props.locale) {
-      const navigationParams = NavigationActions.setParams({
-        params: {
-          title: t('Language', nextState.locale),
-        },
-        key: nextState.navigation.state.key,
-      });
+  shouldComponentUpdate(nextProps) {
+    return nextProps.locale !== this.props.locale;
+  }
 
-      nextState.navigation.dispatch(navigationParams);
-    }
+  componentDidUpdate() {
+    const { locale, navigation } = this.props;
+    const navigationParams = NavigationActions.setParams({
+      params: {
+        title: t('Language', locale),
+      },
+      key: navigation.state.key,
+    });
+
+    navigation.dispatch(navigationParams);
   }
 
   renderListItem = ({ item }) => {
