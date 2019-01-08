@@ -65,6 +65,15 @@ const updateText = locale => ({
 });
 
 class UserOptions extends Component {
+  static getDerivedStateFromProps(props, state) {
+    return props.locale !== state.locale
+      ? {
+          updateText: updateText(props.locale).check,
+          locale: props.locale,
+        }
+      : null;
+  }
+
   props: {
     locale: string,
     signOut: () => void,
@@ -83,15 +92,6 @@ class UserOptions extends Component {
 
   shouldComponentUpdate(nextProps) {
     return nextProps.locale !== this.props.locale;
-  }
-
-  static getDerivedStateFromProps(props, state) {
-    return props.locale !== state.locale
-      ? {
-          updateText: updateText(props.locale).check,
-          locale: props.locale,
-        }
-      : null;
   }
 
   componentDidUpdate() {

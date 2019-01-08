@@ -37,6 +37,10 @@ const LoadingMembersContainer = styled.View`
 `;
 
 class OrganizationProfile extends Component {
+  static getDerivedStateFromProps() {
+    return { refreshing: false };
+  }
+
   props: {
     org: Object,
     orgId: String,
@@ -66,10 +70,6 @@ class OrganizationProfile extends Component {
       getOrgById(orgId);
     }
     getOrgMembers(orgId);
-  }
-
-  static getDerivedStateFromProps() {
-    return { refreshing: false };
   }
 
   refresh = () => {
