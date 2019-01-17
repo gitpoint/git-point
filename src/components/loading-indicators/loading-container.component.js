@@ -25,6 +25,6 @@ const Message = styled.Text`
 export const LoadingContainer = ({ animating, text, center }: Props) => (
   <Container center={center}>
     <ActivityIndicator animating={animating} size="large" />
-    {text && <Message>{text}</Message>}
+    {!!text && <Message>{text}</Message>}
   </Container>
 );
