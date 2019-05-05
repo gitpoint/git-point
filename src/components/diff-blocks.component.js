@@ -67,7 +67,9 @@ export const DiffBlocks = ({
   const linesChanged = additions + deletions;
 
   let addedBlocks = null;
+
   let deletedBlocks = null;
+
   let neutralBlocks = null;
 
   if (linesChanged <= 5) {

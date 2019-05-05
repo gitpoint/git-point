@@ -17,7 +17,9 @@ export const t = (message, locale, interpolation = null) => {
   const retval = [];
 
   let ongoing = '';
+
   let lastIndex = 0;
+
   let key = 0;
 
   translation.replace(

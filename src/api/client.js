@@ -79,7 +79,7 @@ export class Client {
 
   authHeaders = {};
 
-  call = async (
+  call = async(
     url: string,
     params: SpecialParameters = {},
     fetchParameters: FetchParameters = {}
@@ -208,7 +208,7 @@ export class Client {
    * @async
    * @param {Response} response
    */
-  getCount = async (response: Response) => {
+  getCount = async(response: Response) => {
     if (!response.ok) {
       return 0;
     }
