@@ -19,12 +19,12 @@
     "link": "react-native link",
     "ios": "react-native run-ios",
     "android": "react-native run-android",
-    "i18n:extract": "node ./scripts/extract-i18n.js && prettier --loglevel silent --write src/locale/**/*.js",
+    "i18n:extract": "node ./scripts/extract-i18n.js && prettier --loglevel silent --write src/locale/**/*.js src/locale/**/*.ts",
     "commitmsg": "minicat $GIT_PARAMS | commitlint",
     "precommit": "lint-staged",
     "eslint": "eslint .",
-    "stylelint": "stylelint src/**/*.js",
-    "prettier": "prettier --write \"**/*.js\"",
+    "stylelint": "stylelint src/**/*.js src/**/*.ts src/**/*.tsx",
+    "prettier": "prettier --write \"**/*.js\" \"**/*.ts\" \"**/*.tsx\"",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage && cat ./coverage/lcov.info | coveralls",
@@ -46,7 +46,7 @@
     "postinstall": "opencollective postinstall"
   },
   "lint-staged": {
-    "*.js": [
+    "*.{js,ts,tsx}": [
       "prettier-eslint --write --list-different --eslint-config-path .eslintrc.js",
       "git add"
     ]
@@ -103,6 +103,15 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^3.1.0",
+    "@types/jest": "^24.0.12",
+    "@types/react": "^16.8.16",
+    "@types/react-native": "^0.57.51",
+    "@types/react-navigation": "^3.0.6",
+    "@types/react-redux": "^7.0.8",
+    "@types/react-test-renderer": "^16.8.1",
+    "@types/styled-components": "^4.1.14",
+    "@typescript-eslint/eslint-plugin": "^1.7.0",
+    "@typescript-eslint/parser": "^1.7.0",
     "all-contributors-cli": "^4.10.1",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^22.4.3",
@@ -134,11 +143,12 @@
     "lint-staged": "^3.2.6",
     "minicat": "^1.0.0",
     "opencollective": "^1.0.3",
-    "prettier": "^1.7.4",
+    "prettier": "^1.17.0",
     "prettier-eslint-cli": "^4.7.1",
     "react-dom": "16.3.0-alpha.1",
     "react-native-cli": "^2.0.1",
     "react-native-mock": "https://github.com/shqld/react-native-mock/tarball/master",
+    "react-native-typescript-transformer": "^1.2.12",
     "react-test-renderer": "16.3.0-alpha.1",
     "reactotron-react-native": "^1.14.0",
     "reactotron-redux": "^1.13.0",
@@ -146,16 +156,32 @@
     "stylelint": "^8.2.0",
     "stylelint-config-standard": "^18.0.0",
     "stylelint-config-styled-components": "^0.1.1",
-    "stylelint-processor-styled-components": "^1.0.0"
+    "stylelint-processor-styled-components": "^1.0.0",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.4.5"
   },
   "jest": {
     "preset": "react-native",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.(js)$": "<rootDir>/node_modules/babel-jest",
+      "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
     "testMatch": [
-      "**/__tests__/tests/**/*.js"
+      "**/__tests__/tests/**/*.(js|ts|tsx)"
     ],
     "setupFiles": [
       "./testenv.js"
     ],
+    "testPathIgnorePatterns": [
+      "\\.snap$",
+      "<rootDir>/node_modules/"
+    ],
+    "cacheDirectory": ".jest/cache",
     "transformIgnorePatterns": [
       "node_modules/(?!(jest-)?react-native|react-navigation)"
     ],

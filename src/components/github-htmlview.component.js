@@ -306,8 +306,7 @@ export class GithubHtmlView extends Component {
                   onLinkPress({ ...node, attribs: { href: node.attribs.src } })
                 }
               >
-                [{node.attribs.alt}]
-                {'\n'}
+                [{node.attribs.alt}]{'\n'}
               </Text>
             );
           }

@@ -677,6 +677,7 @@ class Events extends Component {
   }
 }
 
-export const EventsScreen = connect(mapStateToProps, mapDispatchToProps)(
-  Events
-);
+export const EventsScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Events);

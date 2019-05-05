@@ -184,14 +184,11 @@ class PullDiff extends Component {
             </Text>
           )}
 
-          {!item.new &&
-            !item.deleted && (
-              <Text style={[styles.fileTitle, styles.codeStyle]}>
-                {item.from === item.to
-                  ? item.to
-                  : `${item.from} \n → ${item.to}`}
-              </Text>
-            )}
+          {!item.new && !item.deleted && (
+            <Text style={[styles.fileTitle, styles.codeStyle]}>
+              {item.from === item.to ? item.to : `${item.from} \n → ${item.to}`}
+            </Text>
+          )}
         </ScrollView>
 
         {item.chunks.length > 0 && chunks}

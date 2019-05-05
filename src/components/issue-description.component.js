@@ -180,14 +180,13 @@ export class IssueDescription extends Component {
           />
 
           {!issue.pull_request ||
-            (issue.pull_request &&
-              !isPendingCheckMerge && (
-                <StateBadge
-                  issue={issue}
-                  isMerged={isMerged && issue.pull_request}
-                  locale={locale}
-                />
-              ))}
+            (issue.pull_request && !isPendingCheckMerge && (
+              <StateBadge
+                issue={issue}
+                isMerged={isMerged && issue.pull_request}
+                locale={locale}
+              />
+            ))}
         </HeaderContainer>
 
         {issue.pull_request && (
@@ -209,42 +208,39 @@ export class IssueDescription extends Component {
               </TouchableHighlight>
             )}
 
-            {!isPendingDiff &&
-              (lineAdditions !== 0 || lineDeletions !== 0) && (
-                <DiffBlocks
-                  additions={lineAdditions}
-                  deletions={lineDeletions}
-                  showNumbers
-                  onPress={() =>
-                    navigation.navigate('PullDiff', {
-                      title: t('Diff', locale),
-                      locale,
-                      diff,
-                    })
-                  }
-                />
-              )}
+            {!isPendingDiff && (lineAdditions !== 0 || lineDeletions !== 0) && (
+              <DiffBlocks
+                additions={lineAdditions}
+                deletions={lineDeletions}
+                showNumbers
+                onPress={() =>
+                  navigation.navigate('PullDiff', {
+                    title: t('Diff', locale),
+                    locale,
+                    diff,
+                  })
+                }
+              />
+            )}
           </DiffBlocksContainer>
         )}
 
-        {issue.labels &&
-          issue.labels.length > 0 && (
-            <LabelButtonGroup>
-              {this.renderLabelButtons(issue.labels)}
-            </LabelButtonGroup>
-          )}
-        {issue.assignees &&
-          issue.assignees.length > 0 && (
-            <AssigneesSection>
-              <MembersList
-                title={t('Assignees', locale)}
-                members={issue.assignees}
-                containerStyle={{ marginTop: 0, paddingTop: 0, paddingLeft: 0 }}
-                smallTitle
-                navigation={navigation}
-              />
-            </AssigneesSection>
-          )}
+        {issue.labels && issue.labels.length > 0 && (
+          <LabelButtonGroup>
+            {this.renderLabelButtons(issue.labels)}
+          </LabelButtonGroup>
+        )}
+        {issue.assignees && issue.assignees.length > 0 && (
+          <AssigneesSection>
+            <MembersList
+              title={t('Assignees', locale)}
+              members={issue.assignees}
+              containerStyle={{ marginTop: 0, paddingTop: 0, paddingLeft: 0 }}
+              smallTitle
+              navigation={navigation}
+            />
+          </AssigneesSection>
+        )}
 
         {issue.pull_request &&
           !isMerged &&

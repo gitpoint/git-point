@@ -1,6 +1,13 @@
 module.exports = {
   extends: 'eslint-config-airbnb',
-  plugins: ['jsx-a11y', 'import', 'react', 'react-native', 'flowtype'],
+  plugins: [
+    'jsx-a11y',
+    'import',
+    'react',
+    'react-native',
+    'flowtype',
+    '@typescript-eslint',
+  ],
   parser: 'babel-eslint',
   env: {
     browser: true,
@@ -92,7 +99,7 @@ module.exports = {
     'react/jsx-filename-extension': [
       'error',
       {
-        extensions: ['.js', '.jsx'],
+        extensions: ['.js', '.jsx', '.tsx'],
       },
     ],
     'react/jsx-indent': 'off',
@@ -139,4 +146,15 @@ module.exports = {
       },
     ],
   },
+  overrides: [
+    {
+      files: ['**/*.ts', '**/*.tsx'],
+      parser: '@typescript-eslint/parser',
+      plugins: ['@typescript-eslint'],
+      rules: {
+        'no-unused-vars': 'off',
+        '@typescript-eslint/no-unused-vars': 'error',
+      },
+    },
+  ],
 };

@@ -104,23 +104,21 @@ class ReadMe extends Component {
         {isPendingReadMe && (
           <LoadingContainer animating={isPendingReadMe} center />
         )}
-        {!isPendingReadMe &&
-          !noReadMe && (
-            <MarkdownWebView
-              html={readMe}
-              baseUrl={`${
-                this.props.navigation.state.params.repository.html_url
-              }/raw/master/`}
-            />
-          )}
-        {!isPendingReadMe &&
-          noReadMe && (
-            <View style={styles.textContainer}>
-              <Text style={styles.noReadMeTitle}>
-                {t('No README.md found', locale)}
-              </Text>
-            </View>
-          )}
+        {!isPendingReadMe && !noReadMe && (
+          <MarkdownWebView
+            html={readMe}
+            baseUrl={`${
+              this.props.navigation.state.params.repository.html_url
+            }/raw/master/`}
+          />
+        )}
+        {!isPendingReadMe && noReadMe && (
+          <View style={styles.textContainer}>
+            <Text style={styles.noReadMeTitle}>
+              {t('No README.md found', locale)}
+            </Text>
+          </View>
+        )}
 
         <ActionSheet
           ref={o => {
@@ -136,6 +134,7 @@ class ReadMe extends Component {
   }
 }
 
-export const ReadMeScreen = connect(mapStateToProps, mapDispatchToProps)(
-  ReadMe
-);
+export const ReadMeScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ReadMe);
