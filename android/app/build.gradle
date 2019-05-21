@@ -112,8 +112,8 @@ android {
         applicationId "com.gitpoint"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 6
-        versionName "1.4.1"
+        versionCode 7
+        versionName "1.7.1"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
