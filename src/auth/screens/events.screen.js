@@ -488,7 +488,9 @@ class Events extends Component {
     const actor = this.getActorLink(userEvent);
     const repo = this.getRepoLink(userEvent);
     const ref = (
-      <LinkBranchDescription onPress={() => this.navigateToCommitList(userEvent)}>
+      <LinkBranchDescription
+        onPress={() => this.navigateToCommitList(userEvent)}
+      >
         {userEvent.payload.ref.replace('refs/heads/', '')}
       </LinkBranchDescription>
     );
@@ -603,6 +605,7 @@ class Events extends Component {
       navigation,
     } = this.props;
     const linebreaksPattern = /(\r\n|\n|\r)/gm;
+
     let content;
 
     if (userEventsPagination.isFetching && userEvents.length === 0) {
@@ -674,6 +677,7 @@ class Events extends Component {
   }
 }
 
-export const EventsScreen = connect(mapStateToProps, mapDispatchToProps)(
-  Events
-);
+export const EventsScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Events);

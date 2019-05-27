@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import {
   AppRegistry,
   LayoutAnimation,
@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import codePush from 'react-native-code-push';
 import { PersistGate } from 'redux-persist/integration/react';
+import { NavigationRoute, NavigationParams } from 'react-navigation';
 import { colors, getStatusBarConfig } from 'config';
 import { getCurrentLocale, configureLocale } from 'utils';
 import { GitPoint } from './routes';
@@ -30,40 +31,42 @@ if (console) {
   console.disableYellowBox = true; // eslint-disable-line no-console
 }
 
-class App extends Component {
-  static async initLocale() {
-    const locale = await getCurrentLocale();
+type State = {
+  rehydrated: boolean;
+};
 
-    configureLocale(locale);
-  }
+type Props = {};
 
-  constructor() {
-    super();
+class App extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
 
     this.state = {
       rehydrated: false,
     };
+
     this.statusBarHandler = this.statusBarHandler.bind(this);
   }
 
-  componentWillMount() {
-    this.constructor.initLocale();
-  }
-
-  componentDidMount() {
+  async componentDidMount() {
     if (!__DEV__) {
       codePush.sync({
-        updateDialog: false,
+        updateDialog: undefined,
         installMode: codePush.InstallMode.IMMEDIATE,
       });
     }
+    const locale = await getCurrentLocale();
+
+    configureLocale(locale);
   }
 
   componentWillUpdate() {
     LayoutAnimation.spring();
   }
 
-  getCurrentRouteName(navigationState) {
+  getCurrentRouteName(
+    navigationState: NavigationRoute<NavigationParams>
+  ): string | null {
     if (!navigationState) {
       return null;
     }
@@ -76,7 +79,10 @@ class App extends Component {
     return route.routeName;
   }
 
-  statusBarHandler(prev, next) {
+  statusBarHandler(
+    prev: NavigationRoute<NavigationParams>,
+    next: NavigationRoute<NavigationParams>
+  ) {
     const routeName = this.getCurrentRouteName(next);
 
     const { translucent, backgroundColor, barStyle } = getStatusBarConfig(

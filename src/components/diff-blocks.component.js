@@ -67,7 +67,9 @@ export const DiffBlocks = ({
   const linesChanged = additions + deletions;
 
   let addedBlocks = null;
+
   let deletedBlocks = null;
+
   let neutralBlocks = null;
 
   if (linesChanged <= 5) {
@@ -75,8 +77,8 @@ export const DiffBlocks = ({
     deletedBlocks = deletions;
     neutralBlocks = 5 - (addedBlocks + deletedBlocks);
   } else {
-    addedBlocks = Math.floor(additions / linesChanged * 5);
-    deletedBlocks = Math.floor(deletions / linesChanged * 5);
+    addedBlocks = Math.floor((additions / linesChanged) * 5);
+    deletedBlocks = Math.floor((deletions / linesChanged) * 5);
     neutralBlocks = 5 - (addedBlocks + deletedBlocks);
   }
 
