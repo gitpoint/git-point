@@ -605,6 +605,7 @@ class Events extends Component {
       navigation,
     } = this.props;
     const linebreaksPattern = /(\r\n|\n|\r)/gm;
+
     let content;
 
     if (userEventsPagination.isFetching && userEvents.length === 0) {

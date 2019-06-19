@@ -142,6 +142,7 @@ export class IssueDescription extends Component {
     const filesChanged = Parse(diff);
 
     let lineAdditions = 0;
+
     let lineDeletions = 0;
 
     filesChanged.forEach(file => {
