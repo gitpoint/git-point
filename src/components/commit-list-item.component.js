@@ -28,12 +28,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export const CommitListItem = ({ commit, navigation }: Props) =>
+export const CommitListItem = ({ commit, navigation }: Props) => (
   <TouchableHighlight
     onPress={() =>
       navigation.navigate('Commit', {
         commit,
-      })}
+      })
+    }
     underlayColor={colors.greyLight}
   >
     <View style={styles.container}>
@@ -54,4 +55,5 @@ export const CommitListItem = ({ commit, navigation }: Props) =>
         titleStyle={styles.title}
       />
     </View>
-  </TouchableHighlight>;
+  </TouchableHighlight>
+);
