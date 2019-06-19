@@ -47,10 +47,24 @@ module.exports = {
     'arrow-parens': ['error', 'as-needed'],
     'comma-dangle': ['error', 'always-multiline'],
     indent: 'off',
-    'newline-after-var': ['error', 'always'],
-    'newline-before-return': 'error',
+    'padding-line-between-statements': [
+      2,
+      { blankLine: 'always', prev: '*', next: 'return' },
+      { blankLine: 'always', prev: ['var', 'let', 'const'], next: '*' },
+      {
+        blankLine: 'any',
+        prev: ['var', 'let', 'const'],
+        next: ['var', 'let', 'const'],
+      },
+    ],
     'newline-per-chained-call': 'off',
     'no-confusing-arrow': 'off',
+    'no-else-return': [
+      'error',
+      {
+        'allowElseIf': true,
+      }
+    ],
     'no-mixed-operators': [
       'error',
       {
@@ -71,7 +85,14 @@ module.exports = {
         allowForLoopAfterthoughts: true,
       },
     ],
-    'space-before-function-paren': ['error', 'never'],
+    'space-before-function-paren': [
+      'error',
+      {
+        anonymous: 'never',
+        named: 'never',
+        asyncArrow: 'always',
+      },
+    ],
     'wrap-iife': [
       'error',
       'inside',
@@ -138,5 +159,18 @@ module.exports = {
         },
       },
     ],
+    // disable temporarily in order to not modify current codes
+    'implicit-arrow-linebreak': 'off',
+    'object-curly-newline': 'off',
+    'operator-linebreak': 'off',
+    'prefer-destructuring': 'off',
+    'import/no-cycle': 'off',
+    'no-restricted-globals': 'off',
+    'react/default-props-match-prop-types': 'off',
+    'react/destructuring-assignment': 'off',
+    'react/jsx-one-expression-per-line': 'off',
+    'react/no-access-state-in-setstate': 'off',
+    'react/no-this-in-sfc': 'off',
+    'react/require-default-props': 'off',
   },
 };
