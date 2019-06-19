@@ -7921,7 +7921,7 @@ react-native-material-design-searchbar@^1.1.4:
 
 "react-native-mock@https://github.com/shqld/react-native-mock/tarball/master":
   version "0.3.1"
-  resolved "https://github.com/shqld/react-native-mock/tarball/master#96bee7b072cea66f5dfa21c39b2416ca6fb6c0da"
+  resolved "https://github.com/shqld/react-native-mock/tarball/master#cf57dad9a6482ac95f81af83a0db9023804d61c6"
   dependencies:
     cubic-bezier "^0.1.2"
     invariant "^2.2.1"
