@@ -432,49 +432,50 @@ class Issue extends Component {
           <LoadingContainer animating={isShowLoadingContainer} center />
         )}
 
-        {!isPendingIssue && issue && (
-          <KeyboardAvoidingView
-            style={{ flex: 1 }}
-            behavior="padding"
-            keyboardVerticalOffset={Platform.select({
-              ios: 65,
-              android: -200,
-            })}
-          >
-            <FlatList
-              ref={ref => {
-                this.commentsList = ref;
-              }}
-              refreshing={isLoadingData}
-              onRefresh={this.getIssueInformation}
-              contentContainerStyle={{ flexGrow: 1 }}
-              removeClippedSubviews={false}
-              data={conversation}
-              keyExtractor={this.keyExtractor}
-              renderItem={this.renderItem}
-              onEndReached={() =>
-                repository &&
-                this.props.getIssueTimeline(
-                  repository.full_name,
-                  issue.number,
-                  { loadMore: true }
-                )
-              }
-              onEndReachedThreshold={0.5}
-              ListFooterComponent={this.renderFooter}
-            />
+        {!isPendingIssue &&
+          issue && (
+            <KeyboardAvoidingView
+              style={{ flex: 1 }}
+              behavior="padding"
+              keyboardVerticalOffset={Platform.select({
+                ios: 65,
+                android: -200,
+              })}
+            >
+              <FlatList
+                ref={ref => {
+                  this.commentsList = ref;
+                }}
+                refreshing={isLoadingData}
+                onRefresh={this.getIssueInformation}
+                contentContainerStyle={{ flexGrow: 1 }}
+                removeClippedSubviews={false}
+                data={conversation}
+                keyExtractor={this.keyExtractor}
+                renderItem={this.renderItem}
+                onEndReached={() =>
+                  repository &&
+                  this.props.getIssueTimeline(
+                    repository.full_name,
+                    issue.number,
+                    { loadMore: true }
+                  )
+                }
+                onEndReachedThreshold={0.5}
+                ListFooterComponent={this.renderFooter}
+              />
 
-            <CommentInput
-              users={fullUsers}
-              userHasPushPermission={
-                navigation.state.params.userHasPushPermission
-              }
-              issueLocked={issue.locked}
-              locale={locale}
-              onSubmit={this.postComment}
-            />
-          </KeyboardAvoidingView>
-        )}
+              <CommentInput
+                users={fullUsers}
+                userHasPushPermission={
+                  navigation.state.params.userHasPushPermission
+                }
+                issueLocked={issue.locked}
+                locale={locale}
+                onSubmit={this.postComment}
+              />
+            </KeyboardAvoidingView>
+          )}
 
         <ActionSheet
           ref={o => {
@@ -490,7 +491,4 @@ class Issue extends Component {
   }
 }
 
-export const IssueScreen = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Issue);
+export const IssueScreen = connect(mapStateToProps, mapDispatchToProps)(Issue);

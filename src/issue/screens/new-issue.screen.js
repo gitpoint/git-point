@@ -175,7 +175,6 @@ class NewIssue extends Component {
   }
 }
 
-export const NewIssueScreen = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(NewIssue);
+export const NewIssueScreen = connect(mapStateToProps, mapDispatchToProps)(
+  NewIssue
+);

@@ -211,7 +211,6 @@ class PullMerge extends Component {
   }
 }
 
-export const PullMergeScreen = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PullMerge);
+export const PullMergeScreen = connect(mapStateToProps, mapDispatchToProps)(
+  PullMerge
+);
