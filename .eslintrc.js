@@ -62,8 +62,8 @@ module.exports = {
     'no-else-return': [
       'error',
       {
-        'allowElseIf': true,
-      }
+        allowElseIf: true,
+      },
     ],
     'no-mixed-operators': [
       'error',
@@ -160,17 +160,22 @@ module.exports = {
       },
     ],
     // disable temporarily in order to not modify current codes
+    'function-paren-newline': 'off',
     'implicit-arrow-linebreak': 'off',
+    'lines-between-class-members': 'off',
     'object-curly-newline': 'off',
     'operator-linebreak': 'off',
     'prefer-destructuring': 'off',
+    'import/named': 'off',
     'import/no-cycle': 'off',
+    'jsx-a11y/anchor-is-valid': 'off',
     'no-restricted-globals': 'off',
     'react/default-props-match-prop-types': 'off',
     'react/destructuring-assignment': 'off',
     'react/jsx-one-expression-per-line': 'off',
     'react/no-access-state-in-setstate': 'off',
     'react/no-this-in-sfc': 'off',
+    'react/no-unused-state': 'off',
     'react/require-default-props': 'off',
   },
 };

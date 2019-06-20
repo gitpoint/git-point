@@ -132,7 +132,7 @@ class PullMerge extends Component {
         <ScrollView>
           <SectionList title={t('Commit Title', locale)}>
             <TextInput
-              underlineColorAndroid={'transparent'}
+              underlineColorAndroid="transparent"
               placeholder={t('Write a title for your commit here', locale)}
               blurOnSubmit
               multiline
@@ -153,7 +153,7 @@ class PullMerge extends Component {
 
           <SectionList title={t('Commit Message', locale)}>
             <TextInput
-              underlineColorAndroid={'transparent'}
+              underlineColorAndroid="transparent"
               placeholder={t('Write a message for your commit here', locale)}
               blurOnSubmit
               multiline
@@ -211,6 +211,7 @@ class PullMerge extends Component {
   }
 }
 
-export const PullMergeScreen = connect(mapStateToProps, mapDispatchToProps)(
-  PullMerge
-);
+export const PullMergeScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PullMerge);

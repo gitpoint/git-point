@@ -75,7 +75,7 @@ export class ImageZoom extends Component {
       return (
         <Modal
           nativeId="image-zoom-modal"
-          animationType={'fade'}
+          animationType="fade"
           onRequestClose={this.closeModal}
         >
           <ModalContainer>

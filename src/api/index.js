@@ -29,7 +29,7 @@ const METHOD = {
 
 export const v3 = {
   root: 'https://api.github.com',
-  call: async(url, parameters) => {
+  call: async (url, parameters) => {
     const finalUrl = url.indexOf(v3.root) === 0 ? url : `${v3.root}${url}`;
     const response = await fetch(finalUrl, parameters);
 
@@ -60,7 +60,7 @@ export const v3 = {
 
     return params;
   },
-  count: async(url, accessToken) => {
+  count: async (url, accessToken) => {
     const finalUrl =
       url.indexOf('?') !== -1 ? `${url}&per_page=1` : `${url}?per_page=1`;
     const response = await v3.get(finalUrl, accessToken);
@@ -84,7 +84,7 @@ export const v3 = {
 
     return number;
   },
-  delete: async(url, accessToken) => {
+  delete: async (url, accessToken) => {
     const response = await v3.call(
       url,
       v3.parameters(accessToken, METHOD.DELETE)
@@ -92,12 +92,12 @@ export const v3 = {
 
     return response;
   },
-  get: async(url, accessToken) => {
+  get: async (url, accessToken) => {
     const response = await v3.call(url, v3.parameters(accessToken));
 
     return response;
   },
-  getDiff: async(url, accessToken) => {
+  getDiff: async (url, accessToken) => {
     const response = await v3.call(
       url,
       v3.parameters(accessToken, METHOD.GET, ACCEPT.DIFF)
@@ -105,7 +105,7 @@ export const v3 = {
 
     return response.text();
   },
-  getHtml: async(url, accessToken) => {
+  getHtml: async (url, accessToken) => {
     const response = await v3.call(
       url,
       v3.parameters(accessToken, METHOD.GET, ACCEPT.HTML)
@@ -113,7 +113,7 @@ export const v3 = {
 
     return response.text();
   },
-  getFull: async(url, accessToken) => {
+  getFull: async (url, accessToken) => {
     const response = await v3.call(
       url,
       v3.parameters(accessToken, METHOD.GET, ACCEPT.FULL)
@@ -121,12 +121,12 @@ export const v3 = {
 
     return response.json();
   },
-  getJson: async(url, accessToken) => {
+  getJson: async (url, accessToken) => {
     const response = await v3.call(url, v3.parameters(accessToken));
 
     return response.json();
   },
-  getRaw: async(url, accessToken) => {
+  getRaw: async (url, accessToken) => {
     const response = await v3.call(
       url,
       v3.parameters(accessToken, METHOD.GET, ACCEPT.RAW)
@@ -134,7 +134,7 @@ export const v3 = {
 
     return response.text();
   },
-  head: async(url, accessToken) => {
+  head: async (url, accessToken) => {
     const response = await v3.call(
       url,
       v3.parameters(accessToken, METHOD.HEAD)
@@ -142,7 +142,7 @@ export const v3 = {
 
     return response;
   },
-  patch: async(url, accessToken, body = {}) => {
+  patch: async (url, accessToken, body = {}) => {
     const response = await v3.call(
       url,
       v3.parameters(accessToken, METHOD.PATCH, ACCEPT.JSON, body)
@@ -150,7 +150,7 @@ export const v3 = {
 
     return response;
   },
-  patchFull: async(url, accessToken, body = {}) => {
+  patchFull: async (url, accessToken, body = {}) => {
     const response = await v3.call(
       url,
       v3.parameters(accessToken, METHOD.PATCH, ACCEPT.FULL, body)
@@ -158,7 +158,7 @@ export const v3 = {
 
     return response.json();
   },
-  postJson: async(url, accessToken, body = {}) => {
+  postJson: async (url, accessToken, body = {}) => {
     const response = await v3.call(
       url,
       v3.parameters(accessToken, METHOD.POST, ACCEPT.JSON, body)
@@ -166,7 +166,7 @@ export const v3 = {
 
     return response.json();
   },
-  postHtml: async(url, accessToken, body = {}) => {
+  postHtml: async (url, accessToken, body = {}) => {
     const response = await v3.call(
       url,
       v3.parameters(accessToken, METHOD.POST, ACCEPT.HTML, body)
@@ -174,7 +174,7 @@ export const v3 = {
 
     return response.text();
   },
-  postFull: async(url, accessToken, body = {}) => {
+  postFull: async (url, accessToken, body = {}) => {
     const response = await v3.call(
       url,
       v3.parameters(accessToken, METHOD.POST, ACCEPT.FULL, body)
@@ -182,7 +182,7 @@ export const v3 = {
 
     return response.json();
   },
-  post: async(url, accessToken, body = {}) => {
+  post: async (url, accessToken, body = {}) => {
     const response = await v3.call(
       url,
       v3.parameters(accessToken, METHOD.POST, ACCEPT.JSON, body)
@@ -190,7 +190,7 @@ export const v3 = {
 
     return response;
   },
-  put: async(url, accessToken, body = {}) => {
+  put: async (url, accessToken, body = {}) => {
     const response = await v3.call(
       url,
       v3.parameters(accessToken, METHOD.PUT, ACCEPT.JSON, body)

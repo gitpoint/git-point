@@ -100,7 +100,7 @@ class EditIssueComment extends Component {
         <ScrollView>
           <SectionList title={t('Issue Comment', locale)}>
             <TextInput
-              underlineColorAndroid={'transparent'}
+              underlineColorAndroid="transparent"
               placeholder={t('Write a comment for your issue here', locale)}
               multiline
               onChangeText={text => this.setState({ issueComment: text })}

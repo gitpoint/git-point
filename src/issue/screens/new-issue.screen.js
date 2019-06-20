@@ -126,7 +126,7 @@ class NewIssue extends Component {
           )}
           <SectionList title={t('Issue Title', locale)}>
             <StyledTextInput
-              underlineColorAndroid={'transparent'}
+              underlineColorAndroid="transparent"
               placeholder={t('Write a title for your issue here', locale)}
               blurOnSubmit
               multiline
@@ -144,7 +144,7 @@ class NewIssue extends Component {
 
           <SectionList title={t('Issue Comment', locale)}>
             <StyledTextInput
-              underlineColorAndroid={'transparent'}
+              underlineColorAndroid="transparent"
               placeholder={t('Write a comment for your issue here', locale)}
               multiline
               onChangeText={text => this.setState({ issueComment: text })}
@@ -175,6 +175,7 @@ class NewIssue extends Component {
   }
 }
 
-export const NewIssueScreen = connect(mapStateToProps, mapDispatchToProps)(
-  NewIssue
-);
+export const NewIssueScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NewIssue);
