@@ -33,3 +33,4 @@ export * from './notification-icon.component';
 export * from './badge.component';
 export * from './topics-list.component';
 export * from './toggle-view.component';
+export * from './keyboard-aware-container';
