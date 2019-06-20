@@ -70,7 +70,6 @@ export const v3 = {
     }
 
     let linkHeader = response.headers.get('Link');
-
     let number;
 
     if (linkHeader !== null) {

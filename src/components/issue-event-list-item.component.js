@@ -214,10 +214,7 @@ export class IssueEventListItem extends Component {
             iconName="person"
             text={
               <Text>
-                <ActorLink
-                  actor={event.assigner || event.actor}
-                  onPress={this.onPressUser}
-                />{' '}
+                <ActorLink actor={event.assigner || event.actor} onPress={this.onPressUser} />{' '}
                 {event.event}{' '}
                 <ActorLink actor={event.assignee} onPress={this.onPressUser} />
               </Text>

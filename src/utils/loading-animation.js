@@ -4,9 +4,7 @@ import React from 'react';
 export const loadingAnimation = state => {
   const duration = 500;
   const iterations = 10;
-
   let opacity1 = 0.3;
-
   let opacity2 = 0.7;
   const animatedTimings = [];
 

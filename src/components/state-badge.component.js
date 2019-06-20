@@ -34,7 +34,6 @@ export const StateBadge = ({
   locale,
 }: Props) => {
   let issueState = type;
-
   let issueText = text;
 
   if (isMerged) {

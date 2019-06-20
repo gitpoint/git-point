@@ -15,9 +15,7 @@ export class MarkdownWebView extends Component {
       // Android's webview won't correctly render new lines in <pre> leading
       // to code being rendered on a single line.. we convert those to <br />s
       const preReg = /<pre>([\s\S]*?)<\/pre>/g;
-
       let match;
-
       let lastIndex = 0;
 
       markdown = '';

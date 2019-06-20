@@ -32,7 +32,6 @@ const extractFromSource = config => {
         sourceType: 'module',
         plugins: ['jsx', 'classProperties', 'objectRestSpread', 'flow'],
       }).tokens;
-
       let counter = 0;
 
       for (let i = 0; i < tokens.length; i++) {

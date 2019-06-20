@@ -102,9 +102,7 @@ const headingRenderer = (node, index, siblings, parent, defaultRenderer) => {
 class CellWithImage extends Cell {
   render() {
     const { data, width, height, flex, style } = this.props;
-
     let borderWidth = 1;
-
     let borderColor = '#000';
 
     if (this.props.borderStyle && this.props.borderStyle.borderWidth) {

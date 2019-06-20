@@ -91,7 +91,6 @@ class ReadMe extends Component {
 
   render() {
     const { readMe, isPendingReadMe, locale } = this.props;
-
     let noReadMe = null;
 
     if (this.isJsonString(readMe)) {

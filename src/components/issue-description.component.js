@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import { Text, ActivityIndicator, TouchableHighlight } from 'react-native';
+import {
+  Text,
+  ActivityIndicator,
+  TouchableHighlight,
+} from 'react-native';
 import { ListItem } from 'react-native-elements';
 
 import Parse from 'parse-diff';
@@ -142,7 +146,6 @@ export class IssueDescription extends Component {
     const filesChanged = Parse(diff);
 
     let lineAdditions = 0;
-
     let lineDeletions = 0;
 
     filesChanged.forEach(file => {

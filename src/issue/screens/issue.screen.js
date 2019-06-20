@@ -237,9 +237,7 @@ class Issue extends Component {
       getPullRequestDetails,
     } = this.props;
 
-    const { issueURL, issueRepository, issueNumber } = parseIssueNavigation(
-      navigation
-    );
+    const { issueURL, issueRepository, issueNumber } = parseIssueNavigation(navigation);
     const pullRequestCommitsURL = `${issueURL.replace(
       'issues',
       'pulls'
