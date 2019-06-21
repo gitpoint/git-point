@@ -24,8 +24,9 @@ class CommitList extends Component {
     return item.id;
   };
 
-  renderItem = ({ item }) =>
-    <CommitListItem commit={item} navigation={this.props.navigation} />;
+  renderItem = ({ item }) => (
+    <CommitListItem commit={item} navigation={this.props.navigation} />
+  );
 
   render() {
     const { locale, navigation } = this.props;
@@ -33,20 +34,20 @@ class CommitList extends Component {
 
     return (
       <ViewContainer>
-        {commits.length > 0 &&
+        {commits.length > 0 && (
           <FlatList
             removeClippedSubviews={false}
             data={commits}
             keyExtractor={this.keyExtractor}
             renderItem={this.renderItem}
-          />}
+          />
+        )}
 
-        {commits.length === 0 &&
+        {commits.length === 0 && (
           <View style={styles.marginSpacing}>
-            <Text style={styles.noCommit}>
-              {t('No commit found!', locale)}
-            </Text>
-          </View>}
+            <Text style={styles.noCommit}>{t('No commit found!', locale)}</Text>
+          </View>
+        )}
       </ViewContainer>
     );
   }

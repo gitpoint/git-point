@@ -488,7 +488,9 @@ class Events extends Component {
     const actor = this.getActorLink(userEvent);
     const repo = this.getRepoLink(userEvent);
     const ref = (
-      <LinkBranchDescription onPress={() => this.navigateToCommitList(userEvent)}>
+      <LinkBranchDescription
+        onPress={() => this.navigateToCommitList(userEvent)}
+      >
         {userEvent.payload.ref.replace('refs/heads/', '')}
       </LinkBranchDescription>
     );
