@@ -2,7 +2,9 @@ import { getRepoIdFromUrl, toOldIssueFormat, toOldUserFormat } from 'utils';
 
 describe('Migration Helper', () => {
   it('should return a repo id in {username}/{reponame} format', () => {
-    const result = getRepoIdFromUrl('https://api.github.com/repos/octocat/Hello-World');
+    const result = getRepoIdFromUrl(
+      'https://api.github.com/repos/octocat/Hello-World'
+    );
 
     expect(result).toBe('octocat/Hello-World');
   });
@@ -13,7 +15,12 @@ describe('Migration Helper', () => {
     const resultKeys = Object.keys(result);
 
     expect(result.avatar_url).toBe(user.avatarUrl);
-    expect(Object.keys(user).reduce((accum, key) => accum && resultKeys.includes(key), true)).toBe(true);
+    expect(
+      Object.keys(user).reduce(
+        (accum, key) => accum && resultKeys.includes(key),
+        true
+      )
+    ).toBe(true);
   });
 
   it('should convert an issue object to old format', () => {
@@ -31,7 +38,12 @@ describe('Migration Helper', () => {
     const result = toOldIssueFormat(issue, repoId);
     const resultKeys = Object.keys(result);
 
-    expect(Object.keys(issue).reduce((accum, key) => accum && resultKeys.includes(key), true)).toBe(true);
+    expect(
+      Object.keys(issue).reduce(
+        (accum, key) => accum && resultKeys.includes(key),
+        true
+      )
+    ).toBe(true);
     expect(result.comments).toBe(issue.comments.totalCount);
     expect(result.closed_at).toBe(issue.closedAt);
     expect(result.created_at).toBe(issue.createdAt);
@@ -40,6 +52,8 @@ describe('Migration Helper', () => {
     expect(result.url).toBe('https://api.github.com/repos/git-point/issues/42');
 
     expect(toOldIssueFormat(issue, repoId, false).pull_request).toBeNull();
-    expect(toOldIssueFormat(issue, repoId, true).pull_request).toMatchObject({});
+    expect(toOldIssueFormat(issue, repoId, true).pull_request).toMatchObject(
+      {}
+    );
   });
 });

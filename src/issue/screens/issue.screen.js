@@ -237,7 +237,9 @@ class Issue extends Component {
       getPullRequestDetails,
     } = this.props;
 
-    const { issueURL, issueRepository, issueNumber } = parseIssueNavigation(navigation);
+    const { issueURL, issueRepository, issueNumber } = parseIssueNavigation(
+      navigation
+    );
     const pullRequestCommitsURL = `${issueURL.replace(
       'issues',
       'pulls'
@@ -434,7 +436,7 @@ class Issue extends Component {
           issue && (
             <KeyboardAvoidingView
               style={{ flex: 1 }}
-              behavior={'padding'}
+              behavior="padding"
               keyboardVerticalOffset={Platform.select({
                 ios: 65,
                 android: -200,
