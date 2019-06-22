@@ -10,22 +10,11 @@ import re
 # - `buck install -r android/app` - compile, install and run application
 #
 
-lib_deps = []
-for jarfile in glob(['libs/*.jar']):
-  name = 'jars__' + re.sub(r'^.*/([^/]+)\.jar$', r'\1', jarfile)
-  lib_deps.append(':' + name)
-  prebuilt_jar(
-    name = name,
-    binary_jar = jarfile,
-  )
+load(":build_defs.bzl", "create_aar_targets", "create_jar_targets")
 
-for aarfile in glob(['libs/*.aar']):
-  name = 'aars__' + re.sub(r'^.*/([^/]+)\.aar$', r'\1', aarfile)
-  lib_deps.append(':' + name)
-  android_prebuilt_aar(
-    name = name,
-    aar = aarfile,
-  )
+lib_deps = []
+create_aar_targets(glob(["libs/*.aar"]))
+create_jar_targets(glob(["libs/*.jar"]))
 
 android_library(
   name = 'all-libs',
