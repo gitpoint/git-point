@@ -1,34 +1,26 @@
-module.exports = {
-  "presets": [
-    "react-native",
-    "flow"
-  ],
-  "retainLines": true,
-  "plugins": [
-    [
-      "module-resolver",
-      {
-        "root": [
-          "./src"
-        ],
-        "alias": {
-          "api": "api",
-          "auth": "auth",
-          "components": "components",
-          "config": "config",
-          "issue": "issue",
-          "locale": "locale",
-          "notifications": "notifications",
-          "organization": "organization",
-          "package.json": "./package.json",
-          "repository": "repository",
-          "search": "search",
-          "testData": "./__tests__/data",
-          "user": "user",
-          "utils": "utils"
-        }
-      }
+module.exports = api => {
+  api.cache(true);
+
+  return {
+    "presets": [
+      "module:metro-react-native-babel-preset",
+      "@babel/preset-flow"
     ],
-    "transform-inline-environment-variables"
-  ]
-}
+    "retainLines": true,
+    "plugins": [
+      [
+        "module-resolver",
+        {
+          "root": [
+            "./src"
+          ],
+          "alias": {
+            "package.json": "./package.json",
+            "testData": "./__tests__/data"
+          }
+        }
+      ],
+      "transform-inline-environment-variables"
+    ]
+  };
+};

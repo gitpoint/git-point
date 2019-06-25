@@ -104,6 +104,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
+    "@babel/preset-flow": "^7.0.0",
     "@babel/runtime": "^7.4.5",
     "@commitlint/cli": "^3.1.0",
     "all-contributors-cli": "^4.10.1",
@@ -111,8 +112,6 @@
     "babel-jest": "^24.8.0",
     "babel-plugin-module-resolver": "^3.0.0",
     "babel-plugin-transform-inline-environment-variables": "^6.8.0",
-    "babel-preset-flow": "^6.23.0",
-    "babel-preset-react-native": "1.9.1",
     "babylon": "^6.18.0",
     "chalk": "^2.3.2",
     "concurrently": "^3.5.0",
