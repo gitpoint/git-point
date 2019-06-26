@@ -9012,15 +9012,15 @@ react-devtools-core@^3.6.0:
     shell-quote "^1.6.1"
     ws "^3.3.1"
 
-react-dom@16.3.0-alpha.1:
-  version "16.3.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.3.0-alpha.1.tgz#5a87746c59f1c8cd4b6d1e1c961bcb3218af88e3"
-  integrity sha512-1HYvdyslO5D0d6C1mGqzyz7V+wzjLcUcj14a7DEEseV3eEn6fPvq4wAGHguG+QbXHkelrrkxh2sgLr/vFA0UYA==
+react-dom@16.8.3:
+  version "16.8.3"
+  resolved "https://registry.yarnpkg.com/react-dom/download/react-dom-16.8.3.tgz#ae236029e66210783ac81999d3015dfc475b9c32"
+  integrity sha1-riNgKeZiEHg6yBmZ0wFd/EdbnDI=
   dependencies:
-    fbjs "^0.8.16"
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
-    prop-types "^15.6.0"
+    prop-types "^15.6.2"
+    scheduler "^0.13.3"
 
 react-is@^16.3.1, react-is@^16.8.1, react-is@^16.8.3, react-is@^16.8.4:
   version "16.8.6"
