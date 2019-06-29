@@ -7,7 +7,7 @@ import com.horcrux.svg.SvgPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.psykar.cookiemanager.CookieManagerPackage;
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
-// import com.reactnative.photoview.PhotoViewPackage;
+import com.reactnative.photoview.PhotoViewPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.microsoft.codepush.react.CodePush;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
@@ -42,7 +42,7 @@ public class MainApplication extends Application implements ReactApplication {
             new LinearGradientPackage(),
             new CookieManagerPackage(),
             new RNI18nPackage(),
-            // new PhotoViewPackage(),
+            new PhotoViewPackage(),
             new ReactNativeConfigPackage(),
             new CodePush(BuildConfig.CODEPUSH_ANDROID_DEPLOYMENT_KEY, MainApplication.this, BuildConfig.DEBUG),
             new RNDeviceInfo(),
