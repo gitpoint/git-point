@@ -86,7 +86,7 @@ project.ext.react = [
 
 apply from: "../../node_modules/react-native/react.gradle"
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
-// apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
+apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 /**
@@ -155,7 +155,7 @@ dependencies {
     compile project(':react-native-i18n')
     // compile project(':react-native-photo-view')
     compile project(':react-native-config')
-    // compile project(':react-native-code-push')
+    compile project(':react-native-code-push')
     compile project(':react-native-device-info')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
