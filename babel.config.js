@@ -2,25 +2,25 @@ module.exports = api => {
   api.cache(true);
 
   return {
-    "presets": [
-      "module:metro-react-native-babel-preset",
-      "@babel/preset-flow"
+    presets: [
+      'module:metro-react-native-babel-preset',
+      '@babel/preset-flow',
     ],
-    "retainLines": true,
-    "plugins": [
+    retainLines: true,
+    plugins: [
       [
-        "module-resolver",
+        'module-resolver',
         {
-          "root": [
-            "./src"
+          root: [
+            './src',
           ],
-          "alias": {
-            "package.json": "./package.json",
-            "testData": "./__tests__/data"
-          }
-        }
+          alias: {
+            'package.json': './package.json',
+            testData: './__tests__/data',
+          },
+        },
       ],
-      "transform-inline-environment-variables"
-    ]
+      'transform-inline-environment-variables',
+    ],
   };
 };
