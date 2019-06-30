@@ -140,7 +140,7 @@
     "prettier-eslint-cli": "^5.0.0",
     "react-dom": "16.8.3",
     "react-native-cli": "^2.0.1",
-    "react-native-mock": "https://github.com/shqld/react-native-mock/tarball/master",
+    "react-native-mock": "chinesedfan/react-native-mock",
     "react-test-renderer": "16.8.3",
     "reactotron-react-native": "^1.14.0",
     "reactotron-redux": "^1.13.0",
