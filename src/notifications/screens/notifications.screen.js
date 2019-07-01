@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { FlatList, View, ScrollView, Platform } from 'react-native';
+import { FlatList, View, ScrollView } from 'react-native';
 import { ButtonGroup, Card, Icon } from 'react-native-elements';
 
 import {
@@ -14,7 +14,7 @@ import {
   NotificationListItem,
 } from 'components';
 import { colors, fonts, normalize } from 'config';
-import { isIphoneX, t } from 'utils';
+import { t } from 'utils';
 import {
   getUnreadNotifications,
   getParticipatingNotifications,
@@ -54,7 +54,7 @@ const mapDispatchToProps = dispatch =>
 
 const ButtonGroupWrapper = styled.View`
   background-color: ${colors.greyLight};
-  padding-top: ${Platform.OS === 'ios' ? (isIphoneX() ? 40 : 30) : 10};
+  padding-top: 10;
   padding-bottom: 10;
   margin-bottom: 15;
 `;

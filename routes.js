@@ -7,6 +7,7 @@ import {
   NavigationActions,
 } from 'react-navigation';
 import { Icon } from 'react-native-elements';
+import { withSafeArea } from 'react-native-safe-area-view';
 
 import { NotificationIcon } from 'components';
 import { colors } from 'config';
@@ -64,6 +65,15 @@ import {
   EditIssueCommentScreen,
 } from 'issue';
 
+function noHeaderScreen(screen) {
+  return {
+    screen: withSafeArea()(screen),
+    navigationOptions: {
+      header: null,
+    },
+  };
+}
+
 const sharedRoutes = {
   RepositoryList: {
     screen: RepositoryListScreen,
@@ -89,30 +99,10 @@ const sharedRoutes = {
       title: navigation.state.params.title,
     }),
   },
-  Profile: {
-    screen: ProfileScreen,
-    navigationOptions: {
-      header: null,
-    },
-  },
-  AuthProfile: {
-    screen: AuthProfileScreen,
-    navigationOptions: {
-      header: null,
-    },
-  },
-  Organization: {
-    screen: OrganizationProfileScreen,
-    navigationOptions: {
-      header: null,
-    },
-  },
-  Repository: {
-    screen: RepositoryScreen,
-    navigationOptions: {
-      header: null,
-    },
-  },
+  Profile: noHeaderScreen(ProfileScreen),
+  AuthProfile: noHeaderScreen(AuthProfileScreen),
+  Organization: noHeaderScreen(OrganizationProfileScreen),
+  Repository: noHeaderScreen(RepositoryScreen),
   RepositoryCodeList: {
     screen: RepositoryCodeListScreen,
     navigationOptions: ({ navigation }) => ({
@@ -239,12 +229,7 @@ const HomeStackNavigator = StackNavigator(
 
 const NotificationsStackNavigator = StackNavigator(
   {
-    Notifications: {
-      screen: NotificationsScreen,
-      navigationOptions: {
-        header: null,
-      },
-    },
+    Notifications: noHeaderScreen(NotificationsScreen),
     ...sharedRoutes,
   },
   {
@@ -254,12 +239,7 @@ const NotificationsStackNavigator = StackNavigator(
 
 const SearchStackNavigator = StackNavigator(
   {
-    Search: {
-      screen: SearchScreen,
-      navigationOptions: {
-        header: null,
-      },
-    },
+    Search: noHeaderScreen(SearchScreen),
     ...sharedRoutes,
   },
   {
@@ -269,12 +249,7 @@ const SearchStackNavigator = StackNavigator(
 
 const MyProfileStackNavigator = StackNavigator(
   {
-    MyProfile: {
-      screen: AuthProfileScreen,
-      navigationOptions: {
-        header: null,
-      },
-    },
+    MyProfile: noHeaderScreen(AuthProfileScreen),
     ...sharedRoutes,
   },
   {

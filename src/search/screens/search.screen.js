@@ -19,7 +19,7 @@ import {
 } from 'components';
 import styled from 'styled-components';
 import { colors, fonts, normalize } from 'config';
-import { isIphoneX, t } from 'utils';
+import { t } from 'utils';
 import { RestClient } from 'api';
 
 const NAV_QUERY_PARAM = 'q';
@@ -70,10 +70,7 @@ const mapDispatchToProps = {
 
 const SearchBarWrapper = styled.View`
   flex-direction: row;
-  margin-top: ${Platform.select({
-    ios: isIphoneX() ? 30 : 20,
-    android: 5,
-  })};
+  margin-top: 5;
 `;
 
 const SearchContainer = styled.View`
