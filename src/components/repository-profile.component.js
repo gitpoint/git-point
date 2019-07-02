@@ -95,7 +95,9 @@ const styles = StyleSheet.create({
   },
   languageInfo: {
     flexDirection: 'row',
-    top: 35,
+    alignItems: 'center',
+    top: 0,
+    height: 44,
     position: 'absolute',
   },
   languageInfoTitle: {

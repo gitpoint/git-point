@@ -70,7 +70,6 @@ const mapDispatchToProps = {
 
 const SearchBarWrapper = styled.View`
   flex-direction: row;
-  margin-top: 5;
 `;
 
 const SearchContainer = styled.View`
