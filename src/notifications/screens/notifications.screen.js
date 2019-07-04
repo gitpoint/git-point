@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FlatList, View, ScrollView } from 'react-native';
 import { ButtonGroup, Card, Icon } from 'react-native-elements';
+import { SafeAreaView } from 'react-navigation';
 
 import {
   Button,
@@ -51,6 +52,10 @@ const mapDispatchToProps = dispatch =>
     },
     dispatch
   );
+
+const StyledSafeAreaView = styled(SafeAreaView)`
+  background-color: ${colors.greyLight};
+`;
 
 const ButtonGroupWrapper = styled.View`
   background-color: ${colors.greyLight};
@@ -441,6 +446,8 @@ class Notifications extends Component {
     return (
       <ViewContainer>
         <Container>
+          <StyledSafeAreaView />
+
           <ButtonGroupWrapper>
             <StyledButtonGroup
               onPress={this.switchType}

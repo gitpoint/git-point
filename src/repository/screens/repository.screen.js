@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { RefreshControl, Share, ActivityIndicator } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
+import { SafeAreaView } from 'react-navigation';
 import { v3, RestClient } from 'api';
 import {
   ViewContainer,
@@ -61,6 +62,10 @@ const mapDispatchToProps = {
   forkRepo: RestClient.repos.fork,
   getCommits,
 };
+
+const StyledSafeAreaView = styled(SafeAreaView)`
+  background-color: ${colors.primaryDark};
+`;
 
 const LoadingMembersContainer = styled.View`
   padding: 5px;
@@ -269,6 +274,8 @@ class Repository extends Component {
 
     return (
       <ViewContainer>
+        <StyledSafeAreaView />
+
         <ParallaxScroll
           renderContent={() => {
             if (isPendingRepository) {

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { RefreshControl, ActivityIndicator } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
+import { SafeAreaView } from 'react-navigation';
 import { RestClient } from 'api';
 import {
   ViewContainer,
@@ -16,6 +17,10 @@ import {
 } from 'components';
 import { emojifyText, t, openURLInView } from 'utils';
 import { colors, fonts } from 'config';
+
+const StyledSafeAreaView = styled(SafeAreaView)`
+  background-color: ${colors.primaryDark};
+`;
 
 const DescriptionListItem = styled(ListItem).attrs({
   subtitleStyle: {
@@ -113,6 +118,8 @@ class OrganizationProfile extends Component {
 
     return (
       <ViewContainer>
+        <StyledSafeAreaView />
+
         <ParallaxScroll
           renderContent={() => (
             <UserProfile

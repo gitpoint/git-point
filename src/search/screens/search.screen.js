@@ -9,6 +9,7 @@ import {
   Platform,
 } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
+import { SafeAreaView } from 'react-navigation';
 
 import {
   ViewContainer,
@@ -67,6 +68,10 @@ const mapDispatchToProps = {
   searchRepos: RestClient.search.repos,
   searchUsers: RestClient.search.users,
 };
+
+const StyledSafeAreaView = styled(SafeAreaView)`
+  background-color: ${colors.white};
+`;
 
 const SearchBarWrapper = styled.View`
   flex-direction: row;
@@ -292,6 +297,8 @@ class Search extends Component {
 
     return (
       <ViewContainer>
+        <StyledSafeAreaView />
+
         <SearchBarWrapper>
           <SearchContainer>
             <SearchBar
