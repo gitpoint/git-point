@@ -9,6 +9,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import { SafeAreaView } from 'react-navigation';
 
 import {
   ViewContainer,
@@ -41,6 +42,10 @@ const mapDispatchToProps = dispatch =>
     },
     dispatch
   );
+
+const StyledSafeAreaView = styled(SafeAreaView)`
+  background-color: ${colors.primaryDark};
+`;
 
 const Note = styled.Text`
   font-size: ${normalize(11)};
@@ -108,6 +113,8 @@ class AuthProfile extends Component {
 
     return (
       <ViewContainer>
+        <StyledSafeAreaView />
+
         <ParallaxScroll
           renderContent={() => (
             <UserProfile

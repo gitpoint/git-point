@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
+import { SafeAreaView } from 'react-navigation';
 
 import {
   ViewContainer,
@@ -56,6 +57,10 @@ const mapDispatchToProps = dispatch =>
     },
     dispatch
   );
+
+const StyledSafeAreaView = styled(SafeAreaView)`
+  background-color: ${colors.primaryDark};
+`;
 
 const BioListItem = styled(ListItem).attrs({
   containerStyle: {
@@ -165,6 +170,8 @@ class Profile extends Component {
 
     return (
       <ViewContainer>
+        <StyledSafeAreaView />
+
         <ParallaxScroll
           renderContent={() => (
             <UserProfile
