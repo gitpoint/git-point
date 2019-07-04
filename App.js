@@ -7,6 +7,8 @@ import {
   StatusBar,
   Platform,
 } from 'react-native';
+import { SafeAreaView } from 'react-navigation';
+import DeviceInfo from 'react-native-device-info';
 import codePush from 'react-native-code-push';
 import { PersistGate } from 'redux-persist/integration/react';
 import { colors, getStatusBarConfig } from 'config';
@@ -28,6 +30,11 @@ const Logo = styled.Image`
 
 if (console) {
   console.disableYellowBox = true; // eslint-disable-line no-console
+}
+
+if (Platform.OS === 'android' && DeviceInfo.hasNotch()) {
+  // FIXME: real value for status bar height + notch height
+  SafeAreaView.setStatusBarHeight(44);
 }
 
 class App extends Component {

@@ -9148,10 +9148,10 @@ react-native-cookies@^3.2.0:
   dependencies:
     invariant "^2.1.0"
 
-react-native-device-info@^0.15.2:
-  version "0.15.3"
-  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.15.3.tgz#c6bb5ed6cb27b9ac239d6fb1a50d20e00d95f71c"
-  integrity sha512-MxNmGXPptMtrXw/vP3XhULswAyFxxHdpvbF70OOMpK9zyaXyMlso1ESdHuZFE+pNcfY/3ibPZqx3QlATK8rahw==
+react-native-device-info@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-2.2.1.tgz#0c14285927fc7beeaf9241ea1ded90f5d5ebf836"
+  integrity sha512-MKhr6Tti9cPJXbTMOV+QuX7an2QGXtcMi/OQ6NdWDhbAmOF+ImW2rxGvD6thwLk+2Xk8rs920k0qibKMnNeZ8A==
 
 react-native-dismiss-keyboard@1.0.0:
   version "1.0.0"
