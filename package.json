@@ -161,7 +161,7 @@
       "./testenv.js"
     ],
     "transformIgnorePatterns": [
-      "node_modules/(?!(jest-)?react-native|react-navigation)"
+      "node_modules/(?!(jest-)?react-native|react-navigation|@react-native-community)"
     ],
     "moduleNameMapper": {
       "styled-components": "<rootDir>/node_modules/styled-components/dist/styled-components.native.cjs.js"
