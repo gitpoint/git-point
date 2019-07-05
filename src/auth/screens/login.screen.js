@@ -2,7 +2,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { ActivityIndicator, Linking, WebView, Platform } from 'react-native';
+import { ActivityIndicator, Linking, Platform } from 'react-native';
+import { WebView } from 'react-native-webview';
 import { Button, Icon } from 'react-native-elements';
 import Swiper from 'react-native-swiper';
 import queryString from 'query-string';

@@ -53,6 +53,7 @@
     ]
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.5.0",
     "date-fns": "^1.29.0",
     "entities": "^1.1.1",
     "fuzzysort": "^1.0.1",
@@ -89,6 +90,7 @@
     "react-native-syntax-highlighter": "^1.2.1",
     "react-native-table-component": "^1.1.0",
     "react-native-vector-icons": "^4.4.0",
+    "react-native-webview": "^5.12.1",
     "react-navigation": "^1.0.0",
     "react-redux": "^5.0.2",
     "react-syntax-highlighter": "^5.6.2",

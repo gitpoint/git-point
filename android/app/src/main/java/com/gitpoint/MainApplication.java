@@ -3,6 +3,8 @@ package com.gitpoint;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.reactnativecommunity.webview.RNCWebViewPackage;
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.horcrux.svg.SvgPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.psykar.cookiemanager.CookieManagerPackage;
@@ -38,6 +40,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNCWebViewPackage(),
+            new AsyncStoragePackage(),
             new SvgPackage(),
             new LinearGradientPackage(),
             new CookieManagerPackage(),

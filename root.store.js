@@ -3,7 +3,7 @@ import { persistReducer, persistStore } from 'redux-persist';
 import createEncryptor from 'redux-persist-transform-encrypt';
 import md5 from 'md5';
 import DeviceInfo from 'react-native-device-info';
-import storage from 'redux-persist/lib/storage';
+import AsyncStorage from '@react-native-community/async-storage';
 import Reactotron from 'reactotron-react-native'; // eslint-disable-line import/no-extraneous-dependencies
 import createLogger from 'redux-logger';
 import reduxThunk from 'redux-thunk';
@@ -16,7 +16,7 @@ const encryptor = createEncryptor({
 });
 const persistConfig = {
   key: 'root',
-  storage,
+  storage: AsyncStorage,
   transforms: [encryptor],
   whitelist: ['auth'],
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import distanceInWords from 'date-fns/distance_in_words';
 
 import { common } from 'config';

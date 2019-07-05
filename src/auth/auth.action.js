@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import { uniqBy } from 'lodash';
 import { delay, configureLocale, saveLocale } from 'utils';
