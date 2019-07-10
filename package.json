@@ -80,7 +80,7 @@
     "react-native-linear-gradient": "^2.4.0",
     "react-native-material-design-searchbar": "^1.1.4",
     "react-native-parallax-scroll-view": "^0.20.1",
-    "react-native-photo-view": "chinesedfan/react-native-photo-view",
+    "react-native-photo-view": "^1.5.2",
     "react-native-safari-view": "^2.0.0",
     "react-native-search-bar": "^3.3.1",
     "react-native-simple-toast": "^0.0.8",
