@@ -1,25 +1,12 @@
 import { compose, createStore, applyMiddleware } from 'redux';
-import { persistReducer, persistStore } from 'redux-persist';
-import createEncryptor from 'redux-persist-transform-encrypt';
-import md5 from 'md5';
-import DeviceInfo from 'react-native-device-info';
-import AsyncStorage from '@react-native-community/async-storage';
+import { persistStore } from 'redux-persist';
 import Reactotron from 'reactotron-react-native'; // eslint-disable-line import/no-extraneous-dependencies
 import createLogger from 'redux-logger';
 import reduxThunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import 'config/reactotron';
-import { rootReducer } from './root.reducer';
+import rootReducer from './root.reducer';
 
-const encryptor = createEncryptor({
-  secretKey: md5(DeviceInfo.getUniqueID()),
-});
-const persistConfig = {
-  key: 'root',
-  storage: AsyncStorage,
-  transforms: [encryptor],
-  whitelist: ['auth'],
-};
 const getMiddleware = () => {
   const middlewares = [reduxThunk];
 
@@ -34,16 +21,20 @@ const getMiddleware = () => {
 
 let store;
 
-if (__DEV__ && process.env.TRON_ENABLED) {
-  store = Reactotron.createStore(
-    persistReducer(persistConfig, rootReducer),
-    compose(getMiddleware())
-  );
+if (__DEV__) {
+  if (process.env.TRON_ENABLED) {
+    store = Reactotron.createStore(
+      rootReducer,
+      compose(getMiddleware())
+    );
+  } else {
+    store = createStore(
+      rootReducer,
+      composeWithDevTools(getMiddleware())
+    );
+  }
 } else {
-  store = createStore(
-    persistReducer(persistConfig, rootReducer),
-    composeWithDevTools(getMiddleware())
-  );
+  store = createStore(rootReducer, compose(getMiddleware()));
 }
 
 export const configureStore = store;
