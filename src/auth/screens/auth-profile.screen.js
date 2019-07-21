@@ -43,7 +43,9 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-const StyledSafeAreaView = styled(SafeAreaView)`
+const StyledSafeAreaView = styled(SafeAreaView).attrs({
+  forceInset: { top: 'always', bottom: 'never' },
+})`
   background-color: ${colors.primaryDark};
 `;
 

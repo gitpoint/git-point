@@ -63,7 +63,9 @@ const mapDispatchToProps = {
   getCommits,
 };
 
-const StyledSafeAreaView = styled(SafeAreaView)`
+const StyledSafeAreaView = styled(SafeAreaView).attrs({
+  forceInset: { top: 'always', bottom: 'never' },
+})`
   background-color: ${colors.primaryDark};
 `;
 
