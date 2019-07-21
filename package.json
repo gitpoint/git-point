@@ -142,7 +142,7 @@
     "prettier-eslint-cli": "^5.0.0",
     "react-dom": "16.8.3",
     "react-native-cli": "^2.0.1",
-    "react-native-mock": "chinesedfan/react-native-mock",
+    "react-native-mock": "chinesedfan/react-native-mock#git-point",
     "react-test-renderer": "16.8.3",
     "reactotron-react-native": "^1.14.0",
     "reactotron-redux": "^1.13.0",
@@ -151,6 +151,9 @@
     "stylelint-config-standard": "^18.0.0",
     "stylelint-config-styled-components": "^0.1.1",
     "stylelint-processor-styled-components": "^1.0.0"
+  },
+  "resolutions": {
+    "react-native-tab-view": "chinesedfan/react-native-tab-view#git-point"
   },
   "jest": {
     "preset": "react-native",

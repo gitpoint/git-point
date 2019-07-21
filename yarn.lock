@@ -9237,7 +9237,7 @@ react-native-material-design-searchbar@^1.1.4:
     prop-types "^15.5.10"
     react-native-vector-icons "^4.2.0"
 
-react-native-mock@chinesedfan/react-native-mock:
+react-native-mock@chinesedfan/react-native-mock#git-point:
   version "0.3.1"
   resolved "https://codeload.github.com/chinesedfan/react-native-mock/tar.gz/eadfb9b0509666c2c0e56edc9f1e0b5babd200a1"
   dependencies:
@@ -9324,9 +9324,9 @@ react-native-syntax-highlighter@^1.2.1:
     babel-runtime "^6.23.0"
     react-syntax-highlighter "^5.6.2"
 
-"react-native-tab-view@github:react-navigation/react-native-tab-view":
+react-native-tab-view@chinesedfan/react-native-tab-view#git-point, "react-native-tab-view@github:react-navigation/react-native-tab-view":
   version "0.0.74"
-  resolved "https://codeload.github.com/react-navigation/react-native-tab-view/tar.gz/36ebd834d78b841fc19778c966465d02fd1213bb"
+  resolved "https://codeload.github.com/chinesedfan/react-native-tab-view/tar.gz/81c016aa0f05029c85d840f69279a548115520ba"
   dependencies:
     prop-types "^15.6.0"
 
