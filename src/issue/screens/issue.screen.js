@@ -247,9 +247,9 @@ class Issue extends Component {
 
     Promise.all([
       getIssue(issueRepository, issueNumber),
-      getIssueTimeline(issueRepository, issueNumber),
+      getIssueTimeline(issueRepository, issueNumber, { forceRefresh: true }),
       getRepo(issueRepository),
-      getContributors(issueRepository),
+      getContributors(issueRepository, { forceRefresh: true }),
     ])
       .then(() => {
         const issue = this.props.issue;
