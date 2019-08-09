@@ -236,16 +236,17 @@ class Notifications extends Component {
   }
 
   getSortedRepos = () => {
-    const repositories = [
-      ...new Set(
-        this.notifications().map(
-          notification => notification.repository.full_name
-        )
-      ),
-    ];
+    const updateTimeMap = {};
 
-    return repositories.sort((a, b) => {
-      return a.toLowerCase() > b.toLowerCase() ? 1 : -1;
+    this.notifications().forEach(notification => {
+      const repoName = notification.repository.full_name;
+
+      updateTimeMap[repoName] =
+        updateTimeMap[repoName] || notification.update_time;
+    });
+
+    return Object.keys(updateTimeMap).sort((a, b) => {
+      return new Date(a) - new Date(b);
     });
   };
 
