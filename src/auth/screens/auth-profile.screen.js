@@ -19,7 +19,7 @@ import {
   UserListItem,
   EntityInfo,
 } from 'components';
-import { colors, fonts, normalize } from 'config';
+import { colors, fonts, normalize, getHeaderForceInset } from 'config';
 import { getUser, getOrgs, getStarCount } from 'auth';
 import { emojifyText, openURLInView, t } from 'utils';
 
@@ -44,7 +44,7 @@ const mapDispatchToProps = dispatch =>
   );
 
 const StyledSafeAreaView = styled(SafeAreaView).attrs({
-  forceInset: { top: 'always', bottom: 'never' },
+  forceInset: getHeaderForceInset('MyProfile'),
 })`
   background-color: ${colors.primaryDark};
 `;

@@ -22,7 +22,7 @@ import {
   EntityInfo,
 } from 'components';
 import { emojifyText, t, openURLInView } from 'utils';
-import { colors, fonts } from 'config';
+import { colors, fonts, getHeaderForceInset } from 'config';
 import {
   getUserInfo,
   getStarCount,
@@ -59,7 +59,7 @@ const mapDispatchToProps = dispatch =>
   );
 
 const StyledSafeAreaView = styled(SafeAreaView).attrs({
-  forceInset: { top: 'always', bottom: 'never' },
+  forceInset: getHeaderForceInset('Profile'),
 })`
   background-color: ${colors.primaryDark};
 `;

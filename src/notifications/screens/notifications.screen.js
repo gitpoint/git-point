@@ -14,7 +14,7 @@ import {
   LoadingContainer,
   NotificationListItem,
 } from 'components';
-import { colors, fonts, normalize } from 'config';
+import { colors, fonts, normalize, getHeaderForceInset } from 'config';
 import { t } from 'utils';
 import {
   getUnreadNotifications,
@@ -53,7 +53,9 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-const StyledSafeAreaView = styled(SafeAreaView)`
+const StyledSafeAreaView = styled(SafeAreaView).attrs({
+  forceInset: getHeaderForceInset('Notifications'),
+})`
   background-color: ${colors.greyLight};
 `;
 

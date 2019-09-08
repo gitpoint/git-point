@@ -50,7 +50,7 @@ const ModalWrapper = styled.View`
 const StyledSafeAreaView = styled(SafeAreaView).attrs({
   forceInset: Platform.select({
     ios: { top: 'always', bottom: 'never' },
-    android: {},
+    android: { top: 'never', bottom: 'never' },
   }),
 })`
   background-color: ${colors.githubDark};

@@ -19,7 +19,7 @@ import {
   SearchBar,
 } from 'components';
 import styled from 'styled-components';
-import { colors, fonts, normalize } from 'config';
+import { colors, fonts, normalize, getHeaderForceInset } from 'config';
 import { t } from 'utils';
 import { RestClient } from 'api';
 
@@ -69,7 +69,9 @@ const mapDispatchToProps = {
   searchUsers: RestClient.search.users,
 };
 
-const StyledSafeAreaView = styled(SafeAreaView)`
+const StyledSafeAreaView = styled(SafeAreaView).attrs({
+  forceInset: getHeaderForceInset('Search'),
+})`
   background-color: ${colors.white};
 `;
 

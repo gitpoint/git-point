@@ -21,7 +21,7 @@ import {
   TopicsList,
 } from 'components';
 import { t, openURLInView, toOldIssueFormat, toOldUserFormat } from 'utils';
-import { colors, fonts } from 'config';
+import { colors, fonts, getHeaderForceInset } from 'config';
 import { getCommits } from '../repository.action';
 
 const mapStateToProps = (state, ownProps) => {
@@ -64,7 +64,7 @@ const mapDispatchToProps = {
 };
 
 const StyledSafeAreaView = styled(SafeAreaView).attrs({
-  forceInset: { top: 'always', bottom: 'never' },
+  forceInset: getHeaderForceInset('Repository'),
 })`
   background-color: ${colors.primaryDark};
 `;

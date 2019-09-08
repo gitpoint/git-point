@@ -32,9 +32,9 @@ if (console) {
   console.disableYellowBox = true; // eslint-disable-line no-console
 }
 
-if (Platform.OS === 'android' && DeviceInfo.hasNotch()) {
+if (Platform.OS === 'android') {
   // FIXME: real value for status bar height + notch height
-  SafeAreaView.setStatusBarHeight(44);
+  SafeAreaView.setStatusBarHeight(DeviceInfo.hasNotch() ? 44 : 20);
 }
 
 class App extends Component {
