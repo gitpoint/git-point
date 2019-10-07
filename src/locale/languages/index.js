@@ -8,6 +8,7 @@ export default {
   eu: require('./eu'),
   fr: require('./fr'),
   gl: require('./gl'),
+  it: require('./it'),
   nl: require('./nl'),
   ph: require('./ph'),
   pl: require('./pl'),

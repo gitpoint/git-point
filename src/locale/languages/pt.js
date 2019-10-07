@@ -92,6 +92,7 @@ module.exports = {
   'New Issue': 'Nova Issue',
   'No README.md found': 'Não foi encontrado nenhum ficheiro README.md',
   'No closed issues found!': 'Nenhuma issue fechada encontrada!',
+  'No closed pull requests found!': '',
   'No commit found!': '',
   'No contributors found': 'Nenhum contribuidor encontrado',
   'No description provided.': 'Nenhuma descrição fornecida.',
