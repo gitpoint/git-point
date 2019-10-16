@@ -153,7 +153,7 @@ module.exports = {
     'Das bedeutet das wir in keinem Fall deine GitHub Daten einsehen noch verwenden werden. Sollten private Daten sichtbar werden, werden wir diese nicht einsehen oder verarbeiten. Sollten sie versehentlich aufgenommen werden, werden sie unverzüglich durch sichere Methoden vernichtet. Wir haben unsere Authentifizierungsmethoden jedoch so spezialisert das dies nie passiert.',
   'USER DATA': 'NUTZERDATEN',
   Unfollow: 'Entfolgen',
-  Unknown: '',
+  Unknown: 'Unbekannt',
   'Unlock {issueType}': '{issueType} entsperren',
   Unread: 'Ungelesen',
   Unstar: 'Deinen Star entfernen',
