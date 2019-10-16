@@ -89,6 +89,7 @@ module.exports = {
   'New Issue': '新建问题',
   'No README.md found': '未找到README.md',
   'No closed issues found!': '没有已关闭的问题！',
+  'No closed pull requests found!': '',
   'No commit found!': '',
   'No contributors found': '没有贡献者',
   'No description provided.': '没有提供简介',

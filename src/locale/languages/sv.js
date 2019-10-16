@@ -91,6 +91,7 @@ module.exports = {
   'New Issue': 'Nytt Issue',
   'No README.md found': 'Hittade ingen README.md',
   'No closed issues found!': 'Inga stängda issues hittades!',
+  'No closed pull requests found!': '',
   'No commit found!': '',
   'No contributors found': 'Inga contributors hittades',
   'No description provided.': 'Ingen beskrivning.',

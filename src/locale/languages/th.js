@@ -91,6 +91,7 @@ module.exports = {
   'New Issue': 'Issue  ใหม่',
   'No README.md found': 'ไม่เจอ README.md',
   'No closed issues found!': 'ไม่เจอ issues ที่ถูกปิด',
+  'No closed pull requests found!': '',
   'No commit found!': '',
   'No contributors found': 'ไม่เจอผู้มีส่วนร่วม',
   'No description provided.': 'ไม่มีการเขียนการบรรยายไว้',

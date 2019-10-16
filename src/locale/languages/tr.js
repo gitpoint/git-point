@@ -92,6 +92,7 @@ module.exports = {
   'New Issue': 'Yeni Issue',
   'No README.md found': 'README.md bulunamadı',
   'No closed issues found!': 'Kapalı issue bulunamadı!',
+  'No closed pull requests found!': '',
   'No commit found!': '',
   'No contributors found': 'katkıda bulunan bulunamadı',
   'No description provided.': 'Açıklama yapılmadı.',

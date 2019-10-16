@@ -90,6 +90,7 @@ module.exports = {
   'New Issue': 'Нови поднесак',
   'No README.md found': 'Датотека README.md није пронађена',
   'No closed issues found!': 'Нема затворених поднесака!',
+  'No closed pull requests found!': '',
   'No commit found!': '',
   'No contributors found': 'Нема сарадника',
   'No description provided.': 'Није достављен опис.',

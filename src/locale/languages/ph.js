@@ -91,6 +91,7 @@ module.exports = {
   'New Issue': 'Bagong Isyu',
   'No README.md found': 'Walang README.md na nahanap',
   'No closed issues found!': 'Walang nahanap na mga saradong isyu!',
+  'No closed pull requests found!': '',
   'No commit found!': '',
   'No contributors found': 'Walang nahanap na kontribyutor',
   'No description provided.': 'Walang deskripsyong naibigay',
