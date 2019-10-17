@@ -14,7 +14,7 @@ module.exports = {
   'Are you sure?': 'Sei sicuro?',
   'Assign Yourself': 'Autoassegna',
   Assignees: 'Assegnatari',
-  'Author: ': 'Autori',
+  'Author: ': 'Autori: ',
   BIO: 'BIO',
   CANCEL: 'ANNULLA',
   CONTACT: 'CONTATTI',
@@ -34,7 +34,7 @@ module.exports = {
   'Commit Message': 'Messaggio di commit',
   'Commit Title': 'Titolo del commit',
   Commits: 'Commit',
-  'Committer: ': 'Autore del commit',
+  'Committer: ': 'Autore del commit: ',
   'Communicate on conversations, merge pull requests and more':
     'Comunica su conversazioni, fai il merge di PR e altro',
   Company: 'Azienda',
