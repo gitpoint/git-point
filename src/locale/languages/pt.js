@@ -14,7 +14,7 @@ module.exports = {
   'Are you sure?': 'Tem  a certeza?',
   'Assign Yourself': 'Atribua a você',
   Assignees: 'Atribuída a',
-  'Author: ': 'Autor',
+  'Author: ': 'Autor: ',
   BIO: 'BIOGRAFIA',
   CANCEL: 'CANCELAR',
   CONTACT: 'CONTATO',

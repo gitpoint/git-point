@@ -14,7 +14,7 @@ module.exports = {
   'Are you sure?': 'Tem certeza?',
   'Assign Yourself': 'Atribua a você',
   Assignees: 'Atribuída a',
-  'Author: ': 'Autor',
+  'Author: ': 'Autor: ',
   BIO: 'BIO',
   CANCEL: 'CANCELAR',
   CONTACT: 'CONTATO',
@@ -164,7 +164,7 @@ module.exports = {
   Users: 'Usuários',
   'View All': 'Ver Todos',
   'View Code': 'Ver Código',
-  'View Commits': '',
+  'View Commits': 'Ver Commits',
   'View and control all of your unread and participating notifications':
     'Ver e controlar todas as suas notificações',
   Watch: 'Acompanhar',
@@ -238,7 +238,7 @@ module.exports = {
     '{actor} reaberto issue {issue} em {repo}',
   '{actor} reopened pull request {pr} at {repo}':
     '{actor} reaberto pull request {pr} em {repo}',
-  '{actor} starred {repo}': '{actor} favoritado {repo}',
+  '{actor} starred {repo}': '{actor} favoritou {repo}',
   '{almostXYears}y': '',
   '{halfAMinute}s': '',
   '{lessThanXMinutes}m': '',
