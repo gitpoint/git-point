@@ -861,6 +861,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "GisliNielsen",
+      "name": "Gisli Nielsen",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/17725274?v=4",
+      "profile": "https://github.com/GisliNielsen",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "repoType": "github"
