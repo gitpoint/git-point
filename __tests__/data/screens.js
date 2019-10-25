@@ -19,11 +19,11 @@ export const Nexus6P = { width: 411, height: 731 };
 export const Nexus5X = { width: 411, height: 731 };
 export const GooglePixel = { width: 411, height: 731 };
 export const GooglePixelXL = { width: 411, height: 731 };
-export const SamsungGalaxyNote5 = { width: 480, height: 853 };
-export const SamsungGalaxyS7 = { width: 340, height: 649 };
-export const SamsungGalaxyS7Edge = { width: 411, height: 731 };
-export const LGG5 = { width: 480, height: 853 };
-export const OnePlus3 = { width: 480, height: 853 };
+export const SamsungGalaxyNote5 = { width: 360, height: 640 };
+export const SamsungGalaxyS7 = { width: 360, height: 640 };
+export const SamsungGalaxyS7Edge = { width: 360, height: 640 };
+export const LGG5 = { width: 360, height: 640 };
+export const OnePlus3 = { width: 360, height: 640 };
 
 // Android Tablets
 export const Nexus7 = { width: 600, height: 960 };

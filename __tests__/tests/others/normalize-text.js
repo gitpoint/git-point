@@ -32,7 +32,7 @@ describe('Normalize Text', () => {
   });
 
   it('should normalize correctly on iPhone 6 Plus', () => {
-    mockRequiredClasses({ dimensions: screens.iPhone6Plus, pixelRatio: 2 });
+    mockRequiredClasses({ dimensions: screens.iPhone6Plus, pixelRatio: 3 });
 
     expectSize(0.95);
   });
@@ -44,7 +44,7 @@ describe('Normalize Text', () => {
   });
 
   it('should normalize correctly on iPhone 7 Plus', () => {
-    mockRequiredClasses({ dimensions: screens.iPhone7Plus, pixelRatio: 2 });
+    mockRequiredClasses({ dimensions: screens.iPhone7Plus, pixelRatio: 3 });
 
     expectSize(0.95);
   });
@@ -74,7 +74,7 @@ describe('Normalize Text', () => {
   });
 
   it('should normalize correctly on iPad Mini', () => {
-    mockRequiredClasses({ dimensions: screens.iPadMini, pixelRatio: 2 });
+    mockRequiredClasses({ dimensions: screens.iPadMini, pixelRatio: 1 });
 
     expectSize(0.95);
   });
@@ -82,25 +82,25 @@ describe('Normalize Text', () => {
   // Android Devices
 
   it('should normalize correctly on Nexus 6P', () => {
-    mockRequiredClasses({ dimensions: screens.Nexus6P, pixelRatio: 3 });
+    mockRequiredClasses({ dimensions: screens.Nexus6P, pixelRatio: 3.5 });
 
     expectSize(0.95);
   });
 
   it('should normalize correctly on Nexus 5X', () => {
-    mockRequiredClasses({ dimensions: screens.Nexus5X, pixelRatio: 3 });
+    mockRequiredClasses({ dimensions: screens.Nexus5X, pixelRatio: 2.6 });
 
     expectSize(0.95);
   });
 
   it('should normalize correctly on Google Pixel', () => {
-    mockRequiredClasses({ dimensions: screens.GooglePixel, pixelRatio: 3 });
+    mockRequiredClasses({ dimensions: screens.GooglePixel, pixelRatio: 2.6 });
 
     expectSize(0.95);
   });
 
   it('should normalize correctly on Google Pixel XL', () => {
-    mockRequiredClasses({ dimensions: screens.GooglePixelXL, pixelRatio: 3 });
+    mockRequiredClasses({ dimensions: screens.GooglePixelXL, pixelRatio: 3.5 });
 
     expectSize(0.95);
   });
@@ -108,14 +108,14 @@ describe('Normalize Text', () => {
   it('should normalize correctly on Samsung Galaxy Note 5', () => {
     mockRequiredClasses({
       dimensions: screens.SamsungGalaxyNote5,
-      pixelRatio: 3,
+      pixelRatio: 4,
     });
 
     expectSize(0.95);
   });
 
   it('should normalize correctly on Samsung Galaxy S7', () => {
-    mockRequiredClasses({ dimensions: screens.SamsungGalaxyS7, pixelRatio: 3 });
+    mockRequiredClasses({ dimensions: screens.SamsungGalaxyS7, pixelRatio: 4 });
 
     expectSize(0.95);
   });
@@ -123,14 +123,14 @@ describe('Normalize Text', () => {
   it('should normalize correctly on Samsung Galaxy S7 Edge', () => {
     mockRequiredClasses({
       dimensions: screens.SamsungGalaxyS7Edge,
-      pixelRatio: 3,
+      pixelRatio: 4,
     });
 
     expectSize(0.95);
   });
 
   it('should normalize correctly on LG G5', () => {
-    mockRequiredClasses({ dimensions: screens.LGG5, pixelRatio: 3 });
+    mockRequiredClasses({ dimensions: screens.LGG5, pixelRatio: 4 });
 
     expectSize(0.95);
   });
@@ -142,13 +142,13 @@ describe('Normalize Text', () => {
   });
 
   it('should normalize correctly on Nexus 7', () => {
-    mockRequiredClasses({ dimensions: screens.Nexus7, pixelRatio: 3 });
+    mockRequiredClasses({ dimensions: screens.Nexus7, pixelRatio: 2 });
 
     expectSize(0.95);
   });
 
   it('should normalize correctly on Nexus 9', () => {
-    mockRequiredClasses({ dimensions: screens.Nexus9, pixelRatio: 3 });
+    mockRequiredClasses({ dimensions: screens.Nexus9, pixelRatio: 2 });
 
     expectSize(0.95);
   });
@@ -156,14 +156,14 @@ describe('Normalize Text', () => {
   it('should normalize correctly on Samsung Galaxy Tab 10', () => {
     mockRequiredClasses({
       dimensions: screens.SamsungGalaxyTab10,
-      pixelRatio: 3,
+      pixelRatio: 1,
     });
 
     expectSize(0.95);
   });
 
   it('should normalize correctly on ChromebookPixel', () => {
-    mockRequiredClasses({ dimensions: screens.ChromebookPixel, pixelRatio: 3 });
+    mockRequiredClasses({ dimensions: screens.ChromebookPixel, pixelRatio: 2 });
 
     expectSize(0.95);
   });
