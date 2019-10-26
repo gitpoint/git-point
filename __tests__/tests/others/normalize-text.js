@@ -90,13 +90,13 @@ describe('Normalize Text', () => {
   it('should normalize correctly on Nexus 5X', () => {
     mockRequiredClasses({ dimensions: screens.Nexus5X, pixelRatio: 2.6 });
 
-    expectSize(1);
+    expectSize(1.15);
   });
 
   it('should normalize correctly on Google Pixel', () => {
     mockRequiredClasses({ dimensions: screens.GooglePixel, pixelRatio: 2.6 });
 
-    expectSize(1);
+    expectSize(1.15);
   });
 
   it('should normalize correctly on Google Pixel XL', () => {
