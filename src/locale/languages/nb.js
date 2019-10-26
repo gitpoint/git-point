@@ -19,8 +19,8 @@ module.exports = {
   CANCEL: 'AVBRYT',
   CONTACT: 'KONTAKT',
   CONTRIBUTORS: 'BIDRAGSYTERE',
-  "Can't login?": "Går det ikke å logge inn?",
-  "Can't see all your organizations?": "Vises ikek alle dine organisasjoner?",
+  "Can't login?": 'Går det ikke å logge inn?',
+  "Can't see all your organizations?": 'Vises ikke alle dine organisasjoner?',
   Cancel: 'Avbryt',
   'Change Merge Type': 'Endre Merge Type',
   'Check for update': 'Set etter oppdatrering',
@@ -63,7 +63,7 @@ module.exports = {
   INFO: 'INFORMASJON',
   ISSUES: 'ISSUES',
   "If we happen to include another third party platform to collect stack traces, error logs or more analytics information, we'll make sure that user data remains anonymized and encrypted.":
-    "Hvis vi tilfeldigvis inkluderer en annen tredjepartsplattform for å samle stack traces, error logs eller mer analyseinformasjon, sørger vi for at brukerdata forblir anonymiserte og krypterte.",
+    'Hvis vi tilfeldigvis inkluderer en annen tredjepartsplattform for å samle stack traces, error logs eller mer analyseinformasjon, sørger vi for at brukerdata forblir anonymiserte og krypterte.',
   'If you have any questions about this Privacy Policy or GitPoint in general, please file an issue in the':
     'Hvis du har spørsmål om denne personvernpolitikken eller GitPoint generelt, kan du sende inn et problem i',
   Issue: 'Issue',
@@ -149,7 +149,7 @@ module.exports = {
   'Thank you for reading our Privacy Policy. We hope you enjoy using GitPoint as much as we enjoyed building it.':
     'Takk for at du leser personvernreglene våre. Vi håper du liker å bruke GitPoint like mye som vi likte å utvikle det.',
   "This means that in no way, shape or form do we ever view, use or share a user's GitHub data. If private data ever becomes visible at any point we will not record or view it. If it happens to be accidentally recorded, we will delete it immediately using secure erase methods. Again, we've set up authentication specifically so that this never happens.":
-    "Dette betyr at vi på ingen måte eller form noensinne ser, bruker eller deler brukerens GitHub-data. Hvis private data noen gang blir synlige når som helst, registrerer vi ikke eller ser på dem. Hvis det tilfeldigvis blir spilt inn ved et uhell, vil vi slette det umiddelbart ved hjelp av sikre slettemetoder. Igjen har vi satt opp autentisering spesifikt slik at dette aldri skjer.",
+    'Dette betyr at vi på ingen måte eller form noensinne ser, bruker eller deler brukerens GitHub-data. Hvis private data noen gang blir synlige når som helst, registrerer vi ikke eller ser på dem. Hvis det tilfeldigvis blir spilt inn ved et uhell, vil vi slette det umiddelbart ved hjelp av sikre slettemetoder. Igjen har vi satt opp autentisering spesifikt slik at dette aldri skjer.',
   'USER DATA': 'BRUKER DATA',
   Unfollow: 'Slutt å følge',
   Unknown: 'Ukjent',
@@ -171,9 +171,9 @@ module.exports = {
   'We currently use Google Analytics and iTunes App Analytics to help us measure traffic and usage trends for the GitPoint. These tools collect information sent by your device including device and platform version, region and referrer. This information cannot reasonably be used to identify any particular individual user and no personal information is extracted.':
     'Vi bruker for øyeblikket Google Analytics og iTunes App Analytics for å hjelpe oss med å måle trafikk og brukstrender for GitPoint. Disse verktøyene samler informasjon sendt av enheten din, inkludert versjon av enhet og plattform, region og henvisning. Denne informasjonen kan ikke med rimelighet brukes til å identifisere noen bestemt bruker, og ingen personlig informasjon blir hentet ut.',
   "We do not do anything with your GitHub information. After authenticating, the user's OAuth token is persisted directly on their device storage. It is not possible for us to retrieve that information. We never view a user's access token nor store it whatsoever.":
-    "Vi gjør ikke noe med GitHub-informasjonen din. Etter autentisering fortsetter brukerens OAuth-token direkte på enheten. Det er ikke mulig for oss å hente den informasjonen. Vi ser aldri brukerens access token eller lagrer det overhodet.",
+    'Vi gjør ikke noe med GitHub-informasjonen din. Etter autentisering fortsetter brukerens OAuth-token direkte på enheten. Det er ikke mulig for oss å hente den informasjonen. Vi ser aldri brukerens access token eller lagrer det overhodet.',
   "We're glad you decided to use GitPoint. This Privacy Policy is here to inform you about what we do — and do not do — with our user's data.":
-    "Vi er glade for at du bestemte deg for å bruke GitPoint. Denne personvernregelen er her for å informere deg om hva vi gjør - og ikke gjør - med brukerens data.",
+    'Vi er glade for at du bestemte deg for å bruke GitPoint. Denne personvernregelen er her for å informere deg om hva vi gjør - og ikke gjør - med brukerens data.',
   Website: 'Hjemmeside',
   'Welcome to GitPoint': 'Velkommen til GitPoint',
   'With each contribution to the app, code review is always performed to prevent anybody from including malicious code of any kind.':
@@ -185,7 +185,7 @@ module.exports = {
   'Write a title for your issue here': 'Skriv en tittel til din issue her',
   Yes: 'Ja',
   "You don't have any notifications of this type":
-    "Do har ingen notifikasjoner av denne typen",
+    'Du har ingen notifikasjoner av denne typen',
   'You may have to request approval for them.':
     'Du må kanskje be om godkjenning for dem.',
   'You need to have a commit title!': 'Du må ha en commit tittel!',
