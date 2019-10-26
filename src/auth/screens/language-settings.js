@@ -45,6 +45,11 @@ export default [
     name: 'Italiano',
   },
   {
+    code: 'nb',
+    emojiCode: ':flag-nb',
+    name: 'Norsk',
+  },
+  {
     code: 'nl',
     emojiCode: ':flag-nl:',
     name: 'Nederlands',
