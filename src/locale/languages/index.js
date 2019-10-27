@@ -9,6 +9,7 @@ export default {
   fr: require('./fr'),
   gl: require('./gl'),
   it: require('./it'),
+  nb: require('./nb'),
   nl: require('./nl'),
   ph: require('./ph'),
   pl: require('./pl'),
