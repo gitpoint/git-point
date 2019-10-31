@@ -13,6 +13,12 @@ describe('<Button />', () => {
     expect(onPress.mock.calls.length).toEqual(1);
   });
 
+  it('correctly renders without title props', () => {
+    const wrapper = render(<Button />);
+
+    expect(wrapper.find('text').text()).toEqual('missing title!');
+  });
+
   it('correctly renders with only title', () => {
     const wrapper = render(<Button title="test text" />);
 
