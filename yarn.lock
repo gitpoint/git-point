@@ -9268,10 +9268,9 @@ react-native-safari-view@^2.0.0:
   resolved "https://registry.yarnpkg.com/react-native-safari-view/-/react-native-safari-view-2.1.0.tgz#1e0cd12c62bce79bc1759c7e281646b08b61c959"
   integrity sha1-HgzRLGK855vBdZx+KBZGsIthyVk=
 
-react-native-safe-area-context@^0.5.0:
+react-native-safe-area-context@chinesedfan/react-native-safe-area-context#git-point:
   version "0.5.0"
-  resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-0.5.0.tgz#2185519ad6296dd7bd4ecc79864c02ca3a7f40b5"
-  integrity sha512-ukg9gO9jCdQIkYYwQf0/mp+67XiFSJH7BOxthoBbJq0x3f61Q/6U6E2v5MkcHO0vJg1Ul4/Pq77V+nR5eY/9fA==
+  resolved "https://codeload.github.com/chinesedfan/react-native-safe-area-context/tar.gz/a93536956ab973fae4a508daf410eea51b843464"
 
 react-native-safe-area-view@0.11.0, react-native-safe-area-view@1.0.0:
   version "1.0.0"
