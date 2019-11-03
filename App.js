@@ -11,6 +11,7 @@ import { SafeAreaView } from 'react-navigation';
 import DeviceInfo from 'react-native-device-info';
 import codePush from 'react-native-code-push';
 import { PersistGate } from 'redux-persist/integration/react';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { colors, getStatusBarConfig } from 'config';
 import { getCurrentLocale, configureLocale } from 'utils';
 import { GitPoint } from './routes';
@@ -107,9 +108,11 @@ class App extends Component {
     return (
       <Provider store={configureStore}>
         <PersistGate loading={this.renderLogo} persistor={persistor}>
-          <GitPoint onNavigationStateChange={this.statusBarHandler}>
-            <StatusBar />
-          </GitPoint>
+          <SafeAreaProvider>
+            <GitPoint onNavigationStateChange={this.statusBarHandler}>
+              <StatusBar />
+            </GitPoint>
+          </SafeAreaProvider>
         </PersistGate>
       </Provider>
     );
