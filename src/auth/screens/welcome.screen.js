@@ -60,7 +60,6 @@ class Welcome extends Component {
       CookieManager.clearAll().then(() => {
         auth(code, state).then(() => {
           getUser().then(() => {
-            console.log('resetNavigationTo Main');
             resetNavigationTo('Main', navigation);
           });
         });

@@ -7,8 +7,6 @@ import {
   StatusBar,
   Platform,
 } from 'react-native';
-import { SafeAreaView } from 'react-navigation';
-import DeviceInfo from 'react-native-device-info';
 import codePush from 'react-native-code-push';
 import { PersistGate } from 'redux-persist/integration/react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
