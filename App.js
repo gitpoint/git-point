@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import codePush from 'react-native-code-push';
 import { PersistGate } from 'redux-persist/integration/react';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaProvider } from 'react-native-safe-area-context'; // eslint-disable-line
 import { colors, getStatusBarConfig } from 'config';
 import { getCurrentLocale, configureLocale } from 'utils';
 import { GitPoint } from './routes';
