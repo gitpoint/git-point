@@ -82,6 +82,7 @@
     "react-native-parallax-scroll-view": "^0.20.1",
     "react-native-photo-view": "^1.5.2",
     "react-native-safari-view": "^2.0.0",
+    "react-native-safe-area-context": "chinesedfan/react-native-safe-area-context#git-point",
     "react-native-search-bar": "^3.3.1",
     "react-native-simple-toast": "^0.0.8",
     "react-native-svg": "^6.3.1",
@@ -153,6 +154,7 @@
     "stylelint-processor-styled-components": "^1.0.0"
   },
   "resolutions": {
+    "react-native-safe-area-view": "1.0.0",
     "react-native-tab-view": "chinesedfan/react-native-tab-view#git-point"
   },
   "jest": {
