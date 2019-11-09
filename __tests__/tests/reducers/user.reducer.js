@@ -11,8 +11,8 @@ import {
   GET_STAR_COUNT,
 } from 'user/user.type';
 import { initialState, userReducer } from 'user/user.reducer';
-import user from '../../data/api/user';
-import organization from '../../data/api/organization';
+import user from 'testData/api/user';
+import organization from 'testData/api/organization';
 
 describe('User Reducer', () => {
   it('should set initial state', () => {

@@ -13,7 +13,7 @@ import {
   SUBMIT_NEW_ISSUE,
 } from 'issue/issue.type';
 import { initialState, issueReducer } from 'issue/issue.reducer';
-import { open } from '../../data/api/issue';
+import { open } from 'testData/api/issue';
 
 describe('Issuer Reducer', () => {
   it('should have initial state', () => {
