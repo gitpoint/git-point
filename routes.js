@@ -9,7 +9,7 @@ import {
 import { Icon } from 'react-native-elements';
 
 import { NotificationIcon } from 'components';
-import { colors } from 'config';
+import { colors, getHeaderForceInset } from 'config';
 import { t } from 'utils';
 
 // Auth
@@ -50,6 +50,8 @@ import {
   IssueListScreen,
   PullListScreen,
   PullDiffScreen,
+  CommitScreen,
+  CommitListScreen,
   ReadMeScreen,
 } from 'repository';
 
@@ -164,6 +166,18 @@ const sharedRoutes = {
       title: navigation.state.params.title,
     }),
   },
+  CommitList: {
+    screen: CommitListScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    }),
+  },
+  Commit: {
+    screen: CommitScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    }),
+  },
   EditIssueComment: {
     screen: EditIssueCommentScreen,
     navigationOptions: ({ navigation }) => ({
@@ -208,12 +222,33 @@ const sharedRoutes = {
   },
 };
 
+Object.keys(sharedRoutes).forEach(routeName => {
+  const { navigationOptions } = sharedRoutes[routeName];
+
+  if (navigationOptions.header !== null) {
+    // fix headerForceInset if the header is not disabled
+    const headerForceInset = getHeaderForceInset(routeName);
+
+    if (typeof navigationOptions === 'function') {
+      const fn = navigationOptions;
+
+      sharedRoutes[routeName].navigationOptions = (...args) => ({
+        ...fn(...args),
+        headerForceInset,
+      });
+    } else {
+      navigationOptions.headerForceInset = headerForceInset;
+    }
+  }
+});
+
 const HomeStackNavigator = StackNavigator(
   {
     Events: {
       screen: EventsScreen,
       navigationOptions: {
         headerTitle: 'GitPoint',
+        headerForceInset: getHeaderForceInset('Events'),
       },
     },
     ...sharedRoutes,

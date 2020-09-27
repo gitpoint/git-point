@@ -1,5 +1,6 @@
 /* eslint-disable quote-props */
 export default {
+  ca: require('./ca'),
   de: require('./de'),
   en: require('./en'),
   eo: require('./eo'),
@@ -7,6 +8,8 @@ export default {
   eu: require('./eu'),
   fr: require('./fr'),
   gl: require('./gl'),
+  it: require('./it'),
+  nb: require('./nb'),
   nl: require('./nl'),
   ph: require('./ph'),
   pl: require('./pl'),
@@ -15,6 +18,7 @@ export default {
   ru: require('./ru'),
   sr: require('./sr'),
   sv: require('./sv'),
+  th: require('./th'),
   tr: require('./tr'),
   uk: require('./uk'),
   zhCn: require('./zhCn'),

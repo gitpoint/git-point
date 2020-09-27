@@ -1,6 +1,6 @@
 module.exports = {
   '#{number} by {user} was closed {time} ago':
-    '#{number} de {user} foi  fechada em {time} ',
+    '#{number} de {user} foi fechada em {time} ',
   '#{number} opened {time} ago by {user}':
     '#{number} aberta em {time} por {user}',
   ACTIONS: 'AÇÕES',
@@ -14,11 +14,12 @@ module.exports = {
   'Are you sure?': 'Tem  a certeza?',
   'Assign Yourself': 'Atribua a você',
   Assignees: 'Atribuída a',
+  'Author: ': 'Autor: ',
   BIO: 'BIOGRAFIA',
   CANCEL: 'CANCELAR',
   CONTACT: 'CONTATO',
   CONTRIBUTORS: 'CONTRIBUIDORES',
-  "Can't login?": '',
+  "Can't login?": 'Não consegue entrar?',
   "Can't see all your organizations?":
     'Não consegue ver todas as suas organizações?',
   Cancel: 'Cancelar',
@@ -33,6 +34,8 @@ module.exports = {
   'Comment Actions': 'Ações do comentário',
   'Commit Message': 'Mensagem do Commit',
   'Commit Title': 'Título do Commit',
+  Commits: '',
+  'Committer: ': '',
   'Communicate on conversations, merge pull requests and more':
     'Comunicar problemas/sugestões, merge pull requests, etc',
   Company: 'Empresa',
@@ -89,9 +92,12 @@ module.exports = {
   'New Issue': 'Nova Issue',
   'No README.md found': 'Não foi encontrado nenhum ficheiro README.md',
   'No closed issues found!': 'Nenhuma issue fechada encontrada!',
+  'No closed pull requests found!': '',
+  'No commit found!': '',
   'No contributors found': 'Nenhum contribuidor encontrado',
   'No description provided.': 'Nenhuma descrição fornecida.',
   'No issues': 'Nenhuma issue',
+  'No members found': 'Nenhum membro encontrado',
   'No open issues': 'Nenhuma issue aberta',
   'No open issues found!': 'Nenhuma issue aberta encontrada!',
   'No open pull requests': 'Nenhum pull request aberto',
@@ -108,7 +114,8 @@ module.exports = {
   OWNER: 'PROPRIETÁRIO',
   'One of the most feature-rich GitHub clients that is 100% free':
     'O cliente de GitHub com mais funcionalidades, 100% grátis',
-  'Oops! it seems that you are not connected to the internet!': '',
+  'Oops! it seems that you are not connected to the internet!':
+    'Ops! Parece que você não está conectado à internet!',
   Open: 'Abertos',
   'Open in Browser': 'Abrir no Browser',
   Options: 'Opções',
@@ -125,7 +132,7 @@ module.exports = {
   Repositories: 'Repositórios',
   'Repositories and Users': 'Repositórios e Utilizadores',
   'Repository Actions': 'Ações do Repositório',
-  'Repository is not found': '',
+  'Repository is not found': 'Repositório não encontrado',
   'Retrieving notifications': 'Procurando notificações',
   'SIGN IN': 'ENTRAR',
   SOURCE: 'CÓDIGO-FONTE',
@@ -157,6 +164,7 @@ module.exports = {
   Users: 'Utilizadores',
   'View All': 'Ver Todos',
   'View Code': 'Ver Código',
+  'View Commits': '',
   'View and control all of your unread and participating notifications':
     'Ver e controlar todas as suas notificações',
   Watch: 'Acompanhar',

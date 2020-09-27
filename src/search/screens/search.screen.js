@@ -9,6 +9,7 @@ import {
   Platform,
 } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
+import { SafeAreaView } from 'react-navigation';
 
 import {
   ViewContainer,
@@ -18,8 +19,8 @@ import {
   SearchBar,
 } from 'components';
 import styled from 'styled-components';
-import { colors, fonts, normalize } from 'config';
-import { isIphoneX, t } from 'utils';
+import { colors, fonts, normalize, getHeaderForceInset } from 'config';
+import { t } from 'utils';
 import { RestClient } from 'api';
 
 const NAV_QUERY_PARAM = 'q';
@@ -68,12 +69,14 @@ const mapDispatchToProps = {
   searchUsers: RestClient.search.users,
 };
 
+const StyledSafeAreaView = styled(SafeAreaView).attrs({
+  forceInset: getHeaderForceInset('Search'),
+})`
+  background-color: ${colors.white};
+`;
+
 const SearchBarWrapper = styled.View`
   flex-direction: row;
-  margin-top: ${Platform.select({
-    ios: isIphoneX() ? 30 : 20,
-    android: 5,
-  })};
 `;
 
 const SearchContainer = styled.View`
@@ -296,6 +299,8 @@ class Search extends Component {
 
     return (
       <ViewContainer>
+        <StyledSafeAreaView />
+
         <SearchBarWrapper>
           <SearchContainer>
             <SearchBar

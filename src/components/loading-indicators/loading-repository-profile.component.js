@@ -1,61 +1,54 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Animated } from 'react-native';
+import { View, Animated } from 'react-native';
 import { Icon } from 'react-native-elements';
+import styled from 'styled-components';
 
 import { colors, fonts, normalize } from 'config';
 import { loadingAnimation, t } from 'utils';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  darkenContainer: {
-    backgroundColor: 'rgba(0,0,0,.6)',
-  },
-  profile: {
-    flex: 2,
-    marginTop: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    color: colors.white,
-    ...fonts.fontPrimaryBold,
-    fontSize: normalize(16),
-    marginBottom: 2,
-    backgroundColor: 'transparent',
-  },
-  subtitle: {
-    color: colors.white,
-    ...fonts.fontPrimary,
-    fontSize: normalize(12),
-    paddingLeft: 15,
-    paddingRight: 15,
-    backgroundColor: 'transparent',
-  },
-  details: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    minWidth: 300,
-  },
-  unit: {
-    flex: 1,
-  },
-  unitText: {
-    textAlign: 'center',
-    color: colors.white,
-    fontSize: normalize(10),
-    ...fonts.fontPrimary,
-  },
-  icon: {
+const Container = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Profile = styled.View`
+  flex: 2;
+  margin-top: 50;
+  align-items: center;
+  justify-content: center;
+`;
+
+const OctIcon = styled(Icon).attrs({
+  name: 'repo',
+  type: 'octicon',
+  size: 45,
+  color: colors.greyLight,
+  containerStyle: {
+    marginLeft: 10,
     paddingBottom: 20,
   },
-});
+})``;
+
+const Details = styled.View`
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-around;
+  min-width: 300;
+`;
+
+const Unit = styled.View`
+  flex: 1;
+`;
+
+const UnitText = styled.Text`
+  text-align: center;
+  color: ${colors.white};
+  font-size: ${normalize(10)};
+  ${fonts.fontPrimary};
+`;
 
 export class LoadingRepositoryProfile extends Component {
   props: {
@@ -81,29 +74,23 @@ export class LoadingRepositoryProfile extends Component {
     const { locale } = this.props;
 
     return (
-      <View style={styles.container}>
+      <Container>
         <View>
-          <View style={styles.profile}>
-            <Icon
-              containerStyle={[styles.icon, { marginLeft: 10 }]}
-              name={'repo'}
-              type="octicon"
-              size={45}
-              color={colors.greyLight}
-            />
-          </View>
+          <Profile>
+            <OctIcon />
+          </Profile>
 
-          <View style={styles.details}>
-            <View style={styles.unit}>
-              <Text style={styles.unitText}>{t('Stars', locale)}</Text>
-            </View>
+          <Details>
+            <Unit>
+              <UnitText>{t('Stars', locale)}</UnitText>
+            </Unit>
 
-            <View style={styles.unit}>
-              <Text style={styles.unitText}>{t('Forks', locale)}</Text>
-            </View>
-          </View>
+            <Unit>
+              <UnitText>{t('Forks', locale)}</UnitText>
+            </Unit>
+          </Details>
         </View>
-      </View>
+      </Container>
     );
   }
 }

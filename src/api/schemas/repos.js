@@ -48,8 +48,7 @@ export const repoSchema = new schema.Entity(
   'repos',
   {},
   {
-    idAttribute: repo =>
-      (repo.full_name ? repo.full_name : repo.name).toLowerCase(),
+    idAttribute: repo => (repo.full_name ? repo.full_name : repo.name),
     processStrategy: repo => {
       if (repo.full_name) {
         // full v3

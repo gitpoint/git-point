@@ -26,8 +26,7 @@ type UpdateEntity = {
   updater: Function,
 };
 
-export type CallParameters = {
-  endpoint: string,
+type BaseCallParameters = {
   schema: Schema,
   params: SpecialParameters,
   fetchParameters?: FetchParameters,
@@ -36,8 +35,18 @@ export type CallParameters = {
   entityId?: String | number,
   updateEntity?: UpdateEntity,
 };
+type GraphQLCallParameters = {
+  ...BaseCallParameters,
+  query: string,
+  variables: Object,
+};
+export type CallParameters = {
+  ...BaseCallParameters,
+  endpoint: string,
+};
 
-export type CallType = CallParameters & {
+export type CallType = {
+  ...CallParameters,
   type: string,
 };
 
@@ -64,6 +73,7 @@ export class Client {
     HTML: 'application/vnd.github.v3.html+json',
     JSON: 'application/vnd.github.v3+json',
     MERCY_PREVIEW: 'application/vnd.github.mercy-preview+json',
+    MOCKINGBIRD_PREVIEW: 'application/vnd.github.mockingbird-preview+json',
     RAW: 'application/vnd.github.v3.raw+json',
   };
 
@@ -154,7 +164,7 @@ export class Client {
     query,
     variables,
     ...config
-  }: CallParameters): CallType => ({
+  }: GraphQLCallParameters): CallType => ({
     type: 'query',
     endpoint: 'graphql',
     params: {},
@@ -262,7 +272,7 @@ export class Client {
     getEventsReceived: (
       userId: string,
       params: SpecialParameters = {}
-    ): CallParameters =>
+    ): CallType =>
       this.list({
         endpoint: `users/${userId}/received_events`,
         params: params || {},
@@ -370,6 +380,15 @@ export class Client {
         paginationArgs: [q],
         normalizrKey: 'items',
       }),
+
+    issues: (q: string, params: SpecialParameters = {}) =>
+      this.list({
+        endpoint: `search/issues?q=${q}`,
+        params,
+        schema: [Schemas.ISSUE],
+        paginationArgs: [q],
+        normalizrKey: 'items',
+      }),
   };
   repos = {
     getContributors: (repoId: string, params: SpecialParameters = {}) =>
@@ -384,6 +403,39 @@ export class Client {
         endpoint: `repos/${repoId}/forks`,
         params,
         schema: Schemas.REPO,
+      }),
+    getIssue: (
+      repoId: string,
+      issueId: number,
+      params: SpecialParameters = {}
+    ) =>
+      this.get({
+        endpoint: `repos/${repoId}/issues/${issueId}`,
+        params,
+        fetchParameters: {
+          headers: {
+            Accept: this.Accept.FULL,
+          },
+        },
+        schema: Schemas.ISSUE,
+      }),
+    getIssueTimeline: (
+      repoId: string,
+      issueId: number,
+      params: SpecialParameters = {}
+    ) =>
+      this.list({
+        endpoint: `repos/${repoId}/issues/${issueId}/timeline`,
+        params,
+        fetchParameters: {
+          headers: {
+            Accept: [this.Accept.MOCKINGBIRD_PREVIEW, this.Accept.FULL].join(
+              ','
+            ),
+          },
+        },
+        schema: [Schemas.ISSUE_TIMELINE_ITEM],
+        paginationArgs: [`${repoId}/${issueId}`],
       }),
   };
   orgs = {

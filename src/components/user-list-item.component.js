@@ -133,6 +133,7 @@ class UserListItemComponent extends Component {
       >
         <Wrapper>
           <UserComponent
+            data-testid="userListItem-user"
             onPress={() =>
               navigation.navigate(userScreen, {
                 user,
@@ -140,6 +141,7 @@ class UserListItemComponent extends Component {
             }
           >
             <ImageContainerComponent
+              data-testid="userListItem-imageContainer"
               onPress={() =>
                 navigation.navigate(userScreen, {
                   user,
@@ -147,6 +149,7 @@ class UserListItemComponent extends Component {
               }
             >
               <Avatar
+                data-testid="userListItem-image"
                 source={{
                   uri: user.avatar_url,
                 }}
@@ -160,7 +163,10 @@ class UserListItemComponent extends Component {
             </TitleSubtitleContainer>
           </UserComponent>
 
-          <IconComponent onPress={() => iconAction(user.login)}>
+          <IconComponent
+            data-testid="userListItem-icon"
+            onPress={() => iconAction(user.login)}
+          >
             <Icon
               color={colors.grey}
               size={icon ? 24 : 28}

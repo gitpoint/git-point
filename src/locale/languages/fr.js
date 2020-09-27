@@ -14,6 +14,7 @@ module.exports = {
   'Are you sure?': 'Êtes-vous certain ?',
   'Assign Yourself': "S'assigner",
   Assignees: 'Assignés',
+  'Author: ': '',
   BIO: 'BIO',
   CANCEL: 'ANNULER',
   CONTACT: 'CONTACT',
@@ -33,6 +34,8 @@ module.exports = {
   'Comment Actions': 'Actions sur le commentaire',
   'Commit Message': 'Message de commit',
   'Commit Title': 'Titre de commit',
+  Commits: '',
+  'Committer: ': '',
   'Communicate on conversations, merge pull requests and more':
     'Communiquez dans les conversations, fusionnez les pull requests et plus',
   Company: 'Société',
@@ -89,9 +92,12 @@ module.exports = {
   'New Issue': 'Nouveau ticket',
   'No README.md found': 'Pas de README.md trouvé',
   'No closed issues found!': 'Aucun ticket fermé trouvé !',
+  'No closed pull requests found!': '',
+  'No commit found!': '',
   'No contributors found': 'Aucun contributeur trouvé',
   'No description provided.': 'Aucune description fournie.',
   'No issues': 'Aucun ticket',
+  'No members found': 'Aucun membre trouvé',
   'No open issues': 'Aucun ticket ouvert',
   'No open issues found!': 'Aucun ticket ouvert trouvé !',
   'No open pull requests': 'Aucune pull request ouverte',
@@ -108,7 +114,8 @@ module.exports = {
   OWNER: 'PROPRIÉTAIRE',
   'One of the most feature-rich GitHub clients that is 100% free':
     'Le client GitHub le plus riche en fonctionnalités tout en étant 100% gratuit',
-  'Oops! it seems that you are not connected to the internet!': 'Aïe ! Il semble que vous êtes actuellement hors connexion !',
+  'Oops! it seems that you are not connected to the internet!':
+    'Aïe ! Il semble que vous êtes actuellement hors connexion !',
   Open: 'Ouvert',
   'Open in Browser': 'Ouvrir dans le navigateur',
   Options: 'Options',
@@ -157,6 +164,7 @@ module.exports = {
   Users: 'Utilisateurs',
   'View All': 'Voir tous',
   'View Code': 'Voir le code',
+  'View Commits': '',
   'View and control all of your unread and participating notifications':
     'Voir et contrôler toutes vos notifications de participations non lues',
   Watch: 'Surveiller',

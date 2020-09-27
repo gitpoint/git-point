@@ -1,8 +1,8 @@
 module.exports = {
   '#{number} by {user} was closed {time} ago':
-    '#{number} by {user} was closed {time} ago',
+    '#{number} por {user} foi fechada faz {time}',
   '#{number} opened {time} ago by {user}':
-    '#{number} opened {time} ago by {user}',
+    '#{number} aberta faz {time} por {user}',
   ACTIONS: 'AÇÕES',
   'ANALYTICS INFORMATION': 'INFORMAÇÕES ANALÍTICAS',
   ASSIGNEES: 'ATRIBUÍDA A',
@@ -14,11 +14,12 @@ module.exports = {
   'Are you sure?': 'Tem certeza?',
   'Assign Yourself': 'Atribua a você',
   Assignees: 'Atribuída a',
+  'Author: ': 'Autor: ',
   BIO: 'BIO',
   CANCEL: 'CANCELAR',
   CONTACT: 'CONTATO',
   CONTRIBUTORS: 'CONTRIBUIDORES',
-  "Can't login?": '',
+  "Can't login?": 'Não consegue entrar?',
   "Can't see all your organizations?":
     'Não consegue ver todas as suas organizações?',
   Cancel: 'Cancelar',
@@ -33,6 +34,8 @@ module.exports = {
   'Comment Actions': 'Ações do comentário',
   'Commit Message': 'Mensagem do Commit',
   'Commit Title': 'Título do Commit',
+  Commits: '',
+  'Committer: ': '',
   'Communicate on conversations, merge pull requests and more':
     'Comunicar-se em conversas, merge pull requests e mais',
   Company: 'Empresa',
@@ -89,9 +92,12 @@ module.exports = {
   'New Issue': 'Nova Issue',
   'No README.md found': 'Nenhum README.md foi encontrado',
   'No closed issues found!': 'Nenhuma issue fechada encontrada!',
+  'No closed pull requests found!': '',
+  'No commit found!': '',
   'No contributors found': 'Nenhum contribuidor encontrado',
   'No description provided.': 'Nenhuma descrição fornecida.',
   'No issues': 'Nenhuma issue',
+  'No members found': 'Nenhum membro encontrado',
   'No open issues': 'Nenhuma issue aberta',
   'No open issues found!': 'Nenhuma issue aberta encontrada!',
   'No open pull requests': 'Nenhum pull request aberto',
@@ -108,7 +114,8 @@ module.exports = {
   OWNER: 'PROPRIETÁRIO',
   'One of the most feature-rich GitHub clients that is 100% free':
     'O GitHub client com a maior quantidade de funcionalidades que é 100% grátis',
-  'Oops! it seems that you are not connected to the internet!': '',
+  'Oops! it seems that you are not connected to the internet!':
+    'Ops! Parece que você não está conectado à internet!',
   Open: 'Abertos',
   'Open in Browser': 'Abrir no Navegador.',
   Options: 'Opções',
@@ -125,7 +132,7 @@ module.exports = {
   Repositories: 'Repositórios',
   'Repositories and Users': 'Repositórios e Usuários',
   'Repository Actions': 'Ações do Repositório',
-  'Repository is not found': '',
+  'Repository is not found': 'Repositório não encontrado',
   'Retrieving notifications': 'Buscando notificações',
   'SIGN IN': 'ENTRAR',
   SOURCE: 'CÓDIGO-FONTE',
@@ -147,7 +154,7 @@ module.exports = {
     'Isso significa que, de forma alguma, vemos, usamos ou compartilhamos os dados do GitHub de um usuário. Se dados privados ficarem visíveis em algum momento, nunca iremos armazená-los ou vê-los. Se os dados forem acidentalmente armazenados, iremos deletá-los imediatamente, usando métodos seguros. Como dito, configuramos autenticação especificamente para que isso nunca aconteça.',
   'USER DATA': 'DADOS DO USUÁRIO',
   Unfollow: 'Deixar de seguir',
-  Unknown: '',
+  Unknown: 'Desconhecido',
   'Unlock {issueType}': 'Destrancar {issueType}',
   Unread: 'Não lidas',
   Unstar: 'Desfavoritar',
@@ -157,10 +164,11 @@ module.exports = {
   Users: 'Usuários',
   'View All': 'Ver Todos',
   'View Code': 'Ver Código',
+  'View Commits': 'Ver Commits',
   'View and control all of your unread and participating notifications':
     'Ver e controlar todas as suas notificações',
   Watch: 'Acompanhar',
-  Watchers: 'Observador',
+  Watchers: 'Observadores',
   Watching: 'Observando',
   'We currently use Google Analytics and iTunes App Analytics to help us measure traffic and usage trends for the GitPoint. These tools collect information sent by your device including device and platform version, region and referrer. This information cannot reasonably be used to identify any particular individual user and no personal information is extracted.':
     'Atualmente, usamos o Google Analytics e o iTunes App Analytics para nos ajudar a medir tráfego e tendências de utilização para o GitPoint. Essas ferramentas coletam informações enviadas pelo seu dispositivo, incluindo versão, plataforma e região. Estas informações não podem ser usadas para identificar qualquer usuário em particular e nenhuma informação pessoal é extraída.',
@@ -230,7 +238,7 @@ module.exports = {
     '{actor} reaberto issue {issue} em {repo}',
   '{actor} reopened pull request {pr} at {repo}':
     '{actor} reaberto pull request {pr} em {repo}',
-  '{actor} starred {repo}': '{actor} favoritado {repo}',
+  '{actor} starred {repo}': '{actor} favoritou {repo}',
   '{almostXYears}y': '',
   '{halfAMinute}s': '',
   '{lessThanXMinutes}m': '',

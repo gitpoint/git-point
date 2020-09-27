@@ -4,6 +4,6 @@ export const orgSchema = new schema.Entity(
   'orgs',
   {},
   {
-    idAttribute: org => org.login.toLowerCase(),
+    idAttribute: org => org.login,
   }
 );

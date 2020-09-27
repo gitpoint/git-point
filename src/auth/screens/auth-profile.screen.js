@@ -9,6 +9,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import { SafeAreaView } from 'react-navigation';
 
 import {
   ViewContainer,
@@ -18,7 +19,7 @@ import {
   UserListItem,
   EntityInfo,
 } from 'components';
-import { colors, fonts, normalize } from 'config';
+import { colors, fonts, normalize, getHeaderForceInset } from 'config';
 import { getUser, getOrgs, getStarCount } from 'auth';
 import { emojifyText, openURLInView, t } from 'utils';
 
@@ -41,6 +42,12 @@ const mapDispatchToProps = dispatch =>
     },
     dispatch
   );
+
+const StyledSafeAreaView = styled(SafeAreaView).attrs({
+  forceInset: getHeaderForceInset('MyProfile'),
+})`
+  background-color: ${colors.primaryDark};
+`;
 
 const Note = styled.Text`
   font-size: ${normalize(11)};
@@ -108,6 +115,8 @@ class AuthProfile extends Component {
 
     return (
       <ViewContainer>
+        <StyledSafeAreaView />
+
         <ParallaxScroll
           renderContent={() => (
             <UserProfile

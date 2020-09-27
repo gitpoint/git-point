@@ -1,11 +1,11 @@
 import { compose, createStore, applyMiddleware } from 'redux';
-import { autoRehydrate } from 'redux-persist';
+import { persistStore } from 'redux-persist';
 import Reactotron from 'reactotron-react-native'; // eslint-disable-line import/no-extraneous-dependencies
 import createLogger from 'redux-logger';
 import reduxThunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import 'config/reactotron';
-import { rootReducer } from './root.reducer';
+import rootReducer from './root.reducer';
 
 const getMiddleware = () => {
   const middlewares = [reduxThunk];
@@ -19,26 +19,23 @@ const getMiddleware = () => {
   return applyMiddleware(...middlewares);
 };
 
-const getEnhancers = () => {
-  const enhancers = [];
-
-  enhancers.push(autoRehydrate());
-
-  return enhancers;
-};
-
 let store;
 
-if (__DEV__ && process.env.TRON_ENABLED) {
-  store = Reactotron.createStore(
-    rootReducer,
-    compose(getMiddleware(), ...getEnhancers())
-  );
+if (__DEV__) {
+  if (process.env.TRON_ENABLED) {
+    store = Reactotron.createStore(
+      rootReducer,
+      compose(getMiddleware())
+    );
+  } else {
+    store = createStore(
+      rootReducer,
+      composeWithDevTools(getMiddleware())
+    );
+  }
 } else {
-  store = createStore(
-    rootReducer,
-    composeWithDevTools(getMiddleware(), ...getEnhancers())
-  );
+  store = createStore(rootReducer, compose(getMiddleware()));
 }
 
 export const configureStore = store;
+export const persistor = persistStore(configureStore);

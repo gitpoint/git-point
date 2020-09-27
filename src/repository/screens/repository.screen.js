@@ -5,7 +5,8 @@ import styled from 'styled-components';
 import { RefreshControl, Share, ActivityIndicator } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
-import { RestClient } from 'api';
+import { SafeAreaView } from 'react-navigation';
+import { v3, RestClient } from 'api';
 import {
   ViewContainer,
   LoadingRepositoryProfile,
@@ -20,18 +21,19 @@ import {
   TopicsList,
 } from 'components';
 import { t, openURLInView, toOldIssueFormat, toOldUserFormat } from 'utils';
-import { colors, fonts } from 'config';
+import { colors, fonts, getHeaderForceInset } from 'config';
+import { getCommits } from '../repository.action';
 
 const mapStateToProps = (state, ownProps) => {
   const {
     auth: { user, locale },
-    entities: { users, repos },
+    entities: { users, gqlRepos },
     pagination: { REPOS_GET_CONTRIBUTORS },
   } = state;
 
   const repoId = ownProps.navigation.state.params.repoId;
 
-  const repository = repos[repoId];
+  const repository = gqlRepos[repoId];
 
   const contributorsPagination = REPOS_GET_CONTRIBUTORS[repoId] || {
     ids: [],
@@ -44,6 +46,7 @@ const mapStateToProps = (state, ownProps) => {
     contributors,
     contributorsPagination,
     repository,
+    commits: state.repository.commits,
     repoId,
     locale,
   };
@@ -57,7 +60,14 @@ const mapDispatchToProps = {
   watchRepo: RestClient.activity.watchRepo,
   unwatchRepo: RestClient.activity.unwatchRepo,
   forkRepo: RestClient.repos.fork,
+  getCommits,
 };
+
+const StyledSafeAreaView = styled(SafeAreaView).attrs({
+  forceInset: getHeaderForceInset('Repository'),
+})`
+  background-color: ${colors.primaryDark};
+`;
 
 const LoadingMembersContainer = styled.View`
   padding: 5px;
@@ -78,6 +88,7 @@ class Repository extends Component {
   props: {
     getRepoById: Function,
     getContributors: Function,
+    getCommits: Function,
     starRepo: Function,
     unstarRepo: Function,
     watchRepo: Function,
@@ -86,6 +97,7 @@ class Repository extends Component {
     repository: Object,
     repoId: String,
     contributors: Array,
+    commits: Array,
     contributorsPagination: Object,
     navigation: Object,
     username: string,
@@ -111,15 +123,7 @@ class Repository extends Component {
   }
 
   componentDidMount() {
-    const { repoId, getRepoById, getContributors } = this.props;
-
-    getRepoById(repoId)
-      .then(() => {
-        getContributors(repoId);
-      })
-      .catch(error => {
-        this.setState({ hasError: true, errorMessage: error });
-      });
+    this.fetchRepoInfo();
   }
 
   showMenuActionSheet = () => {
@@ -174,14 +178,20 @@ class Repository extends Component {
 
   fetchRepoInfo = () => {
     const { repoId } = this.props;
+    const repoCommitsURL = `${v3.root}/repos/${repoId}/commits`;
 
     this.setState({ refreshing: true });
     Promise.all([
       this.props.getRepoById(repoId),
       this.props.getContributors(repoId, { forceRefresh: true }),
-    ]).then(() => {
-      this.setState({ refreshing: false });
-    });
+      this.props.getCommits(repoCommitsURL),
+    ])
+      .then(() => {
+        this.setState({ refreshing: false });
+      })
+      .catch(error => {
+        this.setState({ hasError: true, errorMessage: error });
+      });
   };
 
   shareRepository = repository => {
@@ -223,6 +233,7 @@ class Repository extends Component {
       repository,
       repoId,
       contributors,
+      commits,
       contributorsPagination,
       locale,
       navigation,
@@ -257,15 +268,6 @@ class Repository extends Component {
         ]
       : [];
 
-    const pullRequestCount =
-      !isPendingRepository && repository.pullRequests
-        ? repository.pullRequests.totalCount
-        : 0;
-    const pureIssuesCount =
-      !isPendingRepository && repository.issues
-        ? repository.issues.totalCount
-        : 0;
-
     if (showFork) {
       repositoryActions.splice(1, 0, t('Fork', locale));
     }
@@ -274,6 +276,8 @@ class Repository extends Component {
 
     return (
       <ViewContainer>
+        <StyledSafeAreaView />
+
         <ParallaxScroll
           renderContent={() => {
             if (isPendingRepository) {
@@ -387,6 +391,24 @@ class Repository extends Component {
                 underlayColor={colors.greyLight}
                 disabled={isPendingRepository}
               />
+              {commits.length > 0 && (
+                <SectionListItem
+                  title={t('View Commits', locale)}
+                  leftIcon={{
+                    name: 'git-commit',
+                    color: colors.grey,
+                    type: 'octicon',
+                  }}
+                  onPress={() =>
+                    this.props.navigation.navigate('CommitList', {
+                      commits,
+                      title: t('Commits', locale),
+                      locale,
+                    })
+                  }
+                  underlayColor={colors.greyLight}
+                />
+              )}
             </SectionList>
           )}
 
@@ -397,28 +419,28 @@ class Repository extends Component {
                 title={t('ISSUES', locale)}
                 noItems={openIssues.length === 0}
                 noItemsMessage={
-                  pureIssuesCount === 0
+                  openIssues.length === 0
                     ? t('No issues', locale)
                     : t('No open issues', locale)
                 }
                 showButton
                 buttonTitle={
-                  pureIssuesCount > 0
+                  openIssues.length > 0
                     ? t('View All', locale)
                     : t('New Issue', locale)
                 }
                 buttonAction={() => {
-                  if (pureIssuesCount > 0) {
+                  if (openIssues.length > 0) {
                     navigation.navigate('IssueList', {
                       title: t('Issues', locale),
-                      type: 'issue',
-                      issues: repository.issues.nodes.map(issue =>
-                        toOldIssueFormat(issue)
-                      ),
+                      searchType: 0,
+                      query: '',
+                      repository,
                     });
                   } else {
                     navigation.navigate('NewIssue', {
                       title: t('New Issue', locale),
+                      repository,
                     });
                   }
                 }}
@@ -440,19 +462,18 @@ class Repository extends Component {
                 title={t('PULL REQUESTS', locale)}
                 noItems={openPulls.length === 0}
                 noItemsMessage={
-                  pullRequestCount === 0
+                  openPulls.length === 0
                     ? t('No pull requests', locale)
                     : t('No open pull requests', locale)
                 }
-                showButton={pullRequestCount > 0}
+                showButton={openPulls.length > 0}
                 buttonTitle={t('View All', locale)}
                 buttonAction={() =>
                   navigation.navigate('PullList', {
                     title: t('Pull Requests', locale),
-                    type: 'pull',
-                    issues: repository.pullRequests.nodes.map(issue =>
-                      toOldIssueFormat(issue, repoId, true)
-                    ),
+                    searchType: 0,
+                    query: '',
+                    repository,
                   })
                 }
               >

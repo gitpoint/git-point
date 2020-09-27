@@ -97,18 +97,7 @@ query ($owner: String!, $name: String!) {
       avatarUrl
       type: __typename
     }
-    issues: issues(first: 50, orderBy: {field: CREATED_AT, direction: DESC}) {
-      totalCount
-      nodes {
-        ...IssuesList
-      }
-    }
-    pullRequests: pullRequests(first: 50, orderBy: {field: CREATED_AT, direction: DESC}) {
-      totalCount
-      nodes {
-        ...PullRequestsList
-      }
-    }
+    viewerPermission
   }
 }
 

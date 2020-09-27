@@ -1,7 +1,6 @@
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import {
   FlatList,
   KeyboardAvoidingView,
@@ -15,56 +14,100 @@ import ActionSheet from 'react-native-actionsheet';
 import {
   ViewContainer,
   LoadingContainer,
+  LoadingCommonItem,
   IssueDescription,
   CommentListItem,
   CommentInput,
   IssueEventListItem,
 } from 'components';
-import { v3 } from 'api';
-import { t, formatEventsToRender, openURLInView, getRepoIdFromUrl } from 'utils';
-import { colors } from 'config';
-import { getRepository, getContributors } from 'repository';
+import { v3, RestClient } from 'api';
 import {
-  getIssueComments,
+  t,
+  formatEventsToRender,
+  openURLInView,
+  getRepoIdFromUrl,
+} from 'utils';
+import { colors } from 'config';
+import {
+  getPullRequestDetails,
   postIssueComment,
-  getIssueFromUrl,
+  getCommits,
   deleteIssueComment,
-  getIssueEvents,
 } from '../issue.action';
 
-const mapStateToProps = state => ({
-  locale: state.auth.locale,
-  authUser: state.auth.user,
-  repository: state.repository.repository,
-  contributors: state.repository.contributors,
-  issue: state.issue.issue,
-  diff: state.issue.diff,
-  pr: state.issue.pr,
-  isMerged: state.issue.isMerged,
-  comments: state.issue.comments,
-  events: state.issue.events,
-  isPendingDiff: state.issue.isPendingDiff,
-  isPendingCheckMerge: state.issue.isPendingCheckMerge,
-  isPendingComments: state.issue.isPendingComments,
-  isPendingEvents: state.issue.isPendingEvents,
-  isPostingComment: state.issue.isPostingComment,
-  isPendingContributors: state.repository.isPendingContributors,
-  isDeletingComment: state.issue.isDeletingComment,
-});
+const parseIssueNavigation = navigation => {
+  const params = navigation.state.params;
+  const issueURL = params.issueURL || params.issue.url;
+  const tokens = issueURL.split('/');
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      getIssueComments,
-      getRepository,
-      getContributors,
-      postIssueComment,
-      getIssueFromUrl,
-      deleteIssueComment,
-      getIssueEvents,
+  return {
+    issueURL,
+    issueRepository: issueURL
+      .replace(`${v3.root}/repos/`, '')
+      .replace(/([^/]+\/[^/]+)\/issues\/\d+$/, '$1'),
+    issueNumber: tokens[tokens.length - 1],
+  };
+};
+
+const mapStateToProps = (state, ownProps) => {
+  const {
+    auth: { user, locale },
+    issue: {
+      pr,
+      diff,
+      isMerged,
+      isPendingDiff,
+      isPendingCheckMerge,
+      isPostingComment,
+      isDeletingComment,
     },
-    dispatch
+    entities: { users, gqlRepos, issues, issueTimelineItems },
+    pagination: { REPOS_GET_CONTRIBUTORS, REPOS_GET_ISSUE_TIMELINE },
+  } = state;
+
+  const { issueURL, issueRepository, issueNumber } = parseIssueNavigation(
+    ownProps.navigation
   );
+  const issueId = `${issueRepository}/${issueNumber}`;
+  const timelineItemsPagination = REPOS_GET_ISSUE_TIMELINE[issueId] || {
+    ids: [],
+  };
+  const timelineItems = timelineItemsPagination.ids.map(
+    id => issueTimelineItems[id]
+  );
+
+  return {
+    locale,
+    authUser: user,
+    repository: gqlRepos[issueRepository],
+    contributors: (
+      REPOS_GET_CONTRIBUTORS[issueRepository] || { ids: [] }
+    ).ids.map(id => users[id]),
+    issue: issues[issueURL],
+    comments: timelineItems.filter(item => item && item.event === 'commented'),
+    events: timelineItems.filter(item => item && item.event !== 'commented'),
+    timelineItemsPagination,
+    pr,
+    diff,
+    isMerged,
+    commits: state.issue.commits,
+    isPendingDiff,
+    isPendingCheckMerge,
+    isPostingComment,
+    isDeletingComment,
+  };
+};
+
+const mapDispatchToProps = {
+  getRepo: RestClient.graphql.getRepo,
+  getContributors: RestClient.repos.getContributors,
+  getIssue: RestClient.repos.getIssue,
+  getIssueTimeline: RestClient.repos.getIssueTimeline,
+  getCommits,
+  getPullRequestDetails,
+  postIssueComment,
+  deleteIssueComment,
+};
 
 const compareCreatedAt = (a, b) => {
   if (a.created_at < b.created_at) {
@@ -93,6 +136,7 @@ class Issue extends Component {
               navigate('IssueSettings', {
                 title: t('Settings', state.params.locale),
                 issue: state.params.issue,
+                repository: state.params.repository,
               })
             }
           />
@@ -115,29 +159,29 @@ class Issue extends Component {
   };
 
   props: {
-    getIssueComments: Function,
-    getRepository: Function,
+    getRepo: Function,
     getContributors: Function,
+    getIssue: Function,
+    getIssueTimeline: Function,
+    getPullRequestDetails: Function,
     postIssueComment: Function,
-    getIssueFromUrl: Function,
-    getIssueEvents: Function,
+    getCommits: Function,
     deleteIssueComment: Function,
-    diff: string,
+    commits: Array,
     issue: Object,
+    timelineItemsPagination: Object,
+    comments: Array,
+    events: Array,
+    diff: string,
     pr: Object,
     isMerged: boolean,
     authUser: Object,
     repository: Object,
     contributors: Array,
-    comments: Array,
-    events: Array,
-    isPendingIssue: boolean,
     isPendingDiff: boolean,
+    isPendingCommits: boolean,
     isPendingCheckMerge: boolean,
-    isPendingComments: boolean,
-    isPendingEvents: boolean,
     isDeletingComment: boolean,
-    isPendingContributors: boolean,
     // isPostingComment: boolean,
     locale: string,
     navigation: Object,
@@ -145,8 +189,6 @@ class Issue extends Component {
 
   componentDidMount() {
     this.getIssueInformation();
-
-    this.props.navigation.setParams({ showActionSheet: this.showActionSheet });
   }
 
   onLinkPress = node => {
@@ -167,6 +209,7 @@ class Issue extends Component {
     ) {
       navigation.navigate('Issue', {
         issueURL: node.attribs.href
+          .replace(/(#.+)$/, '')
           .replace('https://github.com', `${v3.root}/repos`)
           .replace(/pull\/([0-9]+)$/, 'issues/$1'),
       });
@@ -186,58 +229,55 @@ class Issue extends Component {
   getIssueInformation = () => {
     const {
       navigation,
-      repository,
-      getIssueComments,
-      getRepository,
+      getIssue,
+      getIssueTimeline,
+      getRepo,
       getContributors,
-      getIssueFromUrl,
-      getIssueEvents,
+      getCommits,
+      getPullRequestDetails,
     } = this.props;
 
-    const params = navigation.state.params;
-    const issueURL = params.issueURL || params.issue.url;
-    const issueRepository = issueURL
-      .replace(`${v3.root}/repos/`, '')
-      .replace(/([^/]+\/[^/]+)\/issues\/\d+$/, '$1');
+    const { issueURL, issueRepository, issueNumber } = parseIssueNavigation(
+      navigation
+    );
+    const pullRequestCommitsURL = `${issueURL.replace(
+      'issues',
+      'pulls'
+    )}/commits`;
 
     Promise.all([
-      getIssueFromUrl(issueURL),
-      getIssueComments(`${issueURL}/comments`),
+      getIssue(issueRepository, issueNumber),
+      getIssueTimeline(issueRepository, issueNumber, { forceRefresh: true }),
+      getRepo(issueRepository),
+      getContributors(issueRepository, { forceRefresh: true }),
     ])
       .then(() => {
         const issue = this.props.issue;
 
-        if (repository.full_name !== issueRepository) {
+        if (issue.pull_request) {
           return Promise.all([
-            getRepository(issue.repository_url),
-            getContributors(this.getContributorsLink(issue.repository_url)),
+            getPullRequestDetails(issue),
+            getCommits(pullRequestCommitsURL),
           ]);
         }
 
-        return [];
+        return Promise.resolve();
       })
       .then(() => {
-        const { issue, repository } = this.props;
-
         this.setNavigationParams();
-
-        return getIssueEvents(
-          repository.owner.login,
-          repository.name,
-          issue.number
-        );
       });
   };
 
-  getContributorsLink = repository => `${repository}/contributors`;
-
   setNavigationParams = () => {
-    const { navigation, locale, repository } = this.props;
+    const { navigation, locale, issue, repository } = this.props;
 
     navigation.setParams({
       locale,
       userHasPushPermission:
         repository.permissions.admin || repository.permissions.push,
+      issue,
+      repository,
+      showActionSheet: this.showActionSheet,
     });
   };
 
@@ -272,10 +312,11 @@ class Issue extends Component {
 
   editComment = comment => {
     const { state, navigate } = this.props.navigation;
-    const { repository } = this.props;
+    const { issue, repository } = this.props;
 
     navigate('EditIssueComment', {
       title: t('Edit Comment', state.params.locale),
+      issue,
       comment,
       repository,
     });
@@ -288,10 +329,13 @@ class Issue extends Component {
   renderHeader = () => {
     const {
       issue,
+      repository,
       pr,
       diff,
+      commits,
       isMerged,
       isPendingDiff,
+      isPendingCommits,
       isPendingCheckMerge,
       locale,
       navigation,
@@ -300,10 +344,13 @@ class Issue extends Component {
     return (
       <IssueDescription
         issue={issue}
+        repository={repository}
         diff={diff}
+        commits={commits}
         isMergeable={pr.mergeable}
         isMerged={isMerged}
         isPendingDiff={isPendingDiff}
+        isPendingCommits={isPendingCommits}
         isPendingCheckMerge={isPendingCheckMerge}
         onRepositoryPress={url => this.onRepositoryPress(url)}
         onLinkPress={node => this.onLinkPress(node)}
@@ -314,6 +361,12 @@ class Issue extends Component {
     );
   };
 
+  renderFooter = () => {
+    return this.props.timelineItemsPagination.nextPageUrl ? (
+      <LoadingCommonItem />
+    ) : null;
+  };
+
   renderItem = ({ item }) => {
     const { repository, locale, navigation } = this.props;
 
@@ -321,7 +374,7 @@ class Issue extends Component {
       return this.renderHeader();
     }
 
-    if (item.event) {
+    if (item.event && item.event !== 'commented') {
       return (
         <IssueEventListItem
           repository={repository}
@@ -346,36 +399,27 @@ class Issue extends Component {
   render() {
     const {
       issue,
+      repository,
       comments,
       contributors,
-      isPendingComments,
-      isPendingEvents,
-      isPendingContributors,
-      isPendingIssue,
       isDeletingComment,
       locale,
       navigation,
     } = this.props;
 
-    const isLoadingData = !!(
-      isPendingComments ||
-      isPendingIssue ||
-      isDeletingComment
-    );
-    const isShowLoadingContainer =
-      isPendingComments || isPendingIssue || isPendingEvents;
+    const isPendingIssue = !issue || !repository;
+    const isLoadingData = !!(isPendingIssue || isDeletingComment);
+    const isShowLoadingContainer = isPendingIssue;
     const header = { header: true, created_at: '' };
     const events = formatEventsToRender([...this.props.events]);
-    const conversation = !isPendingComments
-      ? [header, issue, ...comments, ...events].sort(compareCreatedAt)
-      : [header];
+    const conversation = [header, issue, ...comments, ...events].sort(
+      compareCreatedAt
+    );
 
-    const participantNames = !isPendingComments
-      ? conversation.map(item => item && item.user && item.user.login)
-      : [];
-    const contributorNames = !isPendingContributors
-      ? contributors.map(item => item && item.login)
-      : [];
+    const participantNames = conversation.map(
+      item => item && item.user && item.user.login
+    );
+    const contributorNames = contributors.map(item => item && item.login);
     const fullUsers = [
       ...new Set([...participantNames, ...contributorNames]),
     ].filter(item => !!item);
@@ -388,12 +432,11 @@ class Issue extends Component {
           <LoadingContainer animating={isShowLoadingContainer} center />
         )}
 
-        {!isPendingComments &&
-          !isPendingIssue &&
+        {!isPendingIssue &&
           issue && (
             <KeyboardAvoidingView
               style={{ flex: 1 }}
-              behavior={'padding'}
+              behavior="padding"
               keyboardVerticalOffset={Platform.select({
                 ios: 65,
                 android: -200,
@@ -410,6 +453,16 @@ class Issue extends Component {
                 data={conversation}
                 keyExtractor={this.keyExtractor}
                 renderItem={this.renderItem}
+                onEndReached={() =>
+                  repository &&
+                  this.props.getIssueTimeline(
+                    repository.full_name,
+                    issue.number,
+                    { loadMore: true }
+                  )
+                }
+                onEndReachedThreshold={0.5}
+                ListFooterComponent={this.renderFooter}
               />
 
               <CommentInput

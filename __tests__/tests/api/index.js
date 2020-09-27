@@ -1,6 +1,6 @@
-import { v3 } from '../../../src/api';
-import { open } from '../../data/api/pull-request';
-import { notification } from '../../data/api/notification';
+import { v3 } from 'api';
+import { open } from 'testData/api/pull-request';
+import { notification } from 'testData/api/notification';
 
 describe('API v3 test', () => {
   describe('v3 call', () => {

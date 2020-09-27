@@ -1,5 +1,10 @@
 export default [
   {
+    code: 'ca',
+    emojiCode: ':waving_white_flag:',
+    name: 'Català',
+  },
+  {
     code: 'de',
     emojiCode: ':flag-de:',
     name: 'Deutsch',
@@ -33,6 +38,16 @@ export default [
     code: 'gl',
     emojiCode: ':waving_white_flag:',
     name: 'Galego',
+  },
+  {
+    code: 'it',
+    emojiCode: ':flag-it:',
+    name: 'Italiano',
+  },
+  {
+    code: 'nb',
+    emojiCode: ':flag-nb',
+    name: 'Norsk',
   },
   {
     code: 'nl',
@@ -73,6 +88,11 @@ export default [
     code: 'sv',
     emojiCode: ':flag-se:',
     name: 'Svenska',
+  },
+  {
+    code: 'th',
+    emojiCode: ':flag-th:',
+    name: 'ภาษาไทย',
   },
   {
     code: 'tr',

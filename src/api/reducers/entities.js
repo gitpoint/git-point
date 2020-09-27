@@ -6,6 +6,8 @@ export const entities = (
     events: {},
     orgs: {},
     repos: {},
+    issues: {},
+    issueTimelineItems: {},
     users: {},
     gqlRepos: {},
   },

@@ -195,8 +195,8 @@ class CommentListItemComponent extends Component {
               <Icon
                 color={colors.grey}
                 size={20}
-                name={'ellipsis-h'}
-                type={'font-awesome'}
+                name="ellipsis-h"
+                type="font-awesome"
                 onPress={this.showMenu}
               />
             </ActionButtonIconContainer>

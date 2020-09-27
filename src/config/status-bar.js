@@ -24,3 +24,8 @@ export const getStatusBarConfig = routeName =>
   lightScreens.includes(routeName)
     ? getLightStatusBar(routeName)
     : darkStatusBar;
+
+export const getHeaderForceInset = routeName =>
+  lightScreens.includes(routeName)
+    ? { top: 'always', bottom: 'never' }
+    : {};

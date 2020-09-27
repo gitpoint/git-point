@@ -83,6 +83,8 @@ export const pagination = combineReducers({
   ),
   SEARCH_REPOS: paginate(Actions.SEARCH_REPOS),
   SEARCH_USERS: paginate(Actions.SEARCH_USERS),
+  SEARCH_ISSUES: paginate(Actions.SEARCH_ISSUES),
   ORGS_GET_MEMBERS: paginate(Actions.ORGS_GET_MEMBERS),
   REPOS_GET_CONTRIBUTORS: paginate(Actions.REPOS_GET_CONTRIBUTORS),
+  REPOS_GET_ISSUE_TIMELINE: paginate(Actions.REPOS_GET_ISSUE_TIMELINE),
 });

@@ -4,8 +4,9 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { FlatList, View, ScrollView, Platform } from 'react-native';
+import { FlatList, View, ScrollView } from 'react-native';
 import { ButtonGroup, Card, Icon } from 'react-native-elements';
+import { SafeAreaView } from 'react-navigation';
 
 import {
   Button,
@@ -13,8 +14,8 @@ import {
   LoadingContainer,
   NotificationListItem,
 } from 'components';
-import { colors, fonts, normalize } from 'config';
-import { isIphoneX, t } from 'utils';
+import { colors, fonts, normalize, getHeaderForceInset } from 'config';
+import { t } from 'utils';
 import {
   getUnreadNotifications,
   getParticipatingNotifications,
@@ -52,9 +53,15 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
+const StyledSafeAreaView = styled(SafeAreaView).attrs({
+  forceInset: getHeaderForceInset('Notifications'),
+})`
+  background-color: ${colors.greyLight};
+`;
+
 const ButtonGroupWrapper = styled.View`
   background-color: ${colors.greyLight};
-  padding-top: ${Platform.OS === 'ios' ? (isIphoneX() ? 40 : 30) : 10};
+  padding-top: 10;
   padding-bottom: 10;
   margin-bottom: 15;
 `;
@@ -231,16 +238,17 @@ class Notifications extends Component {
   }
 
   getSortedRepos = () => {
-    const repositories = [
-      ...new Set(
-        this.notifications().map(
-          notification => notification.repository.full_name
-        )
-      ),
-    ];
+    const updateTimeMap = {};
 
-    return repositories.sort((a, b) => {
-      return a.toLowerCase() > b.toLowerCase() ? 1 : -1;
+    this.notifications().forEach(notification => {
+      const repoName = notification.repository.full_name;
+
+      updateTimeMap[repoName] =
+        updateTimeMap[repoName] || notification.update_time;
+    });
+
+    return Object.keys(updateTimeMap).sort((a, b) => {
+      return new Date(a) - new Date(b);
     });
   };
 
@@ -441,6 +449,8 @@ class Notifications extends Component {
     return (
       <ViewContainer>
         <Container>
+          <StyledSafeAreaView />
+
           <ButtonGroupWrapper>
             <StyledButtonGroup
               onPress={this.switchType}

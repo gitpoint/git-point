@@ -41,8 +41,6 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
   locale: state.auth.locale,
-  issue: state.issue.issue,
-  repository: state.repository.repository,
   isEditingComment: state.issue.isEditingComment,
 });
 
@@ -60,9 +58,7 @@ class EditIssueComment extends Component {
     editIssueBody: Function,
     editIssueComment: Function,
     locale: string,
-    repository: Object,
     navigation: Object,
-    issue: Object,
     isEditingComment: boolean,
   };
 
@@ -81,8 +77,8 @@ class EditIssueComment extends Component {
   }
 
   editComment = () => {
-    const { issue, navigation } = this.props;
-    const { repository, comment } = this.props.navigation.state.params;
+    const { navigation } = this.props;
+    const { issue, repository, comment } = this.props.navigation.state.params;
 
     const repoName = repository.name;
     const owner = repository.owner.login;
@@ -104,7 +100,7 @@ class EditIssueComment extends Component {
         <ScrollView>
           <SectionList title={t('Issue Comment', locale)}>
             <TextInput
-              underlineColorAndroid={'transparent'}
+              underlineColorAndroid="transparent"
               placeholder={t('Write a comment for your issue here', locale)}
               multiline
               onChangeText={text => this.setState({ issueComment: text })}

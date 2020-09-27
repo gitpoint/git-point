@@ -14,6 +14,8 @@ const marginLeftForIconName = name => {
     case 'primitive-dot':
       return 8;
     case 'bookmark':
+    case 'check':
+    case 'x':
       return 6;
     case 'person':
     case 'lock':
@@ -212,7 +214,10 @@ export class IssueEventListItem extends Component {
             iconName="person"
             text={
               <Text>
-                <ActorLink actor={event.assigner} onPress={this.onPressUser} />{' '}
+                <ActorLink
+                  actor={event.assigner || event.actor}
+                  onPress={this.onPressUser}
+                />{' '}
                 {event.event}{' '}
                 <ActorLink actor={event.assignee} onPress={this.onPressUser} />
               </Text>
@@ -297,6 +302,42 @@ export class IssueEventListItem extends Component {
             createdAt={event.created_at}
           />
         );
+      case 'reviewed':
+        switch (event.state) {
+          case 'approved':
+            return (
+              <Event
+                iconName="check"
+                iconColor={colors.white}
+                iconBackgroundColor={colors.green}
+                text={
+                  <Text>
+                    <ActorLink actor={event.user} onPress={this.onPressUser} />{' '}
+                    {event.state} these changes
+                  </Text>
+                }
+                createdAt={event.submitted_at}
+              />
+            );
+          case 'changes_requested':
+            return (
+              <Event
+                iconName="x"
+                iconColor={colors.white}
+                iconBackgroundColor={colors.red}
+                text={
+                  <Text>
+                    <ActorLink actor={event.user} onPress={this.onPressUser} />{' '}
+                    requested changes
+                  </Text>
+                }
+                createdAt={event.submitted_at}
+              />
+            );
+          default:
+            return null;
+        }
+
       // case 'added_to_project':
       // case 'moved_columns_in_project':
       // case 'removed_from_project':

@@ -1,5 +1,6 @@
 import 'react-native';
 import 'react-native-mock';
+import mockAsyncStorage from '@react-native-community/async-storage/jest/async-storage-mock';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
@@ -25,6 +26,8 @@ jest.mock('react-native-i18n', () => {
     t: jest.fn((k, o) => i18njs.t(k, { locale: 'en' })),
   };
 });
+
+jest.mock('@react-native-community/async-storage', () => mockAsyncStorage);
 
 jest.mock('react-native-communications', () => ({
   web: jest.fn(),

@@ -7,24 +7,22 @@ import {
   fetchSubmitNewIssue,
   fetchDeleteIssueComment,
   fetchEditIssueComment,
-  fetchIssueEvents,
   v3,
 } from 'api';
+import { getRepoIdFromUrl } from 'utils';
 import {
-  GET_ISSUE_COMMENTS,
   POST_ISSUE_COMMENT,
   EDIT_ISSUE,
   EDIT_ISSUE_BODY,
   CHANGE_LOCK_STATUS,
   GET_ISSUE_DIFF,
+  GET_ISSUE_COMMITS,
   GET_ISSUE_MERGE_STATUS,
   GET_PULL_REQUEST_FROM_URL,
   MERGE_PULL_REQUEST,
-  GET_ISSUE_FROM_URL,
   SUBMIT_NEW_ISSUE,
   DELETE_ISSUE_COMMENT,
   EDIT_ISSUE_COMMENT,
-  GET_ISSUE_EVENTS,
 } from './issue.type';
 
 const getDiff = url => {
@@ -95,9 +93,9 @@ const getPullRequest = url => {
   };
 };
 
-const getPullRequestDetails = issue => {
-  return (dispatch, getState) => {
-    const repoFullName = getState().repository.repository.full_name;
+export const getPullRequestDetails = issue => {
+  return dispatch => {
+    const repoFullName = getRepoIdFromUrl(issue.repository_url);
 
     dispatch(getPullRequest(issue.pull_request.url));
     dispatch(getDiff(issue.pull_request.url));
@@ -105,23 +103,23 @@ const getPullRequestDetails = issue => {
   };
 };
 
-export const getIssueComments = issueCommentsURL => {
+export const getCommits = url => {
   return (dispatch, getState) => {
     const accessToken = getState().auth.accessToken;
 
-    dispatch({ type: GET_ISSUE_COMMENTS.PENDING });
+    dispatch({ type: GET_ISSUE_COMMITS.PENDING });
 
     return v3
-      .getFull(`${issueCommentsURL}?per_page=100`, accessToken)
+      .getJson(url, accessToken)
       .then(data => {
         dispatch({
-          type: GET_ISSUE_COMMENTS.SUCCESS,
+          type: GET_ISSUE_COMMITS.SUCCESS,
           payload: data,
         });
       })
       .catch(error => {
         dispatch({
-          type: GET_ISSUE_COMMENTS.ERROR,
+          type: GET_ISSUE_COMMITS.ERROR,
           payload: error,
         });
       });
@@ -282,33 +280,6 @@ export const changeIssueLockStatus = (
   };
 };
 
-export const getIssueFromUrl = url => {
-  return (dispatch, getState) => {
-    const accessToken = getState().auth.accessToken;
-
-    dispatch({ type: GET_ISSUE_FROM_URL.PENDING });
-
-    return v3
-      .getFull(url, accessToken)
-      .then(issue => {
-        dispatch({
-          type: GET_ISSUE_FROM_URL.SUCCESS,
-          payload: issue,
-        });
-
-        if (issue.pull_request) {
-          dispatch(getPullRequestDetails(issue));
-        }
-      })
-      .catch(error => {
-        dispatch({
-          type: GET_ISSUE_FROM_URL.ERROR,
-          payload: error,
-        });
-      });
-  };
-};
-
 export const mergePullRequest = (
   repo,
   issueNum,
@@ -368,28 +339,6 @@ export const submitNewIssue = (owner, repo, issueTitle, issueComment) => {
       .catch(error => {
         dispatch({
           type: SUBMIT_NEW_ISSUE.ERROR,
-          payload: error,
-        });
-      });
-  };
-};
-
-export const getIssueEvents = (owner, repoName, issueNum) => {
-  return (dispatch, getState) => {
-    const accessToken = getState().auth.accessToken;
-
-    dispatch({ type: GET_ISSUE_EVENTS.PENDING });
-
-    return fetchIssueEvents(owner, repoName, issueNum, accessToken)
-      .then(events => {
-        dispatch({
-          type: GET_ISSUE_EVENTS.SUCCESS,
-          payload: events,
-        });
-      })
-      .catch(error => {
-        dispatch({
-          type: GET_ISSUE_EVENTS.ERROR,
           payload: error,
         });
       });

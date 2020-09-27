@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { RefreshControl, ActivityIndicator } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
+import { SafeAreaView } from 'react-navigation';
 import { RestClient } from 'api';
 import {
   ViewContainer,
@@ -15,7 +16,13 @@ import {
   EntityInfo,
 } from 'components';
 import { emojifyText, t, openURLInView } from 'utils';
-import { colors, fonts } from 'config';
+import { colors, fonts, getHeaderForceInset } from 'config';
+
+const StyledSafeAreaView = styled(SafeAreaView).attrs({
+  forceInset: getHeaderForceInset('Organization'),
+})`
+  background-color: ${colors.primaryDark};
+`;
 
 const DescriptionListItem = styled(ListItem).attrs({
   subtitleStyle: {
@@ -113,6 +120,8 @@ class OrganizationProfile extends Component {
 
     return (
       <ViewContainer>
+        <StyledSafeAreaView />
+
         <ParallaxScroll
           renderContent={() => (
             <UserProfile
@@ -143,6 +152,7 @@ class OrganizationProfile extends Component {
             <MembersList
               title={t('MEMBERS', locale)}
               members={orgMembers}
+              noMembersMessage={t('No members found', locale)}
               navigation={navigation}
               onEndReached={() =>
                 this.props.getOrgMembers(orgId, { loadMore: true })

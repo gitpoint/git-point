@@ -2,11 +2,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { ActivityIndicator, Linking, WebView, Platform } from 'react-native';
+import { ActivityIndicator, Linking, Platform } from 'react-native';
+import { WebView } from 'react-native-webview';
 import { Button, Icon } from 'react-native-elements';
 import Swiper from 'react-native-swiper';
 import queryString from 'query-string';
 import CookieManager from 'react-native-cookies';
+import { SafeAreaView } from 'react-navigation';
 
 import { ViewContainer, ErrorScreen } from 'components';
 import { colors, fonts, normalize } from 'config';
@@ -41,8 +43,17 @@ const Modal = styled.Modal`
 
 const ModalWrapper = styled.View`
   flex: 1;
-  padding-top: 20;
-  background-color: #1f2327;
+  background-color: ${colors.githubDark}
+`;
+
+// https://github.com/facebook/react-native/issues/9090
+const StyledSafeAreaView = styled(SafeAreaView).attrs({
+  forceInset: Platform.select({
+    ios: { top: 'always', bottom: 'never' },
+    android: { top: 'never', bottom: 'never' },
+  }),
+})`
+  background-color: ${colors.githubDark};
 `;
 
 const Slide = styled.View`
@@ -341,6 +352,7 @@ class Login extends Component {
             visible={this.state.modalVisible}
           >
             <ModalWrapper>
+              <StyledSafeAreaView />
               <BrowserSection>
                 <WebView
                   source={{

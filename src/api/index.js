@@ -366,14 +366,3 @@ export const fetchNotificationsCount = accessToken =>
 
 export const fetchRepoNotificationsCount = (owner, repoName, accessToken) =>
   v3.count(`/repos/${owner}/${repoName}/notifications?per_page=1`, accessToken);
-
-export const fetchIssueEvents = (
-  owner: string,
-  repoName: string,
-  issueNum: number,
-  accessToken: string
-) =>
-  v3.getJson(
-    `/repos/${owner}/${repoName}/issues/${issueNum}/events`,
-    accessToken
-  );

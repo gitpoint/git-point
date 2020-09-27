@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { ActivityIndicator } from 'react-native';
+import { Text, ActivityIndicator, TouchableHighlight } from 'react-native';
 import { ListItem } from 'react-native-elements';
+
 import Parse from 'parse-diff';
 import styled from 'styled-components';
 
@@ -56,8 +57,9 @@ const IssueTitle = styled(ListItem).attrs({
 
 const DiffBlocksContainer = styled.View`
   flex-direction: row;
-  align-items: center;
-  justify-content: flex-end;
+  align-items: stretch;
+  justify-content: space-between;
+  padding-left: 10;
   padding-right: 10;
   padding-bottom: 10;
 `;
@@ -83,15 +85,35 @@ const MergeButtonContainer = styled.View`
 export class IssueDescription extends Component {
   props: {
     issue: Object,
+    repository: Object,
     diff: string,
+    commits: Array,
     isMergeable: boolean,
     isMerged: boolean,
     isPendingDiff: boolean,
+    isPendingCommit: boolean,
     isPendingCheckMerge: boolean,
     onRepositoryPress: Function,
     userHasPushPermission: boolean,
     locale: string,
     navigation: Object,
+  };
+
+  navigateToCommitList = () => {
+    const { commits, locale } = this.props;
+
+    if (commits.length > 1) {
+      this.props.navigation.navigate('CommitList', {
+        title: t('Commits', locale),
+        commits,
+        locale,
+      });
+    } else {
+      this.props.navigation.navigate('Commit', {
+        commit: commits[0],
+        title: commits[0].sha.substring(0, 7),
+      });
+    }
   };
 
   renderLabelButtons = labels => {
@@ -104,9 +126,12 @@ export class IssueDescription extends Component {
     const {
       diff,
       issue,
+      commits,
+      repository,
       isMergeable,
       isMerged,
       isPendingDiff,
+      isPendingCommit,
       isPendingCheckMerge,
       onRepositoryPress,
       userHasPushPermission,
@@ -166,8 +191,21 @@ export class IssueDescription extends Component {
 
         {issue.pull_request && (
           <DiffBlocksContainer>
+            {isPendingCommit && (
+              <ActivityIndicator animating={isPendingCommit} size="small" />
+            )}
+
             {isPendingDiff && (
               <ActivityIndicator animating={isPendingDiff} size="small" />
+            )}
+
+            {!isPendingCommit && (
+              <TouchableHighlight
+                onPress={() => this.navigateToCommitList()}
+                underlayColor={colors.greyLight}
+              >
+                <Text>{`${commits.length} commits`}</Text>
+              </TouchableHighlight>
             )}
 
             {!isPendingDiff &&
@@ -219,6 +257,8 @@ export class IssueDescription extends Component {
                 onPress={() =>
                   navigation.navigate('PullMerge', {
                     title: t('Merge Pull Request', locale),
+                    issue,
+                    repository,
                   })
                 }
                 title={t('Merge Pull Request', locale)}

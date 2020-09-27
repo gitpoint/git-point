@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Platform } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-import { emojifyText, abbreviateNumber, t, isIphoneX } from 'utils';
+import { emojifyText, abbreviateNumber, t } from 'utils';
 import { colors, fonts, normalize } from 'config';
 
 type Props = {
@@ -95,7 +95,9 @@ const styles = StyleSheet.create({
   },
   languageInfo: {
     flexDirection: 'row',
-    top: isIphoneX() ? 46 : 35,
+    alignItems: 'center',
+    top: 0,
+    height: 44,
     position: 'absolute',
   },
   languageInfoTitle: {

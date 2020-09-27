@@ -3,25 +3,21 @@ import { Provider } from 'react-redux';
 import styled from 'styled-components';
 import {
   AppRegistry,
-  AsyncStorage,
   LayoutAnimation,
   StatusBar,
   Platform,
 } from 'react-native';
-import { persistStore } from 'redux-persist';
-import createEncryptor from 'redux-persist-transform-encrypt';
-import DeviceInfo from 'react-native-device-info';
-import md5 from 'md5';
 import codePush from 'react-native-code-push';
-
+import { PersistGate } from 'redux-persist/integration/react';
+import { SafeAreaProvider } from 'react-native-safe-area-context'; // eslint-disable-line
 import { colors, getStatusBarConfig } from 'config';
 import { getCurrentLocale, configureLocale } from 'utils';
 import { GitPoint } from './routes';
-import { configureStore } from './root.store';
+import { configureStore, persistor } from './root.store';
 
 const Container = styled.View`
   align-items: center;
-  background-color: ${colors.white}
+  background-color: ${colors.white};
   flex: 1;
   justify-content: center;
 `;
@@ -52,22 +48,6 @@ class App extends Component {
   }
 
   componentWillMount() {
-    const encryptor = createEncryptor({
-      secretKey: md5(DeviceInfo.getUniqueID()),
-    });
-
-    persistStore(
-      configureStore,
-      {
-        storage: AsyncStorage,
-        transforms: [encryptor],
-        whitelist: ['auth'],
-      },
-      () => {
-        this.setState({ rehydrated: true });
-      }
-    );
-
     this.constructor.initLocale();
   }
 
@@ -111,20 +91,22 @@ class App extends Component {
     StatusBar.setBarStyle(barStyle);
   }
 
-  render() {
-    if (!this.state.rehydrated) {
-      return (
-        <Container>
-          <Logo source={require('./src/assets/logo-black.png')} />
-        </Container>
-      );
-    }
+  renderLogo = () => (
+    <Container>
+      <Logo source={require('./src/assets/logo-black.png')} />
+    </Container>
+  );
 
+  render() {
     return (
       <Provider store={configureStore}>
-        <GitPoint onNavigationStateChange={this.statusBarHandler}>
-          <StatusBar />
-        </GitPoint>
+        <PersistGate loading={this.renderLogo} persistor={persistor}>
+          <SafeAreaProvider>
+            <GitPoint onNavigationStateChange={this.statusBarHandler}>
+              <StatusBar />
+            </GitPoint>
+          </SafeAreaProvider>
+        </PersistGate>
       </Provider>
     );
   }
