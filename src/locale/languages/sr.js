@@ -14,7 +14,7 @@ module.exports = {
   'Are you sure?': 'Да ли сте сигурни?',
   'Assign Yourself': 'Додели себи',
   Assignees: 'Заступник',
-  'Author: ': '',
+  'Author: ': 'Аутор',
   BIO: 'БИОГРАФИЈА',
   CANCEL: 'ОДУСТАНИ',
   CONTACT: 'КОНТАКТИ',
@@ -33,8 +33,8 @@ module.exports = {
   'Comment Actions': 'Акције на коментарима',
   'Commit Message': 'Порука измене',
   'Commit Title': 'Наслов измене',
-  Commits: '',
-  'Committer: ': '',
+  Commits: 'Измене',
+  'Committer: ': 'Изменио',
   'Communicate on conversations, merge pull requests and more':
     'Дискутујте, прихватите захтеве за преузимање и друго',
   Company: 'Фирма',
@@ -90,8 +90,8 @@ module.exports = {
   'New Issue': 'Нови поднесак',
   'No README.md found': 'Датотека README.md није пронађена',
   'No closed issues found!': 'Нема затворених поднесака!',
-  'No closed pull requests found!': '',
-  'No commit found!': '',
+  'No closed pull requests found!': 'Нема затворених захтев за преузимање!',
+  'No commit found!': 'Нема измена!',
   'No contributors found': 'Нема сарадника',
   'No description provided.': 'Није достављен опис.',
   'No issues': 'Без поднесака',
@@ -162,7 +162,7 @@ module.exports = {
   Users: 'Корисници',
   'View All': 'Прегледај све',
   'View Code': 'Прегледај код',
-  'View Commits': '',
+  'View Commits': 'Прегледај измене',
   'View and control all of your unread and participating notifications':
     'Преглед и контрола свих ваших непрочитаних и активних обавештења',
   Watch: 'Прати',
@@ -223,7 +223,7 @@ module.exports = {
     '{actor} је избрисао ознаку {ref} у {repo}',
   '{actor} edited the {repo} wiki':
     '{actor} је изменио документацију за {repo}',
-  '{actor} edited {member} at {repo}': '{actor} edited {member} at {repo}',
+  '{actor} edited {member} at {repo}': '{actor} је изменио {member} за {repo}',
   '{actor} forked {repo} at {fork}': '{actor} клонирао {repo} у {fork}',
   '{actor} made {repo} public': '{actor} је учинио јавним {repo}',
   '{actor} merged pull request {pr} at {repo}':
