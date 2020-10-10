@@ -870,6 +870,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "eliottha",
+      "name": "Eliott Hauteclair",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/7842156?v=4",
+      "profile": "https://www.eliott.be",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "repoType": "github"
