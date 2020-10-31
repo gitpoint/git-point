@@ -40,13 +40,18 @@ export default [
     name: 'Galego',
   },
   {
+    code: 'id',
+    emojiCode: ':flag-id:',
+    name: 'Bahasa',
+  },
+  {
     code: 'it',
     emojiCode: ':flag-it:',
     name: 'Italiano',
   },
   {
     code: 'nb',
-    emojiCode: ':flag-nb',
+    emojiCode: ':waving_white_flag:',
     name: 'Norsk',
   },
   {

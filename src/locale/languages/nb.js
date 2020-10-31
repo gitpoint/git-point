@@ -178,9 +178,9 @@ module.exports = {
   'Welcome to GitPoint': 'Velkommen til GitPoint',
   'With each contribution to the app, code review is always performed to prevent anybody from including malicious code of any kind.':
     'Med hvert bidrag til appen utføres alltid code review for å forhindre at noen inkluderer skadelig kode av noe slag.',
-  'Write a comment for your issue here': 'Skriv en kommentar til ditt issue her',
-  'Write a message for your commit here':
-    'Skriv en melding for din commit her',
+  'Write a comment for your issue here':
+    'Skriv en kommentar til ditt issue her',
+  'Write a message for your commit here': 'Skriv en melding for din commit her',
   'Write a title for your commit here': 'Skriv en tittel til din commit her',
   'Write a title for your issue here': 'Skriv en tittel til din issue her',
   Yes: 'Ja',
@@ -214,7 +214,8 @@ module.exports = {
   '{actor} created branch {ref} at {repo}':
     '{actor} opprettet branch {ref} til {repo}',
   '{actor} created repository {repo}': '{actor} opprettet repository {repo}',
-  '{actor} created tag {ref} at {repo}': '{actor} opprettet tag {ref} til {repo}',
+  '{actor} created tag {ref} at {repo}':
+    '{actor} opprettet tag {ref} til {repo}',
   '{actor} created the {repo} wiki': '{actor} oppretett {repo} wikien',
   '{actor} deleted branch {ref} at {repo}':
     '{actor} slettet branch {ref} til {repo}',
