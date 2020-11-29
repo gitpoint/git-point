@@ -65,6 +65,15 @@ const updateText = locale => ({
 });
 
 class UserOptions extends Component {
+  static getDerivedStateFromProps(props, state) {
+    return props.locale !== state.locale
+      ? {
+          updateText: updateText(props.locale).check,
+          locale: props.locale,
+        }
+      : null;
+  }
+
   props: {
     locale: string,
     signOut: () => void,
@@ -77,24 +86,24 @@ class UserOptions extends Component {
 
     this.state = {
       updateText: updateText(props.locale).check,
+      locale: props.locale,
     };
   }
 
-  componentWillReceiveProps(nextState) {
-    if (nextState.locale !== this.props.locale) {
-      this.setState({
-        updateText: updateText(nextState.locale).check,
-      });
+  shouldComponentUpdate(nextProps) {
+    return nextProps.locale !== this.props.locale;
+  }
 
-      const navigationParams = NavigationActions.setParams({
-        params: {
-          title: t('Options', nextState.locale),
-        },
-        key: nextState.navigation.state.key,
-      });
+  componentDidUpdate() {
+    const { locale, navigation } = this.props;
+    const navigationParams = NavigationActions.setParams({
+      params: {
+        title: t('Options', locale),
+      },
+      key: navigation.state.key,
+    });
 
-      nextState.navigation.dispatch(navigationParams);
-    }
+    navigation.dispatch(navigationParams);
   }
 
   checkForUpdate = () => {
@@ -183,6 +192,7 @@ class UserOptions extends Component {
   }
 }
 
-export const UserOptionsScreen = connect(mapStateToProps, mapDispatchToProps)(
-  UserOptions
-);
+export const UserOptionsScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserOptions);

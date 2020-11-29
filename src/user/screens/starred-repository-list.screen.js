@@ -47,7 +47,7 @@ class StarredRepositoryList extends Component {
     navigation: Object,
   };
 
-  componentWillMount() {
+  componentDidMount() {
     const { getStarredReposForUser, userId } = this.props;
 
     getStarredReposForUser(userId);

@@ -100,12 +100,6 @@ class Events extends Component {
     this.getUserEvents();
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.user.login && !this.props.user.login) {
-      this.getUserEvents(nextProps);
-    }
-  }
-
   getUserEvents = ({ user, accessToken } = this.props) => {
     this.props.getUserEvents(user.login, { forceRefresh: true });
     this.props.getNotificationsCount(accessToken);
@@ -676,6 +670,7 @@ class Events extends Component {
   }
 }
 
-export const EventsScreen = connect(mapStateToProps, mapDispatchToProps)(
-  Events
-);
+export const EventsScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Events);

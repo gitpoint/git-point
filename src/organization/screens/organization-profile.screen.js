@@ -37,6 +37,10 @@ const LoadingMembersContainer = styled.View`
 `;
 
 class OrganizationProfile extends Component {
+  static getDerivedStateFromProps() {
+    return { refreshing: false };
+  }
+
   props: {
     org: Object,
     orgId: String,
@@ -66,10 +70,6 @@ class OrganizationProfile extends Component {
       getOrgById(orgId);
     }
     getOrgMembers(orgId);
-  }
-
-  componentWillReceiveProps() {
-    this.setState({ refreshing: false });
   }
 
   refresh = () => {
@@ -162,15 +162,14 @@ class OrganizationProfile extends Component {
             />
           )}
 
-          {!!org.description &&
-            org.description !== '' && (
-              <SectionList title={t('DESCRIPTION', locale)}>
-                <DescriptionListItem
-                  subtitle={emojifyText(org.description)}
-                  hideChevron
-                />
-              </SectionList>
-            )}
+          {!!org.description && org.description !== '' && (
+            <SectionList title={t('DESCRIPTION', locale)}>
+              <DescriptionListItem
+                subtitle={emojifyText(org.description)}
+                hideChevron
+              />
+            </SectionList>
+          )}
 
           {org && (
             <EntityInfo entity={org} navigation={navigation} locale={locale} />
