@@ -119,6 +119,13 @@ const styles = StyleSheet.create({
     color: colors.white,
     ...fonts.fontPrimaryBold,
   },
+  languageBar: {
+    backgroundColor: 'yellow',
+    marginBottom: 30,
+    flexDirection: 'row',
+    minWidth: 400,
+    height: 7,
+  },
 });
 
 const iconName = repository => {
@@ -275,5 +282,7 @@ export const RepositoryProfile = ({
         {!hasError && <Text style={styles.unitText}>{t('Forks', locale)}</Text>}
       </View>
     </View>
+    {!loading &&
+      repository.language !== null && <View style={styles.languageBar} />}
   </View>
 );
