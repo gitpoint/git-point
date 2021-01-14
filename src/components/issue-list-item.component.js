@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, TouchableHighlight, View, Text } from 'react-native';
+import { StyleSheet, TouchableHighlight } from 'react-native';
 import { ListItem, Icon } from 'react-native-elements';
+import styled from 'styled-components';
 
 import { colors, fonts, normalize } from 'config';
 import { t, relativeTimeToNow } from 'utils';
@@ -12,16 +13,28 @@ type Props = {
   locale: string,
 };
 
+const Container = styled.View`
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  padding-right: 10;
+  padding: 5px;
+  border-bottom-width: 1;
+  border-bottom-color: ${colors.greyLight};
+`;
+
+const CommentsContainer = styled.View`
+  flex-direction: row;
+  padding-top: 13;
+`;
+
+const Comments = styled.Text`
+  padding-left: 5;
+  font-size: ${normalize(12)}
+  color: ${colors.greyBlue}
+`;
+
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    paddingRight: 10,
-    paddingVertical: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.greyLight,
-  },
   closedIssue: {
     backgroundColor: colors.greyVeryLight,
     opacity: 0.6,
@@ -39,15 +52,6 @@ const styles = StyleSheet.create({
     marginRight: -30,
     fontSize: normalize(12),
     fontWeight: '400',
-    color: colors.greyBlue,
-  },
-  commentsContainer: {
-    flexDirection: 'row',
-    paddingTop: 13,
-  },
-  comments: {
-    paddingLeft: 5,
-    fontSize: normalize(12),
     color: colors.greyBlue,
   },
 });
@@ -82,7 +86,7 @@ export const IssueListItem = ({ type, issue, navigation, locale }: Props) => (
     }
     underlayColor={colors.greyLight}
   >
-    <View style={styles.container}>
+    <Container>
       <ListItem
         containerStyle={styles.listItemContainer}
         title={issue.title}
@@ -109,10 +113,10 @@ export const IssueListItem = ({ type, issue, navigation, locale }: Props) => (
         titleStyle={styles.title}
         subtitleStyle={styles.subtitle}
       />
-      <View style={styles.commentsContainer}>
+      <CommentsContainer>
         <Icon name="comment" type="octicon" size={18} color={colors.grey} />
-        <Text style={styles.comments}>{issue.comments}</Text>
-      </View>
-    </View>
+        <Comments>{issue.comments}</Comments>
+      </CommentsContainer>
+    </Container>
   </TouchableHighlight>
 );
