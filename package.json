@@ -57,7 +57,7 @@
     "date-fns": "^1.29.0",
     "entities": "^1.1.1",
     "fuzzysort": "^1.0.1",
-    "lodash": "^4.17.5",
+    "lodash": "^4.17.21",
     "lowlight": "^1.5.0",
     "md5": "^2.2.1",
     "node-emoji": "^1.7.0",
