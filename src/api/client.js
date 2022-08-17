@@ -86,7 +86,7 @@ export class Client {
   ) => {
     let finalUrl = url;
 
-    // add explicitely specified parameters
+    // add explicitly specified parameters
     if (params.perPage) {
       finalUrl = `${finalUrl}${
         finalUrl.includes('?') ? '&' : '?'
